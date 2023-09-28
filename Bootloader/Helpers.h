@@ -1,9 +1,10 @@
 #pragma once
+#include "UEFIDef.h"
 #include "Enviroment.h"
-#include <UEFIDef.h>
-#include <EFI_STATUS.h>
-#include <EFI_SYSTEM_TABLE.h>
-#include <Protocols/IO/Console/EFI_CONSOLE_COLOR.h>
+#include "EFI_STATUS.h"
+#include "Protocols/IO/Console/EFI_CONSOLE_COLOR.h"
+#include "EFI_SYSTEM_TABLE.h"
+
 // Bootloader.cpp : This file contains the 'EfiMain' function. Program execution begins and ends there.
 //
 namespace Bootloader

@@ -20,15 +20,15 @@ namespace EFI
 	};
 
 	//***************************************************
-// Bit Definitions for EFI_TIME.Daylight. See below.
-//***************************************************
-	const UINT8 EFI_TIME_ADJUST_DAYLIGHT = 0x01;
-	const UINT8 EFI_TIME_IN_DAYLIGHT = 0x02;
+	// Bit Definitions for EFI_TIME.Daylight. See below.
+	//***************************************************
+	inline const UINT8 EFI_TIME_ADJUST_DAYLIGHT = 0x01;
+	inline const UINT8 EFI_TIME_IN_DAYLIGHT = 0x02;
 
 	//***************************************************
 	// Value Definition for EFI_TIME.TimeZone. See below.
 	//***************************************************
-	const INT16 EFI_UNSPECIFIED_TIMEZONE = 0x07FF;
+	inline const INT16 EFI_UNSPECIFIED_TIMEZONE = 0x07FF;
 
 	
 }

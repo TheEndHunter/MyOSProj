@@ -9,7 +9,7 @@ namespace EFI
 	/// BIT0 implies that Runtime code includes the forward control flow guard
 	/// instruction, such as X86 CET-IBT or ARM BTI. 
 	/// </summary>
-	const UINT8 EFI_MEMORY_ATTRIBUTES_FLAGS_RT_FORWARD_CONTROL_FLOW_GUARD = (UINT8)0x1;
+	inline const UINT8 EFI_MEMORY_ATTRIBUTES_FLAGS_RT_FORWARD_CONTROL_FLOW_GUARD = (UINT8)0x1;
 
 	struct EFI_MEMORY_ATTRIBUTES_TABLE
 	{

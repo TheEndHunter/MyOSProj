@@ -25,12 +25,12 @@ namespace Bootloader
         return key;
     }
 
-    EFI_GRAPHICS_OUTPUT_PROTOCOL gop;
+
     EFI_STATUS EfiMain(EFI_HANDLE handle, EFI_SYSTEM_TABLE* systemTable)
     {
         systemTable->ConOut->Reset(systemTable->ConOut, false);
 
-
+        EFI_GRAPHICS_OUTPUT_PROTOCOL* gop;
         EFI_STATUS gopStatus = systemTable->BootServices->LocateProtocol(&EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID, 0, (void**)&gop);
 
         if (gopStatus != EFI_STATUS::SUCCESS)
@@ -39,6 +39,12 @@ namespace Bootloader
             ClearConOut(systemTable);
             Print(systemTable, boot_GOP_LOCATE_ERROR);
             PrintLine(systemTable, ToString(gopStatus));
+            Print(systemTable, u"GOP Addr: 0x");
+            PrintLine(systemTable, StringHelpers::ToHex((UINTN)gop));
+            Print(systemTable, u"GOP GUID Addr: 0x");
+            PrintLine(systemTable, StringHelpers::ToHex((UINTN)&EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID));
+            Print(systemTable, u"GOP GUID: ");
+            PrintLine(systemTable, StringHelpers::ToString(EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID));
 
             WaitForKey(systemTable);
             return gopStatus;

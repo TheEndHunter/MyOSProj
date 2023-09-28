@@ -59,7 +59,8 @@
                     Console.Clear();
                     Console.WriteLine($"Current Dir: {Directory.GetCurrentDirectory()}");
                     Console.WriteLine("Please enter path of the virtual disk being used(e.g. VirtualOS.vhdx)");
-                    var test = Console.ReadLine();
+
+                    string test = Console.ReadLine()!;
 
                     test = Path.GetFullPath(test);
 
@@ -146,7 +147,7 @@
             Process qemu = new();
             qemu.StartInfo.FileName = exePath;
             qemu.StartInfo.WorkingDirectory = qemuPath;
-            qemu.StartInfo.Arguments = $"""{machine} -m 2048M -drive if=pflash,format=raw,unit=0,file={firmwareCodePath},readonly=on -drive if=pflash,format=raw,unit=1,file={firmwareVarPath} -drive file={imagePath} -net none""";
+            qemu.StartInfo.Arguments = $"""{machine} -m 2048M -drive if=pflash,format=raw,unit=0,file={firmwareCodePath},readonly=on -drive if=pflash,format=raw,unit=1,file={firmwareVarPath} -drive file={imagePath} -net none -vga qxl""";
             qemu.StartInfo.UseShellExecute = false;
             qemu.StartInfo.CreateNoWindow = false;
             qemu.StartInfo.WindowStyle = ProcessWindowStyle.Normal;

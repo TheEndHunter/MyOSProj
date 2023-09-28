@@ -3,8 +3,8 @@
 
 namespace EFI
 {
-	const UINT32 EFI_ABSP_SupportsAltActive = 0x00000001;
-	const UINT32 EFI_ABSP_SupportsPressureAsZ = 0x00000002;
+	inline const UINT32 EFI_ABSP_SupportsAltActive = 0x00000001;
+	inline const UINT32 EFI_ABSP_SupportsPressureAsZ = 0x00000002;
 
 	struct EFI_ABSOLUTE_POINTER_MODE
 	{

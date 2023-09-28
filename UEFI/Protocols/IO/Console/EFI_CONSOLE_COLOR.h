@@ -43,7 +43,7 @@ namespace EFI
 	}
 	
 
-	static class EFI_CONSOLE_COLOR
+	class EFI_CONSOLE_COLOR
 	{
 	public:
 		static const UINT8 SUCCESS_COLOR = EFI_FOREGROUND_COLOR::GREEN | EFI_BACKGROUND_COLOR::BLACK;

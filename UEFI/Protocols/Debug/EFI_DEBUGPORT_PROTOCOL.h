@@ -1,4 +1,5 @@
 #pragma once
+#include "UEFIDef.h"
 #include <EFI_GUID.h>
 #include <EFI_STATUS.h>
 

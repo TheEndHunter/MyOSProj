@@ -2,7 +2,7 @@
 #include <UEFIDef.h>
 namespace Bootloader
 {
-	static class Environment
+	class Environment
 	{
 	public:
 		static const CHAR16  NULL = u'\0';

@@ -4,7 +4,8 @@
 
 namespace EFI
 {
-	struct EFI_GUID
+#pragma pack(push, 1)
+	struct alignas(8) EFI_GUID
 	{
 	public:
 		UINT32 Data1;
@@ -12,4 +13,5 @@ namespace EFI
 		UINT16 Data3;
 		UINT8 Data4[8];
 	};
+#pragma pack(pop)
 }

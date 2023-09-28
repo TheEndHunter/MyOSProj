@@ -10,8 +10,8 @@
 namespace EFI
 {
 
-    const UINT64 EFI_RUNTIME_SERVICES_SIGNATURE = 0x56524553544e5552;
-    const UINT64 EFI_RUNTIME_SERVICES_REVISION = EFI_SPECIFICATION_VERSION;
+    inline const UINT64 EFI_RUNTIME_SERVICES_SIGNATURE = 0x56524553544e5552;
+    inline const UINT64 EFI_RUNTIME_SERVICES_REVISION = EFI_SPECIFICATION_VERSION;
 
     typedef EFI_STATUS (EFIAPI* EFI_GET_TIME)(OUT EFI_TIME* Time,OUT EFI_TIME_CAPABILITIES* Capabilities OPTIONAL);
     typedef EFI_STATUS (EFIAPI* EFI_SET_TIME)(IN EFI_TIME* Time);
@@ -37,7 +37,7 @@ namespace EFI
     //******************************************************
     // EFI_OPTIONAL_PTR
     //******************************************************
-    const UINTN EFI_OPTIONAL_PTR = 1;
+    inline const UINTN EFI_OPTIONAL_PTR = 1;
 
 	struct EFI_RUNTIME_SERVICES
 	{

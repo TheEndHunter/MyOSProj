@@ -5,8 +5,8 @@
 namespace EFI
 {
 	//
-// EFI RT Properties table GUID
-//
+	// EFI RT Properties table GUID
+	//
 	constinit const EFI_GUID EFI_RT_PROPERTIES_TABLE_GUID = { 0xeb66918a, 0x7eef, 0x402a,{ 0x84, 0x2e, 0x93, 0x1d, 0x21, 0xc3, 0x8a, 0xe9 } };
 
 	struct EFI_RT_PROPERTIES_TABLE

@@ -1,16 +1,16 @@
 #pragma once
 
-#include <UEFIDef.h>
-#include <EFI_STATUS.h>
-#include <EFI_GUID.h>
-#include <EFI_EVENT.h>
-#include <Protocols/IO/Peripheral/EFI_KEY_DATA.h>
+#include "UEFIDef.h"
+#include "EFI_STATUS.h"
+#include "EFI_GUID.h"
+#include "EFI_EVENT.h"
+#include "Protocols/IO/Peripheral/EFI_KEY_DATA.h"
 
 namespace EFI
 {
 	struct EFI_SIMPLE_TEXT_INPUT_EX_PROTOCOL;
 
-	constinit const struct EFI::EFI_GUID EFI_SIMPLE_TEXT_INPUT_EX_PROTOCOL_GUID = { 0xdd9e7534, 0x7762, 0x4698,{ 0x8c, 0x14, 0xf5, 0x85, 0x17, 0xa6, 0x25, 0xaa} };
+	constinit const EFI_GUID EFI_SIMPLE_TEXT_INPUT_EX_PROTOCOL_GUID = { 0xdd9e7534, 0x7762, 0x4698,{ 0x8c, 0x14, 0xf5, 0x85, 0x17, 0xa6, 0x25, 0xaa} };
 
 	typedef EFI::EFI_STATUS (EFIAPI* EFI_INPUT_RESET_EX)  (IN EFI::EFI_SIMPLE_TEXT_INPUT_EX_PROTOCOL* This, IN BOOLEAN ExtendedVerification);
 	typedef EFI::EFI_STATUS (EFIAPI* EFI_INPUT_READ_KEY_EX ) (IN EFI::EFI_SIMPLE_TEXT_INPUT_EX_PROTOCOL* This, OUT EFI::EFI_KEY_DATA* KeyData);
