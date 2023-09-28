@@ -1,0 +1,95 @@
+#pragma once
+#include <UEFIDef.h>
+
+namespace EFI
+{
+	struct EFI_UNICODE_CTRL_CHAR
+	{
+	public:
+		static constexpr CHAR16 NUL = 0x0000;
+		static constexpr CHAR16 BACKSPACE = 0x0008;
+		static constexpr CHAR16 TAB = 0x0009;
+		static constexpr CHAR16 LF = 0x000A;
+		static constexpr CHAR16 CR = 0x000D;
+		static constexpr CHAR16 ESC = 0x001B;
+	};
+
+	//******************************************************
+	// UNICODE DRAWING CHARACTERS
+	//******************************************************
+	struct EFI_UNICODE_DRAWING_CHAR
+	{
+	public:
+
+		const CHAR16 BOXDRAW_HORIZONTAL = 0x2500;
+		const CHAR16 BOXDRAW_VERTICAL = 0x2502;
+		const CHAR16 BOXDRAW_DOWN_RIGHT = 0x250c;
+		const CHAR16 BOXDRAW_DOWN_LEFT = 0x2510;
+		const CHAR16 BOXDRAW_UP_RIGHT = 0x2514;
+		const CHAR16 BOXDRAW_UP_LEFT = 0x2518;
+		const CHAR16 BOXDRAW_VERTICAL_RIGHT = 0x251c;
+		const CHAR16 BOXDRAW_VERTICAL_LEFT = 0x2524;
+		const CHAR16 BOXDRAW_DOWN_HORIZONTAL = 0x252c;
+		const CHAR16 BOXDRAW_UP_HORIZONTAL = 0x2534;
+		const CHAR16 BOXDRAW_VERTICAL_HORIZONTAL = 0x253c;
+
+		const CHAR16 BOXDRAW_DOUBLE_HORIZONTAL = 0x2550;
+		const CHAR16 BOXDRAW_DOUBLE_VERTICAL = 0x2551;
+		const CHAR16 BOXDRAW_DOWN_RIGHT_DOUBLE = 0x2552;
+		const CHAR16 BOXDRAW_DOWN_DOUBLE_RIGHT = 0x2553;
+		const CHAR16 BOXDRAW_DOUBLE_DOWN_RIGHT = 0x2554;
+		const CHAR16 BOXDRAW_DOWN_LEFT_DOUBLE = 0x2555;
+		const CHAR16 BOXDRAW_DOWN_DOUBLE_LEFT = 0x2556;
+		const CHAR16 BOXDRAW_DOUBLE_DOWN_LEFT = 0x2557;
+
+		const CHAR16 BOXDRAW_UP_RIGHT_DOUBLE = 0x2558;
+		const CHAR16 BOXDRAW_UP_DOUBLE_RIGHT = 0x2559;
+		const CHAR16 BOXDRAW_DOUBLE_UP_RIGHT = 0x255a;
+		const CHAR16 BOXDRAW_UP_LEFT_DOUBLE = 0x255b;
+		const CHAR16 BOXDRAW_UP_DOUBLE_LEFT = 0x255c;
+		const CHAR16 BOXDRAW_DOUBLE_UP_LEFT = 0x255d;
+
+		const CHAR16 BOXDRAW_VERTICAL_RIGHT_DOUBLE = 0x255e;
+		const CHAR16 BOXDRAW_VERTICAL_DOUBLE_RIGHT = 0x255f;
+		const CHAR16 BOXDRAW_DOUBLE_VERTICAL_RIGHT = 0x2560;
+
+		const CHAR16 BOXDRAW_VERTICAL_LEFT_DOUBLE = 0x2561;
+		const CHAR16 BOXDRAW_VERTICAL_DOUBLE_LEFT = 0x2562;
+		const CHAR16 BOXDRAW_DOUBLE_VERTICAL_LEFT = 0x2563;
+
+		const CHAR16 BOXDRAW_DOWN_HORIZONTAL_DOUBLE = 0x2564;
+		const CHAR16 BOXDRAW_DOWN_DOUBLE_HORIZONTAL = 0x2565;
+		const CHAR16 BOXDRAW_DOUBLE_DOWN_HORIZONTAL = 0x2566;
+
+		const CHAR16 BOXDRAW_UP_HORIZONTAL_DOUBLE = 0x2567;
+		const CHAR16 BOXDRAW_UP_DOUBLE_HORIZONTAL = 0x2568;
+		const CHAR16 BOXDRAW_DOUBLE_UP_HORIZONTAL = 0x2569;
+
+		const CHAR16 BOXDRAW_VERTICAL_HORIZONTAL_DOUBLE = 0x256a;
+		const CHAR16 BOXDRAW_VERTICAL_DOUBLE_HORIZONTAL = 0x256b;
+		const CHAR16 BOXDRAW_DOUBLE_VERTICAL_HORIZONTAL = 0x256c;
+
+		//******************************************************
+		// EFI Required Block Elements Code Chart
+		//******************************************************
+
+		const CHAR16 BLOCKELEMENT_FULL_BLOCK = 0x2588;
+		const CHAR16 BLOCKELEMENT_LIGHT_SHADE = 0x2591;
+
+		//******************************************************
+		// EFI Required Geometric Shapes Code Chart
+		//******************************************************
+
+		const CHAR16 GEOMETRICSHAPE_UP_TRIANGLE = 0x25b2;
+		const CHAR16 GEOMETRICSHAPE_RIGHT_TRIANGLE = 0x25ba;
+		const CHAR16 GEOMETRICSHAPE_DOWN_TRIANGLE = 0x25bc;
+		const CHAR16 GEOMETRICSHAPE_LEFT_TRIANGLE = 0x25c4;
+
+		//******************************************************
+		// EFI Required Arrow shapes
+		//******************************************************
+
+		const CHAR16 ARROW_UP = 0x2191;
+		const CHAR16 ARROW_DOWN = 0x2193;
+	};
+}

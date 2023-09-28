@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<PublishAot>true</PublishAot>
+		<InvariantGlobalization>true</InvariantGlobalization>
+
+		<Platforms>x86;x64;ARM;ARM64</Platforms>
+		<Configurations>Debug;Release</Configurations>
+
+		<OutDir>$(SolutionDir)Tools\Build\</OutDir>
+
+		<DefineConstants>$(DefineConstants);$(Configuration)</DefineConstants>
+		<DefineConstants>$(DefineConstants);$(Platform)</DefineConstants>
+	</PropertyGroup>
+</Project>

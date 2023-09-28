@@ -1,0 +1,83 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PublishAot>true</PublishAot>
+    <InvariantGlobalization>true</InvariantGlobalization>
+	  
+	  <Platforms>x86;x64;ARM;ARM64</Platforms>
+	  <Configurations>Debug;Release</Configurations>
+
+	  <OutDir>$(SolutionDir)Tools\Run\</OutDir>
+	  
+	  <DefineConstants>$(DefineConstants);$(Configuration)</DefineConstants>
+	  <DefineConstants>$(DefineConstants);$(Platform)</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="OVMF\ARM64\Debug\OVMF_CODE.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\ARM64\Debug\OVMF_VARS.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\ARM64\Release\OVMF_CODE.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\ARM64\Release\OVMF_VARS.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\ARM\Debug\OVMF_CODE.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\ARM\Debug\OVMF_VARS.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\ARM\Release\OVMF_CODE.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\ARM\Release\OVMF_VARS.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x64\Debug\OVMF.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x64\Debug\OVMF_CODE.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x64\Debug\OVMF_VARS.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x64\Release\OVMF.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x64\Release\OVMF_CODE.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x64\Release\OVMF_VARS.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x86\Debug\OVMF.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x86\Debug\OVMF_CODE.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x86\Debug\OVMF_VARS.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x86\Release\OVMF.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x86\Release\OVMF_CODE.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x86\Release\OVMF_VARS.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

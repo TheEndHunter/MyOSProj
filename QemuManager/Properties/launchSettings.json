@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "QemuManager": {
+      "commandName": "Project"
+    }
+  }
+}

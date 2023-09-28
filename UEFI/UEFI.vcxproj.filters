@@ -1,0 +1,282 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="UEFIDef.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EFI_STATUS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="UEFIDef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EFI_SYSTEM_TABLE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Configuration\EFI_CONFIGURATION_TABLE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EFI_GUID.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EFI_TPL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Console\EFI_SIMPLE_TEXT_INPUT_PROTOCOL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Console\EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EFI_STATUS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EFI_TABLE_HEADER.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EFI_RUNTIME_SERVICES.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EFI_BOOT_SERVICES.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EFI_MAC_ADDRESS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EFI_IP_ADDRESS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EFI_ALLOCATE_TYPE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EFI_MEMORY_TYPE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EFI_MEMORY_ADDRESS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EFI_HANDLE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EFI_EVENT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EFI_LBA.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EFI_MEMORY_DESCRIPTOR.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EFI_LOCATE_SEARCH_TYPE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Time\EFI_TIMER_DELAY.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EFI_EVENT_NOTIFY.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\EFI_DEVICE_PATH_PROTOCOL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EFI_INTERFACE_TYPE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Configuration\EFI_OPEN_PROTOCOL_INFORMATION_ENTRY.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Configuration\EFI_RT_PROPERTIES.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Configuration\EFI_MEMORY_ATTRIBUTES_TABLE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Configuration\EFI_CONFORMANCE_PROFILES_TABLE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Configuration\EFI_MEMORY_RANGE_CAPSULE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Time\EFI_TIME.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Time\EFI_TIME_CAPABILITIES.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EFI_RESET_TYPE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Configuration\EFI_CAPSULE_BLOCK_DESCRIPTOR.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Configuration\EFI_CAPSULE_HEADER.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Configuration\EFI_CAPSULE_TABLE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Console\EFI_SIMPLE_TEXT_INPUT_EX_PROTOCOL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Peripheral\EFI_INPUT_KEY.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Peripheral\EFI_KEY_DATA.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Peripheral\EFI_KEY_STATE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Peripheral\EFI_KEY_TOGGLE_STATE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Peripheral\EFI_KEY_SHIFT_STATE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Peripheral\EFI_SIMPLE_POINTER_PROTOCOL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Peripheral\EFI_SIMPLE_POINTER_MODE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Peripheral\EFI_SIMPLE_POINTER_STATE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Graphics\EFI_GRAPHICS_OUTPUT_PROTOCOL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Graphics\EFI_PIXEL_BITMASK.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Graphics\EFI_GRAPHICS_PIXEL_FORMAT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Graphics\EFI_GRAPHICS_OUTPUT_MODE_INFORMATION.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Graphics\EFI_GRAPHICS_OUTPUT_PROTOCOL_MODE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Graphics\EFI_GRAPHICS_OUTPUT_BLT_PIXEL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Graphics\EFI_GRAPHICS_OUTPUT_BLT_OPERATION.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Graphics\EFI_EDID_DISCOVERED_PROTOCOL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Serial\EFI_SERIAL_IO_PROTOCOL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Serial\EFI_SERIAL_IO_MODE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Serial\EFI_PARITY_TYPE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Serial\EFI_STOP_BITS_TYPE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Serial\EFI_SERIAL_CONTORL_BITS.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Peripheral\EFI_ABSOLUTE_POINTER_PROTOCOL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Peripheral\EFI_ABSOLUTE_POINTER_MODE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Peripheral\EFI_ABSOLUTE_POINTER_STATE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Debug\EFI_DEBUG_SUPPORT_PROTOCOL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_LOONGARCH64.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_AARCH64.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_ARM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_IFP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Debug\EFI_FX_SAVE_STATE_X64.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_X64.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Debug\EFI_FX_SAVE_STATE_IA32.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_IA32.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_RISCV128.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_RISCV64.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_RISCV32.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_EBC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Debug\EFI_INSTRUCTION_SET_ARCHITECTURE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Debug\EFI_EXCEPTION_TYPE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Debug\EFI_DEBUGPORT_PROTOCOL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_TABLE_POINTER.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Debug\EFI_DEBUG_IMAGE_INFO_TABLE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Debug\EFI_DEBUG_IMAGE_INFO_NORMAL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\Debug\EFI_DEBUG_IMAGE_INFO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\EFI_LOADED_IMAGE_PROTOCOL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Console\EFI_UNICODE_CTRL_CHAR.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Console\EFI_CONSOLE_COLOR.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

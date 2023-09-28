@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|ARM">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM">
+      <Configuration>Release</Configuration>
+      <Platform>ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="EFI_STATUS.cpp" />
+    <ClCompile Include="UEFIDef.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Protocols\Configuration\EFI_CAPSULE_HEADER.h" />
+    <ClInclude Include="Protocols\Configuration\EFI_CAPSULE_TABLE.h" />
+    <ClInclude Include="Protocols\Debug\EFI_DEBUGPORT_PROTOCOL.h" />
+    <ClInclude Include="Protocols\Debug\EFI_DEBUG_IMAGE_INFO_NORMAL.h" />
+    <ClInclude Include="Protocols\Debug\EFI_DEBUG_IMAGE_INFO_TABLE.h" />
+    <ClInclude Include="Protocols\Debug\EFI_DEBUG_SUPPORT_PROTOCOL.h" />
+    <ClInclude Include="Protocols\Debug\EFI_EXCEPTION_TYPE.h" />
+    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT.h" />
+    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_AARCH64.h" />
+    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_ARM.h" />
+    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_IFP.h" />
+    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_LOONGARCH64.h" />
+    <ClInclude Include="Protocols\Debug\EFI_FX_SAVE_STATE_X64.h" />
+    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_X64.h" />
+    <ClInclude Include="Protocols\Debug\EFI_FX_SAVE_STATE_IA32.h" />
+    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_IA32.h" />
+    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_RISCV128.h" />
+    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_RISCV64.h" />
+    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_RISCV32.h" />
+    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_EBC.h" />
+    <ClInclude Include="Protocols\Debug\EFI_INSTRUCTION_SET_ARCHITECTURE.h" />
+    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_TABLE_POINTER.h" />
+    <ClInclude Include="Protocols\Debug\EFI_DEBUG_IMAGE_INFO.h" />
+    <ClInclude Include="Protocols\EFI_LOADED_IMAGE_PROTOCOL.h" />
+    <ClInclude Include="Protocols\IO\Console\EFI_CONSOLE_COLOR.h" />
+    <ClInclude Include="Protocols\IO\Console\EFI_UNICODE_CTRL_CHAR.h" />
+    <ClInclude Include="Protocols\IO\Peripheral\EFI_ABSOLUTE_POINTER_MODE.h" />
+    <ClInclude Include="Protocols\IO\Peripheral\EFI_ABSOLUTE_POINTER_PROTOCOL.h" />
+    <ClInclude Include="Protocols\IO\Peripheral\EFI_ABSOLUTE_POINTER_STATE.h" />
+    <ClInclude Include="Protocols\IO\EFI_DEVICE_PATH_PROTOCOL.h" />
+    <ClInclude Include="Protocols\Graphics\EFI_EDID_DISCOVERED_PROTOCOL.h" />
+    <ClInclude Include="EFI_EVENT.h" />
+    <ClInclude Include="EFI_EVENT_NOTIFY.h" />
+    <ClInclude Include="Protocols\Graphics\EFI_GRAPHICS_OUTPUT_BLT_PIXEL.h" />
+    <ClInclude Include="Protocols\Graphics\EFI_GRAPHICS_OUTPUT_MODE_INFORMATION.h" />
+    <ClInclude Include="Protocols\Graphics\EFI_GRAPHICS_OUTPUT_PROTOCOL.h" />
+    <ClInclude Include="Protocols\Graphics\EFI_GRAPHICS_OUTPUT_PROTOCOL_MODE.h" />
+    <ClInclude Include="Protocols\Graphics\EFI_GRAPHICS_PIXEL_FORMAT.h" />
+    <ClInclude Include="Protocols\IO\Serial\EFI_PARITY_TYPE.h" />
+    <ClInclude Include="Protocols\Graphics\EFI_PIXEL_BITMASK.h" />
+    <ClInclude Include="Protocols\IO\Serial\EFI_SERIAL_CONTORL_BITS.h" />
+    <ClInclude Include="Protocols\IO\Serial\EFI_SERIAL_IO_MODE.h" />
+    <ClInclude Include="Protocols\IO\Serial\EFI_SERIAL_IO_PROTOCOL.h" />
+    <ClInclude Include="Protocols\IO\Peripheral\EFI_SIMPLE_POINTER_MODE.h" />
+    <ClInclude Include="Protocols\IO\Peripheral\EFI_SIMPLE_POINTER_PROTOCOL.h" />
+    <ClInclude Include="EFI_HANDLE.h" />
+    <ClInclude Include="Protocols\IO\Peripheral\EFI_INPUT_KEY.h" />
+    <ClInclude Include="EFI_INTERFACE_TYPE.h" />
+    <ClInclude Include="Protocols\IO\Peripheral\EFI_KEY_DATA.h" />
+    <ClInclude Include="Protocols\IO\Peripheral\EFI_KEY_SHIFT_STATE.h" />
+    <ClInclude Include="Protocols\IO\Peripheral\EFI_KEY_STATE.h" />
+    <ClInclude Include="Protocols\IO\Peripheral\EFI_KEY_TOGGLE_STATE.h" />
+    <ClInclude Include="EFI_LBA.h" />
+    <ClInclude Include="EFI_LOCATE_SEARCH_TYPE.h" />
+    <ClInclude Include="EFI_MEMORY_ADDRESS.h" />
+    <ClInclude Include="EFI_ALLOCATE_TYPE.h" />
+    <ClInclude Include="EFI_BOOT_SERVICES.h" />
+    <ClInclude Include="Protocols\Configuration\EFI_CONFIGURATION_TABLE.h" />
+    <ClInclude Include="EFI_GUID.h" />
+    <ClInclude Include="Protocols\Configuration\EFI_MEMORY_ATTRIBUTES_TABLE.h" />
+    <ClInclude Include="EFI_MEMORY_DESCRIPTOR.h" />
+    <ClInclude Include="Protocols\Configuration\EFI_OPEN_PROTOCOL_INFORMATION_ENTRY.h" />
+    <ClInclude Include="EFI_RESET_TYPE.h" />
+    <ClInclude Include="Protocols\Configuration\EFI_RT_PROPERTIES.h" />
+    <ClInclude Include="Protocols\IO\Peripheral\EFI_SIMPLE_POINTER_STATE.h" />
+    <ClInclude Include="Protocols\IO\Console\EFI_SIMPLE_TEXT_INPUT_EX_PROTOCOL.h" />
+    <ClInclude Include="Protocols\IO\Serial\EFI_STOP_BITS_TYPE.h" />
+    <ClInclude Include="Protocols\Time\EFI_TIME.h" />
+    <ClInclude Include="Protocols\Time\EFI_TIMER_DELAY.h" />
+    <ClInclude Include="Protocols\Time\EFI_TIME_CAPABILITIES.h" />
+    <ClInclude Include="EFI_TPL.h" />
+    <ClInclude Include="EFI_IP_ADDRESS.h" />
+    <ClInclude Include="EFI_MAC_ADDRESS.h" />
+    <ClInclude Include="EFI_MEMORY_TYPE.h" />
+    <ClInclude Include="EFI_RUNTIME_SERVICES.h" />
+    <ClInclude Include="Protocols\IO\Console\EFI_SIMPLE_TEXT_INPUT_PROTOCOL.h" />
+    <ClInclude Include="Protocols\IO\Console\EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL.h" />
+    <ClInclude Include="EFI_STATUS.h" />
+    <ClInclude Include="EFI_SYSTEM_TABLE.h" />
+    <ClInclude Include="EFI_TABLE_HEADER.h" />
+    <ClInclude Include="Protocols\Configuration\EFI_CONFORMANCE_PROFILES_TABLE.h" />
+    <ClInclude Include="Protocols\Configuration\EFI_MEMORY_RANGE_CAPSULE.h" />
+    <ClInclude Include="Protocols\Configuration\EFI_CAPSULE_BLOCK_DESCRIPTOR.h" />
+    <ClInclude Include="Protocols\Graphics\EFI_GRAPHICS_OUTPUT_BLT_OPERATION.h" />
+    <ClInclude Include="UEFIDef.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{C2E4250F-7A7A-4567-8D76-5F42F610B204}</ProjectGuid>
+    <RootNamespace>UEFI</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <WindowsSDKDesktopARMSupport>true</WindowsSDKDesktopARMSupport>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <WindowsSDKDesktopARM64Support>true</WindowsSDKDesktopARM64Support>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <WindowsSDKDesktopARMSupport>true</WindowsSDKDesktopARMSupport>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <WindowsSDKDesktopARM64Support>true</WindowsSDKDesktopARM64Support>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <TargetName>UEFI$(Platform)</TargetName>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
+    <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <TargetName>UEFI$(Platform)</TargetName>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
+    <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <TargetName>UEFI$(Platform)</TargetName>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
+    <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <TargetName>UEFI$(Platform)</TargetName>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
+    <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <TargetName>UEFI$(Platform)</TargetName>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
+    <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <TargetName>UEFI$(Platform)</TargetName>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
+    <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
+    <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <TargetName>UEFI$(Platform)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
+    <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <TargetName>UEFI$(Platform)</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);DEBUG;WIN32;Win32</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <BasicRuntimeChecks />
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>EFI Application</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <SubSystem>EFI Application</SubSystem>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>
+      </FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);RELEASE;NDEBUG;WIN32;Win32</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <BasicRuntimeChecks />
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>EFI Application</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <SubSystem>EFI Application</SubSystem>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);DEBUG;</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <BasicRuntimeChecks />
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>EFI Application</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <SubSystem>EFI Application</SubSystem>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>
+      </FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);RELEASE;NDEBUG;</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <BasicRuntimeChecks />
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>EFI Application</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <SubSystem>EFI Application</SubSystem>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <ClCompile>
+      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);DEBUG;WIN32;Win32</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <ConformanceMode>true</ConformanceMode>
+      <BasicRuntimeChecks />
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+    </ClCompile>
+    <Lib>
+      <SubSystem>EFI Application</SubSystem>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <ClCompile>
+      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);RELEASE;NDEBUG;WIN32;Win32</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <ConformanceMode>true</ConformanceMode>
+      <BasicRuntimeChecks />
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+    </ClCompile>
+    <Lib>
+      <SubSystem>EFI Application</SubSystem>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+    <ClCompile>
+      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);DEBUG;</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <ConformanceMode>true</ConformanceMode>
+      <BasicRuntimeChecks />
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+    </ClCompile>
+    <Lib>
+      <SubSystem>EFI Application</SubSystem>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <ClCompile>
+      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);RELEASE;NDEBUG;</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <ConformanceMode>true</ConformanceMode>
+      <BasicRuntimeChecks />
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+    </ClCompile>
+    <Lib>
+      <SubSystem>EFI Application</SubSystem>
+    </Lib>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

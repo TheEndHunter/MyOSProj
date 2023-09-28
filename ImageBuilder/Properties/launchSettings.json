@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ImageBuilder": {
+      "commandName": "Project",
+      "commandLineArgs": "x64\r\nDebug\r\n..\\..\\bin\\x64\\Debug\r\n..\\\r\nVirtualOS.vhdx"
+    }
+  }
+}
