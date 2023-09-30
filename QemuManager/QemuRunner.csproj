@@ -42,37 +42,151 @@
     <None Update="OVMF\ARM\Release\OVMF_VARS.fd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="OVMF\licenses\edk2-ovmf\License.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\licenses\edk2-ovmf\OvmfPkg.License.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x64\Debug\MEMFD.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x64\Debug\MICROVM.4m.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x64\Debug\MICROVM.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x64\Debug\OVMF.4m.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="OVMF\x64\Debug\OVMF.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x64\Debug\OVMF_CODE.4m.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x64\Debug\OVMF_CODE.csm.4m.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x64\Debug\OVMF_CODE.csm.fd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="OVMF\x64\Debug\OVMF_CODE.fd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="OVMF\x64\Debug\OVMF_CODE.secboot.4m.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x64\Debug\OVMF_CODE.secboot.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x64\Debug\OVMF_VARS.4m.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="OVMF\x64\Debug\OVMF_VARS.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x64\Release\MEMFD.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x64\Release\MICROVM.4m.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x64\Release\MICROVM.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x64\Release\OVMF.4m.fd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="OVMF\x64\Release\OVMF.fd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="OVMF\x64\Release\OVMF_CODE.4m.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x64\Release\OVMF_CODE.csm.4m.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x64\Release\OVMF_CODE.csm.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="OVMF\x64\Release\OVMF_CODE.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x64\Release\OVMF_CODE.secboot.4m.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x64\Release\OVMF_CODE.secboot.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x64\Release\OVMF_VARS.4m.fd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="OVMF\x64\Release\OVMF_VARS.fd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="OVMF\x86\Debug\MEMFD.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x86\Debug\OVMF.4m.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="OVMF\x86\Debug\OVMF.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x86\Debug\OVMF_CODE.4m.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x86\Debug\OVMF_CODE.csm.4m.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x86\Debug\OVMF_CODE.csm.fd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="OVMF\x86\Debug\OVMF_CODE.fd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="OVMF\x86\Debug\OVMF_CODE.secboot.4m.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x86\Debug\OVMF_CODE.secboot.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x86\Debug\OVMF_VARS.4m.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="OVMF\x86\Debug\OVMF_VARS.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x86\Release\MEMFD.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x86\Release\OVMF.4m.fd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="OVMF\x86\Release\OVMF.fd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="OVMF\x86\Release\OVMF_CODE.4m.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x86\Release\OVMF_CODE.csm.4m.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x86\Release\OVMF_CODE.csm.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="OVMF\x86\Release\OVMF_CODE.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x86\Release\OVMF_CODE.secboot.4m.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x86\Release\OVMF_CODE.secboot.fd">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="OVMF\x86\Release\OVMF_VARS.4m.fd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="OVMF\x86\Release\OVMF_VARS.fd">
