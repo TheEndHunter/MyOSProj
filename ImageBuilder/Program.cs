@@ -16,6 +16,7 @@
             string? SrcPath = null;
             string? DestPath = null;
             string? imgName = null;
+            string? bootfile = null;
 
             int l = args.Length;
             if (l != 5)
@@ -32,14 +33,23 @@
                     switch (architecture)
                     {
                         case "x86":
+                            bootfile = "BOOTIA32.efi";
+                            break;
                         case "x64":
+                            bootfile = "BOOTX64.efi";
+                            break;
                         case "arm":
+                            bootfile = "BOOTARM.efi";
+                            break;
                         case "arm64":
+                            bootfile = "BOOTAA64.efi";
                             break;
                         default:
                             architecture = null;
+                            bootfile = null;
                             break;
                     }
+
                 }
 
                 while (string.IsNullOrEmpty(configuration) && string.IsNullOrWhiteSpace(configuration))
@@ -105,6 +115,26 @@
                 SrcPath = Path.GetFullPath(Path.Combine(Dir, args[2]));
                 DestPath = Path.GetFullPath(Path.Combine(Dir, args[3]));
                 imgName = args[4];
+
+                switch (architecture)
+                {
+                    case "x86":
+                        bootfile = "BOOTIA32.efi";
+                        break;
+                    case "x64":
+                        bootfile = "BOOTX64.efi";
+                        break;
+                    case "arm":
+                        bootfile = "BOOTARM.efi";
+                        break;
+                    case "arm64":
+                        bootfile = "BOOTAA64.efi";
+                        break;
+                    default:
+                        architecture = null;
+                        bootfile = null;
+                        break;
+                }
             }
 
             var dirs = Directory.EnumerateDirectories(SrcPath);
@@ -180,14 +210,20 @@
             }
 
 
-            string imgPath = Path.GetFullPath(Path.Combine(DestPath, $"{architecture}_{configuration}_{imgName}"));
+            string vhdxPath = Path.GetFullPath(Path.Combine(DestPath, $"{architecture}_{configuration}_{imgName}"));
+            string vhdPath = vhdxPath.Replace(".vhdx", ".vhd");
 
-            if (File.Exists(imgPath))
+            if (File.Exists(vhdxPath))
             {
-                File.Delete(imgPath);
+                File.Delete(vhdxPath);
             }
 
-            string atScript = CreateAttachScript(DestPath, architecture, configuration, imgPath, ref _partitions);
+            if (File.Exists(vhdPath))
+            {
+                File.Delete(vhdPath);
+            }
+
+            string atScript = CreateAttachScript(DestPath, architecture, configuration, vhdxPath, ref _partitions);
             try
             {
                 ProcessStartInfo a = new()
@@ -211,7 +247,7 @@
 
             try
             {
-                string mScript = CreateMountScript(DestPath, architecture, configuration, imgPath, ref _partitions);
+                string mScript = CreateMountScript(DestPath, architecture, configuration, vhdxPath, ref _partitions);
 
                 ProcessStartInfo m = new()
                 {
@@ -239,11 +275,53 @@
                 DirectoryInfo _dest = new(p.DestPath);
 
                 _src.CopyDirectoriesAndFiles(_src.Parent.FullName, _dest);
+
+                if (p.Label == "EFI")
+                {
+                    using var f = File.CreateText(Path.Combine(p.DestPath, "startup.nsh"));
+                    f.AutoFlush = true;
+                    f.WriteLine("echo -off");
+                    f.WriteLine("mode 80 25");
+                    f.WriteLine("cls");
+
+                    if (configuration == "Debug")
+                    {
+                        for (int i = 0; i < 16; i++)
+                        {
+                            f.WriteLine($"if exists fs{i}:\\efi\\boot\\{bootfile} then");
+                            f.WriteLine($"fs{i}:");
+
+                            f.WriteLine($"echo found Bootloader on fs{i}:");
+                            f.WriteLine($"efi\\boot\\{bootfile}");
+                            f.WriteLine("goto END");
+                            f.WriteLine("endif");
+                            f.Flush();
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 16; i++)
+                        {
+                            f.WriteLine($"if exists fs{i}:\\efi\\boot\\{bootfile} then");
+                            f.WriteLine($"fs{i}:");
+                            f.WriteLine($"efi\\boot\\{bootfile}");
+                            f.WriteLine("goto END");
+                            f.WriteLine("endif");
+
+                            f.Flush();
+                        }
+                    }
+                    f.WriteLine("Unable to find Bootloader");
+                    f.WriteLine("END:");
+                    f.Close();
+                }
             }
 
+            Console.WriteLine("PAUSED");
+            Console.ReadLine();
             try
             {
-                string dtScript = CreateDetachScript(DestPath, architecture, configuration, imgPath, ref _partitions);
+                string dtScript = CreateDetachScript(DestPath, architecture, configuration, vhdxPath, ref _partitions);
 
                 ProcessStartInfo d = new()
                 {
@@ -263,12 +341,38 @@
                 Console.ReadKey();
                 return e.HResult;
             }
-            Console.WriteLine("Finished...");
-            Console.ReadKey();
+            try
+            {
+                //Convert - VHD - Path c:\test\child1vhdx.vhdx - DestinationPath c:\test\child1vhd.vhd - VHDType Differencing
+                string cScript = CreateConvertScript(vhdxPath, vhdPath);
+
+                ProcessStartInfo d = new()
+                {
+                    FileName = "powershell.exe",
+                    Verb = "RunAs",
+                    WorkingDirectory = Environment.SystemDirectory,
+                    Arguments = $"{cScript}",
+                    WindowStyle = ProcessWindowStyle.Normal,
+                    CreateNoWindow = true,
+                    UseShellExecute = true,
+                    ErrorDialog = true,
+                };
+                Process.Start(d).WaitForExit();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Console.ReadKey();
+                return e.HResult;
+            }
+
             return 0;
         }
 
-
+        private static string CreateConvertScript(string vhdxPath, string vhdPath)
+        {
+            return $"Convert-VHD -Path {vhdxPath} -DestinationPath {vhdPath} -VHDType Fixed";
+        }
         private static string CreateDetachScript(string destPath, string architecture, string configuration, string imgPath, ref List<Partition> partitions)
         {
             string diskPartDetach = Path.Combine(destPath, $"{architecture}_{configuration}_DetachScript.txt");

@@ -93,19 +93,19 @@
             {
                 case "x86":
                     filename = "qemu-system-i386";
-                    machine = " -machine q35 -cpu qemu32";
+                    machine = " -machine q35 -accel tcg -display gtk";
                     break;
                 case "x64":
                     filename = "qemu-system-x86_64";
-                    machine = " -machine q35 -cpu qemu64";
+                    machine = " -machine q35 -accel tcg -display gtk";
                     break;
                 case "arm":
                     filename = "qemu-system-arm";
-                    machine = " -machine virt -cpu cortex-a15";
+                    machine = " -machine virt -cpu cortex-a15 -accel tcg -display gtk";
                     break;
                 case "arm64":
                     filename = "qemu-system-aarch64";
-                    machine = " -machine virt -cpu cortex-a710";
+                    machine = " -machine virt -cpu cortex-a710 -accel tcg -display gtk";
                     break;
                 default:
                     Console.WriteLine("Unknown Architecture");
@@ -147,7 +147,7 @@
             Process qemu = new();
             qemu.StartInfo.FileName = exePath;
             qemu.StartInfo.WorkingDirectory = qemuPath;
-            qemu.StartInfo.Arguments = $"""{machine} -m 2048M -drive if=pflash,format=raw,unit=0,file={firmwareCodePath},readonly=on -drive if=pflash,format=raw,unit=1,file={firmwareVarPath} -drive file={imagePath} -net none -vga qxl""";
+            qemu.StartInfo.Arguments = $"""{machine} -accel tcg -m 2048M -drive if=pflash,format=raw,unit=0,file={firmwareCodePath},readonly=on -drive if=pflash,format=raw,unit=1,file={firmwareVarPath} -drive file={imagePath} -net none""";
             qemu.StartInfo.UseShellExecute = false;
             qemu.StartInfo.CreateNoWindow = false;
             qemu.StartInfo.WindowStyle = ProcessWindowStyle.Normal;

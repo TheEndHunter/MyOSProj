@@ -9,6 +9,6 @@ namespace EFI
 		UINT8 Blue;
 		UINT8 Green;
 		UINT8 Red;
-		UINT8 Reserved;
+		UINT8 Alpha;
 	} ;
 }

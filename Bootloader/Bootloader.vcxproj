@@ -569,10 +569,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Environment.cpp" />
-    <ClCompile Include="Helpers.h" />
+    <ClCompile Include="Enviroment\Environment.cpp" />
+    <ClCompile Include="Enviroment\Helpers.h" />
     <ClCompile Include="Entry.cpp" />
-    <ClCompile Include="StringHelpers.cpp" />
+    <ClCompile Include="Enviroment\StringHelpers.cpp" />
+    <ClCompile Include="Graphics\GraphicsContext.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UEFI\UEFI.vcxproj">
@@ -580,8 +581,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Enviroment.h" />
-    <ClInclude Include="StringHelpers.h" />
+    <ClInclude Include="Enviroment\Enviroment.h" />
+    <ClInclude Include="Enviroment\StringHelpers.h" />
+    <ClInclude Include="Graphics\GraphicsContext.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

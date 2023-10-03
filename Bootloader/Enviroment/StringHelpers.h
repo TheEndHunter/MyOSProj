@@ -6,7 +6,7 @@ namespace Bootloader
 {
 	using namespace EFI;
 
-	static class StringHelpers
+	class StringHelpers
 	{
 	public:
 

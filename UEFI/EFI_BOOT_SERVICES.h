@@ -1,8 +1,8 @@
 #pragma once
 
 #include "UEFIDef.h"
-#include "EFI_TABLE_HEADER.h"
 #include "EFI_STATUS.h"
+#include "EFI_TABLE_HEADER.h"
 #include "EFI_TPL.h"
 #include "EFI_ALLOCATE_TYPE.h"
 #include "EFI_EVENT.h"
@@ -21,6 +21,13 @@ namespace EFI
 
 	inline const UINT64 EFI_BOOT_SERVICES_SIGNATURE = 0x56524553544f4f42;
 	inline const UINT64 EFI_BOOT_SERVICES_REVISION = EFI_SPECIFICATION_VERSION;
+
+	inline const UINT32 EFI_OPEN_PROTOCOL_BY_HANDLE_PROTOCOL = 0x00000001;
+	inline const UINT32 EFI_OPEN_PROTOCOL_GET_PROTOCOL = 0x00000002;
+	inline const UINT32 EFI_OPEN_PROTOCOL_TEST_PROTOCOL = 0x00000004;
+	inline const UINT32 EFI_OPEN_PROTOCOL_BY_CHILD_CONTROLLER = 0x00000008;
+	inline const UINT32 EFI_OPEN_PROTOCOL_BY_DRIVER = 0x00000010;
+	inline const UINT32 EFI_OPEN_PROTOCOL_EXCLUSIVE = 0x00000020;
 
 	typedef EFI::EFI_STATUS(EFIAPI* EFI_RAISE_TPL) (IN EFI::EFI_TPL NewTpl);
 	typedef EFI::EFI_STATUS(EFIAPI* EFI_RESTORE_TPL) (IN EFI::EFI_TPL OldTpl);
@@ -243,7 +250,9 @@ namespace EFI
 		//
 		//		
 		/// <summary>
-		/// Adds elements to the list of agents consuming a protocol interface. EFI 1.1+
+		/// Queries a handle to determine if it supports a specified protocol.
+		///  If the protocol is supported by the handle, it opens the protocol on behalf of the calling agent. 
+		/// This is an extended version of the EFI boot service EFI_BOOT_SERVICES.HandleProtocol() . EFI 1.1+
 		/// </summary>
 		EFI::EFI_OPEN_PROTOCOL OpenProtocol;		
 		/// <summary>
