@@ -4,9 +4,8 @@
 #include <EFI_SYSTEM_TABLE.h>
 #include <Protocols/IO/Peripheral/EFI_INPUT_KEY.h>
 #include <Protocols/IO/Console/EFI_CONSOLE_COLOR.h>
-
-#include "Enviroment/Helpers.h"
 #include <Graphics/GraphicsContext.h>
+#include <Console.h>
 
 namespace Bootloader
 {
@@ -35,6 +34,7 @@ namespace Bootloader
         
         if (gopStatus != EFI_STATUS::SUCCESS)
         {
+            WaitForKey(systemTable);
             SetConsoleColor(systemTable, EFI_CONSOLE_COLOR::FATAL_COLOR);
             ClearConOut(systemTable);
             Print(systemTable, boot_GOP_LOCATE_ERROR);
@@ -43,6 +43,7 @@ namespace Bootloader
             return gopStatus;
         }
 
+        PrintLine(systemTable, u"GOP INITIALIZED");
         WaitForKey(systemTable);
 
         return EFI_STATUS::SUCCESS;

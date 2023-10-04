@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Enviroment\Helpers.h">
+    <ClCompile Include="Console.h">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Enviroment\StringHelpers.cpp">
@@ -24,7 +24,7 @@
     <ClCompile Include="Entry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Enviroment\Environment.cpp">
+    <ClCompile Include="Enviroment\Unicode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\GraphicsContext.cpp">
@@ -35,7 +35,7 @@
     <ClInclude Include="Enviroment\StringHelpers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Enviroment\Enviroment.h">
+    <ClInclude Include="Enviroment\Unicode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\GraphicsContext.h">

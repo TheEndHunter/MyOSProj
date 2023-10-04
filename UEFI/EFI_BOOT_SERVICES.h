@@ -89,6 +89,14 @@ namespace EFI
 	struct EFI_BOOT_SERVICES
 	{
 	public:
+		/// <summary>
+		/// The table header for the EFI Runtime Services Table. 
+		/// This header contains the EFI_RUNTIME_SERVICES_SIGNATURE 
+		/// and EFI_RUNTIME_SERVICES_REVISION values along with the size of
+		///  the EFI_RUNTIME_SERVICES structure and a 32-bit CRC to
+		///  verify that the contents of the EFI Runtime Services Table are valid.
+		/// </summary>
+		EFI_TABLE_HEADER Hdr;
 		//
 		// Task Priority Services
 		//		

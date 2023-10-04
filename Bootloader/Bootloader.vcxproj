@@ -569,8 +569,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Enviroment\Environment.cpp" />
-    <ClCompile Include="Enviroment\Helpers.h" />
+    <ClCompile Include="Enviroment\Unicode.cpp" />
+    <ClCompile Include="Console.h" />
     <ClCompile Include="Entry.cpp" />
     <ClCompile Include="Enviroment\StringHelpers.cpp" />
     <ClCompile Include="Graphics\GraphicsContext.cpp" />
@@ -581,7 +581,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Enviroment\Enviroment.h" />
+    <ClInclude Include="Enviroment\Unicode.h" />
     <ClInclude Include="Enviroment\StringHelpers.h" />
     <ClInclude Include="Graphics\GraphicsContext.h" />
   </ItemGroup>

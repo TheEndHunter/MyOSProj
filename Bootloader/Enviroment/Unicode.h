@@ -1,8 +1,8 @@
 #pragma once
 #include <UEFIDef.h>
-namespace Bootloader
+namespace Bootloader::Enviroment
 {
-	class Environment
+	class Unicode
 	{
 	public:
 		static const CHAR16  NULL = u'\0';

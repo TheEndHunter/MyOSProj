@@ -316,9 +316,6 @@
                     f.Close();
                 }
             }
-
-            Console.WriteLine("PAUSED");
-            Console.ReadLine();
             try
             {
                 string dtScript = CreateDetachScript(DestPath, architecture, configuration, vhdxPath, ref _partitions);
@@ -365,7 +362,6 @@
                 Console.ReadKey();
                 return e.HResult;
             }
-
             return 0;
         }
 
