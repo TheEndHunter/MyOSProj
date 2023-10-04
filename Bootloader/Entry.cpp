@@ -43,7 +43,18 @@ namespace Bootloader
             return gopStatus;
         }
 
+        gop.ClearScreen();
+
         PrintLine(systemTable, u"GOP INITIALIZED");
+        
+        UINTN w = gop.GetWidth();
+        UINTN h = gop.GetHeight();
+
+        UINTN x = w / 3;
+        UINTN y = h / 3;
+
+        gop.DrawRectangle(x, y, x, y, 255,255,0);
+
         WaitForKey(systemTable);
 
         return EFI_STATUS::SUCCESS;

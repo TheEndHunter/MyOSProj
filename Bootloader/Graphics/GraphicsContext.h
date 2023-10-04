@@ -19,50 +19,50 @@ namespace Bootloader::Graphics
 
        void SetForegroundPixel(UINTN xPos, UINTN yPos);
        void SetForegroundPixel(UINTN xPos, UINTN yPos, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color);
-       void SetForegroundPixel(UINTN xPos, UINTN yPos, UINT8 r, UINT8 g, UINT8 b, UINT8 a);
+       void SetForegroundPixel(UINTN xPos, UINTN yPos, UINT8 r, UINT8 g, UINT8 b, UINT8 a = (UINT8)0xFF);
        void SetForegroundPixel(UINTN xPos, UINTN yPos, UINT32 color);
 
        void SetBackgroundPixel(UINTN xPos, UINTN yPos);
        void SetBackgroundPixel(UINTN xPos, UINTN yPos, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color);
-       void SetBackgroundPixel(UINTN xPos, UINTN yPos, UINT8 r, UINT8 g, UINT8 b, UINT8 a);
+       void SetBackgroundPixel(UINTN xPos, UINTN yPos, UINT8 r, UINT8 g, UINT8 b, UINT8 a = (UINT8)0xFF);
        void SetBackgroundPixel(UINTN xPos, UINTN yPos, UINT32 color);
 
        void ClearScreen();
        void ClearScreen(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color);
-       void ClearScreen(UINT8 r, UINT8 g, UINT8 b, UINT8 a);
+       void ClearScreen(UINT8 r, UINT8 g, UINT8 b, UINT8 a = (UINT8)0xFF);
        void ClearScreen(UINT32 color);
 
        void DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height);
        void DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color);
-       void DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINT8 r, UINT8 g, UINT8 b, UINT8 a);
+       void DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINT8 r, UINT8 g, UINT8 b, UINT8 a = (UINT8)0xFF);
        void DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINT32 color);
 
        //void DrawFilledRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height);
        //void DrawFilledRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color);
-       //void DrawFilledRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINT8 r, UINT8 g, UINT8 b, UINT8 a);
+       //void DrawFilledRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINT8 r, UINT8 g, UINT8 b, UINT8 a = (UINT8)0xFF);
        //void DrawFilledRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINT32 color);
 
        //void DrawLine(UINTN xPos, UINTN yPos, UINTN x2Pos, UINTN y2Pos);
        //void DrawLine(UINTN xPos, UINTN yPos, UINTN x2Pos, UINTN y2Pos, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color);
-       //void DrawLine(UINTN xPos, UINTN yPos, UINTN x2Pos, UINTN y2Pos, UINT8 r, UINT8 g, UINT8 b, UINT8 a);
+       //void DrawLine(UINTN xPos, UINTN yPos, UINTN x2Pos, UINTN y2Pos, UINT8 r, UINT8 g, UINT8 b, UINT8 a = (UINT8)0xFF);
        //void DrawLine(UINTN xPos, UINTN yPos, UINTN x2Pos, UINTN y2Pos, UINT32 color);
 
        //void DrawCircle(UINTN xPos, UINTN yPos, UINTN radius);
        //void DrawCircle(UINTN xPos, UINTN yPos, UINTN radius, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color);
-       //void DrawCircle(UINTN xPos, UINTN yPos, UINTN radius, UINT8 r, UINT8 g, UINT8 b, UINT8 a);
+       //void DrawCircle(UINTN xPos, UINTN yPos, UINTN radius, UINT8 r, UINT8 g, UINT8 b, UINT8 a = (UINT8)0xFF);
        //void DrawCircle(UINTN xPos, UINTN yPos, UINTN radius, UINT32 color);
 
        //void DrawFilledCircle(UINTN xPos, UINTN yPos, UINTN radius);
        //void DrawFilledCircle(UINTN xPos, UINTN yPos, UINTN radius, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color);
-       //void DrawFilledCircle(UINTN xPos, UINTN yPos, UINTN radius, UINT8 r, UINT8 g, UINT8 b, UINT8 a);
+       //void DrawFilledCircle(UINTN xPos, UINTN yPos, UINTN radius, UINT8 r, UINT8 g, UINT8 b, UINT8 a = (UINT8)0xFF);
        //void DrawFilledCircle(UINTN xPos, UINTN yPos, UINTN radius, UINT32 color);
 
        void SetBackground(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color);
-       void SetBackground(UINT8 r, UINT8 g, UINT8 b, UINT8 a);
+       void SetBackground(UINT8 r, UINT8 g, UINT8 b, UINT8 a = (UINT8)0xFF);
        void SetBackground(UINT32 color);
 
        void SetForeground(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color);
-       void SetForeground(UINT8 r, UINT8 g, UINT8 b, UINT8 a);
+       void SetForeground(UINT8 r, UINT8 g, UINT8 b, UINT8 a = (UINT8)0xFF);
        void SetForeground(UINT32 color);
 
        EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL GetBackground() const;
