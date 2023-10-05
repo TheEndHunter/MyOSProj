@@ -10,8 +10,6 @@
 #include <Protocols/Graphics/EFI_GRAPHICS_OUTPUT_BLT_OPERATION.h>
 #include <Protocols/Graphics/EFI_GRAPHICS_OUTPUT_MODE_INFORMATION.h>
 #include <Enviroment/StringHelpers.h>
-#include <Console.h>
-
 
 namespace Bootloader::Graphics
 {

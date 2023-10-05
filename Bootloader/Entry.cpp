@@ -5,7 +5,7 @@
 #include <Protocols/IO/Peripheral/EFI_INPUT_KEY.h>
 #include <Protocols/IO/Console/EFI_CONSOLE_COLOR.h>
 #include <Graphics/GraphicsContext.h>
-#include <Console.h>
+#include <EFIConsole.h>
 
 namespace Bootloader
 {

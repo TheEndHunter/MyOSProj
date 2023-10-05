@@ -569,8 +569,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="System\Console.cpp" />
     <ClCompile Include="Enviroment\Unicode.cpp" />
-    <ClCompile Include="Console.h" />
+    <ClCompile Include="EFIConsole.h" />
     <ClCompile Include="Entry.cpp" />
     <ClCompile Include="Enviroment\StringHelpers.cpp" />
     <ClCompile Include="Graphics\GraphicsContext.cpp" />
@@ -581,8 +582,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="System\Console.h" />
     <ClInclude Include="Enviroment\Unicode.h" />
     <ClInclude Include="Enviroment\StringHelpers.h" />
+    <ClInclude Include="Graphics\Color.h" />
     <ClInclude Include="Graphics\GraphicsContext.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
