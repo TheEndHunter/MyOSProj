@@ -10,6 +10,7 @@
 namespace Bootloader
 {
     using namespace EFI;
+    using namespace Bootloader::Enviroment;
 
     static void ClearConOut(EFI_SYSTEM_TABLE* systemTable)
     {
@@ -44,37 +45,37 @@ namespace Bootloader
 
     static void Print(EFI_SYSTEM_TABLE* systemTable, const EFI_STATUS status)
     {
-        systemTable->ConOut->OutputString(systemTable->ConOut, EFI::ToString(status));
+        systemTable->ConOut->OutputString(systemTable->ConOut, UTF16::ToString(status));
     }
 
     static void Print(EFI_SYSTEM_TABLE* systemTable, const EFI_STATUS status, EFI_FOREGROUND_COLOR fg, EFI_BACKGROUND_COLOR bg)
     {
         systemTable->ConOut->SetAttribute(systemTable->ConOut, fg | bg);
-        systemTable->ConOut->OutputString(systemTable->ConOut, EFI::ToString(status));
+        systemTable->ConOut->OutputString(systemTable->ConOut, UTF16::ToString(status));
     }
 
     static void PrintLine(EFI_SYSTEM_TABLE* systemTable, const CHAR16* str)
     {
         Print(systemTable, str);
-        Print(systemTable,  Bootloader::Enviroment::Unicode::NewLine);
+        Print(systemTable,  UTF16::NewLine);
     }
 
     static void PrintLine(EFI_SYSTEM_TABLE* systemTable, const CHAR16* str, EFI_FOREGROUND_COLOR fg, EFI_BACKGROUND_COLOR bg)
     {
         Print(systemTable, str,fg,bg);
-        Print(systemTable,  Bootloader::Enviroment::Unicode::NewLine,fg,bg);
+        Print(systemTable,  UTF16::NewLine,fg,bg);
     }
 
     static void PrintLine(EFI_SYSTEM_TABLE* systemTable, const EFI_STATUS status)
     {
-        Print(systemTable, EFI::ToString(status));
-        Print(systemTable,  Bootloader::Enviroment::Unicode::NewLine);
+        Print(systemTable, UTF16::ToString(status));
+        Print(systemTable,  UTF16::NewLine);
     }
 
     static void PrintLine(EFI_SYSTEM_TABLE* systemTable, const EFI_STATUS status, EFI_FOREGROUND_COLOR fg, EFI_BACKGROUND_COLOR bg)
     {
-        Print(systemTable, EFI::ToString(status),fg,bg);
-		Print(systemTable,  Bootloader::Enviroment::Unicode::NewLine,fg,bg);
+        Print(systemTable, UTF16::ToString(status),fg,bg);
+		Print(systemTable,  UTF16::NewLine,fg,bg);
     }
 
     static void Print(EFI_SYSTEM_TABLE* systemTable, const CHAR16* str, UINT8 color)
@@ -86,18 +87,18 @@ namespace Bootloader
     static void Print(EFI_SYSTEM_TABLE* systemTable, const EFI_STATUS status, UINT8 color)
     {
         systemTable->ConOut->SetAttribute(systemTable->ConOut, color);
-        systemTable->ConOut->OutputString(systemTable->ConOut, EFI::ToString(status));
+        systemTable->ConOut->OutputString(systemTable->ConOut, UTF16::ToString(status));
     }
 
     static void PrintLine(EFI_SYSTEM_TABLE* systemTable, const CHAR16* str, UINT8 color)
     {
         Print(systemTable, str, color);
-        Print(systemTable,  Bootloader::Enviroment::Unicode::NewLine, color);
+        Print(systemTable,  UTF16::NewLine, color);
     }
 
     static void PrintLine(EFI_SYSTEM_TABLE* systemTable, const EFI_STATUS status, UINT8 color)
     {
-        Print(systemTable, EFI::ToString(status), color);
-        Print(systemTable,  Bootloader::Enviroment::Unicode::NewLine, color);
+        Print(systemTable, UTF16::ToString(status), color);
+        Print(systemTable,  UTF16::NewLine, color);
     }
 }

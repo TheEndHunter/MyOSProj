@@ -35,99 +35,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="UEFIDef.cpp" />
+    <ClInclude Include="IFileSystem.h" />
+    <ClInclude Include="TypeDefs.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Protocols\Configuration\EFI_CAPSULE_HEADER.h" />
-    <ClInclude Include="Protocols\Configuration\EFI_CAPSULE_TABLE.h" />
-    <ClInclude Include="Protocols\Debug\EFI_DEBUGPORT_PROTOCOL.h" />
-    <ClInclude Include="Protocols\Debug\EFI_DEBUG_IMAGE_INFO_NORMAL.h" />
-    <ClInclude Include="Protocols\Debug\EFI_DEBUG_IMAGE_INFO_TABLE.h" />
-    <ClInclude Include="Protocols\Debug\EFI_DEBUG_SUPPORT_PROTOCOL.h" />
-    <ClInclude Include="Protocols\Debug\EFI_EXCEPTION_TYPE.h" />
-    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT.h" />
-    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_AARCH64.h" />
-    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_ARM.h" />
-    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_IFP.h" />
-    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_LOONGARCH64.h" />
-    <ClInclude Include="Protocols\Debug\EFI_FX_SAVE_STATE_X64.h" />
-    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_X64.h" />
-    <ClInclude Include="Protocols\Debug\EFI_FX_SAVE_STATE_IA32.h" />
-    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_IA32.h" />
-    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_RISCV128.h" />
-    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_RISCV64.h" />
-    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_RISCV32.h" />
-    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_EBC.h" />
-    <ClInclude Include="Protocols\Debug\EFI_INSTRUCTION_SET_ARCHITECTURE.h" />
-    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_TABLE_POINTER.h" />
-    <ClInclude Include="Protocols\Debug\EFI_DEBUG_IMAGE_INFO.h" />
-    <ClInclude Include="Protocols\EFI_LOADED_IMAGE_PROTOCOL.h" />
-    <ClInclude Include="Protocols\IO\Console\EFI_CONSOLE_COLOR.h" />
-    <ClInclude Include="Protocols\IO\Console\EFI_UNICODE_CTRL_CHAR.h" />
-    <ClInclude Include="Protocols\IO\Peripheral\EFI_ABSOLUTE_POINTER_MODE.h" />
-    <ClInclude Include="Protocols\IO\Peripheral\EFI_ABSOLUTE_POINTER_PROTOCOL.h" />
-    <ClInclude Include="Protocols\IO\Peripheral\EFI_ABSOLUTE_POINTER_STATE.h" />
-    <ClInclude Include="Protocols\IO\EFI_DEVICE_PATH_PROTOCOL.h" />
-    <ClInclude Include="Protocols\Graphics\EFI_EDID_DISCOVERED_PROTOCOL.h" />
-    <ClInclude Include="EFI_EVENT.h" />
-    <ClInclude Include="EFI_EVENT_NOTIFY.h" />
-    <ClInclude Include="Protocols\Graphics\EFI_GRAPHICS_OUTPUT_BLT_PIXEL.h" />
-    <ClInclude Include="Protocols\Graphics\EFI_GRAPHICS_OUTPUT_MODE_INFORMATION.h" />
-    <ClInclude Include="Protocols\Graphics\EFI_GRAPHICS_OUTPUT_PROTOCOL.h" />
-    <ClInclude Include="Protocols\Graphics\EFI_GRAPHICS_OUTPUT_PROTOCOL_MODE.h" />
-    <ClInclude Include="Protocols\Graphics\EFI_GRAPHICS_PIXEL_FORMAT.h" />
-    <ClInclude Include="Protocols\IO\Serial\EFI_PARITY_TYPE.h" />
-    <ClInclude Include="Protocols\Graphics\EFI_PIXEL_BITMASK.h" />
-    <ClInclude Include="Protocols\IO\Serial\EFI_SERIAL_CONTORL_BITS.h" />
-    <ClInclude Include="Protocols\IO\Serial\EFI_SERIAL_IO_MODE.h" />
-    <ClInclude Include="Protocols\IO\Serial\EFI_SERIAL_IO_PROTOCOL.h" />
-    <ClInclude Include="Protocols\IO\Peripheral\EFI_SIMPLE_POINTER_MODE.h" />
-    <ClInclude Include="Protocols\IO\Peripheral\EFI_SIMPLE_POINTER_PROTOCOL.h" />
-    <ClInclude Include="EFI_HANDLE.h" />
-    <ClInclude Include="Protocols\IO\Peripheral\EFI_INPUT_KEY.h" />
-    <ClInclude Include="EFI_INTERFACE_TYPE.h" />
-    <ClInclude Include="Protocols\IO\Peripheral\EFI_KEY_DATA.h" />
-    <ClInclude Include="Protocols\IO\Peripheral\EFI_KEY_SHIFT_STATE.h" />
-    <ClInclude Include="Protocols\IO\Peripheral\EFI_KEY_STATE.h" />
-    <ClInclude Include="Protocols\IO\Peripheral\EFI_KEY_TOGGLE_STATE.h" />
-    <ClInclude Include="EFI_LBA.h" />
-    <ClInclude Include="EFI_LOCATE_SEARCH_TYPE.h" />
-    <ClInclude Include="EFI_MEMORY_ADDRESS.h" />
-    <ClInclude Include="EFI_ALLOCATE_TYPE.h" />
-    <ClInclude Include="EFI_BOOT_SERVICES.h" />
-    <ClInclude Include="Protocols\Configuration\EFI_CONFIGURATION_TABLE.h" />
-    <ClInclude Include="EFI_GUID.h" />
-    <ClInclude Include="Protocols\Configuration\EFI_MEMORY_ATTRIBUTES_TABLE.h" />
-    <ClInclude Include="EFI_MEMORY_DESCRIPTOR.h" />
-    <ClInclude Include="Protocols\Configuration\EFI_OPEN_PROTOCOL_INFORMATION_ENTRY.h" />
-    <ClInclude Include="EFI_RESET_TYPE.h" />
-    <ClInclude Include="Protocols\Configuration\EFI_RT_PROPERTIES.h" />
-    <ClInclude Include="Protocols\IO\Peripheral\EFI_SIMPLE_POINTER_STATE.h" />
-    <ClInclude Include="Protocols\IO\Console\EFI_SIMPLE_TEXT_INPUT_EX_PROTOCOL.h" />
-    <ClInclude Include="Protocols\IO\Serial\EFI_STOP_BITS_TYPE.h" />
-    <ClInclude Include="Protocols\Time\EFI_TIME.h" />
-    <ClInclude Include="Protocols\Time\EFI_TIMER_DELAY.h" />
-    <ClInclude Include="Protocols\Time\EFI_TIME_CAPABILITIES.h" />
-    <ClInclude Include="EFI_TPL.h" />
-    <ClInclude Include="EFI_IP_ADDRESS.h" />
-    <ClInclude Include="EFI_MAC_ADDRESS.h" />
-    <ClInclude Include="EFI_MEMORY_TYPE.h" />
-    <ClInclude Include="EFI_RUNTIME_SERVICES.h" />
-    <ClInclude Include="Protocols\IO\Console\EFI_SIMPLE_TEXT_INPUT_PROTOCOL.h" />
-    <ClInclude Include="Protocols\IO\Console\EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL.h" />
-    <ClInclude Include="EFI_STATUS.h" />
-    <ClInclude Include="EFI_SYSTEM_TABLE.h" />
-    <ClInclude Include="EFI_TABLE_HEADER.h" />
-    <ClInclude Include="Protocols\Configuration\EFI_CONFORMANCE_PROFILES_TABLE.h" />
-    <ClInclude Include="Protocols\Configuration\EFI_MEMORY_RANGE_CAPSULE.h" />
-    <ClInclude Include="Protocols\Configuration\EFI_CAPSULE_BLOCK_DESCRIPTOR.h" />
-    <ClInclude Include="Protocols\Graphics\EFI_GRAPHICS_OUTPUT_BLT_OPERATION.h" />
-    <ClInclude Include="UEFIDef.h" />
+    <ClCompile Include="TypeDefs.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{C2E4250F-7A7A-4567-8D76-5F42F610B204}</ProjectGuid>
+    <ProjectGuid>{C23C7061-59FE-4DF9-A5D5-113D3DC74B32}</ProjectGuid>
     <RootNamespace>UEFI</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -190,44 +107,44 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
-    <TargetName>UEFI$(Platform)</TargetName>
+    <TargetName>$(ProjectName)_$(Platform)</TargetName>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
-    <TargetName>UEFI$(Platform)</TargetName>
+    <TargetName>$(ProjectName)_$(Platform)</TargetName>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
-    <TargetName>UEFI$(Platform)</TargetName>
+    <TargetName>$(ProjectName)_$(Platform)</TargetName>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
-    <TargetName>UEFI$(Platform)</TargetName>
+    <TargetName>$(ProjectName)_$(Platform)</TargetName>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <TargetName>UEFI$(Platform)</TargetName>
+    <TargetName>$(ProjectName)_$(Platform)</TargetName>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <TargetName>UEFI$(Platform)</TargetName>
+    <TargetName>$(ProjectName)_$(Platform)</TargetName>
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
-    <TargetName>UEFI$(Platform)</TargetName>
+    <TargetName>$(ProjectName)_$(Platform)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
-    <TargetName>UEFI$(Platform)</TargetName>
+    <TargetName>$(ProjectName)_$(Platform)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

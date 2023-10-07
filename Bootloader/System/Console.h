@@ -23,6 +23,19 @@ namespace Bootloader::System
 		void WriteLine(const CHAR16* str, Graphics::Color bg, Graphics::Color fg);
 		void WriteLine(const CHAR16* fmt, Graphics::Color bg,Graphics::Color fg ...);
 
+		void Write(const CHAR8* str);
+		void Write(const CHAR8* fmt, ...);
+		void Write(const CHAR8* str, Graphics::Color bg);
+		void Write(const CHAR8* fmt, Graphics::Color bg, ...);
+		void Write(const CHAR8* str, Graphics::Color bg, Graphics::Color fg);
+		void Write(const CHAR8* fmt, Graphics::Color bg, Graphics::Color fg, ...);
+		void WriteLine(const CHAR8* str);
+		void WriteLine(const CHAR8* fmt, ...);
+		void WriteLine(const CHAR8* str, Graphics::Color bg);
+		void WriteLine(const CHAR8* fmt, Graphics::Color bg, ...);
+		void WriteLine(const CHAR8* str, Graphics::Color bg, Graphics::Color fg);
+		void WriteLine(const CHAR8* fmt, Graphics::Color bg, Graphics::Color fg ...);
+
 		void ClearScreen();
 		void ClearScreen(Graphics::Color bg);
 		void ClearScreen(Graphics::Color bg, Graphics::Color fg);
@@ -32,4 +45,3 @@ namespace Bootloader::System
 		Graphics::GraphicsContext* context;
 	};
 }
-

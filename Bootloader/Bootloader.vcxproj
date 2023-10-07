@@ -573,7 +573,6 @@
     <ClCompile Include="Enviroment\Unicode.cpp" />
     <ClCompile Include="EFIConsole.h" />
     <ClCompile Include="Entry.cpp" />
-    <ClCompile Include="Enviroment\StringHelpers.cpp" />
     <ClCompile Include="Graphics\GraphicsContext.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -584,7 +583,6 @@
   <ItemGroup>
     <ClInclude Include="System\Console.h" />
     <ClInclude Include="Enviroment\Unicode.h" />
-    <ClInclude Include="Enviroment\StringHelpers.h" />
     <ClInclude Include="Graphics\Color.h" />
     <ClInclude Include="Graphics\GraphicsContext.h" />
   </ItemGroup>

@@ -11,7 +11,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UEFI", "UEFI\UEFI.vcxproj",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QemuRunner", "QemuManager\QemuRunner.csproj", "{CDBA3677-C914-4279-BD94-5EED34E0102B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageBuilder", "ImageBuilder\ImageBuilder.csproj", "{8FB23D48-B6FE-44CE-8314-CF3ADB2E3940}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageBuilder", "ImageBuilder\ImageBuilder.csproj", "{8FB23D48-B6FE-44CE-8314-CF3ADB2E3940}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibFS", "LibFS\LibFS.vcxproj", "{C23C7061-59FE-4DF9-A5D5-113D3DC74B32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -105,6 +107,22 @@ Global
 		{8FB23D48-B6FE-44CE-8314-CF3ADB2E3940}.Release|x64.Build.0 = Release|x64
 		{8FB23D48-B6FE-44CE-8314-CF3ADB2E3940}.Release|x86.ActiveCfg = Release|Any CPU
 		{8FB23D48-B6FE-44CE-8314-CF3ADB2E3940}.Release|x86.Build.0 = Release|Any CPU
+		{C23C7061-59FE-4DF9-A5D5-113D3DC74B32}.Debug|ARM.ActiveCfg = Debug|ARM
+		{C23C7061-59FE-4DF9-A5D5-113D3DC74B32}.Debug|ARM.Build.0 = Debug|ARM
+		{C23C7061-59FE-4DF9-A5D5-113D3DC74B32}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{C23C7061-59FE-4DF9-A5D5-113D3DC74B32}.Debug|ARM64.Build.0 = Debug|ARM64
+		{C23C7061-59FE-4DF9-A5D5-113D3DC74B32}.Debug|x64.ActiveCfg = Debug|x64
+		{C23C7061-59FE-4DF9-A5D5-113D3DC74B32}.Debug|x64.Build.0 = Debug|x64
+		{C23C7061-59FE-4DF9-A5D5-113D3DC74B32}.Debug|x86.ActiveCfg = Debug|Win32
+		{C23C7061-59FE-4DF9-A5D5-113D3DC74B32}.Debug|x86.Build.0 = Debug|Win32
+		{C23C7061-59FE-4DF9-A5D5-113D3DC74B32}.Release|ARM.ActiveCfg = Release|ARM
+		{C23C7061-59FE-4DF9-A5D5-113D3DC74B32}.Release|ARM.Build.0 = Release|ARM
+		{C23C7061-59FE-4DF9-A5D5-113D3DC74B32}.Release|ARM64.ActiveCfg = Release|ARM64
+		{C23C7061-59FE-4DF9-A5D5-113D3DC74B32}.Release|ARM64.Build.0 = Release|ARM64
+		{C23C7061-59FE-4DF9-A5D5-113D3DC74B32}.Release|x64.ActiveCfg = Release|x64
+		{C23C7061-59FE-4DF9-A5D5-113D3DC74B32}.Release|x64.Build.0 = Release|x64
+		{C23C7061-59FE-4DF9-A5D5-113D3DC74B32}.Release|x86.ActiveCfg = Release|Win32
+		{C23C7061-59FE-4DF9-A5D5-113D3DC74B32}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

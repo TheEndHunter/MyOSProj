@@ -1,0 +1,150 @@
+#pragma once
+
+#if defined(ARM) || defined(WIN32)
+#define BITS_32
+#elif defined(ARM64) || defined(x64)
+#define BITS_64
+#else
+#error "Unknown architecture"
+#endif
+
+/*
+*  Setup defines for Data Type Sizes Per Processor Bitness, switching based on on of the following compilers being used:
+* including wide character support
+*  MSVC or GNU
+*/
+
+#define VOID void
+#define VOID_PTR void*
+#define CHAR8 char
+
+#if defined(__cpp_unicode_characters)
+#define CHAR16 char16_t
+#elif defined(_NATIVE_WCHAR_T_DEFINED)
+#define CHAR16 wchar_t
+#else
+#define CHAR16 INT16
+#endif
+#define INT8 signed char
+#define INT16 short
+#define INT32 int
+#define INT64 long long
+#define BOOLEAN INT8
+#define TRUE 0x01
+#define FALSE 0x00
+
+#define UINT8 unsigned char
+#define UINT16 unsigned short
+
+#define UINT32 unsigned int
+#define UINT64 unsigned long long
+
+
+#if defined(BITS_32)
+#define INTN INT32
+#define UINTN UINT32
+#elif defined(BITS_64)
+#define INTN INT64
+#define UINTN UINT64
+#else
+#error "Unknown architecture"
+#endif
+
+/*
+*  Define Sizes for UINT128 and INT128 based for the following Compilers if they have datatypes accessible: MSVC & GCC
+*/
+
+#if defined(_MSC_VER) & defined(__int128)
+#define UINT128 unsigned __int128
+#define INT128 __int128
+
+#elif defined(__GNUC__) & defined(__int128)
+#define UINT128 unsigned __int128
+#define INT128 __int128
+#else
+
+struct int128
+{
+	UINT64 Low;
+	INT64 High;
+};
+struct uint128
+{
+	UINT64 Low;
+	UINT64 High;
+};
+
+#define UINT128 uint128
+#define INT128 int128
+
+#endif
+
+/*
+*  Per compiler definitions for dllexport and dllimport with switch for detecting static imports
+*/
+
+#if defined(_MSC_VER)
+#if defined(StaticLibrary)
+#define DllExport __declspec(dllexport)
+#define DllImport __declspec(dllimport)
+#elif defined(DynamicLibrary)
+#define DllImport
+#define DllExport
+#else
+#define DllImport
+#define DllExport
+#endif
+#elif defined(__GNUC__)
+#if(_WINDLL)
+#define DllExport __attribute__((visibility("default")))
+#define DllImport __attribute__((visibility("default")))
+#else
+#define DllImport
+#define DllExport
+#endif
+#else
+#error "Unknown compiler"
+#endif
+
+/*
+*  Setup Calling conventions and attributes for EFIAPI
+*/
+
+#if defined(_MSC_VER)
+#define EFIAPI  __cdecl
+#define EFIAPIV  __cdecl
+#define VARARGS  __cdecl
+#define CDECL  __cdecl
+#define STDCALL  __stdcall
+#define INLINE __inline
+#define STATIC static
+#define CONST const
+
+#elif defined(__GNUC__)
+#define EFIAPI  __attribute__((cdecl))
+#define EFIAPIV  __attribute__((cdecl))
+#define VARARGS  __attribute__((cdecl))
+#define CDECL  __attribute__((cdecl))
+#define STDCALL  __attribute__((stdcall))
+
+#if defined(BITS_32)
+#define INLINE __inline__
+#elif defined(BITS_64)
+#define INLINE inline
+#endif
+
+#define STATIC static
+#define CONST const
+
+#else
+#error "Unknown compiler"
+#endif
+
+/*
+* IN/OUT /INOUT macros for function parameters
+*/
+
+#define IN
+#define OUT
+#define INOUT
+#define OPTIONAL

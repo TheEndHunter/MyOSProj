@@ -139,7 +139,7 @@
 
             var dirs = Directory.EnumerateDirectories(SrcPath);
 
-            List<Partition> _partitions = new();
+            List<Partition> _partitions = [];
             foreach (var dir in dirs)
             {
                 DirectoryInfo info = new(dir);
@@ -183,10 +183,35 @@
 
             var assigned = drives.Select(d => d.Name).ToArray();
 
-            List<string> free = new List<string>
-            {
-                "A:\\", "B:\\", "C:\\", "D:\\", "E:\\", "F:\\", "G:\\", "H:\\", "I:\\", "J:\\", "K:\\", "L:\\", "M:\\", "N:\\", "O:\\", "P:\\", "Q:\\", "R:\\", "S:\\", "T:\\", "U:\\", "V:\\", "W:\\", "X:\\", "Y:\\", "Z:\\"
-            };
+            List<string> free =
+            [
+                "A:\\",
+                "B:\\",
+                "C:\\",
+                "D:\\",
+                "E:\\",
+                "F:\\",
+                "G:\\",
+                "H:\\",
+                "I:\\",
+                "J:\\",
+                "K:\\",
+                "L:\\",
+                "M:\\",
+                "N:\\",
+                "O:\\",
+                "P:\\",
+                "Q:\\",
+                "R:\\",
+                "S:\\",
+                "T:\\",
+                "U:\\",
+                "V:\\",
+                "W:\\",
+                "X:\\",
+                "Y:\\",
+                "Z:\\"
+            ];
 
             foreach (var drive in assigned)
             {

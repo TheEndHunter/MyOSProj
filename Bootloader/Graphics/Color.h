@@ -12,7 +12,7 @@ namespace Bootloader::Graphics
 	*  + - * / += -= *= /= == != < > <= >=
 	*/
 
-	typedef struct Color
+	struct Color
 	{
 	public:
 		const UINT8 Blue;

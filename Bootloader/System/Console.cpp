@@ -58,6 +58,54 @@ namespace Bootloader::System
 	{
 	}
 
+	void Console::Write(const CHAR8* str)
+	{
+	}
+
+	void Console::Write(const CHAR8* fmt, ...)
+	{
+	}
+
+	void Console::Write(const CHAR8* str, Graphics::Color c)
+	{
+	}
+
+	void Console::Write(const CHAR8* fmt, Graphics::Color c, ...)
+	{
+	}
+
+	void Console::Write(const CHAR8* str, Graphics::Color bg, Graphics::Color fg)
+	{
+	}
+
+	void Console::Write(const CHAR8* fmt, Graphics::Color bg, Graphics::Color fg, ...)
+	{
+	}
+
+	void Console::WriteLine(const CHAR8* str)
+	{
+	}
+
+	void Console::WriteLine(const CHAR8* fmt, ...)
+	{
+	}
+
+	void Console::WriteLine(const CHAR8* str, Graphics::Color c)
+	{
+	}
+
+	void Console::WriteLine(const CHAR8* fmt, Graphics::Color c, ...)
+	{
+	}
+
+	void Console::WriteLine(const CHAR8* str, Graphics::Color bg, Graphics::Color fg)
+	{
+	}
+
+	void Console::WriteLine(const CHAR8* fmt, Graphics::Color bg, Graphics::Color fg ...)
+	{
+	}
+
 	void Console::ClearScreen()
 	{
 	}

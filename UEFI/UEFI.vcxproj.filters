@@ -18,9 +18,6 @@
     <ClCompile Include="UEFIDef.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EFI_STATUS.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UEFIDef.h">

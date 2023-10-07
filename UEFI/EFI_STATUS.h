@@ -55,6 +55,4 @@ namespace EFI
 		WARN_FILE_SYSTEM = 6 | WARNING_MASK,
 		WARN_RESET_REQUIRED = 7 | WARNING_MASK
 	};
-
-	 const CHAR16* EFIAPI ToString(EFI_STATUS status);
 };

@@ -9,7 +9,7 @@
 #include <EFI_BOOT_SERVICES.h>
 #include <Protocols/Graphics/EFI_GRAPHICS_OUTPUT_BLT_OPERATION.h>
 #include <Protocols/Graphics/EFI_GRAPHICS_OUTPUT_MODE_INFORMATION.h>
-#include <Enviroment/StringHelpers.h>
+#include <Enviroment/Unicode.h>
 
 namespace Bootloader::Graphics
 {
@@ -33,7 +33,7 @@ namespace Bootloader::Graphics
 
 			status = sysTable->BootServices->LocateHandleBuffer(EFI_LOCATE_SEARCH_TYPE::ByProtocol, &EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID, nullptr, &handleCount, &handleBuffer);
 			
-			sysTable->ConOut->OutputString(sysTable->ConOut, Enviroment::StringHelpers::ToString(handleCount) );
+			sysTable->ConOut->OutputString(sysTable->ConOut, Enviroment::UTF16::ToString(handleCount) );
 
 			if (status != EFI::EFI_STATUS::SUCCESS)
 			{

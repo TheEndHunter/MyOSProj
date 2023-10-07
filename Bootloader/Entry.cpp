@@ -38,7 +38,7 @@ namespace Bootloader
             SetConsoleColor(systemTable, EFI_CONSOLE_COLOR::FATAL_COLOR);
             ClearConOut(systemTable);
             Print(systemTable, boot_GOP_LOCATE_ERROR);
-            PrintLine(systemTable, ToString(gopStatus));
+            PrintLine(systemTable, UTF16::ToString(gopStatus));
             WaitForKey(systemTable);
             return gopStatus;
         }
