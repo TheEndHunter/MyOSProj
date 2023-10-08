@@ -1,11 +1,14 @@
 #include <UEFIDef.h>
 #include <EFI_HANDLE.h>
 #include <EFI_STATUS.h>
+#include <EFI_RESET_TYPE.h>
 #include <EFI_SYSTEM_TABLE.h>
 #include <Protocols/IO/Peripheral/EFI_INPUT_KEY.h>
 #include <Protocols/IO/Console/EFI_CONSOLE_COLOR.h>
 #include <Graphics/GraphicsContext.h>
 #include <EFIConsole.h>
+#include "Graphics/Color.h"
+#include "Enviroment/Unicode.h"
 
 namespace Bootloader
 {
@@ -50,12 +53,18 @@ namespace Bootloader
         UINTN w = gop.GetWidth();
         UINTN h = gop.GetHeight();
 
-        UINTN x = w / 3;
-        UINTN y = h / 3;
+        UINTN x1 = w / 3;
+        UINTN y1 = h / 3;
 
-        gop.DrawRectangle(x, y, x, y, 255,255,0);
+        UINTN x2 = w / 4;
+        UINTN y2 = h / 4;
+
+        gop.DrawRectangle(x1, y1, x1, y1, Colors::MediumVioletRed);
+        gop.DrawRectangle(x2, y2, x2, y2, Colors::HotPink);
 
         WaitForKey(systemTable);
+
+        systemTable->RuntimeServices->ResetSystem(EFI::EFI_RESET_TYPE::Cold, EFI_STATUS::SUCCESS, 0, nullptr);
 
         return EFI_STATUS::SUCCESS;
     }

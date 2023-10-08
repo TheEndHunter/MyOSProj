@@ -27,7 +27,7 @@ namespace EFI
 	typedef EFI_STATUS (EFIAPI* EFI_SET_VARIABLE)(IN CHAR16* VariableName,IN const EFI_GUID* VendorGuid,IN UINT32 Attributes,IN UINTN DataSize,IN VOID* Data);
 
 	typedef EFI_STATUS (EFIAPI* EFI_GET_NEXT_HIGH_MONO_COUNT)(OUT UINT32* HighCount);
-	typedef VOID (EFIAPI* EFI_RESET_SYSTEM)(IN EFI_RESET_TYPE ResetType,IN EFI_STATUS ResetStatus,IN UINTN DataSize,IN VOID* ResetData OPTIONAL);
+	typedef VOID (EFIAPI* EFI_RESET_SYSTEM)(IN EFI::EFI_RESET_TYPE ResetType,IN EFI_STATUS ResetStatus,IN UINTN DataSize,IN VOID* ResetData OPTIONAL);
 
 	typedef EFI_STATUS (EFIAPI* EFI_UPDATE_CAPSULE)(IN EFI_CAPSULE_HEADER** CapsuleHeaderArray,IN UINTN CapsuleCount,IN EFI_PHYSICAL_ADDRESS ScatterGatherList OPTIONAL);
 	typedef EFI_STATUS (EFIAPI* EFI_QUERY_CAPSULE_CAPABILITIES)(IN EFI_CAPSULE_HEADER** CapsuleHeaderArray,IN UINTN CapsuleCount,OUT UINT64* MaximumCapsuleSize,OUT EFI_RESET_TYPE* ResetType);
@@ -91,7 +91,7 @@ namespace EFI
         /// </summary>
         EFI_GET_VARIABLE GetVariable;
         /// <summary>
-        /// enum classerates the current variable names.
+        /// Gets the current variable names.
         /// </summary>
         EFI_GET_NEXT_VARIABLE_NAME GetNextVariableName;        
         /// <summary>

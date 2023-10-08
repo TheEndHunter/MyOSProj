@@ -1,5 +1,6 @@
 #pragma once
 #include <UEFIDef.h>
+#include <Protocols/Graphics/EFI_GRAPHICS_OUTPUT_BLT_PIXEL.h>
 
 
 namespace Bootloader::Graphics
@@ -40,6 +41,11 @@ namespace Bootloader::Graphics
 			return (UINT32)((Alpha << 24) | (Green << 16) | (Blue << 8) | Red);
 		}
 
+		const EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL AsEFI() const
+		{
+			return EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ Blue, Green, Red, Alpha};
+		}
+
 		Color operator+(const Color& other) const
 		{
 			return Color(Blue + other.Blue, Green + other.Green, Red + other.Red, Alpha + other.Alpha);
@@ -58,6 +64,11 @@ namespace Bootloader::Graphics
 		Color operator/(const Color& other) const
 		{
 			return Color(Blue / other.Blue, Green / other.Green, Red / other.Red, Alpha / other.Alpha);
+		}
+
+		Color operator =(const Color& other) const
+		{
+			return Color(other);
 		}
 
 		bool operator==(const Color& other) const
@@ -91,47 +102,76 @@ namespace Bootloader::Graphics
 		}
 
 		constexpr Color() : Blue(0), Green(0), Red(0), Alpha(255) {};
+		constexpr Color(const UINT32 rgba) : Blue((UINT8)((rgba & 0x0000FF00) >> 8)), Green((UINT8)((rgba & 0x00FF0000) >> 16)), Red((UINT8)((rgba & 0xFF000000) >> 24)), Alpha((UINT8)(rgba & 0x000000FF)) {}
 		constexpr Color(const UINT8 red, const UINT8 green, const UINT8 blue,const UINT8 alpha) : Blue(blue), Green(green), Red(red), Alpha(alpha) {}
 		constexpr Color(const UINT8 red, const UINT8 green, const UINT8 blue) : Blue(blue), Green(green), Red(red), Alpha(255) {}
+		constexpr Color(const Color& color) : Blue(color.Blue), Green(color.Green), Red(color.Red), Alpha(color.Alpha) {}
+		constexpr Color(const Color* color) : Blue(color->Blue), Green(color->Green), Red(color->Red), Alpha(color->Alpha) {}
 
-		const Color FromRGBA(const UINT32 rgba) const 
+		constexpr Color(const EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL& color) : Blue(color.Blue), Green(color.Green), Red(color.Red), Alpha(color.Alpha) {}
+		constexpr Color(const EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color) : Blue(color->Blue), Green(color->Green), Red(color->Red), Alpha(color->Alpha) {}
+
+		static const Color FromRGBA(const UINT32 rgba) 
 		{
-			return Color((UINT8)((rgba & 0x0000FF00) >> 8), (UINT8)((rgba & 0x00FF0000) >> 16), (UINT8)((rgba & 0xFF000000) >> 24), (UINT8)(rgba & 0x000000FF));
+			return Color(rgba);
 		}
 
-		const Color FromBGRA(const UINT32 bgra) const 
+		static const Color FromBGRA(const UINT32 bgra) 
 		{
-			return Color((UINT8)((bgra & 0xFF000000) >> 24), (UINT8)((bgra & 0x00FF0000) >> 16), (UINT8)((bgra & 0x0000FF00) >> 8), (UINT8)(bgra & 0x000000FF));
+			return Color((UINT8)((bgra & 0x0000FF00) >> 8), (UINT8)((bgra & 0x00FF0000) >> 16), (UINT8)((bgra & 0xFF000000) >> 24), (UINT8)((bgra & 0x000000FF)));
 		}
 
-		const Color FromARGB(const UINT32 argb) const 
+		static const Color FromARGB(const UINT32 argb) 
 		{
-			return Color((UINT8)((argb & 0x000000FF)), (UINT8)((argb & 0x0000FF00) >> 8), (UINT8)((argb & 0x00FF0000) >> 16), (UINT8)((argb & 0xFF000000)>>24));
+			return Color((UINT8)((argb & 0x00FF0000) >> 16), (UINT8)((argb & 0x0000FF00) >> 8), (UINT8)(argb & 0x000000FF), (UINT8)((argb & 0xFF000000) >> 24));
 		} 
 
-		const Color FromABGR(const UINT32 abgr) const 
+		static const Color FromABGR(const UINT32 abgr) 
 		{
-			return Color((UINT8)((abgr & 0x00FF0000) >> 16), (UINT8)((abgr & 0x0000FF00) >> 8), (UINT8)(abgr & 0x000000FF), (UINT8)((abgr & 0xFF000000)>>24));
+			return Color((UINT8)((abgr & 0x000000FF)), (UINT8)((abgr & 0x0000FF00) >> 8), (UINT8)((abgr & 0x00FF0000) >> 16), (UINT8)((abgr & 0xFF000000) >> 24));
 		}
 
-		const Color FromRGBA(const UINT8 r, const UINT8 g, const UINT8 b, const UINT8 a = 255) const 
+		static const Color FromRGBA(const UINT8 r, const UINT8 g, const UINT8 b, const UINT8 a = 255)  
 		{
-			return Color(b, g, r, a);
+			return Color(r,g,b,a);
 		}
 
-		const Color FromBGRA(const UINT8 b, const UINT8 g, const UINT8 r, const UINT8 a = 255) const 
+		static const Color FromBGRA(const UINT8 b, const UINT8 g, const UINT8 r, const UINT8 a = 255) 
 		{
-			return Color(b, g, r, a);
+			return Color(r,g,b,a);
 		}
 
-		const Color FromARGB(const UINT8 a, const UINT8 r, const UINT8 g, const UINT8 b) const 
+		static const Color FromARGB(const UINT8 a, const UINT8 r, const UINT8 g, const UINT8 b) 
 		{
-			return Color(b, g, r, a);
+			return Color(r,g,b,a);
 		} 
 
-		const Color FromABGR(const UINT8 a, const UINT8 b, const UINT8 g, const UINT8 r) const 
+		static const Color FromABGR(const UINT8 a, const UINT8 b, const UINT8 g, const UINT8 r) 
 		{
-			return Color(b, g, r, a);
+			return Color(r,g,b,a);
+		}
+
+		static const Color FromRGB(const UINT8 r, const UINT8 g, const UINT8 b)
+		{
+			return Color(r,g,b);
+		}
+		static const Color FromBGR(const UINT8 b, const UINT8 g, const UINT8 r)
+		{
+			return Color(r, g, b);
+		}
+
+		static const Color FromEFI(const EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL color)
+		{
+			return Color(color);
+		}
+
+		static const EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL ToEFI(const Color color)
+		{
+			return EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ color.Blue, color.Green, color.Red, color.Alpha };
+		}
+		static const EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL ToEFI(const Color* color)
+		{
+			return EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ color->Blue, color->Green, color->Red, color->Alpha };
 		}
 	};
 	
@@ -142,7 +182,7 @@ namespace Bootloader::Graphics
 	namespace Colors
 	{
 		/* Pink colors */
-		constinit const Color DeepPink =Color(255, 20, 147);
+		constinit const Color DeepPink = Color(255, 20, 147);
 		constinit const Color HotPink = Color(255, 105, 180);
 		constinit const Color LightPink = Color(255, 182, 193);
 		constinit const Color MediumVioletRed = Color((UINT8)199, (UINT8)21, (UINT8)133);

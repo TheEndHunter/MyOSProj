@@ -60,48 +60,64 @@ namespace Bootloader::Graphics
 
 	void GraphicsContext::SetForegroundPixel(UINTN xPos, UINTN yPos)
 	{
-		*(EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(gop->Mode->FrameBufferBase + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentForeground;
+		*(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(gop->Mode->FrameBufferBase + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentForeground;
 	};
 
 	void GraphicsContext::SetForegroundPixel(UINTN xPos, UINTN yPos, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* rgba)
 	{
 		CurrentForeground = *rgba;
-		*(EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(gop->Mode->FrameBufferBase + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentForeground;
+		*(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(gop->Mode->FrameBufferBase + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentForeground;
+	}
+	void GraphicsContext::SetForegroundPixel(UINTN xPos, UINTN yPos, Color* color)
+	{
+		CurrentForeground = Color::ToEFI(color);
+	}
+	void GraphicsContext::SetForegroundPixel(UINTN xPos, UINTN yPos, Color color)
+	{
+		CurrentForeground = Color::ToEFI(color);
 	};
 
 	void GraphicsContext::SetForegroundPixel(UINTN xPos, UINTN yPos, UINT8 r, UINT8 g, UINT8 b, UINT8 a)
 	{
-		CurrentForeground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ b, g, r, a };
-		*(EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(gop->Mode->FrameBufferBase + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentForeground;
+		CurrentForeground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ b,g,r,a };
+		*(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(gop->Mode->FrameBufferBase + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentForeground;
 	};
 
 	void GraphicsContext::SetForegroundPixel(UINTN xPos, UINTN yPos, UINT32 rgba)
 	{
-		CurrentForeground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ (UINT8)(rgba >> 16), (UINT8)(rgba >> 8), (UINT8)(rgba), (UINT8)(rgba >> 24) };
-		*(EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(gop->Mode->FrameBufferBase + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentForeground;
+		CurrentForeground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ (UINT8)((rgba & 0x0000FF00)>> 8),(UINT8)((rgba & 0x00FF0000) >> 16),(UINT8)((rgba & 0xFF000000) >> 24), (UINT8)((rgba & 0x000000FF)) };
+		*(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(gop->Mode->FrameBufferBase + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentForeground;
 	};
 
 	void GraphicsContext::SetBackgroundPixel(UINTN xPos, UINTN yPos)
 	{
-		*(EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(gop->Mode->FrameBufferBase + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentBackground;
+		*(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(gop->Mode->FrameBufferBase + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentBackground;
 	};
 
 	void GraphicsContext::SetBackgroundPixel(UINTN xPos, UINTN yPos, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* rgba)
 	{
 		CurrentBackground = *rgba;
-		*(EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(gop->Mode->FrameBufferBase + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentBackground;
-	};
+		*(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(gop->Mode->FrameBufferBase + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentBackground;
+	}
+	void GraphicsContext::SetBackgroundPixel(UINTN xPos, UINTN yPos, Color* color)
+	{
+		CurrentBackground = Color::ToEFI(color);
+	}
+	void GraphicsContext::SetBackgroundPixel(UINTN xPos, UINTN yPos, Color color)
+	{
+		CurrentBackground = Color::ToEFI(color);
+	}
 
 	void GraphicsContext::SetBackgroundPixel(UINTN xPos, UINTN yPos, UINT8 r, UINT8 g, UINT8 b, UINT8 a)
 	{
-		CurrentBackground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ b, g, r, a };
-		*(EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(gop->Mode->FrameBufferBase + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentBackground;
+		CurrentBackground = EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ b,g,r,a };
+		*(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(gop->Mode->FrameBufferBase + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentBackground;
 	};
 
 	void GraphicsContext::SetBackgroundPixel(UINTN xPos, UINTN yPos, UINT32 rgba)
 	{
-		CurrentBackground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ (UINT8)(rgba >> 16), (UINT8)(rgba >> 8), (UINT8)(rgba), (UINT8)(rgba >> 24) };
-		*(EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(gop->Mode->FrameBufferBase + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentBackground;
+		CurrentBackground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ (UINT8)((rgba & 0x0000FF00) >> 8),(UINT8)((rgba & 0x00FF0000) >> 16),(UINT8)((rgba & 0xFF000000) >> 24), (UINT8)((rgba & 0x000000FF)) };;
+		*(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(gop->Mode->FrameBufferBase + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentBackground;
 	};
 
 	void GraphicsContext::ClearScreen()
@@ -112,80 +128,115 @@ namespace Bootloader::Graphics
 	void GraphicsContext::ClearScreen(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* rgba)
 	{
 		CurrentBackground = *rgba;
-		gop->Blt(gop, rgba, EFI::EFI_GRAPHICS_OUTPUT_BLT_OPERATION::EfiBltVideoFill, 0, 0, 0, 0, gop->Mode->Info->HorizontalResolution, gop->Mode->Info->VerticalResolution, 0);
-	};
+		gop->Blt(gop, &CurrentBackground, EFI::EFI_GRAPHICS_OUTPUT_BLT_OPERATION::EfiBltVideoFill, 0, 0, 0, 0, gop->Mode->Info->HorizontalResolution, gop->Mode->Info->VerticalResolution, 0);
+	}
+	void GraphicsContext::ClearScreen(Color* color)
+	{
+		CurrentBackground = Color::ToEFI(color);
+		gop->Blt(gop, (EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)&CurrentBackground, EFI::EFI_GRAPHICS_OUTPUT_BLT_OPERATION::EfiBltVideoFill, 0, 0, 0, 0, gop->Mode->Info->HorizontalResolution, gop->Mode->Info->VerticalResolution, 0);
+	}
+	void GraphicsContext::ClearScreen(Color color)
+	{
+		CurrentBackground = Color::ToEFI(color);
+		gop->Blt(gop, (EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)&CurrentBackground, EFI::EFI_GRAPHICS_OUTPUT_BLT_OPERATION::EfiBltVideoFill, 0, 0, 0, 0, gop->Mode->Info->HorizontalResolution, gop->Mode->Info->VerticalResolution, 0);
+	}
 
 	void GraphicsContext::ClearScreen(UINT8 r, UINT8 g, UINT8 b, UINT8 a)
 	{
-		CurrentBackground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ b, g, r, a };
-		gop->Blt(gop, &CurrentBackground, EFI::EFI_GRAPHICS_OUTPUT_BLT_OPERATION::EfiBltVideoFill, 0, 0, 0, 0, gop->Mode->Info->HorizontalResolution, gop->Mode->Info->VerticalResolution, 0);
+		CurrentBackground = EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ b,g,r,a };
+		gop->Blt(gop, (EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*) & CurrentBackground, EFI::EFI_GRAPHICS_OUTPUT_BLT_OPERATION::EfiBltVideoFill, 0, 0, 0, 0, gop->Mode->Info->HorizontalResolution, gop->Mode->Info->VerticalResolution, 0);
 	};
 
 	void GraphicsContext::ClearScreen(UINT32 rgba)
 	{
-		CurrentBackground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ (UINT8)(rgba >> 16), (UINT8)(rgba >> 8), (UINT8)(rgba), (UINT8)(rgba >> 24) };
-		gop->Blt(gop, &CurrentBackground, EFI::EFI_GRAPHICS_OUTPUT_BLT_OPERATION::EfiBltVideoFill, 0, 0, 0, 0, gop->Mode->Info->HorizontalResolution, gop->Mode->Info->VerticalResolution, 0);
+		CurrentBackground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ (UINT8)((rgba & 0x0000FF00) >> 8),(UINT8)((rgba & 0x00FF0000) >> 16),(UINT8)((rgba & 0xFF000000) >> 24), (UINT8)((rgba & 0x000000FF)) };
+		gop->Blt(gop, (EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)&CurrentBackground, EFI::EFI_GRAPHICS_OUTPUT_BLT_OPERATION::EfiBltVideoFill, 0, 0, 0, 0, gop->Mode->Info->HorizontalResolution, gop->Mode->Info->VerticalResolution, 0);
 	};
 
 	void GraphicsContext::DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height)
 	{
-		gop->Blt(gop, &CurrentForeground, EFI::EFI_GRAPHICS_OUTPUT_BLT_OPERATION::EfiBltVideoFill, 0, 0, xPos, yPos, width, height, 0);
+		gop->Blt(gop, (EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)&CurrentForeground, EFI::EFI_GRAPHICS_OUTPUT_BLT_OPERATION::EfiBltVideoFill, 0, 0, xPos, yPos, width, height, 0);
 	};
 
 	void GraphicsContext::DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* rgba)
 	{
 		CurrentForeground = *rgba;
-		gop->Blt(gop, rgba, EFI::EFI_GRAPHICS_OUTPUT_BLT_OPERATION::EfiBltVideoFill, 0, 0, xPos, yPos, width, height, 0);
-	};
+		gop->Blt(gop, (EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)&CurrentForeground, EFI::EFI_GRAPHICS_OUTPUT_BLT_OPERATION::EfiBltVideoFill, 0, 0, xPos, yPos, width, height, 0);
+	}
+	void GraphicsContext::DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, Color* color)
+	{
+		CurrentForeground = Color::ToEFI(color);
+		gop->Blt(gop, (EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)&CurrentForeground, EFI::EFI_GRAPHICS_OUTPUT_BLT_OPERATION::EfiBltVideoFill, 0, 0, xPos, yPos, width, height, 0);
+	}
+	void GraphicsContext::DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, Color color)
+	{
+		CurrentForeground = Color::ToEFI(color);
+		gop->Blt(gop, (EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)&CurrentForeground, EFI::EFI_GRAPHICS_OUTPUT_BLT_OPERATION::EfiBltVideoFill, 0, 0, xPos, yPos, width, height, 0);
+	}
 
 	void GraphicsContext::DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINT8 r, UINT8 g, UINT8 b, UINT8 a)
 	{
-		CurrentForeground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ b, g, r, a };
-		gop->Blt(gop, &CurrentForeground, EFI::EFI_GRAPHICS_OUTPUT_BLT_OPERATION::EfiBltVideoFill, 0, 0, xPos, yPos, width, height, 0);
+		CurrentForeground = EFI_GRAPHICS_OUTPUT_BLT_PIXEL{b,g,r,a};
+		gop->Blt(gop, (EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)&CurrentForeground, EFI::EFI_GRAPHICS_OUTPUT_BLT_OPERATION::EfiBltVideoFill, 0, 0, xPos, yPos, width, height, 0);
 	};
 
 	void GraphicsContext::DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINT32 rgba)
 	{
-		CurrentForeground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ (UINT8)(rgba >> 16), (UINT8)(rgba >> 8), (UINT8)(rgba), (UINT8)(rgba >> 24) };
-		gop->Blt(gop, &CurrentForeground, EFI::EFI_GRAPHICS_OUTPUT_BLT_OPERATION::EfiBltVideoFill, 0, 0, xPos, yPos, width, height, 0);
+		CurrentForeground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ (UINT8)((rgba & 0x0000FF00) >> 8),(UINT8)((rgba & 0x00FF0000) >> 16),(UINT8)((rgba & 0xFF000000) >> 24), (UINT8)((rgba & 0x000000FF)) };
+		gop->Blt(gop, (EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)&CurrentForeground, EFI::EFI_GRAPHICS_OUTPUT_BLT_OPERATION::EfiBltVideoFill, 0, 0, xPos, yPos, width, height, 0);
 	};
 
 	void GraphicsContext::SetBackground(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* rgba)
 	{
 		CurrentBackground = *rgba;
-	};
+	}
+	void GraphicsContext::SetBackground(Color* color)
+	{
+		CurrentBackground = Color::ToEFI(color);
+	}
+	void GraphicsContext::SetBackground(Color color)
+	{CurrentBackground = Color::ToEFI(color);
+	}
 
 	void GraphicsContext::SetBackground(UINT8 r, UINT8 g, UINT8 b, UINT8 a)
 	{
-		CurrentBackground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ b, g, r, a };
+		CurrentBackground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{b,g,r,a};
 	};
 
 	void GraphicsContext::SetBackground(UINT32 rgba)
 	{
-		CurrentBackground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ (UINT8)(rgba >> 16), (UINT8)(rgba >> 8), (UINT8)(rgba), (UINT8)(rgba >> 24) };
+		CurrentBackground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ (UINT8)((rgba & 0x0000FF00) >> 8),(UINT8)((rgba & 0x00FF0000) >> 16),(UINT8)((rgba & 0xFF000000) >> 24), (UINT8)((rgba & 0x000000FF)) };
 	};
 
 	void GraphicsContext::SetForeground(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* rgba)
 	{
 		CurrentForeground = *rgba;
-	};
+	}
+	void GraphicsContext::SetForeground(Color* color)
+	{
+		CurrentForeground = Color::ToEFI(color);
+	}
+	void GraphicsContext::SetForeground(Color color)
+	{
+		CurrentForeground = Color::ToEFI(color);
+	}
 
 	void GraphicsContext::SetForeground(UINT8 r, UINT8 g, UINT8 b, UINT8 a)
 	{
-		CurrentForeground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ b, g, r, a };
+		CurrentForeground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{b,g,r,a};
 	};
 
 	void GraphicsContext::SetForeground(UINT32 rgba)
 	{
-		CurrentForeground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ (UINT8)(rgba >> 16), (UINT8)(rgba >> 8), (UINT8)(rgba), (UINT8)(rgba >> 24) };
+		CurrentForeground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ (UINT8)((rgba & 0x0000FF00) >> 8),(UINT8)((rgba & 0x00FF0000) >> 16),(UINT8)((rgba & 0xFF000000) >> 24), (UINT8)((rgba & 0x000000FF)) };
 	};
 
-	EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL GraphicsContext::GetBackground() const
+	Color GraphicsContext::GetBackground() const
 	{
 		return CurrentBackground;
 	};
 
-	EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL GraphicsContext::GetForeground() const
+	Color GraphicsContext::GetForeground() const
 	{
 		return CurrentForeground;
 	};
@@ -233,8 +284,8 @@ namespace Bootloader::Graphics
 	GraphicsContext::GraphicsContext()
 	{
 		gop = nullptr;
-		CurrentBackground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{0x00, 0x00, 0x00, 0xFF};
-		CurrentForeground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL(0xFF, 0xFF, 0xFF, 0xFF);
+		CurrentBackground = Color::ToEFI(Colors::Black);
+		CurrentForeground = Color::ToEFI(Colors::White);
 	};
 
 };
