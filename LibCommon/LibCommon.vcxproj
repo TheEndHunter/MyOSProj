@@ -35,11 +35,24 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IFileSystem.h" />
+    <ClInclude Include="Enviroment\Unicode.h" />
+    <ClInclude Include="FileSystem\FSVolume.h" />
+    <ClInclude Include="Graphics\Color.h" />
+    <ClInclude Include="Graphics\GraphicsContext.h" />
+    <ClInclude Include="FileSystem\IFileSystem.h" />
+    <ClInclude Include="System\Console.h" />
     <ClInclude Include="TypeDefs.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Enviroment\Unicode.cpp" />
+    <ClCompile Include="Graphics\GraphicsContext.cpp" />
+    <ClCompile Include="System\Console.cpp" />
     <ClCompile Include="TypeDefs.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UEFI\UEFI.vcxproj">
+      <Project>{c2e4250f-7a7a-4567-8d76-5f42f610b204}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -47,6 +60,7 @@
     <ProjectGuid>{C23C7061-59FE-4DF9-A5D5-113D3DC74B32}</ProjectGuid>
     <RootNamespace>UEFI</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>LibCommon</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
@@ -150,11 +164,11 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);DEBUG;WIN32;Win32</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);DEBUG;WIN32;Win32;USE_TYPE_DEFS;USECOMMONTYPES</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories);$(SolutionDir)UEFI\;</AdditionalIncludeDirectories>
       <BasicRuntimeChecks />
       <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
@@ -173,11 +187,11 @@
       </FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);RELEASE;NDEBUG;WIN32;Win32</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);RELEASE;NDEBUG;WIN32;Win32;USE_TYPE_DEFS;USECOMMONTYPES</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories);$(SolutionDir)UEFI\;</AdditionalIncludeDirectories>
       <BasicRuntimeChecks />
       <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
@@ -195,11 +209,11 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);DEBUG;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);DEBUG;;USE_TYPE_DEFS;USECOMMONTYPES</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories);$(SolutionDir)UEFI\;</AdditionalIncludeDirectories>
       <BasicRuntimeChecks />
       <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
@@ -218,11 +232,11 @@
       </FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);RELEASE;NDEBUG;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);RELEASE;NDEBUG;;USE_TYPE_DEFS;USECOMMONTYPES</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories);$(SolutionDir)UEFI\;</AdditionalIncludeDirectories>
       <BasicRuntimeChecks />
       <BufferSecurityCheck>false</BufferSecurityCheck>
     </ClCompile>
@@ -238,8 +252,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
-      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);DEBUG;WIN32;Win32</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);DEBUG;WIN32;Win32;USE_TYPE_DEFS;USECOMMONTYPES</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories);$(SolutionDir)UEFI\;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <ConformanceMode>true</ConformanceMode>
@@ -252,8 +266,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
-      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);RELEASE;NDEBUG;WIN32;Win32</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);RELEASE;NDEBUG;WIN32;Win32;USE_TYPE_DEFS;USECOMMONTYPES</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories);$(SolutionDir)UEFI\;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <ConformanceMode>true</ConformanceMode>
@@ -266,8 +280,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
-      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);DEBUG;</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);DEBUG;;USE_TYPE_DEFS;USECOMMONTYPES</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories);$(SolutionDir)UEFI\;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <ConformanceMode>true</ConformanceMode>
@@ -280,8 +294,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <ClCompile>
-      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);RELEASE;NDEBUG;</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);RELEASE;NDEBUG;;USE_TYPE_DEFS;USECOMMONTYPES</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories);$(SolutionDir)UEFI\;</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <ConformanceMode>true</ConformanceMode>

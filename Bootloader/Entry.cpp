@@ -1,4 +1,4 @@
-#include <UEFIDef.h>
+#include <TypeDefs.h>
 #include <EFI_HANDLE.h>
 #include <EFI_STATUS.h>
 #include <EFI_RESET_TYPE.h>
@@ -7,13 +7,14 @@
 #include <Protocols/IO/Console/EFI_CONSOLE_COLOR.h>
 #include <Graphics/GraphicsContext.h>
 #include <EFIConsole.h>
-#include "Graphics/Color.h"
-#include "Enviroment/Unicode.h"
+#include <Graphics/Color.h>
+#include <Enviroment/Unicode.h>
 
 namespace Bootloader
 {
     using namespace EFI;
-    using namespace Graphics;
+    using namespace Common::Enviroment;
+    using namespace Common::Graphics;
 
     constinit const CHAR16* boot_GOP_LOCATE_ERROR = u"Error in Locate Protocol: ";
 
@@ -32,18 +33,17 @@ namespace Bootloader
     {
         systemTable->ConOut->Reset(systemTable->ConOut, false);
 
-        GraphicsContext gop;
-        EFI_STATUS gopStatus = gop.Initialize(handle, systemTable);
+        GraphicsContext gop = GraphicsContext::Initialize(handle, systemTable);
         
-        if (gopStatus != EFI_STATUS::SUCCESS)
+        if (GraphicsContext::LastStatus != EFI::EFI_STATUS::SUCCESS)
         {
             WaitForKey(systemTable);
             SetConsoleColor(systemTable, EFI_CONSOLE_COLOR::FATAL_COLOR);
             ClearConOut(systemTable);
             Print(systemTable, boot_GOP_LOCATE_ERROR);
-            PrintLine(systemTable, UTF16::ToString(gopStatus));
+            PrintLine(systemTable, UTF16::ToString(GraphicsContext::LastStatus));
             WaitForKey(systemTable);
-            return gopStatus;
+            return GraphicsContext::LastStatus;
         }
 
         gop.ClearScreen();
@@ -64,7 +64,8 @@ namespace Bootloader
 
         WaitForKey(systemTable);
 
-        systemTable->RuntimeServices->ResetSystem(EFI::EFI_RESET_TYPE::Cold, EFI_STATUS::SUCCESS, 0, nullptr);
+        systemTable->RuntimeServices->ResetSystem(EFI_RESET_TYPE::SHUTDOWN, EFI_STATUS::SUCCESS, 0, nullptr);
+
 
         return EFI_STATUS::SUCCESS;
     }

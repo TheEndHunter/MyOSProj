@@ -1,5 +1,4 @@
 #pragma once
-
 #if defined(ARM) || defined(WIN32)
 #define BITS_32
 #elif defined(ARM64) || defined(x64)
@@ -39,11 +38,11 @@
 #define UINT32 unsigned int
 #define UINT64 unsigned long long
 
-
 #if defined(BITS_32)
 #define INTN INT32
 #define UINTN UINT32
 #elif defined(BITS_64)
+
 #define INTN INT64
 #define UINTN UINT64
 #else
@@ -59,24 +58,30 @@
 #define INT128 __int128
 
 #elif defined(__GNUC__) & defined(__int128)
+#define UNICODE
 #define UINT128 unsigned __int128
 #define INT128 __int128
 #else
 
+#endif
+
+#if !defined(STRUCT_INT128)
+#define  STRUCT_INT128
 struct int128
 {
 	UINT64 Low;
 	INT64 High;
 };
+#define INT128 int128
+#endif
+#if !defined(STRUCT_UINT128)
+#define  STRUCT_UINT128
 struct uint128
 {
 	UINT64 Low;
 	UINT64 High;
 };
-
 #define UINT128 uint128
-#define INT128 int128
-
 #endif
 
 /*

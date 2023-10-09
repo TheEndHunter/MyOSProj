@@ -1,5 +1,3 @@
-#include "GraphicsContext.h"
-#include <UEFIDef.h>
 #include <EFI_STATUS.h>
 #include <EFI_HANDLE.h>
 #include <EFI_SYSTEM_TABLE.h>
@@ -10,52 +8,45 @@
 #include <Protocols/Graphics/EFI_GRAPHICS_OUTPUT_BLT_OPERATION.h>
 #include <Protocols/Graphics/EFI_GRAPHICS_OUTPUT_MODE_INFORMATION.h>
 #include <Enviroment/Unicode.h>
+#include "GraphicsContext.h"
 
-namespace Bootloader::Graphics
+namespace Common::Graphics
 {
 	using namespace EFI;
-
-	EFI::EFI_STATUS GraphicsContext::Initialize(EFI::EFI_HANDLE hnd, EFI::EFI_SYSTEM_TABLE* sysTable)
+;
+	EFI::EFI_STATUS Graphics::GraphicsContext::LastStatus = EFI::EFI_STATUS::SUCCESS;
+	GraphicsContext GraphicsContext::Initialize(EFI::EFI_HANDLE hnd, EFI::EFI_SYSTEM_TABLE* sysTable)
 	{
-		if (gop != nullptr)
-		{
-			return EFI::EFI_STATUS::SUCCESS;
-		}
-
+		EFI_GRAPHICS_OUTPUT_PROTOCOL* gop = nullptr;
 		// Locate the GOP protocol and store it in the gop variable, use locate protocol first then try to locate handle Buffer if that fails, if that fails then return the error
 
-		EFI::EFI_STATUS status = sysTable->BootServices->LocateProtocol(&EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID, nullptr, (void**)&gop);
+		LastStatus = sysTable->BootServices->LocateProtocol(&EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID, nullptr, (void**)&gop);
 
-		if (status != EFI::EFI_STATUS::SUCCESS)
+		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
 		{
 			UINTN handleCount = 0;
 			EFI::EFI_HANDLE* handleBuffer;
 
-			status = sysTable->BootServices->LocateHandleBuffer(EFI_LOCATE_SEARCH_TYPE::ByProtocol, &EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID, nullptr, &handleCount, &handleBuffer);
+			LastStatus = sysTable->BootServices->LocateHandleBuffer(EFI_LOCATE_SEARCH_TYPE::ByProtocol, &EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID, nullptr, &handleCount, &handleBuffer);
 			
 			sysTable->ConOut->OutputString(sysTable->ConOut, Enviroment::UTF16::ToString(handleCount) );
 
-			if (status != EFI::EFI_STATUS::SUCCESS)
+			if (LastStatus != EFI::EFI_STATUS::SUCCESS)
 			{
-				return status;
+				return nullptr;
 			}
 
-			status = sysTable->BootServices->OpenProtocol(handleBuffer[0], &EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID, (void**)&gop, hnd, nullptr, EFI::EFI_OPEN_PROTOCOL_GET_PROTOCOL);
+			LastStatus = sysTable->BootServices->OpenProtocol(handleBuffer[0], &EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID, (void**)&gop, hnd, nullptr, EFI::EFI_OPEN_PROTOCOL_GET_PROTOCOL);
 
 			sysTable->BootServices->FreePool(handleBuffer);
 		}
 
-			return status;
+			return GraphicsContext(gop);
 	};
 
-	EFI::EFI_STATUS GraphicsContext::Terminate(EFI::EFI_HANDLE hnd, EFI::EFI_SYSTEM_TABLE* sysTable)
+	void GraphicsContext::Terminate(EFI::EFI_HANDLE hnd, EFI::EFI_SYSTEM_TABLE* sysTable)
 	{
-		if (gop == nullptr)
-		{
-			return EFI::EFI_STATUS::SUCCESS;
-		}
-
-		return sysTable->BootServices->CloseProtocol(sysTable->ConsoleOutHandle, &EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID, hnd, nullptr);
+		LastStatus = sysTable->BootServices->CloseProtocol(sysTable->ConsoleOutHandle, &EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID, hnd, nullptr);
 	};
 
 	void GraphicsContext::SetForegroundPixel(UINTN xPos, UINTN yPos)
@@ -281,9 +272,9 @@ namespace Bootloader::Graphics
 		return gop->Mode->Info->VerticalResolution;
 	};
 
-	GraphicsContext::GraphicsContext()
+	GraphicsContext::GraphicsContext(EFI_GRAPHICS_OUTPUT_PROTOCOL* g)
 	{
-		gop = nullptr;
+		gop = g;
 		CurrentBackground = Color::ToEFI(Colors::Black);
 		CurrentForeground = Color::ToEFI(Colors::White);
 	};

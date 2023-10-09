@@ -1,10 +1,10 @@
 #pragma once
-#include "Unicode.h"
-#include <UEFIDef.h>
+#include "TypeDefs.h"
 #include <EFI_GUID.h>
 #include <EFI_STATUS.h>
+#include "Unicode.h"
 
-namespace Bootloader::Enviroment
+namespace Common::Enviroment
 {
 	CHAR16 _u16_hex16String[6]{ u'\0' };
 	CHAR16 _u16_hex32String[10]{ u'\0' };
@@ -41,9 +41,9 @@ namespace Bootloader::Enviroment
 	CHAR8 _tu64String[21]{ '\0' };
 	CHAR8 _tu8String[4]{ '\0' };
 	const CHAR16* _u16_hexChars = u"0123456789ABCDEF";
-	const CHAR16* Bootloader::Enviroment::UTF16::NewLine = u"\r\n";
+	const CHAR16* Common::Enviroment::UTF16::NewLine = u"\r\n";
 	const CHAR8* _hexChars = "0123456789ABCDEF";
-	const CHAR8* Bootloader::Enviroment::UTF8::NewLine = "\r\n";
+	const CHAR8* Common::Enviroment::UTF8::NewLine = "\r\n";
 	constinit const CHAR16* _u16_ABORTED = u"ABORTED";
 	constinit const CHAR16* _u16_ACCESS_DENIED = u"ACCESS_DENIED";
 	constinit const CHAR16* _u16_ALREADY_STARTED = u"ALREADY_STARTED";

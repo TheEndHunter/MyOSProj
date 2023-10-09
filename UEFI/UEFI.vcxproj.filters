@@ -275,5 +275,35 @@
     <ClInclude Include="Protocols\IO\Console\EFI_CONSOLE_COLOR.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Protocols\IO\Media\EFI_LOAD_FILE_PROTOCOL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Media\EFI_LOAD_FILE2_PROTOCOL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Media\EFI_SIMPLE_FILE_SYSTEM_PROTOCOL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Media\EFI_FILE_PROTOCOL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Media\EFI_FILE_IO_TOKEN.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Media\EFI_FILE_ATTRIBUTES.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Media\EFI_FILE_MODES.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Media\EFI_FILE_INFO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Media\EFI_FILE_SYSTEM_INFO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Media\EFI_FILE_SYSTEM_VOLUME_LABLE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 #pragma once
 #include "TypeDefs.h"
 
-namespace LibFS
+namespace Common
 {
 	class IFileSystem
 	{

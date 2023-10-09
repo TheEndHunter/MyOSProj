@@ -2,6 +2,7 @@
 #include "UEFIDef.h"
 namespace EFI
 {
+
 #if defined(BITS_64)
 	constexpr static UINTN ERROR_MASK = 0x8000000000000000;
 	constexpr static UINTN WARNING_MASK = 0x0000000000000000;

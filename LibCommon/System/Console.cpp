@@ -1,9 +1,9 @@
 #include "Console.h"
 #include "Graphics/Color.h"
 #include "Graphics/GraphicsContext.h"
-#include <UEFIDef.h>
+#include "TypeDefs.h"
 
-namespace Bootloader::System
+namespace Common::System
 {
 	Console::Console(Graphics::GraphicsContext* c)
 	{
@@ -104,6 +104,16 @@ namespace Bootloader::System
 
 	void Console::WriteLine(const CHAR8* fmt, Graphics::Color bg, Graphics::Color fg ...)
 	{
+	}
+
+	CHAR16 Console::ReadKey()
+	{
+		return '\0';
+	}
+
+	CHAR16* Console::ReadLine()
+	{
+		return nullptr;
 	}
 
 	void Console::ClearScreen()

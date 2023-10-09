@@ -1,5 +1,4 @@
 #pragma once
-
 #if defined(ARM) || defined(WIN32)
 #define BITS_32
 #elif defined(ARM64) || defined(x64)
@@ -9,7 +8,7 @@
 #endif
 
 /*
-*  Setup defines for Data Type Sizes Per Processor Bitness, switching based on on of the following compilers being used:
+*  Setup defines for Data Type Sizes Per Processor Bitness based on edk2, switching based on on of the following compilers being used:
 * including wide character support
 *  MSVC or GNU
 */
@@ -59,24 +58,30 @@
 #define INT128 __int128
 
 #elif defined(__GNUC__) & defined(__int128)
+#define UNICODE
 #define UINT128 unsigned __int128
 #define INT128 __int128
 #else
 
+#endif
+
+#if !defined(STRUCT_INT128)
+#define  STRUCT_INT128
 struct int128
 {
 	UINT64 Low;
 	INT64 High;
 };
+#define INT128 int128
+#endif
+#if !defined(STRUCT_UINT128)
+#define  STRUCT_UINT128
 struct uint128
 {
 	UINT64 Low;
 	UINT64 High;
 };
-
 #define UINT128 uint128
-#define INT128 int128
-
 #endif
 
 /*
@@ -111,8 +116,6 @@ struct uint128
 */
 
 #if defined(_MSC_VER)
-#define EFIAPI  __cdecl
-#define EFIAPIV  __cdecl
 #define VARARGS  __cdecl
 #define CDECL  __cdecl
 #define STDCALL  __stdcall

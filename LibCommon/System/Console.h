@@ -1,9 +1,9 @@
 #pragma once
-#include <UEFIDef.h>
+#include "TypeDefs.h"
 #include "Graphics\Color.h"
 #include <Graphics/GraphicsContext.h>
 
-namespace Bootloader::System
+namespace Common::System
 {
 	class Console
 	{
@@ -35,6 +35,9 @@ namespace Bootloader::System
 		void WriteLine(const CHAR8* fmt, Graphics::Color bg, ...);
 		void WriteLine(const CHAR8* str, Graphics::Color bg, Graphics::Color fg);
 		void WriteLine(const CHAR8* fmt, Graphics::Color bg, Graphics::Color fg ...);
+
+		CHAR16 ReadKey();
+		CHAR16* ReadLine();
 
 		void ClearScreen();
 		void ClearScreen(Graphics::Color bg);

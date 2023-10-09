@@ -1,9 +1,9 @@
 #pragma once
-#include <UEFIDef.h>
+#include "TypeDefs.h"
 #include <EFI_GUID.h>
 #include <EFI_STATUS.h>
 
-namespace Bootloader::Enviroment
+namespace Common::Enviroment
 {
 	class UTF16
 	{

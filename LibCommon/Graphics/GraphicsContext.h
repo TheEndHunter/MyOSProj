@@ -1,5 +1,5 @@
 #pragma once
-#include "UEFIDef.h"
+#include "TypeDefs.h"
 #include "EFI_STATUS.h"
 #include "EFI_HANDLE.h"
 #include "EFI_SYSTEM_TABLE.h"
@@ -7,45 +7,45 @@
 #include <Protocols/Graphics/EFI_GRAPHICS_OUTPUT_MODE_INFORMATION.h>
 #include <Protocols/Graphics/EFI_GRAPHICS_OUTPUT_BLT_PIXEL.h>
 #include "Color.h"
-#include "Color.h"
 
-namespace Bootloader::Graphics
+namespace Common::Graphics
 {
     struct GraphicsContext
-    {
+    { 
+    protected:
+       GraphicsContext(EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL* g);
     public:
-       GraphicsContext();
-       EFI::EFI_STATUS Initialize(EFI::EFI_HANDLE hnd, EFI::EFI_SYSTEM_TABLE* sysTable);
-       
-       EFI::EFI_STATUS Terminate(EFI::EFI_HANDLE hnd, EFI::EFI_SYSTEM_TABLE* sysTable);
+        static EFI::EFI_STATUS LastStatus;
+        static GraphicsContext Initialize(EFI::EFI_HANDLE hnd, EFI::EFI_SYSTEM_TABLE* sysTable); 
+        void Terminate(EFI::EFI_HANDLE hnd, EFI::EFI_SYSTEM_TABLE* sysTable);
 
-       void SetForegroundPixel(UINTN xPos, UINTN yPos);
-       void SetForegroundPixel(UINTN xPos, UINTN yPos, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color);
-       void SetForegroundPixel(UINTN xPos, UINTN yPos, Color* color);
-       void SetForegroundPixel(UINTN xPos, UINTN yPos, Color color);
-       void SetForegroundPixel(UINTN xPos, UINTN yPos, UINT8 r, UINT8 g, UINT8 b, UINT8 a = (UINT8)0xFF);
-       void SetForegroundPixel(UINTN xPos, UINTN yPos, UINT32 color);
+        void SetForegroundPixel(UINTN xPos, UINTN yPos);
+        void SetForegroundPixel(UINTN xPos, UINTN yPos, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color);
+        void SetForegroundPixel(UINTN xPos, UINTN yPos, Color* color);
+        void SetForegroundPixel(UINTN xPos, UINTN yPos, Color color);
+        void SetForegroundPixel(UINTN xPos, UINTN yPos, UINT8 r, UINT8 g, UINT8 b, UINT8 a = (UINT8)0xFF);
+        void SetForegroundPixel(UINTN xPos, UINTN yPos, UINT32 color);
 
-       void SetBackgroundPixel(UINTN xPos, UINTN yPos);
-       void SetBackgroundPixel(UINTN xPos, UINTN yPos, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color);
-       void SetBackgroundPixel(UINTN xPos, UINTN yPos, Color* color);
-       void SetBackgroundPixel(UINTN xPos, UINTN yPos, Color color);
-       void SetBackgroundPixel(UINTN xPos, UINTN yPos, UINT8 r, UINT8 g, UINT8 b, UINT8 a = (UINT8)0xFF);
-       void SetBackgroundPixel(UINTN xPos, UINTN yPos, UINT32 color);
+        void SetBackgroundPixel(UINTN xPos, UINTN yPos);
+        void SetBackgroundPixel(UINTN xPos, UINTN yPos, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color);
+        void SetBackgroundPixel(UINTN xPos, UINTN yPos, Color* color);
+        void SetBackgroundPixel(UINTN xPos, UINTN yPos, Color color);
+        void SetBackgroundPixel(UINTN xPos, UINTN yPos, UINT8 r, UINT8 g, UINT8 b, UINT8 a = (UINT8)0xFF);
+        void SetBackgroundPixel(UINTN xPos, UINTN yPos, UINT32 color);
 
-       void ClearScreen();
-       void ClearScreen(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color);
-       void ClearScreen(Color* color);
-       void ClearScreen(Color color);
-       void ClearScreen(UINT8 r, UINT8 g, UINT8 b, UINT8 a = (UINT8)0xFF);
-       void ClearScreen(UINT32 color);
+        void ClearScreen();
+        void ClearScreen(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color);
+        void ClearScreen(Color* color);
+        void ClearScreen(Color color);
+        void ClearScreen(UINT8 r, UINT8 g, UINT8 b, UINT8 a = (UINT8)0xFF);
+        void ClearScreen(UINT32 color);
 
-       void DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height);
-       void DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color);
-       void DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, Color* color);
-       void DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, Color color);
-       void DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINT8 r, UINT8 g, UINT8 b, UINT8 a = (UINT8)0xFF);
-       void DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINT32 color);
+        void DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height);
+        void DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color);
+        void DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, Color* color);
+        void DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, Color color);
+        void DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINT8 r, UINT8 g, UINT8 b, UINT8 a = (UINT8)0xFF);
+        void DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINT32 color);
 
        //void DrawFilledRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height);
        //void DrawFilledRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color);
@@ -97,7 +97,6 @@ namespace Bootloader::Graphics
 
     private:
         EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL* gop;
-
         EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL CurrentBackground;
         EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL CurrentForeground;
     };

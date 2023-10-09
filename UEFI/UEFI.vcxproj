@@ -63,7 +63,17 @@
     <ClInclude Include="Protocols\Debug\EFI_DEBUG_IMAGE_INFO.h" />
     <ClInclude Include="Protocols\EFI_LOADED_IMAGE_PROTOCOL.h" />
     <ClInclude Include="Protocols\IO\Console\EFI_CONSOLE_COLOR.h" />
+    <ClInclude Include="Protocols\IO\Media\EFI_FILE_ATTRIBUTES.h" />
+    <ClInclude Include="Protocols\IO\Media\EFI_FILE_INFO.h" />
+    <ClInclude Include="Protocols\IO\Media\EFI_FILE_IO_TOKEN.h" />
+    <ClInclude Include="Protocols\IO\Media\EFI_FILE_MODES.h" />
+    <ClInclude Include="Protocols\IO\Media\EFI_FILE_PROTOCOL.h" />
+    <ClInclude Include="Protocols\IO\Media\EFI_FILE_SYSTEM_INFO.h" />
+    <ClInclude Include="Protocols\IO\Media\EFI_FILE_SYSTEM_VOLUME_LABLE.h" />
+    <ClInclude Include="Protocols\IO\Media\EFI_LOAD_FILE2_PROTOCOL.h" />
     <ClInclude Include="Protocols\IO\Console\EFI_UNICODE_CTRL_CHAR.h" />
+    <ClInclude Include="Protocols\IO\Media\EFI_LOAD_FILE_PROTOCOL.h" />
+    <ClInclude Include="Protocols\IO\Media\EFI_SIMPLE_FILE_SYSTEM_PROTOCOL.h" />
     <ClInclude Include="Protocols\IO\Peripheral\EFI_ABSOLUTE_POINTER_MODE.h" />
     <ClInclude Include="Protocols\IO\Peripheral\EFI_ABSOLUTE_POINTER_PROTOCOL.h" />
     <ClInclude Include="Protocols\IO\Peripheral\EFI_ABSOLUTE_POINTER_STATE.h" />
@@ -233,7 +243,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);DEBUG;WIN32;Win32</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);DEBUG;WIN32;Win32;USE_UEFI_DEF;USEUEFITYPES</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -256,7 +266,7 @@
       </FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);RELEASE;NDEBUG;WIN32;Win32</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);RELEASE;NDEBUG;WIN32;Win32;USE_UEFI_DEF;USEUEFITYPES</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -278,7 +288,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);DEBUG;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);DEBUG;;USE_UEFI_DEF;USEUEFITYPES</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -301,7 +311,7 @@
       </FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);RELEASE;NDEBUG;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);RELEASE;NDEBUG;;USE_UEFI_DEF;USEUEFITYPES</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -321,7 +331,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
-      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);DEBUG;WIN32;Win32</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);DEBUG;WIN32;Win32;USE_UEFI_DEF;USEUEFITYPES</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -335,7 +345,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
-      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);RELEASE;NDEBUG;WIN32;Win32</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);RELEASE;NDEBUG;WIN32;Win32;USE_UEFI_DEF;USEUEFITYPES</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -349,7 +359,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
-      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);DEBUG;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);DEBUG;;USE_UEFI_DEF;USEUEFITYPES</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -363,7 +373,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <ClCompile>
-      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);RELEASE;NDEBUG;</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);RELEASE;NDEBUG;;USE_UEFI_DEF;USEUEFITYPES</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>

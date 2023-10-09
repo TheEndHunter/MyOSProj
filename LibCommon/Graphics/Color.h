@@ -3,7 +3,7 @@
 #include <Protocols/Graphics/EFI_GRAPHICS_OUTPUT_BLT_PIXEL.h>
 
 
-namespace Bootloader::Graphics
+namespace Common::Graphics
 {
 	/*
 	*  struct for containing a 4 8-bit color values.

@@ -10,7 +10,7 @@
 namespace Bootloader
 {
     using namespace EFI;
-    using namespace Bootloader::Enviroment;
+    using namespace Common::Enviroment;
 
     static void ClearConOut(EFI_SYSTEM_TABLE* systemTable)
     {

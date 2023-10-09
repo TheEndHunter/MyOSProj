@@ -7,9 +7,9 @@ namespace EFI
 	//******************************************************
 	enum EFI_RESET_TYPE
 	{
-		Cold,
-		Warm,
-		Shutdown,
-		PlatformSpecific
+		COLD,
+		WARM,
+		SHUTDOWN,
+		PLATFORMSPECIFIC
 	};
 }
