@@ -179,6 +179,7 @@
       <BasicRuntimeChecks />
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <BufferSecurityCheck>false</BufferSecurityCheck>
+      <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -192,7 +193,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <AllowIsolation>
       </AllowIsolation>
-      <OutputFile>$(OutDir)$(TargetName).efi</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -211,6 +212,7 @@
       <BasicRuntimeChecks />
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <BufferSecurityCheck>false</BufferSecurityCheck>
+      <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -226,7 +228,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <AllowIsolation>
       </AllowIsolation>
-      <OutputFile>$(OutDir)$(TargetName).efi</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -242,6 +244,7 @@
       <BasicRuntimeChecks />
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <BufferSecurityCheck>false</BufferSecurityCheck>
+      <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -255,7 +258,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <AllowIsolation>
       </AllowIsolation>
-      <OutputFile>$(OutDir)$(TargetName).efi</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -274,6 +277,7 @@
       <BasicRuntimeChecks />
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <BufferSecurityCheck>false</BufferSecurityCheck>
+      <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -289,7 +293,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <AllowIsolation>
       </AllowIsolation>
-      <OutputFile>$(OutDir)$(TargetName).efi</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -303,6 +307,7 @@
       <Optimization>Disabled</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <BufferSecurityCheck>false</BufferSecurityCheck>
+      <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
     </ClCompile>
     <Link>
       <EntryPointSymbol>KrnlMain</EntryPointSymbol>
@@ -315,7 +320,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <AllowIsolation>
       </AllowIsolation>
-      <OutputFile>$(OutDir)$(TargetName).efi</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -330,6 +335,7 @@
       <WholeProgramOptimization>true</WholeProgramOptimization>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <BufferSecurityCheck>false</BufferSecurityCheck>
+      <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
     </ClCompile>
     <Link>
       <EntryPointSymbol>KrnlMain</EntryPointSymbol>
@@ -342,7 +348,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <AllowIsolation>
       </AllowIsolation>
-      <OutputFile>$(OutDir)$(TargetName).efi</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)</OutputFile>
       <GenerateDebugInformation />
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
@@ -357,6 +363,7 @@
       <Optimization>Disabled</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <BufferSecurityCheck>false</BufferSecurityCheck>
+      <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
     </ClCompile>
     <Link>
       <EntryPointSymbol>KrnlMain</EntryPointSymbol>
@@ -369,7 +376,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <AllowIsolation>
       </AllowIsolation>
-      <OutputFile>$(OutDir)$(TargetName).efi</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -384,6 +391,7 @@
       <WholeProgramOptimization>true</WholeProgramOptimization>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <BufferSecurityCheck>false</BufferSecurityCheck>
+      <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
     </ClCompile>
     <Link>
       <EntryPointSymbol>KrnlMain</EntryPointSymbol>
@@ -396,7 +404,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <AllowIsolation>
       </AllowIsolation>
-      <OutputFile>$(OutDir)$(TargetName).efi</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)</OutputFile>
       <GenerateDebugInformation />
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>

@@ -53,20 +53,25 @@ namespace Bootloader
         UINTN w = gop.GetWidth();
         UINTN h = gop.GetHeight();
 
+        UINTN cX = w / 2;
+        UINTN cY = h / 2;
+
         UINTN x1 = w / 3;
         UINTN y1 = h / 3;
 
         UINTN x2 = w / 4;
         UINTN y2 = h / 4;
 
-        gop.DrawRectangle(x1, y1, x1, y1, Colors::MediumVioletRed);
-        gop.DrawRectangle(x2, y2, x2, y2, Colors::HotPink);
+        UINTN posX = cX - (x2 / 2);
+        UINTN posY = cY - (y2 / 2);
+
+        gop.DrawFilledRectangle(x1, y1, x1, y1, Colors::MediumVioletRed);
+        gop.DrawFilledRectangle(posX, posY, x2, y2, Colors::HotPink);
 
         WaitForKey(systemTable);
 
         systemTable->RuntimeServices->ResetSystem(EFI_RESET_TYPE::SHUTDOWN, EFI_STATUS::SUCCESS, 0, nullptr);
-
-
+        
         return EFI_STATUS::SUCCESS;
     }
 
