@@ -1,7 +1,9 @@
 {
   "profiles": {
     "QemuManager": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "$(Platform)\r\n$(Configuration)\r\n..\\$(Platform)_$(Configuration)_VirtualOS.vhdx",
+      "workingDirectory": "$(SolutionDir)\\Tools\\Run\\"
     }
   }
 }

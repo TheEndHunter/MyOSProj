@@ -9,30 +9,43 @@
 #include <Protocols/Graphics/EFI_GRAPHICS_OUTPUT_MODE_INFORMATION.h>
 #include <Enviroment/Unicode.h>
 #include "GraphicsContext.h"
+#include <Math/Math.h>
 
 namespace Common::Graphics
 {
 	using namespace EFI;
-	;
+
+	static EFI_INPUT_KEY __WaitForKey(EFI_SYSTEM_TABLE* sysTable)
+	{
+		EFI_INPUT_KEY key;
+		while (sysTable->ConIn->ReadKeyStroke(sysTable->ConIn, &key) == EFI_STATUS::NOT_READY)
+		{
+			sysTable->BootServices->Stall(1000);
+		}
+		sysTable->ConIn->Reset(sysTable->ConIn, false);
+		return key;
+	}
+
 	EFI::EFI_STATUS Graphics::GraphicsContext::LastStatus = EFI::EFI_STATUS::SUCCESS;
 	GraphicsContext GraphicsContext::Initialize(EFI::EFI_HANDLE hnd, EFI::EFI_SYSTEM_TABLE* sysTable)
 	{
 		EFI_GRAPHICS_OUTPUT_PROTOCOL* gop = nullptr;
 		// Locate the GOP protocol and store it in the gop variable, use locate protocol first then try to locate handle Buffer if that fails, if that fails then return the error
-
 		LastStatus = sysTable->BootServices->LocateProtocol(&EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID, nullptr, (void**)&gop);
 
 		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
 		{
+			sysTable->ConOut->OutputString(sysTable->ConOut, u"Unable to locate using LocateProtocol...\n");
 			UINTN handleCount = 0;
 			EFI::EFI_HANDLE* handleBuffer;
-
+			sysTable->ConOut->OutputString(sysTable->ConOut, u"Trying LocateHandleBuffer...\n");
 			LastStatus = sysTable->BootServices->LocateHandleBuffer(EFI_LOCATE_SEARCH_TYPE::ByProtocol, &EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID, nullptr, &handleCount, &handleBuffer);
 
 			sysTable->ConOut->OutputString(sysTable->ConOut, Enviroment::UTF16::ToString(handleCount));
 
 			if (LastStatus != EFI::EFI_STATUS::SUCCESS)
 			{
+				sysTable->ConOut->OutputString(sysTable->ConOut, u"Failed To Locate Graphics...\n");
 				return nullptr;
 			}
 
@@ -167,50 +180,67 @@ namespace Common::Graphics
 
 	void GraphicsContext::DrawLine(UINTN sXPos, UINTN sYPos, UINTN eXPos, UINTN eYPos, UINTN thickness)
 	{
-		UINTN xDiff = eXPos - sXPos;
-		UINTN yDiff = eYPos - sYPos;
-
-
 	}
 	void GraphicsContext::DrawLine(UINTN sXPos, UINTN sYPos, UINTN eXPos, UINTN eYPos, UINTN thickness, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color)
 	{
-
+		CurrentForeground = *color;
+		DrawLine(sXPos, sYPos, eXPos, eYPos, thickness);
 	}
 	void GraphicsContext::DrawLine(UINTN sXPos, UINTN sYPos, UINTN eXPos, UINTN eYPos, UINTN thickness, Color* color)
 	{
+		CurrentForeground = Color::ToEFI(color);
+		DrawLine(sXPos, sYPos, eXPos, eYPos, thickness);
 	}
 	void GraphicsContext::DrawLine(UINTN sXPos, UINTN sYPos, UINTN eXPos, UINTN eYPos, UINTN thickness, Color color)
 	{
+		CurrentForeground = Color::ToEFI(color);
+		DrawLine(sXPos, sYPos, eXPos, eYPos, thickness);
 	}
 	void GraphicsContext::DrawLine(UINTN sXPos, UINTN sYPos, UINTN eXPos, UINTN eYPos, UINTN thickness, UINT8 r, UINT8 g, UINT8 b, UINT8 a)
 	{
+		CurrentForeground = EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ b,g,r,a };
+		DrawLine(sXPos, sYPos, eXPos, eYPos, thickness);
 	}
 	void GraphicsContext::DrawLine(UINTN sXPos, UINTN sYPos, UINTN eXPos, UINTN eYPos, UINTN thickness, UINT32 color)
 	{
+		CurrentForeground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ (UINT8)((color & 0x0000FF00) >> 8),(UINT8)((color & 0x00FF0000) >> 16),(UINT8)((color & 0xFF000000) >> 24), (UINT8)((color & 0x000000FF)) };
+		DrawLine(sXPos, sYPos, eXPos, eYPos, thickness);
 	}
 
 	void GraphicsContext::DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINTN thickness)
 	{
+
 	}
 	void GraphicsContext::DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINTN thickness, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color)
 	{
+		CurrentForeground = *color;
+		DrawRectangle(xPos, yPos, width, height, thickness);
 	}
 	void GraphicsContext::DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINTN thickness, Color* color)
 	{
+		CurrentForeground = Color::ToEFI(color);
+		DrawRectangle(xPos, yPos, width, height, thickness);
 	}
 	void GraphicsContext::DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINTN thickness, Color color)
 	{
+		CurrentForeground = Color::ToEFI(color);
+		DrawRectangle(xPos, yPos, width, height, thickness);
 	}
 	void GraphicsContext::DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINTN thickness, UINT8 r, UINT8 g, UINT8 b, UINT8 a)
 	{
+		CurrentForeground = EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ b,g,r,a };
+		DrawRectangle(xPos, yPos, width, height, thickness);
 	}
 	void GraphicsContext::DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINTN thickness, UINT32 color)
 	{
+		CurrentForeground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ (UINT8)((color & 0x0000FF00) >> 8),(UINT8)((color & 0x00FF0000) >> 16),(UINT8)((color & 0xFF000000) >> 24), (UINT8)((color & 0x000000FF)) };
+		DrawRectangle(xPos, yPos, width, height, thickness);
 	}
 
 	void GraphicsContext::DrawCircle(UINTN xPos, UINTN yPos, UINTN radius,UINTN thickness)
 	{
 	}
+
 	void GraphicsContext::DrawCircle(UINTN xPos, UINTN yPos, UINTN radius, UINTN thickness,EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color)
 	{
 	}

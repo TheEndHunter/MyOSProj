@@ -116,21 +116,46 @@ struct uint128
 */
 
 #if defined(_MSC_VER)
+#if defined(x86)
 #define EFIAPI  __cdecl
 #define EFIAPIV  __cdecl
+#endif
+
+#if defined(x64)
+#define EFIAPI  __vectorcall
+#define EFIAPIV  __vectorcall
+#endif
+
+#if defined(ARM) || defined(ARM64)
+#define EFIAPI
+#define EFIAPIV
+#endif
+
 #define VARARGS  __cdecl
 #define CDECL  __cdecl
 #define STDCALL  __stdcall
+#define VECTORCALL  __vectorcall
 #define INLINE __inline
 #define STATIC static
 #define CONST const
 
 #elif defined(__GNUC__)
-#define EFIAPI  __attribute__((cdecl))
+#if defined(x64)
+#define EFIAPI __attribute__((ms_abi))
+#define EFIAPIV  __attribute__((ms_abi))
+#endif
+#if defined(x86)
+#define EFIAPI __attribute__((cdecl))
 #define EFIAPIV  __attribute__((cdecl))
+#endif
+#if defined(ARM) || defined(ARM64)
+#define EFIAPI
+#define EFIAPIV
+#endif
 #define VARARGS  __attribute__((cdecl))
 #define CDECL  __attribute__((cdecl))
 #define STDCALL  __attribute__((stdcall))
+#define VECTORCALL  __attribute__((ms_abi))
 
 #if defined(BITS_32)
 #define INLINE __inline__

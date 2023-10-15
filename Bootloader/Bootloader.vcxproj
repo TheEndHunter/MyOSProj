@@ -51,6 +51,7 @@
     <PreferredToolArchitecture>
     </PreferredToolArchitecture>
     <SpectreMitigation>Spectre</SpectreMitigation>
+    <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
     <WindowsSDKDesktopARMSupport>true</WindowsSDKDesktopARMSupport>
@@ -61,6 +62,7 @@
     <PreferredToolArchitecture>
     </PreferredToolArchitecture>
     <SpectreMitigation>Spectre</SpectreMitigation>
+    <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -71,6 +73,7 @@
     <PreferredToolArchitecture>
     </PreferredToolArchitecture>
     <SpectreMitigation>Spectre</SpectreMitigation>
+    <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -82,6 +85,7 @@
     <PreferredToolArchitecture>
     </PreferredToolArchitecture>
     <SpectreMitigation>Spectre</SpectreMitigation>
+    <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -89,6 +93,7 @@
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <SpectreMitigation>Spectre</SpectreMitigation>
+    <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">
     <WindowsSDKDesktopARM64Support>true</WindowsSDKDesktopARM64Support>
@@ -97,6 +102,7 @@
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <SpectreMitigation>Spectre</SpectreMitigation>
+    <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -105,6 +111,7 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <SpectreMitigation>Spectre</SpectreMitigation>
+    <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -114,6 +121,7 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <SpectreMitigation>Spectre</SpectreMitigation>
+    <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -146,7 +154,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\EFI\EFI\BOOT\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\EFI\efi\boot\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
     <EmbedManifest>false</EmbedManifest>
     <GenerateManifest>false</GenerateManifest>
@@ -156,7 +164,7 @@
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\EFI\EFI\BOOT\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\EFI\efi\boot\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
     <EmbedManifest>false</EmbedManifest>
     <GenerateManifest>false</GenerateManifest>
@@ -166,7 +174,7 @@
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\EFI\EFI\BOOT\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\EFI\efi\boot\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
     <EmbedManifest>false</EmbedManifest>
     <GenerateManifest>false</GenerateManifest>
@@ -176,7 +184,7 @@
     <TargetName>BOOTX64</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\EFI\EFI\BOOT\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\EFI\efi\boot\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
     <EmbedManifest>false</EmbedManifest>
     <GenerateManifest>false</GenerateManifest>
@@ -186,7 +194,7 @@
     <TargetName>BOOTAA64</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\EFI\EFI\BOOT\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\EFI\efi\boot\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
     <EmbedManifest>false</EmbedManifest>
     <GenerateManifest>false</GenerateManifest>
@@ -196,7 +204,7 @@
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\EFI\EFI\BOOT\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\EFI\efi\boot\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
     <EmbedManifest>false</EmbedManifest>
     <GenerateManifest>false</GenerateManifest>
@@ -206,7 +214,7 @@
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\EFI\EFI\BOOT\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\EFI\efi\boot\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
     <EmbedManifest>false</EmbedManifest>
     <GenerateManifest>false</GenerateManifest>
@@ -216,7 +224,7 @@
     <TargetName>BOOTIA32</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\EFI\EFI\BOOT\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\EFI\efi\boot\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
     <EmbedManifest>false</EmbedManifest>
     <GenerateManifest>false</GenerateManifest>
@@ -248,6 +256,7 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -260,7 +269,7 @@
       <AdditionalDependencies>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\UEFI$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <RandomizedBaseAddress />
       <DataExecutionPrevention>false</DataExecutionPrevention>
-      <OutputFile>$(OutDir)$(TargetName)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName).efi</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <Manifest>
@@ -292,6 +301,7 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -304,7 +314,7 @@
       <AdditionalDependencies>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\UEFI$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <RandomizedBaseAddress />
       <DataExecutionPrevention>false</DataExecutionPrevention>
-      <OutputFile>$(OutDir)$(TargetName)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName).efi</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <Manifest>
@@ -338,6 +348,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -353,7 +364,7 @@
       <AdditionalDependencies>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\UEFI$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <RandomizedBaseAddress />
       <DataExecutionPrevention>false</DataExecutionPrevention>
-      <OutputFile>$(OutDir)$(TargetName)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName).efi</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -381,6 +392,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -396,7 +408,7 @@
       <AdditionalDependencies>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\UEFI$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <RandomizedBaseAddress />
       <DataExecutionPrevention>false</DataExecutionPrevention>
-      <OutputFile>$(OutDir)$(TargetName)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName).efi</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -423,6 +435,7 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -435,7 +448,7 @@
       <AdditionalDependencies>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\UEFI$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <RandomizedBaseAddress />
       <DataExecutionPrevention>false</DataExecutionPrevention>
-      <OutputFile>$(OutDir)$(TargetName)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName).efi</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <Manifest>
@@ -468,6 +481,7 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -480,7 +494,7 @@
       <AdditionalDependencies>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\UEFI$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <RandomizedBaseAddress />
       <DataExecutionPrevention>false</DataExecutionPrevention>
-      <OutputFile>$(OutDir)$(TargetName)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName).efi</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <Manifest>
@@ -514,6 +528,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -529,7 +544,7 @@
       <AdditionalDependencies>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\UEFI$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <RandomizedBaseAddress />
       <DataExecutionPrevention>false</DataExecutionPrevention>
-      <OutputFile>$(OutDir)$(TargetName)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName).efi</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -557,6 +572,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -572,7 +588,7 @@
       <AdditionalDependencies>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\UEFI$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <RandomizedBaseAddress />
       <DataExecutionPrevention>false</DataExecutionPrevention>
-      <OutputFile>$(OutDir)$(TargetName)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName).efi</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>

@@ -40,12 +40,15 @@
     <ClInclude Include="Graphics\Color.h" />
     <ClInclude Include="Graphics\Font\Font.h" />
     <ClInclude Include="Graphics\GraphicsContext.h" />
+    <ClInclude Include="Math\Math.h" />
     <ClInclude Include="System\Console.h" />
     <ClInclude Include="TypeDefs.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FileSystem\EFI_FS.cpp" />
     <ClCompile Include="Enviroment\Unicode.cpp" />
+    <ClCompile Include="FileSystem\FileInfo.h" />
+    <ClCompile Include="FileSystem\VolumeInfo.h" />
     <ClCompile Include="Graphics\GraphicsContext.cpp" />
     <ClCompile Include="System\Console.cpp" />
     <ClCompile Include="TypeDefs.cpp" />
@@ -185,6 +188,7 @@
       <UseUnicodeForAssemblerListing>true</UseUnicodeForAssemblerListing>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -217,6 +221,7 @@
       <UseUnicodeForAssemblerListing>true</UseUnicodeForAssemblerListing>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -248,6 +253,7 @@
       <UseUnicodeForAssemblerListing>true</UseUnicodeForAssemblerListing>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -280,6 +286,7 @@
       <UseUnicodeForAssemblerListing>true</UseUnicodeForAssemblerListing>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -309,6 +316,7 @@
       <UseUnicodeForAssemblerListing>true</UseUnicodeForAssemblerListing>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
     </ClCompile>
     <Lib>
       <SubSystem>EFI Application</SubSystem>
@@ -332,6 +340,7 @@
       <UseUnicodeForAssemblerListing>true</UseUnicodeForAssemblerListing>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
     </ClCompile>
     <Lib>
       <SubSystem>EFI Application</SubSystem>
@@ -355,6 +364,7 @@
       <UseUnicodeForAssemblerListing>true</UseUnicodeForAssemblerListing>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
     </ClCompile>
     <Lib>
       <SubSystem>EFI Application</SubSystem>
@@ -378,6 +388,7 @@
       <UseUnicodeForAssemblerListing>true</UseUnicodeForAssemblerListing>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
+      <ExceptionHandling>SyncCThrow</ExceptionHandling>
     </ClCompile>
     <Lib>
       <SubSystem>EFI Application</SubSystem>

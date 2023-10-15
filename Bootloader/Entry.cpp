@@ -9,11 +9,13 @@
 #include <EFIConsole.h>
 #include <Graphics/Color.h>
 #include <Enviroment/Unicode.h>
+#include <FileSystem/EFI_FS.h>
 
 namespace Bootloader
 {
     using namespace EFI;
     using namespace Common::Enviroment;
+    using namespace Common::FileSystem;
     using namespace Common::Graphics;
 
     constinit const CHAR16* boot_GOP_LOCATE_ERROR = u"Error in Locate Protocol: ";
@@ -29,27 +31,28 @@ namespace Bootloader
         return key;
     }
     
-    EFI_STATUS EfiMain(EFI_HANDLE handle, EFI_SYSTEM_TABLE* systemTable)
+    EFI_STATUS EfiMain(EFI_HANDLE imgHndl, EFI_SYSTEM_TABLE* sysTbl)
     {
-        systemTable->ConOut->Reset(systemTable->ConOut, false);
+        sysTbl->ConOut->Reset(sysTbl->ConOut, false);
+        sysTbl->ConIn->Reset(sysTbl->ConIn, false);
 
-        GraphicsContext gop = GraphicsContext::Initialize(handle, systemTable);
-        
+        PrintLine(sysTbl, u"Starting...");
+        WaitForKey(sysTbl);
+
+        GraphicsContext gop = GraphicsContext::Initialize(imgHndl, sysTbl);
         if (GraphicsContext::LastStatus != EFI::EFI_STATUS::SUCCESS)
         {
-            WaitForKey(systemTable);
-            SetConsoleColor(systemTable, EFI_CONSOLE_COLOR::FATAL_COLOR);
-            ClearConOut(systemTable);
-            Print(systemTable, boot_GOP_LOCATE_ERROR);
-            PrintLine(systemTable, UTF16::ToString(GraphicsContext::LastStatus));
-            WaitForKey(systemTable);
+            SetConsoleColor(sysTbl, EFI_CONSOLE_COLOR::FATAL_COLOR);
+            ClearConOut(sysTbl);
+            Print(sysTbl, boot_GOP_LOCATE_ERROR);
+            PrintLine(sysTbl, UTF16::ToString(GraphicsContext::LastStatus));
+            WaitForKey(sysTbl);
             return GraphicsContext::LastStatus;
         }
-
+        PrintLine(sysTbl, u"Graphics Initialized");
+        WaitForKey(sysTbl);
         gop.ClearScreen();
 
-        PrintLine(systemTable, u"GOP INITIALIZED");
-        
         UINTN w = gop.GetWidth();
         UINTN h = gop.GetHeight();
 
@@ -68,10 +71,10 @@ namespace Bootloader
         gop.DrawFilledRectangle(x1, y1, x1, y1, Colors::MediumVioletRed);
         gop.DrawFilledRectangle(posX, posY, x2, y2, Colors::HotPink);
 
-        WaitForKey(systemTable);
+        WaitForKey(sysTbl);
 
-        systemTable->RuntimeServices->ResetSystem(EFI_RESET_TYPE::SHUTDOWN, EFI_STATUS::SUCCESS, 0, nullptr);
-        
+        sysTbl->RuntimeServices->ResetSystem(EFI_RESET_TYPE::SHUTDOWN, EFI_STATUS::SUCCESS, 0, nullptr);
+
         return EFI_STATUS::SUCCESS;
     }
 

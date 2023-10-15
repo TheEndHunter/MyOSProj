@@ -14,6 +14,8 @@
 #include <Protocols/IO/EFI_DEVICE_PATH_PROTOCOL.h>
 #include <Protocols/Configuration/EFI_OPEN_PROTOCOL_INFORMATION_ENTRY.h>
 #include <EFI_MEMORY_TYPE.h>
+#include <EFI_GUID.h>
+#include <EFI_MEMORY_DESCRIPTOR.h>
 
 namespace EFI
 {

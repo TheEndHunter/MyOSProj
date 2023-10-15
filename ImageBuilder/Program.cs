@@ -28,7 +28,7 @@
                 {
                     Console.Clear();
                     Console.WriteLine("Please enter the architecture being used (Select from: x86,x64,ARM,ARM64)");
-                    architecture = Console.ReadLine().ToLower();
+                    architecture = Console.ReadLine()!.ToLower();
 
                     switch (architecture)
                     {
@@ -66,7 +66,7 @@
                     Console.WriteLine("Please enter path of the to the src directory being used(e.g. C:\\Build\\Src)");
                     var test = Console.ReadLine();
 
-                    test = Path.GetFullPath(test);
+                    test = Path.GetFullPath(test!);
 
                     if (Directory.Exists(test))
                     {
@@ -86,7 +86,7 @@
                     Console.WriteLine("Please enter path of the to the src directory being used(e.g. C:\\Build\\Dest)");
                     var test = Console.ReadLine();
 
-                    test = Path.GetFullPath(test);
+                    test = Path.GetFullPath(test!);
 
                     if (Directory.Exists(test))
                     {
@@ -103,7 +103,7 @@
                 {
                     Console.Clear();
                     Console.WriteLine("Please enter the name to use for the file (e.g. 'virtualOS')(prefixes the Architecture and Configuration)");
-                    imgName = Console.ReadLine().ToLower();
+                    imgName = Console.ReadLine()!.ToLower();
 
                     Console.Clear();
                 }
@@ -154,6 +154,48 @@
                 {
                     p.Label = "EFI";
                     p.Type = PartitionType.EFI;
+
+                    var startupPath = Path.Combine(p.SrcPath, "startup.nsh");
+                    if (File.Exists(startupPath))
+                    {
+                        File.Delete(startupPath);
+                    }
+                    using var f = File.CreateText(startupPath);
+                    f.AutoFlush = true;
+                    f.WriteLine("echo -off");
+                    f.WriteLine("mode 80 25");
+                    f.WriteLine("cls");
+
+                    if (configuration == "Debug")
+                    {
+                        for (int i = 0; i < 16; i++)
+                        {
+                            f.WriteLine($"if exists fs{i}:\\efi\\boot\\{bootfile} then");
+                            f.WriteLine($"fs{i}:");
+
+                            f.WriteLine($"echo found Bootloader on fs{i}:");
+                            f.WriteLine($"efi\\boot\\{bootfile}");
+                            f.WriteLine("goto END");
+                            f.WriteLine("endif");
+                            f.Flush();
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 16; i++)
+                        {
+                            f.WriteLine($"if exists fs{i}:\\efi\\boot\\{bootfile} then");
+                            f.WriteLine($"fs{i}:");
+                            f.WriteLine($"efi\\boot\\{bootfile}");
+                            f.WriteLine("goto END");
+                            f.WriteLine("endif");
+
+                            f.Flush();
+                        }
+                    }
+                    f.WriteLine("echo Unable to find Bootloader");
+                    f.WriteLine("END:");
+                    f.Close();
                 }
                 else
                 {
@@ -218,11 +260,12 @@
                 free.Remove(drive);
             }
 
-
             var max = _partitions.Count;
             if (free.Count < max)
             {
                 Console.WriteLine("Not Enough Free Drive letter to create partitions");
+                Console.ReadLine();
+
             }
 
             for (int i = 0; i < max; i++)
@@ -237,39 +280,68 @@
 
             string vhdxPath = Path.GetFullPath(Path.Combine(DestPath, $"{architecture}_{configuration}_{imgName}"));
             string vhdPath = vhdxPath.Replace(".vhdx", ".vhd");
+            int res = 0;
 
             if (File.Exists(vhdxPath))
             {
-                File.Delete(vhdxPath);
+                try
+                {
+                    File.Delete(vhdxPath);
+                }
+                catch
+                {
+                    Console.WriteLine("Unable to delete existing vhdx file");
+                    Console.ReadLine();
+                    return -1;
+                }
             }
 
             if (File.Exists(vhdPath))
             {
-                File.Delete(vhdPath);
-            }
-
-            string atScript = CreateAttachScript(DestPath, architecture, configuration, vhdxPath, ref _partitions);
-            try
-            {
-                ProcessStartInfo a = new()
+                try
                 {
-                    FileName = "Diskpart.exe",
-                    WorkingDirectory = Environment.SystemDirectory,
-                    Arguments = $"/s {atScript}",
-                    WindowStyle = ProcessWindowStyle.Normal,
-                    CreateNoWindow = true,
-                    UseShellExecute = true,
-                    ErrorDialog = true,
-                };
-                Process.Start(a).WaitForExit();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                Console.ReadKey();
-                return e.HResult;
+                    File.Delete(vhdPath);
+                }
+                catch
+                {
+                    Console.WriteLine("Unable to delete existing vhd file");
+                    Console.ReadLine();
+                    return -1;
+                }
             }
 
+            res = Create(DestPath, architecture!, configuration, vhdxPath, ref _partitions);
+            if (res != 0)
+            {
+                return res;
+            }
+
+            res = Mount(DestPath, architecture!, configuration, vhdxPath, ref _partitions);
+
+            foreach (Partition p in _partitions)
+            {
+                DirectoryInfo _src = new(p.SrcPath);
+                DirectoryInfo _dest = new(p.DestPath!);
+                _src.CopyDirectoriesAndFiles(_src!.Parent!.FullName, _dest);
+            }
+
+            res = Detach(DestPath, architecture, configuration, vhdxPath, ref _partitions);
+            if (res != 0)
+            {
+                return res;
+            }
+
+            res = Convert(vhdxPath, vhdPath);
+            if (res != 0)
+            {
+                return res;
+            }
+
+            return 0;
+        }
+
+        private static int Mount(string DestPath, string architecture, string configuration, string vhdxPath, ref List<Partition> _partitions)
+        {
             try
             {
                 string mScript = CreateMountScript(DestPath, architecture, configuration, vhdxPath, ref _partitions);
@@ -284,7 +356,7 @@
                     UseShellExecute = true,
                     ErrorDialog = true,
                 };
-                Process.Start(m).WaitForExit();
+                Process.Start(m)!.WaitForExit();
             }
             catch (Exception e)
             {
@@ -292,77 +364,10 @@
                 Console.ReadKey();
                 return e.HResult;
             }
-
-            foreach (Partition p in _partitions)
-            {
-                DirectoryInfo _src = new(p.SrcPath);
-
-                DirectoryInfo _dest = new(p.DestPath);
-
-                _src.CopyDirectoriesAndFiles(_src.Parent.FullName, _dest);
-
-                if (p.Label == "EFI")
-                {
-                    using var f = File.CreateText(Path.Combine(p.DestPath, "startup.nsh"));
-                    f.AutoFlush = true;
-                    f.WriteLine("echo -off");
-                    f.WriteLine("mode 80 25");
-                    f.WriteLine("cls");
-
-                    if (configuration == "Debug")
-                    {
-                        for (int i = 0; i < 16; i++)
-                        {
-                            f.WriteLine($"if exists fs{i}:\\efi\\boot\\{bootfile} then");
-                            f.WriteLine($"fs{i}:");
-
-                            f.WriteLine($"echo found Bootloader on fs{i}:");
-                            f.WriteLine($"efi\\boot\\{bootfile}");
-                            f.WriteLine("goto END");
-                            f.WriteLine("endif");
-                            f.Flush();
-                        }
-                    }
-                    else
-                    {
-                        for (int i = 0; i < 16; i++)
-                        {
-                            f.WriteLine($"if exists fs{i}:\\efi\\boot\\{bootfile} then");
-                            f.WriteLine($"fs{i}:");
-                            f.WriteLine($"efi\\boot\\{bootfile}");
-                            f.WriteLine("goto END");
-                            f.WriteLine("endif");
-
-                            f.Flush();
-                        }
-                    }
-                    f.WriteLine("Unable to find Bootloader");
-                    f.WriteLine("END:");
-                    f.Close();
-                }
-            }
-            try
-            {
-                string dtScript = CreateDetachScript(DestPath, architecture, configuration, vhdxPath, ref _partitions);
-
-                ProcessStartInfo d = new()
-                {
-                    FileName = "Diskpart.exe",
-                    WorkingDirectory = Environment.SystemDirectory,
-                    Arguments = $"/s {dtScript}",
-                    WindowStyle = ProcessWindowStyle.Normal,
-                    CreateNoWindow = true,
-                    UseShellExecute = true,
-                    ErrorDialog = true,
-                };
-                Process.Start(d).WaitForExit();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                Console.ReadKey();
-                return e.HResult;
-            }
+            return 0;
+        }
+        private static int Convert(string vhdxPath, string vhdPath)
+        {
             try
             {
                 //Convert - VHD - Path c:\test\child1vhdx.vhdx - DestinationPath c:\test\child1vhd.vhd - VHDType Differencing
@@ -379,7 +384,33 @@
                     UseShellExecute = true,
                     ErrorDialog = true,
                 };
-                Process.Start(d).WaitForExit();
+                Process.Start(d)!.WaitForExit();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Console.ReadKey();
+                return e.HResult;
+            }
+            return 0;
+        }
+        private static int Detach(string DestPath, string architecture, string configuration, string vhdxPath, ref List<Partition> partitions)
+        {
+            try
+            {
+                string dtScript = CreateDetachScript(DestPath, architecture, configuration, vhdxPath, ref partitions);
+
+                ProcessStartInfo d = new()
+                {
+                    FileName = "Diskpart.exe",
+                    WorkingDirectory = Environment.SystemDirectory,
+                    Arguments = $"/s {dtScript}",
+                    WindowStyle = ProcessWindowStyle.Normal,
+                    CreateNoWindow = true,
+                    UseShellExecute = true,
+                    ErrorDialog = true,
+                };
+                Process.Start(d)!.WaitForExit();
             }
             catch (Exception e)
             {
@@ -390,6 +421,31 @@
             return 0;
         }
 
+        private static int Create(string DestPath, string architecture, string configuration, string vhdxPath, ref List<Partition> _partitions)
+        {
+            string atScript = CreateAttachScript(DestPath, architecture, configuration, vhdxPath, ref _partitions);
+            try
+            {
+                ProcessStartInfo a = new()
+                {
+                    FileName = "Diskpart.exe",
+                    WorkingDirectory = Environment.SystemDirectory,
+                    Arguments = $"/s {atScript}",
+                    WindowStyle = ProcessWindowStyle.Normal,
+                    CreateNoWindow = true,
+                    UseShellExecute = true,
+                    ErrorDialog = true,
+                };
+                Process.Start(a!)!.WaitForExit();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Console.ReadKey();
+                return e.HResult;
+            }
+            return 0;
+        }
         private static string CreateConvertScript(string vhdxPath, string vhdPath)
         {
             return $"Convert-VHD -Path {vhdxPath} -DestinationPath {vhdPath} -VHDType Fixed";
@@ -411,7 +467,7 @@
                 foreach (var part in partitions)
                 {
                     f.WriteLine($"select partition {index}");
-                    f.WriteLine($"remove letter = {part.DestPath.Replace(":\\", "")}");
+                    f.WriteLine($"remove letter = {part!.DestPath!.Replace(":\\", "")}");
                     index++;
                 }
 
@@ -440,7 +496,7 @@
                 foreach (var part in partitions)
                 {
                     f.WriteLine($"select partition {index}");
-                    f.WriteLine($"assign letter = {part.DestPath.Replace(":\\", "")}");
+                    f.WriteLine($"assign letter = {part!.DestPath!.Replace(":\\", "")}");
                     index++;
                 }
                 f.Close();
