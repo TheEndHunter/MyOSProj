@@ -35,17 +35,14 @@ namespace Common::Graphics
 
 		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
 		{
-			sysTable->ConOut->OutputString(sysTable->ConOut, u"Unable to locate using LocateProtocol...\n");
 			UINTN handleCount = 0;
 			EFI::EFI_HANDLE* handleBuffer;
-			sysTable->ConOut->OutputString(sysTable->ConOut, u"Trying LocateHandleBuffer...\n");
 			LastStatus = sysTable->BootServices->LocateHandleBuffer(EFI_LOCATE_SEARCH_TYPE::ByProtocol, &EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID, nullptr, &handleCount, &handleBuffer);
 
 			sysTable->ConOut->OutputString(sysTable->ConOut, Enviroment::UTF16::ToString(handleCount));
 
 			if (LastStatus != EFI::EFI_STATUS::SUCCESS)
 			{
-				sysTable->ConOut->OutputString(sysTable->ConOut, u"Failed To Locate Graphics...\n");
 				return nullptr;
 			}
 

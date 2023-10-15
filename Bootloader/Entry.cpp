@@ -36,9 +36,6 @@ namespace Bootloader
         sysTbl->ConOut->Reset(sysTbl->ConOut, false);
         sysTbl->ConIn->Reset(sysTbl->ConIn, false);
 
-        PrintLine(sysTbl, u"Starting...");
-        WaitForKey(sysTbl);
-
         GraphicsContext gop = GraphicsContext::Initialize(imgHndl, sysTbl);
         if (GraphicsContext::LastStatus != EFI::EFI_STATUS::SUCCESS)
         {
@@ -50,7 +47,6 @@ namespace Bootloader
             return GraphicsContext::LastStatus;
         }
         PrintLine(sysTbl, u"Graphics Initialized");
-        WaitForKey(sysTbl);
         gop.ClearScreen();
 
         UINTN w = gop.GetWidth();

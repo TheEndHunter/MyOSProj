@@ -184,7 +184,7 @@
       <BasicRuntimeChecks />
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointExceptions>true</FloatingPointExceptions>
-      <StructMemberAlignment>1Byte</StructMemberAlignment>
+      <StructMemberAlignment>Default</StructMemberAlignment>
       <UseUnicodeForAssemblerListing>true</UseUnicodeForAssemblerListing>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
@@ -217,7 +217,7 @@
       <BasicRuntimeChecks />
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointExceptions>true</FloatingPointExceptions>
-      <StructMemberAlignment>1Byte</StructMemberAlignment>
+      <StructMemberAlignment>Default</StructMemberAlignment>
       <UseUnicodeForAssemblerListing>true</UseUnicodeForAssemblerListing>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
@@ -249,7 +249,7 @@
       <BasicRuntimeChecks />
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointExceptions>true</FloatingPointExceptions>
-      <StructMemberAlignment>1Byte</StructMemberAlignment>
+      <StructMemberAlignment>Default</StructMemberAlignment>
       <UseUnicodeForAssemblerListing>true</UseUnicodeForAssemblerListing>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
@@ -282,7 +282,7 @@
       <BasicRuntimeChecks />
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointExceptions>true</FloatingPointExceptions>
-      <StructMemberAlignment>1Byte</StructMemberAlignment>
+      <StructMemberAlignment>Default</StructMemberAlignment>
       <UseUnicodeForAssemblerListing>true</UseUnicodeForAssemblerListing>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
@@ -312,7 +312,7 @@
       <BasicRuntimeChecks />
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointExceptions>true</FloatingPointExceptions>
-      <StructMemberAlignment>1Byte</StructMemberAlignment>
+      <StructMemberAlignment>Default</StructMemberAlignment>
       <UseUnicodeForAssemblerListing>true</UseUnicodeForAssemblerListing>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
@@ -336,7 +336,7 @@
       <BasicRuntimeChecks />
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointExceptions>true</FloatingPointExceptions>
-      <StructMemberAlignment>1Byte</StructMemberAlignment>
+      <StructMemberAlignment>Default</StructMemberAlignment>
       <UseUnicodeForAssemblerListing>true</UseUnicodeForAssemblerListing>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
@@ -360,7 +360,7 @@
       <BasicRuntimeChecks />
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointExceptions>true</FloatingPointExceptions>
-      <StructMemberAlignment>1Byte</StructMemberAlignment>
+      <StructMemberAlignment>Default</StructMemberAlignment>
       <UseUnicodeForAssemblerListing>true</UseUnicodeForAssemblerListing>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
@@ -384,7 +384,7 @@
       <BasicRuntimeChecks />
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointExceptions>true</FloatingPointExceptions>
-      <StructMemberAlignment>1Byte</StructMemberAlignment>
+      <StructMemberAlignment>Default</StructMemberAlignment>
       <UseUnicodeForAssemblerListing>true</UseUnicodeForAssemblerListing>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
