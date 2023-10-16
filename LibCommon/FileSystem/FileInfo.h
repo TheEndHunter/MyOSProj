@@ -9,19 +9,33 @@ namespace Common::FileSystem
 	struct FileInfo
 	{
 	protected:
-		EFI::EFI_FILE_PROTOCOL* _FileHandle;
-
-		FileInfo(EFI::EFI_FILE_PROTOCOL* _file, EFI::EFI_FILE_INFO& info)
+		FileInfo(EFI::EFI_FILE_INFO& info)
+			: Size(info.Size), FileSize(info.FileSize), PhysicalSize(info.PhysicalSize),
+			CreateTime(info.CreateTime), LastAccessTime(info.LastAccessTime),
+			ModificationTime(info.ModificationTime), Attribute(info.Attribute), FileName(info.FileName)
 		{
-			_FileHandle = _file;
-			Size = info.Size;
-			FileSize = info.FileSize;
-			PhysicalSize = info.PhysicalSize;
-			CreateTime = info.CreateTime;
-			LastAccessTime = info.LastAccessTime;
-			ModificationTime = info.ModificationTime;
-			Attribute = info.Attribute;
-			FileName = info.FileName;
+		}
+
+		FileInfo()
+		{
+			Size = 0;
+			FileSize = 0;
+			PhysicalSize = 0;
+			CreateTime = EFI::EFI_TIME();
+			LastAccessTime = EFI::EFI_TIME();
+			ModificationTime = EFI::EFI_TIME();
+			Attribute = 0;
+			FileName = nullptr;
+		}
+
+	public:
+
+		static FileInfo Create(EFI::EFI_FILE_INFO* info)
+		{
+			if (info == nullptr)
+				return FileInfo();
+
+			return FileInfo(*info);
 		}
 
 	public:

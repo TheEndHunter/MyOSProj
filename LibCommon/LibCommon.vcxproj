@@ -35,7 +35,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FileSystem\EFI_FS.h" />
+    <ClInclude Include="FileSystem\FileSystemContext.h" />
     <ClInclude Include="Enviroment\Unicode.h" />
     <ClInclude Include="Graphics\Color.h" />
     <ClInclude Include="Graphics\Font\Font.h" />
@@ -45,7 +45,7 @@
     <ClInclude Include="TypeDefs.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FileSystem\EFI_FS.cpp" />
+    <ClCompile Include="FileSystem\FileSystemContext.cpp" />
     <ClCompile Include="Enviroment\Unicode.cpp" />
     <ClCompile Include="FileSystem\FileInfo.h" />
     <ClCompile Include="FileSystem\VolumeInfo.h" />

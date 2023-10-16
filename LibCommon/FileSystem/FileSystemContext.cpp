@@ -1,10 +1,10 @@
-#include "EFI_FS.h"
-#include <EFI_HANDLE.h>
+#include "FileSystemContext.h"
 #include <Protocols/EFI_LOADED_IMAGE_PROTOCOL.h>
-#include <Protocols/IO/Media/EFI_SIMPLE_FILE_SYSTEM_PROTOCOL.h>
 
 namespace Common::FileSystem
 {
+    const FileSystemContext FileSystemContext::EmptyFS = FileSystemContext();
+
     FileSystemContext::FileSystemContext(EFI::EFI_HANDLE hnd,EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL* fsp)
         : _devhnd(hnd), _fs(fsp), _root(nullptr), _cwd(nullptr), _isVolumeOpen(false)
     {
@@ -83,6 +83,61 @@ namespace Common::FileSystem
             _isVolumeOpen = false;
 		}
     }
+
+    Common::FileSystem::VolumeInfo FileSystemContext::GetVolumeInfo(EFI::EFI_SYSTEM_TABLE* sysTable)
+    {
+        UINTN size = 0;
+        _root->GetInfo(_root, &EFI::EFI_FILE_SYSTEM_INFO_ID, &size, nullptr);
+        EFI::EFI_FILE_SYSTEM_INFO* info;
+        sysTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, size, (void**) &info);
+        EFI::EFI_STATUS s = _root->GetInfo(_root, &EFI::EFI_FILE_SYSTEM_INFO_ID, &size, info);
+        if (s != EFI::EFI_STATUS::SUCCESS)
+        {
+			sysTable->BootServices->FreePool(info);
+            return VolumeInfo::Create(nullptr);
+		}
+        VolumeInfo vinfo = VolumeInfo::Create(info);
+        sysTable->BootServices->FreePool(info);
+        return vinfo;
+    }
+
+    Common::FileSystem::FileInfo FileSystemContext::GetDirectoryInfo(EFI::EFI_SYSTEM_TABLE* sysTable)
+    {
+        UINTN size = 0;
+        _cwd->GetInfo(_cwd, &EFI::EFI_FILE_INFO_ID, &size, nullptr);
+        EFI::EFI_FILE_INFO* info;
+        sysTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, size, (void**)&info);
+        EFI::EFI_STATUS s = _cwd->GetInfo(_cwd, &EFI::EFI_FILE_INFO_ID, &size, info);
+        if (s != EFI::EFI_STATUS::SUCCESS)
+        {
+            sysTable->BootServices->FreePool(info);
+            return FileInfo::Create(nullptr);
+        }
+        FileInfo finfo = FileInfo::Create(info);
+        sysTable->BootServices->FreePool(info);
+        return finfo;
+    }
+
+    Common::FileSystem::FileInfo FileSystemContext::GetFileInfo(EFI::EFI_SYSTEM_TABLE* sysTable, const CHAR16* path)
+    {
+        UINTN size = 0;
+        EFI::EFI_FILE_PROTOCOL *file;
+        _cwd->Open(_cwd, &file, (CHAR16*)path, EFI::EFI_FILE_MODES::READ, EFI::EFI_FILE_ATTRIBUTES::READ_ONLY);
+        file->GetInfo(file, &EFI::EFI_FILE_INFO_ID, &size, nullptr);
+        EFI::EFI_FILE_INFO* info;
+        sysTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, size, (void**)&info);
+        EFI::EFI_STATUS s = file->GetInfo(file, &EFI::EFI_FILE_INFO_ID, &size, info);
+        file->Close(file);
+        if (s != EFI::EFI_STATUS::SUCCESS)
+        {
+            sysTable->BootServices->FreePool(info);
+            return FileInfo::Create(nullptr);
+        }
+        FileInfo finfo = FileInfo::Create(info);
+        sysTable->BootServices->FreePool(info);
+        return finfo;
+    }
+
 
     void FileSystemContext::CloseContext(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd)
     {

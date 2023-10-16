@@ -69,7 +69,7 @@
     <ClInclude Include="Protocols\IO\Media\EFI_FILE_MODES.h" />
     <ClInclude Include="Protocols\IO\Media\EFI_FILE_PROTOCOL.h" />
     <ClInclude Include="Protocols\IO\Media\EFI_FILE_SYSTEM_INFO.h" />
-    <ClInclude Include="Protocols\IO\Media\EFI_FILE_SYSTEM_VOLUME_LABLE.h" />
+    <ClInclude Include="Protocols\IO\Media\EFI_FILE_SYSTEM_VOLUME_LABEL.h" />
     <ClInclude Include="Protocols\IO\Media\EFI_LOAD_FILE2_PROTOCOL.h" />
     <ClInclude Include="Protocols\IO\Console\EFI_UNICODE_CTRL_CHAR.h" />
     <ClInclude Include="Protocols\IO\Media\EFI_LOAD_FILE_PROTOCOL.h" />

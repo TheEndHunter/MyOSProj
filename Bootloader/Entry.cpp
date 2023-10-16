@@ -9,7 +9,7 @@
 #include <EFIConsole.h>
 #include <Graphics/Color.h>
 #include <Enviroment/Unicode.h>
-#include <FileSystem/EFI_FS.h>
+#include <FileSystem/FileSystemContext.h>
 
 namespace Bootloader
 {
@@ -46,8 +46,8 @@ namespace Bootloader
             WaitForKey(sysTbl);
             return GraphicsContext::LastStatus;
         }
-        PrintLine(sysTbl, u"Graphics Initialized");
         gop.ClearScreen();
+        PrintLine(sysTbl, u"Graphics Initialized");
 
         UINTN w = gop.GetWidth();
         UINTN h = gop.GetHeight();
@@ -66,6 +66,43 @@ namespace Bootloader
 
         gop.DrawFilledRectangle(x1, y1, x1, y1, Colors::MediumVioletRed);
         gop.DrawFilledRectangle(posX, posY, x2, y2, Colors::HotPink);
+
+        WaitForKey(sysTbl);
+
+        UINTN fsCount = FileSystemContext::QueryFSCount(sysTbl, imgHndl);
+
+        if (fsCount == 0)
+        {
+			SetConsoleColor(sysTbl, EFI_CONSOLE_COLOR::FATAL_COLOR);
+			ClearConOut(sysTbl);
+			PrintLine(sysTbl, u"No File Systems Found");
+			WaitForKey(sysTbl);
+			return EFI_STATUS::NOT_FOUND;
+		}
+        UINTN fsIndex = 0;
+        FileSystemContext sysFs = FileSystemContext::EmptyFS;
+        for (; fsIndex < fsCount; fsIndex++)
+        {
+            sysFs = FileSystemContext::GetFileSystem(sysTbl, imgHndl, fsIndex);
+
+            sysFs.OpenVolume();
+            VolumeInfo v = sysFs.GetVolumeInfo(sysTbl);
+
+            if (v.VolumeLabel == u"Sys")
+            {
+                break;
+            }
+        }
+
+        if(sysFs == FileSystemContext::EmptyFS)
+		{
+            SetConsoleColor(sysTbl, EFI_CONSOLE_COLOR::FATAL_COLOR);
+            ClearConOut(sysTbl);
+            PrintLine(sysTbl, u"Could Not Find System Volume");
+            WaitForKey(sysTbl);
+            return EFI_STATUS::NOT_FOUND;
+        }
+        PrintLine(sysTbl, u"Found System Volume");
 
         WaitForKey(sysTbl);
 

@@ -30,7 +30,7 @@
     <ClInclude Include="Enviroment\Unicode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileSystem\EFI_FS.h">
+    <ClInclude Include="FileSystem\FileSystemContext.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\Font\Font.h">
@@ -53,7 +53,7 @@
     <ClCompile Include="Enviroment\Unicode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileSystem\EFI_FS.cpp">
+    <ClCompile Include="FileSystem\FileSystemContext.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FileSystem\FileInfo.h">
