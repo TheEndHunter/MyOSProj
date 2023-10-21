@@ -17,6 +17,51 @@ namespace EFI
 		INT16 TimeZone;
 		UINT8 Daylight;
 		UINT8 Pad2;
+
+		bool operator ==(const EFI_TIME& right)
+		{
+			/*Compare all members for equality, if one fails return false, otherwise return true*/
+
+			if (Year != right.Year)
+				return false;
+
+			if (Month != right.Month)
+				return false;
+
+			if (Day != right.Day)
+				return false;
+
+			if (Hour != right.Hour)
+				return false;
+
+			if (Minute != right.Minute)
+				return false;
+
+			if (Second != right.Second)
+				return false;
+
+			if (Pad1 != right.Pad1)
+				return false;
+
+			if (Nanosecond != right.Nanosecond)
+				return false;
+
+			if (TimeZone != right.TimeZone)
+				return false;
+
+			if (Daylight != right.Daylight)
+				return false;
+
+			if (Pad2 != right.Pad2)
+				return false;
+
+			return true;
+		}
+
+		bool operator !=(const EFI_TIME& right)
+		{
+			return !(*this == right);
+		}
 	};
 
 	//***************************************************
@@ -30,5 +75,4 @@ namespace EFI
 	//***************************************************
 	inline const INT16 EFI_UNSPECIFIED_TIMEZONE = 0x07FF;
 
-	
 }

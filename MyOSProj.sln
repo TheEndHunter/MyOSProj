@@ -15,6 +15,33 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageBuilder", "ImageBuilde
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibCommon", "LibCommon\LibCommon.vcxproj", "{C23C7061-59FE-4DF9-A5D5-113D3DC74B32}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B23A76B8-DCE5-412F-AC58-497D92DC6EDB}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{AEF7EE5E-7925-493D-852F-CECC9632F8D9}"
+	ProjectSection(SolutionItems) = preProject
+		Tools\Build_arm64_Debug.Bat = Tools\Build_arm64_Debug.Bat
+		Tools\Build_arm64_Release.Bat = Tools\Build_arm64_Release.Bat
+		Tools\Build_arm_Debug.Bat = Tools\Build_arm_Debug.Bat
+		Tools\Build_arm_Release.Bat = Tools\Build_arm_Release.Bat
+		Tools\Build_x64_Debug.Bat = Tools\Build_x64_Debug.Bat
+		Tools\Build_x64_Release.Bat = Tools\Build_x64_Release.Bat
+		Tools\Build_x86_Debug.Bat = Tools\Build_x86_Debug.Bat
+		Tools\Build_x86_Release.Bat = Tools\Build_x86_Release.Bat
+		Tools\Run_arm64_Debug.Bat = Tools\Run_arm64_Debug.Bat
+		Tools\Run_arm64_Release.Bat = Tools\Run_arm64_Release.Bat
+		Tools\Run_arm_Debug.Bat = Tools\Run_arm_Debug.Bat
+		Tools\Run_arm_Release.Bat = Tools\Run_arm_Release.Bat
+		Tools\Run_x64_Debug.Bat = Tools\Run_x64_Debug.Bat
+		Tools\Run_x64_Release.Bat = Tools\Run_x64_Release.Bat
+		Tools\Run_x86_Debug.Bat = Tools\Run_x86_Debug.Bat
+		Tools\Run_x86_Release.Bat = Tools\Run_x86_Release.Bat
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -122,6 +149,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AEF7EE5E-7925-493D-852F-CECC9632F8D9} = {B23A76B8-DCE5-412F-AC58-497D92DC6EDB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9B4802ED-BBE8-495E-8800-7931B4586E1A}

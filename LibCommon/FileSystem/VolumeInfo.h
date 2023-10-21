@@ -7,6 +7,7 @@
 
 namespace Common::FileSystem
 {
+	
 	struct  VolumeInfo
 	{
 	protected:
@@ -15,8 +16,8 @@ namespace Common::FileSystem
 			:Size(info.Size), ReadOnly(info.ReadOnly), VolumeSize(info.VolumeSize), FreeSpace(info.FreeSpace), BlockSize(info.BlockSize), VolumeLabel(info.VolumeLabel)
 		{
 		}
-
-		VolumeInfo()
+	public:
+		constexpr VolumeInfo()
 		{
 			Size = 0;
 			ReadOnly = 0;
@@ -26,14 +27,9 @@ namespace Common::FileSystem
 			VolumeLabel = nullptr;
 		}
 
-	public:
-		static VolumeInfo Create(EFI::EFI_FILE_SYSTEM_INFO* info)
-		{
-			if (info == nullptr)
-				return VolumeInfo();
-
-			return VolumeInfo(*info);
-		}
+	
+		
+		static VolumeInfo Create(EFI::EFI_FILE_SYSTEM_INFO* info);
 
 	public:
 		UINT64 Size;
@@ -42,5 +38,36 @@ namespace Common::FileSystem
 		UINT64 FreeSpace;
 		UINT32 BlockSize;
 		CHAR16* VolumeLabel;
+
+		bool operator ==(const VolumeInfo& right)
+		{
+			/*Compare all members for equality, if one fails return false, otherwise return true*/
+
+			if (Size != right.Size)
+				return false;
+
+			if (ReadOnly != right.ReadOnly)
+				return false;
+
+			if (VolumeSize != right.VolumeSize)
+				return false;
+
+			if (FreeSpace != right.FreeSpace)
+				return false;
+
+			if (BlockSize != right.BlockSize)
+				return false;
+
+			if (VolumeLabel != right.VolumeLabel)
+				return false;
+
+			return true;
+		}
+
+		bool operator !=(const VolumeInfo& right)
+		{
+			return !(*this == right);
+		}
 	};
+	constinit const VolumeInfo Empty_VolInfo = VolumeInfo();
 }

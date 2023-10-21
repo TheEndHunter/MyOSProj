@@ -40,7 +40,7 @@
     <ProjectGuid>{DACF7E02-B3A0-449F-9CB3-47F52848FF6E}</ProjectGuid>
     <RootNamespace>Kernel</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <TargetExt>.efi</TargetExt>
+    <TargetExt>.bin</TargetExt>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -48,6 +48,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <PreferredToolArchitecture>x86</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -55,12 +56,14 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <PreferredToolArchitecture>x86</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <PreferredToolArchitecture>x86</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -68,22 +71,27 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <PreferredToolArchitecture>x86</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <WindowsSDKDesktopARMSupport>true</WindowsSDKDesktopARMSupport>
     <PlatformToolset>v143</PlatformToolset>
+    <PreferredToolArchitecture>x86</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <WindowsSDKDesktopARMSupport>true</WindowsSDKDesktopARMSupport>
     <PlatformToolset>v143</PlatformToolset>
+    <PreferredToolArchitecture>x86</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <WindowsSDKDesktopARM64Support>true</WindowsSDKDesktopARM64Support>
     <PlatformToolset>v143</PlatformToolset>
+    <PreferredToolArchitecture>x86</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <WindowsSDKDesktopARM64Support>true</WindowsSDKDesktopARM64Support>
     <PlatformToolset>v143</PlatformToolset>
+    <PreferredToolArchitecture>x86</PreferredToolArchitecture>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -195,7 +203,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <AllowIsolation>
       </AllowIsolation>
-      <OutputFile>$(OutDir)$(TargetName)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetFileExt).bin</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -232,7 +240,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <AllowIsolation>
       </AllowIsolation>
-      <OutputFile>$(OutDir)$(TargetName)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetFileExt).bin</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -264,7 +272,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <AllowIsolation>
       </AllowIsolation>
-      <OutputFile>$(OutDir)$(TargetName)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetFileExt).bin</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -301,7 +309,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <AllowIsolation>
       </AllowIsolation>
-      <OutputFile>$(OutDir)$(TargetName)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetFileExt).bin</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -330,7 +338,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <AllowIsolation>
       </AllowIsolation>
-      <OutputFile>$(OutDir)$(TargetName)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetFileExt).bin</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -360,7 +368,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <AllowIsolation>
       </AllowIsolation>
-      <OutputFile>$(OutDir)$(TargetName)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetFileExt).bin</OutputFile>
       <GenerateDebugInformation />
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
@@ -390,7 +398,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <AllowIsolation>
       </AllowIsolation>
-      <OutputFile>$(OutDir)$(TargetName)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetFileExt).bin</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -420,7 +428,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <AllowIsolation>
       </AllowIsolation>
-      <OutputFile>$(OutDir)$(TargetName)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetFileExt).bin</OutputFile>
       <GenerateDebugInformation />
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>

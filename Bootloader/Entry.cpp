@@ -104,6 +104,23 @@ namespace Bootloader
         }
         PrintLine(sysTbl, u"Found System Volume");
 
+        sysFs.OpenVolume();
+
+        FileInfo krnl = sysFs.GetFileInfo(sysTbl, u"Kernel.bin");
+
+        if (krnl == Empty_FileInfo)
+        {
+            SetConsoleColor(sysTbl, EFI_CONSOLE_COLOR::FATAL_COLOR);
+			ClearConOut(sysTbl);
+			PrintLine(sysTbl, u"Could Not Find Kernel");
+			WaitForKey(sysTbl);
+			return EFI_STATUS::NOT_FOUND;
+        }
+
+        UINT8* krnlData;
+        sysTbl->BootServices->AllocatePool(EFI_MEMORY_TYPE::LoaderData, krnl.PhysicalSize,(void**)&krnlData);
+
+        PrintLine(sysTbl, u"Found Kernel.bin");
         WaitForKey(sysTbl);
 
         sysTbl->RuntimeServices->ResetSystem(EFI_RESET_TYPE::SHUTDOWN, EFI_STATUS::SUCCESS, 0, nullptr);

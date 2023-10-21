@@ -8,15 +8,11 @@ namespace Common::FileSystem
 {
 	struct FileInfo
 	{
+		
 	protected:
-		FileInfo(EFI::EFI_FILE_INFO& info)
-			: Size(info.Size), FileSize(info.FileSize), PhysicalSize(info.PhysicalSize),
-			CreateTime(info.CreateTime), LastAccessTime(info.LastAccessTime),
-			ModificationTime(info.ModificationTime), Attribute(info.Attribute), FileName(info.FileName)
-		{
-		}
-
-		FileInfo()
+		FileInfo(EFI::EFI_FILE_INFO& info);
+	public:
+		constexpr FileInfo()
 		{
 			Size = 0;
 			FileSize = 0;
@@ -28,15 +24,7 @@ namespace Common::FileSystem
 			FileName = nullptr;
 		}
 
-	public:
-
-		static FileInfo Create(EFI::EFI_FILE_INFO* info)
-		{
-			if (info == nullptr)
-				return FileInfo();
-
-			return FileInfo(*info);
-		}
+		static FileInfo Create(EFI::EFI_FILE_INFO* info);
 
 	public:
 		UINT64 Size;
@@ -47,5 +35,11 @@ namespace Common::FileSystem
 		EFI::EFI_TIME ModificationTime;
 		UINT64 Attribute;
 		CHAR16* FileName;
+
+		bool operator ==(const FileInfo& right);
+
+		bool operator !=(const FileInfo& right);
 	};
+
+	constinit const FileInfo Empty_FileInfo = FileInfo();
 }

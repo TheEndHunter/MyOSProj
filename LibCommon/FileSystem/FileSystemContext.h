@@ -7,9 +7,13 @@
 #include <Protocols/IO/Media/EFI_FILE_INFO.h>
 #include "VolumeInfo.h"
 #include "FileInfo.h"
+#include "FileHandle.h"
+#include "FileMode.h"
+#include "FileAttribute.h"
 
 namespace Common::FileSystem
 {
+	
 	class FileSystemContext
 	{
 	protected:
@@ -31,6 +35,12 @@ namespace Common::FileSystem
 
 		void OpenVolume();
 		void CloseVolume();
+
+		void OpenDirectory(const CHAR16* path);
+		void CloseDirectory();
+
+		FileHandle OpenFile(EFI::EFI_SYSTEM_TABLE* sysTable, FileInfo& fileInfo, FileMode mode, FileAttribute attribs);
+		void CloseFile(EFI::EFI_SYSTEM_TABLE* sysTable, FileHandle& handle);
 
 		VolumeInfo GetVolumeInfo(EFI::EFI_SYSTEM_TABLE* sysTable);
 

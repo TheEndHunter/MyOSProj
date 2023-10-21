@@ -35,8 +35,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FileSystem\FileAttribute.h" />
+    <ClInclude Include="FileSystem\FileHandle.h" />
+    <ClInclude Include="FileSystem\FileMode.h" />
     <ClInclude Include="FileSystem\FileSystemContext.h" />
     <ClInclude Include="Enviroment\Unicode.h" />
+    <ClInclude Include="FileSystem\VolumeHandle.h" />
     <ClInclude Include="Graphics\Color.h" />
     <ClInclude Include="Graphics\Font\Font.h" />
     <ClInclude Include="Graphics\GraphicsContext.h" />
@@ -45,9 +49,13 @@
     <ClInclude Include="TypeDefs.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="FileSystem\FileHandle.cpp" />
+    <ClCompile Include="FileSystem\FileInfo.cpp" />
     <ClCompile Include="FileSystem\FileSystemContext.cpp" />
     <ClCompile Include="Enviroment\Unicode.cpp" />
     <ClCompile Include="FileSystem\FileInfo.h" />
+    <ClCompile Include="FileSystem\VolumeHandle.cpp" />
+    <ClCompile Include="FileSystem\VolumeInfo.cpp" />
     <ClCompile Include="FileSystem\VolumeInfo.h" />
     <ClCompile Include="Graphics\GraphicsContext.cpp" />
     <ClCompile Include="System\Console.cpp" />
