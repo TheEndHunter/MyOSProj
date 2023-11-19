@@ -40,6 +40,7 @@ namespace Common::FileSystem
 		void CloseDirectory();
 
 		FileHandle OpenFile(EFI::EFI_SYSTEM_TABLE* sysTable, FileInfo& fileInfo, FileMode mode, FileAttribute attribs);
+		FileHandle CreateFile(EFI::EFI_SYSTEM_TABLE* sysTable, const CHAR16* name, FileAttribute attribs);
 		void CloseFile(EFI::EFI_SYSTEM_TABLE* sysTable, FileHandle& handle);
 
 		VolumeInfo GetVolumeInfo(EFI::EFI_SYSTEM_TABLE* sysTable);

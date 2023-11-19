@@ -1,11 +1,13 @@
 #pragma once
 
+#include "TypeDefs.h"
+
 namespace Common::FileSystem
 {
-	enum FileMode
+	enum FileMode : UINT8
 	{
-		Create = 0,
-		Read = 1,
-		Write = 2,
+		Create = 1,
+		Read = 2,
+		Write = 4,
 	};
 }

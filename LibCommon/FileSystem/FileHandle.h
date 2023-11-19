@@ -4,6 +4,8 @@
 #include <Protocols/IO/Media/EFI_SIMPLE_FILE_SYSTEM_PROTOCOL.h>
 #include <EFI_STATUS.h>
 #include "FileInfo.h"
+#include "FileMode.h"
+#include "FileAttribute.h"
 
 namespace Common::FileSystem
 {
@@ -11,14 +13,34 @@ namespace Common::FileSystem
 	{
 		friend class FileSystemContext;
 	protected:
-		FileHandle(EFI::EFI_FILE_PROTOCOL* file, FileInfo& i) : Info(i), Size(i.Size), _File(file) {};
+		FileHandle(EFI::EFI_FILE_PROTOCOL* file, FileInfo& i, FileMode mode, FileAttribute attribs) : Mode(mode),Attributes(attribs), Info(i), Size(i.Size), _File(file) {};
 
 	public:
-		constexpr FileHandle(): _File(nullptr), Size(0) {};
+		constexpr FileHandle(): _File(nullptr), Size(0), Mode(FileMode::Create), Attributes(FileAttribute::ValidAttrib) {};
 
-		static FileHandle Create(EFI::EFI_FILE_PROTOCOL* file, FileInfo& i);
+		static FileHandle Create(EFI::EFI_FILE_PROTOCOL* file, FileInfo i, FileMode mode, FileAttribute attribs);
+		FileMode Mode;
+		FileAttribute Attributes;
 		FileInfo Info;
 		UINT64 Size;
+
+		/*
+		*  Below are all the fuinctions needed to read, write, seek, close and delete, etc.
+		*/
+
+		EFI::EFI_STATUS Read(UINTN* bufferSize, void* buffer);
+		EFI::EFI_STATUS Write(UINTN* bufferSize, void* buffer);
+		EFI::EFI_STATUS GetPosition(UINT64* position);
+		EFI::EFI_STATUS SetPosition(UINT64 position);
+		EFI::EFI_STATUS GetInfo(EFI::EFI_GUID* infoType, UINTN* bufferSize, void* buffer);
+		EFI::EFI_STATUS SetInfo(EFI::EFI_GUID* infoType, UINTN bufferSize, void* buffer);
+		EFI::EFI_STATUS Flush();
+		EFI::EFI_STATUS Close();
+		EFI::EFI_STATUS Delete();
+		EFI::EFI_STATUS ReadAsync(EFI::EFI_FILE_IO_TOKEN* token);
+		EFI::EFI_STATUS WriteAsync(EFI::EFI_FILE_IO_TOKEN* token);
+		EFI::EFI_STATUS FlushAsync(EFI::EFI_FILE_IO_TOKEN* token);
+
 
 		bool operator ==(const FileHandle& right);
 		bool operator !=(const FileHandle& right);

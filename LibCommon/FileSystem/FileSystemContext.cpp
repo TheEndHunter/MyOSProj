@@ -159,13 +159,38 @@ namespace Common::FileSystem
         {
 			return Empty_FileHandle;
 		}
+        /* Check to make sure we aren't trying to use OpenFile in FileMode::Create as this is not correct usage */
+        if ((mode & FileMode::Create) == FileMode::Create)
+		{
+			return Empty_FileHandle;
+		}
 
         EFI::EFI_FILE_PROTOCOL* file;
 
         _cwd->Open(_cwd, &file, fileInfo.FileName, (EFI::EFI_FILE_MODES)mode, (EFI::EFI_FILE_ATTRIBUTES)attribs);
 
-        return FileHandle::Create(file,fileInfo);
+        return FileHandle::Create(file,fileInfo,mode,attribs);
 	};
+
+    FileHandle FileSystemContext::CreateFile(EFI::EFI_SYSTEM_TABLE* sysTable, const CHAR16* name, FileAttribute attribs)
+    {
+        if (_fs == nullptr)
+        {
+            return Empty_FileHandle;
+        }
+        
+        EFI::EFI_FILE_PROTOCOL* file;
+        
+        _cwd->Open(_cwd, &file, (CHAR16*)name, EFI::EFI_FILE_MODES::CREATE, (EFI::EFI_FILE_ATTRIBUTES)attribs);
+
+        /* Get EFI_FILE_INFO for FileHandle */
+        UINTN size = 0;
+        EFI::EFI_FILE_INFO* info = nullptr;
+        file->GetInfo(file, &EFI::EFI_FILE_INFO_ID, &size, (void**)&info);
+	    sysTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, size, (void**)&info);
+        EFI::EFI_STATUS s = file->GetInfo(file, &EFI::EFI_FILE_INFO_ID, &size, info);
+        return FileHandle::Create(file,FileInfo::Create(info), FileMode::Create, attribs);
+    }
 
     void FileSystemContext::CloseFile(EFI::EFI_SYSTEM_TABLE* sysTable, FileHandle& handle)
     {

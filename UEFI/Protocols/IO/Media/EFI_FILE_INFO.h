@@ -7,7 +7,7 @@
 
 namespace EFI
 {
-	constinit const EFI::EFI_GUID EFI_FILE_INFO_ID{ 0x09576e92,0x6d3f,0x11d2,{0x8e39,0x00,0xa0,0xc9,0x69,0x72,0x3b} };
+	constinit const EFI::EFI_GUID EFI_FILE_INFO_ID{ 0x09576e92,0x6d3f,0x11d2,{ 0x8e39,0x00,0xa0,0xc9,0x69,0x72,0x3b } };
 
 	struct EFI_FILE_INFO 
 	{
@@ -19,7 +19,7 @@ namespace EFI
 		EFI::EFI_TIME LastAccessTime;
 		EFI::EFI_TIME ModificationTime;
 		EFI::EFI_FILE_ATTRIBUTES Attribute;
-		CHAR16 FileName[];
+		CHAR16* FileName;
 
 		bool operator ==(const EFI_FILE_INFO& right)
 		{

@@ -38,6 +38,7 @@
     <ClInclude Include="FileSystem\FileAttribute.h" />
     <ClInclude Include="FileSystem\FileHandle.h" />
     <ClInclude Include="FileSystem\FileMode.h" />
+    <ClInclude Include="FileSystem\FileStatus.h" />
     <ClInclude Include="FileSystem\FileSystemContext.h" />
     <ClInclude Include="Enviroment\Unicode.h" />
     <ClInclude Include="FileSystem\VolumeHandle.h" />
