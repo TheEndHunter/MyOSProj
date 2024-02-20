@@ -24,19 +24,20 @@
 #else
 #define CHAR16 INT16
 #endif
+#define UINT8 unsigned char
+#define UINT16 unsigned short
+#define UINT32 unsigned int
+#define UINT64 unsigned long long
+
 #define INT8 signed char
 #define INT16 short
 #define INT32 int
 #define INT64 long long
-#define BOOLEAN INT8
-#define TRUE 0x01
-#define FALSE 0x00
 
-#define UINT8 unsigned char
-#define UINT16 unsigned short
+#define BOOLEAN UINT8
+#define TRUE (UINT8)1U
+#define FALSE (UINT8)0U
 
-#define UINT32 unsigned int
-#define UINT64 unsigned long long
 
 #if defined(BITS_32)
 #define INTN INT32

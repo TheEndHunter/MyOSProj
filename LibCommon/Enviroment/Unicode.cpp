@@ -15,6 +15,7 @@ namespace Common::Enviroment
 	CHAR16 _u16_hexu32String[9]{ u'\0' };
 	CHAR16 _u16_hexu64String[17]{ u'\0' };
 	CHAR16 _u16_hexu8String[3]{ u'\0' };
+	CHAR16 _u16_hexPtrString[17]{ u'\0' };
 	CHAR16 _u16_t16String[7]{ u'\0' };
 	CHAR16 _u16_t32String[12]{ u'\0' };
 	CHAR16 _u16_t64String[22]{ u'\0' };
@@ -23,6 +24,8 @@ namespace Common::Enviroment
 	CHAR16 _u16_tu32String[11]{ u'\0' };
 	CHAR16 _u16_tu64String[21]{ u'\0' };
 	CHAR16 _u16_tu8String[4]{ u'\0' };
+	CHAR16 _u16_ptrString[21]{ u'\0' };
+
 	CHAR8 _hex16String[6]{ '\0' };
 	CHAR8 _hex32String[10]{ '\0' };
 	CHAR8 _hex64String[18]{ '\0' };
@@ -40,6 +43,9 @@ namespace Common::Enviroment
 	CHAR8 _tu32String[11]{ '\0' };
 	CHAR8 _tu64String[21]{ '\0' };
 	CHAR8 _tu8String[4]{ '\0' };
+	CHAR8 _hexPtrString[17]{ '\0' };
+	CHAR8 _ptrString[21]{ '\0' };
+
 	const CHAR16* _u16_hexChars = u"0123456789ABCDEF";
 	const CHAR16* Common::Enviroment::UTF16::NewLine = u"\r\n";
 	const CHAR8* _hexChars = "0123456789ABCDEF";
@@ -338,12 +344,494 @@ namespace Common::Enviroment
 		return &_u16_tu64String[len];
 	}
 
+	const CHAR16* UTF16::ToString(const VOID_PTR ptr)
+	{
+		UINT64 b = (UINT64)ptr;
+
+		if (b == 0)
+		{
+			_u16_ptrString[0] = u'0';
+			_u16_ptrString[1] = u'\0';
+			return &_u16_ptrString[0];
+		}
+
+		UINT64 i = b;
+		_u16_ptrString[20] = u'\0';
+		UINT8 len = 20;
+		for (; i > 0; i /= 10)
+		{
+			_u16_ptrString[--len] = (i % 10) + u'0';
+		}
+
+		return &_u16_ptrString[len];
+	}
+
+	const UINT64 UTF16::Length(const CHAR16* str)
+	{
+		if (str == nullptr)
+		{
+			return 0;
+		}
+
+		if (str[0] == u'\0')
+		{
+			return 0;
+		}
+
+		UINT64 len = 1;
+		while (str[0] != u'\0')
+		{
+			str++;
+			len++;
+		}
+		return len;
+	}
+
+	const UINT64 UTF8::Length(const CHAR8* str)
+	{
+		if (str == nullptr)
+		{
+			return 0;
+		}
+
+		if (str[0] == '\0')
+		{
+			return 0;
+		}
+
+		UINT64 len = 1;
+		while (str[0] != '\0')
+		{
+			str++;
+			len++;
+		}
+		return len;
+	}
+
+	const BOOLEAN UTF16::Compare(const CHAR16* l, const CHAR16* r, StringComparison mode)
+	{
+		UINT64 lLen = Length(l);
+		UINT64 rLen = Length(r);
+
+		if (lLen != rLen)
+		{
+			return FALSE;
+		}
+
+		if (mode == StringComparison::InvariantCulture)
+		{
+			UINT64 i = 0;
+			for (; i <= lLen; i++)
+			{
+				if (l[i] != r[i])
+				{
+					return FALSE;
+				}
+				i++;
+			}
+			return l[i] == r[i];
+		}
+		else if (mode == StringComparison::InvariantCultureIgnoreCase)
+		{
+			UINT64 i = 0;
+			for (; i <= lLen; i++)
+			{
+				if (l[i] != r[i] && l[i] != r[i] + 32 && l[i] != r[i] - 32)
+				{
+					return FALSE;
+				}
+				i++;
+			}
+			return l[i] == r[i];
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+
+	const BOOLEAN UTF16::StartsWith(const CHAR16* str, const CHAR16* value, StringComparison mode)
+	{
+		UINT64 strLen = Length(str);
+		UINT64 valueLen = Length(value);
+
+		if (valueLen > strLen)
+		{
+			return FALSE;
+		}
+
+		/*
+		*  Based on current StringComparision mode, compare the strings looking to see if the value is at the start of the string
+		*/
+
+		if (mode == StringComparison::InvariantCulture)
+		{
+			UINT64 i = 0;
+			for (; i < valueLen; i++)
+			{
+				if (str[i] != value[i])
+				{
+					return FALSE;
+				}
+			}
+			return TRUE;
+		}
+		else if (mode == StringComparison::InvariantCultureIgnoreCase)
+		{
+			UINT64 i = 0;
+			for (; i < valueLen; i++)
+			{
+				if (str[i] != value[i] && str[i] != value[i] + 32 && str[i] != value[i] - 32)
+				{
+					return FALSE;
+				}
+			}
+			return TRUE;
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+
+	const BOOLEAN UTF16::EndsWith(const CHAR16* str, const CHAR16* value, StringComparison mode)
+	{
+		UINT64 strLen = Length(str);
+		UINT64 valueLen = Length(value);
+
+		if (valueLen > strLen)
+		{
+			return FALSE;
+		}
+		/*
+		*  Based on current StringComparision mode, compare the strings looking to see if the value is at the end of the string
+		*/
+
+		if (mode == StringComparison::InvariantCulture)
+		{
+			UINT64 i = strLen - valueLen;
+			for (UINT64 j = 0; i < strLen; i++, j++)
+			{
+				if (str[i] != value[j])
+				{
+					return FALSE;
+				}
+				j++;
+			}
+			return TRUE;
+		}
+		else if (mode == StringComparison::InvariantCultureIgnoreCase)
+		{
+			UINT64 i = strLen - valueLen;
+			for (UINT64 j = 0; i < strLen; i++, j++)
+			{
+				if (str[i] != value[j] && str[i] != value[j] + 32 && str[i] != value[j] - 32)
+				{
+					return FALSE;
+				}
+				j++;
+			}
+			return TRUE;
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+
+	const BOOLEAN UTF16::Contains(const CHAR16* str, const CHAR16* value, StringComparison mode)
+	{
+		UINT64 strLen = Length(str);
+		UINT64 valueLen = Length(value);
+
+		if (valueLen > strLen)
+		{
+			return FALSE;
+		}
+
+		/*
+		*  Based on current StringComparision mode, compare the strings looking to see if the value is in the string
+		*/
+
+		if (mode == StringComparison::InvariantCulture)
+		{
+			UINT64 i = 0;
+			for (; i < strLen; i++)
+			{
+				if (str[i] == value[0])
+				{
+					UINT64 j = 0;
+					for (; j < valueLen; j++)
+					{
+						if (str[i + j] != value[j])
+						{
+							break;
+						}
+					}
+					if (j == valueLen)
+					{
+						return TRUE;
+					}
+				}
+			}
+			return FALSE;
+		}
+		else if (mode == StringComparison::InvariantCultureIgnoreCase)
+		{
+			UINT64 i = 0;
+			for (; i < strLen; i++)
+			{
+				if (str[i] == value[0] || str[i] == value[0] + 32 || str[i] == value[0] - 32)
+				{
+					UINT64 j = 0;
+					for (; j < valueLen; j++)
+					{
+						if (str[i + j] != value[j] && str[i + j] != value[j] + 32 && str[i + j] != value[j] - 32)
+						{
+							break;
+						}
+					}
+					if (j == valueLen)
+					{
+						return TRUE;
+					}
+				}
+			}
+			return FALSE;
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+
+	const BOOLEAN UTF8::Contains(const CHAR8* str, const CHAR8* value, StringComparison mode)
+	{
+		UINT64 strLen = Length(str);
+		UINT64 valueLen = Length(value);
+
+		if (valueLen > strLen)
+		{
+			return FALSE;
+		}
+
+		/*
+		*  Based on current StringComparision mode, compare the strings looking to see if the value is in the string
+		*/
+
+		if (mode == StringComparison::InvariantCulture)
+		{
+			UINT64 i = 0;
+			for (; i < strLen; i++)
+			{
+				if (str[i] == value[0])
+				{
+					UINT64 j = 0;
+					for (; j < valueLen; j++)
+					{
+						if (str[i + j] != value[j])
+						{
+							break;
+						}
+					}
+					if (j == valueLen)
+					{
+						return TRUE;
+					}
+				}
+			}
+			return FALSE;
+		}
+		else if (mode == StringComparison::InvariantCultureIgnoreCase)
+		{
+			UINT64 i = 0;
+			for (; i < strLen; i++)
+			{
+				if (str[i] == value[0] || str[i] == value[0] + 32 || str[i] == value[0] - 32)
+				{
+					UINT64 j = 0;
+					for (; j < valueLen; j++)
+					{
+						if (str[i + j] != value[j] && str[i + j] != value[j] + 32 && str[i + j] != value[j] - 32)
+						{
+							break;
+						}
+					}
+					if (j == valueLen)
+					{
+						return TRUE;
+					}
+				}
+			}
+			return FALSE;
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+
+	const BOOLEAN UTF8::EndsWith(const CHAR8* str, const CHAR8* value, StringComparison mode)
+	{
+		UINT64 strLen = Length(str);
+		UINT64 valueLen = Length(value);
+
+		if (valueLen > strLen)
+		{
+			return FALSE;
+		}
+		/*
+		*  Based on current StringComparision mode, compare the strings looking to see if the value is at the end of the string
+		*/
+
+		if (mode == StringComparison::InvariantCulture)
+		{
+			UINT64 i = strLen - valueLen;
+			for (UINT64 j = 0; i < strLen; i++, j++)
+			{
+				if (str[i] != value[j])
+				{
+					return FALSE;
+				}
+				j++;
+			}
+			return TRUE;
+		}
+		else if (mode == StringComparison::InvariantCultureIgnoreCase)
+		{
+			UINT64 i = strLen - valueLen;
+			for (UINT64 j = 0; i < strLen; i++, j++)
+			{
+				if (str[i] != value[j] && str[i] != value[j] + 32 && str[i] != value[j] - 32)
+				{
+					return FALSE;
+				}
+				j++;
+			}
+			return TRUE;
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+
+	const BOOLEAN UTF8::StartsWith(const CHAR8* str, const CHAR8* value, StringComparison mode)
+	{
+		UINT64 strLen = Length(str);
+		UINT64 valueLen = Length(value);
+
+		if (valueLen > strLen)
+		{
+			return FALSE;
+		}
+
+		/*
+		*  Based on current StringComparision mode, compare the strings looking to see if the value is at the start of the string
+		*/
+
+		if (mode == StringComparison::InvariantCulture)
+		{
+			UINT64 i = 0;
+			for (; i < valueLen; i++)
+			{
+				if (str[i] != value[i])
+				{
+					return FALSE;
+				}
+			}
+			return TRUE;
+		}
+		else if (mode == StringComparison::InvariantCultureIgnoreCase)
+		{
+			UINT64 i = 0;
+			for (; i < valueLen; i++)
+			{
+				if (str[i] != value[i] && str[i] != value[i] + 32 && str[i] != value[i] - 32)
+				{
+					return FALSE;
+				}
+			}
+			return TRUE;
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+
+
+	const BOOLEAN UTF8::Compare(const CHAR8* l, const CHAR8* r, StringComparison mode)
+	{
+		UINT64 lLen = Length(l);
+		UINT64 rLen = Length(r);
+
+		if (lLen != rLen)
+		{
+			return FALSE;
+		}
+
+		if (mode == StringComparison::InvariantCulture)
+		{
+			UINT64 i = 0;
+			for (; i <= lLen; i++)
+			{
+				if (l[i] != r[i])
+				{
+					return FALSE;
+				}
+				i++;
+			}
+			return l[i] == r[i];
+		}
+		else if (mode == StringComparison::InvariantCultureIgnoreCase)
+		{
+			UINT64 i = 0;
+			for (; i <= lLen; i++)
+			{
+				if (l[i] != r[i] && l[i] != r[i] + 32 && l[i] != r[i] - 32)
+				{
+					return FALSE;
+				}
+				i++;
+			}
+			return l[i] == r[i];
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+
 	const CHAR16* UTF16::ToHex(const UINT8 b)
 	{
 		_u16_hexu8String[0] = _u16_hexChars[(b >> 4) & 0x0F];
 		_u16_hexu8String[1] = _u16_hexChars[b & 0x0F];
 		_u16_hexu8String[2] = u'\0';
 		return &_u16_hexu8String[0];
+	}
+
+	const CHAR16* UTF16::ToHex(const VOID_PTR ptr)
+	{
+		UINT64 b = (UINT64)ptr;
+		_u16_hexPtrString[0] = _u16_hexChars[(b >> 60) & 0x0F];
+		_u16_hexPtrString[1] = _u16_hexChars[(b >> 56) & 0x0F];
+		_u16_hexPtrString[2] = _u16_hexChars[(b >> 52) & 0x0F];
+		_u16_hexPtrString[3] = _u16_hexChars[(b >> 48) & 0x0F];
+		_u16_hexPtrString[4] = _u16_hexChars[(b >> 44) & 0x0F];
+		_u16_hexPtrString[5] = _u16_hexChars[(b >> 40) & 0x0F];
+		_u16_hexPtrString[6] = _u16_hexChars[(b >> 36) & 0x0F];
+		_u16_hexPtrString[7] = _u16_hexChars[(b >> 32) & 0x0F];
+		_u16_hexPtrString[8] = _u16_hexChars[(b >> 28) & 0x0F];
+		_u16_hexPtrString[9] = _u16_hexChars[(b >> 24) & 0x0F];
+		_u16_hexPtrString[10] = _u16_hexChars[(b >> 20) & 0x0F];
+		_u16_hexPtrString[11] = _u16_hexChars[(b >> 16) & 0x0F];
+		_u16_hexPtrString[12] = _u16_hexChars[(b >> 12) & 0x0F];
+		_u16_hexPtrString[13] = _u16_hexChars[(b >> 8) & 0x0F];
+		_u16_hexPtrString[14] = _u16_hexChars[(b >> 4) & 0x0F];
+		_u16_hexPtrString[15] = _u16_hexChars[b & 0x0F];
+		_u16_hexPtrString[16] = u'\0';
+		return &_u16_hexPtrString[0];
 	}
 	const CHAR16* UTF16::ToHex(const UINT16 b)
 	{
@@ -717,6 +1205,26 @@ namespace Common::Enviroment
 		}
 		return &_tu8String[len];
 	}
+	const CHAR8* UTF8::ToString(const VOID_PTR ptr)
+	{
+		UINT64 b = (UINT64)ptr;
+		if (b == 0)
+		{
+			_ptrString[0] = '0';
+			_ptrString[1] = '\0';
+			return &_ptrString[0];
+		}
+
+		UINT64 i = b;
+		_ptrString[20] = '\0';
+		UINT8 len = 20;
+		for (; i > 0; i /= 10)
+		{
+			_ptrString[--len] = (i % 10) + '0';
+		}
+
+		return &_ptrString[len];
+	}
 	const CHAR8* UTF8::ToString(const UINT16 b)
 	{
 		if (b == 0)
@@ -781,6 +1289,28 @@ namespace Common::Enviroment
 		_hexu8String[1] = _hexChars[b & 0x0F];
 		_hexu8String[2] = '\0';
 		return &_hexu8String[0];
+	}
+	const CHAR8* UTF8::ToHex(const VOID_PTR ptr)
+	{
+		UINT64 b = (UINT64)ptr;
+		_hexPtrString[0] = _hexChars[(b >> 60) & 0x0F];
+		_hexPtrString[1] = _hexChars[(b >> 56) & 0x0F];
+		_hexPtrString[2] = _hexChars[(b >> 52) & 0x0F];
+		_hexPtrString[3] = _hexChars[(b >> 48) & 0x0F];
+		_hexPtrString[4] = _hexChars[(b >> 44) & 0x0F];
+		_hexPtrString[5] = _hexChars[(b >> 40) & 0x0F];
+		_hexPtrString[6] = _hexChars[(b >> 36) & 0x0F];
+		_hexPtrString[7] = _hexChars[(b >> 32) & 0x0F];
+		_hexPtrString[8] = _hexChars[(b >> 28) & 0x0F];
+		_hexPtrString[9] = _hexChars[(b >> 24) & 0x0F];
+		_hexPtrString[10] = _hexChars[(b >> 20) & 0x0F];
+		_hexPtrString[11] = _hexChars[(b >> 16) & 0x0F];
+		_hexPtrString[12] = _hexChars[(b >> 12) & 0x0F];
+		_hexPtrString[13] = _hexChars[(b >> 8) & 0x0F];
+		_hexPtrString[14] = _hexChars[(b >> 4) & 0x0F];
+		_hexPtrString[15] = _hexChars[b & 0x0F];
+		_hexPtrString[16] = '\0';
+		return &_hexPtrString[0];
 	}
 	const CHAR8* UTF8::ToHex(const UINT16 b)
 	{

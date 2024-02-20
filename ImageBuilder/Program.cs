@@ -1,10 +1,19 @@
 ﻿namespace ImageBuilder
 {
     using System;
+    using System.Collections.Frozen;
     using System.Diagnostics;
 
     internal class Program
     {
+        private static readonly FrozenDictionary<string, string> bootfileMap = new Dictionary<string,string>()
+                {
+                    { "x86", "BOOTIA32.efi" },
+                    { "x64", "BOOTX64.efi" },
+                    { "arm", "BOOTARM.efi" },
+                    { "arm64", "BOOTAA64.efi" }
+                }.ToFrozenDictionary();
+
         static int Main(string[] args)
         {
             Console.Title = "Virtual Disk Builder Tool";
@@ -23,6 +32,7 @@
             {
                 Console.WriteLine("Invalid amount of arguments specified (min/max of 5 arguments). switching to manual entry");
 
+               
 
                 while (string.IsNullOrEmpty(architecture) && string.IsNullOrWhiteSpace(architecture))
                 {
@@ -30,24 +40,14 @@
                     Console.WriteLine("Please enter the architecture being used (Select from: x86,x64,ARM,ARM64)");
                     architecture = Console.ReadLine()!.ToLower();
 
-                    switch (architecture)
+                    if (bootfileMap.TryGetValue(architecture, out string? bf))
                     {
-                        case "x86":
-                            bootfile = "BOOTIA32.efi";
-                            break;
-                        case "x64":
-                            bootfile = "BOOTX64.efi";
-                            break;
-                        case "arm":
-                            bootfile = "BOOTARM.efi";
-                            break;
-                        case "arm64":
-                            bootfile = "BOOTAA64.efi";
-                            break;
-                        default:
-                            architecture = null;
-                            bootfile = null;
-                            break;
+                        bootfile = bf;
+                    }
+                    else
+                    {
+                        architecture = null;
+                        bootfile = null;
                     }
 
                 }
@@ -116,24 +116,14 @@
                 DestPath = Path.GetFullPath(Path.Combine(Dir, args[3]));
                 imgName = args[4];
 
-                switch (architecture)
+                if (bootfileMap.TryGetValue(architecture, out string? bf))
                 {
-                    case "x86":
-                        bootfile = "BOOTIA32.efi";
-                        break;
-                    case "x64":
-                        bootfile = "BOOTX64.efi";
-                        break;
-                    case "arm":
-                        bootfile = "BOOTARM.efi";
-                        break;
-                    case "arm64":
-                        bootfile = "BOOTAA64.efi";
-                        break;
-                    default:
-                        architecture = null;
-                        bootfile = null;
-                        break;
+                    bootfile = bf;
+                }
+                else
+                {
+                    architecture = null;
+                    bootfile = null;
                 }
             }
 
@@ -194,12 +184,12 @@
                         }
                     }
                     f.WriteLine("echo Unable to find Bootloader");
-                    f.WriteLine("END:");
+                    f.WriteLine(":END");
                     f.Close();
                 }
                 else
                 {
-                    p.Label = info.Name;
+                    p.Label = info.Name.ToUpper();
                     p.Type = PartitionType.PRIMARY;
                 }
                 _partitions.Add(p);
@@ -532,7 +522,7 @@
                             f.WriteLine($"create partition primary size={part.Size}");
                             break;
                     }
-                    f.WriteLine($"format quick fs = fat32 label = \"{part.Label}\"");
+                    f.WriteLine($"format quick fs = fat32 label = \"{part.Label.ToUpper()}\"");
                 }
                 f.WriteLine("detach vdisk");
                 f.Close();

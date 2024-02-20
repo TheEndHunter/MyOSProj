@@ -20,7 +20,7 @@ namespace Common::FileSystem
 		FileSystemContext(EFI::EFI_HANDLE hnd, EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL* fsp);
 		const FileSystemContext()
 		{
-			_devhnd = nullptr;
+			_deviceHandle = nullptr;
 			_fs = nullptr;
 			_root = nullptr;
 			_cwd = nullptr;
@@ -33,10 +33,11 @@ namespace Common::FileSystem
 		static FileSystemContext GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, UINTN index);
 		static const FileSystemContext EmptyFS;
 
-		void OpenVolume();
+		BOOLEAN OpenVolume();
 		void CloseVolume();
 
-		void OpenDirectory(const CHAR16* path);
+		BOOLEAN OpenDirectory(const CHAR16* path);
+		BOOLEAN OpenRoot();
 		void CloseDirectory();
 
 		FileHandle OpenFile(EFI::EFI_SYSTEM_TABLE* sysTable, FileInfo& fileInfo, FileMode mode, FileAttribute attribs);
@@ -54,7 +55,7 @@ namespace Common::FileSystem
 		{
 			/*Compare all members for equality, if one fails return false, otherwise return true*/
 
-			if (_devhnd != right._devhnd)
+			if (_deviceHandle != right._deviceHandle)
 				return false;
 
 			if (_fs != right._fs)
@@ -77,9 +78,11 @@ namespace Common::FileSystem
 			return !(*this == right);
 		}
 
+		EFI::EFI_STATUS LastStatus;
+
 	private:
 		bool _isVolumeOpen;
-		EFI::EFI_HANDLE _devhnd;
+		EFI::EFI_HANDLE _deviceHandle;
 		EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL* _fs;
 		EFI::EFI_FILE_PROTOCOL* _root;
 		EFI::EFI_FILE_PROTOCOL* _cwd;

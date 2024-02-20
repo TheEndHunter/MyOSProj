@@ -26,13 +26,19 @@
             if (l != 3)
             {
                 args = new string[3];
-                Console.WriteLine("Invalid amount of arguments specified (min/max of 3 arguments). switching to manual entry");
+                Console.WriteLine(
+                    "Invalid amount of arguments specified (min/max of 3 arguments). switching to manual entry"
+                );
 
-                while (string.IsNullOrEmpty(architecture) && string.IsNullOrWhiteSpace(architecture))
+                while (
+                    string.IsNullOrEmpty(architecture) && string.IsNullOrWhiteSpace(architecture)
+                )
                 {
                     Console.Clear();
-                    Console.WriteLine("Please enter the architecture being used (Select from: x86,x64,ARM,ARM64)");
-                    architecture = Console.ReadLine().ToLower();
+                    Console.WriteLine(
+                        "Please enter the architecture being used (Select from: x86,x64,ARM,ARM64)"
+                    );
+                    architecture = Console.ReadLine()?.ToLower() ?? string.Empty;
 
                     switch (architecture)
                     {
@@ -47,10 +53,14 @@
                     }
                 }
 
-                while (string.IsNullOrEmpty(configuration) && string.IsNullOrWhiteSpace(configuration))
+                while (
+                    string.IsNullOrEmpty(configuration) && string.IsNullOrWhiteSpace(configuration)
+                )
                 {
                     Console.Clear();
-                    Console.WriteLine("Please enter the configuration being used(e.g. Debug, Release)");
+                    Console.WriteLine(
+                        "Please enter the configuration being used(e.g. Debug, Release)"
+                    );
                     configuration = Console.ReadLine();
                 }
 
@@ -58,7 +68,9 @@
                 {
                     Console.Clear();
                     Console.WriteLine($"Current Dir: {Directory.GetCurrentDirectory()}");
-                    Console.WriteLine("Please enter path of the virtual disk being used(e.g. VirtualOS.vhdx)");
+                    Console.WriteLine(
+                        "Please enter path of the virtual disk being used(e.g. VirtualOS.vhdx)"
+                    );
 
                     string test = Console.ReadLine()!;
 
@@ -84,8 +96,20 @@
                 imagePath = Path.Combine(Dir, args[2]);
             }
 
-            string firmwareCodePath = Path.Combine(Dir, "OVMF", architecture, configuration, "OVMF_CODE.fd");
-            string firmwareVarPath = Path.Combine(Dir, "OVMF", architecture, configuration, "OVMF_VARS.fd");
+            string firmwareCodePath = Path.Combine(
+                Dir,
+                "OVMF",
+                architecture,
+                configuration,
+                "OVMF_CODE.fd"
+            );
+            string firmwareVarPath = Path.Combine(
+                Dir,
+                "OVMF",
+                architecture,
+                configuration,
+                "OVMF_VARS.fd"
+            );
 
             string filename;
 
@@ -147,7 +171,8 @@
             Process qemu = new();
             qemu.StartInfo.FileName = exePath;
             qemu.StartInfo.WorkingDirectory = qemuPath;
-            qemu.StartInfo.Arguments = $"""{machine} -accel tcg -m 2048M -drive if=pflash,format=raw,unit=0,file={firmwareCodePath},readonly=on -drive if=pflash,format=raw,unit=1,file={firmwareVarPath} -drive file={imagePath} -net none""";
+            qemu.StartInfo.Arguments =
+                $"""{machine} -accel tcg -m 2048M -drive if=pflash,format=raw,unit=0,file={firmwareCodePath},readonly=on -drive if=pflash,format=raw,unit=1,file={firmwareVarPath} -drive file={imagePath} -net none""";
             qemu.StartInfo.UseShellExecute = false;
             qemu.StartInfo.CreateNoWindow = false;
             qemu.StartInfo.WindowStyle = ProcessWindowStyle.Normal;

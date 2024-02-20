@@ -7,13 +7,13 @@
 
 ## Platforms Supported
 	[x] x86
-	[~] ARM (ImageBuilder and QemuRunner do not support ARM as C# does not have files for it.Not Tested At This Time, But Source Will Be Created)
+	[~] ARM (UNTESTED, NEEDS Scripts and Tools, as QuemuRunner and ImageBuilder don't support ARM)
 	[x] x64
-	[~] ARM64 (Not Tested At This Time, But Source Will Be Created)
+	[x] ARM64 (UNTESTED)
 
 ## Building
-	!! Build Supported on Windows Only At This Time!!
-	Run build through Visual Studios 2022 or later.
+	Building The QuemuRunner and ImageBuilder can only support Windows at this time, the other projects can be built.
+	Recommnded to build through Visual Studios 2022 or later.
 
 ## Build Image
 	Run Build first!

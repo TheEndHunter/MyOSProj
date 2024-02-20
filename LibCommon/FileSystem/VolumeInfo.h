@@ -24,11 +24,9 @@ namespace Common::FileSystem
 			VolumeSize = 0;
 			FreeSpace = 0;
 			BlockSize = 0;
-			VolumeLabel = nullptr;
+			VolumeLabel = u"\0\0\0\0\0\0\0\0\0\0";
 		}
 
-	
-		
 		static VolumeInfo Create(EFI::EFI_FILE_SYSTEM_INFO* info);
 
 	public:
@@ -37,7 +35,7 @@ namespace Common::FileSystem
 		UINT64 VolumeSize;
 		UINT64 FreeSpace;
 		UINT32 BlockSize;
-		CHAR16* VolumeLabel;
+		const CHAR16* VolumeLabel;
 
 		bool operator ==(const VolumeInfo& right)
 		{

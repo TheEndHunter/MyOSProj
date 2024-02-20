@@ -38,7 +38,6 @@
 #define UINT32 unsigned int
 #define UINT64 unsigned long long
 
-
 #if defined(BITS_32)
 #define INTN INT32
 #define UINTN UINT32
@@ -47,6 +46,18 @@
 #define UINTN UINT64
 #else
 #error "Unknown architecture"
+#endif
+
+/*
+* Define an Attribute for marking a function as None returning
+*/
+
+#if defined(_MSC_VER)
+#define NORETURN __declspec(noreturn)
+#elif defined(__GNUC__)
+#define NORETURN __attribute__((noreturn))
+#else
+#define NORETURN
 #endif
 
 /*
