@@ -1,4 +1,4 @@
-#pragma once
+, 0x#pragma once
 #include "UEFIDef.h"
 
 namespace EFI

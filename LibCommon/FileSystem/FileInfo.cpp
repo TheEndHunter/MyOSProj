@@ -1,11 +1,13 @@
+
 #include "FileInfo.h"
+#include <Enviroment/Unicode.h>
 
 namespace Common::FileSystem
 {
-	FileInfo::FileInfo(EFI::EFI_FILE_INFO& info)
-		: Size(info.Size), FileSize(info.FileSize), PhysicalSize(info.PhysicalSize),
-		CreateTime(info.CreateTime), LastAccessTime(info.LastAccessTime),
-		ModificationTime(info.ModificationTime), Attribute(info.Attribute), FileName(info.FileName)
+	FileInfo::FileInfo(EFI::EFI_FILE_INFO* info)
+		: Size(info->Size), FileSize(info->FileSize), PhysicalSize(info->PhysicalSize),
+		CreateTime(info->CreateTime), LastAccessTime(info->LastAccessTime),
+		ModificationTime(info->ModificationTime), Attribute(info->Attribute), FileName(info->FileName)
 	{
 	}
 
@@ -14,7 +16,7 @@ namespace Common::FileSystem
 		if (info == nullptr)
 			return Empty_FileInfo;
 
-		return FileInfo(*info);
+		return FileInfo(info);
 	}
 	bool FileInfo::operator==(const FileInfo& right)
 	{
@@ -41,7 +43,7 @@ namespace Common::FileSystem
 		if (Attribute != right.Attribute)
 			return false;
 
-		if (FileName != right.FileName)
+		if (Enviroment::UTF16::Compare(FileName,right.FileName) == FALSE)
 			return false;
 
 		return true;

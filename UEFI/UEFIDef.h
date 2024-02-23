@@ -50,6 +50,18 @@
 #error "Unknown architecture"
 #endif
 
+/* Define Alignment Atrribute for aligning on byte,word, dword and qword boundaries for each compiler*/
+
+#if defined(_MSC_VER)
+#define ALIGN(x) __declspec(align(x))
+#elif defined(__GNUC__)
+#define ALIGN(x) __attribute__((aligned(x)))
+#else
+#error "Unknown compiler"
+#endif`
+
+
+
 /*
 *  Define Sizes for UINT128 and INT128 based for the following Compilers if they have datatypes accessible: MSVC & GCC
 */

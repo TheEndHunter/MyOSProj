@@ -105,6 +105,7 @@ namespace Bootloader
 
         WaitForKey(sysTbl);
 
+
         UINTN fsCount = FileSystemContext::QueryFSCount(sysTbl, imgHndl);
 
         if (fsCount == 0)
@@ -112,36 +113,77 @@ namespace Bootloader
             ThrowException(sysTbl, imgHndl, u"No File Systems Found", EFI_STATUS::NOT_FOUND);
 		}
 
-
-        UINTN fsIndex = 0;
+        
         FileSystemContext sysFs = FileSystemContext::EmptyFS;
-        VolumeInfo sysVolumeInfo = Empty_VolInfo;
+        VolumeLabel sysVolumeLabel = Empty_VolLabel;
 
-        for (;fsIndex < fsCount;fsIndex++)
+        ClearConOut(sysTbl);
+        UINTN sysIndex = fsCount;
+        for (UINTN fsIndex = 0; fsIndex < fsCount;)
         {
-            sysFs = FileSystemContext::GetFileSystem(sysTbl, imgHndl, fsIndex);
-            sysFs.OpenVolume();
-            sysVolumeInfo = sysFs.GetVolumeInfo(sysTbl);
+            
+            EFI::EFI_STATUS fsStatus = EFI::EFI_STATUS::SUCCESS;
+            sysFs = FileSystemContext::GetFileSystem(sysTbl, imgHndl, fsIndex, &fsStatus);
 
-            if (UTF16::Compare(sysVolumeInfo.VolumeLabel,u"Sys"), StringComparison::InvariantCultureIgnoreCase)
+            if (fsStatus != EFI::EFI_STATUS::SUCCESS)
+			{
+                ThrowException(sysTbl, imgHndl, u"Could Not Get File System", fsStatus);
+			}
+
+            sysFs.OpenVolume();
+            
+            if (fsStatus != EFI::EFI_STATUS::SUCCESS)
             {
+                ThrowException(sysTbl, imgHndl, u"Could Not Open File System", fsStatus);
+            }
+
+            sysVolumeLabel = sysFs.GetVolumeLabel(sysTbl);
+            
+            if(sysFs.LastStatus != EFI::EFI_STATUS::SUCCESS)
+			{
+				ThrowException(sysTbl, imgHndl, u"Could Not Get Volume Label", sysFs.LastStatus);
+			}
+
+            PrintLine(sysTbl, u"Checking Volume...");
+
+            if (sysVolumeLabel == nullptr || sysVolumeLabel == Empty_VolLabel)
+            {
+				Print(sysTbl, u"No Volume Label: ");
+                PrintLine(sysTbl, UTF16::ToString(fsIndex));
+                sysTbl->BootServices->FreePool(sysVolumeLabel.Label);
+				sysFs.CloseVolume();
+				fsIndex++;
+				continue;
+            }
+
+            Print(sysTbl, u"Checking...");
+
+            if (UTF16::IsNullOrEmpty(sysVolumeLabel.Label) == TRUE)
+            {
+                PrintLine(sysTbl, UTF16::ToString(fsIndex)); sysTbl->BootServices->FreePool(sysVolumeLabel.Label);
+                PrintLine(sysTbl, u"Volume Label Null or Empty");
+                sysFs.CloseVolume();
+                fsIndex++;
+                continue;
+            }
+
+            Print(sysTbl, u"Reading Volume Label: ");
+            PrintLine(sysTbl, UTF16::ToString(fsIndex));
+
+            if (UTF16::StartsWith(sysVolumeLabel.Label,u"SYS", StringComparison::InvariantCultureIgnoreCase))
+            {
+                sysIndex = fsIndex;
                 break;
             }
-            sysFs.CloseVolume();
+            fsIndex++;
         }
-        
-        if (fsIndex == fsCount)
+
+        PrintLine(sysTbl, UTF16::ToString(sysIndex));
+        if (sysIndex == fsCount)
         {
             Print(sysTbl, sysFs.LastStatus);
 			ThrowException(sysTbl, imgHndl, u"Could Not Locate File System with Label: \"Sys\"", sysFs.LastStatus);
 		}
-
-        Print(sysTbl, u"Located System Volume: ");
-        PrintLine(sysTbl, sysVolumeInfo.VolumeLabel);
-        Print(sysTbl, u"File System Size: ");
-        PrintLine(sysTbl, UTF16::ToString(sysVolumeInfo.VolumeSize));
-
-        WaitForKey(sysTbl);
 
         PrintLine(sysTbl, u"Locating Kernel...");
         FileInfo kernel = sysFs.GetFileInfo(sysTbl, u"Kernel.bin");

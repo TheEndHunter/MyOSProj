@@ -56,6 +56,8 @@ namespace Common::Enviroment
 		static const BOOLEAN StartsWith(const CHAR16* str, const CHAR16* value, StringComparison mode = InvariantCulture);
 		static const BOOLEAN EndsWith(const CHAR16* str, const CHAR16* value, StringComparison mode = InvariantCulture);
 		static const BOOLEAN Contains(const CHAR16* str, const CHAR16* value, StringComparison mode = InvariantCulture);
+		static const BOOLEAN IsNullOrEmpty(const CHAR16* str);
+		static const BOOLEAN IsNullOrWhiteSpace(const CHAR16* str);
 	};
 
 	class UTF8
@@ -93,5 +95,7 @@ namespace Common::Enviroment
 		static const BOOLEAN StartsWith(const CHAR8* str, const CHAR8* value, StringComparison mode = InvariantCulture);
 		static const BOOLEAN EndsWith(const CHAR8* str, const CHAR8* value, StringComparison mode = InvariantCulture);
 		static const BOOLEAN Contains(const CHAR8* str, const CHAR8* value, StringComparison mode = InvariantCulture);
+		static const BOOLEAN IsNullOrEmpty(const CHAR8* str);
+		static const BOOLEAN IsNullOrWhiteSpace(const CHAR8* str);
 	};
 }

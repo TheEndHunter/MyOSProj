@@ -2,29 +2,23 @@
 #include <TypeDefs.h>
 #include <Protocols/Time/EFI_TIME.h>
 #include <Protocols/IO/Media/EFI_FILE_PROTOCOL.h>
-#include <Protocols/IO/Media/EFI_FILE_INFO.h>
 #include <Protocols/IO/Media/EFI_FILE_SYSTEM_INFO.h>
+#include <Enviroment/Unicode.h>
+#include <Protocols/IO/Media/EFI_FILE_SYSTEM_VOLUME_LABEL.h>
 
 namespace Common::FileSystem
 {
-	
-	struct  VolumeInfo
+	struct VolumeInfo
 	{
 	protected:
-
 		VolumeInfo(EFI::EFI_FILE_SYSTEM_INFO& info)
 			:Size(info.Size), ReadOnly(info.ReadOnly), VolumeSize(info.VolumeSize), FreeSpace(info.FreeSpace), BlockSize(info.BlockSize), VolumeLabel(info.VolumeLabel)
 		{
 		}
+
 	public:
-		constexpr VolumeInfo()
+		constexpr VolumeInfo() : Size(0), ReadOnly(FALSE), VolumeSize(0), FreeSpace(0), BlockSize(0), VolumeLabel(nullptr)
 		{
-			Size = 0;
-			ReadOnly = 0;
-			VolumeSize = 0;
-			FreeSpace = 0;
-			BlockSize = 0;
-			VolumeLabel = u"\0\0\0\0\0\0\0\0\0\0";
 		}
 
 		static VolumeInfo Create(EFI::EFI_FILE_SYSTEM_INFO* info);
@@ -35,7 +29,7 @@ namespace Common::FileSystem
 		UINT64 VolumeSize;
 		UINT64 FreeSpace;
 		UINT32 BlockSize;
-		const CHAR16* VolumeLabel;
+		CHAR16* VolumeLabel;
 
 		bool operator ==(const VolumeInfo& right)
 		{
@@ -56,10 +50,16 @@ namespace Common::FileSystem
 			if (BlockSize != right.BlockSize)
 				return false;
 
-			if (VolumeLabel != right.VolumeLabel)
-				return false;
+			BOOLEAN lb = Enviroment::UTF16::IsNullOrEmpty(VolumeLabel);
+			BOOLEAN rb = Enviroment::UTF16::IsNullOrEmpty(right.VolumeLabel);
 
-			return true;
+			if (lb && rb)
+				return TRUE;
+
+			if (lb || rb)
+				return FALSE;
+
+			return Enviroment::UTF16::Compare(VolumeLabel, right.VolumeLabel) == TRUE;
 		}
 
 		bool operator !=(const VolumeInfo& right)
@@ -67,5 +67,80 @@ namespace Common::FileSystem
 			return !(*this == right);
 		}
 	};
+
+	struct VolumeLabel
+	{
+		constexpr VolumeLabel() : Label(nullptr)
+		{
+		}
+
+		VolumeLabel(const EFI::EFI_FILE_SYSTEM_VOLUME_LABEL* label)
+			:Label(label->VolumeLabel)
+		{
+		}
+
+		CHAR16* Label;
+
+		bool operator ==(const VolumeLabel* right)
+		{
+			if(right == nullptr && this == nullptr)
+				return true;
+
+			if(right == nullptr || this == nullptr)
+				return false;
+
+			BOOLEAN lb = Enviroment::UTF16::IsNullOrEmpty(Label);
+			BOOLEAN rb = Enviroment::UTF16::IsNullOrEmpty(right->Label);
+
+			if (lb == TRUE && rb == TRUE)
+				return TRUE;
+
+			if (lb || rb)
+				return FALSE;
+
+			return Enviroment::UTF16::Compare(Label, right->Label) == TRUE;
+		};
+
+		bool operator !=(const VolumeLabel* right)
+		{
+			return !this->operator==(right);
+		}
+
+		bool operator ==(const VolumeLabel right)
+		{
+			BOOLEAN lb = Enviroment::UTF16::IsNullOrEmpty(Label);
+			BOOLEAN rb = Enviroment::UTF16::IsNullOrEmpty(right.Label);
+
+			if(lb == TRUE && rb == TRUE)
+				return TRUE;
+
+			if(lb || rb)
+				return FALSE;
+
+			return Enviroment::UTF16::Compare(Label, right.Label) == TRUE;
+		}
+
+		bool operator !=(const VolumeLabel right)
+		{
+			return !this->operator==(right);
+		}
+
+	private:
+		bool IsNullOrEmpty(VolumeLabel* right)
+		{
+			if(right == nullptr)
+				return TRUE;
+
+			if(right->Label == nullptr)
+				return TRUE;
+
+			if(right->Label[0] == 0)
+				return TRUE;
+
+			return FALSE;
+		}
+	};
+
 	constinit const VolumeInfo Empty_VolInfo = VolumeInfo();
+	constinit const VolumeLabel Empty_VolLabel = VolumeLabel();
 }

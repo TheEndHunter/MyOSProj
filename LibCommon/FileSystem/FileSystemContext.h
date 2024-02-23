@@ -25,12 +25,13 @@ namespace Common::FileSystem
 			_root = nullptr;
 			_cwd = nullptr;
 			_isVolumeOpen = false;
+			LastStatus = EFI::EFI_STATUS::SUCCESS;
 		}
 		
 	public:
 		static const UINTN QueryFSCount(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd);
 		static FileSystemContext GetBootFS(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd);
-		static FileSystemContext GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, UINTN index);
+		static FileSystemContext GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, UINTN index, OUT EFI::EFI_STATUS* status);
 		static const FileSystemContext EmptyFS;
 
 		BOOLEAN OpenVolume();
@@ -45,6 +46,8 @@ namespace Common::FileSystem
 		void CloseFile(EFI::EFI_SYSTEM_TABLE* sysTable, FileHandle& handle);
 
 		VolumeInfo GetVolumeInfo(EFI::EFI_SYSTEM_TABLE* sysTable);
+		VolumeLabel GetVolumeLabel(EFI::EFI_SYSTEM_TABLE* sysTable);
+		
 
 		FileInfo GetDirectoryInfo(EFI::EFI_SYSTEM_TABLE* sysTable);
 		FileInfo GetFileInfo(EFI::EFI_SYSTEM_TABLE* sysTable, const CHAR16* path);

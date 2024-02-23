@@ -34,11 +34,20 @@ namespace Bootloader
 
     static void Print(EFI_SYSTEM_TABLE* systemTable, const CHAR16* str)
     {
+        if(UTF16::IsNullOrEmpty(str) == TRUE)
+        {
+			return;
+        }
+
 		systemTable->ConOut->OutputString(systemTable->ConOut, str);
 	}
 
     static void Print(EFI_SYSTEM_TABLE* systemTable, const CHAR16* str, EFI_FOREGROUND_COLOR fg, EFI_BACKGROUND_COLOR bg)
     {
+        if (UTF16::IsNullOrEmpty(str) == TRUE)
+        {
+            return;
+        }
 		systemTable->ConOut->SetAttribute(systemTable->ConOut, fg | bg );
 		systemTable->ConOut->OutputString(systemTable->ConOut, str);
 	}
@@ -56,12 +65,20 @@ namespace Bootloader
 
     static void PrintLine(EFI_SYSTEM_TABLE* systemTable, const CHAR16* str)
     {
+        if (UTF16::IsNullOrEmpty(str) == TRUE)
+        {
+            return;
+        }
         Print(systemTable, str);
         Print(systemTable,  UTF16::NewLine);
     }
 
     static void PrintLine(EFI_SYSTEM_TABLE* systemTable, const CHAR16* str, EFI_FOREGROUND_COLOR fg, EFI_BACKGROUND_COLOR bg)
     {
+        if (UTF16::IsNullOrEmpty(str) == TRUE)
+        {
+            return;
+        }
         Print(systemTable, str,fg,bg);
         Print(systemTable,  UTF16::NewLine,fg,bg);
     }
@@ -80,6 +97,10 @@ namespace Bootloader
 
     static void Print(EFI_SYSTEM_TABLE* systemTable, const CHAR16* str, UINT8 color)
     {
+        if (UTF16::IsNullOrEmpty(str) == TRUE)
+        {
+            return;
+        }
         systemTable->ConOut->SetAttribute(systemTable->ConOut,color);
         systemTable->ConOut->OutputString(systemTable->ConOut, str);
     }
@@ -92,6 +113,10 @@ namespace Bootloader
 
     static void PrintLine(EFI_SYSTEM_TABLE* systemTable, const CHAR16* str, UINT8 color)
     {
+        if (UTF16::IsNullOrEmpty(str) == TRUE)
+        {
+            return;
+        }
         Print(systemTable, str, color);
         Print(systemTable,  UTF16::NewLine, color);
     }

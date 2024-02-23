@@ -3,9 +3,9 @@
 #include <EFI_SYSTEM_TABLE.h>
 #include <Protocols/IO/Media/EFI_SIMPLE_FILE_SYSTEM_PROTOCOL.h>
 #include <EFI_STATUS.h>
-#include "FileInfo.h"
-#include "FileMode.h"
-#include "FileAttribute.h"
+#include <FileSystem/FileInfo.h>
+#include <FileSystem/FileMode.h>
+#include <FileSystem/FileAttribute.h>
 
 namespace Common::FileSystem
 {
@@ -25,7 +25,7 @@ namespace Common::FileSystem
 		UINT64 Size;
 
 		/*
-		*  Below are all the fuinctions needed to read, write, seek, close and delete, etc.
+		*  Below are all the functions needed to read, write, seek, close and delete, etc.
 		*/
 
 		EFI::EFI_STATUS Read(UINTN* bufferSize, void* buffer);

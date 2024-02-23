@@ -11,11 +11,12 @@ namespace Common::Enviroment
 	CHAR16 _u16_hex64String[18]{ u'\0' };
 	CHAR16 _u16_hex8String[4]{ u'\0' };
 	CHAR16 _u16_hexGUIDString[39]{ u'\0' };
+	CHAR16 _u16_hexPtrString[17]{ u'\0' };
 	CHAR16 _u16_hexu16String[5]{ u'\0' };
 	CHAR16 _u16_hexu32String[9]{ u'\0' };
 	CHAR16 _u16_hexu64String[17]{ u'\0' };
 	CHAR16 _u16_hexu8String[3]{ u'\0' };
-	CHAR16 _u16_hexPtrString[17]{ u'\0' };
+	CHAR16 _u16_ptrString[21]{ u'\0' };
 	CHAR16 _u16_t16String[7]{ u'\0' };
 	CHAR16 _u16_t32String[12]{ u'\0' };
 	CHAR16 _u16_t64String[22]{ u'\0' };
@@ -24,17 +25,17 @@ namespace Common::Enviroment
 	CHAR16 _u16_tu32String[11]{ u'\0' };
 	CHAR16 _u16_tu64String[21]{ u'\0' };
 	CHAR16 _u16_tu8String[4]{ u'\0' };
-	CHAR16 _u16_ptrString[21]{ u'\0' };
-
 	CHAR8 _hex16String[6]{ '\0' };
 	CHAR8 _hex32String[10]{ '\0' };
 	CHAR8 _hex64String[18]{ '\0' };
 	CHAR8 _hex8String[4]{ '\0' };
 	CHAR8 _hexGUIDString[39]{ '\0' };
+	CHAR8 _hexPtrString[17]{ '\0' };
 	CHAR8 _hexu16String[5]{ '\0' };
 	CHAR8 _hexu32String[9]{ '\0' };
 	CHAR8 _hexu64String[17]{ '\0' };
 	CHAR8 _hexu8String[3]{ '\0' };
+	CHAR8 _ptrString[21]{ '\0' };
 	CHAR8 _t16String[7]{ '\0' };
 	CHAR8 _t32String[12]{ '\0' };
 	CHAR8 _t64String[22]{ '\0' };
@@ -43,9 +44,6 @@ namespace Common::Enviroment
 	CHAR8 _tu32String[11]{ '\0' };
 	CHAR8 _tu64String[21]{ '\0' };
 	CHAR8 _tu8String[4]{ '\0' };
-	CHAR8 _hexPtrString[17]{ '\0' };
-	CHAR8 _ptrString[21]{ '\0' };
-
 	const CHAR16* _u16_hexChars = u"0123456789ABCDEF";
 	const CHAR16* Common::Enviroment::UTF16::NewLine = u"\r\n";
 	const CHAR8* _hexChars = "0123456789ABCDEF";
@@ -373,14 +371,11 @@ namespace Common::Enviroment
 			return 0;
 		}
 
-		if (str[0] == u'\0')
-		{
-			return 0;
-		}
-
 		UINT64 len = 1;
-		while (str[0] != u'\0')
+		UINT64 i = 0;
+		while (str[i] != u'\0')
 		{
+			i++;
 			str++;
 			len++;
 		}
@@ -394,14 +389,11 @@ namespace Common::Enviroment
 			return 0;
 		}
 
-		if (str[0] == '\0')
-		{
-			return 0;
-		}
-
 		UINT64 len = 1;
-		while (str[0] != '\0')
+		UINT64 i = 0;
+		while (str[i] != u'\0')
 		{
+			i++;
 			str++;
 			len++;
 		}
@@ -410,6 +402,16 @@ namespace Common::Enviroment
 
 	const BOOLEAN UTF16::Compare(const CHAR16* l, const CHAR16* r, StringComparison mode)
 	{
+		if (UTF16::IsNullOrEmpty(l) == TRUE && UTF16::IsNullOrEmpty(r) == TRUE)
+		{
+			return TRUE;
+		};
+
+		if (UTF16::IsNullOrEmpty(l) == TRUE || UTF16::IsNullOrEmpty(r) == TRUE)
+		{
+			return FALSE;
+		};
+
 		UINT64 lLen = Length(l);
 		UINT64 rLen = Length(r);
 
@@ -420,29 +422,29 @@ namespace Common::Enviroment
 
 		if (mode == StringComparison::InvariantCulture)
 		{
-			UINT64 i = 0;
-			for (; i <= lLen; i++)
+			
+			for (UINT64 i = 0;i <= lLen; i++)
 			{
 				if (l[i] != r[i])
 				{
 					return FALSE;
 				}
-				i++;
 			}
-			return l[i] == r[i];
+
+			return TRUE;
 		}
+
 		else if (mode == StringComparison::InvariantCultureIgnoreCase)
 		{
-			UINT64 i = 0;
-			for (; i <= lLen; i++)
+			
+			for (UINT64 i = 0; i <= lLen; i++)
 			{
 				if (l[i] != r[i] && l[i] != r[i] + 32 && l[i] != r[i] - 32)
 				{
 					return FALSE;
 				}
-				i++;
 			}
-			return l[i] == r[i];
+			return TRUE;
 		}
 		else
 		{
@@ -452,6 +454,16 @@ namespace Common::Enviroment
 
 	const BOOLEAN UTF16::StartsWith(const CHAR16* str, const CHAR16* value, StringComparison mode)
 	{
+		if (UTF16::IsNullOrEmpty(str) == TRUE && UTF16::IsNullOrEmpty(value) == TRUE)
+		{
+			return TRUE;
+		};
+
+		if (UTF16::IsNullOrEmpty(str) == TRUE || UTF16::IsNullOrEmpty(value) == TRUE)
+		{
+			return FALSE;
+		};
+
 		UINT64 strLen = Length(str);
 		UINT64 valueLen = Length(value);
 
@@ -460,14 +472,15 @@ namespace Common::Enviroment
 			return FALSE;
 		}
 
+
 		/*
 		*  Based on current StringComparision mode, compare the strings looking to see if the value is at the start of the string
 		*/
 
 		if (mode == StringComparison::InvariantCulture)
 		{
-			UINT64 i = 0;
-			for (; i < valueLen; i++)
+			
+			for (UINT64 i = 0; i < valueLen; i++)
 			{
 				if (str[i] != value[i])
 				{
@@ -478,8 +491,8 @@ namespace Common::Enviroment
 		}
 		else if (mode == StringComparison::InvariantCultureIgnoreCase)
 		{
-			UINT64 i = 0;
-			for (; i < valueLen; i++)
+			
+			for (UINT64 i = 0; i < valueLen; i++)
 			{
 				if (str[i] != value[i] && str[i] != value[i] + 32 && str[i] != value[i] - 32)
 				{
@@ -496,6 +509,16 @@ namespace Common::Enviroment
 
 	const BOOLEAN UTF16::EndsWith(const CHAR16* str, const CHAR16* value, StringComparison mode)
 	{
+		if (UTF16::IsNullOrEmpty(str) == TRUE && UTF16::IsNullOrEmpty(value) == TRUE)
+		{
+			return TRUE;
+		};
+
+		if (UTF16::IsNullOrEmpty(str) == TRUE || UTF16::IsNullOrEmpty(value) == TRUE)
+		{
+			return FALSE;
+		};
+
 		UINT64 strLen = Length(str);
 		UINT64 valueLen = Length(value);
 
@@ -503,6 +526,8 @@ namespace Common::Enviroment
 		{
 			return FALSE;
 		}
+
+
 		/*
 		*  Based on current StringComparision mode, compare the strings looking to see if the value is at the end of the string
 		*/
@@ -516,7 +541,6 @@ namespace Common::Enviroment
 				{
 					return FALSE;
 				}
-				j++;
 			}
 			return TRUE;
 		}
@@ -529,7 +553,6 @@ namespace Common::Enviroment
 				{
 					return FALSE;
 				}
-				j++;
 			}
 			return TRUE;
 		}
@@ -541,6 +564,16 @@ namespace Common::Enviroment
 
 	const BOOLEAN UTF16::Contains(const CHAR16* str, const CHAR16* value, StringComparison mode)
 	{
+		if (UTF16::IsNullOrEmpty(str) == TRUE && UTF16::IsNullOrEmpty(value) == TRUE)
+		{
+			return TRUE;
+		};
+
+		if (UTF16::IsNullOrEmpty(str) == TRUE || UTF16::IsNullOrEmpty(value) == TRUE)
+		{
+			return FALSE;
+		};
+
 		UINT64 strLen = Length(str);
 		UINT64 valueLen = Length(value);
 
@@ -555,8 +588,8 @@ namespace Common::Enviroment
 
 		if (mode == StringComparison::InvariantCulture)
 		{
-			UINT64 i = 0;
-			for (; i < strLen; i++)
+			
+			for (UINT64 i = 0; i < strLen; i++)
 			{
 				if (str[i] == value[0])
 				{
@@ -578,8 +611,8 @@ namespace Common::Enviroment
 		}
 		else if (mode == StringComparison::InvariantCultureIgnoreCase)
 		{
-			UINT64 i = 0;
-			for (; i < strLen; i++)
+			
+			for (UINT64 i = 0; i < strLen; i++)
 			{
 				if (str[i] == value[0] || str[i] == value[0] + 32 || str[i] == value[0] - 32)
 				{
@@ -605,8 +638,86 @@ namespace Common::Enviroment
 		}
 	}
 
+	const BOOLEAN UTF16::IsNullOrEmpty(const CHAR16* str)
+	{
+		if (str == nullptr)
+		{
+			return TRUE;
+		}
+
+		if (str[0] == u'\0')
+		{
+			return TRUE;
+		}
+
+		return FALSE;
+	}
+
+	const BOOLEAN UTF16::IsNullOrWhiteSpace(const CHAR16* str)
+	{
+		if (str == nullptr)
+		{
+			return TRUE;
+		}
+
+		UINT64 len = Length(str);
+		for (UINT64 i = 0; i < len; i++)
+		{
+			if (str[i] != u' ' && str[i] != u'\t' && str[i] != u'\n' && str[i] != u'\r')
+			{
+				return FALSE;
+			}
+		}
+		return TRUE;
+	}
+
+	const BOOLEAN UTF8::IsNullOrWhiteSpace(const CHAR8* str)
+	{
+		if (str == nullptr)
+		{
+			return TRUE;
+		}
+
+		UINT64 len = Length(str);
+		for (UINT64 i = 0; i < len; i++)
+		{
+			if (str[i] != ' ' && str[i] != '\t' && str[i] != '\n' && str[i] != '\r')
+			{
+				return FALSE;
+			}
+		}
+		return TRUE;
+	}
+
+
+
+	const BOOLEAN UTF8::IsNullOrEmpty(const CHAR8* str)
+	{
+		if (str == nullptr)
+		{
+			return TRUE;
+		}
+
+		if (str[0] == '\0')
+		{
+			return TRUE;
+		}
+
+		return FALSE;
+	}
+
 	const BOOLEAN UTF8::Contains(const CHAR8* str, const CHAR8* value, StringComparison mode)
 	{
+		if (UTF8::IsNullOrEmpty(str) == TRUE && UTF8::IsNullOrEmpty(value) == TRUE)
+		{
+			return TRUE;
+		};
+
+		if (UTF8::IsNullOrEmpty(str) == TRUE || UTF8::IsNullOrEmpty(value) == TRUE)
+		{
+			return FALSE;
+		};
+
 		UINT64 strLen = Length(str);
 		UINT64 valueLen = Length(value);
 
@@ -673,6 +784,16 @@ namespace Common::Enviroment
 
 	const BOOLEAN UTF8::EndsWith(const CHAR8* str, const CHAR8* value, StringComparison mode)
 	{
+		if (UTF8::IsNullOrEmpty(str) == TRUE && UTF8::IsNullOrEmpty(value) == TRUE)
+		{
+			return TRUE;
+		};
+
+		if (UTF8::IsNullOrEmpty(str) == TRUE || UTF8::IsNullOrEmpty(value) == TRUE)
+		{
+			return FALSE;
+		};
+
 		UINT64 strLen = Length(str);
 		UINT64 valueLen = Length(value);
 
@@ -680,6 +801,7 @@ namespace Common::Enviroment
 		{
 			return FALSE;
 		}
+
 		/*
 		*  Based on current StringComparision mode, compare the strings looking to see if the value is at the end of the string
 		*/
@@ -693,7 +815,6 @@ namespace Common::Enviroment
 				{
 					return FALSE;
 				}
-				j++;
 			}
 			return TRUE;
 		}
@@ -706,7 +827,6 @@ namespace Common::Enviroment
 				{
 					return FALSE;
 				}
-				j++;
 			}
 			return TRUE;
 		}
@@ -718,6 +838,16 @@ namespace Common::Enviroment
 
 	const BOOLEAN UTF8::StartsWith(const CHAR8* str, const CHAR8* value, StringComparison mode)
 	{
+		if (UTF8::IsNullOrEmpty(str) == TRUE && UTF8::IsNullOrEmpty(value) == TRUE)
+		{
+			return TRUE;
+		};
+
+		if (UTF8::IsNullOrEmpty(str) == TRUE || UTF8::IsNullOrEmpty(value) == TRUE)
+		{
+			return FALSE;
+		};
+
 		UINT64 strLen = Length(str);
 		UINT64 valueLen = Length(value);
 
@@ -732,8 +862,7 @@ namespace Common::Enviroment
 
 		if (mode == StringComparison::InvariantCulture)
 		{
-			UINT64 i = 0;
-			for (; i < valueLen; i++)
+			for (UINT64 i = 0; i < valueLen; i++)
 			{
 				if (str[i] != value[i])
 				{
@@ -744,8 +873,8 @@ namespace Common::Enviroment
 		}
 		else if (mode == StringComparison::InvariantCultureIgnoreCase)
 		{
-			UINT64 i = 0;
-			for (; i < valueLen; i++)
+			
+			for (UINT64 i = 0; i < valueLen; i++)
 			{
 				if (str[i] != value[i] && str[i] != value[i] + 32 && str[i] != value[i] - 32)
 				{
@@ -763,39 +892,43 @@ namespace Common::Enviroment
 
 	const BOOLEAN UTF8::Compare(const CHAR8* l, const CHAR8* r, StringComparison mode)
 	{
+		if (UTF8::IsNullOrEmpty(l) == TRUE && UTF8::IsNullOrEmpty(r) == TRUE)
+		{
+			return TRUE;
+		};
+
+		if (UTF8::IsNullOrEmpty(l) == TRUE || UTF8::IsNullOrEmpty(r) == TRUE)
+		{
+			return FALSE;
+		};
 		UINT64 lLen = Length(l);
 		UINT64 rLen = Length(r);
 
-		if (lLen != rLen)
-		{
-			return FALSE;
-		}
-
 		if (mode == StringComparison::InvariantCulture)
 		{
-			UINT64 i = 0;
-			for (; i <= lLen; i++)
+
+			for (UINT64 i = 0; i <= lLen; i++)
 			{
 				if (l[i] != r[i])
 				{
 					return FALSE;
 				}
-				i++;
 			}
-			return l[i] == r[i];
+
+			return TRUE;
 		}
+
 		else if (mode == StringComparison::InvariantCultureIgnoreCase)
 		{
-			UINT64 i = 0;
-			for (; i <= lLen; i++)
+
+			for (UINT64 i = 0; i <= lLen; i++)
 			{
 				if (l[i] != r[i] && l[i] != r[i] + 32 && l[i] != r[i] - 32)
 				{
 					return FALSE;
 				}
-				i++;
 			}
-			return l[i] == r[i];
+			return TRUE;
 		}
 		else
 		{
@@ -881,21 +1014,27 @@ namespace Common::Enviroment
 	{
 		if (b == 0)
 		{
-			_u16_t8String[0] = u'0';
-			_u16_t8String[1] = u'\0';
+			_u16_t8String[0] = '0';
+			_u16_t8String[1] = '\0';
 			return &_u16_t8String[0];
 		}
 
 		INT8 i = b;
-		_u16_t8String[4] = u'\0';
+		_u16_t8String[4] = '\0';
 		INT8 len = 4;
-		for (; i > 0; i /= 10)
-		{
-			_u16_t8String[--len] = (i % 10) + u'0';
-		}
+		bool isNegative = false;
 		if (i < 0)
 		{
-			_u16_t8String[--len] = u'-';
+			isNegative = true;
+			i = -i; // make it positive
+		}
+		for (; i > 0; i /= 10)
+		{
+			_u16_t8String[--len] = (i % 10) + '0';
+		}
+		if (isNegative)
+		{
+			_u16_t8String[--len] = '-';
 		}
 		return &_u16_t8String[len];
 	}
@@ -903,21 +1042,27 @@ namespace Common::Enviroment
 	{
 		if (b == 0)
 		{
-			_u16_t16String[0] = u'0';
-			_u16_t16String[1] = u'\0';
+			_u16_t16String[0] = '0';
+			_u16_t16String[1] = '\0';
 			return &_u16_t16String[0];
 		}
 
 		INT16 i = b;
-		_u16_t16String[6] = u'\0';
+		_u16_t16String[6] = '\0';
 		INT8 len = 6;
-		for (; i > 0; i /= 10)
-		{
-			_u16_t16String[--len] = (i % 10) + u'0';
-		}
+		bool isNegative = false;
 		if (i < 0)
 		{
-			_u16_t16String[--len] = u'-';
+			isNegative = true;
+			i = -i; // make it positive
+		}
+		for (; i > 0; i /= 10)
+		{
+			_u16_t16String[--len] = (i % 10) + '0';
+		}
+		if (isNegative)
+		{
+			_u16_t16String[--len] = '-';
 		}
 		return &_u16_t16String[len];
 	}
@@ -925,21 +1070,27 @@ namespace Common::Enviroment
 	{
 		if (b == 0)
 		{
-			_u16_t32String[0] = u'0';
-			_u16_t32String[1] = u'\0';
+			_u16_t32String[0] = '0';
+			_u16_t32String[1] = '\0';
 			return &_u16_t32String[0];
 		}
 
 		INT32 i = b;
-		_u16_t32String[11] = u'\0';
+		_u16_t32String[11] = '\0';
 		INT8 len = 11;
-		for (; i > 0; i /= 10)
-		{
-			_u16_t32String[--len] = (i % 10) + u'0';
-		}
+		bool isNegative = false;
 		if (i < 0)
 		{
-			_u16_t32String[--len] = u'-';
+			isNegative = true;
+			i = -i; // make it positive
+		}
+		for (; i > 0; i /= 10)
+		{
+			_u16_t32String[--len] = (i % 10) + '0';
+		}
+		if (isNegative)
+		{
+			_u16_t32String[--len] = '-';
 		}
 		return &_u16_t32String[len];
 	}
@@ -947,21 +1098,27 @@ namespace Common::Enviroment
 	{
 		if (b == 0)
 		{
-			_u16_t64String[0] = u'0';
-			_u16_t64String[1] = u'\0';
+			_u16_t64String[0] = '0';
+			_u16_t64String[1] = '\0';
 			return &_u16_t64String[0];
 		}
 
 		INT64 i = b;
-		_u16_t64String[21] = u'\0';
+		_u16_t64String[21] = '\0';
 		INT8 len = 21;
-		for (; i > 0; i /= 10)
-		{
-			_u16_t64String[--len] = (i % 10) + u'0';
-		}
+		bool isNegative = false;
 		if (i < 0)
 		{
-			_u16_t64String[--len] = u'-';
+			isNegative = true;
+			i = -i; // make it positive
+		}
+		for (; i > 0; i /= 10)
+		{
+			_u16_t64String[--len] = (i % 10) + '0';
+		}
+		if (isNegative)
+		{
+			_u16_t64String[--len] = '-';
 		}
 		return &_u16_t64String[len];
 	}
@@ -1368,11 +1525,17 @@ namespace Common::Enviroment
 		INT8 i = b;
 		_t8String[4] = '\0';
 		INT8 len = 4;
+		bool isNegative = false;
+		if (i < 0)
+		{
+			isNegative = true;
+			i = -i; // make it positive
+		}
 		for (; i > 0; i /= 10)
 		{
 			_t8String[--len] = (i % 10) + '0';
 		}
-		if (i < 0)
+		if (isNegative)
 		{
 			_t8String[--len] = '-';
 		}
@@ -1390,11 +1553,17 @@ namespace Common::Enviroment
 		INT16 i = b;
 		_t16String[6] = '\0';
 		INT8 len = 6;
+		bool isNegative = false;
+		if (i < 0)
+		{
+			isNegative = true;
+			i = -i; // make it positive
+		}
 		for (; i > 0; i /= 10)
 		{
 			_t16String[--len] = (i % 10) + '0';
 		}
-		if (i < 0)
+		if (isNegative)
 		{
 			_t16String[--len] = '-';
 		}
@@ -1412,11 +1581,17 @@ namespace Common::Enviroment
 		INT32 i = b;
 		_t32String[11] = '\0';
 		INT8 len = 11;
+		bool isNegative = false;
+		if (i < 0)
+		{
+			isNegative = true;
+			i = -i; // make it positive
+		}
 		for (; i > 0; i /= 10)
 		{
 			_t32String[--len] = (i % 10) + '0';
 		}
-		if (i < 0)
+		if (isNegative)
 		{
 			_t32String[--len] = '-';
 		}
@@ -1434,11 +1609,17 @@ namespace Common::Enviroment
 		INT64 i = b;
 		_t64String[21] = '\0';
 		INT8 len = 21;
+		bool isNegative = false;
+		if (i < 0)
+		{
+			isNegative = true;
+			i = -i; // make it positive
+		}
 		for (; i > 0; i /= 10)
 		{
 			_t64String[--len] = (i % 10) + '0';
 		}
-		if (i < 0)
+		if (isNegative)
 		{
 			_t64String[--len] = '-';
 		}

@@ -28,9 +28,13 @@
 #define INT16 short
 #define INT32 int
 #define INT64 long long
-#define BOOLEAN INT8
-#define TRUE 0x01
-#define FALSE 0x00
+
+#ifndef BOOLEAN
+#define BOOLEAN UINT8
+#define TRUE (UINT8)1U
+#define FALSE (UINT8)0U
+#endif // BOOLEAN
+
 
 #define UINT8 unsigned char
 #define UINT16 unsigned short

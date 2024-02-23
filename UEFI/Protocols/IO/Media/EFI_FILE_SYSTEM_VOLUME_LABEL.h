@@ -7,11 +7,11 @@
 
 namespace EFI
 {
-	constinit const EFI::EFI_GUID EFI_FILE_SYSTEM_VOLUME_LABEL_ID{ 0xdb47d7d3,0xfe81,0x11d3,0x9a35,0x00,0x90,0x27,0x3f,0xC1,0x4d };
+	constinit const ALIGN(8) EFI::EFI_GUID EFI_FILE_SYSTEM_VOLUME_LABEL_ID { 0xdb47d7d3U,0xfe81U,0x11d3U,{0x9aU,0x35U,0x00U,0x90U,0x27U,0x3fU,0xC1U,0x4dU } };
 
 	struct EFI_FILE_SYSTEM_VOLUME_LABEL
 	{
 	public:
-		CHAR16 VolumeLabel[];
+		CHAR16* VolumeLabel;
 	};
 }

@@ -10,7 +10,7 @@ namespace Common::FileSystem
 	{
 		
 	protected:
-		FileInfo(EFI::EFI_FILE_INFO& info);
+		FileInfo(EFI::EFI_FILE_INFO* info);
 	public:
 		constexpr FileInfo()
 		{
