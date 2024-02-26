@@ -10,6 +10,7 @@
 #include "FileHandle.h"
 #include "FileMode.h"
 #include "FileAttribute.h"
+#include <Enviroment/StringComparisonMode.h>
 
 namespace Common::FileSystem
 {
@@ -32,10 +33,11 @@ namespace Common::FileSystem
 		static const UINTN QueryFSCount(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd);
 		static FileSystemContext GetBootFS(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd);
 		static FileSystemContext GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, UINTN index, OUT EFI::EFI_STATUS* status);
+		static FileSystemContext GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, const CHAR16* label, OUT EFI::EFI_STATUS* status, Enviroment::StringComparisonMode mode = Enviroment::StringComparisonMode::Compare, Enviroment::StringCulture culture = Enviroment::StringCulture::InvariantCulture);
 		static const FileSystemContext EmptyFS;
 
 		BOOLEAN OpenVolume();
-		void CloseVolume();
+		void CloseVolume(EFI::EFI_SYSTEM_TABLE* sysTbl, EFI::EFI_HANDLE imgHndl);
 
 		BOOLEAN OpenDirectory(const CHAR16* path);
 		BOOLEAN OpenRoot();
@@ -51,8 +53,6 @@ namespace Common::FileSystem
 
 		FileInfo GetDirectoryInfo(EFI::EFI_SYSTEM_TABLE* sysTable);
 		FileInfo GetFileInfo(EFI::EFI_SYSTEM_TABLE* sysTable, const CHAR16* path);
-
-		void CloseContext(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd);
 
 		bool operator ==(const FileSystemContext& right)
 		{

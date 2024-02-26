@@ -593,6 +593,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EFIConsole.cpp" />
     <ClCompile Include="EFIConsole.h" />
     <ClCompile Include="Entry.cpp" />
   </ItemGroup>

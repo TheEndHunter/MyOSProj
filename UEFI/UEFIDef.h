@@ -1,4 +1,10 @@
 #pragma once
+
+#ifdef WIN32
+#define x86
+#endif // WIN32
+
+
 #if defined(ARM) || defined(WIN32)
 #define BITS_32
 #elif defined(ARM64) || defined(x64)
@@ -24,6 +30,7 @@
 #else
 #define CHAR16 INT16
 #endif
+
 #define UINT8 unsigned char
 #define UINT16 unsigned short
 #define UINT32 unsigned int
@@ -34,21 +41,25 @@
 #define INT32 int
 #define INT64 long long
 
-#define BOOLEAN UINT8
-#define TRUE (UINT8)1U
-#define FALSE (UINT8)0U
 
+#define BOOLEAN bool
+#define TRUE true
+#define FALSE false
+
+/*
+* define declarations for UINTN and a INTN based on the ptr size of the compiler
+*/
 
 #if defined(BITS_32)
-#define INTN INT32
 #define UINTN UINT32
+#define INTN INT32
 #elif defined(BITS_64)
-
-#define INTN INT64
 #define UINTN UINT64
+#define INTN INT64
 #else
 #error "Unknown architecture"
 #endif
+
 
 /* Define Alignment Atrribute for aligning on byte,word, dword and qword boundaries for each compiler*/
 

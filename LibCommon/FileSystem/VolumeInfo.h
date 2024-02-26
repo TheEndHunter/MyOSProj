@@ -74,8 +74,8 @@ namespace Common::FileSystem
 		{
 		}
 
-		VolumeLabel(const EFI::EFI_FILE_SYSTEM_VOLUME_LABEL* label)
-			:Label(label->VolumeLabel)
+		VolumeLabel(const EFI::EFI_FILE_SYSTEM_VOLUME_LABEL label)
+			:Label((CHAR16*)& label.VolumeLabel[0])
 		{
 		}
 

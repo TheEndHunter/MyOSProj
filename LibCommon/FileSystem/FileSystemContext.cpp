@@ -49,20 +49,196 @@ namespace Common::FileSystem
 
         if (index >= fsCount)
         {
-            sysTable->BootServices->FreePool(handles);
+            if (fsCount > 0)
+            {
+                sysTable->BootServices->FreePool(handles);
+            }
             return EmptyFS;
         };
         EFI::EFI_HANDLE FsHndl = handles[index];
-
         EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL* fsProtocol = nullptr;
         *status = sysTable->BootServices->OpenProtocol(FsHndl, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, (void**)&fsProtocol, hnd, nullptr, EFI::EFI_OPEN_PROTOCOL_GET_PROTOCOL);
+        
         if (*status != EFI::EFI_STATUS::SUCCESS)
         {
+            sysTable->BootServices->FreePool(handles);
             return EmptyFS;
         }
 
         sysTable->BootServices->FreePool(handles);
         return FileSystemContext(FsHndl, fsProtocol);
+    }
+
+    FileSystemContext FileSystemContext::GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, const CHAR16* label, OUT EFI::EFI_STATUS* status, Enviroment::StringComparisonMode mode, Enviroment::StringCulture culture)
+    {
+        if (Common::Enviroment::UTF16::IsNullOrEmpty(label))
+        {
+            *status = EFI::EFI_STATUS::INVALID_PARAMETER;
+            return EmptyFS;
+        }
+
+        EFI::EFI_HANDLE* handles;
+        UINTN fsCount;
+        *status = sysTable->BootServices->LocateHandleBuffer(EFI::EFI_LOCATE_SEARCH_TYPE::ByProtocol, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, nullptr, &fsCount, &handles);
+        
+        if (*status != EFI::EFI_STATUS::SUCCESS)
+        {
+            return EmptyFS;
+        }
+
+        if (fsCount == 0)
+        {
+            return EmptyFS;
+        };
+
+        FileSystemContext fsContext = EmptyFS;
+        for (UINTN fsIndex = 0; fsIndex < fsCount; fsIndex++)
+        {
+
+            EFI::EFI_HANDLE fsHndl = handles[fsIndex];
+            EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL* fsProtocol = nullptr;
+            *status = sysTable->BootServices->OpenProtocol(fsHndl, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, (void**)&fsProtocol, hnd, nullptr, EFI::EFI_OPEN_PROTOCOL_GET_PROTOCOL);
+
+            if (*status != EFI::EFI_STATUS::SUCCESS)
+            {
+                continue;
+            }
+
+            sysTable->ConOut->OutputString(sysTable->ConOut, u"Checking File System: ");
+            sysTable->ConOut->OutputString(sysTable->ConOut, Common::Enviroment::UTF16::ToString(fsIndex));
+            sysTable->ConOut->OutputString(sysTable->ConOut, Common::Enviroment::UTF16::NewLine);
+
+            EFI::EFI_FILE_PROTOCOL* root = nullptr;
+            *status = fsProtocol->OpenVolume(fsProtocol, &root);
+                       
+            if (*status != EFI::EFI_STATUS::SUCCESS)
+            {
+                sysTable->BootServices->CloseProtocol(fsHndl, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, hnd, nullptr);
+				continue;
+			}
+
+            UINTN volLblSize = 0;
+            EFI::EFI_FILE_SYSTEM_VOLUME_LABEL* volLbl = nullptr;
+            *status = root->GetInfo(root, &EFI::EFI_FILE_SYSTEM_VOLUME_LABEL_ID, &volLblSize, (void**)&volLbl);
+            if (volLblSize < 1)
+            {
+                *status = EFI::EFI_STATUS::END_OF_FILE;
+                return EmptyFS;
+            }
+            *status = sysTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, volLblSize, (void**)&volLbl);
+            
+            sysTable->ConOut->OutputString(sysTable->ConOut, u"Fs Label Length: ");
+            sysTable->ConOut->OutputString(sysTable->ConOut, Common::Enviroment::UTF16::ToString(volLblSize));
+            sysTable->ConOut->OutputString(sysTable->ConOut, Common::Enviroment::UTF16::NewLine);
+
+            if (*status != EFI::EFI_STATUS::SUCCESS)
+            {
+				root->Close(root);
+				sysTable->BootServices->CloseProtocol(fsHndl, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, hnd, nullptr);
+				continue;
+			}
+
+            *status = root->GetInfo(root, &EFI::EFI_FILE_SYSTEM_VOLUME_LABEL_ID, &volLblSize, (void*)&volLbl->VolumeLabel);
+            
+            if (*status != EFI::EFI_STATUS::SUCCESS)
+            {
+				sysTable->BootServices->FreePool(volLbl);
+				root->Close(root);
+				sysTable->BootServices->CloseProtocol(fsHndl, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, hnd, nullptr);
+				continue;
+			}
+
+            sysTable->ConOut->OutputString(sysTable->ConOut, u"Fs Label Length(GetLength): ");
+            sysTable->ConOut->OutputString(sysTable->ConOut, Common::Enviroment::UTF16::ToString(Common::Enviroment::UTF16::Length(volLbl->VolumeLabel)));
+            sysTable->ConOut->OutputString(sysTable->ConOut, Common::Enviroment::UTF16::NewLine);
+
+            sysTable->ConOut->OutputString(sysTable->ConOut, u"Fs Label: ");
+            sysTable->ConOut->OutputString(sysTable->ConOut, volLbl->VolumeLabel);
+            sysTable->ConOut->OutputString(sysTable->ConOut, Common::Enviroment::UTF16::NewLine);
+
+            if (Common::Enviroment::UTF16::IsNullOrEmpty(volLbl->VolumeLabel))
+            {
+				sysTable->BootServices->FreePool(volLbl);
+				root->Close(root);
+				sysTable->BootServices->CloseProtocol(fsHndl, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, hnd, nullptr);
+				continue;
+			}
+
+            BOOLEAN comparison = FALSE;
+
+            switch (culture)
+            {
+                case Common::Enviroment::CurrentCulture:
+                case Common::Enviroment::InvariantCulture:
+                    {
+                        switch (mode)
+                        {
+                        case Common::Enviroment::Compare:
+                            comparison = Common::Enviroment::UTF16::Compare(volLbl->VolumeLabel, label, culture);
+                            break;
+                        case Common::Enviroment::Contains:
+                            comparison = Common::Enviroment::UTF16::Contains(volLbl->VolumeLabel, label, culture);
+                            break;
+                        case Common::Enviroment::StartsWith:
+                            comparison = Common::Enviroment::UTF16::StartsWith(volLbl->VolumeLabel, label, culture);
+                            break;
+                        case Common::Enviroment::EndsWith:
+                            comparison = Common::Enviroment::UTF16::EndsWith(volLbl->VolumeLabel, label, culture);
+                            break;
+                        }
+                    }
+                    break;
+                case Common::Enviroment::Ordinal:
+                case Common::Enviroment::OrdinalIgnoreCase:
+                case Common::Enviroment::CurrentCultureIgnoreCase:
+                    return EmptyFS;
+                case Common::Enviroment::InvariantCultureIgnoreCase:
+                    {
+                        switch (mode)
+                        {
+                        case Common::Enviroment::Compare:
+                            comparison = Common::Enviroment::UTF16::Compare(volLbl->VolumeLabel, label, culture);
+                            break;
+                        case Common::Enviroment::Contains:
+                            comparison = Common::Enviroment::UTF16::Contains(volLbl->VolumeLabel, label, culture);
+                            break;
+                        case Common::Enviroment::StartsWith:
+                            comparison = Common::Enviroment::UTF16::StartsWith(volLbl->VolumeLabel, label, culture);
+                            break;
+                        case Common::Enviroment::EndsWith:
+                            comparison = Common::Enviroment::UTF16::EndsWith(volLbl->VolumeLabel, label, culture);
+                            break;
+                        }
+                    }
+                    break;
+            }
+
+            sysTable->ConOut->OutputString(sysTable->ConOut, u"Comparison: ");
+            sysTable->ConOut->OutputString(sysTable->ConOut, Common::Enviroment::UTF16::ToString(comparison));
+            sysTable->ConOut->OutputString(sysTable->ConOut, Common::Enviroment::UTF16::NewLine);
+
+            if (comparison)
+            {
+                sysTable->BootServices->FreePool(volLbl);
+                root->Close(root);
+                fsContext = FileSystemContext(fsHndl, fsProtocol);
+                break;
+            }
+
+			sysTable->BootServices->FreePool(volLbl);
+			root->Close(root);
+			sysTable->BootServices->CloseProtocol(fsHndl, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, hnd, nullptr);
+			continue;
+        }
+
+        sysTable->BootServices->FreePool(handles);
+
+        if (fsContext == EmptyFS)
+        {
+            *status = EFI::EFI_STATUS::NOT_FOUND;
+        }
+
+        return fsContext;
     };
 
     BOOLEAN FileSystemContext::OpenVolume()
@@ -127,7 +303,7 @@ namespace Common::FileSystem
         return true;
     };
 
-    void FileSystemContext::CloseVolume()
+    void FileSystemContext::CloseVolume(EFI::EFI_SYSTEM_TABLE* sysTbl, EFI::EFI_HANDLE imgHndl)
     {
         if (_fs == nullptr)
         {
@@ -147,6 +323,8 @@ namespace Common::FileSystem
             _root = nullptr;
             _isVolumeOpen = false;
         }
+
+        sysTbl->BootServices->CloseProtocol(_deviceHandle, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, nullptr,imgHndl);
     };
 
     Common::FileSystem::VolumeInfo FileSystemContext::GetVolumeInfo(EFI::EFI_SYSTEM_TABLE* sysTable)
@@ -189,15 +367,11 @@ namespace Common::FileSystem
             return Empty_VolLabel;
         }
 
-        LastStatus = EFI::EFI_STATUS::SUCCESS;
-
         if (size == 0)
         {
+            LastStatus != EFI::EFI_STATUS::BAD_BUFFER_SIZE;
             return Empty_VolLabel;
         };
-
-
-        size += sizeof(EFI::EFI_FILE_SYSTEM_VOLUME_LABEL);
 
 		LastStatus = sysTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, size, (void**)&info);
 		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
@@ -206,13 +380,16 @@ namespace Common::FileSystem
 		}
 
 		LastStatus = _root->GetInfo(_root, &EFI::EFI_FILE_SYSTEM_VOLUME_LABEL_ID, &size, info);
+
 		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
 		{
 			LastStatus = sysTable->BootServices->FreePool(info);
 			return Empty_VolLabel;
 		}
 
-		VolumeLabel volLabel = VolumeLabel(info);
+		VolumeLabel volLabel = VolumeLabel(*info);
+        LastStatus = sysTable->BootServices->FreePool(info);
+
 		return volLabel;
     }
 
@@ -270,11 +447,13 @@ namespace Common::FileSystem
 
         if (LastStatus != EFI::EFI_STATUS::SUCCESS)
         {
+            file->Close(file);
             return Empty_FileInfo;
         }
 
         if (size < 1)
         {
+            file->Close(file);
             return Empty_FileInfo;
         }
 
@@ -283,6 +462,7 @@ namespace Common::FileSystem
         LastStatus = sysTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, size, (void**)&info);
         if (LastStatus != EFI::EFI_STATUS::SUCCESS)
         {
+            file->Close(file);
             return Empty_FileInfo;
         }
 
@@ -302,6 +482,7 @@ namespace Common::FileSystem
             file->Close(file);
             return Empty_FileInfo;
         }
+
         FileInfo finfo = FileInfo::Create(info);
         LastStatus = sysTable->BootServices->FreePool(info);
         file->Close(file);
@@ -366,21 +547,4 @@ namespace Common::FileSystem
 
         LastStatus = sysTable->BootServices->FreePool(handle._File);
     }
-
-    void FileSystemContext::CloseContext(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd)
-    {
-        if (_fs == nullptr)
-        {
-            LastStatus = EFI::EFI_STATUS::WARN_FILE_SYSTEM;
-            return;
-        }
-
-        if (_isVolumeOpen)
-        {
-            CloseVolume();
-        }
-        LastStatus = sysTable->BootServices->CloseProtocol(_deviceHandle, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, hnd, nullptr);
-    };
-
-
 }

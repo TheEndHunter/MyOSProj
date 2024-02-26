@@ -12,6 +12,6 @@ namespace EFI
 	struct EFI_FILE_SYSTEM_VOLUME_LABEL
 	{
 	public:
-		CHAR16* VolumeLabel;
+		CHAR16 VolumeLabel[];
 	};
 }

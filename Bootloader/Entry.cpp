@@ -46,7 +46,7 @@ namespace Bootloader
         Exit(sysTbl, imgHndl, status);
     }
 
-    void Exit(EFI_SYSTEM_TABLE* sysTable, EFI_HANDLE imgHndl, EFI_STATUS Status, UINT64 exitDataSize, CHAR16* exitData)
+    void Exit(EFI_SYSTEM_TABLE* sysTable, EFI_HANDLE imgHndl, EFI_STATUS Status, UINTN exitDataSize, CHAR16* exitData)
     {
         sysTable->BootServices->Exit(imgHndl, Status, exitDataSize, exitData);
     };
@@ -104,7 +104,7 @@ namespace Bootloader
         gop.DrawFilledRectangle(posX, posY, x2, y2, Colors::HotPink);
 
         WaitForKey(sysTbl);
-
+        ClearConOut(sysTbl);
 
         UINTN fsCount = FileSystemContext::QueryFSCount(sysTbl, imgHndl);
 
@@ -113,100 +113,50 @@ namespace Bootloader
             ThrowException(sysTbl, imgHndl, u"No File Systems Found", EFI_STATUS::NOT_FOUND);
 		}
 
-        
-        FileSystemContext sysFs = FileSystemContext::EmptyFS;
-        VolumeLabel sysVolumeLabel = Empty_VolLabel;
-
-        ClearConOut(sysTbl);
-        UINTN sysIndex = fsCount;
-        for (UINTN fsIndex = 0; fsIndex < fsCount;)
+        EFI_STATUS fsStatus = EFI_STATUS::SUCCESS;
+        FileSystemContext sysFs = FileSystemContext::GetFileSystem(sysTbl, imgHndl,u"SYS" , &fsStatus);
+        if (sysFs == FileSystemContext::EmptyFS)
         {
-            
-            EFI::EFI_STATUS fsStatus = EFI::EFI_STATUS::SUCCESS;
-            sysFs = FileSystemContext::GetFileSystem(sysTbl, imgHndl, fsIndex, &fsStatus);
-
-            if (fsStatus != EFI::EFI_STATUS::SUCCESS)
-			{
-                ThrowException(sysTbl, imgHndl, u"Could Not Get File System", fsStatus);
-			}
-
-            sysFs.OpenVolume();
-            
-            if (fsStatus != EFI::EFI_STATUS::SUCCESS)
-            {
-                ThrowException(sysTbl, imgHndl, u"Could Not Open File System", fsStatus);
-            }
-
-            sysVolumeLabel = sysFs.GetVolumeLabel(sysTbl);
-            
-            if(sysFs.LastStatus != EFI::EFI_STATUS::SUCCESS)
-			{
-				ThrowException(sysTbl, imgHndl, u"Could Not Get Volume Label", sysFs.LastStatus);
-			}
-
-            PrintLine(sysTbl, u"Checking Volume...");
-
-            if (sysVolumeLabel == nullptr || sysVolumeLabel == Empty_VolLabel)
-            {
-				Print(sysTbl, u"No Volume Label: ");
-                PrintLine(sysTbl, UTF16::ToString(fsIndex));
-                sysTbl->BootServices->FreePool(sysVolumeLabel.Label);
-				sysFs.CloseVolume();
-				fsIndex++;
-				continue;
-            }
-
-            Print(sysTbl, u"Checking...");
-
-            if (UTF16::IsNullOrEmpty(sysVolumeLabel.Label) == TRUE)
-            {
-                PrintLine(sysTbl, UTF16::ToString(fsIndex)); sysTbl->BootServices->FreePool(sysVolumeLabel.Label);
-                PrintLine(sysTbl, u"Volume Label Null or Empty");
-                sysFs.CloseVolume();
-                fsIndex++;
-                continue;
-            }
-
-            Print(sysTbl, u"Reading Volume Label: ");
-            PrintLine(sysTbl, UTF16::ToString(fsIndex));
-
-            if (UTF16::StartsWith(sysVolumeLabel.Label,u"SYS", StringComparison::InvariantCultureIgnoreCase))
-            {
-                sysIndex = fsIndex;
-                break;
-            }
-            fsIndex++;
-        }
-
-        PrintLine(sysTbl, UTF16::ToString(sysIndex));
-        if (sysIndex == fsCount)
-        {
-            Print(sysTbl, sysFs.LastStatus);
-			ThrowException(sysTbl, imgHndl, u"Could Not Locate File System with Label: \"Sys\"", sysFs.LastStatus);
+			ThrowException(sysTbl, imgHndl, u"Could Not Locate File System with Label: \"Sys\"", fsStatus);
 		}
+
+        PrintLine(sysTbl, u"File System Located", EFI_CONSOLE_COLOR::DEBUG_COLOR);
+        WaitForKey(sysTbl);
 
         PrintLine(sysTbl, u"Locating Kernel...");
         FileInfo kernel = sysFs.GetFileInfo(sysTbl, u"Kernel.bin");
 
-        if (kernel == Empty_FileInfo)
+        if (sysFs.LastStatus != EFI::EFI_STATUS::SUCCESS)
         {
-            ThrowException(sysTbl, imgHndl, u"Could not Locate Kernel", sysFs.LastStatus);
-        }
+			ThrowException(sysTbl, imgHndl, u"Could Not Locate Kernel", sysFs.LastStatus);
+		}
 
         PrintLine(sysTbl, u"Loading Kernel...", EFI_CONSOLE_COLOR::DEBUG_COLOR);
         WaitForKey(sysTbl);
 
         FileHandle kernelHandle = sysFs.OpenFile(sysTbl, kernel, FileMode::Read, FileAttribute::System);
 
+        if (sysFs.LastStatus != EFI::EFI_STATUS::SUCCESS)
+        {
+            ThrowException(sysTbl, imgHndl, u"Could Not Open Kernel", sysFs.LastStatus);
+        }
+        
         UINT8* kernelData = nullptr;
         EFI_STATUS allocStatus = sysTbl->BootServices->AllocatePool(EFI_MEMORY_TYPE::LoaderData, kernel.PhysicalSize,(void**)&kernelData);
+        Print(sysTbl, u"Allocating: ", EFI_CONSOLE_COLOR::DEBUG_COLOR);
+        Print(sysTbl, UTF16::ToString(kernel.PhysicalSize), EFI_CONSOLE_COLOR::DEBUG_COLOR);
+        WaitForKey(sysTbl);
 
         if (allocStatus != EFI_STATUS::SUCCESS || kernelData == nullptr)
         {
             ThrowException(sysTbl, imgHndl, u"Could Not Allocate Memory for Kernel", allocStatus);
         }
 
-        EFI_STATUS kernelLoadStatus = kernelHandle.Read(&kernel.PhysicalSize, kernelData);
+        UINTN kernelSize = (UINTN)kernel.PhysicalSize;
+
+        PrintLine(sysTbl, UTF16::ToString(kernelSize));
+
+        EFI_STATUS kernelLoadStatus = kernelHandle.Read(&kernelSize, kernelData);
         if(kernelLoadStatus != EFI_STATUS::SUCCESS)
         {
 			ThrowException(sysTbl, imgHndl, u"Could Not Read Kernel", kernelLoadStatus);

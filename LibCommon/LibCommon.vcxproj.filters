@@ -63,6 +63,15 @@
     <ClInclude Include="FileTypes\MSDOS.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="System\BitMathCompat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enviroment\StringCulture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enviroment\StringComparisonMode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TypeDefs.cpp">

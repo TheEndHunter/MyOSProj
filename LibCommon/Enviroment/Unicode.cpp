@@ -6,48 +6,50 @@
 
 namespace Common::Enviroment
 {
-	CHAR16 _u16_hex16String[6]{ u'\0' };
-	CHAR16 _u16_hex32String[10]{ u'\0' };
-	CHAR16 _u16_hex64String[18]{ u'\0' };
-	CHAR16 _u16_hex8String[4]{ u'\0' };
-	CHAR16 _u16_hexGUIDString[39]{ u'\0' };
-	CHAR16 _u16_hexPtrString[17]{ u'\0' };
-	CHAR16 _u16_hexu16String[5]{ u'\0' };
-	CHAR16 _u16_hexu32String[9]{ u'\0' };
-	CHAR16 _u16_hexu64String[17]{ u'\0' };
-	CHAR16 _u16_hexu8String[3]{ u'\0' };
-	CHAR16 _u16_ptrString[21]{ u'\0' };
-	CHAR16 _u16_t16String[7]{ u'\0' };
-	CHAR16 _u16_t32String[12]{ u'\0' };
-	CHAR16 _u16_t64String[22]{ u'\0' };
-	CHAR16 _u16_t8String[5]{ u'\0' };
-	CHAR16 _u16_tu16String[6]{ u'\0' };
-	CHAR16 _u16_tu32String[11]{ u'\0' };
-	CHAR16 _u16_tu64String[21]{ u'\0' };
-	CHAR16 _u16_tu8String[4]{ u'\0' };
-	CHAR8 _hex16String[6]{ '\0' };
-	CHAR8 _hex32String[10]{ '\0' };
-	CHAR8 _hex64String[18]{ '\0' };
-	CHAR8 _hex8String[4]{ '\0' };
-	CHAR8 _hexGUIDString[39]{ '\0' };
-	CHAR8 _hexPtrString[17]{ '\0' };
-	CHAR8 _hexu16String[5]{ '\0' };
-	CHAR8 _hexu32String[9]{ '\0' };
-	CHAR8 _hexu64String[17]{ '\0' };
-	CHAR8 _hexu8String[3]{ '\0' };
-	CHAR8 _ptrString[21]{ '\0' };
-	CHAR8 _t16String[7]{ '\0' };
-	CHAR8 _t32String[12]{ '\0' };
-	CHAR8 _t64String[22]{ '\0' };
-	CHAR8 _t8String[5]{ '\0' };
-	CHAR8 _tu16String[6]{ '\0' };
-	CHAR8 _tu32String[11]{ '\0' };
-	CHAR8 _tu64String[21]{ '\0' };
-	CHAR8 _tu8String[4]{ '\0' };
+	CHAR16 _u16_hex16String[7]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
+	CHAR16 _u16_hex32String[11]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
+	CHAR16 _u16_hex64String[19]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
+	CHAR16 _u16_hex8String[5]{ u'\0',u'\0',u'\0',u'\0',u'\0' };
+	CHAR16 _u16_hexGUIDString[40]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
+	CHAR16 _u16_hexPtrString[18]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
+	CHAR16 _u16_hexu16String[6]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
+	CHAR16 _u16_hexu32String[10]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
+	CHAR16 _u16_hexu64String[18]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
+	CHAR16 _u16_hexu8String[4]{ u'\0',u'\0',u'\0',u'\0' };
+	CHAR16 _u16_ptrString[22]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
+	CHAR16 _u16_t16String[8]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
+	CHAR16 _u16_t32String[13]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
+	CHAR16 _u16_t64String[23]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
+	CHAR16 _u16_t8String[6]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
+	CHAR16 _u16_tu16String[7]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
+	CHAR16 _u16_tu32String[12]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
+	CHAR16 _u16_tu64String[22]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
+	CHAR16 _u16_tu8String[5]{ u'\0',u'\0',u'\0',u'\0',u'\0' };
+	CHAR8 _hex16String[7]{ '\0','\0','\0','\0','\0','\0',u'\0' };
+	CHAR8 _hex32String[11]{ '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0',u'\0' };
+	CHAR8 _hex64String[19]{ '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0',u'\0' };
+	CHAR8 _hex8String[5]{ '\0','\0','\0','\0',u'\0' };
+	CHAR8 _hexGUIDString[40]{ '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0',u'\0' };
+	CHAR8 _hexPtrString[18]{ '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0',u'\0' };
+	CHAR8 _hexu16String[6]{ '\0','\0','\0','\0','\0',u'\0' };
+	CHAR8 _hexu32String[10]{ '\0','\0','\0','\0','\0','\0','\0','\0','\0',u'\0' };
+	CHAR8 _hexu64String[18]{ '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0',u'\0' };
+	CHAR8 _hexu8String[4]{ '\0','\0','\0',u'\0' };
+	CHAR8 _ptrString[22]{ '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0',u'\0' };
+	CHAR8 _t16String[8]{ '\0','\0','\0','\0','\0','\0','\0',u'\0' };
+	CHAR8 _t32String[13]{ '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0',u'\0' };
+	CHAR8 _t64String[23]{ '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0',u'\0' };
+	CHAR8 _t8String[6]{ '\0','\0','\0','\0','\0',u'\0' };
+	CHAR8 _tu16String[7]{ '\0','\0','\0','\0','\0','\0',u'\0' };
+	CHAR8 _tu32String[12]{ '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0',u'\0' };
+	CHAR8 _tu64String[22]{ '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0',u'\0' };
+	CHAR8 _tu8String[5]{ '\0','\0','\0','\0',u'\0' };
 	const CHAR16* _u16_hexChars = u"0123456789ABCDEF";
 	const CHAR16* Common::Enviroment::UTF16::NewLine = u"\r\n";
 	const CHAR8* _hexChars = "0123456789ABCDEF";
 	const CHAR8* Common::Enviroment::UTF8::NewLine = "\r\n";
+	constinit const CHAR16* _u16_BOOLEAN_TRUE = u"True";
+	constinit const CHAR16* _u16_BOOLEAN_FALSE = u"False";
 	constinit const CHAR16* _u16_ABORTED = u"ABORTED";
 	constinit const CHAR16* _u16_ACCESS_DENIED = u"ACCESS_DENIED";
 	constinit const CHAR16* _u16_ALREADY_STARTED = u"ALREADY_STARTED";
@@ -89,6 +91,9 @@ namespace Common::Enviroment
 	constinit const CHAR16* _u16_WARN_UNKNOWN_GLYPH = u"WARN_UNKNOWN_GLYPH";
 	constinit const CHAR16* _u16_WARN_WRITE_FAILURE = u"WARN_WRITE_FAILURE";
 	constinit const CHAR16* _u16_WRITE_PROTECTED = u"WRITE_PROTECTED";
+
+	constinit const CHAR8* _BOOLEAN_TRUE = "True";
+	constinit const CHAR8* _BOOLEAN_FALSE = "False";
 	constinit const CHAR8* _ABORTED = "ABORTED";
 	constinit const CHAR8* _ACCESS_DENIED = "ACCESS_DENIED";
 	constinit const CHAR8* _ALREADY_STARTED = "ALREADY_STARTED";
@@ -364,6 +369,16 @@ namespace Common::Enviroment
 		return &_u16_ptrString[len];
 	}
 
+	const CHAR16* UTF16::ToString(const BOOLEAN boolean)
+	{
+		if (boolean)
+		{
+			return _u16_BOOLEAN_TRUE;
+		}
+
+		return _u16_BOOLEAN_FALSE;
+	}
+
 	const UINT64 UTF16::Length(const CHAR16* str)
 	{
 		if (str == nullptr)
@@ -373,10 +388,8 @@ namespace Common::Enviroment
 
 		UINT64 len = 1;
 		UINT64 i = 0;
-		while (str[i] != u'\0')
+		for (UINT64 i = 0; str[i] != u'\0'; i++)
 		{
-			i++;
-			str++;
 			len++;
 		}
 		return len;
@@ -391,23 +404,21 @@ namespace Common::Enviroment
 
 		UINT64 len = 1;
 		UINT64 i = 0;
-		while (str[i] != u'\0')
+		for (UINT64 i = 0; str[i] != '\0'; i++)
 		{
-			i++;
-			str++;
 			len++;
 		}
 		return len;
 	}
 
-	const BOOLEAN UTF16::Compare(const CHAR16* l, const CHAR16* r, StringComparison mode)
+	const BOOLEAN UTF16::Compare(const CHAR16* l, const CHAR16* r, StringCulture culture)
 	{
-		if (UTF16::IsNullOrEmpty(l) == TRUE && UTF16::IsNullOrEmpty(r) == TRUE)
+		if (UTF16::IsNullOrEmpty(l) && UTF16::IsNullOrEmpty(r))
 		{
 			return TRUE;
 		};
 
-		if (UTF16::IsNullOrEmpty(l) == TRUE || UTF16::IsNullOrEmpty(r) == TRUE)
+		if (UTF16::IsNullOrEmpty(l)|| UTF16::IsNullOrEmpty(r))
 		{
 			return FALSE;
 		};
@@ -420,24 +431,43 @@ namespace Common::Enviroment
 			return FALSE;
 		}
 
-		if (mode == StringComparison::InvariantCulture)
+		/* Compare strings for equality based on current culture*/
+		if (culture == StringCulture::InvariantCulture)
 		{
-			
-			for (UINT64 i = 0;i <= lLen; i++)
+			for (UINT64 i = 0; i < lLen; i++)
 			{
 				if (l[i] != r[i])
 				{
 					return FALSE;
 				}
 			}
-
 			return TRUE;
 		}
-
-		else if (mode == StringComparison::InvariantCultureIgnoreCase)
+		else if (culture == StringCulture::InvariantCultureIgnoreCase)
 		{
-			
-			for (UINT64 i = 0; i <= lLen; i++)
+			for (UINT64 i = 0; i < lLen; i++)
+			{
+				if (l[i] != r[i] && l[i] != r[i] + 32 && l[i] != r[i] - 32)
+				{
+					return FALSE;
+				}
+			}
+			return TRUE;
+		}
+		else if (culture == StringCulture::Ordinal)
+		{
+			for (UINT64 i = 0; i < lLen; i++)
+			{
+				if (l[i] != r[i])
+				{
+					return FALSE;
+				}
+			}
+			return TRUE;
+		}
+		else if (culture == StringCulture::OrdinalIgnoreCase)
+		{
+			for (UINT64 i = 0; i < lLen; i++)
 			{
 				if (l[i] != r[i] && l[i] != r[i] + 32 && l[i] != r[i] - 32)
 				{
@@ -450,9 +480,10 @@ namespace Common::Enviroment
 		{
 			return FALSE;
 		}
+
 	}
 
-	const BOOLEAN UTF16::StartsWith(const CHAR16* str, const CHAR16* value, StringComparison mode)
+	const BOOLEAN UTF16::StartsWith(const CHAR16* str, const CHAR16* value, StringCulture mode)
 	{
 		if (UTF16::IsNullOrEmpty(str) == TRUE && UTF16::IsNullOrEmpty(value) == TRUE)
 		{
@@ -477,7 +508,7 @@ namespace Common::Enviroment
 		*  Based on current StringComparision mode, compare the strings looking to see if the value is at the start of the string
 		*/
 
-		if (mode == StringComparison::InvariantCulture)
+		if (mode == StringCulture::InvariantCulture)
 		{
 			
 			for (UINT64 i = 0; i < valueLen; i++)
@@ -489,7 +520,7 @@ namespace Common::Enviroment
 			}
 			return TRUE;
 		}
-		else if (mode == StringComparison::InvariantCultureIgnoreCase)
+		else if (mode == StringCulture::InvariantCultureIgnoreCase)
 		{
 			
 			for (UINT64 i = 0; i < valueLen; i++)
@@ -507,7 +538,7 @@ namespace Common::Enviroment
 		}
 	}
 
-	const BOOLEAN UTF16::EndsWith(const CHAR16* str, const CHAR16* value, StringComparison mode)
+	const BOOLEAN UTF16::EndsWith(const CHAR16* str, const CHAR16* value, StringCulture mode)
 	{
 		if (UTF16::IsNullOrEmpty(str) == TRUE && UTF16::IsNullOrEmpty(value) == TRUE)
 		{
@@ -532,7 +563,7 @@ namespace Common::Enviroment
 		*  Based on current StringComparision mode, compare the strings looking to see if the value is at the end of the string
 		*/
 
-		if (mode == StringComparison::InvariantCulture)
+		if (mode == StringCulture::InvariantCulture)
 		{
 			UINT64 i = strLen - valueLen;
 			for (UINT64 j = 0; i < strLen; i++, j++)
@@ -544,7 +575,7 @@ namespace Common::Enviroment
 			}
 			return TRUE;
 		}
-		else if (mode == StringComparison::InvariantCultureIgnoreCase)
+		else if (mode == StringCulture::InvariantCultureIgnoreCase)
 		{
 			UINT64 i = strLen - valueLen;
 			for (UINT64 j = 0; i < strLen; i++, j++)
@@ -562,7 +593,7 @@ namespace Common::Enviroment
 		}
 	}
 
-	const BOOLEAN UTF16::Contains(const CHAR16* str, const CHAR16* value, StringComparison mode)
+	const BOOLEAN UTF16::Contains(const CHAR16* str, const CHAR16* value, StringCulture mode)
 	{
 		if (UTF16::IsNullOrEmpty(str) == TRUE && UTF16::IsNullOrEmpty(value) == TRUE)
 		{
@@ -586,7 +617,7 @@ namespace Common::Enviroment
 		*  Based on current StringComparision mode, compare the strings looking to see if the value is in the string
 		*/
 
-		if (mode == StringComparison::InvariantCulture)
+		if (mode == StringCulture::InvariantCulture)
 		{
 			
 			for (UINT64 i = 0; i < strLen; i++)
@@ -609,7 +640,7 @@ namespace Common::Enviroment
 			}
 			return FALSE;
 		}
-		else if (mode == StringComparison::InvariantCultureIgnoreCase)
+		else if (mode == StringCulture::InvariantCultureIgnoreCase)
 		{
 			
 			for (UINT64 i = 0; i < strLen; i++)
@@ -640,7 +671,7 @@ namespace Common::Enviroment
 
 	const BOOLEAN UTF16::IsNullOrEmpty(const CHAR16* str)
 	{
-		if (str == nullptr)
+		if (str == 0)
 		{
 			return TRUE;
 		}
@@ -655,7 +686,7 @@ namespace Common::Enviroment
 
 	const BOOLEAN UTF16::IsNullOrWhiteSpace(const CHAR16* str)
 	{
-		if (str == nullptr)
+		if (str == 0)
 		{
 			return TRUE;
 		}
@@ -673,7 +704,7 @@ namespace Common::Enviroment
 
 	const BOOLEAN UTF8::IsNullOrWhiteSpace(const CHAR8* str)
 	{
-		if (str == nullptr)
+		if (str == 0)
 		{
 			return TRUE;
 		}
@@ -693,7 +724,7 @@ namespace Common::Enviroment
 
 	const BOOLEAN UTF8::IsNullOrEmpty(const CHAR8* str)
 	{
-		if (str == nullptr)
+		if (str == 0)
 		{
 			return TRUE;
 		}
@@ -706,7 +737,7 @@ namespace Common::Enviroment
 		return FALSE;
 	}
 
-	const BOOLEAN UTF8::Contains(const CHAR8* str, const CHAR8* value, StringComparison mode)
+	const BOOLEAN UTF8::Contains(const CHAR8* str, const CHAR8* value, StringCulture mode)
 	{
 		if (UTF8::IsNullOrEmpty(str) == TRUE && UTF8::IsNullOrEmpty(value) == TRUE)
 		{
@@ -730,7 +761,7 @@ namespace Common::Enviroment
 		*  Based on current StringComparision mode, compare the strings looking to see if the value is in the string
 		*/
 
-		if (mode == StringComparison::InvariantCulture)
+		if (mode == StringCulture::InvariantCulture)
 		{
 			UINT64 i = 0;
 			for (; i < strLen; i++)
@@ -753,7 +784,7 @@ namespace Common::Enviroment
 			}
 			return FALSE;
 		}
-		else if (mode == StringComparison::InvariantCultureIgnoreCase)
+		else if (mode == StringCulture::InvariantCultureIgnoreCase)
 		{
 			UINT64 i = 0;
 			for (; i < strLen; i++)
@@ -782,7 +813,7 @@ namespace Common::Enviroment
 		}
 	}
 
-	const BOOLEAN UTF8::EndsWith(const CHAR8* str, const CHAR8* value, StringComparison mode)
+	const BOOLEAN UTF8::EndsWith(const CHAR8* str, const CHAR8* value, StringCulture mode)
 	{
 		if (UTF8::IsNullOrEmpty(str) == TRUE && UTF8::IsNullOrEmpty(value) == TRUE)
 		{
@@ -806,7 +837,7 @@ namespace Common::Enviroment
 		*  Based on current StringComparision mode, compare the strings looking to see if the value is at the end of the string
 		*/
 
-		if (mode == StringComparison::InvariantCulture)
+		if (mode == StringCulture::InvariantCulture)
 		{
 			UINT64 i = strLen - valueLen;
 			for (UINT64 j = 0; i < strLen; i++, j++)
@@ -818,7 +849,7 @@ namespace Common::Enviroment
 			}
 			return TRUE;
 		}
-		else if (mode == StringComparison::InvariantCultureIgnoreCase)
+		else if (mode == StringCulture::InvariantCultureIgnoreCase)
 		{
 			UINT64 i = strLen - valueLen;
 			for (UINT64 j = 0; i < strLen; i++, j++)
@@ -836,7 +867,7 @@ namespace Common::Enviroment
 		}
 	}
 
-	const BOOLEAN UTF8::StartsWith(const CHAR8* str, const CHAR8* value, StringComparison mode)
+	const BOOLEAN UTF8::StartsWith(const CHAR8* str, const CHAR8* value, StringCulture mode)
 	{
 		if (UTF8::IsNullOrEmpty(str) == TRUE && UTF8::IsNullOrEmpty(value) == TRUE)
 		{
@@ -860,7 +891,7 @@ namespace Common::Enviroment
 		*  Based on current StringComparision mode, compare the strings looking to see if the value is at the start of the string
 		*/
 
-		if (mode == StringComparison::InvariantCulture)
+		if (mode == StringCulture::InvariantCulture)
 		{
 			for (UINT64 i = 0; i < valueLen; i++)
 			{
@@ -871,7 +902,7 @@ namespace Common::Enviroment
 			}
 			return TRUE;
 		}
-		else if (mode == StringComparison::InvariantCultureIgnoreCase)
+		else if (mode == StringCulture::InvariantCultureIgnoreCase)
 		{
 			
 			for (UINT64 i = 0; i < valueLen; i++)
@@ -890,7 +921,7 @@ namespace Common::Enviroment
 	}
 
 
-	const BOOLEAN UTF8::Compare(const CHAR8* l, const CHAR8* r, StringComparison mode)
+	const BOOLEAN UTF8::Compare(const CHAR8* l, const CHAR8* r, StringCulture culture)
 	{
 		if (UTF8::IsNullOrEmpty(l) == TRUE && UTF8::IsNullOrEmpty(r) == TRUE)
 		{
@@ -904,24 +935,43 @@ namespace Common::Enviroment
 		UINT64 lLen = Length(l);
 		UINT64 rLen = Length(r);
 
-		if (mode == StringComparison::InvariantCulture)
+		/* Compare strings for equality based on current culture*/
+		if (culture == StringCulture::InvariantCulture)
 		{
-
-			for (UINT64 i = 0; i <= lLen; i++)
+			for (UINT64 i = 0; i < lLen; i++)
 			{
 				if (l[i] != r[i])
 				{
 					return FALSE;
 				}
 			}
-
 			return TRUE;
 		}
-
-		else if (mode == StringComparison::InvariantCultureIgnoreCase)
+		else if (culture == StringCulture::InvariantCultureIgnoreCase)
 		{
-
-			for (UINT64 i = 0; i <= lLen; i++)
+			for (UINT64 i = 0; i < lLen; i++)
+			{
+				if (l[i] != r[i] && l[i] != r[i] + 32 && l[i] != r[i] - 32)
+				{
+					return FALSE;
+				}
+			}
+			return TRUE;
+		}
+		else if (culture == StringCulture::Ordinal)
+		{
+			for (UINT64 i = 0; i < lLen; i++)
+			{
+				if (l[i] != r[i])
+				{
+					return FALSE;
+				}
+			}
+			return TRUE;
+		}
+		else if (culture == StringCulture::OrdinalIgnoreCase)
+		{
+			for (UINT64 i = 0; i < lLen; i++)
 			{
 				if (l[i] != r[i] && l[i] != r[i] + 32 && l[i] != r[i] - 32)
 				{
@@ -1382,6 +1432,17 @@ namespace Common::Enviroment
 
 		return &_ptrString[len];
 	}
+
+	const CHAR8* UTF8::ToString(const BOOLEAN boolean)
+	{
+		if (boolean)
+		{
+			return _BOOLEAN_TRUE;
+		}
+
+		return _BOOLEAN_FALSE;
+	}
+
 	const CHAR8* UTF8::ToString(const UINT16 b)
 	{
 		if (b == 0)

@@ -35,6 +35,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Enviroment\StringComparisonMode.h" />
+    <ClInclude Include="Enviroment\StringCulture.h" />
     <ClInclude Include="FileTypes\COFF.h" />
     <ClInclude Include="FileSystem\FileAttribute.h" />
     <ClInclude Include="FileSystem\FileHandle.h" />
@@ -49,6 +51,7 @@
     <ClInclude Include="Math\Math.h" />
     <ClInclude Include="FileTypes\PE.h" />
     <ClInclude Include="FileTypes\MSDOS.h" />
+    <ClInclude Include="System\BitMathCompat.h" />
     <ClInclude Include="System\Console.h" />
     <ClInclude Include="TypeDefs.h" />
   </ItemGroup>
