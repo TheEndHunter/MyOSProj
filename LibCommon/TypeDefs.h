@@ -1,4 +1,10 @@
 #pragma once
+
+#ifdef WIN32
+#define x86
+#endif // WIN32
+
+
 #if defined(ARM) || defined(WIN32)
 #define BITS_32
 #elif defined(ARM64) || defined(x64)
@@ -8,13 +14,39 @@
 #endif
 
 /*
+* define declarations for UINTN and a INTN based on the ptr size of the compiler
+*/
+#if defined(BITS_32)
+#if !defined(UINTN)
+#define UINTN unsigned long int
+#endif
+#if !defined(INTN)
+#define INTN long int
+#endif
+#elif defined(BITS_64)
+#if !defined(UINTN)
+#define UINTN unsigned long long int
+#endif
+#if !defined(INTN)
+#define INTN long long int
+#endif
+#else
+#error "Unknown architecture"
+#endif
+
+
+/*
 *  Setup defines for Data Type Sizes Per Processor Bitness based on edk2, switching based on on of the following compilers being used:
 * including wide character support
 *  MSVC or GNU
+*
+* make sure that on 32 & 64 bit processors that the size of UINT64 and INT64 are defined as 8 bytes
 */
 
 #define VOID void
 #define VOID_PTR void*
+#define VOID_PTR_PTR void**
+#define PTR_SIZE (UINTN)sizeof(VOID_PTR)
 #define CHAR8 char
 
 #if defined(__cpp_unicode_characters)
@@ -24,61 +56,68 @@
 #else
 #define CHAR16 INT16
 #endif
-#define INT8 signed char
-#define INT16 short
-#define INT32 int
-#define INT64 long long
 
 #define UINT8 unsigned char
 #define UINT16 unsigned short
 #define UINT32 unsigned int
-#define UINT64 unsigned long long
 
-#ifndef BOOLEAN
+#if defined(_MSC_VER)
+#if defined(__int64)
+#ifndef INT64
+#define INT64 __int64
+#endif // INT64
+#ifndef UINT64
+#define UINT64 unsigned __int64
+#endif // UINT64
+#else
+#ifndef INT64
+#define INT64 long long int
+#endif // INT64
+#ifndef UINT64
+#define UINT64 unsigned long long int
+#endif // UINT64
+#endif
+#elif defined(__GNUC__)
+#ifndef INT64
+#define INT64 long long int
+#endif // INT64
+#ifndef UINT64
+#define UINT64 unsigned long long int
+#endif // UINT64
+#else
+#error "Unknown compiler"
+#endif
+
+
+#define INT8 signed char
+#define INT16 short
+#define INT32 int
+
+
 #define BOOLEAN bool
 #define TRUE true
 #define FALSE false
-#endif // BOOLEAN
 
 
-#if defined(BITS_32)
-#define INTN INT32
-#define UINTN UINT32
-#elif defined(BITS_64)
-#define INTN INT64
-#define UINTN UINT64
-#else
-#error "Unknown architecture"
-#endif
 
-/*
-* Define an Attribute for marking a function as None returning
-*/
+
+/* Define Alignment Attribute for aligning on byte,word, dword and qword boundaries for each compiler,*/
 
 #if defined(_MSC_VER)
-#define NORETURN __declspec(noreturn)
+#define ALIGN(x) __declspec(align(x))
 #elif defined(__GNUC__)
-#define NORETURN __attribute__((noreturn))
+#define ALIGN(x) __attribute__((aligned(x)))
 #else
-#define NORETURN
-#endif
+#error "Unknown compiler"
+#endif`
+
+
 
 /*
 *  Define Sizes for UINT128 and INT128 based for the following Compilers if they have datatypes accessible: MSVC & GCC
 */
 
-#if defined(_MSC_VER) & defined(__int128)
-#define UINT128 unsigned __int128
-#define INT128 __int128
-
-#elif defined(__GNUC__) & defined(__int128)
-#define UNICODE
-#define UINT128 unsigned __int128
-#define INT128 __int128
-#else
-
-#endif
-
+#if defined(_MSC_VER)
 #if !defined(STRUCT_INT128)
 #define  STRUCT_INT128
 struct int128
@@ -97,6 +136,14 @@ struct uint128
 };
 #define UINT128 uint128
 #endif
+#elif defined(__GNUC__) & defined(__int128)
+#define UNICODE
+#define UINT128 unsigned __int128
+#define INT128 __int128
+#else
+#endif
+
+
 
 /*
 *  Per compiler definitions for dllexport and dllimport with switch for detecting static imports
@@ -192,3 +239,20 @@ struct uint128
 #define OUT
 #define INOUT
 #define OPTIONAL
+
+/*
+*  define a NORETURN attribute for functions that do not return for the following compilers: MSVC & GCC
+*/
+
+#if defined(_MSC_VER)
+#define NORETURN __declspec(noreturn)
+#elif defined(__GNUC__)
+#define NORETURN __attribute__((noreturn))
+#else
+#error "Unknown compiler"
+#endif
+
+
+
+
+

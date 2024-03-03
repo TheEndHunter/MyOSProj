@@ -6,633 +6,956 @@
 
 namespace Common::Enviroment
 {
-	CHAR16 _u16_hex16String[7]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
-	CHAR16 _u16_hex32String[11]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
-	CHAR16 _u16_hex64String[19]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
-	CHAR16 _u16_hex8String[5]{ u'\0',u'\0',u'\0',u'\0',u'\0' };
-	CHAR16 _u16_hexGUIDString[40]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
-	CHAR16 _u16_hexPtrString[18]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
-	CHAR16 _u16_hexu16String[6]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
-	CHAR16 _u16_hexu32String[10]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
-	CHAR16 _u16_hexu64String[18]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
-	CHAR16 _u16_hexu8String[4]{ u'\0',u'\0',u'\0',u'\0' };
-	CHAR16 _u16_ptrString[22]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
-	CHAR16 _u16_t16String[8]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
-	CHAR16 _u16_t32String[13]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
-	CHAR16 _u16_t64String[23]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
-	CHAR16 _u16_t8String[6]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
-	CHAR16 _u16_tu16String[7]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
-	CHAR16 _u16_tu32String[12]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
-	CHAR16 _u16_tu64String[22]{ u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
-	CHAR16 _u16_tu8String[5]{ u'\0',u'\0',u'\0',u'\0',u'\0' };
-	CHAR8 _hex16String[7]{ '\0','\0','\0','\0','\0','\0',u'\0' };
-	CHAR8 _hex32String[11]{ '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0',u'\0' };
-	CHAR8 _hex64String[19]{ '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0',u'\0' };
-	CHAR8 _hex8String[5]{ '\0','\0','\0','\0',u'\0' };
-	CHAR8 _hexGUIDString[40]{ '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0',u'\0' };
-	CHAR8 _hexPtrString[18]{ '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0',u'\0' };
-	CHAR8 _hexu16String[6]{ '\0','\0','\0','\0','\0',u'\0' };
-	CHAR8 _hexu32String[10]{ '\0','\0','\0','\0','\0','\0','\0','\0','\0',u'\0' };
-	CHAR8 _hexu64String[18]{ '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0',u'\0' };
-	CHAR8 _hexu8String[4]{ '\0','\0','\0',u'\0' };
-	CHAR8 _ptrString[22]{ '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0',u'\0' };
-	CHAR8 _t16String[8]{ '\0','\0','\0','\0','\0','\0','\0',u'\0' };
-	CHAR8 _t32String[13]{ '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0',u'\0' };
-	CHAR8 _t64String[23]{ '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0',u'\0' };
-	CHAR8 _t8String[6]{ '\0','\0','\0','\0','\0',u'\0' };
-	CHAR8 _tu16String[7]{ '\0','\0','\0','\0','\0','\0',u'\0' };
-	CHAR8 _tu32String[12]{ '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0',u'\0' };
-	CHAR8 _tu64String[22]{ '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0',u'\0' };
-	CHAR8 _tu8String[5]{ '\0','\0','\0','\0',u'\0' };
-	const CHAR16* _u16_hexChars = u"0123456789ABCDEF";
+	CHAR16 _UTF16_GUIDTOSTRING[43] = { u'{',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'-',u'\0',u'\0',u'\0',u'\0',u'-',u'\0',u'\0',u'\0',u'\0',u'-',u'\0',u'\0',u'\0',u'\0',u'-',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'}',u'\0' };
+	CHAR16 _UTF16_HEXCHARS[17] = { u'0',u'1',u'2',u'3',u'4',u'5',u'6',u'7',u'8',u'9',u'A',u'B',u'C',u'D',u'E',u'F' };
+	CHAR16 _UTF16_HEXSTRING[18] = { u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
+	CHAR16 _UTF16_VALUETOSTRING[23] = { u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
+	CHAR16 _UTF16_WHITESPACECHARS[30] = { 0x0009,0x000A,0x000B,0x000C,0x000D,0x0020,0x0085,0x00A0,0x1680,0x2000,0x2001,0x2003,0x2004,0x2005,0x2006,0x2007,0x02008,0x2009,0x200A,0x2028,0x2029,0x202F,0x205F,0x3000,0x180E,0x200B,0x200C,0x200D,0x2060,0xFEFF };
+	CHAR8 _UTF8_GUIDTOSTRING[43] = { '{','\0','\0','\0','\0','\0','\0','\0','\0','-','\0','\0','\0','\0','-','\0','\0','\0','\0','-','\0','\0','\0','\0','-','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','}','\0' };
+	CHAR8 _UTF8_HEXCHARS[17] = { '0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F' };
+	CHAR8 _UTF8_HEXSTRING[18] = { '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0' };
+	CHAR8 _UTF8_VALUETOSTRING[23] = { '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0' };
+	CHAR16 _UTF8_WHITESPACECHARS[8] = { 0x0009,0x000A,0x000B,0x000C,0x000D,0x0020,0x0085,0x00A0 };
 	const CHAR16* Common::Enviroment::UTF16::NewLine = u"\r\n";
-	const CHAR8* _hexChars = "0123456789ABCDEF";
 	const CHAR8* Common::Enviroment::UTF8::NewLine = "\r\n";
-	constinit const CHAR16* _u16_BOOLEAN_TRUE = u"True";
-	constinit const CHAR16* _u16_BOOLEAN_FALSE = u"False";
-	constinit const CHAR16* _u16_ABORTED = u"ABORTED";
-	constinit const CHAR16* _u16_ACCESS_DENIED = u"ACCESS_DENIED";
-	constinit const CHAR16* _u16_ALREADY_STARTED = u"ALREADY_STARTED";
-	constinit const CHAR16* _u16_BAD_BUFFER_SIZE = u"BAD_BUFFER_SIZE";
-	constinit const CHAR16* _u16_BUFFER_TOO_SMALL = u"BUFFER_TOO_SMALL";
-	constinit const CHAR16* _u16_COMPROMISED_DATA = u"COMPROMISED_DATA";
-	constinit const CHAR16* _u16_CRC_ERROR = u"CRC_ERROR";
-	constinit const CHAR16* _u16_DEVICE_ERROR = u"DEVICE_ERROR";
-	constinit const CHAR16* _u16_END_OF_FILE = u"END_OF_FILE";
-	constinit const CHAR16* _u16_END_OF_MEDIA = u"END_OF_MEDIA";
-	constinit const CHAR16* _u16_HTTP_ERROR = u"HTTP_ERROR";
-	constinit const CHAR16* _u16_ICMP_ERROR = u"ICMP_ERROR";
-	constinit const CHAR16* _u16_INCOMPATIBLE_VERSION = u"INCOMPATIBLE_VERSION";
-	constinit const CHAR16* _u16_INVALID_LANGUAGE = u"INVALID_LANGUAGE";
-	constinit const CHAR16* _u16_INVALID_PARAMETER = u"INVALID_PARAMETER";
-	constinit const CHAR16* _u16_IP_ADDRESS_CONFLICT = u"IP_ADDRESS_CONFLICT";
-	constinit const CHAR16* _u16_LOAD_ERROR = u"LOAD_ERROR";
-	constinit const CHAR16* _u16_MEDIA_CHANGED = u"MEDIA_CHANGED";
-	constinit const CHAR16* _u16_NO_MAPPING = u"NO_MAPPING";
-	constinit const CHAR16* _u16_NO_MEDIA = u"NO_MEDIA";
-	constinit const CHAR16* _u16_NO_RESPONSE = u"NO_RESPONSE";
-	constinit const CHAR16* _u16_NOT_FOUND = u"NOT_FOUND";
-	constinit const CHAR16* _u16_NOT_READY = u"NOT_READY";
-	constinit const CHAR16* _u16_NOT_STARTED = u"NOT_STARTED";
-	constinit const CHAR16* _u16_OUT_OF_RESOURCES = u"OUT_OF_RESOURCES";
-	constinit const CHAR16* _u16_PROTOCOL_ERROR = u"PROTOCOL_ERROR";
-	constinit const CHAR16* _u16_SECURITY_VIOLATION = u"SECURITY_VIOLATION";
-	constinit const CHAR16* _u16_SUCCESS = u"SUCCESS";
-	constinit const CHAR16* _u16_TFTP_ERROR = u"TFTP_ERROR";
-	constinit const CHAR16* _u16_TIMEOUT = u"TIMEOUT";
-	constinit const CHAR16* _u16_UNSUPPORTED = u"UNSUPPORTED";
-	constinit const CHAR16* _u16_VOLUME_CORRUPTED = u"VOLUME_CORRUPTED";
-	constinit const CHAR16* _u16_VOLUME_FULL = u"VOLUME_FULL";
-	constinit const CHAR16* _u16_WARN_BUFFER_TOO_SMALL = u"WARN_BUFFER_TOO_SMALL";
-	constinit const CHAR16* _u16_WARN_DELETE_FAILURE = u"WARN_DELETE_FAILURE";
-	constinit const CHAR16* _u16_WARN_FILE_SYSTEM = u"WARN_FILE_SYSTEM";
-	constinit const CHAR16* _u16_WARN_RESET_REQUIRED = u"WARN_RESET_REQUIRED";
-	constinit const CHAR16* _u16_WARN_STALE_DATA = u"WARN_STALE_DATA";
-	constinit const CHAR16* _u16_WARN_UNKNOWN_GLYPH = u"WARN_UNKNOWN_GLYPH";
-	constinit const CHAR16* _u16_WARN_WRITE_FAILURE = u"WARN_WRITE_FAILURE";
-	constinit const CHAR16* _u16_WRITE_PROTECTED = u"WRITE_PROTECTED";
+	constinit const CHAR16* _UTF16_ABORTED = u"ABORTED";
+	constinit const CHAR16* _UTF16_ACCESS_DENIED = u"ACCESS_DENIED";
+	constinit const CHAR16* _UTF16_ALREADY_STARTED = u"ALREADY_STARTED";
+	constinit const CHAR16* _UTF16_BAD_BUFFER_SIZE = u"BAD_BUFFER_SIZE";
+	constinit const CHAR16* _UTF16_BOOLEAN_FALSE = u"False";
+	constinit const CHAR16* _UTF16_BOOLEAN_TRUE = u"True";
+	constinit const CHAR16* _UTF16_BUFFER_TOO_SMALL = u"BUFFER_TOO_SMALL";
+	constinit const CHAR16* _UTF16_COMPROMISED_DATA = u"COMPROMISED_DATA";
+	constinit const CHAR16* _UTF16_CRC_ERROR = u"CRC_ERROR";
+	constinit const CHAR16* _UTF16_DEVICE_ERROR = u"DEVICE_ERROR";
+	constinit const CHAR16* _UTF16_END_OF_FILE = u"END_OF_FILE";
+	constinit const CHAR16* _UTF16_END_OF_MEDIA = u"END_OF_MEDIA";
+	constinit const CHAR16* _UTF16_HTTP_ERROR = u"HTTP_ERROR";
+	constinit const CHAR16* _UTF16_ICMP_ERROR = u"ICMP_ERROR";
+	constinit const CHAR16* _UTF16_INCOMPATIBLE_VERSION = u"INCOMPATIBLE_VERSION";
+	constinit const CHAR16* _UTF16_INVALID_LANGUAGE = u"INVALID_LANGUAGE";
+	constinit const CHAR16* _UTF16_INVALID_PARAMETER = u"INVALID_PARAMETER";
+	constinit const CHAR16* _UTF16_IP_ADDRESS_CONFLICT = u"IP_ADDRESS_CONFLICT";
+	constinit const CHAR16* _UTF16_LOAD_ERROR = u"LOAD_ERROR";
+	constinit const CHAR16* _UTF16_MEDIA_CHANGED = u"MEDIA_CHANGED";
+	constinit const CHAR16* _UTF16_NO_MAPPING = u"NO_MAPPING";
+	constinit const CHAR16* _UTF16_NO_MEDIA = u"NO_MEDIA";
+	constinit const CHAR16* _UTF16_NO_RESPONSE = u"NO_RESPONSE";
+	constinit const CHAR16* _UTF16_NOT_FOUND = u"NOT_FOUND";
+	constinit const CHAR16* _UTF16_NOT_READY = u"NOT_READY";
+	constinit const CHAR16* _UTF16_NOT_STARTED = u"NOT_STARTED";
+	constinit const CHAR16* _UTF16_OUT_OF_RESOURCES = u"OUT_OF_RESOURCES";
+	constinit const CHAR16* _UTF16_PROTOCOL_ERROR = u"PROTOCOL_ERROR";
+	constinit const CHAR16* _UTF16_SECURITY_VIOLATION = u"SECURITY_VIOLATION";
+	constinit const CHAR16* _UTF16_SUCCESS = u"SUCCESS";
+	constinit const CHAR16* _UTF16_TFTP_ERROR = u"TFTP_ERROR";
+	constinit const CHAR16* _UTF16_TIMEOUT = u"TIMEOUT";
+	constinit const CHAR16* _UTF16_UNSUPPORTED = u"UNSUPPORTED";
+	constinit const CHAR16* _UTF16_VOLUME_CORRUPTED = u"VOLUME_CORRUPTED";
+	constinit const CHAR16* _UTF16_VOLUME_FULL = u"VOLUME_FULL";
+	constinit const CHAR16* _UTF16_WARN_BUFFER_TOO_SMALL = u"WARN_BUFFER_TOO_SMALL";
+	constinit const CHAR16* _UTF16_WARN_DELETE_FAILURE = u"WARN_DELETE_FAILURE";
+	constinit const CHAR16* _UTF16_WARN_FILE_SYSTEM = u"WARN_FILE_SYSTEM";
+	constinit const CHAR16* _UTF16_WARN_RESET_REQUIRED = u"WARN_RESET_REQUIRED";
+	constinit const CHAR16* _UTF16_WARN_STALE_DATA = u"WARN_STALE_DATA";
+	constinit const CHAR16* _UTF16_WARN_UNKNOWN_GLYPH = u"WARN_UNKNOWN_GLYPH";
+	constinit const CHAR16* _UTF16_WARN_WRITE_FAILURE = u"WARN_WRITE_FAILURE";
+	constinit const CHAR16* _UTF16_WRITE_PROTECTED = u"WRITE_PROTECTED";
+	constinit const CHAR8* _UTF8_ABORTED = "ABORTED";
+	constinit const CHAR8* _UTF8_ACCESS_DENIED = "ACCESS_DENIED";
+	constinit const CHAR8* _UTF8_ALREADY_STARTED = "ALREADY_STARTED";
+	constinit const CHAR8* _UTF8_BAD_BUFFER_SIZE = "BAD_BUFFER_SIZE";
+	constinit const CHAR8* _UTF8_BOOLEAN_FALSE = "False";
+	constinit const CHAR8* _UTF8_BOOLEAN_TRUE = "True";
+	constinit const CHAR8* _UTF8_BUFFER_TOO_SMALL = "BUFFER_TOO_SMALL";
+	constinit const CHAR8* _UTF8_COMPROMISED_DATA = "COMPROMISED_DATA";
+	constinit const CHAR8* _UTF8_CRC_ERROR = "CRC_ERROR";
+	constinit const CHAR8* _UTF8_DEVICE_ERROR = "DEVICE_ERROR";
+	constinit const CHAR8* _UTF8_END_OF_FILE = "END_OF_FILE";
+	constinit const CHAR8* _UTF8_END_OF_MEDIA = "END_OF_MEDIA";
+	constinit const CHAR8* _UTF8_HTTP_ERROR = "HTTP_ERROR";
+	constinit const CHAR8* _UTF8_ICMP_ERROR = "ICMP_ERROR";
+	constinit const CHAR8* _UTF8_INCOMPATIBLE_VERSION = "INCOMPATIBLE_VERSION";
+	constinit const CHAR8* _UTF8_INVALID_LANGUAGE = "INVALID_LANGUAGE";
+	constinit const CHAR8* _UTF8_INVALID_PARAMETER = "INVALID_PARAMETER";
+	constinit const CHAR8* _UTF8_IP_ADDRESS_CONFLICT = "IP_ADDRESS_CONFLICT";
+	constinit const CHAR8* _UTF8_LOAD_ERROR = "LOAD_ERROR";
+	constinit const CHAR8* _UTF8_MEDIA_CHANGED = "MEDIA_CHANGED";
+	constinit const CHAR8* _UTF8_NO_MAPPING = "NO_MAPPING";
+	constinit const CHAR8* _UTF8_NO_MEDIA = "NO_MEDIA";
+	constinit const CHAR8* _UTF8_NO_RESPONSE = "NO_RESPONSE";
+	constinit const CHAR8* _UTF8_NOT_FOUND = "NOT_FOUND";
+	constinit const CHAR8* _UTF8_NOT_READY = "NOT_READY";
+	constinit const CHAR8* _UTF8_NOT_STARTED = "NOT_STARTED";
+	constinit const CHAR8* _UTF8_OUT_OF_RESOURCES = "OUT_OF_RESOURCES";
+	constinit const CHAR8* _UTF8_PROTOCOL_ERROR = "PROTOCOL_ERROR";
+	constinit const CHAR8* _UTF8_SECURITY_VIOLATION = "SECURITY_VIOLATION";
+	constinit const CHAR8* _UTF8_SUCCESS = "SUCCESS";
+	constinit const CHAR8* _UTF8_TFTP_ERROR = "TFTP_ERROR";
+	constinit const CHAR8* _UTF8_TIMEOUT = "TIMEOUT";
+	constinit const CHAR8* _UTF8_UNSUPPORTED = "UNSUPPORTED";
+	constinit const CHAR8* _UTF8_VOLUME_CORRUPTED = "VOLUME_CORRUPTED";
+	constinit const CHAR8* _UTF8_VOLUME_FULL = "VOLUME_FULL";
+	constinit const CHAR8* _UTF8_WARN_BUFFER_TOO_SMALL = "WARN_BUFFER_TOO_SMALL";
+	constinit const CHAR8* _UTF8_WARN_DELETE_FAILURE = "WARN_DELETE_FAILURE";
+	constinit const CHAR8* _UTF8_WARN_FILE_SYSTEM = "WARN_FILE_SYSTEM";
+	constinit const CHAR8* _UTF8_WARN_RESET_REQUIRED = "WARN_RESET_REQUIRED";
+	constinit const CHAR8* _UTF8_WARN_STALE_DATA = "WARN_STALE_DATA";
+	constinit const CHAR8* _UTF8_WARN_UNKNOWN_GLYPH = "WARN_UNKNOWN_GLYPH";
+	constinit const CHAR8* _UTF8_WARN_WRITE_FAILURE = "WARN_WRITE_FAILURE";
+	constinit const CHAR8* _UTF8_WRITE_PROTECTED = "WRITE_PROTECTED";
 
-	constinit const CHAR8* _BOOLEAN_TRUE = "True";
-	constinit const CHAR8* _BOOLEAN_FALSE = "False";
-	constinit const CHAR8* _ABORTED = "ABORTED";
-	constinit const CHAR8* _ACCESS_DENIED = "ACCESS_DENIED";
-	constinit const CHAR8* _ALREADY_STARTED = "ALREADY_STARTED";
-	constinit const CHAR8* _BAD_BUFFER_SIZE = "BAD_BUFFER_SIZE";
-	constinit const CHAR8* _BUFFER_TOO_SMALL = "BUFFER_TOO_SMALL";
-	constinit const CHAR8* _COMPROMISED_DATA = "COMPROMISED_DATA";
-	constinit const CHAR8* _CRC_ERROR = "CRC_ERROR";
-	constinit const CHAR8* _DEVICE_ERROR = "DEVICE_ERROR";
-	constinit const CHAR8* _END_OF_FILE = "END_OF_FILE";
-	constinit const CHAR8* _END_OF_MEDIA = "END_OF_MEDIA";
-	constinit const CHAR8* _HTTP_ERROR = "HTTP_ERROR";
-	constinit const CHAR8* _ICMP_ERROR = "ICMP_ERROR";
-	constinit const CHAR8* _INCOMPATIBLE_VERSION = "INCOMPATIBLE_VERSION";
-	constinit const CHAR8* _INVALID_LANGUAGE = "INVALID_LANGUAGE";
-	constinit const CHAR8* _INVALID_PARAMETER = "INVALID_PARAMETER";
-	constinit const CHAR8* _IP_ADDRESS_CONFLICT = "IP_ADDRESS_CONFLICT";
-	constinit const CHAR8* _LOAD_ERROR = "LOAD_ERROR";
-	constinit const CHAR8* _MEDIA_CHANGED = "MEDIA_CHANGED";
-	constinit const CHAR8* _NO_MAPPING = "NO_MAPPING";
-	constinit const CHAR8* _NO_MEDIA = "NO_MEDIA";
-	constinit const CHAR8* _NO_RESPONSE = "NO_RESPONSE";
-	constinit const CHAR8* _NOT_FOUND = "NOT_FOUND";
-	constinit const CHAR8* _NOT_READY = "NOT_READY";
-	constinit const CHAR8* _NOT_STARTED = "NOT_STARTED";
-	constinit const CHAR8* _OUT_OF_RESOURCES = "OUT_OF_RESOURCES";
-	constinit const CHAR8* _PROTOCOL_ERROR = "PROTOCOL_ERROR";
-	constinit const CHAR8* _SECURITY_VIOLATION = "SECURITY_VIOLATION";
-	constinit const CHAR8* _SUCCESS = "SUCCESS";
-	constinit const CHAR8* _TFTP_ERROR = "TFTP_ERROR";
-	constinit const CHAR8* _TIMEOUT = "TIMEOUT";
-	constinit const CHAR8* _UNSUPPORTED = "UNSUPPORTED";
-	constinit const CHAR8* _VOLUME_CORRUPTED = "VOLUME_CORRUPTED";
-	constinit const CHAR8* _VOLUME_FULL = "VOLUME_FULL";
-	constinit const CHAR8* _WARN_BUFFER_TOO_SMALL = "WARN_BUFFER_TOO_SMALL";
-	constinit const CHAR8* _WARN_DELETE_FAILURE = "WARN_DELETE_FAILURE";
-	constinit const CHAR8* _WARN_FILE_SYSTEM = "WARN_FILE_SYSTEM";
-	constinit const CHAR8* _WARN_RESET_REQUIRED = "WARN_RESET_REQUIRED";
-	constinit const CHAR8* _WARN_STALE_DATA = "WARN_STALE_DATA";
-	constinit const CHAR8* _WARN_UNKNOWN_GLYPH = "WARN_UNKNOWN_GLYPH";
-	constinit const CHAR8* _WARN_WRITE_FAILURE = "WARN_WRITE_FAILURE";
-	constinit const CHAR8* _WRITE_PROTECTED = "WRITE_PROTECTED";
+	const void ClearStr(CHAR16* str, UINTN length)
+	{
+		for (UINTN i = 0; i < length; i++)
+		{
+			str[i] = u'\0';
+		}
+	}
+
+	const CHAR16* UTF16::ToHex(const INT16 value)
+	{
+		ClearStr(_UTF16_HEXSTRING, 18);
+
+		if (value < 0)
+		{
+			INT16 abs = -value;
+			_UTF16_HEXSTRING[0] = u'-';
+			_UTF16_HEXSTRING[1] = _UTF16_HEXCHARS[(abs >> 12) & 0xF];
+			_UTF16_HEXSTRING[2] = _UTF16_HEXCHARS[(abs >> 8) & 0xF];
+			_UTF16_HEXSTRING[3] = _UTF16_HEXCHARS[(abs >> 4) & 0xF];
+			_UTF16_HEXSTRING[4] = _UTF16_HEXCHARS[abs & 0xF];
+			_UTF16_HEXSTRING[5] = u'\0';
+		}
+		else
+		{
+			_UTF16_HEXSTRING[0] = _UTF16_HEXCHARS[(value >> 12) & 0xF];
+			_UTF16_HEXSTRING[1] = _UTF16_HEXCHARS[(value >> 8) & 0xF];
+			_UTF16_HEXSTRING[2] = _UTF16_HEXCHARS[(value >> 4) & 0xF];
+			_UTF16_HEXSTRING[3] = _UTF16_HEXCHARS[value & 0xF];
+			_UTF16_HEXSTRING[4] = u'\0';
+		}
+		return &_UTF16_HEXSTRING[0];
+	}
+
+	const CHAR16* UTF16::ToHex(const INT32 value)
+	{
+		ClearStr(_UTF16_HEXSTRING, 18);
+		if (value < 0)
+		{
+			INT32 abs = -value;
+			_UTF16_HEXSTRING[0] = u'-';
+			_UTF16_HEXSTRING[1] = _UTF16_HEXCHARS[(abs >> 28) & 0xF];
+			_UTF16_HEXSTRING[2] = _UTF16_HEXCHARS[(abs >> 24) & 0xF];
+			_UTF16_HEXSTRING[3] = _UTF16_HEXCHARS[(abs >> 20) & 0xF];
+			_UTF16_HEXSTRING[4] = _UTF16_HEXCHARS[(abs >> 16) & 0xF];
+			_UTF16_HEXSTRING[5] = _UTF16_HEXCHARS[(abs >> 12) & 0xF];
+			_UTF16_HEXSTRING[6] = _UTF16_HEXCHARS[(abs >> 8) & 0xF];
+			_UTF16_HEXSTRING[7] = _UTF16_HEXCHARS[(abs >> 4) & 0xF];
+			_UTF16_HEXSTRING[8] = _UTF16_HEXCHARS[abs & 0xF];
+			_UTF16_HEXSTRING[9] = u'\0';
+		}
+		else
+		{
+			_UTF16_HEXSTRING[0] = _UTF16_HEXCHARS[(value >> 28) & 0xF];
+			_UTF16_HEXSTRING[1] = _UTF16_HEXCHARS[(value >> 24) & 0xF];
+			_UTF16_HEXSTRING[2] = _UTF16_HEXCHARS[(value >> 20) & 0xF];
+			_UTF16_HEXSTRING[3] = _UTF16_HEXCHARS[(value >> 16) & 0xF];
+			_UTF16_HEXSTRING[4] = _UTF16_HEXCHARS[(value >> 12) & 0xF];
+			_UTF16_HEXSTRING[5] = _UTF16_HEXCHARS[(value >> 8) & 0xF];
+			_UTF16_HEXSTRING[6] = _UTF16_HEXCHARS[(value >> 4) & 0xF];
+			_UTF16_HEXSTRING[7] = _UTF16_HEXCHARS[value & 0xF];
+			_UTF16_HEXSTRING[8] = u'\0';
+		}
+		return &_UTF16_HEXSTRING[0];
+	}
+
+	const CHAR16* UTF16::ToHex(const INT64 value)
+	{
+		ClearStr(_UTF16_HEXSTRING, 18);
+		if (value < 0)
+		{
+			INT64 abs = -value;
+			_UTF16_HEXSTRING[0] = u'-';
+			_UTF16_HEXSTRING[1] = _UTF16_HEXCHARS[(abs >> 60) & 0xF];
+			_UTF16_HEXSTRING[2] = _UTF16_HEXCHARS[(abs >> 56) & 0xF];
+			_UTF16_HEXSTRING[3] = _UTF16_HEXCHARS[(abs >> 52) & 0xF];
+			_UTF16_HEXSTRING[4] = _UTF16_HEXCHARS[(abs >> 48) & 0xF];
+			_UTF16_HEXSTRING[5] = _UTF16_HEXCHARS[(abs >> 44) & 0xF];
+			_UTF16_HEXSTRING[6] = _UTF16_HEXCHARS[(abs >> 40) & 0xF];
+			_UTF16_HEXSTRING[7] = _UTF16_HEXCHARS[(abs >> 36) & 0xF];
+			_UTF16_HEXSTRING[8] = _UTF16_HEXCHARS[(abs >> 32) & 0xF];
+			_UTF16_HEXSTRING[9] = _UTF16_HEXCHARS[(abs >> 28) & 0xF];
+			_UTF16_HEXSTRING[10] = _UTF16_HEXCHARS[(abs >> 24) & 0xF];
+			_UTF16_HEXSTRING[11] = _UTF16_HEXCHARS[(abs >> 20) & 0xF];
+			_UTF16_HEXSTRING[12] = _UTF16_HEXCHARS[(abs >> 16) & 0xF];
+			_UTF16_HEXSTRING[13] = _UTF16_HEXCHARS[(abs >> 12) & 0xF];
+			_UTF16_HEXSTRING[14] = _UTF16_HEXCHARS[(abs >> 8) & 0xF];
+			_UTF16_HEXSTRING[15] = _UTF16_HEXCHARS[(abs >> 4) & 0xF];
+			_UTF16_HEXSTRING[16] = _UTF16_HEXCHARS[abs & 0xF];
+			_UTF16_HEXSTRING[17] = u'\0';
+		}
+		else
+		{
+			_UTF16_HEXSTRING[0] = _UTF16_HEXCHARS[(value >> 60) & 0xF];
+			_UTF16_HEXSTRING[1] = _UTF16_HEXCHARS[(value >> 56) & 0xF];
+			_UTF16_HEXSTRING[2] = _UTF16_HEXCHARS[(value >> 52) & 0xF];
+			_UTF16_HEXSTRING[3] = _UTF16_HEXCHARS[(value >> 48) & 0xF];
+			_UTF16_HEXSTRING[4] = _UTF16_HEXCHARS[(value >> 44) & 0xF];
+			_UTF16_HEXSTRING[5] = _UTF16_HEXCHARS[(value >> 40) & 0xF];
+			_UTF16_HEXSTRING[6] = _UTF16_HEXCHARS[(value >> 36) & 0xF];
+			_UTF16_HEXSTRING[7] = _UTF16_HEXCHARS[(value >> 32) & 0xF];
+			_UTF16_HEXSTRING[8] = _UTF16_HEXCHARS[(value >> 28) & 0xF];
+			_UTF16_HEXSTRING[9] = _UTF16_HEXCHARS[(value >> 24) & 0xF];
+			_UTF16_HEXSTRING[10] = _UTF16_HEXCHARS[(value >> 20) & 0xF];
+			_UTF16_HEXSTRING[11] = _UTF16_HEXCHARS[(value >> 16) & 0xF];
+			_UTF16_HEXSTRING[12] = _UTF16_HEXCHARS[(value >> 12) & 0xF];
+			_UTF16_HEXSTRING[13] = _UTF16_HEXCHARS[(value >> 8) & 0xF];
+			_UTF16_HEXSTRING[14] = _UTF16_HEXCHARS[(value >> 4) & 0xF];
+			_UTF16_HEXSTRING[15] = _UTF16_HEXCHARS[value & 0xF];
+			_UTF16_HEXSTRING[16] = u'\0';
+		}
+		return &_UTF16_HEXSTRING[0];
+	}
+
+	const CHAR16* UTF16::ToHex(const INT8 value)
+	{
+		ClearStr(_UTF16_HEXSTRING, 18);
+		if (value < 0)
+		{
+			INT8 abs = -value;
+			_UTF16_HEXSTRING[0] = u'-';
+			_UTF16_HEXSTRING[1] = _UTF16_HEXCHARS[(abs >> 4) & 0xF];
+			_UTF16_HEXSTRING[2] = _UTF16_HEXCHARS[abs & 0xF];
+			_UTF16_HEXSTRING[3] = u'\0';
+		}
+		else
+		{
+			_UTF16_HEXSTRING[0] = _UTF16_HEXCHARS[(value >> 4) & 0xF];
+			_UTF16_HEXSTRING[1] = _UTF16_HEXCHARS[value & 0xF];
+			_UTF16_HEXSTRING[2] = u'\0';
+		}
+		return &_UTF16_HEXSTRING[0];
+	}
+
+	const CHAR16* UTF16::ToHex(const UINT16 value)
+	{
+		ClearStr(_UTF16_HEXSTRING, 18);
+		_UTF16_HEXSTRING[0] = _UTF16_HEXCHARS[(value >> 12) & 0xF];
+		_UTF16_HEXSTRING[1] = _UTF16_HEXCHARS[(value >> 8) & 0xF];
+		_UTF16_HEXSTRING[2] = _UTF16_HEXCHARS[(value >> 4) & 0xF];
+		_UTF16_HEXSTRING[3] = _UTF16_HEXCHARS[value & 0xF];
+		_UTF16_HEXSTRING[4] = u'\0';
+		return &_UTF16_HEXSTRING[0];
+	}
+
+	const CHAR16* UTF16::ToHex(const UINT32 value)
+	{
+		ClearStr(_UTF16_HEXSTRING, 18);
+		_UTF16_HEXSTRING[0] = _UTF16_HEXCHARS[(value >> 28) & 0xF];
+		_UTF16_HEXSTRING[1] = _UTF16_HEXCHARS[(value >> 24) & 0xF];
+		_UTF16_HEXSTRING[2] = _UTF16_HEXCHARS[(value >> 20) & 0xF];
+		_UTF16_HEXSTRING[3] = _UTF16_HEXCHARS[(value >> 16) & 0xF];
+		_UTF16_HEXSTRING[4] = _UTF16_HEXCHARS[(value >> 12) & 0xF];
+		_UTF16_HEXSTRING[5] = _UTF16_HEXCHARS[(value >> 8) & 0xF];
+		_UTF16_HEXSTRING[6] = _UTF16_HEXCHARS[(value >> 4) & 0xF];
+		_UTF16_HEXSTRING[7] = _UTF16_HEXCHARS[value & 0xF];
+		_UTF16_HEXSTRING[8] = u'\0';
+		return &_UTF16_HEXSTRING[0];
+	}
+
+	const CHAR16* UTF16::ToHex(const UINT64 value)
+	{
+		ClearStr(_UTF16_HEXSTRING, 18);
+		_UTF16_HEXSTRING[0] = _UTF16_HEXCHARS[(value >> 60) & 0xF];
+		_UTF16_HEXSTRING[1] = _UTF16_HEXCHARS[(value >> 56) & 0xF];
+		_UTF16_HEXSTRING[2] = _UTF16_HEXCHARS[(value >> 52) & 0xF];
+		_UTF16_HEXSTRING[3] = _UTF16_HEXCHARS[(value >> 48) & 0xF];
+		_UTF16_HEXSTRING[4] = _UTF16_HEXCHARS[(value >> 44) & 0xF];
+		_UTF16_HEXSTRING[5] = _UTF16_HEXCHARS[(value >> 40) & 0xF];
+		_UTF16_HEXSTRING[6] = _UTF16_HEXCHARS[(value >> 36) & 0xF];
+		_UTF16_HEXSTRING[7] = _UTF16_HEXCHARS[(value >> 32) & 0xF];
+		_UTF16_HEXSTRING[8] = _UTF16_HEXCHARS[(value >> 28) & 0xF];
+		_UTF16_HEXSTRING[9] = _UTF16_HEXCHARS[(value >> 24) & 0xF];
+		_UTF16_HEXSTRING[10] = _UTF16_HEXCHARS[(value >> 20) & 0xF];
+		_UTF16_HEXSTRING[11] = _UTF16_HEXCHARS[(value >> 16) & 0xF];
+		_UTF16_HEXSTRING[12] = _UTF16_HEXCHARS[(value >> 12) & 0xF];
+		_UTF16_HEXSTRING[13] = _UTF16_HEXCHARS[(value >> 8) & 0xF];
+		_UTF16_HEXSTRING[14] = _UTF16_HEXCHARS[(value >> 4) & 0xF];
+		_UTF16_HEXSTRING[15] = _UTF16_HEXCHARS[value & 0xF];
+		_UTF16_HEXSTRING[16] = u'\0';
+		return &_UTF16_HEXSTRING[0];
+	}
+
+	const CHAR16* UTF16::ToHex(const UINT8 value)
+	{
+		ClearStr(_UTF16_HEXSTRING, 18);
+		_UTF16_HEXSTRING[0] = _UTF16_HEXCHARS[(value >> 4) & 0xF];
+		_UTF16_HEXSTRING[1] = _UTF16_HEXCHARS[value & 0xF];
+		_UTF16_HEXSTRING[2] = u'\0';
+		return &_UTF16_HEXSTRING[0];
+	}
+
+	const CHAR16* UTF16::ToHex(const VOID_PTR ptr)
+	{
+		ClearStr(_UTF16_HEXSTRING, 18);
+		UINT64 value = (UINT64)ptr;
+		_UTF16_HEXSTRING[0] = _UTF16_HEXCHARS[(value >> 60) & 0xF];
+		_UTF16_HEXSTRING[1] = _UTF16_HEXCHARS[(value >> 56) & 0xF];
+		_UTF16_HEXSTRING[2] = _UTF16_HEXCHARS[(value >> 52) & 0xF];
+		_UTF16_HEXSTRING[3] = _UTF16_HEXCHARS[(value >> 48) & 0xF];
+		_UTF16_HEXSTRING[4] = _UTF16_HEXCHARS[(value >> 44) & 0xF];
+		_UTF16_HEXSTRING[5] = _UTF16_HEXCHARS[(value >> 40) & 0xF];
+		_UTF16_HEXSTRING[6] = _UTF16_HEXCHARS[(value >> 36) & 0xF];
+		_UTF16_HEXSTRING[7] = _UTF16_HEXCHARS[(value >> 32) & 0xF];
+		_UTF16_HEXSTRING[8] = _UTF16_HEXCHARS[(value >> 28) & 0xF];
+		_UTF16_HEXSTRING[9] = _UTF16_HEXCHARS[(value >> 24) & 0xF];
+		_UTF16_HEXSTRING[10] = _UTF16_HEXCHARS[(value >> 20) & 0xF];
+		_UTF16_HEXSTRING[11] = _UTF16_HEXCHARS[(value >> 16) & 0xF];
+		_UTF16_HEXSTRING[12] = _UTF16_HEXCHARS[(value >> 12) & 0xF];
+		_UTF16_HEXSTRING[13] = _UTF16_HEXCHARS[(value >> 8) & 0xF];
+		_UTF16_HEXSTRING[14] = _UTF16_HEXCHARS[(value >> 4) & 0xF];
+		_UTF16_HEXSTRING[15] = _UTF16_HEXCHARS[value & 0xF];
+		_UTF16_HEXSTRING[16] = u'\0';
+		return &_UTF16_HEXSTRING[0];
+	}
 
 	const CHAR16* UTF16::ToString(const EFI::EFI_GUID guid)
 	{
-		_u16_hexGUIDString[0] = u'{';
-		_u16_hexGUIDString[1] = _u16_hexChars[(guid.Data1 >> 28) & 0x0F];
-		_u16_hexGUIDString[2] = _u16_hexChars[(guid.Data1 >> 24) & 0x0F];
-		_u16_hexGUIDString[3] = _u16_hexChars[(guid.Data1 >> 20) & 0x0F];
-		_u16_hexGUIDString[4] = _u16_hexChars[(guid.Data1 >> 16) & 0x0F];
-		_u16_hexGUIDString[5] = _u16_hexChars[(guid.Data1 >> 12) & 0x0F];
-		_u16_hexGUIDString[6] = _u16_hexChars[(guid.Data1 >> 8) & 0x0F];
-		_u16_hexGUIDString[7] = _u16_hexChars[(guid.Data1 >> 4) & 0x0F];
-		_u16_hexGUIDString[8] = _u16_hexChars[guid.Data1 & 0x0F];
-		_u16_hexGUIDString[9] = u'-';
-		_u16_hexGUIDString[10] = _u16_hexChars[(guid.Data2 >> 12) & 0x0F];
-		_u16_hexGUIDString[11] = _u16_hexChars[(guid.Data2 >> 8) & 0x0F];
-		_u16_hexGUIDString[12] = _u16_hexChars[(guid.Data2 >> 4) & 0x0F];
-		_u16_hexGUIDString[13] = _u16_hexChars[guid.Data2 & 0x0F];
-		_u16_hexGUIDString[14] = u'-';
-		_u16_hexGUIDString[15] = _u16_hexChars[(guid.Data3 >> 12) & 0x0F];
-		_u16_hexGUIDString[16] = _u16_hexChars[(guid.Data3 >> 8) & 0x0F];
-		_u16_hexGUIDString[17] = _u16_hexChars[(guid.Data3 >> 4) & 0x0F];
-		_u16_hexGUIDString[18] = _u16_hexChars[guid.Data3 & 0x0F];
-		_u16_hexGUIDString[19] = u'-';
-		_u16_hexGUIDString[20] = _u16_hexChars[(guid.Data4[0] >> 4) & 0x0F];
-		_u16_hexGUIDString[21] = _u16_hexChars[guid.Data4[0] & 0x0F];
-		_u16_hexGUIDString[22] = _u16_hexChars[(guid.Data4[1] >> 4) & 0x0F];
-		_u16_hexGUIDString[23] = _u16_hexChars[guid.Data4[1] & 0x0F];
-		_u16_hexGUIDString[24] = u'-';
-		_u16_hexGUIDString[25] = _u16_hexChars[(guid.Data4[2] >> 4) & 0x0F];
-		_u16_hexGUIDString[26] = _u16_hexChars[guid.Data4[2] & 0x0F];
-		_u16_hexGUIDString[27] = _u16_hexChars[(guid.Data4[3] >> 4) & 0x0F];
-		_u16_hexGUIDString[28] = _u16_hexChars[guid.Data4[3] & 0x0F];
-		_u16_hexGUIDString[29] = _u16_hexChars[(guid.Data4[4] >> 4) & 0x0F];
-		_u16_hexGUIDString[30] = _u16_hexChars[guid.Data4[4] & 0x0F];
-		_u16_hexGUIDString[31] = _u16_hexChars[(guid.Data4[5] >> 4) & 0x0F];
-		_u16_hexGUIDString[32] = _u16_hexChars[guid.Data4[5] & 0x0F];
-		_u16_hexGUIDString[33] = _u16_hexChars[(guid.Data4[6] >> 4) & 0x0F];
-		_u16_hexGUIDString[34] = _u16_hexChars[guid.Data4[6] & 0x0F];
-		_u16_hexGUIDString[35] = _u16_hexChars[(guid.Data4[7] >> 4) & 0x0F];
-		_u16_hexGUIDString[36] = _u16_hexChars[guid.Data4[7] & 0x0F];
-		_u16_hexGUIDString[37] = u'}';
-		_u16_hexGUIDString[38] = u'\0';
-		return _u16_hexGUIDString;
+		_UTF16_GUIDTOSTRING[1] = _UTF16_HEXCHARS[(guid.Data1 >> 28) & 0xF];
+		_UTF16_GUIDTOSTRING[2] = _UTF16_HEXCHARS[(guid.Data1 >> 24) & 0xF];
+		_UTF16_GUIDTOSTRING[3] = _UTF16_HEXCHARS[(guid.Data1 >> 20) & 0xF];
+		_UTF16_GUIDTOSTRING[4] = _UTF16_HEXCHARS[(guid.Data1 >> 16) & 0xF];
+		_UTF16_GUIDTOSTRING[5] = _UTF16_HEXCHARS[(guid.Data1 >> 12) & 0xF];
+		_UTF16_GUIDTOSTRING[6] = _UTF16_HEXCHARS[(guid.Data1 >> 8) & 0xF];
+		_UTF16_GUIDTOSTRING[7] = _UTF16_HEXCHARS[(guid.Data1 >> 4) & 0xF];
+		_UTF16_GUIDTOSTRING[8] = _UTF16_HEXCHARS[guid.Data1 & 0xF];
+		_UTF16_GUIDTOSTRING[10] = _UTF16_HEXCHARS[(guid.Data2 >> 12) & 0xF];
+		_UTF16_GUIDTOSTRING[11] = _UTF16_HEXCHARS[(guid.Data2 >> 8) & 0xF];
+		_UTF16_GUIDTOSTRING[12] = _UTF16_HEXCHARS[(guid.Data2 >> 4) & 0xF];
+		_UTF16_GUIDTOSTRING[13] = _UTF16_HEXCHARS[guid.Data2 & 0xF];
+		_UTF16_GUIDTOSTRING[15] = _UTF16_HEXCHARS[(guid.Data3 >> 12) & 0xF];
+		_UTF16_GUIDTOSTRING[16] = _UTF16_HEXCHARS[(guid.Data3 >> 8) & 0xF];
+		_UTF16_GUIDTOSTRING[17] = _UTF16_HEXCHARS[(guid.Data3 >> 4) & 0xF];
+		_UTF16_GUIDTOSTRING[18] = _UTF16_HEXCHARS[guid.Data3 & 0xF];
+		_UTF16_GUIDTOSTRING[20] = _UTF16_HEXCHARS[(guid.Data4[0] >> 4) & 0xF];
+		_UTF16_GUIDTOSTRING[21] = _UTF16_HEXCHARS[guid.Data4[0] & 0xF];
+		_UTF16_GUIDTOSTRING[23] = _UTF16_HEXCHARS[(guid.Data4[1] >> 4) & 0xF];
+		_UTF16_GUIDTOSTRING[24] = _UTF16_HEXCHARS[guid.Data4[1] & 0xF];
+		_UTF16_GUIDTOSTRING[26] = _UTF16_HEXCHARS[(guid.Data4[2] >> 4) & 0xF];
+		_UTF16_GUIDTOSTRING[27] = _UTF16_HEXCHARS[guid.Data4[2] & 0xF];
+		_UTF16_GUIDTOSTRING[28] = _UTF16_HEXCHARS[(guid.Data4[3] >> 4) & 0xF];
+		_UTF16_GUIDTOSTRING[29] = _UTF16_HEXCHARS[guid.Data4[3] & 0xF];
+		_UTF16_GUIDTOSTRING[31] = _UTF16_HEXCHARS[(guid.Data4[4] >> 4) & 0xF];
+		_UTF16_GUIDTOSTRING[32] = _UTF16_HEXCHARS[guid.Data4[4] & 0xF];
+		_UTF16_GUIDTOSTRING[34] = _UTF16_HEXCHARS[(guid.Data4[5] >> 4) & 0xF];
+		_UTF16_GUIDTOSTRING[35] = _UTF16_HEXCHARS[guid.Data4[5] & 0xF];
+		_UTF16_GUIDTOSTRING[37] = _UTF16_HEXCHARS[(guid.Data4[6] >> 4) & 0xF];
+		_UTF16_GUIDTOSTRING[38] = _UTF16_HEXCHARS[guid.Data4[6] & 0xF];
+		_UTF16_GUIDTOSTRING[40] = _UTF16_HEXCHARS[(guid.Data4[7] >> 4) & 0xF];
+		_UTF16_GUIDTOSTRING[41] = _UTF16_HEXCHARS[guid.Data4[7] & 0xF];
+		return &_UTF16_GUIDTOSTRING[0];
 	}
 
-	const CHAR16* UTF16::ToString(EFI::EFI_STATUS status)
+	const CHAR16* UTF16::ToString(const EFI::EFI_STATUS status)
 	{
 		switch (status)
 		{
-		case EFI::EFI_STATUS::SUCCESS:
-			return _u16_SUCCESS;
-		case EFI::EFI_STATUS::LOAD_ERROR:
-			return _u16_LOAD_ERROR;
-		case EFI::EFI_STATUS::INVALID_PARAMETER:
-			return _u16_INVALID_PARAMETER;
-		case EFI::EFI_STATUS::UNSUPPORTED:
-			return _u16_UNSUPPORTED;
-		case EFI::EFI_STATUS::BAD_BUFFER_SIZE:
-			return _u16_BAD_BUFFER_SIZE;
-		case EFI::EFI_STATUS::BUFFER_TOO_SMALL:
-			return _u16_BUFFER_TOO_SMALL;
-		case EFI::EFI_STATUS::NOT_READY:
-			return _u16_NOT_READY;
-		case EFI::EFI_STATUS::DEVICE_ERROR:
-			return _u16_DEVICE_ERROR;
-		case EFI::EFI_STATUS::WRITE_PROTECTED:
-			return _u16_WRITE_PROTECTED;
-		case EFI::EFI_STATUS::OUT_OF_RESOURCES:
-			return _u16_OUT_OF_RESOURCES;
-		case EFI::EFI_STATUS::VOLUME_CORRUPTED:
-			return _u16_VOLUME_CORRUPTED;
-		case EFI::EFI_STATUS::VOLUME_FULL:
-			return _u16_VOLUME_FULL;
-		case EFI::EFI_STATUS::NO_MEDIA:
-			return _u16_NO_MEDIA;
-		case EFI::EFI_STATUS::MEDIA_CHANGED:
-			return _u16_MEDIA_CHANGED;
-		case EFI::EFI_STATUS::NOT_FOUND:
-			return _u16_NOT_FOUND;
-		case EFI::EFI_STATUS::ACCESS_DENIED:
-			return _u16_ACCESS_DENIED;
-		case EFI::EFI_STATUS::NO_RESPONSE:
-			return _u16_NO_RESPONSE;
-		case EFI::EFI_STATUS::NO_MAPPING:
-			return _u16_NO_MAPPING;
-		case EFI::EFI_STATUS::TIMEOUT:
-			return _u16_TIMEOUT;
-		case EFI::EFI_STATUS::NOT_STARTED:
-			return _u16_NOT_STARTED;
-		case EFI::EFI_STATUS::ALREADY_STARTED:
-			return _u16_ALREADY_STARTED;
 		case EFI::EFI_STATUS::ABORTED:
-			return _u16_ABORTED;
-		case EFI::EFI_STATUS::ICMP_ERROR:
-			return _u16_ICMP_ERROR;
-		case EFI::EFI_STATUS::TFTP_ERROR:
-			return _u16_TFTP_ERROR;
-		case EFI::EFI_STATUS::PROTOCOL_ERROR:
-			return _u16_PROTOCOL_ERROR;
-		case EFI::EFI_STATUS::INCOMPATIBLE_VERSION:
-			return _u16_INCOMPATIBLE_VERSION;
-		case EFI::EFI_STATUS::SECURITY_VIOLATION:
-			return _u16_SECURITY_VIOLATION;
-		case EFI::EFI_STATUS::CRC_ERROR:
-			return _u16_CRC_ERROR;
-		case EFI::EFI_STATUS::END_OF_MEDIA:
-			return _u16_END_OF_MEDIA;
-		case EFI::EFI_STATUS::END_OF_FILE:
-			return _u16_END_OF_FILE;
-		case EFI::EFI_STATUS::INVALID_LANGUAGE:
-			return _u16_INVALID_LANGUAGE;
+			return _UTF16_ABORTED;
+		case EFI::EFI_STATUS::ACCESS_DENIED:
+			return _UTF16_ACCESS_DENIED;
+		case EFI::EFI_STATUS::ALREADY_STARTED:
+			return _UTF16_ALREADY_STARTED;
+		case EFI::EFI_STATUS::BAD_BUFFER_SIZE:
+			return _UTF16_BAD_BUFFER_SIZE;
+		case EFI::EFI_STATUS::BUFFER_TOO_SMALL:
+			return _UTF16_BUFFER_TOO_SMALL;
 		case EFI::EFI_STATUS::COMPROMISED_DATA:
-			return _u16_COMPROMISED_DATA;
-		case EFI::EFI_STATUS::IP_ADDRESS_CONFLICT:
-			return _u16_IP_ADDRESS_CONFLICT;
+			return _UTF16_COMPROMISED_DATA;
+		case EFI::EFI_STATUS::CRC_ERROR:
+			return _UTF16_CRC_ERROR;
+		case EFI::EFI_STATUS::DEVICE_ERROR:
+			return _UTF16_DEVICE_ERROR;
+		case EFI::EFI_STATUS::END_OF_FILE:
+			return _UTF16_END_OF_FILE;
+		case EFI::EFI_STATUS::END_OF_MEDIA:
+			return _UTF16_END_OF_MEDIA;
 		case EFI::EFI_STATUS::HTTP_ERROR:
-			return _u16_HTTP_ERROR;
-
-		case EFI::EFI_STATUS::WARN_UNKNOWN_GLYPH:
-			return _u16_WARN_UNKNOWN_GLYPH;
-		case EFI::EFI_STATUS::WARN_DELETE_FAILURE:
-			return _u16_WARN_DELETE_FAILURE;
-		case EFI::EFI_STATUS::WARN_WRITE_FAILURE:
-			return _u16_WARN_WRITE_FAILURE;
+			return _UTF16_HTTP_ERROR;
+		case EFI::EFI_STATUS::ICMP_ERROR:
+			return _UTF16_ICMP_ERROR;
+		case EFI::EFI_STATUS::INCOMPATIBLE_VERSION:
+			return _UTF16_INCOMPATIBLE_VERSION;
+		case EFI::EFI_STATUS::INVALID_LANGUAGE:
+			return _UTF16_INVALID_LANGUAGE;
+		case EFI::EFI_STATUS::INVALID_PARAMETER:
+			return _UTF16_INVALID_PARAMETER;
+		case EFI::EFI_STATUS::IP_ADDRESS_CONFLICT:
+			return _UTF16_IP_ADDRESS_CONFLICT;
+		case EFI::EFI_STATUS::LOAD_ERROR:
+			return _UTF16_LOAD_ERROR;
+		case EFI::EFI_STATUS::MEDIA_CHANGED:
+			return _UTF16_MEDIA_CHANGED;
+		case EFI::EFI_STATUS::NO_MAPPING:
+			return _UTF16_NO_MAPPING;
+		case EFI::EFI_STATUS::NO_MEDIA:
+			return _UTF16_NO_MEDIA;
+		case EFI::EFI_STATUS::NO_RESPONSE:
+			return _UTF16_NO_RESPONSE;
+		case EFI::EFI_STATUS::NOT_FOUND:
+			return _UTF16_NOT_FOUND;
+		case EFI::EFI_STATUS::NOT_READY:
+			return _UTF16_NOT_READY;
+		case EFI::EFI_STATUS::NOT_STARTED:
+			return _UTF16_NOT_STARTED;
+		case EFI::EFI_STATUS::OUT_OF_RESOURCES:
+			return _UTF16_OUT_OF_RESOURCES;
+		case EFI::EFI_STATUS::PROTOCOL_ERROR:
+			return _UTF16_PROTOCOL_ERROR;
+		case EFI::EFI_STATUS::SECURITY_VIOLATION:
+			return _UTF16_SECURITY_VIOLATION;
+		case EFI::EFI_STATUS::SUCCESS:
+			return _UTF16_SUCCESS;
+		case EFI::EFI_STATUS::TFTP_ERROR:
+			return _UTF16_TFTP_ERROR;
+		case EFI::EFI_STATUS::TIMEOUT:
+			return _UTF16_TIMEOUT;
+		case EFI::EFI_STATUS::UNSUPPORTED:
+			return _UTF16_UNSUPPORTED;
+		case EFI::EFI_STATUS::VOLUME_CORRUPTED:
+			return _UTF16_VOLUME_CORRUPTED;
+		case EFI::EFI_STATUS::VOLUME_FULL:
+			return _UTF16_VOLUME_FULL;
 		case EFI::EFI_STATUS::WARN_BUFFER_TOO_SMALL:
-			return _u16_WARN_BUFFER_TOO_SMALL;
-		case EFI::EFI_STATUS::WARN_STALE_DATA:
-			return _u16_WARN_STALE_DATA;
+			return _UTF16_WARN_BUFFER_TOO_SMALL;
+		case EFI::EFI_STATUS::WARN_DELETE_FAILURE:
+			return _UTF16_WARN_DELETE_FAILURE;
 		case EFI::EFI_STATUS::WARN_FILE_SYSTEM:
-			return _u16_WARN_FILE_SYSTEM;
+			return _UTF16_WARN_FILE_SYSTEM;
 		case EFI::EFI_STATUS::WARN_RESET_REQUIRED:
-			return _u16_WARN_RESET_REQUIRED;
-		default: return nullptr;
+			return _UTF16_WARN_RESET_REQUIRED;
+		case EFI::EFI_STATUS::WARN_STALE_DATA:
+			return _UTF16_WARN_STALE_DATA;
+		case EFI::EFI_STATUS::WARN_UNKNOWN_GLYPH:
+			return _UTF16_WARN_UNKNOWN_GLYPH;
+		case EFI::EFI_STATUS::WARN_WRITE_FAILURE:
+			return _UTF16_WARN_WRITE_FAILURE;
+		case EFI::EFI_STATUS::WRITE_PROTECTED:
+			return _UTF16_WRITE_PROTECTED;
+		default:
+			return nullptr;
 		}
 	}
 
-	const CHAR16* UTF16::ToString(const UINT8 b)
+	const CHAR16* UTF16::ToString(const INT16 value)
 	{
-		if (b == 0)
+		ClearStr(_UTF16_VALUETOSTRING, 23);
+		if (value == 0)
 		{
-			_u16_tu8String[0] = u'0';
-			_u16_tu8String[1] = u'\0';
-			return &_u16_tu8String[0];
+			_UTF16_VALUETOSTRING[0] = u'0';
+			_UTF16_VALUETOSTRING[1] = u'\0';
+			return &_UTF16_VALUETOSTRING[0];
 		}
 
-		UINT8 i = b;
-		_u16_tu8String[3] = u'\0';
-		UINT8 len = 3;
+		INT16 i = value;
+		INT8 len = 6;
+		_UTF16_VALUETOSTRING[len] = u'\0';
+		bool isNegative = false;
+		if (i < 0)
+		{
+			isNegative = true;
+			i = -i; // make it positive
+		}
 		for (; i > 0; i /= 10)
 		{
-			_u16_tu8String[--len] = (i % 10) + u'0';
+			_UTF16_VALUETOSTRING[--len] = (i % 10) + u'0';
 		}
-		return &_u16_tu8String[len];
+		if (isNegative)
+		{
+			_UTF16_VALUETOSTRING[--len] = u'-';
+		}
+		return &_UTF16_VALUETOSTRING[len];
 	}
-	const CHAR16* UTF16::ToString(const UINT16 b)
+
+	const CHAR16* UTF16::ToString(const INT32 value)
 	{
-		if (b == 0)
+		ClearStr(_UTF16_VALUETOSTRING, 23);
+		if (value == 0)
 		{
-			_u16_tu16String[0] = u'0';
-			_u16_tu16String[1] = u'\0';
-			return &_u16_tu16String[0];
+			_UTF16_VALUETOSTRING[0] = u'0';
+			_UTF16_VALUETOSTRING[1] = u'\0';
+			return &_UTF16_VALUETOSTRING[0];
 		}
 
-		UINT16 i = b;
-		_u16_tu16String[5] = u'\0';
-		UINT8 len = 5;
+		INT32 i = value;
+		INT8 len = 11;
+		_UTF16_VALUETOSTRING[len] = u'\0';
+		bool isNegative = false;
+		if (i < 0)
+		{
+			isNegative = true;
+			i = -i; // make it positive
+		}
 		for (; i > 0; i /= 10)
 		{
-			_u16_tu16String[--len] = (i % 10) + u'0';
+			_UTF16_VALUETOSTRING[--len] = (i % 10) + u'0';
 		}
-
-		return &_u16_tu16String[len];
+		if (isNegative)
+		{
+			_UTF16_VALUETOSTRING[--len] = u'-';
+		}
+		return &_UTF16_VALUETOSTRING[len];
 	}
-	const CHAR16* UTF16::ToString(const UINT32 b)
+
+	const CHAR16* UTF16::ToString(const INT64 value)
 	{
-		if (b == 0)
+		ClearStr(_UTF16_VALUETOSTRING, 23);
+		if (value == 0)
 		{
-			_u16_tu32String[0] = u'0';
-			_u16_tu32String[1] = u'\0';
-			return &_u16_tu32String[0];
+			_UTF16_VALUETOSTRING[0] = u'0';
+			_UTF16_VALUETOSTRING[1] = u'\0';
+			return &_UTF16_VALUETOSTRING[0];
 		}
 
-		UINT32 i = b;
-		_u16_tu32String[10] = u'\0';
-		UINT8 len = 10;
+		INT64 i = value;
+		INT8 len = 21;
+		_UTF16_VALUETOSTRING[len] = u'\0';
+		bool isNegative = false;
+		if (i < 0)
+		{
+			isNegative = true;
+			i = -i; // make it positive
+		}
 		for (; i > 0; i /= 10)
 		{
-			_u16_tu32String[--len] = (i % 10) + u'0';
+			_UTF16_VALUETOSTRING[--len] = (i % 10) + u'0';
 		}
-
-		return &_u16_tu32String[len];
+		if (isNegative)
+		{
+			_UTF16_VALUETOSTRING[--len] = u'-';
+		}
+		return &_UTF16_VALUETOSTRING[len];
 	}
-	const CHAR16* UTF16::ToString(const UINT64 b)
+
+	const CHAR16* UTF16::ToString(const INT8 value)
 	{
-		if (b == 0)
+		ClearStr(_UTF16_VALUETOSTRING, 23);
+		if (value == 0)
 		{
-			_u16_tu64String[0] = u'0';
-			_u16_tu64String[1] = u'\0';
-			return &_u16_tu64String[0];
+			_UTF16_VALUETOSTRING[0] = u'0';
+			_UTF16_VALUETOSTRING[1] = u'\0';
+			return &_UTF16_VALUETOSTRING[0];
 		}
 
-		UINT64 i = b;
-		_u16_tu64String[20] = u'\0';
-		UINT8 len = 20;
+		INT8 i = value;
+		INT8 len = 4;
+		_UTF16_VALUETOSTRING[len] = u'\0';
+		bool isNegative = false;
+		if (i < 0)
+		{
+			isNegative = true;
+			i = -i; // make it positive
+		}
 		for (; i > 0; i /= 10)
 		{
-			_u16_tu64String[--len] = (i % 10) + u'0';
+			_UTF16_VALUETOSTRING[--len] = (i % 10) + u'0';
+		}
+		if (isNegative)
+		{
+			_UTF16_VALUETOSTRING[--len] = '-';
+		}
+		return &_UTF16_VALUETOSTRING[len];
+	}
+
+	const CHAR16* UTF16::ToString(const UINT16 value)
+	{
+		ClearStr(_UTF16_VALUETOSTRING, 23);
+		if (value == 0)
+		{
+			_UTF16_VALUETOSTRING[0] = u'0';
+			_UTF16_VALUETOSTRING[1] = u'\0';
+			return &_UTF16_VALUETOSTRING[0];
 		}
 
-		return &_u16_tu64String[len];
+		UINT16 i = value;
+		INT8 len = 5;
+		_UTF16_VALUETOSTRING[len] = u'\0';
+		for (; i > 0; i /= 10)
+		{
+			_UTF16_VALUETOSTRING[--len] = (i % 10) + u'0';
+		}
+		return &_UTF16_VALUETOSTRING[len];
+	}
+
+	const CHAR16* UTF16::ToString(const UINT32 value)
+	{
+		ClearStr(_UTF16_VALUETOSTRING, 23);
+		if (value == 0)
+		{
+			_UTF16_VALUETOSTRING[0] = u'0';
+			_UTF16_VALUETOSTRING[1] = u'\0';
+			return &_UTF16_VALUETOSTRING[0];
+		}
+
+		UINT32 i = value;
+		INT8 len = 10;
+		_UTF16_VALUETOSTRING[len] = u'\0';
+		for (; i > 0; i /= 10)
+		{
+			_UTF16_VALUETOSTRING[--len] = (i % 10) + u'0';
+		}
+		return &_UTF16_VALUETOSTRING[len];
+	}
+
+	const CHAR16* UTF16::ToString(const UINT64 value)
+	{
+		ClearStr(_UTF16_VALUETOSTRING, 23);
+		if (value == 0)
+		{
+			_UTF16_VALUETOSTRING[0] = u'0';
+			_UTF16_VALUETOSTRING[1] = u'\0';
+			return &_UTF16_VALUETOSTRING[0];
+		}
+
+		UINT64 i = value;
+		INT8 len = 20;
+		_UTF16_VALUETOSTRING[len] = u'\0';
+		for (; i > 0; i /= 10)
+		{
+			_UTF16_VALUETOSTRING[--len] = (i % 10) + u'0';
+		}
+		return &_UTF16_VALUETOSTRING[len];
+	}
+
+	const CHAR16* UTF16::ToString(const UINT8 value)
+	{
+		ClearStr(_UTF16_VALUETOSTRING, 23);
+		if (value == 0)
+		{
+			_UTF16_VALUETOSTRING[0] = u'0';
+			_UTF16_VALUETOSTRING[1] = u'\0';
+			return &_UTF16_VALUETOSTRING[0];
+		}
+
+		UINT8 i = value;
+		INT8 len = 3;
+		_UTF16_VALUETOSTRING[len] = u'\0';
+		for (; i > 0; i /= 10)
+		{
+			_UTF16_VALUETOSTRING[--len] = (i % 10) + u'0';
+		}
+		return &_UTF16_VALUETOSTRING[len];
 	}
 
 	const CHAR16* UTF16::ToString(const VOID_PTR ptr)
 	{
-		UINT64 b = (UINT64)ptr;
-
-		if (b == 0)
+		ClearStr(_UTF16_VALUETOSTRING, 23);
+		UINT64 value = (UINT64)ptr;
+		if (value == 0)
 		{
-			_u16_ptrString[0] = u'0';
-			_u16_ptrString[1] = u'\0';
-			return &_u16_ptrString[0];
+			_UTF16_VALUETOSTRING[0] = u'0';
+			_UTF16_VALUETOSTRING[1] = u'\0';
+			return &_UTF16_VALUETOSTRING[0];
 		}
 
-		UINT64 i = b;
-		_u16_ptrString[20] = u'\0';
-		UINT8 len = 20;
+		UINT64 i = value;
+		INT8 len = 20;
+		_UTF16_VALUETOSTRING[len] = u'\0';
 		for (; i > 0; i /= 10)
 		{
-			_u16_ptrString[--len] = (i % 10) + u'0';
+			_UTF16_VALUETOSTRING[--len] = (i % 10) + u'0';
 		}
-
-		return &_u16_ptrString[len];
+		return &_UTF16_VALUETOSTRING[len];
 	}
 
 	const CHAR16* UTF16::ToString(const BOOLEAN boolean)
 	{
 		if (boolean)
 		{
-			return _u16_BOOLEAN_TRUE;
+			return _UTF16_BOOLEAN_TRUE;
 		}
-
-		return _u16_BOOLEAN_FALSE;
+		else
+		{
+			return _UTF16_BOOLEAN_FALSE;
+		}
 	}
 
-	const UINT64 UTF16::Length(const CHAR16* str)
+	const UINTN UTF16::Length(const CHAR16* str)
 	{
 		if (str == nullptr)
 		{
 			return 0;
 		}
 
-		UINT64 len = 1;
-		UINT64 i = 0;
-		for (UINT64 i = 0; str[i] != u'\0'; i++)
+		UINTN len = 0;
+		while (str[len] != u'\0')
 		{
 			len++;
 		}
-		return len;
-	}
-
-	const UINT64 UTF8::Length(const CHAR8* str)
-	{
-		if (str == nullptr)
-		{
-			return 0;
-		}
-
-		UINT64 len = 1;
-		UINT64 i = 0;
-		for (UINT64 i = 0; str[i] != '\0'; i++)
-		{
-			len++;
-		}
-		return len;
+		return len + 1;
 	}
 
 	const BOOLEAN UTF16::Compare(const CHAR16* l, const CHAR16* r, StringCulture culture)
 	{
-		if (UTF16::IsNullOrEmpty(l) && UTF16::IsNullOrEmpty(r))
-		{
-			return TRUE;
-		};
+		/*Check for isNullOrEmpty and Lengths, if they don't match, return FALSE*/
+		BOOLEAN lBool = IsNullOrEmpty(l);
+		BOOLEAN rBool = IsNullOrEmpty(r);
 
-		if (UTF16::IsNullOrEmpty(l)|| UTF16::IsNullOrEmpty(r))
-		{
-			return FALSE;
-		};
-
-		UINT64 lLen = Length(l);
-		UINT64 rLen = Length(r);
-
-		if (lLen != rLen)
+		if (lBool || rBool)
 		{
 			return FALSE;
 		}
 
-		/* Compare strings for equality based on current culture*/
-		if (culture == StringCulture::InvariantCulture)
+		if (lBool && rBool)
 		{
-			for (UINT64 i = 0; i < lLen; i++)
+			return TRUE;
+		}
+
+		UINTN lLength = Length(l);
+		UINTN rLength = Length(r);
+
+		if (lLength != rLength)
+		{
+			return FALSE;
+		}
+
+		switch (culture)
+		{
+		case Common::Enviroment::InvariantCulture:
+		case Common::Enviroment::CurrentCulture:
+		case Common::Enviroment::Ordinal:
+		{
+			/*Binary Comparison of string*/
+
+			for (UINTN index = 0; index < lLength; index++)
 			{
-				if (l[i] != r[i])
+				if (l[index] != r[index])
 				{
 					return FALSE;
 				}
 			}
 			return TRUE;
 		}
-		else if (culture == StringCulture::InvariantCultureIgnoreCase)
+		case Common::Enviroment::InvariantCultureIgnoreCase:
+		case Common::Enviroment::CurrentCultureIgnoreCase:
+		case Common::Enviroment::OrdinalIgnoreCase:
 		{
-			for (UINT64 i = 0; i < lLen; i++)
+			/*Binary Comparison, Ignoring Case of string*/
+
+			UINTN index = 0;
+
+			for (UINTN index = 0; index < lLength; index++)
 			{
-				if (l[i] != r[i] && l[i] != r[i] + 32 && l[i] != r[i] - 32)
+				CHAR16 lChar = l[index];
+				CHAR16 rChar = r[index];
+				/*If the character is a lower case letter, switch it to upper for comparison*/
+				if (lChar >= u'a' && lChar <= u'z')
+				{
+					lChar -= 32;
+				}
+				if (rChar >= u'a' && rChar <= u'z')
+				{
+					rChar -= 32;
+				}
+
+				if (lChar != rChar)
 				{
 					return FALSE;
 				}
 			}
 			return TRUE;
 		}
-		else if (culture == StringCulture::Ordinal)
-		{
-			for (UINT64 i = 0; i < lLen; i++)
-			{
-				if (l[i] != r[i])
-				{
-					return FALSE;
-				}
-			}
-			return TRUE;
-		}
-		else if (culture == StringCulture::OrdinalIgnoreCase)
-		{
-			for (UINT64 i = 0; i < lLen; i++)
-			{
-				if (l[i] != r[i] && l[i] != r[i] + 32 && l[i] != r[i] - 32)
-				{
-					return FALSE;
-				}
-			}
-			return TRUE;
-		}
-		else
-		{
+		default:
 			return FALSE;
 		}
 
 	}
 
-	const BOOLEAN UTF16::StartsWith(const CHAR16* str, const CHAR16* value, StringCulture mode)
+	const BOOLEAN UTF16::StartsWith(const CHAR16* str, const CHAR16* value, StringCulture culture)
 	{
-		if (UTF16::IsNullOrEmpty(str) == TRUE && UTF16::IsNullOrEmpty(value) == TRUE)
-		{
-			return TRUE;
-		};
+		BOOLEAN l = IsNullOrEmpty(str);
+		BOOLEAN r = IsNullOrEmpty(value);
 
-		if (UTF16::IsNullOrEmpty(str) == TRUE || UTF16::IsNullOrEmpty(value) == TRUE)
-		{
-			return FALSE;
-		};
-
-		UINT64 strLen = Length(str);
-		UINT64 valueLen = Length(value);
-
-		if (valueLen > strLen)
+		if (l || r)
 		{
 			return FALSE;
 		}
 
-
-		/*
-		*  Based on current StringComparision mode, compare the strings looking to see if the value is at the start of the string
-		*/
-
-		if (mode == StringCulture::InvariantCulture)
+		if (l && r)
 		{
-			
-			for (UINT64 i = 0; i < valueLen; i++)
+			return TRUE;
+		}
+
+		UINTN strLength = Length(str);
+		UINTN valueLength = Length(value);
+
+		if (strLength < valueLength)
+		{
+			return FALSE;
+		}
+
+		switch (culture)
+		{
+		case Common::Enviroment::InvariantCulture:
+		case Common::Enviroment::CurrentCulture:
+		case Common::Enviroment::Ordinal:
+		{
+			for (UINTN index = 0; index < valueLength; index++)
 			{
-				if (str[i] != value[i])
+				if (str[index] != value[index])
 				{
 					return FALSE;
 				}
 			}
 			return TRUE;
 		}
-		else if (mode == StringCulture::InvariantCultureIgnoreCase)
+		case Common::Enviroment::InvariantCultureIgnoreCase:
+		case Common::Enviroment::CurrentCultureIgnoreCase:
+		case Common::Enviroment::OrdinalIgnoreCase:
 		{
-			
-			for (UINT64 i = 0; i < valueLen; i++)
+			for (UINTN index = 0; index < valueLength; index++)
 			{
-				if (str[i] != value[i] && str[i] != value[i] + 32 && str[i] != value[i] - 32)
+				CHAR16 lChar = str[index];
+				CHAR16 rChar = value[index];
+				/*If the character is a lower case letter, switch it to upper for comparison*/
+				if (lChar >= u'a' && lChar <= u'z')
+				{
+					lChar -= 32;
+				}
+				if (rChar >= u'a' && rChar <= u'z')
+				{
+					rChar -= 32;
+				}
+
+				if (lChar != rChar)
 				{
 					return FALSE;
 				}
 			}
 			return TRUE;
 		}
-		else
-		{
+		default:
 			return FALSE;
 		}
 	}
 
-	const BOOLEAN UTF16::EndsWith(const CHAR16* str, const CHAR16* value, StringCulture mode)
+	const BOOLEAN UTF16::EndsWith(const CHAR16* str, const CHAR16* value, StringCulture culture)
 	{
-		if (UTF16::IsNullOrEmpty(str) == TRUE && UTF16::IsNullOrEmpty(value) == TRUE)
-		{
-			return TRUE;
-		};
+		BOOLEAN l = IsNullOrEmpty(str);
+		BOOLEAN r = IsNullOrEmpty(value);
 
-		if (UTF16::IsNullOrEmpty(str) == TRUE || UTF16::IsNullOrEmpty(value) == TRUE)
-		{
-			return FALSE;
-		};
-
-		UINT64 strLen = Length(str);
-		UINT64 valueLen = Length(value);
-
-		if (valueLen > strLen)
+		if (l || r)
 		{
 			return FALSE;
 		}
 
-
-		/*
-		*  Based on current StringComparision mode, compare the strings looking to see if the value is at the end of the string
-		*/
-
-		if (mode == StringCulture::InvariantCulture)
+		if (l && r)
 		{
-			UINT64 i = strLen - valueLen;
-			for (UINT64 j = 0; i < strLen; i++, j++)
+			return TRUE;
+		}
+
+		UINTN strLength = Length(str);
+		UINTN valueLength = Length(value);
+
+		if (strLength < valueLength)
+		{
+			return FALSE;
+		}
+
+		switch (culture)
+		{
+		case Common::Enviroment::InvariantCulture:
+		case Common::Enviroment::CurrentCulture:
+		case Common::Enviroment::Ordinal:
+		{
+			UINTN index = 0;
+			for (UINTN index = 0; index < valueLength; index++)
 			{
-				if (str[i] != value[j])
+				if (str[strLength - valueLength + index] != value[index])
 				{
 					return FALSE;
 				}
 			}
 			return TRUE;
 		}
-		else if (mode == StringCulture::InvariantCultureIgnoreCase)
+		case Common::Enviroment::InvariantCultureIgnoreCase:
+		case Common::Enviroment::CurrentCultureIgnoreCase:
+		case Common::Enviroment::OrdinalIgnoreCase:
 		{
-			UINT64 i = strLen - valueLen;
-			for (UINT64 j = 0; i < strLen; i++, j++)
+			UINTN index = 0;
+			for (UINTN index = 0; index < valueLength; index++)
 			{
-				if (str[i] != value[j] && str[i] != value[j] + 32 && str[i] != value[j] - 32)
+				CHAR16 lChar = str[strLength - valueLength + index];
+				CHAR16 rChar = value[index];
+				/*If the character is a lower case letter, switch it to upper for comparison*/
+				if (lChar >= u'a' && lChar <= u'z')
+				{
+					lChar -= 32;
+				}
+				if (rChar >= u'a' && rChar <= u'z')
+				{
+					rChar -= 32;
+				}
+
+				if (lChar != rChar)
 				{
 					return FALSE;
 				}
 			}
 			return TRUE;
 		}
-		else
-		{
+		default:
 			return FALSE;
 		}
+
 	}
 
-	const BOOLEAN UTF16::Contains(const CHAR16* str, const CHAR16* value, StringCulture mode)
+	const BOOLEAN UTF16::Contains(const CHAR16* str, const CHAR16* value, StringCulture culture)
 	{
-		if (UTF16::IsNullOrEmpty(str) == TRUE && UTF16::IsNullOrEmpty(value) == TRUE)
-		{
-			return TRUE;
-		};
+		BOOLEAN l = IsNullOrEmpty(str);
+		BOOLEAN r = IsNullOrEmpty(value);
 
-		if (UTF16::IsNullOrEmpty(str) == TRUE || UTF16::IsNullOrEmpty(value) == TRUE)
-		{
-			return FALSE;
-		};
-
-		UINT64 strLen = Length(str);
-		UINT64 valueLen = Length(value);
-
-		if (valueLen > strLen)
+		if (l || r)
 		{
 			return FALSE;
 		}
 
-		/*
-		*  Based on current StringComparision mode, compare the strings looking to see if the value is in the string
-		*/
-
-		if (mode == StringCulture::InvariantCulture)
+		if (l && r)
 		{
-			
-			for (UINT64 i = 0; i < strLen; i++)
+			return TRUE;
+		}
+
+		UINTN strLength = Length(str);
+		UINTN valueLength = Length(value);
+
+		if (strLength < valueLength)
+		{
+			return FALSE;
+		}
+
+		switch (culture)
+		{
+		case Common::Enviroment::InvariantCulture:
+		case Common::Enviroment::CurrentCulture:
+		case Common::Enviroment::Ordinal:
+		{
+			UINTN index = 0;
+			for (UINTN index = 0; index < strLength - valueLength; index++)
 			{
-				if (str[i] == value[0])
+				if (str[index] == value[0])
 				{
-					UINT64 j = 0;
-					for (; j < valueLen; j++)
+					BOOLEAN match = TRUE;
+					for (UINTN i = 0; i < valueLength; i++)
 					{
-						if (str[i + j] != value[j])
+						if (str[index + i] != value[i])
 						{
+							match = FALSE;
 							break;
 						}
 					}
-					if (j == valueLen)
+
+					if (match)
 					{
 						return TRUE;
 					}
@@ -640,22 +963,52 @@ namespace Common::Enviroment
 			}
 			return FALSE;
 		}
-		else if (mode == StringCulture::InvariantCultureIgnoreCase)
+		case Common::Enviroment::InvariantCultureIgnoreCase:
+		case Common::Enviroment::CurrentCultureIgnoreCase:
+		case Common::Enviroment::OrdinalIgnoreCase:
 		{
-			
-			for (UINT64 i = 0; i < strLen; i++)
+			UINTN index = 0;
+			for (UINTN index = 0; index < strLength - valueLength; index++)
 			{
-				if (str[i] == value[0] || str[i] == value[0] + 32 || str[i] == value[0] - 32)
+				CHAR16 lChar = str[index];
+				CHAR16 rChar = value[0];
+
+				/*If the character is a lower case letter, switch it to upper for comparison*/
+
+				if (lChar >= u'a' && lChar <= u'z')
 				{
-					UINT64 j = 0;
-					for (; j < valueLen; j++)
+					lChar -= 32;
+				}
+				if (rChar >= u'a' && rChar <= u'z')
+				{
+					rChar -= 32;
+				}
+
+				if (lChar == rChar)
+				{
+					BOOLEAN match = TRUE;
+					for (UINTN i = 0; i < valueLength; i++)
 					{
-						if (str[i + j] != value[j] && str[i + j] != value[j] + 32 && str[i + j] != value[j] - 32)
+						CHAR16 lChar2 = str[index + i];
+						CHAR16 rChar2 = value[i];
+						/*If the character is a lower case letter, switch it to upper for comparison*/
+						if (lChar2 >= u'a' && lChar2 <= u'z')
 						{
+							lChar2 -= 32;
+						}
+						if (rChar2 >= u'a' && rChar2 <= u'z')
+						{
+							rChar2 -= 32;
+						}
+
+						if (lChar != rChar)
+						{
+							match = FALSE;
 							break;
 						}
 					}
-					if (j == valueLen)
+
+					if (match)
 					{
 						return TRUE;
 					}
@@ -663,18 +1016,17 @@ namespace Common::Enviroment
 			}
 			return FALSE;
 		}
-		else
-		{
+		default:
 			return FALSE;
 		}
 	}
 
 	const BOOLEAN UTF16::IsNullOrEmpty(const CHAR16* str)
 	{
-		if (str == 0)
+		if (str == nullptr)
 		{
 			return TRUE;
-		}
+		};
 
 		if (str[0] == u'\0')
 		{
@@ -686,48 +1038,930 @@ namespace Common::Enviroment
 
 	const BOOLEAN UTF16::IsNullOrWhiteSpace(const CHAR16* str)
 	{
-		if (str == 0)
+		if (str == nullptr)
+		{
+			return TRUE;
+		};
+
+		if (str[0] == u'\0')
 		{
 			return TRUE;
 		}
 
-		UINT64 len = Length(str);
-		for (UINT64 i = 0; i < len; i++)
+		UINTN index = 0;
+		while (str[index] != u'\0')
 		{
-			if (str[i] != u' ' && str[i] != u'\t' && str[i] != u'\n' && str[i] != u'\r')
+			UINTN i = 0;
+			for (UINTN i = 0; i < 30; i++)
 			{
-				return FALSE;
+				if (str[index] == _UTF16_WHITESPACECHARS[i])
+				{
+					return TRUE;
+				}
 			}
+			index++;
 		}
-		return TRUE;
+		return FALSE;
 	}
 
-	const BOOLEAN UTF8::IsNullOrWhiteSpace(const CHAR8* str)
+	
+	const CHAR8* UTF8::ToHex(const INT16 value)
 	{
-		if (str == 0)
+		if (value < 0)
+		{
+			INT16 abs = -value;
+			_UTF8_HEXSTRING[0] = '-';
+			_UTF8_HEXSTRING[1] = _UTF8_HEXCHARS[(abs >> 12) & 0xF];
+			_UTF8_HEXSTRING[2] = _UTF8_HEXCHARS[(abs >> 8) & 0xF];
+			_UTF8_HEXSTRING[3] = _UTF8_HEXCHARS[(abs >> 4) & 0xF];
+			_UTF8_HEXSTRING[4] = _UTF8_HEXCHARS[abs & 0xF];
+			_UTF8_HEXSTRING[5] = '\0';
+		}
+		else
+		{
+			_UTF8_HEXSTRING[0] = _UTF8_HEXCHARS[(value >> 12) & 0xF];
+			_UTF8_HEXSTRING[1] = _UTF8_HEXCHARS[(value >> 8) & 0xF];
+			_UTF8_HEXSTRING[2] = _UTF8_HEXCHARS[(value >> 4) & 0xF];
+			_UTF8_HEXSTRING[3] = _UTF8_HEXCHARS[value & 0xF];
+			_UTF8_HEXSTRING[4] = '\0';
+		}
+		return &_UTF8_HEXSTRING[0];
+	}
+
+	const CHAR8* UTF8::ToHex(const INT32 value)
+	{
+		if (value < 0)
+		{
+			INT32 abs = -value;
+			_UTF8_HEXSTRING[0] = u'-';
+			_UTF8_HEXSTRING[1] = _UTF8_HEXCHARS[(abs >> 28) & 0xF];
+			_UTF8_HEXSTRING[2] = _UTF8_HEXCHARS[(abs >> 24) & 0xF];
+			_UTF8_HEXSTRING[3] = _UTF8_HEXCHARS[(abs >> 20) & 0xF];
+			_UTF8_HEXSTRING[4] = _UTF8_HEXCHARS[(abs >> 16) & 0xF];
+			_UTF8_HEXSTRING[5] = _UTF8_HEXCHARS[(abs >> 12) & 0xF];
+			_UTF8_HEXSTRING[6] = _UTF8_HEXCHARS[(abs >> 8) & 0xF];
+			_UTF8_HEXSTRING[7] = _UTF8_HEXCHARS[(abs >> 4) & 0xF];
+			_UTF8_HEXSTRING[8] = _UTF8_HEXCHARS[abs & 0xF];
+			_UTF8_HEXSTRING[9] = '\0';
+		}
+		else
+		{
+			_UTF8_HEXSTRING[0] = _UTF8_HEXCHARS[(value >> 28) & 0xF];
+			_UTF8_HEXSTRING[1] = _UTF8_HEXCHARS[(value >> 24) & 0xF];
+			_UTF8_HEXSTRING[2] = _UTF8_HEXCHARS[(value >> 20) & 0xF];
+			_UTF8_HEXSTRING[3] = _UTF8_HEXCHARS[(value >> 16) & 0xF];
+			_UTF8_HEXSTRING[4] = _UTF8_HEXCHARS[(value >> 12) & 0xF];
+			_UTF8_HEXSTRING[5] = _UTF8_HEXCHARS[(value >> 8) & 0xF];
+			_UTF8_HEXSTRING[6] = _UTF8_HEXCHARS[(value >> 4) & 0xF];
+			_UTF8_HEXSTRING[7] = _UTF8_HEXCHARS[value & 0xF];
+			_UTF8_HEXSTRING[8] = '\0';
+		}
+		return &_UTF8_HEXSTRING[0];
+	}
+
+	const CHAR8* UTF8::ToHex(const INT64 value)
+	{
+		if (value < 0)
+		{
+			INT64 abs = -value;
+			_UTF8_HEXSTRING[0] = '-';
+			_UTF8_HEXSTRING[1] = _UTF8_HEXCHARS[(abs >> 60) & 0xF];
+			_UTF8_HEXSTRING[2] = _UTF8_HEXCHARS[(abs >> 56) & 0xF];
+			_UTF8_HEXSTRING[3] = _UTF8_HEXCHARS[(abs >> 52) & 0xF];
+			_UTF8_HEXSTRING[4] = _UTF8_HEXCHARS[(abs >> 48) & 0xF];
+			_UTF8_HEXSTRING[5] = _UTF8_HEXCHARS[(abs >> 44) & 0xF];
+			_UTF8_HEXSTRING[6] = _UTF8_HEXCHARS[(abs >> 40) & 0xF];
+			_UTF8_HEXSTRING[7] = _UTF8_HEXCHARS[(abs >> 36) & 0xF];
+			_UTF8_HEXSTRING[8] = _UTF8_HEXCHARS[(abs >> 32) & 0xF];
+			_UTF8_HEXSTRING[9] = _UTF8_HEXCHARS[(abs >> 28) & 0xF];
+			_UTF8_HEXSTRING[10] = _UTF8_HEXCHARS[(abs >> 24) & 0xF];
+			_UTF8_HEXSTRING[11] = _UTF8_HEXCHARS[(abs >> 20) & 0xF];
+			_UTF8_HEXSTRING[12] = _UTF8_HEXCHARS[(abs >> 16) & 0xF];
+			_UTF8_HEXSTRING[13] = _UTF8_HEXCHARS[(abs >> 12) & 0xF];
+			_UTF8_HEXSTRING[14] = _UTF8_HEXCHARS[(abs >> 8) & 0xF];
+			_UTF8_HEXSTRING[15] = _UTF8_HEXCHARS[(abs >> 4) & 0xF];
+			_UTF8_HEXSTRING[16] = _UTF8_HEXCHARS[abs & 0xF];
+			_UTF8_HEXSTRING[17] = '\0';
+		}
+		else
+		{
+			_UTF8_HEXSTRING[0] = _UTF8_HEXCHARS[(value >> 60) & 0xF];
+			_UTF8_HEXSTRING[1] = _UTF8_HEXCHARS[(value >> 56) & 0xF];
+			_UTF8_HEXSTRING[2] = _UTF8_HEXCHARS[(value >> 52) & 0xF];
+			_UTF8_HEXSTRING[3] = _UTF8_HEXCHARS[(value >> 48) & 0xF];
+			_UTF8_HEXSTRING[4] = _UTF8_HEXCHARS[(value >> 44) & 0xF];
+			_UTF8_HEXSTRING[5] = _UTF8_HEXCHARS[(value >> 40) & 0xF];
+			_UTF8_HEXSTRING[6] = _UTF8_HEXCHARS[(value >> 36) & 0xF];
+			_UTF8_HEXSTRING[7] = _UTF8_HEXCHARS[(value >> 32) & 0xF];
+			_UTF8_HEXSTRING[8] = _UTF8_HEXCHARS[(value >> 28) & 0xF];
+			_UTF8_HEXSTRING[9] = _UTF8_HEXCHARS[(value >> 24) & 0xF];
+			_UTF8_HEXSTRING[10] = _UTF8_HEXCHARS[(value >> 20) & 0xF];
+			_UTF8_HEXSTRING[11] = _UTF8_HEXCHARS[(value >> 16) & 0xF];
+			_UTF8_HEXSTRING[12] = _UTF8_HEXCHARS[(value >> 12) & 0xF];
+			_UTF8_HEXSTRING[13] = _UTF8_HEXCHARS[(value >> 8) & 0xF];
+			_UTF8_HEXSTRING[14] = _UTF8_HEXCHARS[(value >> 4) & 0xF];
+			_UTF8_HEXSTRING[15] = _UTF8_HEXCHARS[value & 0xF];
+			_UTF8_HEXSTRING[16] = '\0';
+		}
+		return &_UTF8_HEXSTRING[0];
+	}
+
+	const CHAR8* UTF8::ToHex(const INT8 value)
+	{
+		if (value < 0)
+		{
+			INT8 abs = -value;
+			_UTF8_HEXSTRING[0] = '-';
+			_UTF8_HEXSTRING[1] = _UTF8_HEXCHARS[(abs >> 4) & 0xF];
+			_UTF8_HEXSTRING[2] = _UTF8_HEXCHARS[abs & 0xF];
+			_UTF8_HEXSTRING[3] = '\0';
+		}
+		else
+		{
+			_UTF8_HEXSTRING[0] = _UTF8_HEXCHARS[(value >> 4) & 0xF];
+			_UTF8_HEXSTRING[1] = _UTF8_HEXCHARS[value & 0xF];
+			_UTF8_HEXSTRING[2] = '\0';
+		}
+		return &_UTF8_HEXSTRING[0];
+	}
+
+	const CHAR8* UTF8::ToHex(const UINT16 value)
+	{
+		_UTF8_HEXSTRING[0] = _UTF8_HEXCHARS[(value >> 12) & 0xF];
+		_UTF8_HEXSTRING[1] = _UTF8_HEXCHARS[(value >> 8) & 0xF];
+		_UTF8_HEXSTRING[2] = _UTF8_HEXCHARS[(value >> 4) & 0xF];
+		_UTF8_HEXSTRING[3] = _UTF8_HEXCHARS[value & 0xF];
+		_UTF8_HEXSTRING[4] = '\0';
+		return &_UTF8_HEXSTRING[0];
+	}
+
+	const CHAR8* UTF8::ToHex(const UINT32 value)
+	{
+		_UTF8_HEXSTRING[0] = _UTF8_HEXCHARS[(value >> 28) & 0xF];
+		_UTF8_HEXSTRING[1] = _UTF8_HEXCHARS[(value >> 24) & 0xF];
+		_UTF8_HEXSTRING[2] = _UTF8_HEXCHARS[(value >> 20) & 0xF];
+		_UTF8_HEXSTRING[3] = _UTF8_HEXCHARS[(value >> 16) & 0xF];
+		_UTF8_HEXSTRING[4] = _UTF8_HEXCHARS[(value >> 12) & 0xF];
+		_UTF8_HEXSTRING[5] = _UTF8_HEXCHARS[(value >> 8) & 0xF];
+		_UTF8_HEXSTRING[6] = _UTF8_HEXCHARS[(value >> 4) & 0xF];
+		_UTF8_HEXSTRING[7] = _UTF8_HEXCHARS[value & 0xF];
+		_UTF8_HEXSTRING[8] = '\0';
+		return &_UTF8_HEXSTRING[0];
+	}
+
+	const CHAR8* UTF8::ToHex(const UINT64 value)
+	{
+		_UTF8_HEXSTRING[0] = _UTF8_HEXCHARS[(value >> 60) & 0xF];
+		_UTF8_HEXSTRING[1] = _UTF8_HEXCHARS[(value >> 56) & 0xF];
+		_UTF8_HEXSTRING[2] = _UTF8_HEXCHARS[(value >> 52) & 0xF];
+		_UTF8_HEXSTRING[3] = _UTF8_HEXCHARS[(value >> 48) & 0xF];
+		_UTF8_HEXSTRING[4] = _UTF8_HEXCHARS[(value >> 44) & 0xF];
+		_UTF8_HEXSTRING[5] = _UTF8_HEXCHARS[(value >> 40) & 0xF];
+		_UTF8_HEXSTRING[6] = _UTF8_HEXCHARS[(value >> 36) & 0xF];
+		_UTF8_HEXSTRING[7] = _UTF8_HEXCHARS[(value >> 32) & 0xF];
+		_UTF8_HEXSTRING[8] = _UTF8_HEXCHARS[(value >> 28) & 0xF];
+		_UTF8_HEXSTRING[9] = _UTF8_HEXCHARS[(value >> 24) & 0xF];
+		_UTF8_HEXSTRING[10] = _UTF8_HEXCHARS[(value >> 20) & 0xF];
+		_UTF8_HEXSTRING[11] = _UTF8_HEXCHARS[(value >> 16) & 0xF];
+		_UTF8_HEXSTRING[12] = _UTF8_HEXCHARS[(value >> 12) & 0xF];
+		_UTF8_HEXSTRING[13] = _UTF8_HEXCHARS[(value >> 8) & 0xF];
+		_UTF8_HEXSTRING[14] = _UTF8_HEXCHARS[(value >> 4) & 0xF];
+		_UTF8_HEXSTRING[15] = _UTF8_HEXCHARS[value & 0xF];
+		_UTF8_HEXSTRING[16] = '\0';
+		return &_UTF8_HEXSTRING[0];
+	}
+
+	const CHAR8* UTF8::ToHex(const UINT8 value)
+	{
+		_UTF8_HEXSTRING[0] = _UTF8_HEXCHARS[(value >> 4) & 0xF];
+		_UTF8_HEXSTRING[1] = _UTF8_HEXCHARS[value & 0xF];
+		_UTF8_HEXSTRING[2] = '\0';
+		return &_UTF8_HEXSTRING[0];
+	}
+
+	const CHAR8* UTF8::ToHex(const VOID_PTR ptr)
+	{
+		UINT64 value = (UINT64)ptr;
+		_UTF8_HEXSTRING[0] = _UTF8_HEXCHARS[(value >> 60) & 0xF];
+		_UTF8_HEXSTRING[1] = _UTF8_HEXCHARS[(value >> 56) & 0xF];
+		_UTF8_HEXSTRING[2] = _UTF8_HEXCHARS[(value >> 52) & 0xF];
+		_UTF8_HEXSTRING[3] = _UTF8_HEXCHARS[(value >> 48) & 0xF];
+		_UTF8_HEXSTRING[4] = _UTF8_HEXCHARS[(value >> 44) & 0xF];
+		_UTF8_HEXSTRING[5] = _UTF8_HEXCHARS[(value >> 40) & 0xF];
+		_UTF8_HEXSTRING[6] = _UTF8_HEXCHARS[(value >> 36) & 0xF];
+		_UTF8_HEXSTRING[7] = _UTF8_HEXCHARS[(value >> 32) & 0xF];
+		_UTF8_HEXSTRING[8] = _UTF8_HEXCHARS[(value >> 28) & 0xF];
+		_UTF8_HEXSTRING[9] = _UTF8_HEXCHARS[(value >> 24) & 0xF];
+		_UTF8_HEXSTRING[10] = _UTF8_HEXCHARS[(value >> 20) & 0xF];
+		_UTF8_HEXSTRING[11] = _UTF8_HEXCHARS[(value >> 16) & 0xF];
+		_UTF8_HEXSTRING[12] = _UTF8_HEXCHARS[(value >> 12) & 0xF];
+		_UTF8_HEXSTRING[13] = _UTF8_HEXCHARS[(value >> 8) & 0xF];
+		_UTF8_HEXSTRING[14] = _UTF8_HEXCHARS[(value >> 4) & 0xF];
+		_UTF8_HEXSTRING[15] = _UTF8_HEXCHARS[value & 0xF];
+		_UTF8_HEXSTRING[16] = '\0';
+		return &_UTF8_HEXSTRING[0];
+	}
+
+	const CHAR8* UTF8::ToString(const EFI::EFI_GUID guid)
+	{
+		_UTF8_GUIDTOSTRING[1] = _UTF8_HEXCHARS[(guid.Data1 >> 28) & 0xF];
+		_UTF8_GUIDTOSTRING[2] = _UTF8_HEXCHARS[(guid.Data1 >> 24) & 0xF];
+		_UTF8_GUIDTOSTRING[3] = _UTF8_HEXCHARS[(guid.Data1 >> 20) & 0xF];
+		_UTF8_GUIDTOSTRING[4] = _UTF8_HEXCHARS[(guid.Data1 >> 16) & 0xF];
+		_UTF8_GUIDTOSTRING[5] = _UTF8_HEXCHARS[(guid.Data1 >> 12) & 0xF];
+		_UTF8_GUIDTOSTRING[6] = _UTF8_HEXCHARS[(guid.Data1 >> 8) & 0xF];
+		_UTF8_GUIDTOSTRING[7] = _UTF8_HEXCHARS[(guid.Data1 >> 4) & 0xF];
+		_UTF8_GUIDTOSTRING[8] = _UTF8_HEXCHARS[guid.Data1 & 0xF];
+		_UTF8_GUIDTOSTRING[10] = _UTF8_HEXCHARS[(guid.Data2 >> 12) & 0xF];
+		_UTF8_GUIDTOSTRING[11] = _UTF8_HEXCHARS[(guid.Data2 >> 8) & 0xF];
+		_UTF8_GUIDTOSTRING[12] = _UTF8_HEXCHARS[(guid.Data2 >> 4) & 0xF];
+		_UTF8_GUIDTOSTRING[13] = _UTF8_HEXCHARS[guid.Data2 & 0xF];
+		_UTF8_GUIDTOSTRING[15] = _UTF8_HEXCHARS[(guid.Data3 >> 12) & 0xF];
+		_UTF8_GUIDTOSTRING[16] = _UTF8_HEXCHARS[(guid.Data3 >> 8) & 0xF];
+		_UTF8_GUIDTOSTRING[17] = _UTF8_HEXCHARS[(guid.Data3 >> 4) & 0xF];
+		_UTF8_GUIDTOSTRING[18] = _UTF8_HEXCHARS[guid.Data3 & 0xF];
+		_UTF8_GUIDTOSTRING[20] = _UTF8_HEXCHARS[(guid.Data4[0] >> 4) & 0xF];
+		_UTF8_GUIDTOSTRING[21] = _UTF8_HEXCHARS[guid.Data4[0] & 0xF];
+		_UTF8_GUIDTOSTRING[23] = _UTF8_HEXCHARS[(guid.Data4[1] >> 4) & 0xF];
+		_UTF8_GUIDTOSTRING[24] = _UTF8_HEXCHARS[guid.Data4[1] & 0xF];
+		_UTF8_GUIDTOSTRING[26] = _UTF8_HEXCHARS[(guid.Data4[2] >> 4) & 0xF];
+		_UTF8_GUIDTOSTRING[27] = _UTF8_HEXCHARS[guid.Data4[2] & 0xF];
+		_UTF8_GUIDTOSTRING[28] = _UTF8_HEXCHARS[(guid.Data4[3] >> 4) & 0xF];
+		_UTF8_GUIDTOSTRING[29] = _UTF8_HEXCHARS[guid.Data4[3] & 0xF];
+		_UTF8_GUIDTOSTRING[31] = _UTF8_HEXCHARS[(guid.Data4[4] >> 4) & 0xF];
+		_UTF8_GUIDTOSTRING[32] = _UTF8_HEXCHARS[guid.Data4[4] & 0xF];
+		_UTF8_GUIDTOSTRING[34] = _UTF8_HEXCHARS[(guid.Data4[5] >> 4) & 0xF];
+		_UTF8_GUIDTOSTRING[35] = _UTF8_HEXCHARS[guid.Data4[5] & 0xF];
+		_UTF8_GUIDTOSTRING[37] = _UTF8_HEXCHARS[(guid.Data4[6] >> 4) & 0xF];
+		_UTF8_GUIDTOSTRING[38] = _UTF8_HEXCHARS[guid.Data4[6] & 0xF];
+		_UTF8_GUIDTOSTRING[40] = _UTF8_HEXCHARS[(guid.Data4[7] >> 4) & 0xF];
+		_UTF8_GUIDTOSTRING[41] = _UTF8_HEXCHARS[guid.Data4[7] & 0xF];
+		return &_UTF8_GUIDTOSTRING[0];
+	}
+
+	const CHAR8* UTF8::ToString(const EFI::EFI_STATUS status)
+	{
+		switch (status)
+		{
+		case EFI::EFI_STATUS::ABORTED:
+			return _UTF8_ABORTED;
+		case EFI::EFI_STATUS::ACCESS_DENIED:
+			return _UTF8_ACCESS_DENIED;
+		case EFI::EFI_STATUS::ALREADY_STARTED:
+			return _UTF8_ALREADY_STARTED;
+		case EFI::EFI_STATUS::BAD_BUFFER_SIZE:
+			return _UTF8_BAD_BUFFER_SIZE;
+		case EFI::EFI_STATUS::BUFFER_TOO_SMALL:
+			return _UTF8_BUFFER_TOO_SMALL;
+		case EFI::EFI_STATUS::COMPROMISED_DATA:
+			return _UTF8_COMPROMISED_DATA;
+		case EFI::EFI_STATUS::CRC_ERROR:
+			return _UTF8_CRC_ERROR;
+		case EFI::EFI_STATUS::DEVICE_ERROR:
+			return _UTF8_DEVICE_ERROR;
+		case EFI::EFI_STATUS::END_OF_FILE:
+			return _UTF8_END_OF_FILE;
+		case EFI::EFI_STATUS::END_OF_MEDIA:
+			return _UTF8_END_OF_MEDIA;
+		case EFI::EFI_STATUS::HTTP_ERROR:
+			return _UTF8_HTTP_ERROR;
+		case EFI::EFI_STATUS::ICMP_ERROR:
+			return _UTF8_ICMP_ERROR;
+		case EFI::EFI_STATUS::INCOMPATIBLE_VERSION:
+			return _UTF8_INCOMPATIBLE_VERSION;
+		case EFI::EFI_STATUS::INVALID_LANGUAGE:
+			return _UTF8_INVALID_LANGUAGE;
+		case EFI::EFI_STATUS::INVALID_PARAMETER:
+			return _UTF8_INVALID_PARAMETER;
+		case EFI::EFI_STATUS::IP_ADDRESS_CONFLICT:
+			return _UTF8_IP_ADDRESS_CONFLICT;
+		case EFI::EFI_STATUS::LOAD_ERROR:
+			return _UTF8_LOAD_ERROR;
+		case EFI::EFI_STATUS::MEDIA_CHANGED:
+			return _UTF8_MEDIA_CHANGED;
+		case EFI::EFI_STATUS::NO_MAPPING:
+			return _UTF8_NO_MAPPING;
+		case EFI::EFI_STATUS::NO_MEDIA:
+			return _UTF8_NO_MEDIA;
+		case EFI::EFI_STATUS::NO_RESPONSE:
+			return _UTF8_NO_RESPONSE;
+		case EFI::EFI_STATUS::NOT_FOUND:
+			return _UTF8_NOT_FOUND;
+		case EFI::EFI_STATUS::NOT_READY:
+			return _UTF8_NOT_READY;
+		case EFI::EFI_STATUS::NOT_STARTED:
+			return _UTF8_NOT_STARTED;
+		case EFI::EFI_STATUS::OUT_OF_RESOURCES:
+			return _UTF8_OUT_OF_RESOURCES;
+		case EFI::EFI_STATUS::PROTOCOL_ERROR:
+			return _UTF8_PROTOCOL_ERROR;
+		case EFI::EFI_STATUS::SECURITY_VIOLATION:
+			return _UTF8_SECURITY_VIOLATION;
+		case EFI::EFI_STATUS::SUCCESS:
+			return _UTF8_SUCCESS;
+		case EFI::EFI_STATUS::TFTP_ERROR:
+			return _UTF8_TFTP_ERROR;
+		case EFI::EFI_STATUS::TIMEOUT:
+			return _UTF8_TIMEOUT;
+		case EFI::EFI_STATUS::UNSUPPORTED:
+			return _UTF8_UNSUPPORTED;
+		case EFI::EFI_STATUS::VOLUME_CORRUPTED:
+			return _UTF8_VOLUME_CORRUPTED;
+		case EFI::EFI_STATUS::VOLUME_FULL:
+			return _UTF8_VOLUME_FULL;
+		case EFI::EFI_STATUS::WARN_BUFFER_TOO_SMALL:
+			return _UTF8_WARN_BUFFER_TOO_SMALL;
+		case EFI::EFI_STATUS::WARN_DELETE_FAILURE:
+			return _UTF8_WARN_DELETE_FAILURE;
+		case EFI::EFI_STATUS::WARN_FILE_SYSTEM:
+			return _UTF8_WARN_FILE_SYSTEM;
+		case EFI::EFI_STATUS::WARN_RESET_REQUIRED:
+			return _UTF8_WARN_RESET_REQUIRED;
+		case EFI::EFI_STATUS::WARN_STALE_DATA:
+			return _UTF8_WARN_STALE_DATA;
+		case EFI::EFI_STATUS::WARN_UNKNOWN_GLYPH:
+			return _UTF8_WARN_UNKNOWN_GLYPH;
+		case EFI::EFI_STATUS::WARN_WRITE_FAILURE:
+			return _UTF8_WARN_WRITE_FAILURE;
+		case EFI::EFI_STATUS::WRITE_PROTECTED:
+			return _UTF8_WRITE_PROTECTED;
+		default:
+			return nullptr;
+		}
+	}
+
+	const CHAR8* UTF8::ToString(const INT16 value)
+	{
+		if (value == 0)
+		{
+			_UTF8_VALUETOSTRING[0] = '0';
+			_UTF8_VALUETOSTRING[1] = '\0';
+			return &_UTF8_VALUETOSTRING[0];
+		}
+
+		INT16 i = value;
+		INT8 len = 6;
+		_UTF8_VALUETOSTRING[len] = '\0';
+		bool isNegative = false;
+		if (i < 0)
+		{
+			isNegative = true;
+			i = -i; // make it positive
+		}
+		for (; i > 0; i /= 10)
+		{
+			_UTF8_VALUETOSTRING[--len] = (i % 10) + '0';
+		}
+		if (isNegative)
+		{
+			_UTF8_VALUETOSTRING[--len] = '-';
+		}
+		return &_UTF8_VALUETOSTRING[len];
+	}
+
+	const CHAR8* UTF8::ToString(const INT32 value)
+	{
+		if (value == 0)
+		{
+			_UTF8_VALUETOSTRING[0] = '0';
+			_UTF8_VALUETOSTRING[1] = '\0';
+			return &_UTF8_VALUETOSTRING[0];
+		}
+
+		INT32 i = value;
+		INT8 len = 11;
+		_UTF8_VALUETOSTRING[len] = '\0';
+		bool isNegative = false;
+		if (i < 0)
+		{
+			isNegative = true;
+			i = -i; // make it positive
+		}
+		for (; i > 0; i /= 10)
+		{
+			_UTF8_VALUETOSTRING[--len] = (i % 10) + '0';
+		}
+		if (isNegative)
+		{
+			_UTF8_VALUETOSTRING[--len] = '-';
+		}
+		return &_UTF8_VALUETOSTRING[len];
+	}
+
+	const CHAR8* UTF8::ToString(const INT64 value)
+	{
+		if (value == 0)
+		{
+			_UTF8_VALUETOSTRING[0] = '0';
+			_UTF8_VALUETOSTRING[1] = '\0';
+			return &_UTF8_VALUETOSTRING[0];
+		}
+
+		INT64 i = value;
+		INT8 len = 21;
+		_UTF8_VALUETOSTRING[len] = '\0';
+		bool isNegative = false;
+		if (i < 0)
+		{
+			isNegative = true;
+			i = -i; // make it positive
+		}
+		for (; i > 0; i /= 10)
+		{
+			_UTF8_VALUETOSTRING[--len] = (i % 10) + '0';
+		}
+		if (isNegative)
+		{
+			_UTF8_VALUETOSTRING[--len] = '-';
+		}
+		return &_UTF8_VALUETOSTRING[len];
+	}
+
+	const CHAR8* UTF8::ToString(const INT8 value)
+	{
+		if (value == 0)
+		{
+			_UTF8_VALUETOSTRING[0] = '0';
+			_UTF8_VALUETOSTRING[1] = '\0';
+			return &_UTF8_VALUETOSTRING[0];
+		}
+
+		INT8 i = value;
+		INT8 len = 4;
+		_UTF8_VALUETOSTRING[len] = '\0';
+		bool isNegative = false;
+		if (i < 0)
+		{
+			isNegative = true;
+			i = -i; // make it positive
+		}
+		for (; i > 0; i /= 10)
+		{
+			_UTF8_VALUETOSTRING[--len] = (i % 10) + '0';
+		}
+		if (isNegative)
+		{
+			_UTF8_VALUETOSTRING[--len] = '-';
+		}
+		return &_UTF8_VALUETOSTRING[len];
+	}
+
+	const CHAR8* UTF8::ToString(const UINT16 value)
+	{
+		if (value == 0)
+		{
+			_UTF8_VALUETOSTRING[0] = '0';
+			_UTF8_VALUETOSTRING[1] = '\0';
+			return &_UTF8_VALUETOSTRING[0];
+		}
+
+		UINT16 i = value;
+		INT8 len = 5;
+		_UTF8_VALUETOSTRING[len] = '\0';
+		for (; i > 0; i /= 10)
+		{
+			_UTF8_VALUETOSTRING[--len] = (i % 10) + '0';
+		}
+		return &_UTF8_VALUETOSTRING[len];
+	}
+
+	const CHAR8* UTF8::ToString(const UINT32 value)
+	{
+		if (value == 0)
+		{
+			_UTF8_VALUETOSTRING[0] = '0';
+			_UTF8_VALUETOSTRING[1] = '\0';
+			return &_UTF8_VALUETOSTRING[0];
+		}
+
+		UINT32 i = value;
+		INT8 len = 10;
+		_UTF8_VALUETOSTRING[len] = '\0';
+		for (; i > 0; i /= 10)
+		{
+			_UTF8_VALUETOSTRING[--len] = (i % 10) + '0';
+		}
+		return &_UTF8_VALUETOSTRING[len];
+	}
+
+	const CHAR8* UTF8::ToString(const UINT64 value)
+	{
+		if (value == 0)
+		{
+			_UTF8_VALUETOSTRING[0] = '0';
+			_UTF8_VALUETOSTRING[1] = '\0';
+			return &_UTF8_VALUETOSTRING[0];
+		}
+
+		UINT64 i = value;
+		INT8 len = 20;
+		_UTF8_VALUETOSTRING[len] = '\0';
+		for (; i > 0; i /= 10)
+		{
+			_UTF8_VALUETOSTRING[--len] = (i % 10) + '0';
+		}
+		return &_UTF8_VALUETOSTRING[len];
+	}
+
+	const CHAR8* UTF8::ToString(const UINT8 value)
+	{
+		if (value == 0)
+		{
+			_UTF8_VALUETOSTRING[0] = '0';
+			_UTF8_VALUETOSTRING[1] = '\0';
+			return &_UTF8_VALUETOSTRING[0];
+		}
+
+		UINT8 i = value;
+		INT8 len = 3;
+		_UTF8_VALUETOSTRING[len] = '\0';
+		for (; i > 0; i /= 10)
+		{
+			_UTF8_VALUETOSTRING[--len] = (i % 10) + '0';
+		}
+		return &_UTF8_VALUETOSTRING[len];
+	}
+
+	const CHAR8* UTF8::ToString(const VOID_PTR ptr)
+	{
+		UINT64 value = (UINT64)ptr;
+		if (value == 0)
+		{
+			_UTF8_VALUETOSTRING[0] = '0';
+			_UTF8_VALUETOSTRING[1] = '\0';
+			return &_UTF8_VALUETOSTRING[0];
+		}
+
+		UINT64 i = value;
+		INT8 len = 20;
+		_UTF8_VALUETOSTRING[len] = '\0';
+		for (; i > 0; i /= 10)
+		{
+			_UTF8_VALUETOSTRING[--len] = (i % 10) + '0';
+		}
+		return &_UTF8_VALUETOSTRING[len];
+	}
+
+	const CHAR8* UTF8::ToString(const BOOLEAN boolean)
+	{
+		if (boolean)
+		{
+			return _UTF8_BOOLEAN_TRUE;
+		}
+		else
+		{
+			return _UTF8_BOOLEAN_FALSE;
+		}
+	}
+
+	const UINTN UTF8::Length(const CHAR8* str)
+	{
+		if (str == nullptr)
+		{
+			return 0;
+		}
+
+		UINTN len = 1;
+		while (str[len] != '\0')
+		{
+			len++;
+		}
+		return len;
+	}
+
+	const BOOLEAN UTF8::Compare(const CHAR8* l, const CHAR8* r, StringCulture culture)
+	{
+		/*Check for isNullOrEmpty and Lengths, if they don't match, return FALSE*/
+		BOOLEAN lBool = IsNullOrEmpty(l);
+		BOOLEAN rBool = IsNullOrEmpty(r);
+
+		if (lBool || rBool)
+		{
+			return FALSE;
+		}
+
+		if (lBool && rBool)
 		{
 			return TRUE;
 		}
 
-		UINT64 len = Length(str);
-		for (UINT64 i = 0; i < len; i++)
+		UINTN lLength = Length(l);
+		UINTN rLength = Length(r);
+
+		if (lLength != rLength)
 		{
-			if (str[i] != ' ' && str[i] != '\t' && str[i] != '\n' && str[i] != '\r')
-			{
-				return FALSE;
-			}
+			return FALSE;
 		}
-		return TRUE;
+
+
+
+		switch (culture)
+		{
+		case Common::Enviroment::InvariantCulture:
+		case Common::Enviroment::CurrentCulture:
+		case Common::Enviroment::Ordinal:
+		{
+			/*Binary Comparison of string*/
+
+			for (UINTN index = 0; index < lLength; index++)
+			{
+				if (l[index] != r[index])
+				{
+					return FALSE;
+				}
+			}
+			return TRUE;
+		}
+		case Common::Enviroment::InvariantCultureIgnoreCase:
+		case Common::Enviroment::CurrentCultureIgnoreCase:
+		case Common::Enviroment::OrdinalIgnoreCase:
+		{
+			/*Binary Comparison, Ignoring Case of string*/
+
+			UINTN index = 0;
+
+			for (UINTN index = 0; index < lLength; index++)
+			{
+				CHAR8 lChar = l[index];
+				CHAR8 rChar = r[index];
+				/*If the character is a lower case letter, switch it to upper for comparison*/
+				if (lChar >= 'a' && lChar <= 'z')
+				{
+					lChar -= 32;
+				}
+				if (rChar >= 'a' && rChar <= 'z')
+				{
+					rChar -= 32;
+				}
+
+				if (lChar != rChar)
+				{
+					return FALSE;
+				}
+			}
+			return TRUE;
+		}
+		default:
+			return FALSE;
+		}
+
 	}
 
+	const BOOLEAN UTF8::StartsWith(const CHAR8* str, const CHAR8* value, StringCulture culture)
+	{
+		BOOLEAN l = IsNullOrEmpty(str);
+		BOOLEAN r = IsNullOrEmpty(value);
 
+		if (l || r)
+		{
+			return FALSE;
+		}
+
+		if (l && r)
+		{
+			return TRUE;
+		}
+
+		UINTN strLength = Length(str);
+		UINTN valueLength = Length(value);
+
+		if (strLength < valueLength)
+		{
+			return FALSE;
+		}
+
+		switch (culture)
+		{
+		case Common::Enviroment::InvariantCulture:
+		case Common::Enviroment::CurrentCulture:
+		case Common::Enviroment::Ordinal:
+		{
+			for (UINTN index = 0; index < valueLength; index++)
+			{
+				if (str[index] != value[index])
+				{
+					return FALSE;
+				}
+			}
+			return TRUE;
+		}
+		case Common::Enviroment::InvariantCultureIgnoreCase:
+		case Common::Enviroment::CurrentCultureIgnoreCase:
+		case Common::Enviroment::OrdinalIgnoreCase:
+		{
+			for (UINTN index = 0; index < valueLength; index++)
+			{
+				CHAR8 lChar = str[index];
+				CHAR8 rChar = value[index];
+				/*If the character is a lower case letter, switch it to upper for comparison*/
+				if (lChar >= 'a' && lChar <= 'z')
+				{
+					lChar -= 32;
+				}
+				if (rChar >= 'a' && rChar <= 'z')
+				{
+					rChar -= 32;
+				}
+
+				if (lChar != rChar)
+				{
+					return FALSE;
+				}
+			}
+			return TRUE;
+		}
+		default:
+			return FALSE;
+		}
+	}
+
+	const BOOLEAN UTF8::EndsWith(const CHAR8* str, const CHAR8* value, StringCulture culture)
+	{
+		BOOLEAN l = IsNullOrEmpty(str);
+		BOOLEAN r = IsNullOrEmpty(value);
+
+		if (l || r)
+		{
+			return FALSE;
+		}
+
+		if (l && r)
+		{
+			return TRUE;
+		}
+
+		UINTN strLength = Length(str);
+		UINTN valueLength = Length(value);
+
+		if (strLength < valueLength)
+		{
+			return FALSE;
+		}
+
+		switch (culture)
+		{
+		case Common::Enviroment::InvariantCulture:
+		case Common::Enviroment::CurrentCulture:
+		case Common::Enviroment::Ordinal:
+		{
+			UINTN index = 0;
+			for (UINTN index = 0; index < valueLength; index++)
+			{
+				if (str[strLength - valueLength + index] != value[index])
+				{
+					return FALSE;
+				}
+			}
+			return TRUE;
+		}
+		case Common::Enviroment::InvariantCultureIgnoreCase:
+		case Common::Enviroment::CurrentCultureIgnoreCase:
+		case Common::Enviroment::OrdinalIgnoreCase:
+		{
+			UINTN index = 0;
+			for (UINTN index = 0; index < valueLength; index++)
+			{
+				CHAR8 lChar = str[strLength - valueLength + index];
+				CHAR8 rChar = value[index];
+				/*If the character is a lower case letter, switch it to upper for comparison*/
+				if (lChar >= 'a' && lChar <= 'z')
+				{
+					lChar -= 32;
+				}
+				if (rChar >= 'a' && rChar <= 'z')
+				{
+					rChar -= 32;
+				}
+
+				if (lChar != rChar)
+				{
+					return FALSE;
+				}
+			}
+			return TRUE;
+		}
+		default:
+			return FALSE;
+		}
+
+	}
+
+	const BOOLEAN UTF8::Contains(const CHAR8* str, const CHAR8* value, StringCulture culture)
+	{
+		BOOLEAN l = IsNullOrEmpty(str);
+		BOOLEAN r = IsNullOrEmpty(value);
+
+		if (l || r)
+		{
+			return FALSE;
+		}
+
+		if (l && r)
+		{
+			return TRUE;
+		}
+
+		UINTN strLength = Length(str);
+		UINTN valueLength = Length(value);
+
+		if (strLength < valueLength)
+		{
+			return FALSE;
+		}
+
+		switch (culture)
+		{
+		case Common::Enviroment::InvariantCulture:
+		case Common::Enviroment::CurrentCulture:
+		case Common::Enviroment::Ordinal:
+		{
+			UINTN index = 0;
+			for (UINTN index = 0; index < strLength - valueLength; index++)
+			{
+				if (str[index] == value[0])
+				{
+					BOOLEAN match = TRUE;
+					for (UINTN i = 0; i < valueLength; i++)
+					{
+						if (str[index + i] != value[i])
+						{
+							match = FALSE;
+							break;
+						}
+					}
+
+					if (match)
+					{
+						return TRUE;
+					}
+				}
+			}
+			return FALSE;
+		}
+		case Common::Enviroment::InvariantCultureIgnoreCase:
+		case Common::Enviroment::CurrentCultureIgnoreCase:
+		case Common::Enviroment::OrdinalIgnoreCase:
+		{
+			UINTN index = 0;
+			for (UINTN index = 0; index < strLength - valueLength; index++)
+			{
+				CHAR8 lChar = str[index];
+				CHAR8 rChar = value[0];
+
+				/*If the character is a lower case letter, switch it to upper for comparison*/
+
+				if (lChar >= 'a' && lChar <= 'z')
+				{
+					lChar -= 32;
+				}
+				if (rChar >= 'a' && rChar <= 'z')
+				{
+					rChar -= 32;
+				}
+
+				if (lChar == rChar)
+				{
+					BOOLEAN match = TRUE;
+					for (UINTN i = 0; i < valueLength; i++)
+					{
+						CHAR8 lChar2 = str[index + i];
+						CHAR8 rChar2 = value[i];
+						/*If the character is a lower case letter, switch it to upper for comparison*/
+						if (lChar2 >= 'a' && lChar2 <= 'z')
+						{
+							lChar2 -= 32;
+						}
+						if (rChar2 >= 'a' && rChar2 <= 'z')
+						{
+							rChar2 -= 32;
+						}
+
+						if (lChar != rChar)
+						{
+							match = FALSE;
+							break;
+						}
+					}
+
+					if (match)
+					{
+						return TRUE;
+					}
+				}
+			}
+			return FALSE;
+		}
+		default:
+			return FALSE;
+		}
+	}
 
 	const BOOLEAN UTF8::IsNullOrEmpty(const CHAR8* str)
 	{
-		if (str == 0)
+		if (str == nullptr)
 		{
 			return TRUE;
-		}
+		};
 
 		if (str[0] == '\0')
 		{
@@ -737,1039 +1971,31 @@ namespace Common::Enviroment
 		return FALSE;
 	}
 
-	const BOOLEAN UTF8::Contains(const CHAR8* str, const CHAR8* value, StringCulture mode)
+	const BOOLEAN UTF8::IsNullOrWhiteSpace(const CHAR8* str)
 	{
-		if (UTF8::IsNullOrEmpty(str) == TRUE && UTF8::IsNullOrEmpty(value) == TRUE)
+		if (str == nullptr)
 		{
 			return TRUE;
 		};
 
-		if (UTF8::IsNullOrEmpty(str) == TRUE || UTF8::IsNullOrEmpty(value) == TRUE)
+		if (str[0] == '\0')
 		{
-			return FALSE;
-		};
-
-		UINT64 strLen = Length(str);
-		UINT64 valueLen = Length(value);
-
-		if (valueLen > strLen)
-		{
-			return FALSE;
+			return TRUE;
 		}
 
-		/*
-		*  Based on current StringComparision mode, compare the strings looking to see if the value is in the string
-		*/
-
-		if (mode == StringCulture::InvariantCulture)
+		UINTN index = 0;
+		while (str[index] != '\0')
 		{
-			UINT64 i = 0;
-			for (; i < strLen; i++)
+			UINTN i = 0;
+			for (UINTN i = 0; i < 30; i++)
 			{
-				if (str[i] == value[0])
+				if (str[index] == _UTF8_WHITESPACECHARS[i])
 				{
-					UINT64 j = 0;
-					for (; j < valueLen; j++)
-					{
-						if (str[i + j] != value[j])
-						{
-							break;
-						}
-					}
-					if (j == valueLen)
-					{
-						return TRUE;
-					}
+					return TRUE;
 				}
 			}
-			return FALSE;
+			index++;
 		}
-		else if (mode == StringCulture::InvariantCultureIgnoreCase)
-		{
-			UINT64 i = 0;
-			for (; i < strLen; i++)
-			{
-				if (str[i] == value[0] || str[i] == value[0] + 32 || str[i] == value[0] - 32)
-				{
-					UINT64 j = 0;
-					for (; j < valueLen; j++)
-					{
-						if (str[i + j] != value[j] && str[i + j] != value[j] + 32 && str[i + j] != value[j] - 32)
-						{
-							break;
-						}
-					}
-					if (j == valueLen)
-					{
-						return TRUE;
-					}
-				}
-			}
-			return FALSE;
-		}
-		else
-		{
-			return FALSE;
-		}
-	}
-
-	const BOOLEAN UTF8::EndsWith(const CHAR8* str, const CHAR8* value, StringCulture mode)
-	{
-		if (UTF8::IsNullOrEmpty(str) == TRUE && UTF8::IsNullOrEmpty(value) == TRUE)
-		{
-			return TRUE;
-		};
-
-		if (UTF8::IsNullOrEmpty(str) == TRUE || UTF8::IsNullOrEmpty(value) == TRUE)
-		{
-			return FALSE;
-		};
-
-		UINT64 strLen = Length(str);
-		UINT64 valueLen = Length(value);
-
-		if (valueLen > strLen)
-		{
-			return FALSE;
-		}
-
-		/*
-		*  Based on current StringComparision mode, compare the strings looking to see if the value is at the end of the string
-		*/
-
-		if (mode == StringCulture::InvariantCulture)
-		{
-			UINT64 i = strLen - valueLen;
-			for (UINT64 j = 0; i < strLen; i++, j++)
-			{
-				if (str[i] != value[j])
-				{
-					return FALSE;
-				}
-			}
-			return TRUE;
-		}
-		else if (mode == StringCulture::InvariantCultureIgnoreCase)
-		{
-			UINT64 i = strLen - valueLen;
-			for (UINT64 j = 0; i < strLen; i++, j++)
-			{
-				if (str[i] != value[j] && str[i] != value[j] + 32 && str[i] != value[j] - 32)
-				{
-					return FALSE;
-				}
-			}
-			return TRUE;
-		}
-		else
-		{
-			return FALSE;
-		}
-	}
-
-	const BOOLEAN UTF8::StartsWith(const CHAR8* str, const CHAR8* value, StringCulture mode)
-	{
-		if (UTF8::IsNullOrEmpty(str) == TRUE && UTF8::IsNullOrEmpty(value) == TRUE)
-		{
-			return TRUE;
-		};
-
-		if (UTF8::IsNullOrEmpty(str) == TRUE || UTF8::IsNullOrEmpty(value) == TRUE)
-		{
-			return FALSE;
-		};
-
-		UINT64 strLen = Length(str);
-		UINT64 valueLen = Length(value);
-
-		if (valueLen > strLen)
-		{
-			return FALSE;
-		}
-
-		/*
-		*  Based on current StringComparision mode, compare the strings looking to see if the value is at the start of the string
-		*/
-
-		if (mode == StringCulture::InvariantCulture)
-		{
-			for (UINT64 i = 0; i < valueLen; i++)
-			{
-				if (str[i] != value[i])
-				{
-					return FALSE;
-				}
-			}
-			return TRUE;
-		}
-		else if (mode == StringCulture::InvariantCultureIgnoreCase)
-		{
-			
-			for (UINT64 i = 0; i < valueLen; i++)
-			{
-				if (str[i] != value[i] && str[i] != value[i] + 32 && str[i] != value[i] - 32)
-				{
-					return FALSE;
-				}
-			}
-			return TRUE;
-		}
-		else
-		{
-			return FALSE;
-		}
-	}
-
-
-	const BOOLEAN UTF8::Compare(const CHAR8* l, const CHAR8* r, StringCulture culture)
-	{
-		if (UTF8::IsNullOrEmpty(l) == TRUE && UTF8::IsNullOrEmpty(r) == TRUE)
-		{
-			return TRUE;
-		};
-
-		if (UTF8::IsNullOrEmpty(l) == TRUE || UTF8::IsNullOrEmpty(r) == TRUE)
-		{
-			return FALSE;
-		};
-		UINT64 lLen = Length(l);
-		UINT64 rLen = Length(r);
-
-		/* Compare strings for equality based on current culture*/
-		if (culture == StringCulture::InvariantCulture)
-		{
-			for (UINT64 i = 0; i < lLen; i++)
-			{
-				if (l[i] != r[i])
-				{
-					return FALSE;
-				}
-			}
-			return TRUE;
-		}
-		else if (culture == StringCulture::InvariantCultureIgnoreCase)
-		{
-			for (UINT64 i = 0; i < lLen; i++)
-			{
-				if (l[i] != r[i] && l[i] != r[i] + 32 && l[i] != r[i] - 32)
-				{
-					return FALSE;
-				}
-			}
-			return TRUE;
-		}
-		else if (culture == StringCulture::Ordinal)
-		{
-			for (UINT64 i = 0; i < lLen; i++)
-			{
-				if (l[i] != r[i])
-				{
-					return FALSE;
-				}
-			}
-			return TRUE;
-		}
-		else if (culture == StringCulture::OrdinalIgnoreCase)
-		{
-			for (UINT64 i = 0; i < lLen; i++)
-			{
-				if (l[i] != r[i] && l[i] != r[i] + 32 && l[i] != r[i] - 32)
-				{
-					return FALSE;
-				}
-			}
-			return TRUE;
-		}
-		else
-		{
-			return FALSE;
-		}
-	}
-
-	const CHAR16* UTF16::ToHex(const UINT8 b)
-	{
-		_u16_hexu8String[0] = _u16_hexChars[(b >> 4) & 0x0F];
-		_u16_hexu8String[1] = _u16_hexChars[b & 0x0F];
-		_u16_hexu8String[2] = u'\0';
-		return &_u16_hexu8String[0];
-	}
-
-	const CHAR16* UTF16::ToHex(const VOID_PTR ptr)
-	{
-		UINT64 b = (UINT64)ptr;
-		_u16_hexPtrString[0] = _u16_hexChars[(b >> 60) & 0x0F];
-		_u16_hexPtrString[1] = _u16_hexChars[(b >> 56) & 0x0F];
-		_u16_hexPtrString[2] = _u16_hexChars[(b >> 52) & 0x0F];
-		_u16_hexPtrString[3] = _u16_hexChars[(b >> 48) & 0x0F];
-		_u16_hexPtrString[4] = _u16_hexChars[(b >> 44) & 0x0F];
-		_u16_hexPtrString[5] = _u16_hexChars[(b >> 40) & 0x0F];
-		_u16_hexPtrString[6] = _u16_hexChars[(b >> 36) & 0x0F];
-		_u16_hexPtrString[7] = _u16_hexChars[(b >> 32) & 0x0F];
-		_u16_hexPtrString[8] = _u16_hexChars[(b >> 28) & 0x0F];
-		_u16_hexPtrString[9] = _u16_hexChars[(b >> 24) & 0x0F];
-		_u16_hexPtrString[10] = _u16_hexChars[(b >> 20) & 0x0F];
-		_u16_hexPtrString[11] = _u16_hexChars[(b >> 16) & 0x0F];
-		_u16_hexPtrString[12] = _u16_hexChars[(b >> 12) & 0x0F];
-		_u16_hexPtrString[13] = _u16_hexChars[(b >> 8) & 0x0F];
-		_u16_hexPtrString[14] = _u16_hexChars[(b >> 4) & 0x0F];
-		_u16_hexPtrString[15] = _u16_hexChars[b & 0x0F];
-		_u16_hexPtrString[16] = u'\0';
-		return &_u16_hexPtrString[0];
-	}
-	const CHAR16* UTF16::ToHex(const UINT16 b)
-	{
-		_u16_hexu16String[0] = _u16_hexChars[(b >> 12) & 0x0F];
-		_u16_hexu16String[1] = _u16_hexChars[(b >> 8) & 0x0F];
-		_u16_hexu16String[2] = _u16_hexChars[(b >> 4) & 0x0F];
-		_u16_hexu16String[3] = _u16_hexChars[b & 0x0F];
-		_u16_hexu16String[4] = u'\0';
-		return &_u16_hexu16String[0];
-	}
-	const CHAR16* UTF16::ToHex(const UINT32 b)
-	{
-		_u16_hexu32String[0] = _u16_hexChars[(b >> 28) & 0x0F];
-		_u16_hexu32String[1] = _u16_hexChars[(b >> 24) & 0x0F];
-		_u16_hexu32String[2] = _u16_hexChars[(b >> 20) & 0x0F];
-		_u16_hexu32String[3] = _u16_hexChars[(b >> 16) & 0x0F];
-		_u16_hexu32String[4] = _u16_hexChars[(b >> 12) & 0x0F];
-		_u16_hexu32String[5] = _u16_hexChars[(b >> 8) & 0x0F];
-		_u16_hexu32String[6] = _u16_hexChars[(b >> 4) & 0x0F];
-		_u16_hexu32String[7] = _u16_hexChars[b & 0x0F];
-		_u16_hexu32String[8] = u'\0';
-		return &_u16_hexu32String[0];
-	}
-	const CHAR16* UTF16::ToHex(const UINT64 b)
-	{
-		_u16_hexu64String[0] = _u16_hexChars[(b >> 60) & 0x0F];
-		_u16_hexu64String[1] = _u16_hexChars[(b >> 56) & 0x0F];
-		_u16_hexu64String[2] = _u16_hexChars[(b >> 52) & 0x0F];
-		_u16_hexu64String[3] = _u16_hexChars[(b >> 48) & 0x0F];
-		_u16_hexu64String[4] = _u16_hexChars[(b >> 44) & 0x0F];
-		_u16_hexu64String[5] = _u16_hexChars[(b >> 40) & 0x0F];
-		_u16_hexu64String[6] = _u16_hexChars[(b >> 36) & 0x0F];
-		_u16_hexu64String[7] = _u16_hexChars[(b >> 32) & 0x0F];
-		_u16_hexu64String[8] = _u16_hexChars[(b >> 28) & 0x0F];
-		_u16_hexu64String[9] = _u16_hexChars[(b >> 24) & 0x0F];
-		_u16_hexu64String[10] = _u16_hexChars[(b >> 20) & 0x0F];
-		_u16_hexu64String[11] = _u16_hexChars[(b >> 16) & 0x0F];
-		_u16_hexu64String[12] = _u16_hexChars[(b >> 12) & 0x0F];
-		_u16_hexu64String[13] = _u16_hexChars[(b >> 8) & 0x0F];
-		_u16_hexu64String[14] = _u16_hexChars[(b >> 4) & 0x0F];
-		_u16_hexu64String[15] = _u16_hexChars[b & 0x0F];
-		_u16_hexu64String[16] = u'\0';
-		return &_u16_hexu64String[0];
-	}
-
-	const CHAR16* UTF16::ToString(const INT8 b)
-	{
-		if (b == 0)
-		{
-			_u16_t8String[0] = '0';
-			_u16_t8String[1] = '\0';
-			return &_u16_t8String[0];
-		}
-
-		INT8 i = b;
-		_u16_t8String[4] = '\0';
-		INT8 len = 4;
-		bool isNegative = false;
-		if (i < 0)
-		{
-			isNegative = true;
-			i = -i; // make it positive
-		}
-		for (; i > 0; i /= 10)
-		{
-			_u16_t8String[--len] = (i % 10) + '0';
-		}
-		if (isNegative)
-		{
-			_u16_t8String[--len] = '-';
-		}
-		return &_u16_t8String[len];
-	}
-	const CHAR16* UTF16::ToString(const INT16 b)
-	{
-		if (b == 0)
-		{
-			_u16_t16String[0] = '0';
-			_u16_t16String[1] = '\0';
-			return &_u16_t16String[0];
-		}
-
-		INT16 i = b;
-		_u16_t16String[6] = '\0';
-		INT8 len = 6;
-		bool isNegative = false;
-		if (i < 0)
-		{
-			isNegative = true;
-			i = -i; // make it positive
-		}
-		for (; i > 0; i /= 10)
-		{
-			_u16_t16String[--len] = (i % 10) + '0';
-		}
-		if (isNegative)
-		{
-			_u16_t16String[--len] = '-';
-		}
-		return &_u16_t16String[len];
-	}
-	const CHAR16* UTF16::ToString(const INT32 b)
-	{
-		if (b == 0)
-		{
-			_u16_t32String[0] = '0';
-			_u16_t32String[1] = '\0';
-			return &_u16_t32String[0];
-		}
-
-		INT32 i = b;
-		_u16_t32String[11] = '\0';
-		INT8 len = 11;
-		bool isNegative = false;
-		if (i < 0)
-		{
-			isNegative = true;
-			i = -i; // make it positive
-		}
-		for (; i > 0; i /= 10)
-		{
-			_u16_t32String[--len] = (i % 10) + '0';
-		}
-		if (isNegative)
-		{
-			_u16_t32String[--len] = '-';
-		}
-		return &_u16_t32String[len];
-	}
-	const CHAR16* UTF16::ToString(const INT64 b)
-	{
-		if (b == 0)
-		{
-			_u16_t64String[0] = '0';
-			_u16_t64String[1] = '\0';
-			return &_u16_t64String[0];
-		}
-
-		INT64 i = b;
-		_u16_t64String[21] = '\0';
-		INT8 len = 21;
-		bool isNegative = false;
-		if (i < 0)
-		{
-			isNegative = true;
-			i = -i; // make it positive
-		}
-		for (; i > 0; i /= 10)
-		{
-			_u16_t64String[--len] = (i % 10) + '0';
-		}
-		if (isNegative)
-		{
-			_u16_t64String[--len] = '-';
-		}
-		return &_u16_t64String[len];
-	}
-
-	const CHAR16* UTF16::ToHex(const INT8 b)
-	{
-		_u16_hex8String[1] = _u16_hexChars[(b >> 4) & 0x0F];
-		_u16_hex8String[2] = _u16_hexChars[b & 0x0F];
-		_u16_hex8String[3] = u'\0';
-
-		if (b < 0)
-		{
-			_u16_hex8String[0] = u'-';
-			return &_u16_hex8String[0];
-		}
-		else
-		{
-			return &_u16_hex8String[1];
-		}
-
-		return _u16_hex8String;
-	}
-	const CHAR16* UTF16::ToHex(const INT16 b)
-	{
-		_u16_hex16String[1] = _u16_hexChars[(b >> 12) & 0x0F];
-		_u16_hex16String[2] = _u16_hexChars[(b >> 8) & 0x0F];
-		_u16_hex16String[3] = _u16_hexChars[(b >> 4) & 0x0F];
-		_u16_hex16String[4] = _u16_hexChars[b & 0x0F];
-		_u16_hex16String[5] = u'\0';
-		if (b < 0)
-		{
-			_u16_hex16String[0] = u'-';
-			return &_u16_hex16String[0];
-		}
-		else
-		{
-			return &_u16_hex16String[1];
-		}
-	}
-	const CHAR16* UTF16::ToHex(const INT32 b)
-	{
-		_u16_hex32String[1] = _u16_hexChars[(b >> 28) & 0x0F];
-		_u16_hex32String[2] = _u16_hexChars[(b >> 24) & 0x0F];
-		_u16_hex32String[3] = _u16_hexChars[(b >> 20) & 0x0F];
-		_u16_hex32String[4] = _u16_hexChars[(b >> 16) & 0x0F];
-		_u16_hex32String[5] = _u16_hexChars[(b >> 12) & 0x0F];
-		_u16_hex32String[6] = _u16_hexChars[(b >> 8) & 0x0F];
-		_u16_hex32String[7] = _u16_hexChars[(b >> 4) & 0x0F];
-		_u16_hex32String[8] = _u16_hexChars[b & 0x0F];
-		_u16_hex32String[9] = u'\0';
-		if (b < 0)
-		{
-			_u16_hex32String[0] = u'-';
-			return &_u16_hex32String[0];
-		}
-		else
-		{
-			return &_u16_hex32String[1];
-		}
-	}
-	const CHAR16* UTF16::ToHex(const INT64 b)
-	{
-		_u16_hex64String[1] = _u16_hexChars[(b >> 60) & 0x0F];
-		_u16_hex64String[2] = _u16_hexChars[(b >> 56) & 0x0F];
-		_u16_hex64String[3] = _u16_hexChars[(b >> 52) & 0x0F];
-		_u16_hex64String[4] = _u16_hexChars[(b >> 48) & 0x0F];
-		_u16_hex64String[5] = _u16_hexChars[(b >> 44) & 0x0F];
-		_u16_hex64String[6] = _u16_hexChars[(b >> 40) & 0x0F];
-		_u16_hex64String[7] = _u16_hexChars[(b >> 36) & 0x0F];
-		_u16_hex64String[8] = _u16_hexChars[(b >> 32) & 0x0F];
-		_u16_hex64String[9] = _u16_hexChars[(b >> 28) & 0x0F];
-		_u16_hex64String[10] = _u16_hexChars[(b >> 24) & 0x0F];
-		_u16_hex64String[11] = _u16_hexChars[(b >> 20) & 0x0F];
-		_u16_hex64String[12] = _u16_hexChars[(b >> 16) & 0x0F];
-		_u16_hex64String[13] = _u16_hexChars[(b >> 12) & 0x0F];
-		_u16_hex64String[14] = _u16_hexChars[(b >> 8) & 0x0F];
-		_u16_hex64String[15] = _u16_hexChars[(b >> 4) & 0x0F];
-		_u16_hex64String[16] = _u16_hexChars[b & 0x0F];
-		_u16_hex64String[17] = u'\0';
-		if (b < 0)
-		{
-			_u16_hex64String[0] = u'-';
-			return &_u16_hex64String[0];
-		}
-		else
-		{
-			return &_u16_hex64String[1];
-		}
-	}
-
-	const CHAR8* UTF8::ToString(const EFI::EFI_GUID guid)
-	{
-		_hexGUIDString[0] = '{';
-		_hexGUIDString[1] = _hexChars[(guid.Data1 >> 28) & 0x0F];
-		_hexGUIDString[2] = _hexChars[(guid.Data1 >> 24) & 0x0F];
-		_hexGUIDString[3] = _hexChars[(guid.Data1 >> 20) & 0x0F];
-		_hexGUIDString[4] = _hexChars[(guid.Data1 >> 16) & 0x0F];
-		_hexGUIDString[5] = _hexChars[(guid.Data1 >> 12) & 0x0F];
-		_hexGUIDString[6] = _hexChars[(guid.Data1 >> 8) & 0x0F];
-		_hexGUIDString[7] = _hexChars[(guid.Data1 >> 4) & 0x0F];
-		_hexGUIDString[8] = _hexChars[guid.Data1 & 0x0F];
-		_hexGUIDString[9] = '-';
-		_hexGUIDString[10] = _hexChars[(guid.Data2 >> 12) & 0x0F];
-		_hexGUIDString[11] = _hexChars[(guid.Data2 >> 8) & 0x0F];
-		_hexGUIDString[12] = _hexChars[(guid.Data2 >> 4) & 0x0F];
-		_hexGUIDString[13] = _hexChars[guid.Data2 & 0x0F];
-		_hexGUIDString[14] = '-';
-		_hexGUIDString[15] = _hexChars[(guid.Data3 >> 12) & 0x0F];
-		_hexGUIDString[16] = _hexChars[(guid.Data3 >> 8) & 0x0F];
-		_hexGUIDString[17] = _hexChars[(guid.Data3 >> 4) & 0x0F];
-		_hexGUIDString[18] = _hexChars[guid.Data3 & 0x0F];
-		_hexGUIDString[19] = '-';
-		_hexGUIDString[20] = _hexChars[(guid.Data4[0] >> 4) & 0x0F];
-		_hexGUIDString[21] = _hexChars[guid.Data4[0] & 0x0F];
-		_hexGUIDString[22] = _hexChars[(guid.Data4[1] >> 4) & 0x0F];
-		_hexGUIDString[23] = _hexChars[guid.Data4[1] & 0x0F];
-		_hexGUIDString[24] = '-';
-		_hexGUIDString[25] = _hexChars[(guid.Data4[2] >> 4) & 0x0F];
-		_hexGUIDString[26] = _hexChars[guid.Data4[2] & 0x0F];
-		_hexGUIDString[27] = _hexChars[(guid.Data4[3] >> 4) & 0x0F];
-		_hexGUIDString[28] = _hexChars[guid.Data4[3] & 0x0F];
-		_hexGUIDString[29] = _hexChars[(guid.Data4[4] >> 4) & 0x0F];
-		_hexGUIDString[30] = _hexChars[guid.Data4[4] & 0x0F];
-		_hexGUIDString[31] = _hexChars[(guid.Data4[5] >> 4) & 0x0F];
-		_hexGUIDString[32] = _hexChars[guid.Data4[5] & 0x0F];
-		_hexGUIDString[33] = _hexChars[(guid.Data4[6] >> 4) & 0x0F];
-		_hexGUIDString[34] = _hexChars[guid.Data4[6] & 0x0F];
-		_hexGUIDString[35] = _hexChars[(guid.Data4[7] >> 4) & 0x0F];
-		_hexGUIDString[36] = _hexChars[guid.Data4[7] & 0x0F];
-		_hexGUIDString[37] = '}';
-		_hexGUIDString[38] = '\0';
-		return _hexGUIDString;
-	}
-
-	const CHAR8* UTF8::ToString(EFI::EFI_STATUS status)
-	{
-		switch (status)
-		{
-		case EFI::EFI_STATUS::SUCCESS:
-			return _SUCCESS;
-		case EFI::EFI_STATUS::LOAD_ERROR:
-			return _LOAD_ERROR;
-		case EFI::EFI_STATUS::INVALID_PARAMETER:
-			return _INVALID_PARAMETER;
-		case EFI::EFI_STATUS::UNSUPPORTED:
-			return _UNSUPPORTED;
-		case EFI::EFI_STATUS::BAD_BUFFER_SIZE:
-			return _BAD_BUFFER_SIZE;
-		case EFI::EFI_STATUS::BUFFER_TOO_SMALL:
-			return _BUFFER_TOO_SMALL;
-		case EFI::EFI_STATUS::NOT_READY:
-			return _NOT_READY;
-		case EFI::EFI_STATUS::DEVICE_ERROR:
-			return _DEVICE_ERROR;
-		case EFI::EFI_STATUS::WRITE_PROTECTED:
-			return _WRITE_PROTECTED;
-		case EFI::EFI_STATUS::OUT_OF_RESOURCES:
-			return _OUT_OF_RESOURCES;
-		case EFI::EFI_STATUS::VOLUME_CORRUPTED:
-			return _VOLUME_CORRUPTED;
-		case EFI::EFI_STATUS::VOLUME_FULL:
-			return _VOLUME_FULL;
-		case EFI::EFI_STATUS::NO_MEDIA:
-			return _NO_MEDIA;
-		case EFI::EFI_STATUS::MEDIA_CHANGED:
-			return _MEDIA_CHANGED;
-		case EFI::EFI_STATUS::NOT_FOUND:
-			return _NOT_FOUND;
-		case EFI::EFI_STATUS::ACCESS_DENIED:
-			return _ACCESS_DENIED;
-		case EFI::EFI_STATUS::NO_RESPONSE:
-			return _NO_RESPONSE;
-		case EFI::EFI_STATUS::NO_MAPPING:
-			return _NO_MAPPING;
-		case EFI::EFI_STATUS::TIMEOUT:
-			return _TIMEOUT;
-		case EFI::EFI_STATUS::NOT_STARTED:
-			return _NOT_STARTED;
-		case EFI::EFI_STATUS::ALREADY_STARTED:
-			return _ALREADY_STARTED;
-		case EFI::EFI_STATUS::ABORTED:
-			return _ABORTED;
-		case EFI::EFI_STATUS::ICMP_ERROR:
-			return _ICMP_ERROR;
-		case EFI::EFI_STATUS::TFTP_ERROR:
-			return _TFTP_ERROR;
-		case EFI::EFI_STATUS::PROTOCOL_ERROR:
-			return _PROTOCOL_ERROR;
-		case EFI::EFI_STATUS::INCOMPATIBLE_VERSION:
-			return _INCOMPATIBLE_VERSION;
-		case EFI::EFI_STATUS::SECURITY_VIOLATION:
-			return _SECURITY_VIOLATION;
-		case EFI::EFI_STATUS::CRC_ERROR:
-			return _CRC_ERROR;
-		case EFI::EFI_STATUS::END_OF_MEDIA:
-			return _END_OF_MEDIA;
-		case EFI::EFI_STATUS::END_OF_FILE:
-			return _END_OF_FILE;
-		case EFI::EFI_STATUS::INVALID_LANGUAGE:
-			return _INVALID_LANGUAGE;
-		case EFI::EFI_STATUS::COMPROMISED_DATA:
-			return _COMPROMISED_DATA;
-		case EFI::EFI_STATUS::IP_ADDRESS_CONFLICT:
-			return _IP_ADDRESS_CONFLICT;
-		case EFI::EFI_STATUS::HTTP_ERROR:
-			return _HTTP_ERROR;
-
-		case EFI::EFI_STATUS::WARN_UNKNOWN_GLYPH:
-			return _WARN_UNKNOWN_GLYPH;
-		case EFI::EFI_STATUS::WARN_DELETE_FAILURE:
-			return _WARN_DELETE_FAILURE;
-		case EFI::EFI_STATUS::WARN_WRITE_FAILURE:
-			return _WARN_WRITE_FAILURE;
-		case EFI::EFI_STATUS::WARN_BUFFER_TOO_SMALL:
-			return _WARN_BUFFER_TOO_SMALL;
-		case EFI::EFI_STATUS::WARN_STALE_DATA:
-			return _WARN_STALE_DATA;
-		case EFI::EFI_STATUS::WARN_FILE_SYSTEM:
-			return _WARN_FILE_SYSTEM;
-		case EFI::EFI_STATUS::WARN_RESET_REQUIRED:
-			return _WARN_RESET_REQUIRED;
-		default: return nullptr;
-		};
-	};
-
-	const CHAR8* UTF8::ToString(const UINT8 b)
-	{
-		if (b == 0)
-		{
-			_tu8String[0] = '0';
-			_tu8String[1] = '\0';
-			return &_tu8String[0];
-		}
-
-		UINT8 i = b;
-		_tu8String[3] = '\0';
-		UINT8 len = 3;
-		for (; i > 0; i /= 10)
-		{
-			_tu8String[--len] = (i % 10) + '0';
-		}
-		return &_tu8String[len];
-	}
-	const CHAR8* UTF8::ToString(const VOID_PTR ptr)
-	{
-		UINT64 b = (UINT64)ptr;
-		if (b == 0)
-		{
-			_ptrString[0] = '0';
-			_ptrString[1] = '\0';
-			return &_ptrString[0];
-		}
-
-		UINT64 i = b;
-		_ptrString[20] = '\0';
-		UINT8 len = 20;
-		for (; i > 0; i /= 10)
-		{
-			_ptrString[--len] = (i % 10) + '0';
-		}
-
-		return &_ptrString[len];
-	}
-
-	const CHAR8* UTF8::ToString(const BOOLEAN boolean)
-	{
-		if (boolean)
-		{
-			return _BOOLEAN_TRUE;
-		}
-
-		return _BOOLEAN_FALSE;
-	}
-
-	const CHAR8* UTF8::ToString(const UINT16 b)
-	{
-		if (b == 0)
-		{
-			_tu16String[0] = '0';
-			_tu16String[1] = '\0';
-			return &_tu16String[0];
-		}
-
-		UINT16 i = b;
-		_tu16String[5] = '\0';
-		UINT8 len = 5;
-		for (; i > 0; i /= 10)
-		{
-			_tu16String[--len] = (i % 10) + '0';
-		}
-
-		return &_tu16String[len];
-	}
-	const CHAR8* UTF8::ToString(const UINT32 b)
-	{
-		if (b == 0)
-		{
-			_tu32String[0] = '0';
-			_tu32String[1] = '\0';
-			return &_tu32String[0];
-		}
-
-		UINT32 i = b;
-		_tu32String[10] = '\0';
-		UINT8 len = 10;
-		for (; i > 0; i /= 10)
-		{
-			_tu32String[--len] = (i % 10) + '0';
-		}
-
-		return &_tu32String[len];
-	}
-	const CHAR8* UTF8::ToString(const UINT64 b)
-	{
-		if (b == 0)
-		{
-			_tu64String[0] = '0';
-			_tu64String[1] = '\0';
-			return &_tu64String[0];
-		}
-
-		UINT64 i = b;
-		_tu64String[20] = '\0';
-		UINT8 len = 20;
-		for (; i > 0; i /= 10)
-		{
-			_tu64String[--len] = (i % 10) + '0';
-		}
-
-		return &_tu64String[len];
-	}
-
-	const CHAR8* UTF8::ToHex(const UINT8 b)
-	{
-		_hexu8String[0] = _hexChars[(b >> 4) & 0x0F];
-		_hexu8String[1] = _hexChars[b & 0x0F];
-		_hexu8String[2] = '\0';
-		return &_hexu8String[0];
-	}
-	const CHAR8* UTF8::ToHex(const VOID_PTR ptr)
-	{
-		UINT64 b = (UINT64)ptr;
-		_hexPtrString[0] = _hexChars[(b >> 60) & 0x0F];
-		_hexPtrString[1] = _hexChars[(b >> 56) & 0x0F];
-		_hexPtrString[2] = _hexChars[(b >> 52) & 0x0F];
-		_hexPtrString[3] = _hexChars[(b >> 48) & 0x0F];
-		_hexPtrString[4] = _hexChars[(b >> 44) & 0x0F];
-		_hexPtrString[5] = _hexChars[(b >> 40) & 0x0F];
-		_hexPtrString[6] = _hexChars[(b >> 36) & 0x0F];
-		_hexPtrString[7] = _hexChars[(b >> 32) & 0x0F];
-		_hexPtrString[8] = _hexChars[(b >> 28) & 0x0F];
-		_hexPtrString[9] = _hexChars[(b >> 24) & 0x0F];
-		_hexPtrString[10] = _hexChars[(b >> 20) & 0x0F];
-		_hexPtrString[11] = _hexChars[(b >> 16) & 0x0F];
-		_hexPtrString[12] = _hexChars[(b >> 12) & 0x0F];
-		_hexPtrString[13] = _hexChars[(b >> 8) & 0x0F];
-		_hexPtrString[14] = _hexChars[(b >> 4) & 0x0F];
-		_hexPtrString[15] = _hexChars[b & 0x0F];
-		_hexPtrString[16] = '\0';
-		return &_hexPtrString[0];
-	}
-	const CHAR8* UTF8::ToHex(const UINT16 b)
-	{
-		_hexu16String[0] = _hexChars[(b >> 12) & 0x0F];
-		_hexu16String[1] = _hexChars[(b >> 8) & 0x0F];
-		_hexu16String[2] = _hexChars[(b >> 4) & 0x0F];
-		_hexu16String[3] = _hexChars[b & 0x0F];
-		_hexu16String[4] = '\0';
-		return &_hexu16String[0];
-	}
-	const CHAR8* UTF8::ToHex(const UINT32 b)
-	{
-		_hexu32String[0] = _hexChars[(b >> 28) & 0x0F];
-		_hexu32String[1] = _hexChars[(b >> 24) & 0x0F];
-		_hexu32String[2] = _hexChars[(b >> 20) & 0x0F];
-		_hexu32String[3] = _hexChars[(b >> 16) & 0x0F];
-		_hexu32String[4] = _hexChars[(b >> 12) & 0x0F];
-		_hexu32String[5] = _hexChars[(b >> 8) & 0x0F];
-		_hexu32String[6] = _hexChars[(b >> 4) & 0x0F];
-		_hexu32String[7] = _hexChars[b & 0x0F];
-		_hexu32String[8] = '\0';
-		return &_hexu32String[0];
-	}
-	const CHAR8* UTF8::ToHex(const UINT64 b)
-	{
-		_hexu64String[0] = _hexChars[(b >> 60) & 0x0F];
-		_hexu64String[1] = _hexChars[(b >> 56) & 0x0F];
-		_hexu64String[2] = _hexChars[(b >> 52) & 0x0F];
-		_hexu64String[3] = _hexChars[(b >> 48) & 0x0F];
-		_hexu64String[4] = _hexChars[(b >> 44) & 0x0F];
-		_hexu64String[5] = _hexChars[(b >> 40) & 0x0F];
-		_hexu64String[6] = _hexChars[(b >> 36) & 0x0F];
-		_hexu64String[7] = _hexChars[(b >> 32) & 0x0F];
-		_hexu64String[8] = _hexChars[(b >> 28) & 0x0F];
-		_hexu64String[9] = _hexChars[(b >> 24) & 0x0F];
-		_hexu64String[10] = _hexChars[(b >> 20) & 0x0F];
-		_hexu64String[11] = _hexChars[(b >> 16) & 0x0F];
-		_hexu64String[12] = _hexChars[(b >> 12) & 0x0F];
-		_hexu64String[13] = _hexChars[(b >> 8) & 0x0F];
-		_hexu64String[14] = _hexChars[(b >> 4) & 0x0F];
-		_hexu64String[15] = _hexChars[b & 0x0F];
-		_hexu64String[16] = '\0';
-		return &_hexu64String[0];
-	}
-
-	const CHAR8* UTF8::ToString(const INT8 b)
-	{
-		if (b == 0)
-		{
-			_t8String[0] = '0';
-			_t8String[1] = '\0';
-			return &_t8String[0];
-		}
-
-		INT8 i = b;
-		_t8String[4] = '\0';
-		INT8 len = 4;
-		bool isNegative = false;
-		if (i < 0)
-		{
-			isNegative = true;
-			i = -i; // make it positive
-		}
-		for (; i > 0; i /= 10)
-		{
-			_t8String[--len] = (i % 10) + '0';
-		}
-		if (isNegative)
-		{
-			_t8String[--len] = '-';
-		}
-		return &_t8String[len];
-	}
-	const CHAR8* UTF8::ToString(const INT16 b)
-	{
-		if (b == 0)
-		{
-			_t16String[0] = '0';
-			_t16String[1] = '\0';
-			return &_t16String[0];
-		}
-
-		INT16 i = b;
-		_t16String[6] = '\0';
-		INT8 len = 6;
-		bool isNegative = false;
-		if (i < 0)
-		{
-			isNegative = true;
-			i = -i; // make it positive
-		}
-		for (; i > 0; i /= 10)
-		{
-			_t16String[--len] = (i % 10) + '0';
-		}
-		if (isNegative)
-		{
-			_t16String[--len] = '-';
-		}
-		return &_t16String[len];
-	}
-	const CHAR8* UTF8::ToString(const INT32 b)
-	{
-		if (b == 0)
-		{
-			_t32String[0] = '0';
-			_t32String[1] = '\0';
-			return &_t32String[0];
-		}
-
-		INT32 i = b;
-		_t32String[11] = '\0';
-		INT8 len = 11;
-		bool isNegative = false;
-		if (i < 0)
-		{
-			isNegative = true;
-			i = -i; // make it positive
-		}
-		for (; i > 0; i /= 10)
-		{
-			_t32String[--len] = (i % 10) + '0';
-		}
-		if (isNegative)
-		{
-			_t32String[--len] = '-';
-		}
-		return &_t32String[len];
-	}
-	const CHAR8* UTF8::ToString(const INT64 b)
-	{
-		if (b == 0)
-		{
-			_t64String[0] = '0';
-			_t64String[1] = '\0';
-			return &_t64String[0];
-		}
-
-		INT64 i = b;
-		_t64String[21] = '\0';
-		INT8 len = 21;
-		bool isNegative = false;
-		if (i < 0)
-		{
-			isNegative = true;
-			i = -i; // make it positive
-		}
-		for (; i > 0; i /= 10)
-		{
-			_t64String[--len] = (i % 10) + '0';
-		}
-		if (isNegative)
-		{
-			_t64String[--len] = '-';
-		}
-		return &_t64String[len];
-	}
-
-	const CHAR8* UTF8::ToHex(const INT8 b)
-	{
-		_hex8String[1] = _hexChars[(b >> 4) & 0x0F];
-		_hex8String[2] = _hexChars[b & 0x0F];
-		_hex8String[3] = '\0';
-
-		if (b < 0)
-		{
-			_hex8String[0] = '-';
-			return &_hex8String[0];
-		}
-		else
-		{
-			return &_hex8String[1];
-		}
-
-		return _hex8String;
-	}
-	const CHAR8* UTF8::ToHex(const INT16 b)
-	{
-		_hex16String[1] = _hexChars[(b >> 12) & 0x0F];
-		_hex16String[2] = _hexChars[(b >> 8) & 0x0F];
-		_hex16String[3] = _hexChars[(b >> 4) & 0x0F];
-		_hex16String[4] = _hexChars[b & 0x0F];
-		_hex16String[5] = '\0';
-		if (b < 0)
-		{
-			_hex16String[0] = '-';
-			return &_hex16String[0];
-		}
-		else
-		{
-			return &_hex16String[1];
-		}
-	}
-	const CHAR8* UTF8::ToHex(const INT32 b)
-	{
-		_hex32String[1] = _hexChars[(b >> 28) & 0x0F];
-		_hex32String[2] = _hexChars[(b >> 24) & 0x0F];
-		_hex32String[3] = _hexChars[(b >> 20) & 0x0F];
-		_hex32String[4] = _hexChars[(b >> 16) & 0x0F];
-		_hex32String[5] = _hexChars[(b >> 12) & 0x0F];
-		_hex32String[6] = _hexChars[(b >> 8) & 0x0F];
-		_hex32String[7] = _hexChars[(b >> 4) & 0x0F];
-		_hex32String[8] = _hexChars[b & 0x0F];
-		_hex32String[9] = '\0';
-		if (b < 0)
-		{
-			_hex32String[0] = '-';
-			return &_hex32String[0];
-		}
-		else
-		{
-			return &_hex32String[1];
-		}
-	}
-	const CHAR8* UTF8::ToHex(const INT64 b)
-	{
-		_hex64String[1] = _hexChars[(b >> 60) & 0x0F];
-		_hex64String[2] = _hexChars[(b >> 56) & 0x0F];
-		_hex64String[3] = _hexChars[(b >> 52) & 0x0F];
-		_hex64String[4] = _hexChars[(b >> 48) & 0x0F];
-		_hex64String[5] = _hexChars[(b >> 44) & 0x0F];
-		_hex64String[6] = _hexChars[(b >> 40) & 0x0F];
-		_hex64String[7] = _hexChars[(b >> 36) & 0x0F];
-		_hex64String[8] = _hexChars[(b >> 32) & 0x0F];
-		_hex64String[9] = _hexChars[(b >> 28) & 0x0F];
-		_hex64String[10] = _hexChars[(b >> 24) & 0x0F];
-		_hex64String[11] = _hexChars[(b >> 20) & 0x0F];
-		_hex64String[12] = _hexChars[(b >> 16) & 0x0F];
-		_hex64String[13] = _hexChars[(b >> 12) & 0x0F];
-		_hex64String[14] = _hexChars[(b >> 8) & 0x0F];
-		_hex64String[15] = _hexChars[(b >> 4) & 0x0F];
-		_hex64String[16] = _hexChars[b & 0x0F];
-		_hex64String[17] = '\0';
-		if (b < 0)
-		{
-			_hex64String[0] = '-';
-			return &_hex64String[0];
-		}
-		else
-		{
-			return &_hex64String[1];
-		}
+		return FALSE;
 	}
 }

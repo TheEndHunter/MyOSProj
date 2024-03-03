@@ -18,6 +18,9 @@
     <ClCompile Include="UEFIDef.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Helpers\EFI_SYS_LIBS.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UEFIDef.h">
@@ -303,6 +306,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Protocols\IO\Media\EFI_FILE_SYSTEM_VOLUME_LABEL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\EFI_SYS_LIBS.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -61,12 +61,12 @@ namespace Common::Graphics
 
 	void GraphicsContext::SetForegroundPixel(UINTN xPos, UINTN yPos)
 	{
-		*(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(gop->Mode->FrameBufferBase + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentForeground;
+		*(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(((UINTN)gop->Mode->FrameBufferBase) + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentForeground;
 	};
 	void GraphicsContext::SetForegroundPixel(UINTN xPos, UINTN yPos, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* rgba)
 	{
 		CurrentForeground = *rgba;
-		*(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(gop->Mode->FrameBufferBase + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentForeground;
+		*(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(((UINTN)gop->Mode->FrameBufferBase) + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentForeground;
 	}
 	void GraphicsContext::SetForegroundPixel(UINTN xPos, UINTN yPos, Color* color)
 	{
@@ -79,22 +79,22 @@ namespace Common::Graphics
 	void GraphicsContext::SetForegroundPixel(UINTN xPos, UINTN yPos, UINT8 r, UINT8 g, UINT8 b, UINT8 a)
 	{
 		CurrentForeground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ b,g,r,a };
-		*(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(gop->Mode->FrameBufferBase + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentForeground;
+		*(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(((UINTN)gop->Mode->FrameBufferBase) + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentForeground;
 	};
 	void GraphicsContext::SetForegroundPixel(UINTN xPos, UINTN yPos, UINT32 rgba)
 	{
 		CurrentForeground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ (UINT8)((rgba & 0x0000FF00) >> 8),(UINT8)((rgba & 0x00FF0000) >> 16),(UINT8)((rgba & 0xFF000000) >> 24), (UINT8)((rgba & 0x000000FF)) };
-		*(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(gop->Mode->FrameBufferBase + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentForeground;
+		*(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(((UINTN)gop->Mode->FrameBufferBase) + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentForeground;
 	};
 
 	void GraphicsContext::SetBackgroundPixel(UINTN xPos, UINTN yPos)
 	{
-		*(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(gop->Mode->FrameBufferBase + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentBackground;
+		*(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(((UINTN)gop->Mode->FrameBufferBase) + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentBackground;
 	};
 	void GraphicsContext::SetBackgroundPixel(UINTN xPos, UINTN yPos, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* rgba)
 	{
 		CurrentBackground = *rgba;
-		*(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(gop->Mode->FrameBufferBase + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentBackground;
+		*(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(((UINTN)gop->Mode->FrameBufferBase) + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentBackground;
 	}
 	void GraphicsContext::SetBackgroundPixel(UINTN xPos, UINTN yPos, Color* color)
 	{
@@ -107,12 +107,12 @@ namespace Common::Graphics
 	void GraphicsContext::SetBackgroundPixel(UINTN xPos, UINTN yPos, UINT8 r, UINT8 g, UINT8 b, UINT8 a)
 	{
 		CurrentBackground = EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ b,g,r,a };
-		*(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(gop->Mode->FrameBufferBase + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentBackground;
+		*(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(((UINTN)((UINTN)gop->Mode->FrameBufferBase)) + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentBackground;
 	};
 	void GraphicsContext::SetBackgroundPixel(UINTN xPos, UINTN yPos, UINT32 rgba)
 	{
 		CurrentBackground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ (UINT8)((rgba & 0x0000FF00) >> 8),(UINT8)((rgba & 0x00FF0000) >> 16),(UINT8)((rgba & 0xFF000000) >> 24), (UINT8)((rgba & 0x000000FF)) };;
-		*(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(gop->Mode->FrameBufferBase + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentBackground;
+		*(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(((UINTN)((UINTN)gop->Mode->FrameBufferBase)) + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentBackground;
 	};
 
 	void GraphicsContext::ClearScreen()

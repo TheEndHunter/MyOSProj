@@ -11,7 +11,7 @@ namespace Common::FileSystem
 	struct VolumeInfo
 	{
 	protected:
-		VolumeInfo(EFI::EFI_FILE_SYSTEM_INFO& info)
+		VolumeInfo(EFI::EFI_FILE_SYSTEM_INFO info)
 			:Size(info.Size), ReadOnly(info.ReadOnly), VolumeSize(info.VolumeSize), FreeSpace(info.FreeSpace), BlockSize(info.BlockSize), VolumeLabel(info.VolumeLabel)
 		{
 		}

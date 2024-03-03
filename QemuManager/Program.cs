@@ -25,7 +25,6 @@
             int l = args.Length;
             if (l != 3)
             {
-                args = new string[3];
                 Console.WriteLine(
                     "Invalid amount of arguments specified (min/max of 3 arguments). switching to manual entry"
                 );

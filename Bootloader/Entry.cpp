@@ -1,15 +1,12 @@
 #include "Entry.h"
-
-
 #include <EFI_RESET_TYPE.h>
-
 #include <Protocols/IO/Console/EFI_CONSOLE_COLOR.h>
 #include <Graphics/GraphicsContext.h>
 #include <EFIConsole.h>
 #include <Graphics/Color.h>
 #include <Enviroment/Unicode.h>
 #include <FileSystem/FileSystemContext.h>
-
+#include <Helpers/EFI_SYS_LIBS.h>
 
 namespace Bootloader
 {
@@ -49,7 +46,7 @@ namespace Bootloader
     void Exit(EFI_SYSTEM_TABLE* sysTable, EFI_HANDLE imgHndl, EFI_STATUS Status, UINTN exitDataSize, CHAR16* exitData)
     {
         sysTable->BootServices->Exit(imgHndl, Status, exitDataSize, exitData);
-    };
+    }
 
     EFI_INPUT_KEY WaitForKey(EFI_SYSTEM_TABLE* sysTable)
     {
@@ -73,17 +70,19 @@ namespace Bootloader
 
     EFI_STATUS EfiMain(EFI_HANDLE imgHndl, EFI_SYSTEM_TABLE* sysTbl)
     {
+        EFI::EFI_SYS_LIBS::InitializeLib(imgHndl, sysTbl);
+
         sysTbl->ConOut->Reset(sysTbl->ConOut, false);
         sysTbl->ConIn->Reset(sysTbl->ConIn, false);
 
         GraphicsContext gop = GraphicsContext::Initialize(imgHndl, sysTbl);
+
         if (GraphicsContext::LastStatus != EFI::EFI_STATUS::SUCCESS)
         {
             ThrowException(sysTbl,imgHndl, boot_GOP_LOCATE_ERROR,GraphicsContext::LastStatus);
-            return GraphicsContext::LastStatus;
         }
+
         gop.ClearScreen();
-        PrintLine(sysTbl, u"Graphics Initialized");
 
         UINTN w = gop.GetWidth();
         UINTN h = gop.GetHeight();
@@ -103,9 +102,6 @@ namespace Bootloader
         gop.DrawFilledRectangle(x1, y1, x1, y1, Colors::MediumVioletRed);
         gop.DrawFilledRectangle(posX, posY, x2, y2, Colors::HotPink);
 
-        WaitForKey(sysTbl);
-        ClearConOut(sysTbl);
-
         UINTN fsCount = FileSystemContext::QueryFSCount(sysTbl, imgHndl);
 
         if (fsCount == 0)
@@ -115,24 +111,22 @@ namespace Bootloader
 
         EFI_STATUS fsStatus = EFI_STATUS::SUCCESS;
         FileSystemContext sysFs = FileSystemContext::GetFileSystem(sysTbl, imgHndl,u"SYS" , &fsStatus);
+        
         if (sysFs == FileSystemContext::EmptyFS)
         {
 			ThrowException(sysTbl, imgHndl, u"Could Not Locate File System with Label: \"Sys\"", fsStatus);
 		}
 
-        PrintLine(sysTbl, u"File System Located", EFI_CONSOLE_COLOR::DEBUG_COLOR);
-        WaitForKey(sysTbl);
-
         PrintLine(sysTbl, u"Locating Kernel...");
-        FileInfo kernel = sysFs.GetFileInfo(sysTbl, u"Kernel.bin");
+        
+        FileInfo kernel = sysFs.GetFileInfo(sysTbl,u"Kernel.bin");
 
         if (sysFs.LastStatus != EFI::EFI_STATUS::SUCCESS)
         {
 			ThrowException(sysTbl, imgHndl, u"Could Not Locate Kernel", sysFs.LastStatus);
 		}
-
+        
         PrintLine(sysTbl, u"Loading Kernel...", EFI_CONSOLE_COLOR::DEBUG_COLOR);
-        WaitForKey(sysTbl);
 
         FileHandle kernelHandle = sysFs.OpenFile(sysTbl, kernel, FileMode::Read, FileAttribute::System);
 
@@ -140,11 +134,12 @@ namespace Bootloader
         {
             ThrowException(sysTbl, imgHndl, u"Could Not Open Kernel", sysFs.LastStatus);
         }
-        
-        UINT8* kernelData = nullptr;
-        EFI_STATUS allocStatus = sysTbl->BootServices->AllocatePool(EFI_MEMORY_TYPE::LoaderData, kernel.PhysicalSize,(void**)&kernelData);
+
         Print(sysTbl, u"Allocating: ", EFI_CONSOLE_COLOR::DEBUG_COLOR);
         Print(sysTbl, UTF16::ToString(kernel.PhysicalSize), EFI_CONSOLE_COLOR::DEBUG_COLOR);
+
+        UINT8* kernelData = new UINT8[kernel.PhysicalSize];
+        EFI_STATUS allocStatus = EFI::EFI_SYS_LIBS::LastStatus();
         WaitForKey(sysTbl);
 
         if (allocStatus != EFI_STATUS::SUCCESS || kernelData == nullptr)
