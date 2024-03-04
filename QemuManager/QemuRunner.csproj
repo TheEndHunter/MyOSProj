@@ -11,7 +11,7 @@
 	  <Platforms>x86;x64;ARM;ARM64</Platforms>
 	  <Configurations>Debug;Release</Configurations>
 
-	  <OutDir>$(SolutionDir)Tools\Run\</OutDir>
+	  <OutDir>$(SolutionDir)Tools\QemuRunner\</OutDir>
 	  
 	  <DefineConstants>$(DefineConstants);$(Configuration)</DefineConstants>
 	  <DefineConstants>$(DefineConstants);$(Platform)</DefineConstants>

@@ -1,9 +1,29 @@
 ﻿namespace QemuManager
 {
     using System.Diagnostics;
+    using System.Text;
 
     internal class Program
     {
+        static string BuildDrives(string directory)
+        {
+            if (Directory.Exists(directory))
+            {
+                StringBuilder sb = new();
+
+                foreach (string folder in Directory.GetDirectories(directory))
+                {
+                    DirectoryInfo i = new(folder);
+                    Console.WriteLine(i.FullName);
+                    sb.Append(
+                        $"-drive file=fat:fat-type=fat32:rw:\"{i.FullName}\",label=\"{i.Name.ToUpperInvariant()}\",format=vvfat "
+                    );
+                }
+                return sb.ToString();
+            }
+            return string.Empty;
+        }
+
         static int Main(string[] args)
         {
             Console.Title = "Qemu Virtual Machine Starter Tool";
@@ -68,14 +88,14 @@
                     Console.Clear();
                     Console.WriteLine($"Current Dir: {Directory.GetCurrentDirectory()}");
                     Console.WriteLine(
-                        "Please enter path of the virtual disk being used(e.g. VirtualOS.vhdx)"
+                        "Please enter path to the Directory where the drives are specified(e.g. C:\\MyBuildDir\\"
                     );
 
                     string test = Console.ReadLine()!;
 
                     test = Path.GetFullPath(test);
 
-                    if (File.Exists(test))
+                    if (Directory.Exists(test))
                     {
                         imagePath = test;
                     }
@@ -92,7 +112,7 @@
             {
                 architecture = args[0];
                 configuration = args[1];
-                imagePath = Path.Combine(Dir, args[2]);
+                imagePath = Path.Combine(args[2]);
             }
 
             string firmwareCodePath = Path.Combine(
@@ -171,7 +191,7 @@
             qemu.StartInfo.FileName = exePath;
             qemu.StartInfo.WorkingDirectory = qemuPath;
             qemu.StartInfo.Arguments =
-                $"""{machine} -accel tcg -m 2048M -drive if=pflash,format=raw,unit=0,file={firmwareCodePath},readonly=on -drive if=pflash,format=raw,unit=1,file={firmwareVarPath} -drive file={imagePath} -net none""";
+                $"""{machine} -accel tcg -m 2048M -drive if=pflash,format=raw,unit=0,file={firmwareCodePath},readonly=on -drive if=pflash,format=raw,unit=1,file={firmwareVarPath} {BuildDrives(imagePath)} -net none""";
             qemu.StartInfo.UseShellExecute = false;
             qemu.StartInfo.CreateNoWindow = false;
             qemu.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
@@ -191,9 +211,12 @@
             }
             else
             {
-                Console.WriteLine("Failed to start Process");
-                Console.ReadKey();
-                return -1;
+                if (qemu.ExitCode != 0)
+                {
+                    Console.WriteLine("Failed to start Process with error code: " + qemu.ExitCode);
+                    Console.ReadKey(true);
+                }
+                return qemu.ExitCode;
             }
         }
     }

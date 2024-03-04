@@ -203,41 +203,41 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <TargetName>UEFI$(Platform)</TargetName>
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\LIBS\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <TargetName>UEFI$(Platform)</TargetName>
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\LIBS\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <TargetName>UEFI$(Platform)</TargetName>
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\LIBS\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <TargetName>UEFI$(Platform)</TargetName>
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\LIBS\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetName>UEFI$(Platform)</TargetName>
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\LIBS\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <TargetName>UEFI$(Platform)</TargetName>
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\LIBS\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\LIBS\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
     <TargetName>UEFI$(Platform)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\LIBS\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
     <TargetName>UEFI$(Platform)</TargetName>
   </PropertyGroup>

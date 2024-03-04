@@ -236,12 +236,6 @@ namespace Common::FileSystem
 				LastStatus = _fs->OpenVolume(_fs, &_root);
 				_cwd = _root;
 			}
-
-			if (_cwd != _root)
-			{
-				LastStatus = _cwd->Close(_cwd);
-				_cwd = _root;
-			}
 			return true;
 		}
 
@@ -400,9 +394,16 @@ namespace Common::FileSystem
 			LastStatus = EFI::EFI_STATUS::WARN_FILE_SYSTEM;
 			return Empty_FileInfo;
 		}
+
+		if (_cwd == nullptr)
+		{
+			LastStatus = EFI::EFI_STATUS::WARN_FILE_SYSTEM;
+			return Empty_FileInfo;
+		};
+
 		/*open _cwd to the file denoted by the path as readOnly, placing the found files pointer into a _file pointer variable on the stack*/
-		EFI::EFI_FILE_PROTOCOL* file;
-		sysTable->ConOut->OutputString(sysTable->ConOut, u"1");
+		EFI::EFI_FILE_PROTOCOL* file = nullptr;
+		sysTable->ConOut->OutputString(sysTable->ConOut,u"1");
 		LastStatus = _cwd->Open(_cwd, &file, (CHAR16*)path, EFI::EFI_FILE_MODES::READ, EFI::EFI_FILE_ATTRIBUTES::READ_ONLY);
 		sysTable->ConOut->OutputString(sysTable->ConOut, u"2");
 		/*if the LastStatus is Not a success, return an Empty FileInfo*/

@@ -37,12 +37,7 @@
 *.vhdx
 bin/
 binInt/
-ImageBuilder/obj
+/ImageBuilder/obj
 /QemuManager/obj
-/Tools/Run/
-/Tools/Build/
-/Tools/x64_Debug_AttachScript.txt
-/Tools/x64_Debug_DetachScript.txt
-/Tools/x64_Debug_MountScript.txt
-/Tools/x64_Debug_VirtualOS.vhd
+/Tools
 /workload-install.ps1

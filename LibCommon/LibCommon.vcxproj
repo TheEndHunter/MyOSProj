@@ -152,41 +152,41 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <TargetName>$(ProjectName)_$(Platform)</TargetName>
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\LIBS\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <TargetName>$(ProjectName)_$(Platform)</TargetName>
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\LIBS\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <TargetName>$(ProjectName)_$(Platform)</TargetName>
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\LIBS\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <TargetName>$(ProjectName)_$(Platform)</TargetName>
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\LIBS\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetName>$(ProjectName)_$(Platform)</TargetName>
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\LIBS\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <TargetName>$(ProjectName)_$(Platform)</TargetName>
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\LIBS\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\LIBS\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
     <TargetName>$(ProjectName)_$(Platform)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\</OutDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\LIBS\</OutDir>
     <IntDir>$(SolutionDir)binInt\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
     <TargetName>$(ProjectName)_$(Platform)</TargetName>
   </PropertyGroup>

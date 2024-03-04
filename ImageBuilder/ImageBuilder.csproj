@@ -11,7 +11,7 @@
 		<Platforms>x86;x64;ARM;ARM64</Platforms>
 		<Configurations>Debug;Release</Configurations>
 
-		<OutDir>$(SolutionDir)Tools\Build\</OutDir>
+		<OutDir>$(SolutionDir)Tools\ImageBuilder\</OutDir>
 
 		<DefineConstants>$(DefineConstants);$(Configuration)</DefineConstants>
 		<DefineConstants>$(DefineConstants);$(Platform)</DefineConstants>
