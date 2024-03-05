@@ -2,7 +2,7 @@
 
 namespace Common::FileSystem
 {
-	FileHandle FileHandle::Create(EFI::EFI_FILE_PROTOCOL* file, FileInfo i, FileMode mode, FileAttribute attribs)
+	FileHandle FileHandle::Create(EFI::EFI_FILE_PROTOCOL* file, FileInfo* i, FileMode mode, UINT64 attribs)
 	{
 		return FileHandle(file, i,mode,attribs);
 	}

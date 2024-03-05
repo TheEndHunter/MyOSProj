@@ -24,6 +24,8 @@
             return string.Empty;
         }
 
+        private static Process qemu;
+
         static int Main(string[] args)
         {
             Console.Title = "Qemu Virtual Machine Starter Tool";
@@ -187,7 +189,9 @@
                 exePath = filename;
             }
 
-            Process qemu = new();
+            Process.GetCurrentProcess().EnableRaisingEvents = true;
+
+            qemu = new();
             qemu.StartInfo.FileName = exePath;
             qemu.StartInfo.WorkingDirectory = qemuPath;
             qemu.StartInfo.Arguments =
@@ -195,7 +199,11 @@
             qemu.StartInfo.UseShellExecute = false;
             qemu.StartInfo.CreateNoWindow = false;
             qemu.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+            qemu.EnableRaisingEvents = true;
 
+            AppDomain.CurrentDomain.DomainUnload += DomainUnload;
+            AppDomain.CurrentDomain.UnhandledException += UnhandledException;
+            AppDomain.CurrentDomain.ProcessExit += Exit;
             Console.WriteLine(qemu.StartInfo.Arguments);
 
             if (qemu.Start())
@@ -217,6 +225,48 @@
                     Console.ReadKey(true);
                 }
                 return qemu.ExitCode;
+            }
+        }
+
+        private static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            if (qemu != null)
+            {
+                if (qemu.HasExited)
+                {
+                    return;
+                }
+                qemu.Kill();
+                qemu.WaitForExit();
+                qemu.Dispose();
+            }
+        }
+
+        private static void DomainUnload(object? sender, EventArgs e)
+        {
+            if (qemu != null)
+            {
+                if (qemu.HasExited)
+                {
+                    return;
+                }
+                qemu.Kill();
+                qemu.WaitForExit();
+                qemu.Dispose();
+            }
+        }
+
+        private static void Exit(object? sender, EventArgs e)
+        {
+            if (qemu != null)
+            {
+                if (qemu.HasExited)
+                {
+                    return;
+                }
+                qemu.Kill();
+                qemu.WaitForExit();
+                qemu.Dispose();
             }
         }
     }

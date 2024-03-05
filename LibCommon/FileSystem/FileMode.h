@@ -4,10 +4,11 @@
 
 namespace Common::FileSystem
 {
-	enum FileMode : UINT8
+	enum FileMode : UINT64
 	{
-		Create = 1,
-		Read = 2,
-		Write = 4,
+		Read = 0x0000000000000001,
+		Write = 0x0000000000000002,
+		Create = 0x8000000000000000,
+		ReadWrite = Read | Write,
 	};
 }

@@ -13,14 +13,14 @@ namespace Common::FileSystem
 	{
 		friend class FileSystemContext;
 	protected:
-		FileHandle(EFI::EFI_FILE_PROTOCOL* file, FileInfo& i, FileMode mode, FileAttribute attribs) : Mode(mode),Attributes(attribs), Info(i), Size(i.Size), _File(file) {};
+		FileHandle(EFI::EFI_FILE_PROTOCOL* file, FileInfo* i, FileMode mode, UINT64 attribs) : Mode(mode),Attributes(attribs), Info(*i), Size(i->Size), _File(file) {};
 
 	public:
-		constexpr FileHandle(): _File(nullptr), Size(0), Mode(FileMode::Create), Attributes(FileAttribute::ValidAttrib) {};
+		constexpr FileHandle(): _File(nullptr), Size(0), Mode(FileMode::Create), Attributes(0) {};
 
-		static FileHandle Create(EFI::EFI_FILE_PROTOCOL* file, FileInfo i, FileMode mode, FileAttribute attribs);
+		static FileHandle Create(EFI::EFI_FILE_PROTOCOL* file, FileInfo* i, FileMode mode, UINT64 attribs);
 		FileMode Mode;
-		FileAttribute Attributes;
+		UINT64 Attributes;
 		FileInfo Info;
 		UINT64 Size;
 

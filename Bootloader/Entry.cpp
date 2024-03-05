@@ -14,10 +14,9 @@ namespace Bootloader
     using namespace Common::FileSystem;
     using namespace Common::Graphics;
 
-    void PrintInfo(EFI_SYSTEM_TABLE* sysTbl, EFI_HANDLE imgHndl, UINT8 color, const CHAR16* errorMessage, EFI_STATUS status)
+    void PrintInfo(EFI_SYSTEM_TABLE* sysTbl, UINT8 color, const CHAR16* errorMessage, EFI_STATUS status)
     {
         SetConsoleColor(sysTbl, color);
-        ClearConOut(sysTbl);
         PrintLine(sysTbl, errorMessage);
         if (status != EFI_STATUS::SUCCESS)
         {
@@ -25,20 +24,35 @@ namespace Bootloader
         };
     }
 
-    void PrintDebug(EFI_SYSTEM_TABLE* sysTbl, EFI_HANDLE imgHndl, const CHAR16* errorMessage, EFI_STATUS status)
+    void PrintDebug(EFI_SYSTEM_TABLE* sysTbl, const CHAR16* errorMessage, EFI_STATUS status)
     {
-		PrintInfo(sysTbl, imgHndl, EFI_CONSOLE_COLOR::DEBUG_COLOR, errorMessage, status);
+        SetConsoleColor(sysTbl, EFI_CONSOLE_COLOR::DEBUG_COLOR);
+        PrintLine(sysTbl, errorMessage);
+        if (status != EFI_STATUS::SUCCESS)
+        {
+            PrintLine(sysTbl, UTF16::ToString(status));
+        };
 	}
 
-    void PrintError(EFI_SYSTEM_TABLE* sysTbl, EFI_HANDLE imgHndl, const CHAR16* errorMessage, EFI_STATUS status)
+    void PrintError(EFI_SYSTEM_TABLE* sysTbl, const CHAR16* errorMessage, EFI_STATUS status)
     {
-        PrintInfo(sysTbl, imgHndl, EFI_CONSOLE_COLOR::ERROR_COLOR, errorMessage, status);
-        WaitForKey(sysTbl);
+        SetConsoleColor(sysTbl, EFI_CONSOLE_COLOR::ERROR_COLOR);
+        PrintLine(sysTbl, errorMessage);
+        if (status != EFI_STATUS::SUCCESS)
+        {
+            PrintLine(sysTbl, UTF16::ToString(status));
+        };
     };
 
     void ThrowException(EFI_SYSTEM_TABLE* sysTbl, EFI_HANDLE imgHndl, const CHAR16* errorMessage, EFI_STATUS status)
     {
-        PrintInfo(sysTbl, imgHndl, EFI_CONSOLE_COLOR::FATAL_COLOR, errorMessage, status);
+        SetConsoleColor(sysTbl, EFI_CONSOLE_COLOR::FATAL_COLOR);
+        ClearConOut(sysTbl);
+        PrintLine(sysTbl, errorMessage);
+        if (status != EFI_STATUS::SUCCESS)
+        {
+            PrintLine(sysTbl, UTF16::ToString(status));
+        };
         WaitForKey(sysTbl);
         Exit(sysTbl, imgHndl, status);
     }
@@ -57,12 +71,12 @@ namespace Bootloader
         status = sysTable->BootServices->WaitForEvent(1, &sysTable->ConIn->WaitForKey, &index);
         if (status != EFI_STATUS::SUCCESS)
         {
-            PrintError(sysTable, nullptr, u"Error in WaitForEvent", status);
+            PrintError(sysTable,u"Error in WaitForEvent", status);
         }
         status = sysTable->ConIn->ReadKeyStroke(sysTable->ConIn, &key);
         if (status != EFI_STATUS::SUCCESS)
         {
-            PrintError(sysTable, nullptr, u"Error in ReadKeyStroke", status);
+            PrintError(sysTable,u"Error in ReadKeyStroke", status);
         }
         ClearConIn(sysTable);
         return key;
@@ -71,6 +85,11 @@ namespace Bootloader
     EFI_STATUS EfiMain(EFI_HANDLE imgHndl, EFI_SYSTEM_TABLE* sysTbl)
     {
         EFI::EFI_SYS_LIBS::InitializeLib(imgHndl, sysTbl);
+
+        if (!EFI::EFI_SYS_LIBS::IsInitialized())
+        {
+			ThrowException(sysTbl, imgHndl, u"Could Not Initialize System Libraries", EFI::EFI_SYS_LIBS::LastStatus());
+		}
 
         sysTbl->ConOut->Reset(sysTbl->ConOut, false);
         sysTbl->ConIn->Reset(sysTbl->ConIn, false);
@@ -117,8 +136,8 @@ namespace Bootloader
 			ThrowException(sysTbl, imgHndl, u"Could Not Locate File System with Label: \"Sys\"", fsStatus);
 		}
 
-        PrintLine(sysTbl, u"Locating Kernel...");
-        
+        sysFs.OpenVolume();
+
         FileInfo kernel = sysFs.GetFileInfo(sysTbl,u"Kernel.bin");
 
         if (sysFs.LastStatus != EFI::EFI_STATUS::SUCCESS)
@@ -126,30 +145,32 @@ namespace Bootloader
 			ThrowException(sysTbl, imgHndl, u"Could Not Locate Kernel", sysFs.LastStatus);
 		}
         
-        PrintLine(sysTbl, u"Loading Kernel...", EFI_CONSOLE_COLOR::DEBUG_COLOR);
+        if (kernel == Empty_FileInfo)
+        {
+			ThrowException(sysTbl, imgHndl, u"Kernel Not Found", EFI::EFI_STATUS::NOT_FOUND);
+		}
 
-        FileHandle kernelHandle = sysFs.OpenFile(sysTbl, kernel, FileMode::Read, FileAttribute::System);
+        FileHandle kernelHandle = sysFs.OpenFile(sysTbl, &kernel, FileMode::Read,kernel.Attribute);
 
         if (sysFs.LastStatus != EFI::EFI_STATUS::SUCCESS)
         {
             ThrowException(sysTbl, imgHndl, u"Could Not Open Kernel", sysFs.LastStatus);
         }
 
-        Print(sysTbl, u"Allocating: ", EFI_CONSOLE_COLOR::DEBUG_COLOR);
-        Print(sysTbl, UTF16::ToString(kernel.PhysicalSize), EFI_CONSOLE_COLOR::DEBUG_COLOR);
-
         UINT8* kernelData = new UINT8[kernel.PhysicalSize];
         EFI_STATUS allocStatus = EFI::EFI_SYS_LIBS::LastStatus();
-        WaitForKey(sysTbl);
 
-        if (allocStatus != EFI_STATUS::SUCCESS || kernelData == nullptr)
+        if (allocStatus != EFI_STATUS::SUCCESS)
         {
             ThrowException(sysTbl, imgHndl, u"Could Not Allocate Memory for Kernel", allocStatus);
         }
 
-        UINTN kernelSize = (UINTN)kernel.PhysicalSize;
+        if (kernelData == nullptr)
+        {
+			ThrowException(sysTbl, imgHndl, u"Could Not Allocate Memory for Kernel", EFI_STATUS::OUT_OF_RESOURCES);
+		}
 
-        PrintLine(sysTbl, UTF16::ToString(kernelSize));
+        UINTN kernelSize = (UINTN)kernel.PhysicalSize;
 
         EFI_STATUS kernelLoadStatus = kernelHandle.Read(&kernelSize, kernelData);
         if(kernelLoadStatus != EFI_STATUS::SUCCESS)
@@ -157,6 +178,7 @@ namespace Bootloader
 			ThrowException(sysTbl, imgHndl, u"Could Not Read Kernel", kernelLoadStatus);
         }
 
+        WaitForKey(sysTbl);
         sysTbl->RuntimeServices->ResetSystem(EFI_RESET_TYPE::SHUTDOWN, EFI_STATUS::SUCCESS, 0, nullptr);
 
         return EFI::EFI_STATUS::END_OF_MEDIA;

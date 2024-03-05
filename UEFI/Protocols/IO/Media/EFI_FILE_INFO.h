@@ -19,7 +19,7 @@ namespace EFI
 		EFI::EFI_TIME LastAccessTime;
 		EFI::EFI_TIME ModificationTime;
 		EFI::EFI_FILE_ATTRIBUTES Attribute;
-		CHAR16* FileName;
+		CHAR16 FileName[];
 
 		bool operator ==(const EFI_FILE_INFO& right)
 		{

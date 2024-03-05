@@ -5,9 +5,9 @@ namespace EFI
 {
 	enum EFI_FILE_MODES : UINT64
 	{
-		CREATE = 0,
-		READ = 1,
-		WRITE = 2,
-		READWRITE = READ | WRITE,
+		Read = 0x0000000000000001,
+		Write  = 0x0000000000000002,
+		Create = 0x8000000000000000,
+		ReadWrite = Read | Write,
 	};
 };

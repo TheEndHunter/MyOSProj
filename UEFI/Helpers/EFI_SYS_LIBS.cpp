@@ -8,17 +8,24 @@ namespace EFI
 
 	void EFI_SYS_LIBS::InitializeLib(EFI_HANDLE imageHandle, EFI_SYSTEM_TABLE* systemTable)
 	{
-		if (_systemTable == nullptr)
+		if (systemTable == nullptr)
 		{
 			_lastStatus = EFI_STATUS::INVALID_PARAMETER;
-			_initialized = false;
+			_initialized = FALSE;
+			return;
+		}
+
+		if (imageHandle == nullptr)
+		{
+			_lastStatus = EFI_STATUS::INVALID_PARAMETER;
+			_initialized = FALSE;
 			return;
 		}
 
 		_systemTable = systemTable;
 		_imgHandle = imageHandle;
 
-		_initialized = true;
+		_initialized = TRUE;
 		_lastStatus = EFI_STATUS::SUCCESS;
 	}
 
@@ -35,7 +42,7 @@ namespace EFI
 	void* EFI_SYS_LIBS::AllocatePool(UINTN size)
 	{
 		void* buffer = nullptr;
-		_lastStatus = _systemTable->BootServices->AllocatePool(EFI_MEMORY_TYPE::LoaderData, size, &buffer);
+		_lastStatus = _systemTable->BootServices->AllocatePool(EFI_MEMORY_TYPE::LoaderData, size, (void**)&buffer);
 		return buffer;
 	}
 
@@ -47,7 +54,7 @@ namespace EFI
 	void* EFI_SYS_LIBS::AllocateZeroPool(UINTN size)
 	{
 		void* buffer = nullptr;
-		_lastStatus = _systemTable->BootServices->AllocatePool(EFI_MEMORY_TYPE::LoaderData, size, &buffer);
+		_lastStatus = _systemTable->BootServices->AllocatePool(EFI_MEMORY_TYPE::LoaderData, size, (void**)&buffer);
 		if (_lastStatus == EFI_STATUS::SUCCESS)
 		{
 			SetMem(buffer, size, (UINT8)0);
@@ -109,50 +116,60 @@ namespace EFI
 
 void* operator new(UINTN size)
 {
-	if (EFI::EFI_SYS_LIBS::IsInitialized())
+	if (!EFI::EFI_SYS_LIBS::IsInitialized())
 	{
-		return EFI::EFI_SYS_LIBS::AllocatePool(size);
+		EFI::_lastStatus = EFI::EFI_STATUS::NOT_READY;
+		return nullptr;
 	}
-	return nullptr;
+		return EFI::EFI_SYS_LIBS::AllocatePool(size);
 }
 
 void* operator new[](UINTN size)
 {
-	if (EFI::EFI_SYS_LIBS::IsInitialized())
+	if (!EFI::EFI_SYS_LIBS::IsInitialized())
 	{
-		return EFI::EFI_SYS_LIBS::AllocatePool(size);
+		EFI::_lastStatus = EFI::EFI_STATUS::NOT_READY;
+		return nullptr;
 	}
-	return nullptr;
+	return EFI::EFI_SYS_LIBS::AllocatePool(size);
 }
 
 void operator delete(void* ptr)
 {
-	if (EFI::EFI_SYS_LIBS::IsInitialized())
+	if (!EFI::EFI_SYS_LIBS::IsInitialized())
 	{
-		EFI::EFI_SYS_LIBS::FreePool(ptr);
+		EFI::_lastStatus = EFI::EFI_STATUS::NOT_READY;
+		return;
 	}
+		return EFI::EFI_SYS_LIBS::FreePool(ptr);
 }
 
 void operator delete[](void* ptr)
 {
-	if (EFI::EFI_SYS_LIBS::IsInitialized())
+	if (!EFI::EFI_SYS_LIBS::IsInitialized())
 	{
-		EFI::EFI_SYS_LIBS::FreePool(ptr);
+		EFI::_lastStatus = EFI::EFI_STATUS::NOT_READY;
+		return;
 	}
+	EFI::EFI_SYS_LIBS::FreePool(ptr);
 }
 
 void operator delete  (void* ptr, void* n)
 {
-	if (EFI::EFI_SYS_LIBS::IsInitialized())
+	if (!EFI::EFI_SYS_LIBS::IsInitialized())
 	{
-		EFI::EFI_SYS_LIBS::FreePool(ptr);
+		EFI::_lastStatus = EFI::EFI_STATUS::NOT_READY;
+		return;
 	}
+		EFI::EFI_SYS_LIBS::FreePool(ptr);
 };
 
 void operator delete[](void* ptr, void* n)
 {
-	if (EFI::EFI_SYS_LIBS::IsInitialized())
+	if (!EFI::EFI_SYS_LIBS::IsInitialized())
 	{
-		EFI::EFI_SYS_LIBS::FreePool(ptr);
+		EFI::_lastStatus = EFI::EFI_STATUS::NOT_READY;
+		return;
 	}
+		EFI::EFI_SYS_LIBS::FreePool(ptr);
 };

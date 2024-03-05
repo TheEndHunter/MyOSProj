@@ -40,11 +40,10 @@ namespace Common::FileSystem
 		void CloseVolume(EFI::EFI_SYSTEM_TABLE* sysTbl, EFI::EFI_HANDLE imgHndl);
 
 		BOOLEAN OpenDirectory(const CHAR16* path);
-		BOOLEAN OpenRoot();
 		void CloseDirectory();
 
-		FileHandle OpenFile(EFI::EFI_SYSTEM_TABLE* sysTable, FileInfo& fileInfo, FileMode mode, FileAttribute attribs);
-		FileHandle CreateFile(EFI::EFI_SYSTEM_TABLE* sysTable, const CHAR16* name, FileAttribute attribs);
+		FileHandle OpenFile(EFI::EFI_SYSTEM_TABLE* sysTable, FileInfo* fileInfo, FileMode mode, UINT64 attribs);
+		FileHandle CreateFile(EFI::EFI_SYSTEM_TABLE* sysTable, const CHAR16* name, UINT64 attribs);
 		void CloseFile(EFI::EFI_SYSTEM_TABLE* sysTable, FileHandle& handle);
 
 		VolumeInfo GetVolumeInfo(EFI::EFI_SYSTEM_TABLE* sysTable);

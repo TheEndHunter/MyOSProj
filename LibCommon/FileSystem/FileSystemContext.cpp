@@ -200,9 +200,14 @@ namespace Common::FileSystem
 		if (_root == nullptr)
 		{
 			LastStatus = _fs->OpenVolume(_fs, &_root);
-			_cwd = _root;
-			_isVolumeOpen = true;
+			if (LastStatus != EFI::EFI_STATUS::SUCCESS)
+			{
+				return false;
+			}
 		}
+
+		_cwd = _root;
+		_isVolumeOpen = true;
 
 		return true;
 	};
@@ -215,33 +220,21 @@ namespace Common::FileSystem
 			return false;
 		}
 
-		EFI::EFI_FILE_PROTOCOL* dir;
-		LastStatus = _cwd->Open(_cwd, &dir, (CHAR16*)path, EFI::EFI_FILE_MODES::READWRITE, EFI::EFI_FILE_ATTRIBUTES::DIRECTORY);
-		_cwd = dir;
-		return true;
-	};
-
-	BOOLEAN FileSystemContext::OpenRoot()
-	{
-		if (_fs == nullptr)
+		if (!_isVolumeOpen)
 		{
-			LastStatus = EFI::EFI_STATUS::WARN_FILE_SYSTEM;
-			return false;
-		}
-
-		if (_isVolumeOpen)
-		{
-			if (_root == nullptr)
+			if (!OpenVolume())
 			{
-				LastStatus = _fs->OpenVolume(_fs, &_root);
-				_cwd = _root;
+				return FALSE;
 			}
-			return true;
 		}
 
-		EFI::EFI_FILE_PROTOCOL* dir;
-		LastStatus = _cwd->Open(_cwd, &dir, (CHAR16*)&RootPath, EFI::EFI_FILE_MODES::READWRITE, EFI::EFI_FILE_ATTRIBUTES::DIRECTORY);
-		_cwd = _root = dir;
+		if (_cwd == nullptr)
+		{
+			LastStatus = EFI::EFI_STATUS::DEVICE_ERROR;
+			return FALSE;
+		}
+
+		LastStatus = _cwd->Open(_cwd, &_cwd, (CHAR16*)path, EFI::EFI_FILE_MODES::ReadWrite, EFI::EFI_FILE_ATTRIBUTES::Directory);
 		return true;
 	};
 
@@ -253,7 +246,7 @@ namespace Common::FileSystem
 			return;
 		}
 
-		if (_cwd != nullptr && _cwd != _root)
+		if (_cwd != nullptr)
 		{
 			LastStatus = _cwd->Close(_cwd);
 			_cwd = nullptr;
@@ -397,15 +390,14 @@ namespace Common::FileSystem
 
 		if (_cwd == nullptr)
 		{
-			LastStatus = EFI::EFI_STATUS::WARN_FILE_SYSTEM;
+			LastStatus = EFI::EFI_STATUS::DEVICE_ERROR;
 			return Empty_FileInfo;
 		};
 
 		/*open _cwd to the file denoted by the path as readOnly, placing the found files pointer into a _file pointer variable on the stack*/
 		EFI::EFI_FILE_PROTOCOL* file = nullptr;
-		sysTable->ConOut->OutputString(sysTable->ConOut,u"1");
-		LastStatus = _cwd->Open(_cwd, &file, (CHAR16*)path, EFI::EFI_FILE_MODES::READ, EFI::EFI_FILE_ATTRIBUTES::READ_ONLY);
-		sysTable->ConOut->OutputString(sysTable->ConOut, u"2");
+		LastStatus = _cwd->Open(_cwd, &file, (CHAR16*)path, EFI::EFI_FILE_MODES::Read, EFI::EFI_FILE_ATTRIBUTES::ReadOnly);
+
 		/*if the LastStatus is Not a success, return an Empty FileInfo*/
 		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
 		{
@@ -413,11 +405,9 @@ namespace Common::FileSystem
 		}
 		/*Get the size of the FileInfo struct for the file*/
 		UINTN size = 0;
-		sysTable->ConOut->OutputString(sysTable->ConOut, u"3");
 		LastStatus = file->GetInfo(file, &EFI::EFI_FILE_INFO_ID, &size, nullptr);
-		sysTable->ConOut->OutputString(sysTable->ConOut, u"4");
 		/*if the LastStatus is Not a success, return an Empty FileInfo*/
-		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
+		if (LastStatus != EFI::EFI_STATUS::BUFFER_TOO_SMALL)
 		{
 			return Empty_FileInfo;
 		}
@@ -429,11 +419,10 @@ namespace Common::FileSystem
 			return Empty_FileInfo;
 		}
 
+		size += sizeof(EFI::EFI_FILE_INFO);
 		/*Allocate a buffer for the FileInfo struct*/
 		EFI::EFI_FILE_INFO* info = nullptr;
-		sysTable->ConOut->OutputString(sysTable->ConOut, u"5");
 		LastStatus = sysTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, size, (void**)&info);
-		sysTable->ConOut->OutputString(sysTable->ConOut, u"6");
 
 		/*if the LastStatus is Not a success, return an Empty FileInfo*/
 		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
@@ -442,9 +431,7 @@ namespace Common::FileSystem
 		}
 
 		/*Get the FileInfo struct for the file*/
-		sysTable->ConOut->OutputString(sysTable->ConOut, u"7");
 		LastStatus = file->GetInfo(file, &EFI::EFI_FILE_INFO_ID, &size, info);
-		sysTable->ConOut->OutputString(sysTable->ConOut, u"8");
 
 		/*if the LastStatus is Not a success, return an Empty FileInfo*/
 		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
@@ -454,38 +441,51 @@ namespace Common::FileSystem
 		}
 
 		/*Create a FileInfo struct from the EFI_FILE_INFO struct*/
-		sysTable->ConOut->OutputString(sysTable->ConOut, u"9");
 		FileInfo fileInfo = FileInfo::Create(info);
-		sysTable->ConOut->OutputString(sysTable->ConOut, u"10");
-		/*Free the buffer for the FileInfo struct*/
-		LastStatus = sysTable->BootServices->FreePool(info);
-
-		/*return the FileInfo struct*/
 		return fileInfo;
 	}
 
-	FileHandle FileSystemContext::OpenFile(EFI::EFI_SYSTEM_TABLE* sysTable, FileInfo& fileInfo, FileMode mode, FileAttribute attribs)
+	FileHandle FileSystemContext::OpenFile(EFI::EFI_SYSTEM_TABLE* sysTable, FileInfo* fileInfo, FileMode mode, UINT64 attribs)
 	{
 		if (_fs == nullptr)
 		{
 			LastStatus = EFI::EFI_STATUS::WARN_FILE_SYSTEM;
 			return Empty_FileHandle;
 		}
-		/* Check to make sure we aren't trying to use OpenFile in FileMode::Create as this is not correct usage */
-		if ((mode & FileMode::Create) == FileMode::Create)
+
+		if (fileInfo == nullptr)
 		{
-			LastStatus = EFI::EFI_STATUS::ACCESS_DENIED;
+			LastStatus = EFI::EFI_STATUS::INVALID_PARAMETER;
 			return Empty_FileHandle;
 		}
 
-		EFI::EFI_FILE_PROTOCOL* file;
+		if (Common::Enviroment::UTF16::IsNullOrEmpty(fileInfo->FileName))
+		{
+			LastStatus = EFI::EFI_STATUS::INVALID_PARAMETER;
+			return Empty_FileHandle;
+		}
 
-		LastStatus = _cwd->Open(_cwd, &file, fileInfo.FileName, (EFI::EFI_FILE_MODES)mode, (EFI::EFI_FILE_ATTRIBUTES)attribs);
+		/* Check to see if FileMode::Create Flag is set, if it is, set an INVALID_PARAMETER and return an Empty File Handle*/
+
+		if ((mode & FileMode::Create) == FileMode::Create)
+		{
+			LastStatus = EFI::EFI_STATUS::INVALID_PARAMETER;
+			return Empty_FileHandle;
+		}
+
+		EFI::EFI_FILE_PROTOCOL* file = nullptr;
+		LastStatus = _cwd->Open(_cwd, &file, fileInfo->FileName, (EFI::EFI_FILE_MODES)mode,attribs);
+
+
+		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
+		{
+			return Empty_FileHandle;
+		}
 
 		return FileHandle::Create(file, fileInfo, mode, attribs);
 	};
 
-	FileHandle FileSystemContext::CreateFile(EFI::EFI_SYSTEM_TABLE* sysTable, const CHAR16* name, FileAttribute attribs)
+	FileHandle FileSystemContext::CreateFile(EFI::EFI_SYSTEM_TABLE* sysTable, const CHAR16* name, UINT64 attribs)
 	{
 		if (_fs == nullptr)
 		{
@@ -495,7 +495,7 @@ namespace Common::FileSystem
 
 		EFI::EFI_FILE_PROTOCOL* file;
 
-		LastStatus = _cwd->Open(_cwd, &file, (CHAR16*)name, EFI::EFI_FILE_MODES::CREATE, (EFI::EFI_FILE_ATTRIBUTES)attribs);
+		LastStatus = _cwd->Open(_cwd, &file, (CHAR16*)name, EFI::EFI_FILE_MODES::Create, attribs);
 
 		/* Get EFI_FILE_INFO for FileHandle */
 		UINTN size = 0;
@@ -503,7 +503,8 @@ namespace Common::FileSystem
 		LastStatus = file->GetInfo(file, &EFI::EFI_FILE_INFO_ID, &size, (void**)&info);
 		LastStatus = sysTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, size, (void**)&info);
 		LastStatus = file->GetInfo(file, &EFI::EFI_FILE_INFO_ID, &size, info);
-		return FileHandle::Create(file, FileInfo::Create(info), FileMode::Create, attribs);
+		FileInfo i = FileInfo::Create(info);
+		return FileHandle::Create(file,&i, FileMode::Create, attribs);
 	}
 
 	void FileSystemContext::CloseFile(EFI::EFI_SYSTEM_TABLE* sysTable, FileHandle& handle)
