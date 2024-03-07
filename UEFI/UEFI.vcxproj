@@ -35,7 +35,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Helpers\EFI_SYS_LIBS.cpp" />
     <ClCompile Include="UEFIDef.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -133,7 +132,6 @@
     <ClInclude Include="Protocols\Configuration\EFI_MEMORY_RANGE_CAPSULE.h" />
     <ClInclude Include="Protocols\Configuration\EFI_CAPSULE_BLOCK_DESCRIPTOR.h" />
     <ClInclude Include="Protocols\Graphics\EFI_GRAPHICS_OUTPUT_BLT_OPERATION.h" />
-    <ClInclude Include="Helpers\EFI_SYS_LIBS.h" />
     <ClInclude Include="UEFIDef.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

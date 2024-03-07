@@ -6,7 +6,9 @@
 #include <Graphics/Color.h>
 #include <Enviroment/Unicode.h>
 #include <FileSystem/FileSystemContext.h>
-#include <Helpers/EFI_SYS_LIBS.h>
+#include <System/EfiAllocator.h>
+#include <System/Allocator.h>
+#include <System//AllocatorStatus.h>
 
 namespace Bootloader
 {
@@ -49,10 +51,7 @@ namespace Bootloader
         SetConsoleColor(sysTbl, EFI_CONSOLE_COLOR::FATAL_COLOR);
         ClearConOut(sysTbl);
         PrintLine(sysTbl, errorMessage);
-        if (status != EFI_STATUS::SUCCESS)
-        {
-            PrintLine(sysTbl, UTF16::ToString(status));
-        };
+        PrintLine(sysTbl, UTF16::ToString(status));
         WaitForKey(sysTbl);
         Exit(sysTbl, imgHndl, status);
     }
@@ -84,11 +83,16 @@ namespace Bootloader
 
     EFI_STATUS EfiMain(EFI_HANDLE imgHndl, EFI_SYSTEM_TABLE* sysTbl)
     {
-        EFI::EFI_SYS_LIBS::InitializeLib(imgHndl, sysTbl);
+        Common::System::EFIAllocator::SetEFIAllocator(sysTbl);
 
-        if (!EFI::EFI_SYS_LIBS::IsInitialized())
+
+        if (!Common::System::Allocator::IsInitalized())
         {
-			ThrowException(sysTbl, imgHndl, u"Could Not Initialize System Libraries", EFI::EFI_SYS_LIBS::LastStatus());
+            Common::System::AllocatorStatus s = Common::System::Allocator::LastStatus();
+
+            EFI::EFI_STATUS t = Common::System::ToEfiStatus(s);
+
+			ThrowException(sysTbl, imgHndl, u"Could Not Initialize EFI Allocator", t);
 		}
 
         sysTbl->ConOut->Reset(sysTbl->ConOut, false);
@@ -158,11 +162,12 @@ namespace Bootloader
         }
 
         UINT8* kernelData = new UINT8[kernel.PhysicalSize];
-        EFI_STATUS allocStatus = EFI::EFI_SYS_LIBS::LastStatus();
 
-        if (allocStatus != EFI_STATUS::SUCCESS)
+        Common::System::AllocatorStatus allocStatus = Common::System::Allocator::LastStatus();
+
+        if (allocStatus != Common::System::AllocatorStatus::Success)
         {
-            ThrowException(sysTbl, imgHndl, u"Could Not Allocate Memory for Kernel", allocStatus);
+            ThrowException(sysTbl, imgHndl, u"Could Not Allocate Memory for Kernel", Common::System::ToEfiStatus(allocStatus));
         }
 
         if (kernelData == nullptr)

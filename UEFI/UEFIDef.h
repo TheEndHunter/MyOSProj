@@ -135,13 +135,54 @@ struct uint128
 };
 #define UINT128 uint128
 #endif
+#define MAX_UINT128 0xffffffffffffffffffffffffffffffff
+#define MIN_INT128 0x80000000000000000000000000000000
 #elif defined(__GNUC__) & defined(__int128)
 #define UNICODE
 #define UINT128 unsigned __int128
 #define INT128 __int128
 #else
+#define MAX_UINT128 0xffffffffffffffffffffffffffffffff
+#define MIN_INT128 0x80000000000000000000000000000000
 #endif
 
+/*Defines MAX and MIN values for all UINT and INT Types, including UINTN and INTN based on Bitness of CPU*/
+
+#define MAX_UINT8 0xff
+#define MAX_UINT16 0xffff
+#define MAX_UINT32 0xffffffff
+#define MAX_UINT64 0xffffffffffffffff
+
+#define MAX_INT8 0x7f
+#define MAX_INT16 0x7fff
+#define MAX_INT32 0x7fffffff
+#define MAX_INT64 0x7fffffffffffffff
+#define MAX_INT128 0x7fffffffffffffffffffffffffffffff
+
+#define MIN_UINT8 0x00
+#define MIN_UINT16 0x0000
+#define MIN_UINT32 0x00000000
+#define MIN_UINT64 0x0000000000000000
+#define MIN_UINT128 0x00000000000000000000000000000000
+
+#define MIN_INT8 0x80
+#define MIN_INT16 0x8000
+#define MIN_INT32 0x80000000
+#define MIN_INT64 0x8000000000000000
+
+#ifdef BITS_32
+#define MAX_UINTN MAX_UINT32
+#define MAX_INTN MAX_INT32
+#define MIN_UINTN MIN_UINT32
+#define MIN_INTN MIN_INT32
+#elif defined(BITS_64)
+#define MAX_UINTN MAX_UINT64
+#define MAX_INTN MAX_INT64
+#define MIN_UINTN MIN_UINT64
+#define MIN_INTN MIN_INT64
+#else
+#error "Unknown architecture"
+#endif
 
 
 /*

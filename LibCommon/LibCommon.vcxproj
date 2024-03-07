@@ -51,8 +51,12 @@
     <ClInclude Include="Math\Math.h" />
     <ClInclude Include="FileTypes\PE.h" />
     <ClInclude Include="FileTypes\MSDOS.h" />
+    <ClInclude Include="System\Allocator.h" />
+    <ClInclude Include="System\AllocatorStatus.h" />
     <ClInclude Include="System\BitMathCompat.h" />
     <ClInclude Include="System\Console.h" />
+    <ClInclude Include="System\EfiAllocator.h" />
+    <ClInclude Include="System\MemFuncs.h" />
     <ClInclude Include="TypeDefs.h" />
   </ItemGroup>
   <ItemGroup>
@@ -68,7 +72,10 @@
     <ClCompile Include="Graphics\GraphicsContext.cpp" />
     <ClCompile Include="FileTypes\PE.cpp" />
     <ClCompile Include="FileTypes\MSDOS.cpp" />
+    <ClCompile Include="System\Allocator.cpp" />
     <ClCompile Include="System\Console.cpp" />
+    <ClCompile Include="System\EfiAllocator.cpp" />
+    <ClCompile Include="System\MemFuncs.cpp" />
     <ClCompile Include="TypeDefs.cpp" />
   </ItemGroup>
   <ItemGroup>
