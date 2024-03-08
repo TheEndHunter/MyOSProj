@@ -1,5 +1,6 @@
 #pragma once
 #include <TypeDefs.h>
+#include <FileSystem/FileHandle.h>
 
 namespace Common::FileTypes
 {
@@ -181,10 +182,8 @@ namespace Common::FileTypes
 		UINT32 PEHeaderOffset;
 
 	public:
-		static const BOOLEAN VerifyHeader(const DOSHeader* header)
-		{
-			return header->Magic.Value == 0x5A4D;
-		}
+		static const BOOLEAN VerifySignature(const DOSHeader* header);
+
 	};
 #pragma pack(pop)
 #pragma pack(push, 1)
@@ -281,25 +280,10 @@ namespace Common::FileTypes
 		COFFHeader FileHeader;
 		PE32OptionHeader OptionHeader;
 	public:
-		static const BOOLEAN VerifyHeader(const PE32Header* header)
-		{
-			if (header->Signature.Char[0] == 'P')
-			{
-				if (header->Signature.Char[1] == 'E')
-				{
-					if (header->Signature.Char[2] == 0)
-					{
-						if (header->Signature.Char[3] == 0)
-						{
-							return TRUE;
-						}
-					}
-				}
-			}
-			return FALSE;
-		}
+		static const BOOLEAN VerifySignature(const PE32Header* header);
 	};
 #pragma pack(pop)
+
 
 #pragma pack(push,1)
 	struct PE32SectionHeader
@@ -320,5 +304,31 @@ namespace Common::FileTypes
 		PE32SectionCharacteristics Characteristics;
 	};
 #pragma pack(pop)
+
+	struct PE32File
+	{
+		UINTN lastHeaderPosition;
+		DOSHeader* DosHeader;
+		PE32Header* PEHeader;
+		PE32OptionHeader* PEOptionHeader;
+		union
+		{
+			void* _Ptr;
+			PE32OptionFooter* PE32;
+			PE32POptionFooter* PE32P;
+		}Footer;
+		PE32SectionHeader* SectionHeaders;
+
+	private:
+		PE32File(Common::FileSystem::FileHandle* handle);
+	public:
+		static PE32File* Read(Common::FileSystem::FileHandle* handle);
+		static DOSHeader* ReadDOSHeader(Common::FileSystem::FileHandle* handle, UINTN offset = 0U);
+		static PE32Header* ReadPE32Header(Common::FileSystem::FileHandle* handle, UINTN offset = 0U);
+		static PE32OptionHeader* ReadPE32OptionHeader(Common::FileSystem::FileHandle* handle, UINTN offset = 0U);
+		static PE32OptionFooter* ReadPE32OptionFooter(Common::FileSystem::FileHandle* handle, UINTN offset = 0U);
+		static PE32POptionFooter* ReadPE32POptionFooter(Common::FileSystem::FileHandle* handle, UINTN offset = 0U);
+		static PE32SectionHeader* ReadPE32SectionHeader(Common::FileSystem::FileHandle* handle, UINTN offset = 0U);
+	};
 };
 

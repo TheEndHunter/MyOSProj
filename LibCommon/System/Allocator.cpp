@@ -170,23 +170,84 @@ namespace Common::System
 
 }
 
-VOID_PTR __cdecl operator new(UINTN size)
+VOID_PTR operator new(UINTN size)
 {
+	if (!Common::System::Allocator::IsInitalized())
+	{
+		return nullptr;
+	}
 	return Common::System::Allocator::Allocate(size);
 }
 
-VOID_PTR __cdecl operator new[](UINTN size)
+VOID_PTR operator new[](UINTN size)
 {
+	if (!Common::System::Allocator::IsInitalized())
+	{
+		return nullptr;
+	}
 	return Common::System::Allocator::Allocate(size);
 }
 
-VOID __cdecl operator delete(VOID_PTR ptr)
+VOID_PTR operator new(UINTN size, VOID_PTR ptr)
 {
-	return Common::System::Allocator::Free(ptr);
+	return ptr;
 }
 
-VOID __cdecl operator delete[](VOID_PTR ptr)
+VOID_PTR operator new[](UINTN size, VOID_PTR ptr)
 {
-	return Common::System::Allocator::Free(ptr);
+	return ptr;
 }
 
+void operator delete(VOID_PTR ptr)
+{
+	if (!Common::System::Allocator::IsInitalized())
+	{
+		return;
+	}
+	Common::System::Allocator::Free(ptr);
+}
+
+void operator delete[](VOID_PTR ptr)
+{
+	if (!Common::System::Allocator::IsInitalized())
+	{
+		return;
+	}
+	Common::System::Allocator::Free(ptr);
+}
+
+void operator delete(VOID_PTR ptr, UINTN size)
+{
+	if (!Common::System::Allocator::IsInitalized())
+	{
+		return;
+	}
+	Common::System::Allocator::Free(ptr);
+}
+
+void operator delete[](VOID_PTR ptr, UINTN size)
+{
+	if (!Common::System::Allocator::IsInitalized())
+	{
+		return;
+	}
+	Common::System::Allocator::Free(ptr);
+}
+
+void operator delete(VOID_PTR ptr, VOID_PTR place)
+{
+	if (!Common::System::Allocator::IsInitalized())
+	{
+		return;
+	}
+	Common::System::Allocator::Free(ptr);
+}
+
+void operator delete[](VOID_PTR ptr, VOID_PTR place)
+{
+	if (!Common::System::Allocator::IsInitalized())
+	{
+		return;
+	}
+	Common::System::Allocator::Free(ptr);
+}

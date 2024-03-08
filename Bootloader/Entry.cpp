@@ -9,13 +9,14 @@
 #include <System/EfiAllocator.h>
 #include <System/Allocator.h>
 #include <System//AllocatorStatus.h>
-#include <FileTypes/PE.h>
+#include <FileTypes/PE32.h>
 
 namespace Bootloader
 {
     using namespace Common::Enviroment;
     using namespace Common::FileSystem;
     using namespace Common::Graphics;
+    using namespace Common::FileTypes;
 
     void PrintInfo(EFI_SYSTEM_TABLE* sysTbl, UINT8 color, const CHAR16* errorMessage, EFI_STATUS status)
     {
@@ -162,42 +163,22 @@ namespace Bootloader
             ThrowException(sysTbl, imgHndl, u"Could Not Open Kernel", sysFs.LastStatus);
         }
 
-        UINT8* kernelData = new UINT8[kernel.PhysicalSize];
+        PE32File* kernelFile = PE32File::Read(&kernelHandle);
 
-        Common::System::AllocatorStatus allocStatus = Common::System::Allocator::LastStatus();
-
-        if (allocStatus != Common::System::AllocatorStatus::Success)
+        if (kernelFile->DosHeader == nullptr)
         {
-            ThrowException(sysTbl, imgHndl, u"Could Not Allocate Memory for Kernel", Common::System::ToEfiStatus(allocStatus));
-        }
-
-        if (kernelData == nullptr)
-        {
-			ThrowException(sysTbl, imgHndl, u"Could Not Allocate Memory for Kernel", EFI_STATUS::OUT_OF_RESOURCES);
+			ThrowException(sysTbl, imgHndl, u"Invalid DOS Header", EFI::EFI_STATUS::INVALID_PARAMETER);
+            PrintDebug(sysTbl, u"Invalid PE Header", EFI::EFI_STATUS::INVALID_PARAMETER);
+            PrintDebug(sysTbl, UTF16::ToString(kernelFile->lastHeaderPosition));
+            WaitForKey(sysTbl);
 		}
 
-        UINTN kernelSize = (UINTN)kernel.PhysicalSize;
-
-        EFI_STATUS kernelLoadStatus = kernelHandle.Read(&kernelSize, kernelData);
-        if(kernelLoadStatus != EFI_STATUS::SUCCESS)
+        if (kernelFile->PEHeader == nullptr)
         {
-			ThrowException(sysTbl, imgHndl, u"Could Not Read Kernel", kernelLoadStatus);
-        }
-
-        Common::FileTypes::DOSHeader* dosHeader = (Common::FileTypes::DOSHeader*)&kernelData[0];
-
-        if(!Common::FileTypes::DOSHeader::VerifyHeader(dosHeader))
-        {
-			ThrowException(sysTbl, imgHndl, u"Invalid DOS Header Signature", EFI_STATUS::LOAD_ERROR);
+            PrintDebug(sysTbl, u"Invalid PE Header", EFI::EFI_STATUS::INVALID_PARAMETER);
+            PrintDebug(sysTbl, UTF16::ToString(kernelFile->lastHeaderPosition));
+            WaitForKey(sysTbl);
 		}
-
-		Common::FileTypes::PE32Header* peHeader = (Common::FileTypes::PE32Header*)&kernelData[dosHeader->PEHeaderOffset];
-
-		if (!Common::FileTypes::PE32Header::VerifyHeader(peHeader))
-		{
-            ThrowException(sysTbl, imgHndl, u"Invalid PE Header Signature", EFI_STATUS::LOAD_ERROR);
-		}
-
 
         WaitForKey(sysTbl);
         sysTbl->RuntimeServices->ResetSystem(EFI_RESET_TYPE::SHUTDOWN, EFI_STATUS::SUCCESS, 0, nullptr);

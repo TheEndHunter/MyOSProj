@@ -41,8 +41,16 @@ namespace Common::System
 	
 }
 
-VOID_PTR CDECL operator new(UINTN size);
-VOID_PTR CDECL operator new[](UINTN size);
-VOID	 CDECL operator delete(VOID_PTR ptr);
-VOID	 CDECL operator delete[](VOID_PTR ptr);
+/*Declare all overridable new and delete operator variants*/
 
+VOID_PTR operator new(UINTN size);
+VOID_PTR operator new[](UINTN size);
+VOID_PTR operator new(UINTN size, VOID_PTR ptr);
+VOID_PTR operator new[](UINTN size, VOID_PTR ptr);
+
+void operator delete(VOID_PTR ptr);
+void operator delete[](VOID_PTR ptr);
+void operator delete(VOID_PTR ptr, UINTN size);
+void operator delete[](VOID_PTR ptr, UINTN size);
+void operator delete(VOID_PTR ptr, VOID_PTR ptr2);
+void operator delete[](VOID_PTR ptr, VOID_PTR ptr2);

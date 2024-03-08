@@ -48,7 +48,7 @@
     <ClInclude Include="Graphics\Font\Font.h" />
     <ClInclude Include="Graphics\GraphicsContext.h" />
     <ClInclude Include="Math\Math.h" />
-    <ClInclude Include="FileTypes\PE.h" />
+    <ClInclude Include="FileTypes\PE32.h" />
     <ClInclude Include="System\Allocator.h" />
     <ClInclude Include="System\AllocatorStatus.h" />
     <ClInclude Include="System\BitMathCompat.h" />
@@ -67,7 +67,7 @@
     <ClCompile Include="FileSystem\VolumeInfo.cpp" />
     <ClCompile Include="FileSystem\VolumeInfo.h" />
     <ClCompile Include="Graphics\GraphicsContext.cpp" />
-    <ClCompile Include="FileTypes\PE.cpp" />
+    <ClCompile Include="FileTypes\PE32.cpp" />
     <ClCompile Include="System\Allocator.cpp" />
     <ClCompile Include="System\Console.cpp" />
     <ClCompile Include="System\EfiAllocator.cpp" />

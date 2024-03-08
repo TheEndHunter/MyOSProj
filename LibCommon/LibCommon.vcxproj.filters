@@ -54,7 +54,7 @@
     <ClInclude Include="FileSystem\FileStatus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileTypes\PE.h">
+    <ClInclude Include="FileTypes\PE32.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="System\BitMathCompat.h">
@@ -113,7 +113,7 @@
     <ClCompile Include="FileSystem\VolumeHandle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileTypes\PE.cpp">
+    <ClCompile Include="FileTypes\PE32.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="System\Allocator.cpp">
