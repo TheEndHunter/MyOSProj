@@ -37,7 +37,6 @@
   <ItemGroup>
     <ClInclude Include="Enviroment\StringComparisonMode.h" />
     <ClInclude Include="Enviroment\StringCulture.h" />
-    <ClInclude Include="FileTypes\COFF.h" />
     <ClInclude Include="FileSystem\FileAttribute.h" />
     <ClInclude Include="FileSystem\FileHandle.h" />
     <ClInclude Include="FileSystem\FileMode.h" />
@@ -50,7 +49,6 @@
     <ClInclude Include="Graphics\GraphicsContext.h" />
     <ClInclude Include="Math\Math.h" />
     <ClInclude Include="FileTypes\PE.h" />
-    <ClInclude Include="FileTypes\MSDOS.h" />
     <ClInclude Include="System\Allocator.h" />
     <ClInclude Include="System\AllocatorStatus.h" />
     <ClInclude Include="System\BitMathCompat.h" />
@@ -60,7 +58,6 @@
     <ClInclude Include="TypeDefs.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FileTypes\COFF.cpp" />
     <ClCompile Include="FileSystem\FileHandle.cpp" />
     <ClCompile Include="FileSystem\FileInfo.cpp" />
     <ClCompile Include="FileSystem\FileSystemContext.cpp" />
@@ -71,7 +68,6 @@
     <ClCompile Include="FileSystem\VolumeInfo.h" />
     <ClCompile Include="Graphics\GraphicsContext.cpp" />
     <ClCompile Include="FileTypes\PE.cpp" />
-    <ClCompile Include="FileTypes\MSDOS.cpp" />
     <ClCompile Include="System\Allocator.cpp" />
     <ClCompile Include="System\Console.cpp" />
     <ClCompile Include="System\EfiAllocator.cpp" />

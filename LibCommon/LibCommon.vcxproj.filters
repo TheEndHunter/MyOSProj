@@ -57,12 +57,6 @@
     <ClInclude Include="FileTypes\PE.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileTypes\COFF.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FileTypes\MSDOS.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="System\BitMathCompat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -120,12 +114,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FileTypes\PE.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FileTypes\COFF.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FileTypes\MSDOS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="System\Allocator.cpp">

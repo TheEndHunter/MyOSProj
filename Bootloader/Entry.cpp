@@ -9,6 +9,7 @@
 #include <System/EfiAllocator.h>
 #include <System/Allocator.h>
 #include <System//AllocatorStatus.h>
+#include <FileTypes/PE.h>
 
 namespace Bootloader
 {
@@ -182,6 +183,21 @@ namespace Bootloader
         {
 			ThrowException(sysTbl, imgHndl, u"Could Not Read Kernel", kernelLoadStatus);
         }
+
+        Common::FileTypes::DOSHeader* dosHeader = (Common::FileTypes::DOSHeader*)&kernelData[0];
+
+        if(!Common::FileTypes::DOSHeader::VerifyHeader(dosHeader))
+        {
+			ThrowException(sysTbl, imgHndl, u"Invalid DOS Header Signature", EFI_STATUS::LOAD_ERROR);
+		}
+
+		Common::FileTypes::PE32Header* peHeader = (Common::FileTypes::PE32Header*)&kernelData[dosHeader->PEHeaderOffset];
+
+		if (!Common::FileTypes::PE32Header::VerifyHeader(peHeader))
+		{
+            ThrowException(sysTbl, imgHndl, u"Invalid PE Header Signature", EFI_STATUS::LOAD_ERROR);
+		}
+
 
         WaitForKey(sysTbl);
         sysTbl->RuntimeServices->ResetSystem(EFI_RESET_TYPE::SHUTDOWN, EFI_STATUS::SUCCESS, 0, nullptr);
