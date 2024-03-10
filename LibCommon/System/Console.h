@@ -16,6 +16,7 @@ namespace Common::System
 		void Write(const CHAR16* fmt, Graphics::Color bg, ...);
 		void Write(const CHAR16* str, Graphics::Color bg, Graphics::Color fg);
 		void Write(const CHAR16* fmt, Graphics::Color bg,Graphics::Color fg, ...);
+
 		void WriteLine(const CHAR16* str);
 		void WriteLine(const CHAR16* fmt,...);
 		void WriteLine(const CHAR16* str, Graphics::Color bg);
@@ -29,12 +30,27 @@ namespace Common::System
 		void Write(const CHAR8* fmt, Graphics::Color bg, ...);
 		void Write(const CHAR8* str, Graphics::Color bg, Graphics::Color fg);
 		void Write(const CHAR8* fmt, Graphics::Color bg, Graphics::Color fg, ...);
+
 		void WriteLine(const CHAR8* str);
 		void WriteLine(const CHAR8* fmt, ...);
 		void WriteLine(const CHAR8* str, Graphics::Color bg);
 		void WriteLine(const CHAR8* fmt, Graphics::Color bg, ...);
 		void WriteLine(const CHAR8* str, Graphics::Color bg, Graphics::Color fg);
 		void WriteLine(const CHAR8* fmt, Graphics::Color bg, Graphics::Color fg ...);
+
+		void Write(const CCHAR str);
+		void Write(const CCHAR fmt, ...);
+		void Write(const CCHAR str, Graphics::Color bg);
+		void Write(const CCHAR fmt, Graphics::Color bg, ...);
+		void Write(const CCHAR str, Graphics::Color bg, Graphics::Color fg);
+		void Write(const CCHAR fmt, Graphics::Color bg, Graphics::Color fg, ...);
+
+		void WriteLine(const CCHAR str);
+		void WriteLine(const CCHAR fmt, ...);
+		void WriteLine(const CCHAR str, Graphics::Color bg);
+		void WriteLine(const CCHAR fmt, Graphics::Color bg, ...);
+		void WriteLine(const CCHAR str, Graphics::Color bg, Graphics::Color fg);
+		void WriteLine(const CCHAR fmt, Graphics::Color bg, Graphics::Color fg ...);
 
 		CHAR16 ReadKey();
 		CHAR16* ReadLine();

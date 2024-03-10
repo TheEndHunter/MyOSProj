@@ -34,9 +34,6 @@
 #error "Unknown architecture"
 #endif
 
-
-
-
 /*
 *  Setup defines for Data Type Sizes Per Processor Bitness based on edk2, switching based on on of the following compilers being used:
 * including wide character support
@@ -49,13 +46,16 @@
 #define VOID_PTR void*
 #define VOID_PTR_PTR void**
 #define PTR_SIZE (UINTN)sizeof(VOID_PTR)
-#define CHAR8 char
+#define CCHAR char
 
 #if defined(__cpp_unicode_characters)
+#define CHAR8 char8_t
 #define CHAR16 char16_t
 #elif defined(_NATIVE_WCHAR_T_DEFINED)
+#define CHAR8 char
 #define CHAR16 wchar_t
 #else
+#define CHAR8 INT8
 #define CHAR16 INT16
 #endif
 
@@ -111,7 +111,7 @@
 #define ALIGN(x) __attribute__((aligned(x)))
 #else
 #error "Unknown compiler"
-#endif`Rs282122
+#endif`
 
 
 
@@ -149,8 +149,6 @@ struct uint128
 #define MIN_INT128 0x80000000000000000000000000000000
 #endif
 
-
-
 /*Defines MAX and MIN values for all UINT and INT Types, including UINTN and INTN based on Bitness of CPU*/
 
 #define MAX_UINT8 0xff
@@ -174,6 +172,20 @@ struct uint128
 #define MIN_INT16 0x8000
 #define MIN_INT32 0x80000000
 #define MIN_INT64 0x8000000000000000
+
+#ifdef BITS_32
+#define MAX_UINTN MAX_UINT32
+#define MAX_INTN MAX_INT32
+#define MIN_UINTN MIN_UINT32
+#define MIN_INTN MIN_INT32
+#elif defined(BITS_64)
+#define MAX_UINTN MAX_UINT64
+#define MAX_INTN MAX_INT64
+#define MIN_UINTN MIN_UINT64
+#define MIN_INTN MIN_INT64
+#else
+#error "Unknown architecture"
+#endif
 
 
 /*
@@ -212,7 +224,6 @@ struct uint128
 #define EFIAPI  __cdecl
 #define EFIAPIV  __cdecl
 #endif
-
 #if defined(x64)
 #define EFIAPI  __vectorcall
 #define EFIAPIV  __vectorcall
@@ -282,8 +293,3 @@ struct uint128
 #else
 #error "Unknown compiler"
 #endif
-
-
-
-
-

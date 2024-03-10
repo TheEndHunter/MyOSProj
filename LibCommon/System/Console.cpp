@@ -106,6 +106,54 @@ namespace Common::System
 	{
 	}
 
+	void Console::Write(const CCHAR str)
+	{
+	}
+
+	void Console::Write(const CCHAR fmt, ...)
+	{
+	}
+
+	void Console::Write(const CCHAR str, Graphics::Color bg)
+	{
+	}
+
+	void Console::Write(const CCHAR fmt, Graphics::Color bg, ...)
+	{
+	}
+
+	void Console::Write(const CCHAR str, Graphics::Color bg, Graphics::Color fg)
+	{
+	}
+
+	void Console::Write(const CCHAR fmt, Graphics::Color bg, Graphics::Color fg, ...)
+	{
+	}
+
+	void Console::WriteLine(const CCHAR str)
+	{
+	}
+
+	void Console::WriteLine(const CCHAR fmt, ...)
+	{
+	}
+
+	void Console::WriteLine(const CCHAR str, Graphics::Color bg)
+	{
+	}
+
+	void Console::WriteLine(const CCHAR fmt, Graphics::Color bg, ...)
+	{
+	}
+
+	void Console::WriteLine(const CCHAR str, Graphics::Color bg, Graphics::Color fg)
+	{
+	}
+
+	void Console::WriteLine(const CCHAR fmt, Graphics::Color bg, Graphics::Color fg ...)
+	{
+	}
+
 	CHAR16 Console::ReadKey()
 	{
 		return '\0';

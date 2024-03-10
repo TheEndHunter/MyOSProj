@@ -32,7 +32,7 @@ namespace Common::System
 		static VOID_PTR	AllocatePageZeroed(UINTN pageCount);
 		static VOID		FreePage(VOID_PTR ptr, UINTN pageCount);
 		
-		static void SetAllocators(AllocFunc& allocFunc, AllocZeroedFunc& allocZeroFunc, AllocPageFunc& allocPageFunc, AllocPageZeroedFunc& allocPageZeroFunc, FreeFunc& freeFunc, FreePageFunc& freePageFunc, GetStatusFunc& getStatusFunc, SetStatusFunc& setStatusFunc);
+		static void SetAllocators(AllocFunc* allocFunc, AllocZeroedFunc* allocZeroFunc, AllocPageFunc* allocPageFunc, AllocPageZeroedFunc* allocPageZeroFunc, FreeFunc* freeFunc, FreePageFunc* freePageFunc, GetStatusFunc* getStatusFunc, SetStatusFunc* setStatusFunc);
 		
 		static BOOLEAN IsInitalized();
 		static AllocatorStatus LastStatus();

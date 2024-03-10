@@ -54,9 +54,6 @@
     <ClInclude Include="FileSystem\FileStatus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileTypes\PE32.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="System\BitMathCompat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -76,6 +73,30 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="System\MemFuncs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileTypes\PE\MSDos.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileTypes\PE\PE32Header.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileTypes\PE\PE32OptionHeader32.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileTypes\PE\PE32OptionHeader64.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileTypes\PE\PE32DLLCharacteristics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileTypes\PE\PE32OptionHeader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileTypes\PE\PE32DataDirectory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FileTypes\PE\PE32.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -113,9 +134,6 @@
     <ClCompile Include="FileSystem\VolumeHandle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileTypes\PE32.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="System\Allocator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -123,6 +141,24 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="System\MemFuncs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FileTypes\PE\MSDos.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FileTypes\PE\PE32Header.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FileTypes\PE\PE32OptionHeader32.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FileTypes\PE\PE32OptionHeader64.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FileTypes\PE\PE32OptionHeader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FileTypes\PE\PE32.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

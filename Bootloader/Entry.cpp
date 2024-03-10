@@ -9,14 +9,14 @@
 #include <System/EfiAllocator.h>
 #include <System/Allocator.h>
 #include <System//AllocatorStatus.h>
-#include <FileTypes/PE32.h>
+#include <FileTypes/PE/PE32.h>
 
 namespace Bootloader
 {
     using namespace Common::Enviroment;
     using namespace Common::FileSystem;
     using namespace Common::Graphics;
-    using namespace Common::FileTypes;
+    using namespace Common::FileTypes::PE;
 
     void PrintInfo(EFI_SYSTEM_TABLE* sysTbl, UINT8 color, const CHAR16* errorMessage, EFI_STATUS status)
     {
@@ -163,22 +163,9 @@ namespace Bootloader
             ThrowException(sysTbl, imgHndl, u"Could Not Open Kernel", sysFs.LastStatus);
         }
 
-        PE32File* kernelFile = PE32File::Read(&kernelHandle);
+        PE32 krnlPE = PE32(&kernelHandle);
 
-        if (kernelFile->DosHeader == nullptr)
-        {
-			ThrowException(sysTbl, imgHndl, u"Invalid DOS Header", EFI::EFI_STATUS::INVALID_PARAMETER);
-            PrintDebug(sysTbl, u"Invalid PE Header", EFI::EFI_STATUS::INVALID_PARAMETER);
-            PrintDebug(sysTbl, UTF16::ToString(kernelFile->lastHeaderPosition));
-            WaitForKey(sysTbl);
-		}
-
-        if (kernelFile->PEHeader == nullptr)
-        {
-            PrintDebug(sysTbl, u"Invalid PE Header", EFI::EFI_STATUS::INVALID_PARAMETER);
-            PrintDebug(sysTbl, UTF16::ToString(kernelFile->lastHeaderPosition));
-            WaitForKey(sysTbl);
-		}
+        PrintDebug(sysTbl,UTF16::ToString(krnlPE.IsValid()),EFI::EFI_STATUS::SUCCESS);
 
         WaitForKey(sysTbl);
         sysTbl->RuntimeServices->ResetSystem(EFI_RESET_TYPE::SHUTDOWN, EFI_STATUS::SUCCESS, 0, nullptr);

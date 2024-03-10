@@ -32,9 +32,19 @@ namespace Common::FileSystem
 		return _File->Read(_File, bufferSize, buffer);
 	}
 
+	EFI::EFI_STATUS FileHandle::Read(const UINTN bufferSize, void* buffer)
+	{
+		return _File->Read(_File, (UINTN*)&bufferSize, buffer);
+	}
+
 	EFI::EFI_STATUS FileHandle::Write(UINTN* bufferSize, void* buffer)
 	{
 		return _File->Write(_File, bufferSize, buffer);
+	}
+
+	EFI::EFI_STATUS FileHandle::Write(const UINTN bufferSize, void* buffer)
+	{
+		return _File->Write(_File, (UINTN*)&bufferSize, buffer);
 	}
 
 	EFI::EFI_STATUS FileHandle::GetPosition(UINT64* position)
@@ -42,9 +52,14 @@ namespace Common::FileSystem
 		return _File->GetPosition(_File, position);
 	}
 
-	EFI::EFI_STATUS FileHandle::SetPosition(UINT64 position)
+	EFI::EFI_STATUS FileHandle::SetPosition(const UINT64 position)
 	{
 		return _File->SetPosition(_File, position);
+	}
+
+	EFI::EFI_STATUS FileHandle::GetPosition(UINT64 position)
+	{
+		return _File->GetPosition(_File, &position);
 	}
 
 	EFI::EFI_STATUS FileHandle::GetInfo(EFI::EFI_GUID* infoType, UINTN* bufferSize, void* buffer)

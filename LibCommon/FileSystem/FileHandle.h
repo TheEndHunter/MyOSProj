@@ -29,11 +29,14 @@ namespace Common::FileSystem
 		*/
 
 		EFI::EFI_STATUS Read(UINTN* bufferSize, void* buffer);
+		EFI::EFI_STATUS Read(const UINTN bufferSize, void* buffer);
 		EFI::EFI_STATUS Write(UINTN* bufferSize, void* buffer);
+		EFI::EFI_STATUS Write(const UINTN bufferSize, void* buffer);
 		EFI::EFI_STATUS GetPosition(UINT64* position);
-		EFI::EFI_STATUS SetPosition(UINT64 position);
+		EFI::EFI_STATUS GetPosition(UINT64 position);
+		EFI::EFI_STATUS SetPosition(const UINT64 position);
 		EFI::EFI_STATUS GetInfo(EFI::EFI_GUID* infoType, UINTN* bufferSize, void* buffer);
-		EFI::EFI_STATUS SetInfo(EFI::EFI_GUID* infoType, UINTN bufferSize, void* buffer);
+		EFI::EFI_STATUS SetInfo(EFI::EFI_GUID* infoType,const UINTN bufferSize, void* buffer);
 		EFI::EFI_STATUS Flush();
 		EFI::EFI_STATUS Close();
 		EFI::EFI_STATUS Delete();

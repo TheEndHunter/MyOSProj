@@ -84,7 +84,7 @@ namespace Common::System
 		_lastStatus = _getStatusFunc();
 	}
 
-	void Allocator::SetAllocators(AllocFunc& allocFunc,AllocZeroedFunc& allocZeroFunc, AllocPageFunc& allocPageFunc, AllocPageZeroedFunc& allocPageZeroFunc, FreeFunc& freeFunc, FreePageFunc& freePageFunc, GetStatusFunc& getStatusFunc, SetStatusFunc& setStatusFunc)
+	void Allocator::SetAllocators(AllocFunc* allocFunc,AllocZeroedFunc* allocZeroFunc, AllocPageFunc* allocPageFunc, AllocPageZeroedFunc* allocPageZeroFunc, FreeFunc* freeFunc, FreePageFunc* freePageFunc, GetStatusFunc* getStatusFunc, SetStatusFunc* setStatusFunc)
 	{
 		/*if any or all of the function pointers are zero, return nullptr*/
 		if (setStatusFunc == nullptr)
@@ -94,7 +94,6 @@ namespace Common::System
 			return;
 		};
 
-		_lastStatus = AllocatorStatus::Success;
 
 		if (allocFunc == nullptr)
 		{
@@ -148,6 +147,7 @@ namespace Common::System
 		_freePageFunc = freePageFunc;
 		_getStatusFunc = getStatusFunc;
 
+		_lastStatus = AllocatorStatus::Success;
 		_isInitalized = TRUE;
 	}
 
