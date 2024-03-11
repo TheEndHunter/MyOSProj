@@ -203,6 +203,11 @@ namespace Common::Enviroment
 
 	CHAR16* UTF16::ToHex(const UINT64 value)
 	{
+		UINTN i = value;
+		for (;i > 0; i >>= 4)
+		{
+			_UTF16_HEXSTRING[i] = _UTF16_HEXCHARS[i & 0xF];
+		}
 		_UTF16_HEXSTRING[0] = _UTF16_HEXCHARS[(value >> 60) & 0xF];
 		_UTF16_HEXSTRING[1] = _UTF16_HEXCHARS[(value >> 56) & 0xF];
 		_UTF16_HEXSTRING[2] = _UTF16_HEXCHARS[(value >> 52) & 0xF];

@@ -9,8 +9,6 @@ namespace Bootloader
 {
 	using namespace EFI;
 
-	constinit const CHAR16* boot_GOP_LOCATE_ERROR = u"Error in Locate Protocol: ";
-
 	static void PrintInfo(EFI_SYSTEM_TABLE* sysTbl, UINT8 color, const CHAR16* errorMessage, EFI_STATUS status = EFI_STATUS::SUCCESS);
 	static void PrintDebug(EFI_SYSTEM_TABLE* sysTbl, const CHAR16* errorMessage, EFI_STATUS status = EFI_STATUS::SUCCESS);
 	static void PrintError(EFI_SYSTEM_TABLE* sysTbl, const CHAR16* errorMessage, EFI_STATUS status = EFI_STATUS::SUCCESS);

@@ -99,6 +99,9 @@
     <ClInclude Include="FileTypes\PE\PE32.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FileTypes\PE\PE32SectionHeader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TypeDefs.cpp">
@@ -159,6 +162,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FileTypes\PE\PE32.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FileTypes\PE\PE32SectionHeader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

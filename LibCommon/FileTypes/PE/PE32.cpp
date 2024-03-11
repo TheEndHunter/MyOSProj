@@ -41,16 +41,23 @@ namespace Common::FileTypes::PE
 
 		if(OptHdrCommon.Magic.Value == 0x10B)
 		{
-			OptHdr.X86 = new PE32OptionHeader32(handle);
+			OptHdr.PE32 = new PE32OptionHeader32(handle);
 		}
 		else if(OptHdrCommon.Magic.Value == 0x20B)
 		{
-			OptHdr.X64 = new PE32OptionHeader64(handle);
+			OptHdr.PE32PLUS = new PE32OptionHeader64(handle);
 		}
 		else
 		{
 			_isValid = FALSE;
 			return;
+		}
+
+		SectionHeaders = (PE32SectionHeader*)System::Allocator::Allocate(sizeof(PE32SectionHeader)* PE32hdr.NumberOfSections);
+
+		for (UINT16 i = 0; i < PE32hdr.NumberOfSections; i++)
+		{
+			SectionHeaders[i] = PE32SectionHeader(handle);
 		}
 
 		_isValid = TRUE;

@@ -6,12 +6,14 @@
 #include <FileTypes/PE/PE32OptionHeader32.h>
 #include <FileTypes/PE/PE32OptionHeader64.h>
 #include <FileTypes/PE/PE32DataDirectory.h>
+#include <FileTypes/PE/PE32SectionHeader.h>
 #include <FileTypes/PE/PE32DLLCharacteristics.h>
 #include <System/Allocator.h>
 #include <FileSystem/FileHandle.h>
 
 namespace Common::FileTypes::PE
 {
+
 	struct PE32
 	{
 	public:
@@ -27,9 +29,11 @@ namespace Common::FileTypes::PE
 		private:
 			void* _optionHeaders;
 		public:
-			PE32OptionHeader32* X86;
-			PE32OptionHeader64* X64;
+			PE32OptionHeader32* PE32;
+			PE32OptionHeader64* PE32PLUS;
 		}OptHdr;
+
+		PE32SectionHeader* SectionHeaders;
 	private:
 		BOOLEAN _isValid;
 	};

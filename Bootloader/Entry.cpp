@@ -102,30 +102,64 @@ namespace Bootloader
 
         GraphicsContext gop = GraphicsContext::Initialize(imgHndl, sysTbl);
 
-        if (GraphicsContext::LastStatus != EFI::EFI_STATUS::SUCCESS)
-        {
-            ThrowException(sysTbl,imgHndl, boot_GOP_LOCATE_ERROR,GraphicsContext::LastStatus);
-        }
+        /*
+        * Select highest resolution
+        */
 
-        gop.ClearScreen();
+        UINTN modes = gop.GetModeCount();
+
+        Print(sysTbl, u"Number of Modes: ", EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+        PrintDebug(sysTbl, UTF16::ToString(modes));
+
+        UINTN modeInfoSize = sizeof(EFI_GRAPHICS_OUTPUT_MODE_INFORMATION);
+
+        UINTN maxH = 0;
+        UINTN maxV = 0;
+        UINTN HighestResMode = 0;
+
+        for (UINTN i = 0; i < modes; i++)
+        {
+            EFI_GRAPHICS_OUTPUT_MODE_INFORMATION* info = new EFI_GRAPHICS_OUTPUT_MODE_INFORMATION();
+            EFI::EFI_STATUS s = gop.QueryMode(i,&modeInfoSize,&info);
+
+            if (s != EFI::EFI_STATUS::SUCCESS)
+            {
+				ThrowException(sysTbl, imgHndl,u"Unable to Query GOP modes", s);
+			}
+
+            if (info->VerticalResolution > maxV || info->HorizontalResolution > maxH)
+            {
+                Print(sysTbl, u"Mode: ", EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+                Print(sysTbl, UTF16::ToString(i), EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+                Print(sysTbl, u" Width: ", EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+                Print(sysTbl, UTF16::ToString(info->HorizontalResolution), EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+                Print(sysTbl, u" Height: ", EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+                PrintDebug(sysTbl, UTF16::ToString(info->VerticalResolution));
+
+				maxH = info->HorizontalResolution;
+				maxV = info->VerticalResolution;
+                HighestResMode = i;
+			}
+            delete info;
+		}
+        EFI::EFI_STATUS s = gop.SetMode(HighestResMode);
+        gop.ClearScreen(Colors::Black);
+        sysTbl->ConOut->SetCursorPosition(sysTbl->ConOut, 0, 0);
+        
+        if (s != EFI::EFI_STATUS::SUCCESS)
+        {
+            ThrowException(sysTbl,imgHndl, u"Unable to Set GOP mode" ,s);
+        }
 
         UINTN w = gop.GetWidth();
         UINTN h = gop.GetHeight();
 
-        UINTN cX = w / 2;
-        UINTN cY = h / 2;
-
-        UINTN x1 = w / 3;
-        UINTN y1 = h / 3;
-
-        UINTN x2 = w / 4;
-        UINTN y2 = h / 4;
-
-        UINTN posX = cX - (x2 / 2);
-        UINTN posY = cY - (y2 / 2);
-
-        gop.DrawFilledRectangle(x1, y1, x1, y1, Colors::MediumVioletRed);
-        gop.DrawFilledRectangle(posX, posY, x2, y2, Colors::HotPink);
+        Print(sysTbl, u"Selected Mode: ", EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+        Print(sysTbl, UTF16::ToString(gop.GetCurrentMode()), EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+        Print(sysTbl, u" Width: ", EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+        Print(sysTbl, UTF16::ToString(w), EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+        Print(sysTbl, u" Height: ", EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+        PrintDebug(sysTbl, UTF16::ToString(h));
 
         UINTN fsCount = FileSystemContext::QueryFSCount(sysTbl, imgHndl);
 
@@ -165,7 +199,126 @@ namespace Bootloader
 
         PE32 krnlPE = PE32(&kernelHandle);
 
-        PrintDebug(sysTbl,UTF16::ToString(krnlPE.IsValid()),EFI::EFI_STATUS::SUCCESS);
+        if (!krnlPE.IsValid())
+        {
+			ThrowException(sysTbl, imgHndl, u"Invalid Kernel PE", EFI::EFI_STATUS::INVALID_PARAMETER);
+		}
+
+        PrintDebug(sysTbl, UTF16::ToHex(krnlPE.OptHdrCommon.AddressOfEntryPoint));
+        
+        UINTN imgBase;
+        if (krnlPE.PE32hdr.Machine == MachineTypes::I386)
+        {
+            PrintDebug(sysTbl, u"Machine Type: I386");
+            if (krnlPE.OptHdrCommon.Magic.Value = 0x10b)
+            {
+                PrintDebug(sysTbl, u"Magic: PE32");
+                for (UINTN i = 0; i < krnlPE.OptHdr.PE32->NumberOfRvaAndSizes; i++)
+                {
+                    Print(sysTbl, u"Data Directory: ", EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+                    Print(sysTbl, UTF16::ToString(i), EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+                    Print(sysTbl,u"VA: ",EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+                    Print(sysTbl, UTF16::ToHex(krnlPE.OptHdr.PE32->DataDirectories[i].VirtualAddress), EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+                    Print(sysTbl, u" Size:", EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+				    PrintDebug(sysTbl, UTF16::ToString(krnlPE.OptHdr.PE32->DataDirectories[i].Size));
+			    }
+                imgBase = krnlPE.OptHdr.PE32->ImageBase;
+			}
+            else if (krnlPE.OptHdrCommon.Magic.Value = 0x20b)
+            {
+				PrintDebug(sysTbl, u"Magic: PE32+");
+                for (UINTN i = 0; i < krnlPE.OptHdr.PE32PLUS->NumberOfRvaAndSizes; i++)
+                {
+					Print(sysTbl, u"Data Directory: ", EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+					Print(sysTbl, UTF16::ToString(i), EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+					Print(sysTbl, u"VA: ", EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+					Print(sysTbl, UTF16::ToHex(krnlPE.OptHdr.PE32PLUS->DataDirectories[i].VirtualAddress), EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+					Print(sysTbl, u" Size:", EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+					PrintDebug(sysTbl, UTF16::ToString(krnlPE.OptHdr.PE32PLUS->DataDirectories[i].Size));
+				}
+                imgBase = krnlPE.OptHdr.PE32PLUS->ImageBase;
+			}
+            else
+            {
+				ThrowException(sysTbl, imgHndl, u"Invalid Magic Value", EFI::EFI_STATUS::INVALID_PARAMETER);
+			}
+        }
+        else if (krnlPE.PE32hdr.Machine == MachineTypes::Amd64)
+        {
+            PrintDebug(sysTbl, u"Machine Type: AMD64");
+            if (krnlPE.OptHdrCommon.Magic.Value = 0x010B)
+            {
+                PrintDebug(sysTbl, u"Magic: PE32");
+                for (UINTN i = 0; i < krnlPE.OptHdr.PE32->NumberOfRvaAndSizes; i++)
+                {
+                    Print(sysTbl, u"Data Directory: ", EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+                    Print(sysTbl, UTF16::ToString(i), EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+                    Print(sysTbl, u"VA: ", EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+                    Print(sysTbl, UTF16::ToHex(krnlPE.OptHdr.PE32->DataDirectories[i].VirtualAddress), EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+                    Print(sysTbl, u" Size:", EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+                    PrintDebug(sysTbl, UTF16::ToString(krnlPE.OptHdr.PE32->DataDirectories[i].Size));
+                }
+                imgBase = krnlPE.OptHdr.PE32->ImageBase;
+            }
+            else if (krnlPE.OptHdrCommon.Magic.Value = 0x020B)
+            {
+                PrintDebug(sysTbl, u"Magic: PE32+");
+                for (UINTN i = 0; i < krnlPE.OptHdr.PE32PLUS->NumberOfRvaAndSizes; i++)
+                {
+                    Print(sysTbl, u"Data Directory: ", EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+                    Print(sysTbl, UTF16::ToString(i), EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+                    Print(sysTbl, u"VA: ", EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+                    Print(sysTbl, UTF16::ToHex(krnlPE.OptHdr.PE32PLUS->DataDirectories[i].VirtualAddress), EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+                    Print(sysTbl, u" Size:", EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+                    PrintDebug(sysTbl, UTF16::ToString(krnlPE.OptHdr.PE32PLUS->DataDirectories[i].Size));
+                }
+                imgBase = krnlPE.OptHdr.PE32PLUS->ImageBase;
+            }
+            else
+            {
+                ThrowException(sysTbl, imgHndl, u"Invalid Magic Value", EFI::EFI_STATUS::INVALID_PARAMETER);
+            }
+
+
+		}
+        else
+        {
+			ThrowException(sysTbl, imgHndl, u"Invalid Machine Type", EFI::EFI_STATUS::INVALID_PARAMETER);
+		}
+
+        PrintDebug(sysTbl, u"Image Base: ");
+        PrintDebug(sysTbl, UTF16::ToHex(imgBase));
+
+        CHAR16 name[9] = { '\0','\0' ,'\0' ,'\0' ,'\0' ,'\0' ,'\0' ,'\0' ,'\0' };
+        for (UINTN i = 0; i < krnlPE.PE32hdr.NumberOfSections; i++)
+        {
+            PE32SectionHeader* section = &krnlPE.SectionHeaders[i];
+            Print(sysTbl, u"Section: ", EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+            Print(sysTbl, UTF16::ToString(i), EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+            Print(sysTbl, u" Name: ", EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+            name[0] = section->Name[0];
+            name[1] = section->Name[1];
+            name[2] = section->Name[2];
+            name[3] = section->Name[3];
+            name[4] = section->Name[4];
+            name[5] = section->Name[5];
+            name[6] = section->Name[6];
+            name[7] = section->Name[7];
+            name[8] = u'\0';
+            Print(sysTbl, &name[0], EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+			Print(sysTbl, u" VA: ", EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+			Print(sysTbl, UTF16::ToHex(section->VirtualAddress), EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+			Print(sysTbl, u" Size: ", EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+			Print(sysTbl, UTF16::ToString(section->SizeOfRawData));
+            Print(sysTbl, u" RawDataOffset: ", EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+            Print(sysTbl, UTF16::ToHex(section->PointerToRawData), EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+            Print(sysTbl, u" NO Relocations: ", EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+            Print(sysTbl, UTF16::ToString(section->NumberOfRelocations), EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+            Print(sysTbl, u" NO Line Numbers: ", EFI::EFI_CONSOLE_COLOR::DEBUG_COLOR);
+            PrintDebug(sysTbl, UTF16::ToString(section->NumberOfLinenumbers));
+        }
+
+        gop.Terminate(imgHndl, sysTbl);
 
         WaitForKey(sysTbl);
         sysTbl->RuntimeServices->ResetSystem(EFI_RESET_TYPE::SHUTDOWN, EFI_STATUS::SUCCESS, 0, nullptr);

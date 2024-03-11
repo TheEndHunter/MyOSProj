@@ -333,14 +333,14 @@ namespace Common::Graphics
 
 		return gop->SetMode(gop, modeNumber);
 	};
-	EFI::EFI_STATUS GraphicsContext::QueryMode(UINT32 modeNumber, OUT UINTN* size, OUT EFI::EFI_GRAPHICS_OUTPUT_MODE_INFORMATION* info)
+	EFI::EFI_STATUS GraphicsContext::QueryMode(UINT32 modeNumber, OUT UINTN* size, OUT EFI::EFI_GRAPHICS_OUTPUT_MODE_INFORMATION** info)
 	{
 		if (modeNumber >= gop->Mode->MaxMode)
 		{
 			return EFI::EFI_STATUS::UNSUPPORTED;
 		}
 
-		return gop->QueryMode(gop, modeNumber, size, (EFI_GRAPHICS_OUTPUT_MODE_INFORMATION**)info);
+		return gop->QueryMode(gop, modeNumber, size, info);
 	};
 
 	UINT32 GraphicsContext::GetModeCount()

@@ -21,7 +21,7 @@ namespace Common::Graphics
 
         Color GetBackground() const;
         Color GetForeground() const;
-        EFI::EFI_STATUS QueryMode(UINT32 modeNumber,OUT UINTN* size,OUT EFI::EFI_GRAPHICS_OUTPUT_MODE_INFORMATION* info);
+        EFI::EFI_STATUS QueryMode(UINT32 modeNumber,OUT UINTN* size,OUT EFI::EFI_GRAPHICS_OUTPUT_MODE_INFORMATION** info);
         EFI::EFI_STATUS SetMode(UINT32 modeNumber);
         UINT32 GetCurrentMode();
         UINT32 GetModeCount();
