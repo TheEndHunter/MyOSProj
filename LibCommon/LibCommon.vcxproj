@@ -53,15 +53,20 @@
     <ClInclude Include="FileTypes\PE\PE32OptionHeader32.h" />
     <ClInclude Include="FileTypes\PE\PE32OptionHeader64.h" />
     <ClInclude Include="FileTypes\PE\PE32SectionHeader.h" />
-    <ClInclude Include="Graphics\Color.h" />
+    <ClInclude Include="Graphics\Colour.h" />
     <ClInclude Include="Graphics\Font\Font.h" />
     <ClInclude Include="Graphics\GraphicsContext.h" />
+    <ClInclude Include="Graphics\MonitorContext.h" />
+    <ClInclude Include="Graphics\MonitorMode.h" />
+    <ClInclude Include="Graphics\Pixel.h" />
+    <ClInclude Include="Graphics\PixelBitMask.h" />
+    <ClInclude Include="Graphics\PixelFormat.h" />
+    <ClInclude Include="Graphics\RenderContext.h" />
     <ClInclude Include="Math\Math.h" />
     <ClInclude Include="System\Allocator.h" />
     <ClInclude Include="System\AllocatorStatus.h" />
     <ClInclude Include="System\BitMathCompat.h" />
     <ClInclude Include="System\Console.h" />
-    <ClInclude Include="System\EfiAllocator.h" />
     <ClInclude Include="System\MemFuncs.h" />
     <ClInclude Include="TypeDefs.h" />
   </ItemGroup>
@@ -82,9 +87,11 @@
     <ClCompile Include="FileTypes\PE\PE32OptionHeader64.cpp" />
     <ClCompile Include="FileTypes\PE\PE32SectionHeader.cpp" />
     <ClCompile Include="Graphics\GraphicsContext.cpp" />
+    <ClCompile Include="Graphics\MonitorContext.cpp" />
+    <ClCompile Include="Graphics\MonitorMode.cpp" />
+    <ClCompile Include="Graphics\RenderContext.cpp" />
     <ClCompile Include="System\Allocator.cpp" />
     <ClCompile Include="System\Console.cpp" />
-    <ClCompile Include="System\EfiAllocator.cpp" />
     <ClCompile Include="System\MemFuncs.cpp" />
     <ClCompile Include="TypeDefs.cpp" />
   </ItemGroup>
@@ -116,38 +123,46 @@
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>Static</UseOfMfc>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>Static</UseOfMfc>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <WindowsSDKDesktopARMSupport>true</WindowsSDKDesktopARMSupport>
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>Static</UseOfMfc>
+    <PreferredToolArchitecture>x86</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <WindowsSDKDesktopARM64Support>true</WindowsSDKDesktopARM64Support>
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>Static</UseOfMfc>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>Static</UseOfMfc>
+    <PreferredToolArchitecture>x86</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <WindowsSDKDesktopARMSupport>true</WindowsSDKDesktopARMSupport>
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>Static</UseOfMfc>
+    <PreferredToolArchitecture>x86</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <WindowsSDKDesktopARM64Support>true</WindowsSDKDesktopARM64Support>
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>Static</UseOfMfc>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>Static</UseOfMfc>
+    <PreferredToolArchitecture>x86</PreferredToolArchitecture>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -224,6 +239,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
       <ExceptionHandling>false</ExceptionHandling>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -257,6 +273,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
       <ExceptionHandling>false</ExceptionHandling>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -289,6 +306,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
       <ExceptionHandling>false</ExceptionHandling>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -322,6 +340,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
       <ExceptionHandling>false</ExceptionHandling>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -352,6 +371,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
       <ExceptionHandling>false</ExceptionHandling>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Lib>
       <SubSystem>EFI Application</SubSystem>
@@ -376,6 +396,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
       <ExceptionHandling>false</ExceptionHandling>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Lib>
       <SubSystem>EFI Application</SubSystem>
@@ -400,6 +421,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
       <ExceptionHandling>false</ExceptionHandling>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Lib>
       <SubSystem>EFI Application</SubSystem>
@@ -424,6 +446,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
       <ExceptionHandling>false</ExceptionHandling>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Lib>
       <SubSystem>EFI Application</SubSystem>

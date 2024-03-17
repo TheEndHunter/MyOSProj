@@ -40,7 +40,6 @@
     <ProjectGuid>{93114b72-b03a-45c4-9928-f71537dfcbf1}</ProjectGuid>
     <RootNamespace>Bootloader</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <TargetExt>.efi</TargetExt>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -48,8 +47,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
-    <PreferredToolArchitecture>
-    </PreferredToolArchitecture>
+    <PreferredToolArchitecture>x86</PreferredToolArchitecture>
     <SpectreMitigation>Spectre</SpectreMitigation>
     <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
@@ -59,8 +57,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
-    <PreferredToolArchitecture>
-    </PreferredToolArchitecture>
+    <PreferredToolArchitecture>x86</PreferredToolArchitecture>
     <SpectreMitigation>Spectre</SpectreMitigation>
     <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
@@ -70,8 +67,7 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <PreferredToolArchitecture>
-    </PreferredToolArchitecture>
+    <PreferredToolArchitecture>x86</PreferredToolArchitecture>
     <SpectreMitigation>Spectre</SpectreMitigation>
     <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
@@ -82,8 +78,7 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <PreferredToolArchitecture>
-    </PreferredToolArchitecture>
+    <PreferredToolArchitecture>x86</PreferredToolArchitecture>
     <SpectreMitigation>Spectre</SpectreMitigation>
     <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
@@ -94,6 +89,7 @@
     <CharacterSet>Unicode</CharacterSet>
     <SpectreMitigation>Spectre</SpectreMitigation>
     <UseOfMfc>Static</UseOfMfc>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">
     <WindowsSDKDesktopARM64Support>true</WindowsSDKDesktopARM64Support>
@@ -103,6 +99,7 @@
     <CharacterSet>Unicode</CharacterSet>
     <SpectreMitigation>Spectre</SpectreMitigation>
     <UseOfMfc>Static</UseOfMfc>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -112,6 +109,7 @@
     <CharacterSet>Unicode</CharacterSet>
     <SpectreMitigation>Spectre</SpectreMitigation>
     <UseOfMfc>Static</UseOfMfc>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -122,6 +120,7 @@
     <CharacterSet>Unicode</CharacterSet>
     <SpectreMitigation>Spectre</SpectreMitigation>
     <UseOfMfc>Static</UseOfMfc>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -162,6 +161,7 @@
     <ExcludePath />
     <TargetName>BOOTX64</TargetName>
     <LinkIncremental>false</LinkIncremental>
+    <TargetExt>.efi</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\EFI\efi\boot\</OutDir>
@@ -172,6 +172,7 @@
     <ExcludePath />
     <TargetName>BOOTAA64</TargetName>
     <LinkIncremental>false</LinkIncremental>
+    <TargetExt>.efi</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\EFI\efi\boot\</OutDir>
@@ -182,6 +183,7 @@
     <ExcludePath />
     <LibraryWPath />
     <TargetName>BOOTX64</TargetName>
+    <TargetExt>.efi</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\EFI\efi\boot\</OutDir>
@@ -192,6 +194,7 @@
     <ExcludePath />
     <LibraryWPath />
     <TargetName>BOOTAA64</TargetName>
+    <TargetExt>.efi</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\EFI\efi\boot\</OutDir>
@@ -202,6 +205,7 @@
     <ExcludePath />
     <TargetName>BOOTIA32</TargetName>
     <LinkIncremental>false</LinkIncremental>
+    <TargetExt>.efi</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\EFI\efi\boot\</OutDir>
@@ -212,6 +216,7 @@
     <ExcludePath />
     <TargetName>BOOTARM</TargetName>
     <LinkIncremental>false</LinkIncremental>
+    <TargetExt>.efi</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\EFI\efi\boot\</OutDir>
@@ -222,6 +227,7 @@
     <ExcludePath />
     <LibraryWPath />
     <TargetName>BOOTIA32</TargetName>
+    <TargetExt>.efi</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\EFI\efi\boot\</OutDir>
@@ -232,6 +238,7 @@
     <ExcludePath />
     <LibraryWPath />
     <TargetName>BOOTARM</TargetName>
+    <TargetExt>.efi</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -269,7 +276,7 @@
       <AdditionalDependencies>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\UEFI$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <RandomizedBaseAddress />
       <DataExecutionPrevention>false</DataExecutionPrevention>
-      <OutputFile>$(OutDir)$(TargetName).efi</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <Manifest>
@@ -314,7 +321,7 @@
       <AdditionalDependencies>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\UEFI$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <RandomizedBaseAddress />
       <DataExecutionPrevention>false</DataExecutionPrevention>
-      <OutputFile>$(OutDir)$(TargetName).efi</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <Manifest>
@@ -364,7 +371,7 @@
       <AdditionalDependencies>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\UEFI$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <RandomizedBaseAddress />
       <DataExecutionPrevention>false</DataExecutionPrevention>
-      <OutputFile>$(OutDir)$(TargetName).efi</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -408,7 +415,7 @@
       <AdditionalDependencies>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\UEFI$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <RandomizedBaseAddress />
       <DataExecutionPrevention>false</DataExecutionPrevention>
-      <OutputFile>$(OutDir)$(TargetName).efi</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -448,7 +455,7 @@
       <AdditionalDependencies>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\UEFI$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <RandomizedBaseAddress />
       <DataExecutionPrevention>false</DataExecutionPrevention>
-      <OutputFile>$(OutDir)$(TargetName).efi</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <Manifest>
@@ -494,7 +501,7 @@
       <AdditionalDependencies>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\UEFI$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <RandomizedBaseAddress />
       <DataExecutionPrevention>false</DataExecutionPrevention>
-      <OutputFile>$(OutDir)$(TargetName).efi</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <Manifest>
@@ -544,7 +551,7 @@
       <AdditionalDependencies>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\UEFI$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <RandomizedBaseAddress />
       <DataExecutionPrevention>false</DataExecutionPrevention>
-      <OutputFile>$(OutDir)$(TargetName).efi</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -588,7 +595,7 @@
       <AdditionalDependencies>$(SolutionDir)bin\$(Platform)\$(Configuration)\Libs\UEFI$(Platform).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <RandomizedBaseAddress />
       <DataExecutionPrevention>false</DataExecutionPrevention>
-      <OutputFile>$(OutDir)$(TargetName).efi</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>

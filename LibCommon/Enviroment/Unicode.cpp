@@ -56,6 +56,14 @@ namespace Common::Enviroment
 	constinit const CHAR16* _UTF16_WARN_UNKNOWN_GLYPH = u"WARN_UNKNOWN_GLYPH";
 	constinit const CHAR16* _UTF16_WARN_WRITE_FAILURE = u"WARN_WRITE_FAILURE";
 	constinit const CHAR16* _UTF16_WRITE_PROTECTED = u"WRITE_PROTECTED";
+
+	constinit const CHAR16* _UTF16_ALLOC_STATUS_SUCCESS = u"SUCCESS";
+	constinit const CHAR16* _UTF16_ALLOC_STATUS_INVALID_PARAMETER = u"INVALID_PARAMETER";
+	constinit const CHAR16* _UTF16_ALLOC_STATUS_NOT_ENOUGH_MEMORY = u"NOT_ENOUGH_MEMORY";
+	constinit const CHAR16* _UTF16_ALLOC_STATUS_NOT_ENOUGH_PAGES = u"NOT_ENOUGH_PAGES";
+	constinit const CHAR16* _UTF16_ALLOC_STATUS_ACCESS_DENIED = u"ACCESS_DENIED";
+	constinit const CHAR16* _UTF16_ALLOC_STATUS_UNKNOWN = u"UNKNOWN";
+
 	
 	CHAR16* UTF16::ToHex(const INT16 value)
 	{
@@ -384,6 +392,23 @@ namespace Common::Enviroment
 			return (CHAR16*)_UTF16_WRITE_PROTECTED;
 		default:
 			return nullptr;
+		}
+	}
+
+	CHAR16* UTF16::ToString(const Common::System::AllocatorStatus status)
+	{
+		switch (status)
+		{
+		case Common::System::AllocatorStatus::Success:
+			return (CHAR16*)_UTF16_ALLOC_STATUS_SUCCESS;
+		case Common::System::AllocatorStatus::Invalid_Parameters:
+			return (CHAR16*)_UTF16_ALLOC_STATUS_INVALID_PARAMETER;
+		case Common::System::AllocatorStatus::Not_Enough_Memory:
+			return (CHAR16*)_UTF16_ALLOC_STATUS_NOT_ENOUGH_MEMORY;
+		case Common::System::AllocatorStatus::Not_Enough_Pages:
+			return (CHAR16*)_UTF16_ALLOC_STATUS_NOT_ENOUGH_PAGES;
+		case Common::System::AllocatorStatus::Access_Denied:
+			return (CHAR16*)_UTF16_ALLOC_STATUS_ACCESS_DENIED;
 		}
 	}
 
@@ -1123,6 +1148,13 @@ namespace Common::Enviroment
 	constinit const CHAR8* _UTF8_WARN_WRITE_FAILURE = u8"WARN_WRITE_FAILURE";
 	constinit const CHAR8* _UTF8_WRITE_PROTECTED = u8"WRITE_PROTECTED";
 
+	constinit const CHAR8* _UTF8_ALLOC_STATUS_SUCCESS = u8"SUCCESS";
+	constinit const CHAR8* _UTF8_ALLOC_STATUS_INVALID_PARAMETER = u8"INVALID_PARAMETER";
+	constinit const CHAR8* _UTF8_ALLOC_STATUS_NOT_ENOUGH_MEMORY = u8"NOT_ENOUGH_MEMORY";
+	constinit const CHAR8* _UTF8_ALLOC_STATUS_NOT_ENOUGH_PAGES = u8"NOT_ENOUGH_PAGES";
+	constinit const CHAR8* _UTF8_ALLOC_STATUS_ACCESS_DENIED = u8"ACCESS_DENIED";
+	constinit const CHAR8* _UTF8_ALLOC_STATUS_UNKNOWN = u8"UNKNOWN";
+
 	CHAR8* UTF8::ToHex(const INT16 value)
 	{
 		if (value < 0)
@@ -1445,6 +1477,23 @@ namespace Common::Enviroment
 			return (CHAR8*)_UTF8_WRITE_PROTECTED;
 		default:
 			return nullptr;
+		}
+	}
+
+	CHAR8* UTF8::ToString(const Common::System::AllocatorStatus status)
+	{
+		switch (status)
+		{
+		case Common::System::AllocatorStatus::Success:
+			return (CHAR8*)_UTF8_ALLOC_STATUS_SUCCESS;
+		case Common::System::AllocatorStatus::Invalid_Parameters:
+			return (CHAR8*)_UTF8_ALLOC_STATUS_INVALID_PARAMETER;
+		case Common::System::AllocatorStatus::Not_Enough_Memory:
+			return (CHAR8*)_UTF8_ALLOC_STATUS_NOT_ENOUGH_MEMORY;
+		case Common::System::AllocatorStatus::Not_Enough_Pages:
+			return (CHAR8*)_UTF8_ALLOC_STATUS_NOT_ENOUGH_PAGES;
+		case Common::System::AllocatorStatus::Access_Denied:
+			return (CHAR8*)_UTF8_ALLOC_STATUS_ACCESS_DENIED;
 		}
 	}
 
@@ -2173,6 +2222,13 @@ namespace Common::Enviroment
 	constinit const CCHAR* _CSTR_WARN_WRITE_FAILURE = "WARN_WRITE_FAILURE";
 	constinit const CCHAR* _CSTR_WRITE_PROTECTED = "WRITE_PROTECTED";
 
+	constinit const CCHAR* _CSTR_ALLOC_STATUS_SUCCESS = "SUCCESS";
+	constinit const CCHAR* _CSTR_ALLOC_STATUS_INVALID_PARAMETER = "INVALID_PARAMETER";
+	constinit const CCHAR* _CSTR_ALLOC_STATUS_NOT_ENOUGH_MEMORY = "NOT_ENOUGH_MEMORY";
+	constinit const CCHAR* _CSTR_ALLOC_STATUS_NOT_ENOUGH_PAGES = "NOT_ENOUGH_PAGES";
+	constinit const CCHAR* _CSTR_ALLOC_STATUS_ACCESS_DENIED = "ACCESS_DENIED";
+	constinit const CCHAR* _CSTR_ALLOC_STATUS_UNKNOWN = "UNKNOWN";
+
 	CCHAR* CString::ToHex(const INT16 value)
 	{
 		if (value < 0)
@@ -2495,6 +2551,23 @@ namespace Common::Enviroment
 			return (CCHAR*)_CSTR_WRITE_PROTECTED;
 		default:
 			return nullptr;
+		}
+	}
+
+	CCHAR* CString::ToString(const Common::System::AllocatorStatus status)
+	{
+		switch (status)
+		{
+		case Common::System::AllocatorStatus::Success:
+			return (CCHAR*)_CSTR_ALLOC_STATUS_SUCCESS;
+		case Common::System::AllocatorStatus::Invalid_Parameters:
+			return (CCHAR*)_CSTR_ALLOC_STATUS_INVALID_PARAMETER;
+		case Common::System::AllocatorStatus::Not_Enough_Memory:
+			return (CCHAR*)_CSTR_ALLOC_STATUS_NOT_ENOUGH_MEMORY;
+		case Common::System::AllocatorStatus::Not_Enough_Pages:
+			return (CCHAR*)_CSTR_ALLOC_STATUS_NOT_ENOUGH_PAGES;
+		case Common::System::AllocatorStatus::Access_Denied:
+			return (CCHAR*)_CSTR_ALLOC_STATUS_ACCESS_DENIED;
 		}
 	}
 

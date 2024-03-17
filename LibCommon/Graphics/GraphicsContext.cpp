@@ -68,13 +68,13 @@ namespace Common::Graphics
 		CurrentForeground = *rgba;
 		*(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(((UINTN)gop->Mode->FrameBufferBase) + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentForeground;
 	}
-	void GraphicsContext::SetForegroundPixel(UINTN xPos, UINTN yPos, Color* color)
+	void GraphicsContext::SetForegroundPixel(UINTN xPos, UINTN yPos, Colour* colour)
 	{
-		CurrentForeground = Color::ToEFI(color);
+		CurrentForeground = Colour::ToEFI(colour);
 	}
-	void GraphicsContext::SetForegroundPixel(UINTN xPos, UINTN yPos, Color color)
+	void GraphicsContext::SetForegroundPixel(UINTN xPos, UINTN yPos, Colour colour)
 	{
-		CurrentForeground = Color::ToEFI(color);
+		CurrentForeground = Colour::ToEFI(colour);
 	};
 	void GraphicsContext::SetForegroundPixel(UINTN xPos, UINTN yPos, UINT8 r, UINT8 g, UINT8 b, UINT8 a)
 	{
@@ -96,13 +96,13 @@ namespace Common::Graphics
 		CurrentBackground = *rgba;
 		*(EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)(((UINTN)gop->Mode->FrameBufferBase) + (yPos * (UINTN)(gop->Mode->Info->HorizontalResolution) + xPos)) = CurrentBackground;
 	}
-	void GraphicsContext::SetBackgroundPixel(UINTN xPos, UINTN yPos, Color* color)
+	void GraphicsContext::SetBackgroundPixel(UINTN xPos, UINTN yPos, Colour* colour)
 	{
-		CurrentBackground = Color::ToEFI(color);
+		CurrentBackground = Colour::ToEFI(colour);
 	}
-	void GraphicsContext::SetBackgroundPixel(UINTN xPos, UINTN yPos, Color color)
+	void GraphicsContext::SetBackgroundPixel(UINTN xPos, UINTN yPos, Colour colour)
 	{
-		CurrentBackground = Color::ToEFI(color);
+		CurrentBackground = Colour::ToEFI(colour);
 	}
 	void GraphicsContext::SetBackgroundPixel(UINTN xPos, UINTN yPos, UINT8 r, UINT8 g, UINT8 b, UINT8 a)
 	{
@@ -124,14 +124,14 @@ namespace Common::Graphics
 		CurrentBackground = *rgba;
 		gop->Blt(gop, &CurrentBackground, EFI::EFI_GRAPHICS_OUTPUT_BLT_OPERATION::EfiBltVideoFill, 0, 0, 0, 0, gop->Mode->Info->HorizontalResolution, gop->Mode->Info->VerticalResolution, 0);
 	}
-	void GraphicsContext::ClearScreen(Color* color)
+	void GraphicsContext::ClearScreen(Colour* colour)
 	{
-		CurrentBackground = Color::ToEFI(color);
+		CurrentBackground = Colour::ToEFI(colour);
 		gop->Blt(gop, (EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)&CurrentBackground, EFI::EFI_GRAPHICS_OUTPUT_BLT_OPERATION::EfiBltVideoFill, 0, 0, 0, 0, gop->Mode->Info->HorizontalResolution, gop->Mode->Info->VerticalResolution, 0);
 	}
-	void GraphicsContext::ClearScreen(Color color)
+	void GraphicsContext::ClearScreen(Colour colour)
 	{
-		CurrentBackground = Color::ToEFI(color);
+		CurrentBackground = Colour::ToEFI(colour);
 		gop->Blt(gop, (EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)&CurrentBackground, EFI::EFI_GRAPHICS_OUTPUT_BLT_OPERATION::EfiBltVideoFill, 0, 0, 0, 0, gop->Mode->Info->HorizontalResolution, gop->Mode->Info->VerticalResolution, 0);
 	}
 	void GraphicsContext::ClearScreen(UINT8 r, UINT8 g, UINT8 b, UINT8 a)
@@ -154,14 +154,14 @@ namespace Common::Graphics
 		CurrentForeground = *rgba;
 		gop->Blt(gop, (EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)&CurrentForeground, EFI::EFI_GRAPHICS_OUTPUT_BLT_OPERATION::EfiBltVideoFill, 0, 0, xPos, yPos, width, height, 0);
 	}
-	void GraphicsContext::DrawFilledRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, Color* color)
+	void GraphicsContext::DrawFilledRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, Colour* colour)
 	{
-		CurrentForeground = Color::ToEFI(color);
+		CurrentForeground = Colour::ToEFI(colour);
 		gop->Blt(gop, (EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)&CurrentForeground, EFI::EFI_GRAPHICS_OUTPUT_BLT_OPERATION::EfiBltVideoFill, 0, 0, xPos, yPos, width, height, 0);
 	}
-	void GraphicsContext::DrawFilledRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, Color color)
+	void GraphicsContext::DrawFilledRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, Colour colour)
 	{
-		CurrentForeground = Color::ToEFI(color);
+		CurrentForeground = Colour::ToEFI(colour);
 		gop->Blt(gop, (EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL*)&CurrentForeground, EFI::EFI_GRAPHICS_OUTPUT_BLT_OPERATION::EfiBltVideoFill, 0, 0, xPos, yPos, width, height, 0);
 	}
 	void GraphicsContext::DrawFilledRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINT8 r, UINT8 g, UINT8 b, UINT8 a)
@@ -178,19 +178,19 @@ namespace Common::Graphics
 	void GraphicsContext::DrawLine(UINTN sXPos, UINTN sYPos, UINTN eXPos, UINTN eYPos, UINTN thickness)
 	{
 	}
-	void GraphicsContext::DrawLine(UINTN sXPos, UINTN sYPos, UINTN eXPos, UINTN eYPos, UINTN thickness, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color)
+	void GraphicsContext::DrawLine(UINTN sXPos, UINTN sYPos, UINTN eXPos, UINTN eYPos, UINTN thickness, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* colour)
 	{
-		CurrentForeground = *color;
+		CurrentForeground = *colour;
 		DrawLine(sXPos, sYPos, eXPos, eYPos, thickness);
 	}
-	void GraphicsContext::DrawLine(UINTN sXPos, UINTN sYPos, UINTN eXPos, UINTN eYPos, UINTN thickness, Color* color)
+	void GraphicsContext::DrawLine(UINTN sXPos, UINTN sYPos, UINTN eXPos, UINTN eYPos, UINTN thickness, Colour* colour)
 	{
-		CurrentForeground = Color::ToEFI(color);
+		CurrentForeground = Colour::ToEFI(colour);
 		DrawLine(sXPos, sYPos, eXPos, eYPos, thickness);
 	}
-	void GraphicsContext::DrawLine(UINTN sXPos, UINTN sYPos, UINTN eXPos, UINTN eYPos, UINTN thickness, Color color)
+	void GraphicsContext::DrawLine(UINTN sXPos, UINTN sYPos, UINTN eXPos, UINTN eYPos, UINTN thickness, Colour colour)
 	{
-		CurrentForeground = Color::ToEFI(color);
+		CurrentForeground = Colour::ToEFI(colour);
 		DrawLine(sXPos, sYPos, eXPos, eYPos, thickness);
 	}
 	void GraphicsContext::DrawLine(UINTN sXPos, UINTN sYPos, UINTN eXPos, UINTN eYPos, UINTN thickness, UINT8 r, UINT8 g, UINT8 b, UINT8 a)
@@ -198,9 +198,9 @@ namespace Common::Graphics
 		CurrentForeground = EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ b,g,r,a };
 		DrawLine(sXPos, sYPos, eXPos, eYPos, thickness);
 	}
-	void GraphicsContext::DrawLine(UINTN sXPos, UINTN sYPos, UINTN eXPos, UINTN eYPos, UINTN thickness, UINT32 color)
+	void GraphicsContext::DrawLine(UINTN sXPos, UINTN sYPos, UINTN eXPos, UINTN eYPos, UINTN thickness, UINT32 colour)
 	{
-		CurrentForeground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ (UINT8)((color & 0x0000FF00) >> 8),(UINT8)((color & 0x00FF0000) >> 16),(UINT8)((color & 0xFF000000) >> 24), (UINT8)((color & 0x000000FF)) };
+		CurrentForeground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ (UINT8)((colour & 0x0000FF00) >> 8),(UINT8)((colour & 0x00FF0000) >> 16),(UINT8)((colour & 0xFF000000) >> 24), (UINT8)((colour & 0x000000FF)) };
 		DrawLine(sXPos, sYPos, eXPos, eYPos, thickness);
 	}
 
@@ -208,19 +208,19 @@ namespace Common::Graphics
 	{
 
 	}
-	void GraphicsContext::DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINTN thickness, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color)
+	void GraphicsContext::DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINTN thickness, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* colour)
 	{
-		CurrentForeground = *color;
+		CurrentForeground = *colour;
 		DrawRectangle(xPos, yPos, width, height, thickness);
 	}
-	void GraphicsContext::DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINTN thickness, Color* color)
+	void GraphicsContext::DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINTN thickness, Colour* colour)
 	{
-		CurrentForeground = Color::ToEFI(color);
+		CurrentForeground = Colour::ToEFI(colour);
 		DrawRectangle(xPos, yPos, width, height, thickness);
 	}
-	void GraphicsContext::DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINTN thickness, Color color)
+	void GraphicsContext::DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINTN thickness, Colour colour)
 	{
-		CurrentForeground = Color::ToEFI(color);
+		CurrentForeground = Colour::ToEFI(colour);
 		DrawRectangle(xPos, yPos, width, height, thickness);
 	}
 	void GraphicsContext::DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINTN thickness, UINT8 r, UINT8 g, UINT8 b, UINT8 a)
@@ -228,9 +228,9 @@ namespace Common::Graphics
 		CurrentForeground = EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ b,g,r,a };
 		DrawRectangle(xPos, yPos, width, height, thickness);
 	}
-	void GraphicsContext::DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINTN thickness, UINT32 color)
+	void GraphicsContext::DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINTN thickness, UINT32 colour)
 	{
-		CurrentForeground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ (UINT8)((color & 0x0000FF00) >> 8),(UINT8)((color & 0x00FF0000) >> 16),(UINT8)((color & 0xFF000000) >> 24), (UINT8)((color & 0x000000FF)) };
+		CurrentForeground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ (UINT8)((colour & 0x0000FF00) >> 8),(UINT8)((colour & 0x00FF0000) >> 16),(UINT8)((colour & 0xFF000000) >> 24), (UINT8)((colour & 0x000000FF)) };
 		DrawRectangle(xPos, yPos, width, height, thickness);
 	}
 
@@ -238,38 +238,38 @@ namespace Common::Graphics
 	{
 	}
 
-	void GraphicsContext::DrawCircle(UINTN xPos, UINTN yPos, UINTN radius, UINTN thickness,EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color)
+	void GraphicsContext::DrawCircle(UINTN xPos, UINTN yPos, UINTN radius, UINTN thickness,EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* colour)
 	{
 	}
-	void GraphicsContext::DrawCircle(UINTN xPos, UINTN yPos, UINTN radius, UINTN thickness, Color* color)
+	void GraphicsContext::DrawCircle(UINTN xPos, UINTN yPos, UINTN radius, UINTN thickness, Colour* colour)
 	{
 	}
-	void GraphicsContext::DrawCircle(UINTN xPos, UINTN yPos, UINTN radius, UINTN thickness, Color color)
+	void GraphicsContext::DrawCircle(UINTN xPos, UINTN yPos, UINTN radius, UINTN thickness, Colour colour)
 	{
 	}
 	void GraphicsContext::DrawCircle(UINTN xPos, UINTN yPos, UINTN radius, UINTN thickness, UINT8 r, UINT8 g, UINT8 b, UINT8 a)
 	{
 	}
-	void GraphicsContext::DrawCircle(UINTN xPos, UINTN yPos, UINTN radius, UINTN thickness, UINT32 color)
+	void GraphicsContext::DrawCircle(UINTN xPos, UINTN yPos, UINTN radius, UINTN thickness, UINT32 colour)
 	{
 	}
 
 	void GraphicsContext::DrawFilledCircle(UINTN xPos, UINTN yPos, UINTN radius)
 	{
 	}
-	void GraphicsContext::DrawFilledCircle(UINTN xPos, UINTN yPos, UINTN radius, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color)
+	void GraphicsContext::DrawFilledCircle(UINTN xPos, UINTN yPos, UINTN radius, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* colour)
 	{
 	}
-	void GraphicsContext::DrawFilledCircle(UINTN xPos, UINTN yPos, UINTN radius, Color* color)
+	void GraphicsContext::DrawFilledCircle(UINTN xPos, UINTN yPos, UINTN radius, Colour* colour)
 	{
 	}
-	void GraphicsContext::DrawFilledCircle(UINTN xPos, UINTN yPos, UINTN radius, Color color)
+	void GraphicsContext::DrawFilledCircle(UINTN xPos, UINTN yPos, UINTN radius, Colour colour)
 	{
 	}
 	void GraphicsContext::DrawFilledCircle(UINTN xPos, UINTN yPos, UINTN radius, UINT8 r, UINT8 g, UINT8 b, UINT8 a)
 	{
 	}
-	void GraphicsContext::DrawFilledCircle(UINTN xPos, UINTN yPos, UINTN radius, UINT32 color)
+	void GraphicsContext::DrawFilledCircle(UINTN xPos, UINTN yPos, UINTN radius, UINT32 colour)
 	{
 	}
 
@@ -277,13 +277,13 @@ namespace Common::Graphics
 	{
 		CurrentBackground = *rgba;
 	}
-	void GraphicsContext::SetBackground(Color* color)
+	void GraphicsContext::SetBackground(Colour* colour)
 	{
-		CurrentBackground = Color::ToEFI(color);
+		CurrentBackground = Colour::ToEFI(colour);
 	}
-	void GraphicsContext::SetBackground(Color color)
+	void GraphicsContext::SetBackground(Colour colour)
 	{
-		CurrentBackground = Color::ToEFI(color);
+		CurrentBackground = Colour::ToEFI(colour);
 	}
 	void GraphicsContext::SetBackground(UINT8 r, UINT8 g, UINT8 b, UINT8 a)
 	{
@@ -298,13 +298,13 @@ namespace Common::Graphics
 	{
 		CurrentForeground = *rgba;
 	}
-	void GraphicsContext::SetForeground(Color* color)
+	void GraphicsContext::SetForeground(Colour* colour)
 	{
-		CurrentForeground = Color::ToEFI(color);
+		CurrentForeground = Colour::ToEFI(colour);
 	}
-	void GraphicsContext::SetForeground(Color color)
+	void GraphicsContext::SetForeground(Colour colour)
 	{
-		CurrentForeground = Color::ToEFI(color);
+		CurrentForeground = Colour::ToEFI(colour);
 	}
 	void GraphicsContext::SetForeground(UINT8 r, UINT8 g, UINT8 b, UINT8 a)
 	{
@@ -315,11 +315,11 @@ namespace Common::Graphics
 		CurrentForeground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ (UINT8)((rgba & 0x0000FF00) >> 8),(UINT8)((rgba & 0x00FF0000) >> 16),(UINT8)((rgba & 0xFF000000) >> 24), (UINT8)((rgba & 0x000000FF)) };
 	};
 
-	Color GraphicsContext::GetBackground() const
+	Colour GraphicsContext::GetBackground() const
 	{
 		return CurrentBackground;
 	};
-	Color GraphicsContext::GetForeground() const
+	Colour GraphicsContext::GetForeground() const
 	{
 		return CurrentForeground;
 	}
@@ -363,7 +363,7 @@ namespace Common::Graphics
 	GraphicsContext::GraphicsContext(EFI_GRAPHICS_OUTPUT_PROTOCOL* g)
 	{
 		gop = g;
-		CurrentBackground = Color::ToEFI(Colors::Black);
-		CurrentForeground = Color::ToEFI(Colors::White);
+		CurrentBackground = Colour::ToEFI(Colours::Black);
+		CurrentForeground = Colour::ToEFI(Colours::White);
 	};
 };

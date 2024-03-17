@@ -27,6 +27,7 @@ namespace Common::FileTypes::PE
 		handle->Read(sizeof(LoaderFlags), &LoaderFlags);
 		handle->Read(sizeof(NumberOfRvaAndSizes), &NumberOfRvaAndSizes);
 		UINTN dataDirSize = sizeof(PE32DataDirectory) * NumberOfRvaAndSizes;
+		
 		DataDirectories = (PE32DataDirectory*)System::Allocator::Allocate(dataDirSize);
 		handle->Read(dataDirSize, &DataDirectories);
 	}

@@ -40,7 +40,6 @@
     <ProjectGuid>{DACF7E02-B3A0-449F-9CB3-47F52848FF6E}</ProjectGuid>
     <RootNamespace>Kernel</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <TargetExt>.bin</TargetExt>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -63,7 +62,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
-    <PreferredToolArchitecture>x86</PreferredToolArchitecture>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -71,7 +70,7 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <PreferredToolArchitecture>x86</PreferredToolArchitecture>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <WindowsSDKDesktopARMSupport>true</WindowsSDKDesktopARMSupport>
@@ -86,12 +85,12 @@
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <WindowsSDKDesktopARM64Support>true</WindowsSDKDesktopARM64Support>
     <PlatformToolset>v143</PlatformToolset>
-    <PreferredToolArchitecture>x86</PreferredToolArchitecture>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <WindowsSDKDesktopARM64Support>true</WindowsSDKDesktopARM64Support>
     <PlatformToolset>v143</PlatformToolset>
-    <PreferredToolArchitecture>x86</PreferredToolArchitecture>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -118,6 +117,7 @@
     <LibraryWPath />
     <ExcludePath />
     <LinkIncremental>false</LinkIncremental>
+    <TargetExt>.bin</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\SYS\</OutDir>
@@ -126,6 +126,7 @@
     <LibraryWPath />
     <ExcludePath />
     <LinkIncremental>false</LinkIncremental>
+    <TargetExt>.bin</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\SYS\</OutDir>
@@ -134,6 +135,7 @@
     <LibraryWPath />
     <ExcludePath />
     <LinkIncremental>false</LinkIncremental>
+    <TargetExt>.bin</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\SYS\</OutDir>
@@ -142,6 +144,7 @@
     <LibraryWPath />
     <ExcludePath />
     <LinkIncremental>false</LinkIncremental>
+    <TargetExt>.bin</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\SYS\</OutDir>
@@ -150,6 +153,7 @@
     <LibraryWPath />
     <ExcludePath />
     <LinkIncremental>false</LinkIncremental>
+    <TargetExt>.bin</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\SYS\</OutDir>
@@ -158,6 +162,7 @@
     <LibraryWPath />
     <ExcludePath />
     <LinkIncremental>false</LinkIncremental>
+    <TargetExt>.bin</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\SYS\</OutDir>
@@ -166,6 +171,7 @@
     <LibraryWPath />
     <ExcludePath />
     <LinkIncremental>false</LinkIncremental>
+    <TargetExt>.bin</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\SYS\</OutDir>
@@ -174,6 +180,7 @@
     <LibraryWPath />
     <ExcludePath />
     <LinkIncremental>false</LinkIncremental>
+    <TargetExt>.bin</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -190,6 +197,7 @@
       <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <ExceptionHandling>false</ExceptionHandling>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -203,7 +211,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <AllowIsolation>
       </AllowIsolation>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetFileExt).bin</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -225,6 +233,7 @@
       <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <ExceptionHandling>false</ExceptionHandling>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -240,7 +249,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <AllowIsolation>
       </AllowIsolation>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetFileExt).bin</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -259,6 +268,7 @@
       <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <ExceptionHandling>false</ExceptionHandling>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -272,7 +282,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <AllowIsolation>
       </AllowIsolation>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetFileExt).bin</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -294,6 +304,7 @@
       <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <ExceptionHandling>false</ExceptionHandling>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -309,7 +320,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <AllowIsolation>
       </AllowIsolation>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetFileExt).bin</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -326,6 +337,7 @@
       <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <ExceptionHandling>false</ExceptionHandling>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <EntryPointSymbol>KrnlMain</EntryPointSymbol>
@@ -338,7 +350,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <AllowIsolation>
       </AllowIsolation>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetFileExt).bin</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -356,6 +368,7 @@
       <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <ExceptionHandling>false</ExceptionHandling>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <EntryPointSymbol>KrnlMain</EntryPointSymbol>
@@ -368,7 +381,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <AllowIsolation>
       </AllowIsolation>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetFileExt).bin</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <GenerateDebugInformation />
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
@@ -386,6 +399,7 @@
       <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <ExceptionHandling>false</ExceptionHandling>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <EntryPointSymbol>KrnlMain</EntryPointSymbol>
@@ -398,7 +412,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <AllowIsolation>
       </AllowIsolation>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetFileExt).bin</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
@@ -416,6 +430,7 @@
       <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <ExceptionHandling>false</ExceptionHandling>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <EntryPointSymbol>KrnlMain</EntryPointSymbol>
@@ -428,7 +443,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <AllowIsolation>
       </AllowIsolation>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetFileExt).bin</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <GenerateDebugInformation />
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>

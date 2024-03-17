@@ -2,29 +2,38 @@
 
 namespace Common::System
 {
+	typedef VOID_PTR AllocFunc(UINTN size);
+	typedef VOID_PTR AllocZeroedFunc(UINTN size);
+	typedef VOID_PTR AllocPageFunc(UINTN size);
+	typedef VOID_PTR AllocPageZeroedFunc(UINTN size);
+
+	typedef VOID FreeFunc(VOID_PTR ptr);
+	typedef VOID FreePageFunc(VOID* ptr, UINTN size);
+
+	typedef AllocatorStatus GetStatusFunc();
+	typedef VOID SetStatusFunc(AllocatorStatus status);
+
 	AllocFunc* _allocFunc;
 	AllocZeroedFunc* _allocZeroedFunc;
 	AllocPageFunc* _allocPageFunc;
 	AllocPageZeroedFunc* _allocPageZeroedFunc;
 	FreeFunc* _freeFunc;
 	FreePageFunc* _freePageFunc;
-	GetStatusFunc* _getStatusFunc;
-	SetStatusFunc* _setStatusFunc;
+	EFI::EFI_SYSTEM_TABLE* _efiSystemTable;
 
-
+#pragma region Allocator
 	BOOLEAN _isInitalized;
-	AllocatorStatus _lastStatus;
+
+	AllocatorStatus Allocator::_lastStatus = AllocatorStatus::Not_Initialized;
 
 	VOID_PTR Allocator::Allocate(UINTN size)
 	{
 		if (!_isInitalized)
 		{
-			_lastStatus = AllocatorStatus::Not_Initialized;
 			return nullptr;
 		}
 
 		VOID_PTR p = _allocFunc(size);
-		_lastStatus = _getStatusFunc();
 		return p;
 	}
 	VOID_PTR Allocator::AllocateZeroed(UINTN size)
@@ -36,7 +45,7 @@ namespace Common::System
 		}
 
 		VOID_PTR p = _allocZeroedFunc(size);
-		_lastStatus = _getStatusFunc();
+		
 		return p;
 	}
 	VOID Allocator::Free(VOID_PTR ptr)
@@ -47,7 +56,7 @@ namespace Common::System
 			return;
 		}
 		_freeFunc(ptr);
-		_lastStatus = _getStatusFunc();
+		
 	}
 	VOID_PTR Allocator::AllocatePage(UINTN pageCount)
 	{
@@ -57,7 +66,7 @@ namespace Common::System
 			return nullptr;
 		}
 		void* p = _allocPageFunc(pageCount);
-		_lastStatus = _getStatusFunc();
+		
 		return p;
 	}
 
@@ -69,7 +78,7 @@ namespace Common::System
 			return nullptr;
 		}
 		void* p = _allocPageZeroedFunc(pageCount);
-		_lastStatus = _getStatusFunc();
+		
 		return p;
 	}
 
@@ -81,74 +90,7 @@ namespace Common::System
 			return;
 		}
 		_freePageFunc(ptr, pageCount);
-		_lastStatus = _getStatusFunc();
-	}
-
-	void Allocator::SetAllocators(AllocFunc* allocFunc,AllocZeroedFunc* allocZeroFunc, AllocPageFunc* allocPageFunc, AllocPageZeroedFunc* allocPageZeroFunc, FreeFunc* freeFunc, FreePageFunc* freePageFunc, GetStatusFunc* getStatusFunc, SetStatusFunc* setStatusFunc)
-	{
-		/*if any or all of the function pointers are zero, return nullptr*/
-		if (setStatusFunc == nullptr)
-		{
-			_isInitalized = FALSE;
-			_lastStatus = AllocatorStatus::Invalid_Parameters;
-			return;
-		};
-
-
-		if (allocFunc == nullptr)
-		{
-			_isInitalized = FALSE;
-			setStatusFunc(AllocatorStatus::Invalid_Parameters);
-			return;
-		}
-		if (allocZeroFunc == nullptr)
-		{
-			_isInitalized = FALSE;
-			setStatusFunc(AllocatorStatus::Invalid_Parameters);
-			return;
-		}
-		if (allocPageFunc == nullptr)
-		{
-			_isInitalized = FALSE;
-			setStatusFunc(AllocatorStatus::Invalid_Parameters);
-			return;
-		}
-		if (allocPageZeroFunc == nullptr)
-		{
-			_isInitalized = FALSE;
-			setStatusFunc(AllocatorStatus::Invalid_Parameters);
-			return;
-		}
-		if (freeFunc == nullptr)
-		{
-			_isInitalized = FALSE;
-			setStatusFunc(AllocatorStatus::Invalid_Parameters);
-			return;
-		}
-		if (freePageFunc == nullptr)
-		{
-			_isInitalized = FALSE;
-			setStatusFunc(AllocatorStatus::Invalid_Parameters);
-			return;
-		}
-		if (getStatusFunc == nullptr)
-		{
-			_isInitalized = FALSE;
-			setStatusFunc(AllocatorStatus::Invalid_Parameters);
-			return;
-		}
-
-
-		_allocFunc = allocFunc;
-		_allocZeroedFunc = allocZeroFunc;
-		_allocPageFunc = allocPageFunc;
-		_allocPageZeroedFunc = allocPageZeroFunc;
-		_freeFunc = freeFunc;
-		_freePageFunc = freePageFunc;
-		_getStatusFunc = getStatusFunc;
-
-		_lastStatus = AllocatorStatus::Success;
-		_isInitalized = TRUE;
+		
 	}
 
 	BOOLEAN Allocator::IsInitalized()
@@ -158,18 +100,166 @@ namespace Common::System
 
 	AllocatorStatus Allocator::LastStatus()
 	{
-		if (!_isInitalized)
-			return _lastStatus;
-		
-		if(_lastStatus != AllocatorStatus::Success)
-			return _lastStatus;
-
-
-		return _getStatusFunc();
+		return _lastStatus;
 	}
 
-}
+	AllocatorStatus Allocator::SetEfiAllocator(EFI::EFI_SYSTEM_TABLE* systemTable)
+	{
+		if(_isInitalized)
+		{
+			_lastStatus = AllocatorStatus::Success;
+			return _lastStatus;
+		}
 
+		_efiSystemTable = systemTable;
+
+		_allocFunc = EfiAllocator::Allocate;
+		_allocZeroedFunc = EfiAllocator::AllocateZeroed;
+		_allocPageFunc = EfiAllocator::AllocatePage;
+		_allocPageZeroedFunc = EfiAllocator::AllocatePageZeroed;
+		_freeFunc = EfiAllocator::Free;
+		_freePageFunc = EfiAllocator::FreePage;
+
+		_lastStatus = AllocatorStatus::Success;
+		_isInitalized = TRUE;
+		return _lastStatus;
+	}
+
+#pragma endregion
+
+#pragma region EfiAllocator
+
+	
+	VOID_PTR EfiAllocator::Allocate(UINTN size)
+	{
+		if (_efiSystemTable == nullptr)
+		{
+			return nullptr;
+		}
+
+		EFI::EFI_STATUS status;
+		VOID* buffer;
+		status = _efiSystemTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, size, &buffer);
+		if (status != EFI::EFI_STATUS::SUCCESS)
+		{
+			switch (status)
+			{
+			case EFI::EFI_STATUS::OUT_OF_RESOURCES:
+				Allocator::_lastStatus = AllocatorStatus::Not_Enough_Memory;
+				break;
+			case EFI::EFI_STATUS::INVALID_PARAMETER:
+				Allocator::_lastStatus = AllocatorStatus::Invalid_Parameters;
+				break;
+			}
+			return nullptr;
+		}
+
+		Allocator::_lastStatus = AllocatorStatus::Success;
+		return buffer;
+	}
+	VOID_PTR EfiAllocator::AllocateZeroed(UINTN size)
+	{
+		if (_efiSystemTable == nullptr)
+		{
+			return nullptr;
+		}
+
+		EFI::EFI_STATUS status;
+		VOID* buffer;
+		status = _efiSystemTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, size, &buffer);
+		if (status != EFI::EFI_STATUS::SUCCESS)
+		{
+			switch (status)
+			{
+			case EFI::EFI_STATUS::OUT_OF_RESOURCES:
+				Allocator::_lastStatus = AllocatorStatus::Not_Enough_Memory;
+				break;
+			case EFI::EFI_STATUS::INVALID_PARAMETER:
+				Allocator::_lastStatus = AllocatorStatus::Invalid_Parameters;
+				break;
+			}
+			return nullptr;
+		}
+
+		status = _efiSystemTable->BootServices->SetMem(buffer, size, 0);
+
+		Allocator::_lastStatus = AllocatorStatus::Success;
+		return buffer;
+	}
+	VOID_PTR EfiAllocator::AllocatePage(UINTN pageCount)
+	{
+		if (_efiSystemTable == nullptr)
+		{
+			return nullptr;
+		}
+
+		EFI::EFI_STATUS status;
+		VOID* buffer;
+		status = _efiSystemTable->BootServices->AllocatePages(EFI::EFI_ALLOCATE_TYPE::AllocateAnyPages, EFI::EFI_MEMORY_TYPE::LoaderData, pageCount, &buffer);
+		if (status != EFI::EFI_STATUS::SUCCESS)
+		{
+			switch (status)
+			{
+			case EFI::EFI_STATUS::OUT_OF_RESOURCES:
+				Allocator::_lastStatus = AllocatorStatus::Not_Enough_Memory;
+				break;
+			case EFI::EFI_STATUS::INVALID_PARAMETER:
+				Allocator::_lastStatus = AllocatorStatus::Invalid_Parameters;
+				break;
+			}
+			return nullptr;
+		}
+
+		Allocator::_lastStatus = AllocatorStatus::Success;
+		return buffer;
+	}
+	VOID_PTR EfiAllocator::AllocatePageZeroed(UINTN pageCount)
+	{
+		if (_efiSystemTable == nullptr)
+		{
+			return nullptr;
+		}
+
+		EFI::EFI_STATUS status;
+		VOID* buffer;
+		status = _efiSystemTable->BootServices->AllocatePages(EFI::EFI_ALLOCATE_TYPE::AllocateAnyPages, EFI::EFI_MEMORY_TYPE::LoaderData, pageCount, &buffer);
+		if (status != EFI::EFI_STATUS::SUCCESS)
+		{
+			switch (status)
+			{
+			case EFI::EFI_STATUS::OUT_OF_RESOURCES:
+				Allocator::_lastStatus = AllocatorStatus::Not_Enough_Memory;
+				break;
+			case EFI::EFI_STATUS::INVALID_PARAMETER:
+				Allocator::_lastStatus = AllocatorStatus::Invalid_Parameters;
+				break;
+			}
+			return nullptr;
+		}
+
+		status = _efiSystemTable->BootServices->SetMem(buffer, (pageCount * 4096), 0);
+
+		Allocator::_lastStatus = AllocatorStatus::Success;
+		return buffer;
+	}
+	VOID EfiAllocator::Free(VOID_PTR ptr)
+	{
+		if (_efiSystemTable == nullptr)
+		{
+			return;
+		}
+		_efiSystemTable->BootServices->FreePool(ptr);
+	}
+	VOID EfiAllocator::FreePage(VOID_PTR ptr, UINTN pageCount)
+	{
+		if (_efiSystemTable == nullptr)
+		{
+			return;
+		}
+		_efiSystemTable->BootServices->FreePages(ptr, pageCount);
+	}
+#pragma endregion
+}
 VOID_PTR operator new(UINTN size)
 {
 	if (!Common::System::Allocator::IsInitalized())
@@ -251,3 +341,4 @@ void operator delete[](VOID_PTR ptr, VOID_PTR place)
 	}
 	Common::System::Allocator::Free(ptr);
 }
+

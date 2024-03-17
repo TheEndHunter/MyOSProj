@@ -6,7 +6,7 @@
 
     internal class Program
     {
-        private static readonly FrozenDictionary<string, string> bootfileMap = new Dictionary<string,string>()
+        private static readonly FrozenDictionary<string, string> bootfileMap = new Dictionary<string, string>()
                 {
                     { "x86", "BOOTIA32.efi" },
                     { "x64", "BOOTX64.efi" },
@@ -32,7 +32,7 @@
             {
                 Console.WriteLine("Invalid amount of arguments specified (min/max of 5 arguments). switching to manual entry");
 
-               
+
 
                 while (string.IsNullOrEmpty(architecture) && string.IsNullOrWhiteSpace(architecture))
                 {
@@ -270,7 +270,7 @@
 
             string vhdxPath = Path.GetFullPath(Path.Combine(DestPath, $"{architecture}_{configuration}_{imgName}"));
             string vhdPath = vhdxPath.Replace(".vhdx", ".vhd");
-            int res = 0;
+            int res;
 
             if (File.Exists(vhdxPath))
             {

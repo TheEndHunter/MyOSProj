@@ -7,7 +7,7 @@ namespace kernel
 {
     using namespace Common::Graphics;
 
-    UINTN KrnlMain(GraphicsContext* context)
+     UINTN CDECL KrnlMain(GraphicsContext* context)
     {
         return 123;
     }

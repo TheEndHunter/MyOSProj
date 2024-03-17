@@ -45,7 +45,6 @@
                 File.Copy(s, destPath, true);
                 Console.WriteLine($"Copied File: {s} to {destPath}");
             }
-
         }
 
         public static long CalculateSize(this DirectoryInfo d)

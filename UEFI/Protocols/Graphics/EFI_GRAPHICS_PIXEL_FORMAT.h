@@ -5,7 +5,7 @@
 
 namespace EFI
 {
-	enum class EFI_GRAPHICS_PIXEL_FORMAT
+	enum EFI_GRAPHICS_PIXEL_FORMAT : UINT32
 	{
 		PixelRedGreenBlueReserved8BitPerColor,
 		PixelBlueGreenRedReserved8BitPerColor,

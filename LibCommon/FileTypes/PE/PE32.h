@@ -19,7 +19,12 @@ namespace Common::FileTypes::PE
 	public:
 		PE32(FileSystem::FileHandle* handle);
 
-		BOOLEAN IsValid() const;
+		BOOLEAN IsDosHdrValid() const;
+		BOOLEAN IsPEHdrValid() const;
+		BOOLEAN IsOptHdrValid() const;
+		BOOLEAN IsSectionHdrValid() const;
+		BOOLEAN IsDataBufferValid() const;
+
 		DOSHeader DOSHdr;
 		PE32Header PE32hdr;
 		PE32OptionHeader OptHdrCommon;
@@ -34,7 +39,21 @@ namespace Common::FileTypes::PE
 		}OptHdr;
 
 		PE32SectionHeader* SectionHeaders;
+
+		const UINTN GetEntryPointOffset() const;
+		const VOID_PTR GetEntryPoint() const;
+
+		UINTN SizeOfDataBuffer;
+		UINT8* DataBuffer;
+
 	private:
-		BOOLEAN _isValid;
+
+		UINTN _EntryPointOffset;
+		VOID_PTR _EntryPoint;
+		BOOLEAN _dosHdrValid;
+		BOOLEAN _peHdrValid;
+		BOOLEAN _optHdrValid;
+		BOOLEAN _sectionHdrValid;
+		BOOLEAN _dataBufferValid;
 	};
 }
