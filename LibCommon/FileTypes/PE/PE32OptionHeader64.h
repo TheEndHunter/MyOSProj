@@ -1,7 +1,7 @@
 #pragma once
 #include <TypeDefs.h>
 #include <FileTypes/PE/PE32DLLCharacteristics.h>
-#include <FileSystem/FileHandle.h>
+#include <FileSystem/ESP/FileHandle.h>
 #include <FileTypes/PE/PE32DataDirectory.h>
 
 namespace Common::FileTypes::PE
@@ -10,7 +10,7 @@ namespace Common::FileTypes::PE
 	struct PE32OptionHeader64
 	{
     public:
-        PE32OptionHeader64(FileSystem::FileHandle* handle);
+        PE32OptionHeader64(FileSystem::ESP::FileHandle* handle);
         /*
         *  NT additional fields
         */

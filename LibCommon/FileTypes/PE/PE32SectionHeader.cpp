@@ -2,7 +2,7 @@
 
 namespace Common::FileTypes::PE
 {
-	PE32SectionHeader::PE32SectionHeader(FileSystem::FileHandle * handle)
+	PE32SectionHeader::PE32SectionHeader(FileSystem::ESP::FileHandle * handle)
 	{
 		handle->Read(sizeof(Name), &Name);
 		handle->Read(sizeof(Misc), &Misc.value);

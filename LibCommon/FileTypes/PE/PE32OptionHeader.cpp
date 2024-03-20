@@ -14,7 +14,7 @@ namespace Common::FileTypes::PE
 		BaseOfCode = 0;
 	}
 
-	PE32OptionHeader::PE32OptionHeader(FileSystem::FileHandle* handle)
+	PE32OptionHeader::PE32OptionHeader(FileSystem::ESP::FileHandle* handle)
 	{
 		handle->Read(sizeof(Magic), &Magic);
 		handle->Read(sizeof(MajorLinkerVersion), &MajorLinkerVersion);

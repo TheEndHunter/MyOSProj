@@ -1,6 +1,6 @@
 #pragma once
 #include <TypeDefs.h>
-#include <FileSystem/FileHandle.h>
+#include <FileSystem/ESP/FileHandle.h>
 
 namespace Common::FileTypes::PE
 {
@@ -9,7 +9,7 @@ namespace Common::FileTypes::PE
 	{
 	public:
 		DOSHeader();
-		DOSHeader(Common::FileSystem::FileHandle* handle);
+		DOSHeader(Common::FileSystem::ESP::FileHandle* handle);
 
 		union
 		{

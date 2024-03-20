@@ -1,7 +1,7 @@
 #include "FileHandle.h"
 #include "VolumeHandle.h"
 
-namespace Common::FileSystem
+namespace Common::FileSystem::ESP
 {
 	VolumeHandle VolumeHandle::Create(EFI::EFI_FILE_PROTOCOL* file, VolumeInfo i, FileMode mode, FileAttribute attribs)
 	{

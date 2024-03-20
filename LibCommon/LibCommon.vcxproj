@@ -37,13 +37,14 @@
   <ItemGroup>
     <ClInclude Include="Enviroment\StringComparisonMode.h" />
     <ClInclude Include="Enviroment\StringCulture.h" />
-    <ClInclude Include="FileSystem\FileAttribute.h" />
-    <ClInclude Include="FileSystem\FileHandle.h" />
-    <ClInclude Include="FileSystem\FileMode.h" />
-    <ClInclude Include="FileSystem\FileStatus.h" />
-    <ClInclude Include="FileSystem\FileSystemContext.h" />
+    <ClInclude Include="FileSystem\ESP\FileAttribute.h" />
+    <ClInclude Include="FileSystem\ESP\FileHandle.h" />
+    <ClInclude Include="FileSystem\ESP\FileMode.h" />
+    <ClInclude Include="FileSystem\ESP\FileStatus.h" />
+    <ClInclude Include="FileSystem\ESP\FileSystemContext.h" />
     <ClInclude Include="Enviroment\Unicode.h" />
-    <ClInclude Include="FileSystem\VolumeHandle.h" />
+    <ClInclude Include="FileSystem\ESP\VolumeHandle.h" />
+    <ClInclude Include="FileTypes\ELF\ELF.h" />
     <ClInclude Include="FileTypes\PE\MSDos.h" />
     <ClInclude Include="FileTypes\PE\PE32DataDirectory.h" />
     <ClInclude Include="FileTypes\PE\PE32DLLCharacteristics.h" />
@@ -71,16 +72,17 @@
     <ClInclude Include="TypeDefs.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FileSystem\FileHandle.cpp" />
-    <ClCompile Include="FileSystem\FileInfo.cpp" />
-    <ClCompile Include="FileSystem\FileSystemContext.cpp" />
+    <ClCompile Include="FileSystem\ESP\FileHandle.cpp" />
+    <ClCompile Include="FileSystem\ESP\FileInfo.cpp" />
+    <ClCompile Include="FileSystem\ESP\FileSystemContext.cpp" />
     <ClCompile Include="Enviroment\Unicode.cpp" />
-    <ClCompile Include="FileSystem\FileInfo.h" />
-    <ClCompile Include="FileSystem\VolumeHandle.cpp" />
-    <ClCompile Include="FileSystem\VolumeInfo.cpp" />
-    <ClCompile Include="FileSystem\VolumeInfo.h" />
+    <ClCompile Include="FileSystem\ESP\FileInfo.h" />
+    <ClCompile Include="FileSystem\ESP\VolumeHandle.cpp" />
+    <ClCompile Include="FileSystem\ESP\VolumeInfo.cpp" />
+    <ClCompile Include="FileSystem\ESP\VolumeInfo.h" />
     <ClCompile Include="FileTypes\PE\MSDos.cpp" />
     <ClCompile Include="FileTypes\PE\PE32.cpp" />
+    <ClCompile Include="FileTypes\PE\PE32DataDirectory.cpp" />
     <ClCompile Include="FileTypes\PE\PE32Header.cpp" />
     <ClCompile Include="FileTypes\PE\PE32OptionHeader.cpp" />
     <ClCompile Include="FileTypes\PE\PE32OptionHeader32.cpp" />

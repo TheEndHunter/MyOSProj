@@ -9,7 +9,7 @@
 #include <FileTypes/PE/PE32SectionHeader.h>
 #include <FileTypes/PE/PE32DLLCharacteristics.h>
 #include <System/Allocator.h>
-#include <FileSystem/FileHandle.h>
+#include <FileSystem/ESP/FileHandle.h>
 
 namespace Common::FileTypes::PE
 {
@@ -17,7 +17,7 @@ namespace Common::FileTypes::PE
 	struct PE32
 	{
 	public:
-		PE32(FileSystem::FileHandle* handle);
+		PE32(FileSystem::ESP::FileHandle* handle);
 
 		BOOLEAN IsDosHdrValid() const;
 		BOOLEAN IsPEHdrValid() const;

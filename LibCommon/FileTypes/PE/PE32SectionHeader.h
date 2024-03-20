@@ -1,7 +1,7 @@
 #pragma once
 
 #include <TypeDefs.h>
-#include <FileSystem/FileHandle.h>
+#include <FileSystem/ESP/FileHandle.h>
 
 namespace Common::FileTypes::PE
 {
@@ -94,7 +94,7 @@ namespace Common::FileTypes::PE
 	struct PE32SectionHeader
 	{
 	public:
-		PE32SectionHeader(FileSystem::FileHandle* handle);
+		PE32SectionHeader(FileSystem::ESP::FileHandle* handle);
 
 		CHAR8 Name[8];
 		union

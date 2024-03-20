@@ -1,10 +1,10 @@
 #include "FileSystemContext.h"
 #include <Protocols/EFI_LOADED_IMAGE_PROTOCOL.h>
-#include <FileSystem/FileAttribute.h>
+#include <FileSystem/ESP/FileAttribute.h>
 #include <Protocols/IO/Media/EFI_FILE_INFO.h>
 #include <Protocols/IO/Media/EFI_FILE_SYSTEM_VOLUME_LABEL.h>
 
-namespace Common::FileSystem
+namespace Common::FileSystem::ESP
 {
 	const FileSystemContext FileSystemContext::EmptyFS = FileSystemContext();
 	const CHAR16* RootPath = u"\\";
@@ -262,7 +262,7 @@ namespace Common::FileSystem
 		sysTbl->BootServices->CloseProtocol(_deviceHandle, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, nullptr, imgHndl);
 	};
 
-	Common::FileSystem::VolumeInfo FileSystemContext::GetVolumeInfo(EFI::EFI_SYSTEM_TABLE* sysTable)
+	Common::FileSystem::ESP::VolumeInfo FileSystemContext::GetVolumeInfo(EFI::EFI_SYSTEM_TABLE* sysTable)
 	{
 		UINTN size = 0;
 		LastStatus = _root->GetInfo(_root, &EFI::EFI_FILE_SYSTEM_INFO_ID, &size, nullptr);
@@ -291,7 +291,7 @@ namespace Common::FileSystem
 		return volumeInfo;
 	};
 
-	Common::FileSystem::VolumeLabel FileSystemContext::GetVolumeLabel(EFI::EFI_SYSTEM_TABLE* sysTable)
+	Common::FileSystem::ESP::VolumeLabel FileSystemContext::GetVolumeLabel(EFI::EFI_SYSTEM_TABLE* sysTable)
 	{
 		UINTN size = 0;
 		EFI::EFI_FILE_SYSTEM_VOLUME_LABEL* info = nullptr;
@@ -328,7 +328,7 @@ namespace Common::FileSystem
 		return volLabel;
 	}
 
-	Common::FileSystem::FileInfo FileSystemContext::GetDirectoryInfo(EFI::EFI_SYSTEM_TABLE* sysTable)
+	Common::FileSystem::ESP::FileInfo FileSystemContext::GetDirectoryInfo(EFI::EFI_SYSTEM_TABLE* sysTable)
 	{
 		UINTN size = 0;
 		EFI::EFI_FILE_SYSTEM_INFO* info = nullptr;
@@ -372,7 +372,7 @@ namespace Common::FileSystem
 		}
 	};
 
-	Common::FileSystem::FileInfo FileSystemContext::GetFileInfo(EFI::EFI_SYSTEM_TABLE* sysTable, const CHAR16* path)
+	Common::FileSystem::ESP::FileInfo FileSystemContext::GetFileInfo(EFI::EFI_SYSTEM_TABLE* sysTable, const CHAR16* path)
 	{
 		/*Check path to see if it's null or empty, if it is return an empty FileSystem, putting INVALID_PARAMETER status into LastStatus Member*/
 		if (Common::Enviroment::UTF16::IsNullOrEmpty(path))

@@ -3,7 +3,7 @@
 
 namespace Common::FileTypes::PE
 {
-	PE32OptionHeader64::PE32OptionHeader64(FileSystem::FileHandle* handle)
+	PE32OptionHeader64::PE32OptionHeader64(FileSystem::ESP::FileHandle* handle)
 	{
 		handle->Read(sizeof(ImageBase), &ImageBase);
 		handle->Read(sizeof(SectionAlignment), &SectionAlignment);
@@ -26,9 +26,8 @@ namespace Common::FileTypes::PE
 		handle->Read(sizeof(SizeOfHeapCommit), &SizeOfHeapCommit);
 		handle->Read(sizeof(LoaderFlags), &LoaderFlags);
 		handle->Read(sizeof(NumberOfRvaAndSizes), &NumberOfRvaAndSizes);
+		DataDirectories = System::Allocator::AllocateArray<PE32DataDirectory>(NumberOfRvaAndSizes);
 		UINTN dataDirSize = sizeof(PE32DataDirectory) * NumberOfRvaAndSizes;
-		
-		DataDirectories = (PE32DataDirectory*)System::Allocator::Allocate(dataDirSize);
 		handle->Read(dataDirSize, &DataDirectories);
 	}
 }

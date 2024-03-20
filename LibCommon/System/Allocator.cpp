@@ -260,6 +260,7 @@ namespace Common::System
 	}
 #pragma endregion
 }
+
 VOID_PTR operator new(UINTN size)
 {
 	if (!Common::System::Allocator::IsInitalized())
@@ -294,6 +295,7 @@ void operator delete(VOID_PTR ptr)
 	{
 		return;
 	}
+
 	Common::System::Allocator::Free(ptr);
 }
 

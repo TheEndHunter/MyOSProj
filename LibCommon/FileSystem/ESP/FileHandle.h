@@ -3,11 +3,11 @@
 #include <EFI_SYSTEM_TABLE.h>
 #include <Protocols/IO/Media/EFI_SIMPLE_FILE_SYSTEM_PROTOCOL.h>
 #include <EFI_STATUS.h>
-#include <FileSystem/FileInfo.h>
-#include <FileSystem/FileMode.h>
-#include <FileSystem/FileAttribute.h>
+#include <FileSystem/ESP/FileInfo.h>
+#include <FileSystem/ESP/FileMode.h>
+#include <FileSystem/ESP/FileAttribute.h>
 
-namespace Common::FileSystem
+namespace Common::FileSystem::ESP
 {
 	struct FileHandle
 	{

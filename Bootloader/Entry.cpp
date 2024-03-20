@@ -5,7 +5,7 @@
 #include <EFIConsole.h>
 #include <Graphics/Colour.h>
 #include <Enviroment/Unicode.h>
-#include <FileSystem/FileSystemContext.h>
+#include <FileSystem/ESP/FileSystemContext.h>
 #include <System/Allocator.h>
 #include <System//AllocatorStatus.h>
 
@@ -15,7 +15,7 @@
 namespace Bootloader
 {
     using namespace Common::Enviroment;
-    using namespace Common::FileSystem;
+    using namespace Common::FileSystem::ESP;
     using namespace Common::Graphics;
     using namespace Common::FileTypes::PE;
     using namespace EFI;
@@ -94,6 +94,41 @@ namespace Bootloader
         if (!Common::System::Allocator::IsInitalized)
 		{
             ThrowException(sysTbl, imgHndl, u"Could Not Set EFI Allocator", Common::System::ToEfiStatus(Common::System::Allocator::LastStatus()));
+		}
+
+        UINT32 mm = sysTbl->ConOut->Mode->MaxMode;
+
+        UINTN Columns = 0;
+        
+        UINTN Rows = 0;
+        UINTN mode = 0;
+
+        for (; mode < mm; mode++)
+        {
+            UINTN CurrentC = 0;
+            UINTN CurrentR = 0;
+
+            EFI_STATUS queryStat = sysTbl->ConOut->QueryMode(sysTbl->ConOut, mode,&CurrentC,&CurrentR);
+			if (queryStat != EFI_STATUS::SUCCESS)
+			{
+				PrintError(sysTbl, u"Error in Query Mode", queryStat);
+			}
+
+            if (CurrentC > Columns && CurrentR > Rows)
+			{
+				Columns = CurrentC;
+				Rows = CurrentR;
+			}
+        }
+
+        EFI_STATUS conStat = sysTbl->ConOut->SetMode(sysTbl->ConOut,mode);
+
+        if (conStat != EFI_STATUS::SUCCESS)
+		{
+            if (conStat != EFI_STATUS::UNSUPPORTED)
+            {
+                ThrowException(sysTbl, imgHndl, u"Could Not Set Console Mode", conStat);
+            }
 		}
 
         sysTbl->ConOut->Reset(sysTbl->ConOut, false);
@@ -276,7 +311,7 @@ namespace Bootloader
         Print(sysTbl, u"Image Base: ",EFI::EFI_CONSOLE_COLOR::DEBUG);
         Print(sysTbl, UTF16::ToHex(imgBase),EFI::EFI_CONSOLE_COLOR::DEBUG);
         Print(sysTbl, u" Kernel Image Size: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
-        PrintDebug(sysTbl, UTF16::ToString(krnlPE.OptHdr.PE32PLUS->SizeOfImage));
+        PrintDebug(sysTbl, UTF16::ToHex(krnlPE.OptHdr.PE32PLUS->SizeOfImage));
 
         Print(sysTbl, u"Kernel Buffer Size: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
         Print(sysTbl, UTF16::ToString(krnlPE.SizeOfDataBuffer), EFI::EFI_CONSOLE_COLOR::DEBUG);
@@ -293,18 +328,6 @@ namespace Bootloader
 
         Print(sysTbl, u"Kernel Returned: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
         PrintDebug(sysTbl, UTF16::ToString(status));
-
-        delete krnlPE.DataBuffer;
-        delete krnlPE.SectionHeaders;
-
-        if (krnlPE.OptHdrCommon.Magic.Value == 0x020b)
-        {
-            delete krnlPE.OptHdr.PE32PLUS;
-        }
-        else if (krnlPE.OptHdrCommon.Magic.Value == 0x010b)
-        {
-            delete krnlPE.OptHdr.PE32;
-        };
 
         gop.Terminate(imgHndl, sysTbl);
 

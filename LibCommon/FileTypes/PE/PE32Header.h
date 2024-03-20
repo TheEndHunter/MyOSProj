@@ -1,6 +1,6 @@
 #pragma once
 #include <TypeDefs.h>
-#include <FileSystem/FileHandle.h>
+#include <FileSystem/ESP/FileHandle.h>
 #include <FileTypes/PE/PE32OptionHeader32.h>
 #include <FileTypes/PE/PE32OptionHeader64.h>
 
@@ -95,7 +95,7 @@ namespace Common::FileTypes::PE
 	public:
 		PE32Header();
 
-		PE32Header(FileSystem::FileHandle* handle);
+		PE32Header(FileSystem::ESP::FileHandle* handle);
 
 		union
 		{

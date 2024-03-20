@@ -1,6 +1,6 @@
 #pragma once
 #include <TypeDefs.h>
-#include <FileSystem/FileHandle.h>
+#include <FileSystem/ESP/FileHandle.h>
 
 namespace Common::FileTypes::PE
 {
@@ -10,7 +10,7 @@ namespace Common::FileTypes::PE
 	public:
 		PE32OptionHeader();
 
-		PE32OptionHeader(FileSystem::FileHandle* handle);
+		PE32OptionHeader(FileSystem::ESP::FileHandle* handle);
 		/*
 		*  Standard Fields
 		*/

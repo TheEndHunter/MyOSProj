@@ -16,7 +16,7 @@ namespace Common::FileTypes::PE
 		Characteristics = PECharacteristics::System;
 	}
 
-	PE32Header::PE32Header(FileSystem::FileHandle * handle)
+	PE32Header::PE32Header(FileSystem::ESP::FileHandle * handle)
 	{
 		handle->Read(sizeof(Signature), &Signature);
 		handle->Read(sizeof(Machine), &Machine);

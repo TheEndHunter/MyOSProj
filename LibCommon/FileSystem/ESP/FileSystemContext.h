@@ -12,7 +12,7 @@
 #include "FileAttribute.h"
 #include <Enviroment/StringComparisonMode.h>
 
-namespace Common::FileSystem
+namespace Common::FileSystem::ESP
 {
 	
 	class FileSystemContext

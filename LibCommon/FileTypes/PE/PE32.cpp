@@ -2,9 +2,8 @@
 
 namespace Common::FileTypes::PE
 {
-	PE32::PE32(FileSystem::FileHandle* handle)
+	PE32::PE32(FileSystem::ESP::FileHandle* handle)
 	{
-		UINTN offset = 0;
 		_dosHdrValid = FALSE;
 		_peHdrValid = FALSE;
 		_optHdrValid = FALSE;
@@ -19,7 +18,6 @@ namespace Common::FileTypes::PE
 			return;
 		}
 
-		offset += sizeof(DOSHeader);
 		_dosHdrValid = TRUE;
 
 		handle->SetPosition(DOSHdr.PEHeaderOffset);
@@ -43,29 +41,22 @@ namespace Common::FileTypes::PE
 			return;
 		}
 		_peHdrValid = TRUE;
-		offset += sizeof(PE32Header);
 
 		OptHdrCommon = PE32OptionHeader(handle);
 		
-		UINTN ImageBase;
-
 		if(OptHdrCommon.Magic.Value == 0x010b)
 		{
-			OptHdr.PE32 = (PE32OptionHeader32*)System::Allocator::Allocate(sizeof(PE32OptionHeader32));
-			OptHdr.PE32 = new(OptHdr.PE32) PE32OptionHeader32(handle);
+			OptHdr.PE32 = new PE32OptionHeader32(handle);
 
 			if(OptHdr.PE32 == nullptr)
 			{
 				return;
 			}
 			SizeOfDataBuffer = OptHdr.PE32->SizeOfImage;
-			offset += sizeof(PE32OptionHeader32) - sizeof(PE32OptionHeader32::DataDirectories) + (sizeof(PE32DataDirectory) * OptHdr.PE32->NumberOfRvaAndSizes);
-			ImageBase = OptHdr.PE32->ImageBase;
 		}
 		else if(OptHdrCommon.Magic.Value == 0x020b)
 		{
-			OptHdr.PE32PLUS = (PE32OptionHeader64*)System::Allocator::Allocate(sizeof(PE32OptionHeader64));
-			OptHdr.PE32PLUS = new(OptHdr.PE32PLUS) PE32OptionHeader64(handle);
+			OptHdr.PE32PLUS = new PE32OptionHeader64(handle);
 
 			if(OptHdr.PE32PLUS == nullptr)
 			{
@@ -73,8 +64,6 @@ namespace Common::FileTypes::PE
 			}
 
 			SizeOfDataBuffer = OptHdr.PE32PLUS->SizeOfImage;
-			offset += sizeof(PE32OptionHeader64) - sizeof(PE32OptionHeader64::DataDirectories) + (sizeof(PE32DataDirectory) * OptHdr.PE32PLUS->NumberOfRvaAndSizes);
-			ImageBase = OptHdr.PE32PLUS->ImageBase;
 		}
 		else
 		{
@@ -83,14 +72,13 @@ namespace Common::FileTypes::PE
 
 		_optHdrValid = TRUE;
 
-		SectionHeaders = (PE32SectionHeader*)System::Allocator::Allocate(sizeof(PE32SectionHeader) * PE32hdr.NumberOfSections);
+		SectionHeaders = System::Allocator::AllocateArray<PE32SectionHeader>(PE32hdr.NumberOfSections);
 		
 		if (SectionHeaders == nullptr)
 		{
 			return;
 		}
 
-		handle->SetPosition(offset);
 		for (UINTN i = 0; i < PE32hdr.NumberOfSections; i++)
 		{
 			SectionHeaders[i] = PE32SectionHeader(handle);
@@ -99,7 +87,7 @@ namespace Common::FileTypes::PE
 		_sectionHdrValid = TRUE;
 
 
-		DataBuffer = (UINT8*)System::Allocator::AllocateZeroed(SizeOfDataBuffer);
+		DataBuffer = new UINT8[SizeOfDataBuffer];
 				
 		if(DataBuffer == nullptr)
 		{
@@ -119,6 +107,7 @@ namespace Common::FileTypes::PE
 		_EntryPointOffset = OptHdrCommon.AddressOfEntryPoint;
 		_EntryPoint = &DataBuffer[OptHdrCommon.AddressOfEntryPoint];
 	}
+
 	BOOLEAN PE32::IsDosHdrValid() const
 	{
 		return _dosHdrValid;
