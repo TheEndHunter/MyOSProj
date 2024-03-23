@@ -3,6 +3,7 @@
 
 namespace Common::FileTypes::ELF
 {
+
 	/* Symbol Binding
 		STB_LOCAL	0
 		STB_GLOBAL	1
@@ -51,7 +52,7 @@ namespace Common::FileTypes::ELF
 #define ELF64_R_TYPE(i)   ((i)&0xffffffffL)
 #define ELF64_R_INFO(s,t) (((s)<<32)+((t)&0xffffffffL))
 
-	enum ElfSectionFlags64 : UINT64
+	enum class ElfSectionFlags64 : UINT64
 	{
 		WRITE = 0x1,
 		ALLOC = 0x2,
@@ -131,6 +132,20 @@ namespace Common::FileTypes::ELF
 		UINT64 Offset;
 		UINT64 Info;
 		INT64 Addend;
+	};
+#pragma pack(pop)
+#pragma pack (push,1)
+	struct ElfProgramHeader64
+	{
+	public:
+		ElfProgramType Type;
+		ElfProgramFlags	ProgramFlags;
+		UINT64	ProgramOffset;
+		UINT64	ProgramVirtAddr;
+		UINT64	ProgramPhysAddr;
+		UINT64	ProgramFileSize;
+		UINT64	ProgramMemSixe;
+		UINT64	ProgramAlign;
 	};
 #pragma pack(pop)
 }

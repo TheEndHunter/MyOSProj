@@ -3,46 +3,6 @@
 
 namespace Common::FileTypes::ELF
 {
-	/* Symbol Binding
-		STB_LOCAL	0
-		STB_GLOBAL	1
-		STB_WEAK	2
-		STB_LOOS	10
-		STB_HIOS	12
-		STB_LOPROC	13
-		STB_HIPROC	15
-	*/
-
-	/* Symbol Type
-		STT_NOTYPE	0
-		STT_OBJECT	1
-		STT_FUNC	2
-		STT_SECTION	3
-		STT_FILE	4
-		STT_COMMON	5
-		STT_TLS	6
-		STT_LOOS	10
-		STT_HIOS	12
-		STT_LOPROC	13
-		STT_HIPROC	15
-	*/
-
-	/*  Symbol Visibility
-		STV_DEFAULT	0
-		STV_INTERNAL	1
-		STV_HIDDEN	2
-		STV_PROTECTED	3
-	*/
-
-	/* Section Index 0
-		st_name	0	No name
-		st_value	0	Zero value
-		st_size	0	No size
-		st_info	0	No type, local binding
-		st_other	0	Default visibility
-		st_shndx	SHN_UNDEF	No section
-	*/
-
 #define ELF32_ST_BIND(i)   ((i)>>4)
 #define ELF32_ST_TYPE(i)   ((i)&0xf)
 #define ELF32_ST_INFO(b,t) (((b)<<4)+((t)&0xf))
@@ -51,7 +11,7 @@ namespace Common::FileTypes::ELF
 #define ELF32_R_TYPE(i)   ((unsigned char)(i))
 #define ELF32_R_INFO(s,t) (((s)<<8)+(unsigned char)(t))
 
-	enum ElfSectionFlags32 : UINT32
+	enum class ElfSectionFlags32 : UINT32
 	{
 		WRITE = 0x1,
 		ALLOC = 0x2,
@@ -130,6 +90,20 @@ namespace Common::FileTypes::ELF
 		UINT32 Offset;
 		UINT32 Info;
 		INT32 Addend;
+	};
+#pragma pack(pop)
+#pragma pack (push,1)
+	struct ElfProgramHeader32
+	{
+	public:
+		ElfProgramType Type;
+		UINT32	ProgramOffset;
+		UINT32	ProgramVirtAddr;
+		UINT32	ProgramPhysAddr;
+		UINT32	ProgramFileSize;
+		UINT32	ProgramMemSize;
+		ElfProgramFlags	ProgramFlags;
+		UINT32	ProgramAlign;
 	};
 #pragma pack(pop)
 }

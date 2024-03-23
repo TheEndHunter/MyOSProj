@@ -3,6 +3,47 @@
 
 namespace Common::FileTypes::ELF
 {
+
+	/* Symbol Binding
+		STB_LOCAL	0
+		STB_GLOBAL	1
+		STB_WEAK	2
+		STB_LOOS	10
+		STB_HIOS	12
+		STB_LOPROC	13
+		STB_HIPROC	15
+	*/
+
+	/* Symbol Type
+		STT_NOTYPE	0
+		STT_OBJECT	1
+		STT_FUNC	2
+		STT_SECTION	3
+		STT_FILE	4
+		STT_COMMON	5
+		STT_TLS	6
+		STT_LOOS	10
+		STT_HIOS	12
+		STT_LOPROC	13
+		STT_HIPROC	15
+	*/
+
+	/*  Symbol Visibility
+		STV_DEFAULT	0
+		STV_INTERNAL	1
+		STV_HIDDEN	2
+		STV_PROTECTED	3
+	*/
+
+	/* Section Index 0
+		st_name	0	No name
+		st_value	0	Zero value
+		st_size	0	No size
+		st_info	0	No type, local binding
+		st_other	0	Default visibility
+		st_shndx	SHN_UNDEF	No section
+	*/
+
 	const UINTN MAX_IDENT_LEN = 16ull;
 
 	const UINT16 ELFSectionHdr_UNDEF = 0;
@@ -16,21 +57,21 @@ namespace Common::FileTypes::ELF
 	const UINT16 ELFSectionHdr_XINDEX = 0xffff;
 	const UINT16 ELFSectionHdr_HIRESERVE = 0xffff;
 
-	enum ELFClass : UINT8
+	enum class ELFClass : UINT8
 	{
 		None = 0,
 		ELF32 = 1,
 		ELF64 = 2
 	};
 
-	enum ELFDataType : UINT8
+	enum class ELFDataType : UINT8
 	{
 		None = 0,
 		LSB = 1,
 		MSB = 2
 	};
 
-	enum ElfType : UINT16
+	enum class ElfHdrType : UINT16
 	{
 		//No file type
 		NONE = 0,
@@ -52,7 +93,45 @@ namespace Common::FileTypes::ELF
 		HIPROC = 0xffff,
 	};
 
-	enum ElfMachine : UINT16
+	enum class ElfProgramType : UINT32
+	{
+		NULL = 0,
+		LOAD = 1,
+		DYNAMIC = 2,
+		INTERP = 3,
+		NOTE = 4,
+		SHLIB = 5,
+		PHDR = 6,
+		TLS = 7,
+		LOOS = 0x60000000,
+		HIOS = 0x6fffffff,
+		LOPROC = 0x70000000,
+		HIPROC = 0x7fffffff,
+
+	};
+
+	enum class ElfProgramFlags : UINT32
+	{
+		X = 0x1,//Execute
+		W = 0x2,//Write
+		R = 0x4,//Read
+		MASKOS = 0x0ff00000,//Unspecified
+		MASKPROC = 0xf0000000,//Unspecified
+	};
+
+	enum class ElfSectionPermissons : UINT8
+	{
+		None = 0,//All access denied	All access denied
+		X = 1,//Execute only	Read, execute
+		W = 2,//Write only	Read, write, execute
+		WX = 3,//Write, execute	Read, write, execute
+		R = 4,//Read only	Read, execute
+		RX = 5,//Read, execute	Read, execute
+		RW = 6,//Read, write	Read, write, execute
+		RWX = 7,//Read, write, execute	Read, write, execute
+	};
+
+	enum class ElfMachine : UINT16
 	{
 		//No machine		
 		NONE = 0,
@@ -258,7 +337,7 @@ namespace Common::FileTypes::ELF
 		ST200 = 100,
 	};
 
-	enum ElfOSABI : UINT8
+	enum class ElfOSABI : UINT8
 	{
 		//UNIX System V
 		UnixSVR4 = 0,
@@ -302,7 +381,7 @@ namespace Common::FileTypes::ELF
 		Sortix = 83,
 	};
 
-	enum ElfSectionType : UINT32
+	enum class ElfSectionType : UINT32
 	{
 		NULL = 0,
 		PROGBITS = 1,
@@ -352,7 +431,7 @@ namespace Common::FileTypes::ELF
 	{
 	public:
 		ElfIdentHdr Identity;
-		ElfType Type;
+		ElfHdrType Type;
 		ElfMachine Machine;
 	};
 
