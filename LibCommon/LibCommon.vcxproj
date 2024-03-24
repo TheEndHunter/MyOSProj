@@ -84,6 +84,8 @@
     <ClCompile Include="FileSystem\ESP\VolumeInfo.cpp" />
     <ClCompile Include="FileSystem\ESP\VolumeInfo.h" />
     <ClCompile Include="FileTypes\ELF\ELF.cpp" />
+    <ClCompile Include="FileTypes\ELF\ELF32.cpp" />
+    <ClCompile Include="FileTypes\ELF\ELF64.cpp" />
     <ClCompile Include="FileTypes\PE\MSDos.cpp" />
     <ClCompile Include="FileTypes\PE\PE32.cpp" />
     <ClCompile Include="FileTypes\PE\PE32DataDirectory.cpp" />

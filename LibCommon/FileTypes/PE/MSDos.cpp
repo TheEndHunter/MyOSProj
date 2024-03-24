@@ -43,25 +43,25 @@ namespace Common::FileTypes::PE
 	DOSHeader::DOSHeader(Common::FileSystem::ESP::FileHandle* handle)
 	{
 		handle->SetPosition(0UL);
-		handle->Read(sizeof(Magic), &Magic);
-		handle->Read(sizeof(BytesOnLastPage), &BytesOnLastPage);
-		handle->Read(sizeof(PagesInFile), &PagesInFile);
-		handle->Read(sizeof(Relocations), &Relocations);
-		handle->Read(sizeof(SizeOfHeaderParagraphs), &SizeOfHeaderParagraphs);
-		handle->Read(sizeof(MinimumExtraParagraphs), &MinimumExtraParagraphs);
-		handle->Read(sizeof(MaximumExtraParagraphs), &MaximumExtraParagraphs);
-		handle->Read(sizeof(InitialSS), &InitialSS);
-		handle->Read(sizeof(InitialSP), &InitialSP);
-		handle->Read(sizeof(Checksum), &Checksum);
-		handle->Read(sizeof(InitialIP), &InitialIP);
-		handle->Read(sizeof(InitialCS), &InitialCS);
-		handle->Read(sizeof(RelocationTableOffset), &RelocationTableOffset);
-		handle->Read(sizeof(OverlayNumber), &OverlayNumber);
-		handle->Read(sizeof(Reserved), &Reserved);
-		handle->Read(sizeof(OEMID), &OEMID);
-		handle->Read(sizeof(OEMInfo), &OEMInfo);
-		handle->Read(sizeof(Reserved2), &Reserved2);
-		handle->Read(sizeof(PEHeaderOffset), &PEHeaderOffset);
+		handle->Read<UINT16>(&Magic.Value);
+		handle->Read<UINT16>(&BytesOnLastPage);
+		handle->Read<UINT16>(&PagesInFile);
+		handle->Read<UINT16>(&Relocations);
+		handle->Read<UINT16>(&SizeOfHeaderParagraphs);
+		handle->Read<UINT16>(&MinimumExtraParagraphs);
+		handle->Read<UINT16>(&MaximumExtraParagraphs);
+		handle->Read<UINT16>(&InitialSS);
+		handle->Read<UINT16>(&InitialSP);
+		handle->Read<UINT16>(&Checksum);
+		handle->Read<UINT16>(&InitialIP);
+		handle->Read<UINT16>(&InitialCS);
+		handle->Read<UINT16>(&RelocationTableOffset);
+		handle->Read<UINT16>(&OverlayNumber);
+		handle->Read<UINT16>(&Reserved[0], 4);
+		handle->Read<UINT16>(&OEMID);
+		handle->Read<UINT16>(&OEMInfo);
+		handle->Read<UINT16>(&Reserved2[0],10);
+		handle->Read<UINT32>(&PEHeaderOffset);
 	}
 
 	const BOOLEAN DOSHeader::VerifySignature(const DOSHeader* header)

@@ -42,6 +42,8 @@ namespace Common::FileTypes::PE
 #pragma pack(push,1)
 	struct PE32DataDirectory
 	{
+	public:
+		PE32DataDirectory();
 		PE32DataDirectory(Common::FileSystem::ESP::FileHandle* hndl);
 		UINT32 VirtualAddress;
 		UINT32 Size;

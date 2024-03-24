@@ -1,5 +1,7 @@
 #pragma once
 #include <TypeDefs.h>
+#include <FileTypes/ELF/ELFCommon.h>
+#include <FileSystem/ESP/FileHandle.h>
 
 namespace Common::FileTypes::ELF
 {
@@ -67,6 +69,8 @@ namespace Common::FileTypes::ELF
 		MASKOS = 0x0ff00000,
 		MASKPROC = 0xf0000000,
 	};
+
+	
 
 #pragma pack(push, 1)
 	struct ElfHeader64
@@ -146,6 +150,16 @@ namespace Common::FileTypes::ELF
 		UINT64	ProgramFileSize;
 		UINT64	ProgramMemSixe;
 		UINT64	ProgramAlign;
+	};
+#pragma pack(pop)
+#pragma pack (push,1)
+	struct ELF64
+	{
+	public:
+		ELF64(Common::FileSystem::ESP::FileHandle* handle);
+		ElfHeader64 EntryHeader;
+		ElfProgramHeader64* ProgHeader;
+		ElfSectionHeader64* SectHeader;
 	};
 #pragma pack(pop)
 }

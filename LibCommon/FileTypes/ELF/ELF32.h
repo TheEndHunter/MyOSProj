@@ -1,5 +1,7 @@
 #pragma once
 #include <TypeDefs.h>
+#include <FileTypes/ELF/ELFCommon.h>
+#include <FileSystem/ESP/FileHandle.h>
 
 namespace Common::FileTypes::ELF
 {
@@ -104,6 +106,17 @@ namespace Common::FileTypes::ELF
 		UINT32	ProgramMemSize;
 		ElfProgramFlags	ProgramFlags;
 		UINT32	ProgramAlign;
+	};
+#pragma pack(pop)
+
+#pragma pack (push,1)
+	struct ELF32
+	{
+	public:
+		ELF32(Common::FileSystem::ESP::FileHandle* handle);
+		ElfHeader32 EntryHeader;
+		ElfProgramHeader32* ProgHeader;
+		ElfSectionHeader32* SectHeader;
 	};
 #pragma pack(pop)
 }

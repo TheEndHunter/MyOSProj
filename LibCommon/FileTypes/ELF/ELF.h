@@ -1,12 +1,13 @@
 #pragma once
 #include <TypeDefs.h>
+#include <FileSystem/ESP/FileHandle.h>
 #include <FileTypes/ELF/ELFCommon.h>
 #include <FileTypes/ELF/ELF32.h>
 #include <FileTypes/ELF/ELF64.h>
-#include <FileSystem/ESP/FileHandle.h>
 
 namespace Common::FileTypes::ELF
 {
+#pragma pack(push, 1)
 	struct ELF
 	{
 	public:
@@ -15,15 +16,18 @@ namespace Common::FileTypes::ELF
 		BOOLEAN IsValidElf();
 
 		ElfHeaderCommon CommonHeader;
-
 		union
 		{
-			ElfHeader32* Elf32;
-			ElfHeader64* Elf64;
-		}Hdr;
+			ELF32* Elf32;
+			ELF64* Elf64;
+		}Hdrs;
+
 	private:
 		BOOLEAN _isValidElf;
 
 	};
+#pragma pack(pop)
+
+	
 }
 

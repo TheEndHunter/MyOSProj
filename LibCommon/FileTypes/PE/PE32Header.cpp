@@ -18,13 +18,13 @@ namespace Common::FileTypes::PE
 
 	PE32Header::PE32Header(FileSystem::ESP::FileHandle * handle)
 	{
-		handle->Read(sizeof(Signature), &Signature);
-		handle->Read(sizeof(Machine), &Machine);
-		handle->Read(sizeof(NumberOfSections), &NumberOfSections);
-		handle->Read(sizeof(TimeDateStamp), &TimeDateStamp);
-		handle->Read(sizeof(PointerToSymbolTable), &PointerToSymbolTable);
-		handle->Read(sizeof(NumberOfSymbols), &NumberOfSymbols);
-		handle->Read(sizeof(SizeOfOptionalHeader), &SizeOfOptionalHeader);
-		handle->Read(sizeof(Characteristics), &Characteristics);
+		handle->Read<UINT32>(&Signature.Value);
+		handle->Read<MachineTypes>(&Machine);
+		handle->Read<UINT16>(&NumberOfSections);
+		handle->Read<UINT32>(&TimeDateStamp);
+		handle->Read<UINT32>(&PointerToSymbolTable);
+		handle->Read<UINT32>(&NumberOfSymbols);
+		handle->Read<UINT16>(&SizeOfOptionalHeader);
+		handle->Read<PECharacteristics>(&Characteristics);
 	}
 }

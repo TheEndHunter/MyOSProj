@@ -94,14 +94,16 @@ namespace Common::FileTypes::PE
 	struct PE32SectionHeader
 	{
 	public:
+		PE32SectionHeader();
 		PE32SectionHeader(FileSystem::ESP::FileHandle* handle);
 
-		CHAR8 Name[8];
+		CCHAR Name[8];
+
 		union
 		{
 			friend struct PE32SectionHeader;
 		private:
-			UINT32 value;
+			UINT32 Value;
 		public:
 			UINT32 PhysicalAddress;
 			UINT32 VirtualSize;

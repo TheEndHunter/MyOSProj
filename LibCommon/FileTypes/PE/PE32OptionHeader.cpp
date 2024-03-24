@@ -16,13 +16,13 @@ namespace Common::FileTypes::PE
 
 	PE32OptionHeader::PE32OptionHeader(FileSystem::ESP::FileHandle* handle)
 	{
-		handle->Read(sizeof(Magic), &Magic);
-		handle->Read(sizeof(MajorLinkerVersion), &MajorLinkerVersion);
-		handle->Read(sizeof(MinorLinkerVersion), &MinorLinkerVersion);
-		handle->Read(sizeof(SizeOfCode), &SizeOfCode);
-		handle->Read(sizeof(SizeOfInitializedData), &SizeOfInitializedData);
-		handle->Read(sizeof(SizeOfUninitializedData), &SizeOfUninitializedData);
-		handle->Read(sizeof(AddressOfEntryPoint), &AddressOfEntryPoint);
-		handle->Read(sizeof(BaseOfCode), &BaseOfCode);
+		handle->Read<UINT16>(&Magic.Value);
+		handle->Read<UINT8>(&MajorLinkerVersion);
+		handle->Read<UINT8>(&MinorLinkerVersion);
+		handle->Read<UINT32>(&SizeOfCode);
+		handle->Read<UINT32>(&SizeOfInitializedData);
+		handle->Read<UINT32>(&SizeOfUninitializedData);
+		handle->Read<UINT32>(&AddressOfEntryPoint);
+		handle->Read<UINT32>(&BaseOfCode);
 	};
 }

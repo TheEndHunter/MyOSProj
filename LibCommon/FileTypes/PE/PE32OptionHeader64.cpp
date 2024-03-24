@@ -5,29 +5,28 @@ namespace Common::FileTypes::PE
 {
 	PE32OptionHeader64::PE32OptionHeader64(FileSystem::ESP::FileHandle* handle)
 	{
-		handle->Read(sizeof(ImageBase), &ImageBase);
-		handle->Read(sizeof(SectionAlignment), &SectionAlignment);
-		handle->Read(sizeof(FileAlignment), &FileAlignment);
-		handle->Read(sizeof(MajorOperatingSystemVersion), &MajorOperatingSystemVersion);
-		handle->Read(sizeof(MinorOperatingSystemVersion), &MinorOperatingSystemVersion);
-		handle->Read(sizeof(MajorImageVersion), &MajorImageVersion);
-		handle->Read(sizeof(MinorImageVersion), &MinorImageVersion);
-		handle->Read(sizeof(MajorSubsystemVersion), &MajorSubsystemVersion);
-		handle->Read(sizeof(MinorSubsystemVersion), &MinorSubsystemVersion);
-		handle->Read(sizeof(Win32VersionValue), &Win32VersionValue);
-		handle->Read(sizeof(SizeOfImage), &SizeOfImage);
-		handle->Read(sizeof(SizeOfHeaders), &SizeOfHeaders);
-		handle->Read(sizeof(CheckSum), &CheckSum);
-		handle->Read(sizeof(Subsystem), &Subsystem);
-		handle->Read(sizeof(DllCharacteristics), &DllCharacteristics);
-		handle->Read(sizeof(SizeOfStackReserve), &SizeOfStackReserve);
-		handle->Read(sizeof(SizeOfStackCommit), &SizeOfStackCommit);
-		handle->Read(sizeof(SizeOfHeapReserve), &SizeOfHeapReserve);
-		handle->Read(sizeof(SizeOfHeapCommit), &SizeOfHeapCommit);
-		handle->Read(sizeof(LoaderFlags), &LoaderFlags);
-		handle->Read(sizeof(NumberOfRvaAndSizes), &NumberOfRvaAndSizes);
-		DataDirectories = System::Allocator::AllocateArray<PE32DataDirectory>(NumberOfRvaAndSizes);
-		UINTN dataDirSize = sizeof(PE32DataDirectory) * NumberOfRvaAndSizes;
-		handle->Read(dataDirSize, &DataDirectories);
+		handle->Read<UINT64>(&ImageBase);
+		handle->Read<UINT32>(&SectionAlignment);
+		handle->Read<UINT32>(&FileAlignment);
+		handle->Read<UINT16>(&MajorOperatingSystemVersion);
+		handle->Read<UINT16>(&MinorOperatingSystemVersion);
+		handle->Read<UINT16>(&MajorImageVersion);
+		handle->Read<UINT16>(&MinorImageVersion);
+		handle->Read<UINT16>(&MajorSubsystemVersion);
+		handle->Read<UINT16>(&MinorSubsystemVersion);
+		handle->Read<UINT32>(&Win32VersionValue);
+		handle->Read<UINT32>(&SizeOfImage);
+		handle->Read<UINT32>(&SizeOfHeaders);
+		handle->Read<UINT32>(&CheckSum);
+		handle->Read<UINT16>(&Subsystem);
+		handle->Read<PE32DLLCharacteristics>(&DllCharacteristics);
+		handle->Read<UINT64>(&SizeOfStackReserve);
+		handle->Read<UINT64>(&SizeOfStackCommit);
+		handle->Read<UINT64>(&SizeOfHeapReserve);
+		handle->Read<UINT64>(&SizeOfHeapCommit);
+		handle->Read<UINT32>(&LoaderFlags);
+		handle->Read<UINT32>(&NumberOfRvaAndSizes);
+		DataDirectories = new PE32DataDirectory[NumberOfRvaAndSizes];
+		handle->Read<PE32DataDirectory>(DataDirectories,NumberOfRvaAndSizes);
 	}
 }

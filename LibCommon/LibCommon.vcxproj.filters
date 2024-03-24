@@ -206,5 +206,11 @@
     <ClCompile Include="FileTypes\ELF\ELF.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FileTypes\ELF\ELF32.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FileTypes\ELF\ELF64.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -72,29 +72,20 @@ namespace Common::FileTypes::PE
 
 		_optHdrValid = TRUE;
 
-		SectionHeaders = System::Allocator::AllocateArray<PE32SectionHeader>(PE32hdr.NumberOfSections);
-		
+		SectionHeaders = new PE32SectionHeader[PE32hdr.NumberOfSections];
 		if (SectionHeaders == nullptr)
 		{
 			return;
 		}
 
-		for (UINTN i = 0; i < PE32hdr.NumberOfSections; i++)
-		{
-			SectionHeaders[i] = PE32SectionHeader(handle);
-		}
-
+		handle->Read<PE32SectionHeader>(SectionHeaders, PE32hdr.NumberOfSections);
 		_sectionHdrValid = TRUE;
-
-
 		DataBuffer = new UINT8[SizeOfDataBuffer];
-				
 		if(DataBuffer == nullptr)
 		{
 			delete SectionHeaders;
 			return;
 		}
-
 
 		handle->SetPosition(SectionHeaders[0].PointerToRawData);
 		for (UINT16 i = 0; i < PE32hdr.NumberOfSections; i++)
