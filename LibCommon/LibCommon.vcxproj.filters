@@ -129,6 +129,9 @@
     <ClInclude Include="FileTypes\ELF\ELF.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FileTypes\PSF\PSF1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TypeDefs.cpp">
@@ -210,6 +213,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FileTypes\ELF\ELF64.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FileTypes\PSF\PSF1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

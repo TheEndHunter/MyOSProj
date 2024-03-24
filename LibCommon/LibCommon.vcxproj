@@ -57,6 +57,7 @@
     <ClInclude Include="FileTypes\PE\PE32OptionHeader32.h" />
     <ClInclude Include="FileTypes\PE\PE32OptionHeader64.h" />
     <ClInclude Include="FileTypes\PE\PE32SectionHeader.h" />
+    <ClInclude Include="FileTypes\PSF\PSF1.h" />
     <ClInclude Include="Graphics\Colour.h" />
     <ClInclude Include="Graphics\Font\Font.h" />
     <ClInclude Include="Graphics\GraphicsContext.h" />
@@ -94,6 +95,7 @@
     <ClCompile Include="FileTypes\PE\PE32OptionHeader32.cpp" />
     <ClCompile Include="FileTypes\PE\PE32OptionHeader64.cpp" />
     <ClCompile Include="FileTypes\PE\PE32SectionHeader.cpp" />
+    <ClCompile Include="FileTypes\PSF\PSF1.cpp" />
     <ClCompile Include="Graphics\GraphicsContext.cpp" />
     <ClCompile Include="Graphics\MonitorContext.cpp" />
     <ClCompile Include="Graphics\MonitorMode.cpp" />
