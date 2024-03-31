@@ -1,0 +1,32 @@
+{
+  "GitConfig": {
+    "Author": "retrage",
+    "Repo": "edk2-nightly",
+    "Branch": "master",
+    "OVMFPath": "bin",
+    "Commit": "HEAD"
+  },
+  "Configurations": [
+    {
+      "Name": "Debug"
+    },
+    {
+      "Name": "Release"
+    }
+  ],
+  "Architectures": [
+    {
+      "Name": "x86"
+    },
+    {
+      "Name": "x64"
+    },
+    {
+      "Name": "ARM"
+    },
+    {
+      "Name": "ARM64"
+    }
+  ]
+
+}

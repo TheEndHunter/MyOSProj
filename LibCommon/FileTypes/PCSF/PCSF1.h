@@ -2,16 +2,16 @@
 #include <Typedefs.h>
 #include <FileSystem/ESP/FileHandle.h>
 
-namespace Common::FileTypes::PSF
+namespace Common::FileTypes::PCSF
 {
 	const CCHAR PSF1_MAGIC[2] = { 0x36, 0x04 };
 
-	enum PSF1_Mode : UINT8
+	enum PSF1Mode : UINT8
 	{
-		MODE512    = 0x01,
-		MODEHASTAB = 0x02,
-		MODEHASSEQ = 0x04,
-		MAXMODE    = 0x05,
+		None = 0,
+		Length512 = 1,
+		HasUnicode = 2,
+		HasSeq = 2,
 	};
 
 	const UINT16 PSF1_SEPARATOR  = 0xFFFF;
@@ -30,7 +30,7 @@ namespace Common::FileTypes::PSF
 			UINT16 Value;
 		}Magic;
 
-		PSF1_Mode Mode;
+		PSF1Mode Mode;
 		UINT8 CharSize;
 
 	};
@@ -44,18 +44,17 @@ namespace Common::FileTypes::PSF
 		PSF1(Common::FileSystem::ESP::FileHandle* handle);
 
 		PSF1Hdr Header;
+		BOOLEAN IsValid();
+		UINT8 GetGlyph(UINT8 index);
+		UINT16 GetGlyphUnicode(UINT8 index);
+	private:
 
 		union
 		{
-			UINT8*  _1;
-			UINT16* _2;
-			UINT32* _3;
-			UINT64* _4;
+			UINT8* _8;
+			UINT16* _16;
 
-		}Chars;
-
-		BOOLEAN IsValid();
-	private:
+		}Glyphs;
 		BOOLEAN _isValid;
 	};
 #pragma pack(pop)

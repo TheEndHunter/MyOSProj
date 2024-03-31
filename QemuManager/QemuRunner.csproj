@@ -18,6 +18,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Update="OVMF.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="OVMF\ARM64\Debug\OVMF_CODE.fd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -192,6 +195,16 @@
     <None Update="OVMF\x86\Release\OVMF_VARS.fd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\EFI\" />
+    <Folder Include="Assets\LIBS\" />
+    <Folder Include="Assets\SYS\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Octokit" Version="10.0.0" />
   </ItemGroup>
 
 </Project>

@@ -613,9 +613,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\README.md" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Entry.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
