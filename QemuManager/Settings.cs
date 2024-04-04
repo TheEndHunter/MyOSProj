@@ -17,9 +17,10 @@ namespace QemuManager
 
             OVMFConfiguration = new GitConfiguration()
             {
-                Author = ovmf["Author"],
-                Repo = ovmf["Repo"],
-                OVMFBinPath = ovmf["OVMFBinPath"]
+                Author = ovmf["Author"] ?? string.Empty,
+                Repo = ovmf["Repo"] ?? string.Empty,
+                OVMFBinPath = ovmf["OVMFBinPath"] ?? string.Empty,
+                Branch = ovmf["Branch"] ?? "main",
             };
 
         }

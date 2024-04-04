@@ -32,8 +32,10 @@ namespace QemuManager
 
         private static Process qemu;
 
-        private static void UpdateOVMF(Settings config, DateTimeOffset? offset = null)
+        private static async Task UpdateOVMF(Settings config, string? sha1 = null, long? offset = null)
         {
+            Console.WriteLine("Checking for Updates...");
+
             var Dir = Directory.GetCurrentDirectory();
             var extractPath = Path.Combine(Dir, "OVMF_Latest");
             var ovmfPath = Path.Combine(Dir, "OVMF");
@@ -41,22 +43,25 @@ namespace QemuManager
 
             var client = new GitHubClient(new ProductHeaderValue("QemuRunner"));
             var ovmf = config.OVMFConfiguration!.Value;
-            var repoTask = client.Repository.Get(ovmf.Author, ovmf.Repo);
+            var repo = await client.Repository.Get(ovmf.Author, ovmf.Repo);
 
-            repoTask.Wait();
-
-            if (!repoTask.IsCompletedSuccessfully)
+            if (repo == null)
             {
-                Console.WriteLine("Could not find OVMF Repository");
-                throw repoTask.Exception;
+                Console.WriteLine("Could not find Repository");
+                return;
+            }
+            var branch = await client.Repository.Branch.Get(repo.Id, ovmf.Branch);
+            if (branch == null)
+            {
+                Console.WriteLine("Could not find Branch");
+                return;
             }
 
-            var repo = repoTask.Result;
-            Console.WriteLine("Checking for OVMF Updates...");
+            var currentsha = branch.Commit.Sha;
 
-            if (offset != null)
+            if (offset != null && sha1 != null && currentsha != null)
             {
-                if (offset >= repo.UpdatedAt)
+                if (offset >= repo.UpdatedAt.ToUnixTimeMilliseconds() && sha1 == currentsha)
                 {
                     Console.WriteLine("OVMF is up to date");
                     return;
@@ -105,14 +110,15 @@ namespace QemuManager
 
                     Console.WriteLine("Writing Version.txt");
                     using var versionFile = File.CreateText(Path.Combine(ovmfPath, "Version.txt"));
-                    versionFile.WriteLine(repo.UpdatedAt.ToUnixTimeMilliseconds());
+                    versionFile.WriteLine(repo.UpdatedAt.ToUnixTimeSeconds());
+                    versionFile.WriteLine(currentsha);
 
                     versionFile.Flush();
                     versionFile.Close();
                 }
             });
 
-            DownloadTask.Wait();
+            await DownloadTask;
 
             if (!DownloadTask.IsCompletedSuccessfully)
             {
@@ -164,7 +170,7 @@ namespace QemuManager
                     return -1;
                 }
 
-                UpdateOVMF(config);
+                UpdateOVMF(config).Wait();
             }
 
             var verPath = Path.Combine(Dir, "OVMF", "Version.txt");
@@ -174,11 +180,21 @@ namespace QemuManager
                 var data = File.ReadLines(verPath);
                 if (data.Any())
                 {
-                    if (long.TryParse(data.ElementAt(0), out long unixtimeMilli))
+                    if (data.Count() > 1)
                     {
-                        var offset = DateTimeOffset.FromUnixTimeMilliseconds(unixtimeMilli);
-                        UpdateOVMF(config, offset);
+                        if (long.TryParse(data.ElementAt(0), out long unixtimeSeconds))
+                        {
+                            UpdateOVMF(config, data.ElementAt(1)!, unixtimeSeconds).Wait();
+                        }
                     }
+                    else
+                    {
+                        UpdateOVMF(config).Wait();
+                    }
+                }
+                else
+                {
+                    UpdateOVMF(config).Wait();
                 }
             }
 

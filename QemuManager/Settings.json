@@ -2,7 +2,8 @@
   "OVMFConfig": {
     "Author": "TheEndHunter",
     "Repo": "OVMF_BIN",
-    "OVMFBinPath": "Latest"
+    "OVMFBinPath": "Latest",
+    "Branch": "main"
   },
   "Configurations": [
     {

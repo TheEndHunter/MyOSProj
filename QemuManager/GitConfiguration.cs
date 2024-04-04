@@ -5,6 +5,7 @@
         public string Author;
         public string Repo;
         public string OVMFBinPath;
+        public string Branch;
     }
 }
 
