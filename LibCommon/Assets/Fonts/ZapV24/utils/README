@@ -1,0 +1,77 @@
+.. -*- mode: rst; coding: utf-8 -*-
+.. role:: filename(literal)
+.. default-role:: filename
+
+============================
+Linux Console Font Utilities
+============================
+
+The Linux Console Font Utilities package contains various applications to
+manipulate Linux console fonts.  In particular, programs are included to
+convert standard PSF font files to a text representation and vice versa,
+allowing easy font editing using any text editor.
+
+The following programs are included:
+
+* ``psf2psftx``         — Convert binary PSF font to text representation
+* ``psftx2psf``         — Convert PSFTX text representation to binary format
+* ``freebsdvfnt2psftx`` — Convert FreeBSD VFNT font to text representation
+* ``psftx2freebsdvfnt`` — Convert PSFTX representation to FreeBSD VFNT font
+* ``rawfnt2psftx``      — Convert raw font file to text representation
+
+* ``psftx-codechart``   — Generate a PDF font coverage codechart
+* ``psftx-encodings``   — Check PSFTX for charmap encodings coverage
+* ``psftx-sampler``     — Generate a text output font coverage sampler
+* ``psftx-screenshot``  — Generate a simulated screenshot image
+* ``psftx-template``    — Create a blank template PSFTX file
+
+The following Python modules are included:
+
+* `psffont.py`          — Object-oriented interface to in-memory PSF font
+* `psfio.py`            — Input/output functions for binary PSF files
+* `psftxio.py`          — Input/output functions for PSFTX text files
+* `freebsdvfntio.py`    — Input/output functions for FreeBSD VFNT files
+* `rawfntio.py`         — Input/output functions for raw font files
+* `unicustom.py`        — Custom Unicode mapping functions
+
+The following additional libraries are required for correct operation:
+
+* reportlab     — Create PDF documents (required for ``psftx-codechart``)
+* Pillow PIL    — Python imaging library (required for ``psftx-screenshot``)
+
+
+Feedback
+========
+
+Your comments, suggestions, corrections and enhancements are always
+warmly welcomed!  Please send these to:
+
+    :Postal:  | John Zaitseff,
+              | The ZAP Group Australia,
+              | Unit 6, 116 Woodburn Road,
+              | Berala, NSW, 2141,
+              | Australia
+    :Email:   | J.Zaitseff@zap.org.au
+    :Web:     | https://www.zap.org.au/projects/console-fonts-utils/
+    :FTP:     | https://ftp.zap.org.au/pub/fonts/console-fonts-utils/
+              | ftp://ftp.zap.org.au/pub/fonts/console-fonts-utils/
+    :Git:     | https://www.zap.org.au/git-browser/console-fonts-utils.git
+              | https://git.zap.org.au/git/console-fonts-utils.git
+              | git://git.zap.org.au/data/git/console-fonts-utils.git
+
+
+Copyright
+=========
+
+**Copyright © 2004–24, John Zaitseff**
+
+The Linux Console Font Utilities package is free software that is
+distributed under the terms of the GNU General Public License.  You can
+redistribute it and/or modify it under the terms of that License as
+published by the Free Software Foundation, either version 3 or (at your
+option) any later version.
+
+This software is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General
+Public License in the file `COPYING` for more details.

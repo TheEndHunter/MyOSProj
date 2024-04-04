@@ -22,7 +22,7 @@ namespace Common::FileTypes::PCSF
 		}
 		UINT32 length;
 
-		if(Header.Mode == PSF1Mode::Length512)
+		if(Header.Mode == PSF1Mode::MODE512)
 		{
 			length = 512;
 		}
@@ -31,7 +31,7 @@ namespace Common::FileTypes::PCSF
 			length = 256;
 		}
 
-		if (Header.Mode == PSF1Mode::HasUnicode)
+		if (Header.Mode == PSF1Mode::MODEHASTAB)
 		{
 			length *= 2;
 		}

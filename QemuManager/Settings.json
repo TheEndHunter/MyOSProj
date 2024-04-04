@@ -1,0 +1,30 @@
+{
+  "OVMFConfig": {
+    "Author": "TheEndHunter",
+    "Repo": "OVMF_BIN",
+    "OVMFBinPath": "Latest"
+  },
+  "Configurations": [
+    {
+      "Name": "Debug"
+    },
+    {
+      "Name": "Release"
+    }
+  ],
+  "Architectures": [
+    {
+      "Name": "x86"
+    },
+    {
+      "Name": "x64"
+    },
+    {
+      "Name": "ARM"
+    },
+    {
+      "Name": "ARM64"
+    }
+  ]
+
+}

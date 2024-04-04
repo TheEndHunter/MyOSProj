@@ -46,15 +46,19 @@ namespace Common::FileTypes::PCSF
 
 		PCSF2Hdr Header;
 		BOOLEAN IsValid();
-		UINT8 GetGlyph(UINT8 index);
-		UINT16 GetGlyphUnicode(UINT8 index);
+
+		UINT8 GetGlyph8(UINT8 index);
+		UINT16 GetGlyph16(UINT8 index);
+		UINT32 GetGlyph32(UINT8 index);
+		UINT64 GetGlyph64(UINT8 index);
 	private:
 
 		union
 		{
 			UINT8* _8;
 			UINT16* _16;
-
+			UINT32* _32;
+			UINT64* _64;
 		}Glyphs;
 		BOOLEAN _isValid;
 	};

@@ -1,0 +1,76 @@
+#!/usr/bin/env python3
+
+#########################################################################
+#                                                                       #
+#            Convert Binary PSF Font to Text Representation             #
+#                 Copyright (C) 2004-24, John Zaitseff                  #
+#                                                                       #
+#########################################################################
+
+# Author: John Zaitseff <J.Zaitseff@zap.org.au>
+
+# This program converts a binary PSF font to its text representation.
+# This allows you to easily edit the font using any text editor.
+#
+#
+# This program is free software: you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by the
+# Free Software Foundation, either version 3 of the License, or (at your
+# option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+
+__version__ = '2.2'
+__author__ = 'John Zaitseff <J.Zaitseff@zap.org.au>'
+
+
+import sys
+import argparse
+
+import psfio
+import psftxio
+
+
+#########################################################################
+# Process command line arguments
+
+def parse_command_line():
+    parser = argparse.ArgumentParser(
+        usage='%(prog)s [-h] [--vga] [INPUT [OUTPUT]]',
+        description='Convert binary PSF font to text representation.')
+    parser.add_argument(
+        '--vga', '-9', action='store_true',
+        help='include a 9th column for VGA-style fonts')
+    parser.add_argument(
+        'input', metavar='INPUT', nargs=argparse.OPTIONAL,
+        type=argparse.FileType('rb'), default=sys.stdin.buffer,
+        help='binary PSF font file to convert (default: stdin)')
+    parser.add_argument(
+        'output', metavar='OUTPUT', nargs=argparse.OPTIONAL,
+        type=argparse.FileType('w'), default=sys.stdout,
+        help='text PSFTX output file (default: stdout)')
+
+    args = parser.parse_args()
+    return args
+
+
+#########################################################################
+# Main program
+
+def main():
+    args = parse_command_line()
+
+    font = psfio.readfont(args.input)
+    psftxio.writefont(font, args.output, strict=False, vga=args.vga,
+                      name=args.input.name if args.input else None)
+
+
+if __name__ == '__main__':
+    main()

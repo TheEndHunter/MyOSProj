@@ -9,9 +9,12 @@ namespace Common::FileTypes::PCSF
 	enum PSF1Mode : UINT8
 	{
 		None = 0,
-		Length512 = 1,
-		HasUnicode = 2,
-		HasSeq = 2,
+		// If this bit is set, the font face will have 512 glyphs.If it is unset, then the font face will have just 256 glyphs.
+		MODE512 = 1,
+		//If this bit is set, the font face will have a unicode table.
+		MODEHASTAB = 2,
+		//Equivalent to PSF1_MODEHASTAB
+		MODESEQ = 4,
 	};
 
 	const UINT16 PSF1_SEPARATOR  = 0xFFFF;

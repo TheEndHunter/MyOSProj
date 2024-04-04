@@ -56,7 +56,7 @@ namespace Common::FileTypes::PCSF
 		return _isValid;
 	}
 
-	UINT8 PCSF2::GetGlyph(UINT8 index)
+	UINT8 PCSF2::GetGlyph8(UINT8 index)
 	{
 		if (index < 256)
 		{
@@ -65,11 +65,27 @@ namespace Common::FileTypes::PCSF
 		return 0;
 	}
 
-	UINT16 PCSF2::GetGlyphUnicode(UINT8 index)
+	UINT16 PCSF2::GetGlyph16(UINT8 index)
 	{
 		if (index < 256)
 		{
 			return Glyphs._16[index];
+		}
+		return 0;
+	}
+	UINT32 PCSF2::GetGlyph32(UINT8 index)
+	{
+		if (index < 256)
+		{
+			return Glyphs._32[index];
+		}
+		return 0;
+	}
+	UINT64 PCSF2::GetGlyph64(UINT8 index)
+	{
+		if (index < 256)
+		{
+			return Glyphs._64[index];
 		}
 		return 0;
 	}
