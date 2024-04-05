@@ -13,21 +13,17 @@ namespace QemuManager
     {
         static string BuildDrives(string directory)
         {
-            if (Directory.Exists(directory))
-            {
-                Console.WriteLine($"Building Qemu Drive Layout from Directory: {Path.GetFullPath(directory)}");
+            if (!Directory.Exists(directory)) return string.Empty;
 
-                StringBuilder sb = new();
-                foreach (string folder in Directory.GetDirectories(directory))
-                {
-                    DirectoryInfo i = new(folder);
-                    sb.Append(
-                        $"-drive file=fat:fat-type=fat32:rw:\"{i.FullName}\",label=\"{i.Name.ToUpperInvariant()}\",format=vvfat "
-                    );
-                }
-                return sb.ToString();
+            Console.WriteLine($"Building Qemu Drive Layout from Directory: {Path.GetFullPath(directory)}");
+
+            StringBuilder sb = new();
+            foreach (string folder in Directory.GetDirectories(directory))
+            {
+                DirectoryInfo i = new(folder);
+                sb.Append($"-drive file=fat:fat-type=fat32:rw:\"{i.FullName}\",label=\"{i.Name.ToUpperInvariant()}\",format=vvfat ");
             }
-            return string.Empty;
+            return sb.ToString();
         }
 
         private static Process qemu;
@@ -389,40 +385,23 @@ namespace QemuManager
 
         private static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            if (qemu != null)
-            {
-                if (qemu.HasExited)
-                {
-                    return;
-                }
-                qemu.Kill();
-                qemu.WaitForExit();
-                qemu.Dispose();
-            }
+            TerminateQemu();
         }
 
         private static void DomainUnload(object? sender, EventArgs e)
         {
-            if (qemu != null)
-            {
-                if (qemu.HasExited)
-                {
-                    return;
-                }
-                qemu.Kill();
-                qemu.WaitForExit();
-                qemu.Dispose();
-            }
+            TerminateQemu();
         }
 
         private static void Exit(object? sender, EventArgs e)
         {
-            if (qemu != null)
+            TerminateQemu();
+        }
+
+        private static void TerminateQemu()
+        {
+            if (qemu != null && !qemu.HasExited)
             {
-                if (qemu.HasExited)
-                {
-                    return;
-                }
                 qemu.Kill();
                 qemu.WaitForExit();
                 qemu.Dispose();
