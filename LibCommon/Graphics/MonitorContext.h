@@ -11,24 +11,30 @@ namespace Common::Graphics
 		friend struct RenderContext;
 
 	public:
-		const MonitorMode* GetCurrentMode() const;
-		const MonitorMode* GetMode(UINT32 modeNumber) const;
-		void SetMode(UINT32 modeNumber);
+		BOOLEAN SetMode(UINT32 modeNumber);
+		MonitorMode* GetCurrentMode();
+		MonitorMode* GetMode(UINT32 modeNumber);
 
-		UINTN GetFrameBufferSize() const;
-		UINT32 GetHorizontalResolution() const;
-		UINT32 GetVerticalResolution() const;
-		UINT32 GetPixelsPerScanLine() const;
-		Pixel* GetFrameBuffer() const;
+		UINT32 GetMaxMode();
+		UINTN GetFrameBufferSize();
+		UINT32 GetHorizontalResolution();
+		UINT32 GetVerticalResolution();
+		UINT32 GetPixelsPerScanLine();
+		VOID_PTR GetFrameBuffer();
+		PixelFormat GetPixelFormat();
+		PixelBitMask GetPixelBitMask();
+		void Terminate();
 
 
 	private:
-		EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL* protocol;
-		MonitorMode* modes;
-		UINTN maxMode;
-		UINTN currentMode;
 		MonitorContext();
 		MonitorContext(EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL* ptr);
+		EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL* protocol;
+		UINT32 maxMode;
+		UINT32 currentModeNumber;
+		MonitorMode* currentMode;
+		MonitorMode* modes;
+
 	};
 
 

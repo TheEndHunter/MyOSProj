@@ -14,27 +14,6 @@
 #endif
 
 /*
-* define declarations for UINTN and a INTN based on the ptr size of the compiler
-*/
-#if defined(BITS_32)
-#if !defined(UINTN)
-#define UINTN unsigned long int
-#endif
-#if !defined(INTN)
-#define INTN long int
-#endif
-#elif defined(BITS_64)
-#if !defined(UINTN)
-#define UINTN unsigned long long int
-#endif
-#if !defined(INTN)
-#define INTN long long int
-#endif
-#else
-#error "Unknown architecture"
-#endif
-
-/*
 *  Setup defines for Data Type Sizes Per Processor Bitness based on edk2, switching based on on of the following compilers being used:
 * including wide character support
 *  MSVC or GNU
@@ -100,7 +79,26 @@
 #define TRUE true
 #define FALSE false
 
-
+/*
+* define declarations for UINTN and a INTN based on the ptr size of the compiler
+*/
+#if defined(BITS_32)
+#if !defined(UINTN)
+#define UINTN UINT32
+#endif
+#if !defined(INTN)
+#define INTN INT32
+#endif
+#elif defined(BITS_64)
+#if !defined(UINTN)
+#define UINTN UINT64
+#endif
+#if !defined(INTN)
+#define INTN INT64
+#endif
+#else
+#error "Unknown architecture"
+#endif
 
 
 /* Define Alignment Attribute for aligning on byte,word, dword and qword boundaries for each compiler,*/

@@ -10,6 +10,7 @@
 #include <System//AllocatorStatus.h>
 
 #include <FileTypes/PE/PE32.h>
+#include <Graphics/RenderContext.h>
 
 
 namespace Bootloader
@@ -20,7 +21,7 @@ namespace Bootloader
     using namespace Common::FileTypes::PE;
     using namespace EFI;
 
-    typedef UINTN(CDECL*KrnlMain)(GraphicsContext* context);
+    typedef UINTN(CDECL*KrnlMain)(RenderContext* rendererCtx, MonitorContext* monitorCtx);
 
     void PrintInfo(EFI_SYSTEM_TABLE* sysTbl, UINT8 color, const CHAR16* errorMessage, EFI_STATUS status)
     {
@@ -45,6 +46,15 @@ namespace Bootloader
     void PrintError(EFI_SYSTEM_TABLE* sysTbl, const CHAR16* errorMessage, EFI_STATUS status)
     {
         SetConsoleColor(sysTbl, EFI_CONSOLE_COLOR::ERROR);
+        PrintLine(sysTbl, errorMessage);
+        if (status != EFI_STATUS::SUCCESS)
+        {
+            PrintLine(sysTbl, UTF16::ToString(status));
+        };
+    }
+    void PrintWarning(EFI_SYSTEM_TABLE* sysTbl, const CHAR16* errorMessage, EFI_STATUS status)
+    {
+        SetConsoleColor(sysTbl, EFI_CONSOLE_COLOR::WARNING);
         PrintLine(sysTbl, errorMessage);
         if (status != EFI_STATUS::SUCCESS)
         {
@@ -91,15 +101,13 @@ namespace Bootloader
     {
         Common::System::Allocator::SetEfiAllocator(sysTbl);
 
-        if (!Common::System::Allocator::IsInitalized)
+        if (!Common::System::Allocator::IsInitalized())
 		{
             ThrowException(sysTbl, imgHndl, u"Could Not Set EFI Allocator", Common::System::ToEfiStatus(Common::System::Allocator::LastStatus()));
 		}
 
         UINT32 mm = sysTbl->ConOut->Mode->MaxMode;
-
         UINTN Columns = 0;
-        
         UINTN Rows = 0;
         UINTN mode = 0;
 
@@ -109,16 +117,18 @@ namespace Bootloader
             UINTN CurrentR = 0;
 
             EFI_STATUS queryStat = sysTbl->ConOut->QueryMode(sysTbl->ConOut, mode,&CurrentC,&CurrentR);
-			if (queryStat != EFI_STATUS::SUCCESS)
+			
+            if (queryStat == EFI_STATUS::SUCCESS)
 			{
-				PrintError(sysTbl, u"Error in Query Mode", queryStat);
+                if (CurrentC > Columns && CurrentR > Rows)
+                {
+                    Columns = CurrentC;
+                    Rows = CurrentR;
+                }
+                continue;
 			}
 
-            if (CurrentC > Columns && CurrentR > Rows)
-			{
-				Columns = CurrentC;
-				Rows = CurrentR;
-			}
+            PrintError(sysTbl, u"Error in Query Mode", queryStat);
         }
 
         EFI_STATUS conStat = sysTbl->ConOut->SetMode(sysTbl->ConOut,mode);
@@ -129,18 +139,28 @@ namespace Bootloader
             {
                 ThrowException(sysTbl, imgHndl, u"Could Not Set Console Mode", conStat);
             }
+            else
+            {
+                PrintWarning(sysTbl, u"Does not support setting console mode", conStat);
+            }
 		}
 
         sysTbl->ConOut->Reset(sysTbl->ConOut, false);
         sysTbl->ConIn->Reset(sysTbl->ConIn, false);
 
-        GraphicsContext gop = GraphicsContext::Initialize(imgHndl, sysTbl);
+        RenderContext* render = RenderContext::Initialize(sysTbl, imgHndl);
+        MonitorContext* monitor = render->GetMonitorContext();
+
+        if (render == nullptr)
+        {
+            ThrowException(sysTbl, imgHndl, u"Unable to initialize render context", EFI::EFI_STATUS::DEVICE_ERROR);
+        }
 
         /*
         * Select highest resolution
         */
 
-        UINT32 modes = gop.GetModeCount();
+        UINT32 modes = monitor->GetMaxMode();
 
         Print(sysTbl, u"Number of Modes: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
         PrintDebug(sysTbl, UTF16::ToString(modes));
@@ -149,47 +169,38 @@ namespace Bootloader
 
         UINTN maxH = 0;
         UINTN maxV = 0;
-        UINTN HighestResMode = 0;
+        UINT32 HighestResMode = 0;
 
-        EFI_GRAPHICS_OUTPUT_MODE_INFORMATION info = EFI_GRAPHICS_OUTPUT_MODE_INFORMATION();
+        MonitorMode* info = nullptr;
+
         for (UINT32 i = 0; i < modes; i++)
         {
-            EFI_GRAPHICS_OUTPUT_MODE_INFORMATION* ptr = &info;
-            EFI::EFI_STATUS s = gop.QueryMode(i, &modeInfoSize,  (EFI::EFI_GRAPHICS_OUTPUT_MODE_INFORMATION**)&info);
+            info = monitor->GetMode(i);
 
-            if (s != EFI::EFI_STATUS::SUCCESS)
+            if (info->VerticalResolution > maxV || info->HorizontalResolution > maxH)
             {
-                ThrowException(sysTbl, imgHndl, u"Unable to Query GOP modes", s);
-            }
-
-            if (info.VerticalResolution > maxV || info.HorizontalResolution > maxH)
-            {
-                Print(sysTbl, u"Mode: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
-                Print(sysTbl, UTF16::ToString(i), EFI::EFI_CONSOLE_COLOR::DEBUG);
-                Print(sysTbl, u" Width: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
-                Print(sysTbl, UTF16::ToString(info.HorizontalResolution), EFI::EFI_CONSOLE_COLOR::DEBUG);
-                Print(sysTbl, u" Height: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
-                PrintDebug(sysTbl, UTF16::ToString(info.VerticalResolution));
-
-                maxH = info.HorizontalResolution;
-                maxV = info.VerticalResolution;
+                maxH = info->HorizontalResolution;
+                maxV = info->VerticalResolution;
                 HighestResMode = i;
             }
         }
-        EFI::EFI_STATUS s = gop.SetMode(HighestResMode);
-        gop.ClearScreen(Colours::Black);
-        sysTbl->ConOut->SetCursorPosition(sysTbl->ConOut, 0, 0);
-
-        if (s != EFI::EFI_STATUS::SUCCESS)
+        
+        if (!monitor->SetMode(HighestResMode))
         {
-            ThrowException(sysTbl, imgHndl, u"Unable to Set GOP mode", s);
+            ThrowException(sysTbl, imgHndl, u"Could Not Set Highest Resolution Mode", EFI::EFI_STATUS::DEVICE_ERROR);
         }
 
-        UINTN w = gop.GetWidth();
-        UINTN h = gop.GetHeight();
+        WaitForKey(sysTbl);
+
+        render->ClearScreen(Colours::White);
+
+        sysTbl->ConOut->SetCursorPosition(sysTbl->ConOut, 0, 0);
+
+        UINTN w = monitor->GetHorizontalResolution();
+        UINTN h = monitor->GetVerticalResolution();
 
         Print(sysTbl, u"Selected Mode: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
-        Print(sysTbl, UTF16::ToString(gop.GetCurrentMode()), EFI::EFI_CONSOLE_COLOR::DEBUG);
+        Print(sysTbl, UTF16::ToString(monitor->GetCurrentMode()), EFI::EFI_CONSOLE_COLOR::DEBUG);
         Print(sysTbl, u" Width: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
         Print(sysTbl, UTF16::ToString(w), EFI::EFI_CONSOLE_COLOR::DEBUG);
         Print(sysTbl, u" Height: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
@@ -323,13 +334,16 @@ namespace Bootloader
 
         Print(sysTbl, u"Kernel Entry Point Virtual Offset: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
         PrintDebug(sysTbl, UTF16::ToHex(entryPVO));
-        
-        UINTN status = main(&gop);
+
+        render->ClearScreen(Colours::White);
+
+        WaitForKey(sysTbl);
+        UINTN status = main(render, monitor);
 
         Print(sysTbl, u"Kernel Returned: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
         PrintDebug(sysTbl, UTF16::ToString(status));
 
-        gop.Terminate(imgHndl, sysTbl);
+        render->Terminate(imgHndl, sysTbl);
 
         WaitForKey(sysTbl);
         sysTbl->RuntimeServices->ResetSystem(EFI_RESET_TYPE::SHUTDOWN, EFI_STATUS::SUCCESS, 0, nullptr);

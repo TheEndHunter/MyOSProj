@@ -9,13 +9,15 @@
 #include <Protocols/Graphics/EFI_GRAPHICS_OUTPUT_MODE_INFORMATION.h>
 #include <Enviroment/Unicode.h>
 #include "GraphicsContext.h"
-#include <Math/Math.h>
+#include <Numerics/Math.h>
+
+using namespace Common::Numerics;
 
 namespace Common::Graphics
 {
 	using namespace EFI;
 
-	static EFI_INPUT_KEY __WaitForKey(EFI_SYSTEM_TABLE* sysTable)
+	/*static EFI_INPUT_KEY __WaitForKey(EFI_SYSTEM_TABLE* sysTable)
 	{
 		EFI_INPUT_KEY key;
 		while (sysTable->ConIn->ReadKeyStroke(sysTable->ConIn, &key) == EFI_STATUS::NOT_READY)
@@ -24,7 +26,7 @@ namespace Common::Graphics
 		}
 		sysTable->ConIn->Reset(sysTable->ConIn, false);
 		return key;
-	}
+	}*/
 
 	EFI::EFI_STATUS Graphics::GraphicsContext::LastStatus = EFI::EFI_STATUS::SUCCESS;
 	GraphicsContext GraphicsContext::Initialize(EFI::EFI_HANDLE hnd, EFI::EFI_SYSTEM_TABLE* sysTable)
@@ -177,6 +179,42 @@ namespace Common::Graphics
 
 	void GraphicsContext::DrawLine(UINTN sXPos, UINTN sYPos, UINTN eXPos, UINTN eYPos, UINTN thickness)
 	{
+		INTN dx = Math::AbsDiff((INTN)(sXPos), (INTN)(eXPos));
+		INTN dy = Math::AbsDiff((INTN)(sYPos), (INTN)(eYPos));
+		INTN sx = Math::Sign((INTN)(eXPos - sXPos));
+		INTN sy = Math::Sign((INTN)(eYPos - sYPos));
+		INTN err = dx - dy;
+		INTN e2;
+		INTN x = sXPos;
+		INTN y = sYPos;
+
+		for (UINTN i = 0; i < thickness; i++)
+		{
+			SetForegroundPixel(x, y);
+		}
+
+		while (x != eXPos || y != eYPos)
+		{
+			e2 = 2 * err;
+			if (e2 > -dy)
+			{
+				err -= dy;
+				x += sx;
+				for (UINTN i = 0; i < thickness; i++)
+				{
+					SetForegroundPixel(x, y);
+				}
+			}
+			if (e2 < dx)
+			{
+				err += dx;
+				y += sy;
+				for (UINTN i = 0; i < thickness; i++)
+				{
+					SetForegroundPixel(x, y);
+				}
+			}
+		}
 	}
 	void GraphicsContext::DrawLine(UINTN sXPos, UINTN sYPos, UINTN eXPos, UINTN eYPos, UINTN thickness, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* colour)
 	{
@@ -203,11 +241,17 @@ namespace Common::Graphics
 		CurrentForeground = EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ (UINT8)((colour & 0x0000FF00) >> 8),(UINT8)((colour & 0x00FF0000) >> 16),(UINT8)((colour & 0xFF000000) >> 24), (UINT8)((colour & 0x000000FF)) };
 		DrawLine(sXPos, sYPos, eXPos, eYPos, thickness);
 	}
-
 	void GraphicsContext::DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINTN thickness)
 	{
-
+		/*Draw to filled rectangles to mimic an outlined rectangle tacking the thickness off of the inner rectangles size*/
+		UINTN x2 = xPos + thickness;
+		UINTN y2 = yPos + thickness;
+		UINTN w2 = width - (thickness * 2);
+		UINTN h2 = height - (thickness * 2);
+		DrawFilledRectangle(xPos, yPos, width, height,CurrentForeground);
+		DrawFilledRectangle(x2, y2, w2, h2, CurrentBackground);
 	}
+
 	void GraphicsContext::DrawRectangle(UINTN xPos, UINTN yPos, UINTN width, UINTN height, UINTN thickness, EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* colour)
 	{
 		CurrentForeground = *colour;

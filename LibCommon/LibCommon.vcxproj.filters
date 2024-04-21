@@ -36,7 +36,7 @@
     <ClInclude Include="Graphics\Font\Font.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Math\Math.h">
+    <ClInclude Include="Numerics\Math.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FileSystem\ESP\FileHandle.h">
@@ -135,6 +135,15 @@
     <ClInclude Include="FileTypes\PCSF\PCSF2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Numerics\NumberBase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System\IConsole.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Numerics\Vectors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TypeDefs.cpp">
@@ -222,6 +231,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FileTypes\PCSF\PCSF2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Pixel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

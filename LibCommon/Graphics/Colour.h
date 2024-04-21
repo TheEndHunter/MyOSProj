@@ -8,11 +8,11 @@ namespace Common::Graphics
 	/*
 	*  struct for containing a 4 8-bit color values.
 	*  with functions for converting to 32-bit color values.
-	* 
+	*
 	*  This struct also supports the following operators:
 	*  + - * / += -= *= /= == != < > <= >=
 	*/
-
+#pragma pack(push, 1)
 	struct Colour
 	{
 	public:
@@ -25,17 +25,17 @@ namespace Common::Graphics
 		{
 			return (UINT32)((Alpha << 24) | (Red << 16) | (Green << 8) | Blue);
 		}
-		
+
 		const UINT32 AsBGRA() const
 		{
 			return (UINT32)((Blue << 24) | (Green << 16) | (Red << 8) | Alpha);
 		}
-		
+
 		const UINT32 AsARGB() const
 		{
 			return (UINT32)((Alpha << 24) | (Blue << 16) | (Green << 8) | Red);
 		}
-		
+
 		const UINT32 AsABGR() const
 		{
 			return (UINT32)((Alpha << 24) | (Green << 16) | (Blue << 8) | Red);
@@ -43,7 +43,7 @@ namespace Common::Graphics
 
 		const EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL AsEFI() const
 		{
-			return EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ Blue, Green, Red, Alpha};
+			return EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ Blue, Green, Red, Alpha };
 		}
 
 		Colour operator+(const Colour& other) const
@@ -103,7 +103,7 @@ namespace Common::Graphics
 
 		constexpr Colour() : Blue(0), Green(0), Red(0), Alpha(255) {};
 		constexpr Colour(const UINT32 rgba) : Blue((UINT8)((rgba & 0x0000FF00) >> 8)), Green((UINT8)((rgba & 0x00FF0000) >> 16)), Red((UINT8)((rgba & 0xFF000000) >> 24)), Alpha((UINT8)(rgba & 0x000000FF)) {}
-		constexpr Colour(const UINT8 red, const UINT8 green, const UINT8 blue,const UINT8 alpha) : Blue(blue), Green(green), Red(red), Alpha(alpha) {}
+		constexpr Colour(const UINT8 red, const UINT8 green, const UINT8 blue, const UINT8 alpha) : Blue(blue), Green(green), Red(red), Alpha(alpha) {}
 		constexpr Colour(const UINT8 red, const UINT8 green, const UINT8 blue) : Blue(blue), Green(green), Red(red), Alpha(255) {}
 		constexpr Colour(const Colour& color) : Blue(color.Blue), Green(color.Green), Red(color.Red), Alpha(color.Alpha) {}
 		constexpr Colour(const Colour* color) : Blue(color->Blue), Green(color->Green), Red(color->Red), Alpha(color->Alpha) {}
@@ -111,49 +111,49 @@ namespace Common::Graphics
 		constexpr Colour(const EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL& color) : Blue(color.Blue), Green(color.Green), Red(color.Red), Alpha(color.Alpha) {}
 		constexpr Colour(const EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color) : Blue(color->Blue), Green(color->Green), Red(color->Red), Alpha(color->Alpha) {}
 
-		static const Colour FromRGBA(const UINT32 rgba) 
+		static const Colour FromRGBA(const UINT32 rgba)
 		{
 			return Colour(rgba);
 		}
 
-		static const Colour FromBGRA(const UINT32 bgra) 
+		static const Colour FromBGRA(const UINT32 bgra)
 		{
 			return Colour((UINT8)((bgra & 0x0000FF00) >> 8), (UINT8)((bgra & 0x00FF0000) >> 16), (UINT8)((bgra & 0xFF000000) >> 24), (UINT8)((bgra & 0x000000FF)));
 		}
 
-		static const Colour FromARGB(const UINT32 argb) 
+		static const Colour FromARGB(const UINT32 argb)
 		{
 			return Colour((UINT8)((argb & 0x00FF0000) >> 16), (UINT8)((argb & 0x0000FF00) >> 8), (UINT8)(argb & 0x000000FF), (UINT8)((argb & 0xFF000000) >> 24));
-		} 
+		}
 
-		static const Colour FromABGR(const UINT32 abgr) 
+		static const Colour FromABGR(const UINT32 abgr)
 		{
 			return Colour((UINT8)((abgr & 0x000000FF)), (UINT8)((abgr & 0x0000FF00) >> 8), (UINT8)((abgr & 0x00FF0000) >> 16), (UINT8)((abgr & 0xFF000000) >> 24));
 		}
 
-		static const Colour FromRGBA(const UINT8 r, const UINT8 g, const UINT8 b, const UINT8 a = 255)  
+		static const Colour FromRGBA(const UINT8 r, const UINT8 g, const UINT8 b, const UINT8 a = 255)
 		{
-			return Colour(r,g,b,a);
+			return Colour(r, g, b, a);
 		}
 
-		static const Colour FromBGRA(const UINT8 b, const UINT8 g, const UINT8 r, const UINT8 a = 255) 
+		static const Colour FromBGRA(const UINT8 b, const UINT8 g, const UINT8 r, const UINT8 a = 255)
 		{
-			return Colour(r,g,b,a);
+			return Colour(r, g, b, a);
 		}
 
-		static const Colour FromARGB(const UINT8 a, const UINT8 r, const UINT8 g, const UINT8 b) 
+		static const Colour FromARGB(const UINT8 a, const UINT8 r, const UINT8 g, const UINT8 b)
 		{
-			return Colour(r,g,b,a);
-		} 
+			return Colour(r, g, b, a);
+		}
 
-		static const Colour FromABGR(const UINT8 a, const UINT8 b, const UINT8 g, const UINT8 r) 
+		static const Colour FromABGR(const UINT8 a, const UINT8 b, const UINT8 g, const UINT8 r)
 		{
-			return Colour(r,g,b,a);
+			return Colour(r, g, b, a);
 		}
 
 		static const Colour FromRGB(const UINT8 r, const UINT8 g, const UINT8 b)
 		{
-			return Colour(r,g,b);
+			return Colour(r, g, b);
 		}
 		static const Colour FromBGR(const UINT8 b, const UINT8 g, const UINT8 r)
 		{
@@ -174,7 +174,7 @@ namespace Common::Graphics
 			return EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ color->Blue, color->Green, color->Red, color->Alpha };
 		}
 	};
-	
+#pragma pack(pop)
 	/// <summary>
 	///  Selection of colours for use in the bootloader for the GraphicsContext.
 	///  base on colors from https://en.wikipedia.org/wiki/Web_colors
@@ -185,8 +185,8 @@ namespace Common::Graphics
 		constinit const Colour DeepPink = Colour(255, 20, 147);
 		constinit const Colour HotPink = Colour(255, 105, 180);
 		constinit const Colour LightPink = Colour(255, 182, 193);
-		constinit const Colour MediumVioletRed = Colour((UINT8)199, (UINT8)21, (UINT8)133);
-		constinit const Colour PaleVioletRed	=Colour(219, 112, 147);
+		constinit const Colour MediumVioletRed = Colour(199, 21, 133);
+		constinit const Colour PaleVioletRed = Colour(219, 112, 147);
 		constinit const Colour Pink = Colour(255, 192, 203);
 		/* Red colors */
 		constinit const Colour Crimson = Colour(220, 20, 60);
@@ -198,7 +198,7 @@ namespace Common::Graphics
 		constinit const Colour LightSalmon = Colour(255, 160, 122);
 		constinit const Colour Red = Colour(255, 0, 0);
 		constinit const Colour Salmon = Colour(250, 128, 114);
-		 /* Orange colors */
+		/* Orange colors */
 		constinit const Colour Coral = Colour(255, 127, 80);
 		constinit const Colour DarkOrange = Colour(255, 140, 0);
 		constinit const Colour Orange = Colour(255, 165, 0);
@@ -254,19 +254,19 @@ namespace Common::Graphics
 		constinit const Colour Thistle = Colour(216, 191, 216);
 		constinit const Colour Violet = Colour(238, 130, 238);
 		/* Blue colors */
-		constinit const Colour Blue	 = Colour(0, 0, 255);
+		constinit const Colour Blue = Colour(0, 0, 255);
 		constinit const Colour CornflowerBlue = Colour(100, 149, 237);
-		constinit const Colour DarkBlue	= Colour(0, 0, 139);
+		constinit const Colour DarkBlue = Colour(0, 0, 139);
 		constinit const Colour DeepSkyBlue = Colour(0, 191, 255);
 		constinit const Colour DodgerBlue = Colour(30, 144, 255);
 		constinit const Colour LightBlue = Colour(173, 216, 230);
 		constinit const Colour LightSkyBlue = Colour(135, 206, 250);
 		constinit const Colour LightSteelBlue = Colour(176, 196, 222);
-		constinit const Colour MediumBlue	 = Colour(0, 0, 205);
+		constinit const Colour MediumBlue = Colour(0, 0, 205);
 		constinit const Colour MidnightBlue = Colour(25, 25, 112);
 		constinit const Colour Navy = Colour(0, 0, 128);
 		constinit const Colour PowderBlue = Colour(176, 224, 230);
-		constinit const Colour RoyalBlue	 = Colour(65, 105, 225);
+		constinit const Colour RoyalBlue = Colour(65, 105, 225);
 		constinit const Colour SkyBlue = Colour(135, 206, 235);
 		constinit const Colour SteelBlue = Colour(70, 130, 180);
 		/*Cyan colors*/
@@ -291,7 +291,7 @@ namespace Common::Graphics
 		constinit const Colour Green = Colour(0, 128, 0);
 		constinit const Colour GreenYellow = Colour(173, 255, 47);
 		constinit const Colour LawnGreen = Colour(124, 252, 0);
-		constinit const Colour LightGreen	 = Colour(144, 238, 144);
+		constinit const Colour LightGreen = Colour(144, 238, 144);
 		constinit const Colour Lime = Colour(0, 255, 0);
 		constinit const Colour LimeGreen = Colour(50, 205, 50);
 		constinit const Colour MediumAquamarine = Colour(102, 205, 170);
@@ -316,9 +316,9 @@ namespace Common::Graphics
 		constinit const Colour Linen = Colour(250, 240, 230);
 		constinit const Colour MintCream = Colour(245, 255, 250);
 		constinit const Colour MistyRose = Colour(255, 228, 225);
-		constinit const Colour OldLace	 = Colour(253, 245, 230);
-		constinit const Colour Seashell	 = Colour(255, 245, 238);
-		constinit const Colour Snow	 = Colour(255, 250, 250);
+		constinit const Colour OldLace = Colour(253, 245, 230);
+		constinit const Colour Seashell = Colour(255, 245, 238);
+		constinit const Colour Snow = Colour(255, 250, 250);
 		constinit const Colour White = Colour(255, 255, 255);
 		constinit const Colour WhiteSmoke = Colour(245, 245, 245);
 		/* Gray and black colors */

@@ -68,11 +68,14 @@
     <ClInclude Include="Graphics\PixelBitMask.h" />
     <ClInclude Include="Graphics\PixelFormat.h" />
     <ClInclude Include="Graphics\RenderContext.h" />
-    <ClInclude Include="Math\Math.h" />
+    <ClInclude Include="Numerics\Math.h" />
+    <ClInclude Include="Numerics\NumberBase.h" />
+    <ClInclude Include="Numerics\Vectors.h" />
     <ClInclude Include="System\Allocator.h" />
     <ClInclude Include="System\AllocatorStatus.h" />
     <ClInclude Include="System\BitMathCompat.h" />
     <ClInclude Include="System\Console.h" />
+    <ClInclude Include="System\IConsole.h" />
     <ClInclude Include="System\MemFuncs.h" />
     <ClInclude Include="TypeDefs.h" />
   </ItemGroup>
@@ -101,6 +104,7 @@
     <ClCompile Include="Graphics\GraphicsContext.cpp" />
     <ClCompile Include="Graphics\MonitorContext.cpp" />
     <ClCompile Include="Graphics\MonitorMode.cpp" />
+    <ClCompile Include="Graphics\Pixel.cpp" />
     <ClCompile Include="Graphics\RenderContext.cpp" />
     <ClCompile Include="System\Allocator.cpp" />
     <ClCompile Include="System\Console.cpp" />

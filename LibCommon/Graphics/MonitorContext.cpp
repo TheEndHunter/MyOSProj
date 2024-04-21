@@ -8,65 +8,107 @@ namespace Common::Graphics
 		protocol = nullptr;
 		modes = nullptr;
 		maxMode = 0;
-		currentMode = 0;
+		currentModeNumber = 0;
+		currentMode = nullptr;
 	};
 
 	MonitorContext::MonitorContext(EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL* ptr)
 	{
 		protocol = ptr;
 		maxMode = ptr->Mode->MaxMode;
-		
-		modes = (MonitorMode*)System::Allocator::Allocate(sizeof(MonitorMode)*maxMode);
-		for (UINT32 i = 0; i < maxMode; i++)
+
+		if (maxMode == 0)
 		{
-			EFI::EFI_GRAPHICS_OUTPUT_MODE_INFORMATION* info = ptr->Mode->Info;
+			return;
+		};
 
-			modes[i] = MonitorMode(info->Version, info->HorizontalResolution, info->VerticalResolution,(PixelFormat)info->PixelFormat, (PixelBitMask)info->PixelInformation,info->PixelsPerScanLine,ptr->Mode->FrameBufferSize,(Pixel*)ptr->Mode->FrameBufferBase);
+		currentModeNumber = ptr->Mode->Mode;
+		currentMode = &modes[currentModeNumber];
+
+		modes = System::Allocator::AllocateZeroedArray<MonitorMode>(maxMode);
+
+		if (modes == nullptr)
+		{
+			maxMode = 0;
+			return;
+		};
+
+		for (UINT32 i = 0; i < maxMode; i++)
+		{			
+			ptr->SetMode(ptr, i);
+
+			new(&modes[i]) MonitorMode(ptr->Mode);
 		}
-		currentMode = ptr->Mode->Mode;
+		ptr->SetMode(ptr, currentModeNumber);
 	}
 
-	const MonitorMode* MonitorContext::GetCurrentMode() const
+	MonitorMode* MonitorContext::GetCurrentMode()
 	{
-		return &modes[currentMode];
+		return currentMode;
 	}
 
-	const MonitorMode* MonitorContext::GetMode(UINT32 modeNumber) const
+	MonitorMode* MonitorContext::GetMode(UINT32 modeNumber)
 	{
 		return &modes[modeNumber];
 	}
-	void MonitorContext::SetMode(UINT32 modeNumber)
+
+	BOOLEAN MonitorContext::SetMode(UINT32 modeNumber)
 	{
-		auto s = protocol->SetMode(protocol, modeNumber);
+		EFI::EFI_STATUS s = protocol->SetMode(protocol, modeNumber);
+		
 		if(s != EFI::EFI_STATUS::SUCCESS)
 		{
-			return;
+			return FALSE;
 		}
-		currentMode = modeNumber;
+		currentModeNumber = modeNumber;
+		currentMode = &modes[modeNumber];
+
+		return TRUE;
 	}
 
-	UINTN MonitorContext::GetFrameBufferSize() const
+	UINT32 MonitorContext::GetMaxMode()
 	{
-		return modes[currentMode].FrameBufferSize;
+		return maxMode;
 	}
 
-	UINT32 MonitorContext::GetHorizontalResolution() const
+	UINTN MonitorContext::GetFrameBufferSize() 
 	{
-		return modes[currentMode].HorizontalResolution;
+		return currentMode->FrameBufferSize;
 	}
 
-	UINT32 MonitorContext::GetVerticalResolution() const
+	UINT32 MonitorContext::GetHorizontalResolution()
 	{
-		return modes[currentMode].VerticalResolution;
+		return currentMode->HorizontalResolution;
 	}
 
-	UINT32 MonitorContext::GetPixelsPerScanLine() const
+	UINT32 MonitorContext::GetVerticalResolution()
 	{
-		return modes[currentMode].PixelsPerScanLine;
+		return currentMode->VerticalResolution;
 	}
 
-	Pixel* MonitorContext::GetFrameBuffer() const
+	UINT32 MonitorContext::GetPixelsPerScanLine()
 	{
-		return modes[currentMode].FrameBufferBase;
+		return currentMode->PixelsPerScanLine;
+	}
+
+	VOID_PTR MonitorContext::GetFrameBuffer()
+	{
+		return currentMode->FrameBufferBase;
+	}
+
+	PixelFormat MonitorContext::GetPixelFormat()
+	{
+		return currentMode->Format;
+	}
+
+	PixelBitMask MonitorContext::GetPixelBitMask()
+	{
+		return currentMode->BitMask;
+	}
+
+
+	void MonitorContext::Terminate()
+	{
+		delete[maxMode] modes;
 	}
 }

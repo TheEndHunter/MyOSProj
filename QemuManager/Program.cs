@@ -8,7 +8,6 @@ using System.Text;
 
 namespace QemuManager
 {
-
     internal class Program
     {
         static string BuildDrives(string directory)
@@ -27,8 +26,7 @@ namespace QemuManager
         }
 
         private static Process qemu;
-
-        private static async Task UpdateOVMF(Settings config, string? sha1 = null, long? offset = null)
+        private static async Task UpdateOVMF(Settings config, string? sha1 = null)
         {
             Console.WriteLine("Checking for Updates...");
 
@@ -52,12 +50,10 @@ namespace QemuManager
                 Console.WriteLine("Could not find Branch");
                 return;
             }
-
             var currentsha = branch.Commit.Sha;
-
-            if (offset != null && sha1 != null && currentsha != null)
+            if (sha1 != null && currentsha != null)
             {
-                if (offset >= repo.UpdatedAt.ToUnixTimeMilliseconds() && sha1 == currentsha)
+                if (sha1 == currentsha)
                 {
                     Console.WriteLine("OVMF is up to date");
                     return;
@@ -80,21 +76,16 @@ namespace QemuManager
                     {
                         Directory.Delete(ovmfPath, true);
                     }
-
                     if (Directory.Exists(extractPath))
                     {
                         Directory.Delete(extractPath, true);
                     }
                     Directory.CreateDirectory(extractPath);
                     System.IO.File.WriteAllBytes(zipPath, zipTask.Result);
-
-
                     Console.WriteLine("Extracting...");
                     ZipFile.ExtractToDirectory(zipPath, extractPath);
                     Console.WriteLine("Extracted...");
-
                     var dirs = Directory.GetDirectories(extractPath);
-
                     foreach (var d in dirs)
                     {
                         var t = Path.Combine(d, ovmf.OVMFBinPath);
@@ -103,14 +94,9 @@ namespace QemuManager
                             Directory.Move(t, ovmfPath);
                         }
                     }
-
                     Console.WriteLine("Writing Version.txt");
                     using var versionFile = File.CreateText(Path.Combine(ovmfPath, "Version.txt"));
-                    versionFile.WriteLine(repo.UpdatedAt.ToUnixTimeSeconds());
                     versionFile.WriteLine(currentsha);
-
-                    versionFile.Flush();
-                    versionFile.Close();
                 }
             });
 
@@ -176,17 +162,7 @@ namespace QemuManager
                 var data = File.ReadLines(verPath);
                 if (data.Any())
                 {
-                    if (data.Count() > 1)
-                    {
-                        if (long.TryParse(data.ElementAt(0), out long unixtimeSeconds))
-                        {
-                            UpdateOVMF(config, data.ElementAt(1)!, unixtimeSeconds).Wait();
-                        }
-                    }
-                    else
-                    {
-                        UpdateOVMF(config).Wait();
-                    }
+                    UpdateOVMF(config, data.ElementAt(0)!).Wait();
                 }
                 else
                 {
@@ -340,7 +316,7 @@ namespace QemuManager
                 exePath = filename;
             }
 
-            string debug = string.Empty; //* TODO: Enable this in debug builds to allow live debug of the boot configuration. (configuration != "Debug") ? string.Empty : "-gdb tcp::4242 -S";
+            string debug = (configuration != "Debug") ? string.Empty : "-gdb tcp::4242 -S";
 
             Process.GetCurrentProcess().EnableRaisingEvents = true;
             qemu = new();
@@ -363,7 +339,9 @@ namespace QemuManager
                 {
                     Console.WriteLine("Listening as gdb tcp on LocalHost:4242...");
                 }
+
                 qemu.WaitForExit();
+
                 if (qemu.ExitCode != 0)
                 {
                     Console.WriteLine("Qemu exited with error code: " + qemu.ExitCode);

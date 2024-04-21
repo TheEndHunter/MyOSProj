@@ -12,7 +12,7 @@ namespace EFI
 		UINT32 Mode;
 		EFI_GRAPHICS_OUTPUT_MODE_INFORMATION* Info;
 		UINTN SizeOfInfo;
-		EFI_PHYSICAL_ADDRESS FrameBufferBase;
+		VOID_PTR FrameBufferBase;
 		UINTN FrameBufferSize;
 	};
 }
