@@ -30,7 +30,7 @@ namespace Common::Graphics
 		B3 = (UINT8)p.B3;
 		B4 = (UINT8)p.B4;
 	}
-	Pixel1Bpp::Pixel1Bpp(UINT8 b1, UINT8 b2, UINT8 b3, UINT8 b4)
+	Pixel1Bpp::Pixel1Bpp(const UINT8 b1, const UINT8 b2, const UINT8 b3, const UINT8 b4)
 	{
 		B1 = b1;
 		B2 = b2;
@@ -65,7 +65,7 @@ namespace Common::Graphics
 		B3 = p.B3;
 		B4 = p.B4;
 	}
-	Pixel2Bpp::Pixel2Bpp(UINT16 b1, UINT16 b2, UINT16 b3, UINT16 b4)
+	Pixel2Bpp::Pixel2Bpp(const UINT16 b1, const UINT16 b2, const UINT16 b3, const UINT16 b4)
 	{
 		B1 = b1;
 		B2 = b2;
@@ -147,7 +147,7 @@ namespace Common::Graphics
 		B4[1] = 0;
 		B4[2] = p.B4;
 	}
-	Pixel3Bpp::Pixel3Bpp(UINT32 b1, UINT32 b2, UINT32 b3, UINT32 b4)
+	Pixel3Bpp::Pixel3Bpp(const UINT32 b1, const UINT32 b2, const UINT32 b3, const UINT32 b4)
 	{
 		B1[0] = (UINT8)((b1 & 0x0F00) >> 16);
 		B1[1] = (UINT8)((b1 & 0x00F0) >> 8);
@@ -197,7 +197,7 @@ namespace Common::Graphics
 		B3 = p.B3;
 		B4 = p.B4;
 	}
-	Pixel4Bpp::Pixel4Bpp(UINT32 b1, UINT32 b2, UINT32 b3, UINT32 b4)
+	Pixel4Bpp::Pixel4Bpp(const UINT32 b1, const UINT32 b2, const UINT32 b3, const UINT32 b4)
 	{
 		B1 = b1;
 		B2 = b2;

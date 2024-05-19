@@ -35,6 +35,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Debugging\EFI\EFIDebugger.h" />
+    <ClInclude Include="Debugging\IDebugger.h" />
     <ClInclude Include="Enviroment\StringComparisonMode.h" />
     <ClInclude Include="Enviroment\StringCulture.h" />
     <ClInclude Include="FileSystem\ESP\FileAttribute.h" />
@@ -80,6 +82,7 @@
     <ClInclude Include="TypeDefs.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Debugging\EFI\EFIDebugger.cpp" />
     <ClCompile Include="FileSystem\ESP\FileHandle.cpp" />
     <ClCompile Include="FileSystem\ESP\FileInfo.cpp" />
     <ClCompile Include="FileSystem\ESP\FileSystemContext.cpp" />
@@ -628,6 +631,8 @@
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <SupportJustMyCode>false</SupportJustMyCode>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -695,6 +700,8 @@
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <SupportJustMyCode>false</SupportJustMyCode>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -760,6 +767,7 @@
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <SupportJustMyCode>false</SupportJustMyCode>
     </ClCompile>
     <Lib>
       <SubSystem>EFI Application</SubSystem>
@@ -810,6 +818,8 @@
       <UseStandardPreprocessor>true</UseStandardPreprocessor>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <SupportJustMyCode>false</SupportJustMyCode>
     </ClCompile>
     <Lib>
       <SubSystem>EFI Application</SubSystem>

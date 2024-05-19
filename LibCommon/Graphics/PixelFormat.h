@@ -6,10 +6,10 @@ namespace Common::Graphics
 {
 	enum PixelFormat : UINT32
 	{
-		RedGreenBlueReserved8BitPerColor,
-		BlueGreenRedReserved8BitPerColor,
-		BitMask,
-		BltOnly,
-		FormatMax
+		RedGreenBlueReserved8BitPerColor = 0,
+		BlueGreenRedReserved8BitPerColor = 1,
+		BitMask = 2,
+		BltOnly = 3,
+		FormatMax = 4
 	};
 }

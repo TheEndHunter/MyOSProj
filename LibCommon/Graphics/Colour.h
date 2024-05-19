@@ -16,160 +16,179 @@ namespace Common::Graphics
 	struct Colour
 	{
 	public:
-		const UINT8 Blue;
-		const UINT8 Green;
-		const UINT8 Red;
-		const UINT8 Alpha;
+		UINT8 Red;
+		UINT8 Green;
+		UINT8 Blue;
+		UINT8 Alpha;
 
-		const UINT32 AsRGBA() const
+		const UINT32 AsRGBA()
 		{
 			return (UINT32)((Alpha << 24) | (Red << 16) | (Green << 8) | Blue);
 		}
 
-		const UINT32 AsBGRA() const
+		const UINT32 AsBGRA()
 		{
 			return (UINT32)((Blue << 24) | (Green << 16) | (Red << 8) | Alpha);
 		}
 
-		const UINT32 AsARGB() const
+		const UINT32 AsARGB()
 		{
 			return (UINT32)((Alpha << 24) | (Blue << 16) | (Green << 8) | Red);
 		}
 
-		const UINT32 AsABGR() const
+		const UINT32 AsABGR()
 		{
 			return (UINT32)((Alpha << 24) | (Green << 16) | (Blue << 8) | Red);
 		}
 
-		const EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL AsEFI() const
+		const EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL AsEFI()
 		{
 			return EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ Blue, Green, Red, Alpha };
 		}
 
-		Colour operator+(const Colour& other) const
+		Colour operator+(const Colour& other)
 		{
-			return Colour(Blue + other.Blue, Green + other.Green, Red + other.Red, Alpha + other.Alpha);
+			Blue += other.Blue;
+			Green += other.Green;
+			Red += other.Red;
+			Alpha += other.Alpha;
+			return *this;
 		}
 
-		Colour operator-(const Colour& other) const
+		Colour operator-(const Colour& other)
 		{
-			return Colour(Blue - other.Blue, Green - other.Green, Red - other.Red, Alpha - other.Alpha);
+			Blue -= other.Blue;
+			Green -= other.Green;
+			Red -= other.Red;
+			Alpha -= other.Alpha;
+			return *this;
 		}
 
-		Colour operator*(const Colour& other) const
+		Colour operator*(const Colour& other)
 		{
-			return Colour(Blue * other.Blue, Green * other.Green, Red * other.Red, Alpha * other.Alpha);
+			Blue *= other.Blue;
+			Green *= other.Green;
+			Red *= other.Red;
+			Alpha *= other.Alpha;
+			return *this;
 		}
 
-		Colour operator/(const Colour& other) const
+		Colour operator/(const Colour& other)
 		{
-			return Colour(Blue / other.Blue, Green / other.Green, Red / other.Red, Alpha / other.Alpha);
+			Blue /= other.Blue;
+			Green /= other.Green;
+			Red /= other.Red;
+			Alpha /= other.Alpha;
+			return *this;
 		}
 
-		Colour operator =(const Colour& other) const
+		Colour operator =(const Colour& other)
 		{
-			return Colour(other);
+			Blue = other.Blue;
+			Green = other.Green;
+			Red = other.Red;
+			Alpha = other.Alpha;
+			return *this;
 		}
 
-		bool operator==(const Colour& other) const
+		bool operator==(const Colour& other)
 		{
 			return Blue == other.Blue && Green == other.Green && Red == other.Red && Alpha == other.Alpha;
 		}
 
-		bool operator!=(const Colour& other) const
+		bool operator!=(const Colour& other)
 		{
 			return Blue != other.Blue || Green != other.Green || Red != other.Red || Alpha != other.Alpha;
 		}
 
-		bool operator<(const Colour& other) const
+		bool operator<(const Colour& other)
 		{
 			return Blue < other.Blue && Green < other.Green && Red < other.Red && Alpha < other.Alpha;
 		}
 
-		bool operator>(const Colour& other) const
+		bool operator>(const Colour& other)
 		{
 			return Blue > other.Blue && Green > other.Green && Red > other.Red && Alpha > other.Alpha;
 		}
 
-		bool operator<=(const Colour& other) const
+		bool operator<=(const Colour& other)
 		{
 			return Blue <= other.Blue && Green <= other.Green && Red <= other.Red && Alpha <= other.Alpha;
 		}
 
-		bool operator>=(const Colour& other) const
+		bool operator>=(const Colour& other)
 		{
 			return Blue >= other.Blue && Green >= other.Green && Red >= other.Red && Alpha >= other.Alpha;
 		}
 
-		constexpr Colour() : Blue(0), Green(0), Red(0), Alpha(255) {};
-		constexpr Colour(const UINT32 rgba) : Blue((UINT8)((rgba & 0x0000FF00) >> 8)), Green((UINT8)((rgba & 0x00FF0000) >> 16)), Red((UINT8)((rgba & 0xFF000000) >> 24)), Alpha((UINT8)(rgba & 0x000000FF)) {}
-		constexpr Colour(const UINT8 red, const UINT8 green, const UINT8 blue, const UINT8 alpha) : Blue(blue), Green(green), Red(red), Alpha(alpha) {}
-		constexpr Colour(const UINT8 red, const UINT8 green, const UINT8 blue) : Blue(blue), Green(green), Red(red), Alpha(255) {}
-		constexpr Colour(const Colour& color) : Blue(color.Blue), Green(color.Green), Red(color.Red), Alpha(color.Alpha) {}
-		constexpr Colour(const Colour* color) : Blue(color->Blue), Green(color->Green), Red(color->Red), Alpha(color->Alpha) {}
+		Colour() : Blue(0), Green(0), Red(0), Alpha(255) {};
+		Colour(const UINT32 rgba) : Blue((UINT8)((rgba & 0x0000FF00) >> 8)), Green((UINT8)((rgba & 0x00FF0000) >> 16)), Red((UINT8)((rgba & 0xFF000000) >> 24)), Alpha((UINT8)(rgba & 0x000000FF)) {}
+		constexpr Colour(const UINT8 red, UINT8 green, UINT8 blue, UINT8 alpha = 255) : Blue(blue), Green(green), Red(red), Alpha(alpha) {}
+		Colour(const Colour& color) : Blue(color.Blue), Green(color.Green), Red(color.Red), Alpha(color.Alpha) {}
+		Colour(const Colour* color) : Blue(color->Blue), Green(color->Green), Red(color->Red), Alpha(color->Alpha) {}
 
-		constexpr Colour(const EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL& color) : Blue(color.Blue), Green(color.Green), Red(color.Red), Alpha(color.Alpha) {}
-		constexpr Colour(const EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color) : Blue(color->Blue), Green(color->Green), Red(color->Red), Alpha(color->Alpha) {}
+		Colour(const EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL& color) : Blue(color.Blue), Green(color.Green), Red(color.Red), Alpha(color.Alpha) {}
+		Colour(const EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color) : Blue(color->Blue), Green(color->Green), Red(color->Red), Alpha(color->Alpha) {}
 
-		static const Colour FromRGBA(const UINT32 rgba)
+		static Colour FromRGBA(const UINT32 rgba)
 		{
 			return Colour(rgba);
 		}
 
-		static const Colour FromBGRA(const UINT32 bgra)
+		static Colour FromBGRA(const UINT32 bgra)
 		{
 			return Colour((UINT8)((bgra & 0x0000FF00) >> 8), (UINT8)((bgra & 0x00FF0000) >> 16), (UINT8)((bgra & 0xFF000000) >> 24), (UINT8)((bgra & 0x000000FF)));
 		}
 
-		static const Colour FromARGB(const UINT32 argb)
+		static Colour FromARGB(const UINT32 argb)
 		{
 			return Colour((UINT8)((argb & 0x00FF0000) >> 16), (UINT8)((argb & 0x0000FF00) >> 8), (UINT8)(argb & 0x000000FF), (UINT8)((argb & 0xFF000000) >> 24));
 		}
 
-		static const Colour FromABGR(const UINT32 abgr)
+		static Colour FromABGR(const UINT32 abgr)
 		{
 			return Colour((UINT8)((abgr & 0x000000FF)), (UINT8)((abgr & 0x0000FF00) >> 8), (UINT8)((abgr & 0x00FF0000) >> 16), (UINT8)((abgr & 0xFF000000) >> 24));
 		}
 
-		static const Colour FromRGBA(const UINT8 r, const UINT8 g, const UINT8 b, const UINT8 a = 255)
+		static Colour FromRGBA(const UINT8 r, UINT8 g, UINT8 b, UINT8 a = 255)
 		{
 			return Colour(r, g, b, a);
 		}
 
-		static const Colour FromBGRA(const UINT8 b, const UINT8 g, const UINT8 r, const UINT8 a = 255)
+		static Colour FromBGRA(const UINT8 b, UINT8 g, UINT8 r, UINT8 a = 255)
 		{
 			return Colour(r, g, b, a);
 		}
 
-		static const Colour FromARGB(const UINT8 a, const UINT8 r, const UINT8 g, const UINT8 b)
+		static Colour FromARGB(const UINT8 a, UINT8 r, UINT8 g, UINT8 b)
 		{
 			return Colour(r, g, b, a);
 		}
 
-		static const Colour FromABGR(const UINT8 a, const UINT8 b, const UINT8 g, const UINT8 r)
+		static Colour FromABGR(const UINT8 a, UINT8 b, UINT8 g, UINT8 r)
 		{
 			return Colour(r, g, b, a);
 		}
 
-		static const Colour FromRGB(const UINT8 r, const UINT8 g, const UINT8 b)
+		static Colour FromRGB(const UINT8 r, UINT8 g, UINT8 b)
 		{
 			return Colour(r, g, b);
 		}
-		static const Colour FromBGR(const UINT8 b, const UINT8 g, const UINT8 r)
+		static Colour FromBGR(const UINT8 b, UINT8 g, UINT8 r)
 		{
 			return Colour(r, g, b);
 		}
 
-		static const Colour FromEFI(const EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL color)
+		static Colour FromEFI(const EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL color)
 		{
 			return Colour(color);
 		}
 
-		static const EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL ToEFI(const Colour color)
+		static EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL ToEFI(const Colour color)
 		{
 			return EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ color.Blue, color.Green, color.Red, color.Alpha };
 		}
-		static const EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL ToEFI(const Colour* color)
+		static EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL ToEFI(const Colour* color)
 		{
 			return EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ color->Blue, color->Green, color->Red, color->Alpha };
 		}
@@ -244,7 +263,7 @@ namespace Common::Graphics
 		constinit const Colour Indigo = Colour(75, 0, 130);
 		constinit const Colour Lavender = Colour(230, 230, 250);
 		constinit const Colour Magenta = Colour(255, 0, 255);
-		constinit const Colour MediumOrchid = Colour(186, 85, 211);
+		constexpr Colour MediumOrchid = Colour(186, 85, 211);
 		constinit const Colour MediumPurple = Colour(147, 112, 219);
 		constinit const Colour MediumSlateBlue = Colour(123, 104, 238);
 		constinit const Colour Orchid = Colour(218, 112, 214);

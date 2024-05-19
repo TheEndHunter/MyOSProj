@@ -49,7 +49,8 @@
     <CharacterSet>Unicode</CharacterSet>
     <PreferredToolArchitecture>x86</PreferredToolArchitecture>
     <SpectreMitigation>Spectre</SpectreMitigation>
-    <UseOfMfc>Static</UseOfMfc>
+    <UseOfMfc>
+    </UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
     <WindowsSDKDesktopARMSupport>true</WindowsSDKDesktopARMSupport>
@@ -59,7 +60,8 @@
     <CharacterSet>Unicode</CharacterSet>
     <PreferredToolArchitecture>x86</PreferredToolArchitecture>
     <SpectreMitigation>Spectre</SpectreMitigation>
-    <UseOfMfc>Static</UseOfMfc>
+    <UseOfMfc>
+    </UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -69,7 +71,8 @@
     <CharacterSet>Unicode</CharacterSet>
     <PreferredToolArchitecture>x86</PreferredToolArchitecture>
     <SpectreMitigation>Spectre</SpectreMitigation>
-    <UseOfMfc>Static</UseOfMfc>
+    <UseOfMfc>
+    </UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -80,7 +83,8 @@
     <CharacterSet>Unicode</CharacterSet>
     <PreferredToolArchitecture>x86</PreferredToolArchitecture>
     <SpectreMitigation>Spectre</SpectreMitigation>
-    <UseOfMfc>Static</UseOfMfc>
+    <UseOfMfc>
+    </UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -88,7 +92,8 @@
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <SpectreMitigation>Spectre</SpectreMitigation>
-    <UseOfMfc>Static</UseOfMfc>
+    <UseOfMfc>
+    </UseOfMfc>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">
@@ -98,7 +103,8 @@
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <SpectreMitigation>Spectre</SpectreMitigation>
-    <UseOfMfc>Static</UseOfMfc>
+    <UseOfMfc>
+    </UseOfMfc>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -108,7 +114,8 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <SpectreMitigation>Spectre</SpectreMitigation>
-    <UseOfMfc>Static</UseOfMfc>
+    <UseOfMfc>
+    </UseOfMfc>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
@@ -119,7 +126,8 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
     <SpectreMitigation>Spectre</SpectreMitigation>
-    <UseOfMfc>Static</UseOfMfc>
+    <UseOfMfc>
+    </UseOfMfc>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -278,6 +286,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AssemblyDebug>true</AssemblyDebug>
     </Link>
     <Manifest>
       <OutputManifestFile />
@@ -323,6 +332,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AssemblyDebug>true</AssemblyDebug>
     </Link>
     <Manifest>
       <OutputManifestFile />
@@ -457,6 +467,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AssemblyDebug>true</AssemblyDebug>
     </Link>
     <Manifest>
       <OutputManifestFile />
@@ -503,6 +514,7 @@
       <DataExecutionPrevention>false</DataExecutionPrevention>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AssemblyDebug>true</AssemblyDebug>
     </Link>
     <Manifest>
       <OutputManifestFile />

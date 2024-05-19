@@ -12,64 +12,73 @@
 
 namespace Common::Graphics
 {
-	static inline UINTN CalculatePixelOffset(UINTN x, UINTN y, UINTN ppsl)
+	static inline const UINTN CalculatePixelOffset(const UINTN x, const UINTN y, const UINTN ppsl)
 	{
 		return (y * ppsl) + x;
 	}
 
 	template<typename Pixel>
-	static void SetRectangle(UINT32 x1, UINT32 y1, UINT32 width, UINT32 height, UINT32 ppsl, Pixel* fb,const Pixel* p)
+	static void SetRectangle(const UINT32 x1, const UINT32 y1, const UINT32 width, const UINT32 height, const UINT32 ppsl, Pixel* fb, const Pixel& p)
 	{
 		UINT32 yMax = y1 + height;
+		UINT32 xMax = x1 + width;
 
 		/*Draw the rectangle*/
 		for (UINTN y = y1; y < yMax; y++)
 		{
 			UINTN row = CalculatePixelOffset(x1, y, ppsl);
-			for (UINTN x = x1; x < width; x++)
+			Pixel* pRow = &fb[row];
+			for (UINTN x = x1; x < xMax; x++)
 			{
-				fb[row + x] = *p;
+				pRow[x] = p;
 			}
 		}
 	}
 
 	template<typename Pixel>
-	static void SetFilledRectangle(UINT32 x1, UINT32 y1, UINT32 width1, UINT32 height1,UINT32 x2,UINT32 y2,UINT32 width2,UINT32 height2, UINT32 ppsl, Pixel* fb,const Pixel* bgP,const Pixel* fgP)
+	static void SetFilledRectangle(const UINT32 x1, const UINT32 y1, const UINT32 width1, const UINT32 height1, const UINT32 x2, const UINT32 y2, const UINT32 width2, const UINT32 height2, const UINT32 ppsl, Pixel* fb, const Pixel& c2P, const Pixel& c1P)
 	{
-		/*Draw a Rectangle within a rectangle*/
+		UINT32 yMax1 = y1 + height1;
+		UINT32 xMax1 = x1 + width1;
 
-		UINT32 yMax = y1 + height1;
-		UINT32 xMax = x1 + width1;
+		UINT32 yMax2 = y2 + height2;
+		UINT32 xMax2 = x2 + width2;
 
 		/*Draw the rectangle*/
-		for (UINTN y = y1; y < yMax; y++)
+		for (UINTN y = y1; y < yMax1; y++)
 		{
 			UINTN row = CalculatePixelOffset(x1, y, ppsl);
-			for (UINTN x = x1; x < xMax; x++)
+			Pixel* pRow = &fb[row];
+			for (UINTN x = x1; x < xMax1; x++)
 			{
-				if (y > y2 && y < height2 || x > x2 && x < width2)
+				if ((y > y2 && y < yMax2) && (x > x2 && x < xMax2))
 				{
-					fb[row + x] = *fgP;
+					pRow[x] = c1P;
 				}
 				else
 				{
-					fb[row + x] = *bgP;
+					pRow[x] = c2P;
 				}
 			}
 		}
 	}
 
 
-	RenderContext::RenderContext(EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL* ptr, Colour fg, Colour bg)
+	RenderContext::RenderContext(EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL* ptr,const Colour txt,const Colour bg,const Colour fg1,const Colour fg2)
 	{
 		monitor = MonitorContext(ptr);
-		defaultBg = bg;
-		defaultFg = fg;
-		background = bg;
-		foreground = fg;
+		defaultBackgroundColour = bg;
+		defaultForeground1Colour = fg1;
+		defaultForeground2Colour = fg2;
+		defaultText = txt;
+
+		backgroundColour = bg;
+		foreground1Colour = fg1;
+		foreground2Colour = fg2;
+		textColour = txt;
 	}
 
-	RenderContext* RenderContext::Initialize(EFI::EFI_SYSTEM_TABLE* sysTbl, EFI::EFI_HANDLE imgHndl, Colour fg, Colour bg)
+	RenderContext* RenderContext::Initialize(EFI::EFI_SYSTEM_TABLE* sysTbl, EFI::EFI_HANDLE imgHndl,const Colour txt,const Colour bg,const Colour fg1,const Colour fg2)
 	{
 		EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL* gop = nullptr;
 		// Locate the GOP protocol and store it in the gop variable, use locate protocol first then try to locate handle Buffer if that fails, if that fails then return the error
@@ -77,7 +86,7 @@ namespace Common::Graphics
 
 		if (LastStatus == EFI::EFI_STATUS::SUCCESS)
 		{
-			return new RenderContext(gop, fg, bg);
+			return new RenderContext(gop, txt, bg, fg1, fg2);
 		}
 
 		UINTN handleCount = 0;
@@ -95,146 +104,167 @@ namespace Common::Graphics
 
 		sysTbl->BootServices->FreePool(handleBuffer);
 
-		return new RenderContext(gop, fg, bg);
+		return new RenderContext(gop, txt, bg, fg1, fg2);
 	}
 
-	Colour RenderContext::GetBackground()
+	Colour RenderContext::GetBackgroundColour()
 	{
-		return background;
+		return backgroundColour;
 	}
 
-	Colour RenderContext::GetForeground()
+	Colour RenderContext::GetForeground1Colour()
 	{
-		return foreground;
+		return foreground1Colour;
+	}
+	Colour RenderContext::GetForeground2Colour()
+	{
+		return foreground2Colour;
+	}
+	Colour RenderContext::GetTextColour()
+	{
+		return textColour;
 	}
 
 	void RenderContext::ResetToDefaultColours()
 	{
-		background = defaultBg;
-		foreground = defaultFg;
+		backgroundColour = defaultBackgroundColour;
+		foreground1Colour = defaultForeground1Colour;
+		foreground2Colour = defaultForeground2Colour;
+		textColour = defaultText;
 	}
 
-	void RenderContext::ResetBackground()
+	void RenderContext::ResetBackgroundColour()
 	{
-		background = defaultBg;
+		backgroundColour = defaultBackgroundColour;
 	}
 
-
-	void RenderContext::ResetForeground()
+	void RenderContext::ResetForeground1Colour()
 	{
-		foreground = defaultFg;
+		foreground1Colour = defaultForeground1Colour;
+	}
+	void RenderContext::ResetForeground2Colour()
+	{
+		foreground2Colour = defaultForeground2Colour;
+	}
+	void RenderContext::ResetTextColour()
+	{
+		textColour = defaultText;
 	}
 
 	void RenderContext::ClearScreen(BOOLEAN resetColours)
 	{
 		VOID_PTR fb = monitor.GetFrameBuffer();
+		const UINTN fbSize = monitor.GetFrameBufferSize();
 		PixelFormat pf = monitor.GetPixelFormat();
-		UINT32 ppsl = monitor.GetPixelsPerScanLine();
-		UINT32 hRes = monitor.GetHorizontalResolution();
-		UINT32 vRes = monitor.GetVerticalResolution();
 
 		/*
-		Base on monitor colour mode and bytes per pixel we grab and calculate the colour values need to be entered for the buffer
+		Base on monitorconst Colour mode and bytes per pixel we grab and calculate theconst Colour values need to be entered for the buffer
 		*/
 
-		if (resetColours)
+		if (resetColours == TRUE)
 		{
-			background = defaultBg;
-			foreground = defaultFg;
+			backgroundColour = defaultBackgroundColour;
+			foreground1Colour = defaultForeground1Colour;
+			foreground2Colour = defaultForeground2Colour;
+			textColour = defaultText;
 		}
-
+		
 		switch (pf)
 		{
 		case Common::Graphics::RedGreenBlueReserved8BitPerColor:
 		{
-			Pixel1Bpp bgP = Pixel1Bpp(background.Red, background.Green, background.Blue, background.Alpha);
-			SetRectangle<Pixel1Bpp>(0,0,vRes,hRes,ppsl, (Pixel1Bpp*)fb, &bgP);
-			return;
+			Pixel1Bpp bg = Pixel1Bpp(backgroundColour.Red, backgroundColour.Green, backgroundColour.Blue, backgroundColour.Alpha);
+			Pixel1Bpp* fbptr = (Pixel1Bpp*)fb;
+			for (UINTN i = 0; i < fbSize; i++)
+			{
+				fbptr[i] = bg;
+			}
+			break;
 		}
 		case Common::Graphics::BlueGreenRedReserved8BitPerColor:
 		{
-			Pixel1Bpp bgP = Pixel1Bpp(background.Blue, background.Green, background.Red, background.Alpha);
-			SetRectangle<Pixel1Bpp>(0, 0, vRes, hRes, ppsl, (Pixel1Bpp*)fb, &bgP);
-			return;
+			Pixel1Bpp bg = Pixel1Bpp(backgroundColour.Blue, backgroundColour.Green, backgroundColour.Red, backgroundColour.Alpha);
+			Pixel1Bpp* fbptr = (Pixel1Bpp*)fb;
+			for (UINTN i = 0; i < fbSize; i++)
+			{
+				fbptr[i] = bg;
+			}
+			break;
 		}
 		case Common::Graphics::BitMask:
-			return;
+			break;
 		case Common::Graphics::BltOnly:
-			return;
+			break;
 		case Common::Graphics::FormatMax:
-			return;
-		default:
-			return;
+			break;
 		}
-
-
 	}
 
-	void RenderContext::ClearScreen(Colour colour)
+	void RenderContext::ClearScreen(const Colour colour)
 	{
-		background = colour;
+		backgroundColour = colour;
 		ClearScreen();
 	}
 
-	void RenderContext::ClearScreen(Colour* colour)
+	void RenderContext::ClearScreen(const Colour* colour)
 	{
-		background = *colour;
+		backgroundColour = *colour;
 		ClearScreen();
 	}
 
-	void RenderContext::ClearScreen(UINT32 colour)
+	void RenderContext::ClearScreen(const UINT32 colour)
 	{
-		background = Colour(colour);
+		backgroundColour = Colour(colour);
 		ClearScreen();
 	}
 
-	void RenderContext::ClearScreen(UINT32 r, UINT32 g, UINT32 b, UINT32 a)
+	void RenderContext::ClearScreen(const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a)
 	{
-		background = Colour(r, g, b, a);
+		backgroundColour = Colour(r, g, b, a);
 		ClearScreen();
 	}
 
-	void RenderContext::DrawCircle(UINT32 xPos, UINT32 yPos, UINT32 radius, UINT32 thickness)
+	void RenderContext::DrawCircle(const UINT32 xPos, const UINT32 yPos, const UINT32 radius, const UINT32 thickness)
 	{
 	}
 
-	void RenderContext::DrawCircle(UINT32 xPos, UINT32 yPos, UINT32 radius, UINT32 thickness, Colour colour)
+	void RenderContext::DrawCircle(const UINT32 xPos, const UINT32 yPos, const UINT32 radius, const UINT32 thickness,const Colour colour)
 	{
 	}
 
-	void RenderContext::DrawCircle(UINT32 xPos, UINT32 yPos, UINT32 radius, UINT32 thickness, Colour* colour)
+	void RenderContext::DrawCircle(const UINT32 xPos, const UINT32 yPos, const UINT32 radius, const UINT32 thickness, const Colour* colour)
 	{
 	}
 
-	void RenderContext::DrawCircle(UINT32 xPos, UINT32 yPos, UINT32 radius, UINT32 thickness, UINT32 colour)
+	void RenderContext::DrawCircle(const UINT32 xPos, const UINT32 yPos, const UINT32 radius, const UINT32 thickness, const UINT32 colour)
 	{
 	}
 
-	void RenderContext::DrawCircle(UINT32 xPos, UINT32 yPos, UINT32 radius, UINT32 thickness, UINT32 r, UINT32 g, UINT32 b, UINT32 a)
+	void RenderContext::DrawCircle(const UINT32 xPos, const UINT32 yPos, const UINT32 radius, const UINT32 thickness, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a)
 	{
 	}
 
-	void RenderContext::DrawFilledCircle(UINT32 xPos, UINT32 yPos, UINT32 radius)
+	void RenderContext::DrawFilledCircle(const UINT32 xPos, const UINT32 yPos, const UINT32 radius)
 	{
 	}
 
-	void RenderContext::DrawFilledCircle(UINT32 xPos, UINT32 yPos, UINT32 radius, Colour colour)
+	void RenderContext::DrawFilledCircle(const UINT32 xPos, const UINT32 yPos, const UINT32 radius,const Colour colour)
 	{
 	}
 
-	void RenderContext::DrawFilledCircle(UINT32 xPos, UINT32 yPos, UINT32 radius, Colour* colour)
+	void RenderContext::DrawFilledCircle(const UINT32 xPos, const UINT32 yPos, const UINT32 radius, const Colour* colour)
 	{
 	}
 
-	void RenderContext::DrawFilledCircle(UINT32 xPos, UINT32 yPos, UINT32 radius, UINT32 colour)
+	void RenderContext::DrawFilledCircle(const UINT32 xPos, const UINT32 yPos, const UINT32 radius, const UINT32 colour)
 	{
 	}
 
-	void RenderContext::DrawFilledCircle(UINT32 xPos, UINT32 yPos, UINT32 radius, UINT32 r, UINT32 g, UINT32 b, UINT32 a)
+	void RenderContext::DrawFilledCircle(const UINT32 xPos, const UINT32 yPos, const UINT32 radius, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a)
 	{
 	}
 
-	void RenderContext::DrawFilledRectangle(UINT32 xPos, UINT32 yPos, UINT32 width, UINT32 height, UINT32 thickness)
+	void RenderContext::DrawFilledRectangle(const UINT32 xPos, const UINT32 yPos, const UINT32 width, const UINT32 height, const UINT32 thickness)
 	{
 		VOID_PTR fb = monitor.GetFrameBuffer();
 		UINT32 ppsl = monitor.GetPixelsPerScanLine();
@@ -253,16 +283,16 @@ namespace Common::Graphics
 		{
 		case Common::Graphics::RedGreenBlueReserved8BitPerColor:
 		{
-			Pixel1Bpp bgP = Pixel1Bpp(background.Red, background.Green, background.Blue, background.Alpha);
-			Pixel1Bpp fgP = Pixel1Bpp(foreground.Red, foreground.Green, foreground.Blue, foreground.Alpha);
-			SetFilledRectangle<Pixel1Bpp>(xPos, yPos, width, height, x2, y2, width2, height2, ppsl, (Pixel1Bpp*)fb, &bgP, &fgP);
+			Pixel1Bpp c2P = Pixel1Bpp(foreground2Colour.Red, foreground2Colour.Green, foreground2Colour.Blue, foreground2Colour.Alpha);
+			Pixel1Bpp c1P = Pixel1Bpp(foreground1Colour.Red, foreground1Colour.Green, foreground1Colour.Blue, foreground1Colour.Alpha);
+			SetFilledRectangle<Pixel1Bpp>(xPos, yPos, width, height, x2, y2, width2, height2, ppsl, (Pixel1Bpp*)fb, c2P, c1P);
 			return;
 		}
 		case Common::Graphics::BlueGreenRedReserved8BitPerColor:
 		{
-			Pixel1Bpp bgP = Pixel1Bpp(background.Blue, background.Green, background.Red, background.Alpha);
-			Pixel1Bpp fgP = Pixel1Bpp(foreground.Blue, foreground.Green, foreground.Red, foreground.Alpha);
-			SetFilledRectangle<Pixel1Bpp>(xPos, yPos, width, height, x2, y2, width2, height2, ppsl, (Pixel1Bpp*)fb, &bgP, &fgP);
+			Pixel1Bpp c2P = Pixel1Bpp(foreground2Colour.Blue, foreground2Colour.Green, foreground2Colour.Red, foreground2Colour.Alpha);
+			Pixel1Bpp c1P = Pixel1Bpp(foreground1Colour.Blue, foreground1Colour.Green, foreground1Colour.Red, foreground1Colour.Alpha);
+			SetFilledRectangle<Pixel1Bpp>(xPos, yPos, width, height, x2, y2, width2, height2, ppsl, (Pixel1Bpp*)fb, c2P, c1P);
 			return;
 		}
 		case Common::Graphics::BitMask:
@@ -276,58 +306,55 @@ namespace Common::Graphics
 		}
 	}
 
-	
-
-	void RenderContext::DrawFilledRectangle(UINT32 xPos, UINT32 yPos, UINT32 width, UINT32 height, UINT32 thickness, Colour fg, Colour bg)
+	void RenderContext::DrawFilledRectangle(const UINT32 xPos, const UINT32 yPos, const UINT32 width, const UINT32 height, const UINT32 thickness,const Colour c1,const Colour c2)
 	{
-		foreground = fg;
-		background = bg;
+		foreground1Colour = c1;
+		foreground2Colour = c2;
 		DrawFilledRectangle(xPos, yPos, width, height, thickness);
 	}
 
-	void RenderContext::DrawFilledRectangle(UINT32 xPos, UINT32 yPos, UINT32 width, UINT32 height, UINT32 thickness, Colour* fg, Colour* bg)
+	void RenderContext::DrawFilledRectangle(const UINT32 xPos, const UINT32 yPos, const UINT32 width, const UINT32 height, const UINT32 thickness, const Colour* c1, const Colour* c2)
 	{
-		foreground = *fg;
-		background = *bg;
+		foreground1Colour = *c1;
+		foreground2Colour = *c2;
 		DrawFilledRectangle(xPos, yPos, width, height, thickness);
 	}
 
-	void RenderContext::DrawFilledRectangle(UINT32 xPos, UINT32 yPos, UINT32 width, UINT32 height, UINT32 thickness, UINT32 fg, UINT32 bg)
+	void RenderContext::DrawFilledRectangle(const UINT32 xPos, const UINT32 yPos, const UINT32 width, const UINT32 height, const UINT32 thickness, const UINT32 c1, const UINT32 c2)
 	{
-		foreground = Colour(fg);
-		background = Colour(bg);
+		foreground1Colour = Colour(c1);
+		foreground2Colour = Colour(c2);
 		DrawFilledRectangle(xPos, yPos, width, height, thickness);
 	}
 
-	void RenderContext::DrawFilledRectangle(UINT32 xPos, UINT32 yPos, UINT32 width, UINT32 height, UINT32 thickness, UINT8 fgR, UINT8 fgG, UINT8 fbB, UINT32 bgR, UINT32 bgG, UINT32 bgB, UINT8 fbA, UINT32 bgA)
+	void RenderContext::DrawFilledRectangle(const UINT32 xPos, const UINT32 yPos, const UINT32 width, const UINT32 height, const UINT32 thickness, const UINT32 c1R, const UINT32 c1G, const UINT32 c1B, const UINT32 c1A, const UINT32 c2R, const UINT32 c2G, const UINT32 c2B, const UINT32 c2A)
 	{
-		foreground = Colour(fgR, fgG, fbB, fbA);
-		background = Colour(bgR, bgG, bgB, bgA);
+		foreground1Colour = Colour(c1R, c1G, c1B, c1A);
+		foreground2Colour = Colour(c2R, c2G, c2B, c2A);
 		DrawFilledRectangle(xPos, yPos, width, height, thickness);
 	}
 
-	void RenderContext::DrawLine(UINT32 sXPos, UINT32 sYPos, UINT32 eXPos, UINT32 eYPos, UINT32 thickness)
+	void RenderContext::DrawLine(const UINT32 sXPos, const UINT32 sYPos, const UINT32 eXPos, const UINT32 eYPos, const UINT32 thickness)
 	{
 	}
 
-	void RenderContext::DrawLine(UINT32 sXPos, UINT32 sYPos, UINT32 eXPos, UINT32 eYPos, UINT32 thickness, Colour colour)
+	void RenderContext::DrawLine(const UINT32 sXPos, const UINT32 sYPos, const UINT32 eXPos, const UINT32 eYPos, const UINT32 thickness,const Colour colour)
 	{
 	}
 
-	void RenderContext::DrawLine(UINT32 sXPos, UINT32 sYPos, UINT32 eXPos, UINT32 eYPos, UINT32 thickness, Colour* colour)
+	void RenderContext::DrawLine(const UINT32 sXPos, const UINT32 sYPos, const UINT32 eXPos, const UINT32 eYPos, const UINT32 thickness, const Colour* colour)
 	{
 	}
 
-	void RenderContext::DrawLine(UINT32 sXPos, UINT32 sYPos, UINT32 eXPos, UINT32 eYPos, UINT32 thickness, UINT32 colour)
+	void RenderContext::DrawLine(const UINT32 sXPos, const UINT32 sYPos, const UINT32 eXPos, const UINT32 eYPos, const UINT32 thickness, const UINT32 colour)
 	{
 	}
 
-	void RenderContext::DrawLine(UINT32 sXPos, UINT32 sYPos, UINT32 eXPos, UINT32 eYPos, UINT32 thickness, UINT32 r, UINT32 g, UINT32 b, UINT32 a)
+	void RenderContext::DrawLine(const UINT32 sXPos, const UINT32 sYPos, const UINT32 eXPos, const UINT32 eYPos, const UINT32 thickness, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a)
 	{
 	}
 
-	
-	void RenderContext::DrawRectangle(UINT32 xPos, UINT32 yPos, UINT32 width, UINT32 height)
+	void RenderContext::DrawRectangle(const UINT32 xPos, const UINT32 yPos, const UINT32 width, const UINT32 height)
 	{
 		VOID_PTR fb = monitor.GetFrameBuffer();
 		UINT32 ppsl = monitor.GetPixelsPerScanLine();
@@ -339,15 +366,15 @@ namespace Common::Graphics
 		{
 			/*Get X and Y Pos in Buffer*/
 
-			Pixel1Bpp bgP = Pixel1Bpp(background.Red, background.Green, background.Blue, background.Alpha);
+			Pixel1Bpp c2P = Pixel1Bpp(backgroundColour.Red, backgroundColour.Green, backgroundColour.Blue, backgroundColour.Alpha);
 
-			SetRectangle<Pixel1Bpp>(xPos,yPos,width,height,ppsl,(Pixel1Bpp*)fb, &bgP);
+			SetRectangle<Pixel1Bpp>(xPos, yPos, width, height, ppsl, (Pixel1Bpp*)fb, c2P);
 			return;
 		}
 		case Common::Graphics::BlueGreenRedReserved8BitPerColor:
 		{
-			Pixel1Bpp bgP = Pixel1Bpp(background.Blue, background.Green, background.Red, background.Alpha);
-			SetRectangle<Pixel1Bpp>(xPos, yPos, width, height, ppsl, (Pixel1Bpp*)fb, &bgP);
+			Pixel1Bpp c2P = Pixel1Bpp(backgroundColour.Blue, backgroundColour.Green, backgroundColour.Red, backgroundColour.Alpha);
+			SetRectangle<Pixel1Bpp>(xPos, yPos, width, height, ppsl, (Pixel1Bpp*)fb, c2P);
 			return;
 		}
 		case Common::Graphics::BitMask:
@@ -361,90 +388,130 @@ namespace Common::Graphics
 		}
 	}
 
-	void RenderContext::DrawRectangle(UINT32 xPos, UINT32 yPos, UINT32 width, UINT32 height, Colour colour)
+	void RenderContext::DrawRectangle(const UINT32 xPos, const UINT32 yPos, const UINT32 width, const UINT32 height,const Colour colour)
 	{
-		background = colour;
+		backgroundColour = colour;
 		DrawRectangle(xPos, yPos, width, height);
 	}
 
-	void RenderContext::DrawRectangle(UINT32 xPos, UINT32 yPos, UINT32 width, UINT32 height, Colour* colour)
+	void RenderContext::DrawRectangle(const UINT32 xPos, const UINT32 yPos, const UINT32 width, const UINT32 height, const Colour* colour)
 	{
-		background = *colour;
+		backgroundColour = *colour;
 		DrawRectangle(xPos, yPos, width, height);
 	}
 
-	void RenderContext::DrawRectangle(UINT32 xPos, UINT32 yPos, UINT32 width, UINT32 height, UINT32 colour)
+	void RenderContext::DrawRectangle(const UINT32 xPos, const UINT32 yPos, const UINT32 width, const UINT32 height, const UINT32 colour)
 	{
-		background = Colour(colour);
+		backgroundColour = Colour(colour);
 		DrawRectangle(xPos, yPos, width, height);
 	}
 
-	void RenderContext::DrawRectangle(UINT32 xPos, UINT32 yPos, UINT32 width, UINT32 height, UINT32 r, UINT32 g, UINT32 b, UINT32 a)
+	void RenderContext::DrawRectangle(const UINT32 xPos, const UINT32 yPos, const UINT32 width, const UINT32 height, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a)
 	{
-		background = Colour(r, g, b, a);
+		backgroundColour = Colour(r, g, b, a);
 		DrawRectangle(xPos, yPos, width, height);
 	}
 
-	void RenderContext::SetBackground(Colour colour)
+	void RenderContext::SetBackgroundColour(Colour colour)
 	{
-		background = colour;
+		backgroundColour = colour;
 	}
 
-	void RenderContext::SetBackground(Colour* colour)
+	void RenderContext::SetBackgroundColour(const Colour* colour)
 	{
-		background = *colour;
+		backgroundColour = *colour;
 	}
 
-	void RenderContext::SetBackground(UINT32 colour)
+	void RenderContext::SetBackgroundColour(const UINT32 colour)
 	{
-		background = Colour(colour);
+		backgroundColour = Colour(colour);
 	}
 
-	void RenderContext::SetBackground(UINT32 r, UINT32 g, UINT32 b, UINT32 a)
+	void RenderContext::SetBackgroundColour(const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a)
 	{
-		background = Colour(r, g, b, a);
+		backgroundColour = Colour(r, g, b, a);
 	}
 
-	void RenderContext::SetForeground(Colour colour)
+	void RenderContext::SetForeground1Colour(Colour colour)
 	{
-		foreground = colour;
+		foreground1Colour = colour;
 	}
 
-	void RenderContext::SetForeground(Colour* colour)
+	void RenderContext::SetForeground1Colour(const Colour* colour)
 	{
-		foreground = *colour;
+		foreground1Colour = *colour;
 	}
 
-	void RenderContext::SetForeground(UINT32 colour)
+	void RenderContext::SetForeground1Colour(const UINT32 colour)
 	{
-		foreground = Colour(colour);
+		foreground1Colour = Colour(colour);
 	}
 
-	void RenderContext::SetForeground(UINT32 r, UINT32 g, UINT32 b, UINT32 a)
+	void RenderContext::SetForeground1Colour(const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a)
 	{
-		foreground = Colour(r, g, b, a);
+		foreground1Colour = Colour(r, g, b, a);
 	}
 
-	void RenderContext::SetPixelBackground(UINT32 xPos, UINT32 yPos)
+	void RenderContext::SetForeground2Colour(Colour colour)
+	{
+		foreground2Colour = colour;
+	}
+
+	void RenderContext::SetForeground2Colour(const Colour* colour)
+	{
+		foreground2Colour = *colour;
+	}
+
+	void RenderContext::SetForeground2Colour(const UINT32 colour)
+	{
+		foreground2Colour = Colour(colour);
+	}
+
+	void RenderContext::SetForeground2Colour(const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a)
+	{
+		foreground2Colour = Colour(r, g, b, a);
+	}
+
+	void RenderContext::SetTextColour(Colour colour)
+	{
+		textColour = colour;
+	}
+
+	void RenderContext::SetTextColour(const Colour* colour)
+	{
+		textColour = *colour;
+	}
+
+	void RenderContext::SetTextColour(const UINT32 colour)
+	{
+		textColour = Colour(colour);
+	}
+
+	void RenderContext::SetTextColour(const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a)
+	{
+		textColour = Colour(r, g, b, a);
+	}
+
+	void RenderContext::SetPixelBackgroundColour(const UINT32 xPos, const UINT32 yPos)
 	{
 		VOID_PTR fb = monitor.GetFrameBuffer();
 		UINTN ppsl = monitor.GetPixelsPerScanLine();
 		PixelFormat pf = monitor.GetPixelFormat();
 
-		UINTN pos = CalculatePixelOffset(xPos,yPos,ppsl);
+		UINTN pos = CalculatePixelOffset(xPos, yPos, ppsl);
 
 		switch (pf)
 		{
 		case Common::Graphics::RedGreenBlueReserved8BitPerColor:
 		{
-			Pixel1Bpp bgP = Pixel1Bpp(background.Red, background.Green, background.Blue, background.Alpha);
-			((Pixel1Bpp*)fb)[pos] = bgP;
+			Pixel1Bpp c2P = Pixel1Bpp(backgroundColour.Red, backgroundColour.Green, backgroundColour.Blue, backgroundColour.Alpha);
+			((Pixel1Bpp*)fb)[pos] = c2P;
 			return;
 		}
 		case Common::Graphics::BlueGreenRedReserved8BitPerColor:
 		{
-			Pixel1Bpp bgP = Pixel1Bpp(background.Blue, background.Green, background.Red, background.Alpha);
-			((Pixel1Bpp*)fb)[pos] = bgP;
+			Pixel1Bpp c2P = Pixel1Bpp(backgroundColour.Blue, backgroundColour.Green, backgroundColour.Red, backgroundColour.Alpha);
+			((Pixel1Bpp*)fb)[pos] = c2P;
 			return;
 		}
 		case Common::Graphics::BitMask:
@@ -458,7 +525,7 @@ namespace Common::Graphics
 		}
 	}
 
-	void RenderContext::SetPixelRowBackground(UINT32 xPos, UINT32 yPos, UINT32 length)
+	void RenderContext::SetPixelRowBackgroundColour(const UINT32 xPos, const UINT32 yPos, const UINT32 length)
 	{
 		VOID_PTR fb = monitor.GetFrameBuffer();
 		PixelFormat pf = monitor.GetPixelFormat();
@@ -468,14 +535,14 @@ namespace Common::Graphics
 		UINTN end = pos + length;
 
 		/*
-		*  Calculate the pixel position in the frame buffer, and set the colour of the pixel
+		*  Calculate the pixel position in the frame buffer, and set theconst Colour of the pixel
 		*/
 
 		switch (pf)
 		{
 		case Common::Graphics::RedGreenBlueReserved8BitPerColor:
 		{
-			Pixel1Bpp p = Pixel1Bpp(background.Red, background.Green, background.Blue, background.Alpha);
+			Pixel1Bpp p = Pixel1Bpp(backgroundColour.Red, backgroundColour.Green, backgroundColour.Blue, backgroundColour.Alpha);
 			for (UINTN i = pos; i < end; i++)
 			{
 				((Pixel1Bpp*)fb)[i] = p;
@@ -484,7 +551,7 @@ namespace Common::Graphics
 		}
 		case Common::Graphics::BlueGreenRedReserved8BitPerColor:
 		{
-			Pixel1Bpp p = Pixel1Bpp(background.Blue, background.Green, background.Red, background.Alpha);
+			Pixel1Bpp p = Pixel1Bpp(backgroundColour.Blue, backgroundColour.Green, backgroundColour.Red, backgroundColour.Alpha);
 			for (UINTN i = pos; i < end; i++)
 			{
 				((Pixel1Bpp*)fb)[i] = p;
@@ -502,74 +569,74 @@ namespace Common::Graphics
 		}
 	}
 
-	void RenderContext::SetPixelRowBackground(UINT32 xPos, UINT32 yPos, UINT32 length, Colour colour)
+	void RenderContext::SetPixelRowBackgroundColour(const UINT32 xPos, const UINT32 yPos, const UINT32 length,const Colour colour)
 	{
-		background = colour;
-		SetPixelRowBackground(xPos, yPos, length);
+		backgroundColour = colour;
+		SetPixelRowBackgroundColour(xPos, yPos, length);
 	}
 
-	void RenderContext::SetPixelRowBackground(UINT32 xPos, UINT32 yPos, UINT32 length, Colour* colour)
+	void RenderContext::SetPixelRowBackgroundColour(const UINT32 xPos, const UINT32 yPos, const UINT32 length, const Colour* colour)
 	{
-		background = *colour;
-		SetPixelRowBackground(xPos, yPos, length);
+		backgroundColour = *colour;
+		SetPixelRowBackgroundColour(xPos, yPos, length);
 	}
 
-	void RenderContext::SetPixelRowBackground(UINT32 xPos, UINT32 yPos, UINT32 length, UINT32 colour)
+	void RenderContext::SetPixelRowBackgroundColour(const UINT32 xPos, const UINT32 yPos, const UINT32 length, const UINT32 colour)
 	{
-		background = Colour(colour);
-		SetPixelRowBackground(xPos, yPos, length);
+		backgroundColour = Colour(colour);
+		SetPixelRowBackgroundColour(xPos, yPos, length);
 	}
 
-	void RenderContext::SetPixelRowBackground(UINT32 xPos, UINT32 yPos, UINT32 length, UINT32 r, UINT32 g, UINT32 b, UINT32 a)
+	void RenderContext::SetPixelRowBackgroundColour(const UINT32 xPos, const UINT32 yPos, const UINT32 length, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a)
 	{
-		background = Colour(r, g, b, a);
-		SetPixelRowBackground(xPos, yPos, length);
+		backgroundColour = Colour(r, g, b, a);
+		SetPixelRowBackgroundColour(xPos, yPos, length);
 	}
 
-	void RenderContext::SetPixelBackground(UINT32 xPos, UINT32 yPos, Colour colour)
+	void RenderContext::SetPixelBackgroundColour(const UINT32 xPos, const UINT32 yPos,const Colour colour)
 	{
-		background = colour;
-		SetPixelBackground(xPos, yPos);
+		backgroundColour = colour;
+		SetPixelBackgroundColour(xPos, yPos);
 	}
 
-	void RenderContext::SetPixelBackground(UINT32 xPos, UINT32 yPos, Colour* colour)
+	void RenderContext::SetPixelBackgroundColour(const UINT32 xPos, const UINT32 yPos, const Colour* colour)
 	{
-		background = *colour;
-		SetPixelBackground(xPos, yPos);
+		backgroundColour = *colour;
+		SetPixelBackgroundColour(xPos, yPos);
 	}
 
-	void RenderContext::SetPixelBackground(UINT32 xPos, UINT32 yPos, UINT32 colour)
+	void RenderContext::SetPixelBackgroundColour(const UINT32 xPos, const UINT32 yPos, const UINT32 colour)
 	{
-		background = Colour(colour);
-		SetPixelBackground(xPos, yPos);
+		backgroundColour = Colour(colour);
+		SetPixelBackgroundColour(xPos, yPos);
 	}
 
-	void RenderContext::SetPixelBackground(UINT32 xPos, UINT32 yPos, UINT32 r, UINT32 g, UINT32 b, UINT32 a)
+	void RenderContext::SetPixelBackgroundColour(const UINT32 xPos, const UINT32 yPos, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a)
 	{
-		background = Colour(r, g, b, a);
-		SetPixelBackground(xPos, yPos);
+		backgroundColour = Colour(r, g, b, a);
+		SetPixelBackgroundColour(xPos, yPos);
 	}
 
-	void RenderContext::SetPixelForeground(UINT32 xPos, UINT32 yPos)
+	void RenderContext::SetPixelForeground1Colour(const UINT32 xPos, const UINT32 yPos)
 	{
 		VOID_PTR fb = monitor.GetFrameBuffer();
 		UINTN ppsl = monitor.GetPixelsPerScanLine();
 		PixelFormat pf = monitor.GetPixelFormat();
 
-		UINTN pos = CalculatePixelOffset(xPos,yPos,ppsl);
+		UINTN pos = CalculatePixelOffset(xPos, yPos, ppsl);
 
 		switch (pf)
 		{
 		case Common::Graphics::RedGreenBlueReserved8BitPerColor:
 		{
-			Pixel1Bpp bgP = Pixel1Bpp(foreground.Red, foreground.Green, foreground.Blue, foreground.Alpha);
-			((Pixel1Bpp*)fb)[pos] = bgP;
+			Pixel1Bpp c2P = Pixel1Bpp(foreground1Colour.Red, foreground1Colour.Green, foreground1Colour.Blue, foreground1Colour.Alpha);
+			((Pixel1Bpp*)fb)[pos] = c2P;
 			return;
 		}
 		case Common::Graphics::BlueGreenRedReserved8BitPerColor:
 		{
-			Pixel1Bpp bgP = Pixel1Bpp(foreground.Blue, foreground.Green, foreground.Red, foreground.Alpha);
-			((Pixel1Bpp*)fb)[pos] = bgP;
+			Pixel1Bpp c2P = Pixel1Bpp(foreground1Colour.Blue, foreground1Colour.Green, foreground1Colour.Red, foreground1Colour.Alpha);
+			((Pixel1Bpp*)fb)[pos] = c2P;
 			return;
 		}
 		case Common::Graphics::BitMask:
@@ -583,20 +650,20 @@ namespace Common::Graphics
 		}
 	}
 
-	void RenderContext::SetPixelRowForeground(UINT32 xPos, UINT32 yPos, UINT32 length)
+	void RenderContext::SetPixelRowForeground1Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 length)
 	{
 		VOID_PTR fb = monitor.GetFrameBuffer();
 		PixelFormat pf = monitor.GetPixelFormat();
 		UINTN ppsl = monitor.GetPixelsPerScanLine();
 
-		UINTN pos = CalculatePixelOffset(xPos,yPos,ppsl);
+		UINTN pos = CalculatePixelOffset(xPos, yPos, ppsl);
 		UINTN end = pos + length;
 
 		switch (pf)
 		{
 		case Common::Graphics::RedGreenBlueReserved8BitPerColor:
 		{
-			Pixel1Bpp p = Pixel1Bpp(foreground.Red, foreground.Green, foreground.Blue, foreground.Alpha);
+			Pixel1Bpp p = Pixel1Bpp(foreground1Colour.Red, foreground1Colour.Green, foreground1Colour.Blue, foreground1Colour.Alpha);
 			for (UINTN i = pos; i < end; i++)
 			{
 				((Pixel1Bpp*)fb)[i] = p;
@@ -605,7 +672,7 @@ namespace Common::Graphics
 		}
 		case Common::Graphics::BlueGreenRedReserved8BitPerColor:
 		{
-			Pixel1Bpp p = Pixel1Bpp(foreground.Blue, foreground.Green, foreground.Red, foreground.Alpha);
+			Pixel1Bpp p = Pixel1Bpp(foreground1Colour.Blue, foreground1Colour.Green, foreground1Colour.Red, foreground1Colour.Alpha);
 			for (UINTN i = pos; i < end; i++)
 			{
 				((Pixel1Bpp*)fb)[i] = p;
@@ -623,28 +690,28 @@ namespace Common::Graphics
 		}
 	}
 
-	void RenderContext::SetPixelForeground(UINT32 xPos, UINT32 yPos, Colour colour)
+	void RenderContext::SetPixelForeground1Colour(const UINT32 xPos, const UINT32 yPos,const Colour colour)
 	{
-		foreground = colour;
-		SetPixelForeground(xPos, yPos);
+		foreground1Colour = colour;
+		SetPixelForeground1Colour(xPos, yPos);
 	}
 
-	void RenderContext::SetPixelForeground(UINT32 xPos, UINT32 yPos, Colour* colour)
+	void RenderContext::SetPixelForeground1Colour(const UINT32 xPos, const UINT32 yPos, const Colour* colour)
 	{
-		foreground = *colour;
-		SetPixelForeground(xPos, yPos);
+		foreground1Colour = *colour;
+		SetPixelForeground1Colour(xPos, yPos);
 	}
 
-	void RenderContext::SetPixelForeground(UINT32 xPos, UINT32 yPos, UINT32 colour)
+	void RenderContext::SetPixelForeground1Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 colour)
 	{
-		foreground = Colour(colour);
-		SetPixelForeground(xPos, yPos);
+		foreground1Colour = Colour(colour);
+		SetPixelForeground1Colour(xPos, yPos);
 	}
 
-	void RenderContext::SetPixelForeground(UINT32 xPos, UINT32 yPos, UINT32 r, UINT32 g, UINT32 b, UINT32 a)
+	void RenderContext::SetPixelForeground1Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a)
 	{
-		foreground = Colour(r, g, b, a);
-		SetPixelForeground(xPos, yPos);
+		foreground1Colour = Colour(r, g, b, a);
+		SetPixelForeground1Colour(xPos, yPos);
 	}
 
 	void RenderContext::Terminate(EFI::EFI_HANDLE hnd, EFI::EFI_SYSTEM_TABLE* sysTable)
@@ -653,26 +720,145 @@ namespace Common::Graphics
 		sysTable->BootServices->CloseProtocol(sysTable->ConsoleOutHandle, &EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID, hnd, nullptr);
 	};
 
-	void RenderContext::SetPixelRowForeground(UINT32 xPos, UINT32 yPos, UINT32 length, Colour colour)
+	void RenderContext::SetPixelRowForeground1Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 length,const Colour colour)
 	{
-		foreground = colour;
-		SetPixelRowForeground(xPos, yPos, length);
+		foreground1Colour = colour;
+		SetPixelRowForeground1Colour(xPos, yPos, length);
 	}
-	void RenderContext::SetPixelRowForeground(UINT32 xPos, UINT32 yPos, UINT32 length, Colour* colour)
+	void RenderContext::SetPixelRowForeground1Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 length, const Colour* colour)
 	{
-		foreground = *colour;
-		SetPixelRowForeground(xPos, yPos, length);
+		foreground1Colour = *colour;
+		SetPixelRowForeground1Colour(xPos, yPos, length);
 	}
-	void RenderContext::SetPixelRowForeground(UINT32 xPos, UINT32 yPos, UINT32 length, UINT32 colour)
+	void RenderContext::SetPixelRowForeground1Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 length, const UINT32 colour)
 	{
-		foreground = Colour(colour);
-		SetPixelRowForeground(xPos, yPos, length);
+		foreground1Colour = Colour(colour);
+		SetPixelRowForeground1Colour(xPos, yPos, length);
 	}
-	void RenderContext::SetPixelRowForeground(UINT32 xPos, UINT32 yPos, UINT32 length, UINT32 r, UINT32 g, UINT32 b, UINT32 a)
+	void RenderContext::SetPixelRowForeground1Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 length, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a)
 	{
-		foreground = Colour(r, g, b, a);
-		SetPixelRowForeground(xPos, yPos, length);
+		foreground1Colour = Colour(r, g, b, a);
+		SetPixelRowForeground1Colour(xPos, yPos, length);
 	}
+
+	void RenderContext::SetPixelRowForeground2Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 length,const Colour colour)
+	{
+		foreground2Colour = colour;
+		SetPixelRowForeground2Colour(xPos, yPos, length);
+	}
+	void RenderContext::SetPixelRowForeground2Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 length, const Colour* colour)
+	{
+		foreground2Colour = *colour;
+		SetPixelRowForeground2Colour(xPos, yPos, length);
+	}
+	void RenderContext::SetPixelRowForeground2Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 length, const UINT32 colour)
+	{
+		foreground2Colour = Colour(colour);
+		SetPixelRowForeground2Colour(xPos, yPos, length);
+	}
+	void RenderContext::SetPixelRowForeground2Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 length, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a)
+	{
+		foreground2Colour = Colour(r, g, b, a);
+		SetPixelRowForeground2Colour(xPos, yPos, length);
+	}
+
+	void RenderContext::SetPixelForeground2Colour(const UINT32 xPos, const UINT32 yPos)
+	{
+		VOID_PTR fb = monitor.GetFrameBuffer();
+		const UINTN ppsl = monitor.GetPixelsPerScanLine();
+		PixelFormat pf = monitor.GetPixelFormat();
+
+		const UINTN pos = CalculatePixelOffset(xPos, yPos, ppsl);
+
+		switch (pf)
+		{
+		case Common::Graphics::RedGreenBlueReserved8BitPerColor:
+		{
+			Pixel1Bpp c2P = Pixel1Bpp(foreground2Colour.Red, foreground2Colour.Green, foreground2Colour.Blue, foreground2Colour.Alpha);
+			((Pixel1Bpp*)fb)[pos] = c2P;
+			return;
+		}
+		case Common::Graphics::BlueGreenRedReserved8BitPerColor:
+		{
+			Pixel1Bpp c2P = Pixel1Bpp(foreground2Colour.Blue, foreground2Colour.Green, foreground2Colour.Red, foreground2Colour.Alpha);
+			((Pixel1Bpp*)fb)[pos] = c2P;
+			return;
+		}
+		case Common::Graphics::BitMask:
+			return;
+		case Common::Graphics::BltOnly:
+			return;
+		case Common::Graphics::FormatMax:
+			return;
+		default:
+			return;
+		}
+	}
+
+	void RenderContext::SetPixelRowForeground2Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 length)
+	{
+		VOID_PTR fb = monitor.GetFrameBuffer();
+		PixelFormat pf = monitor.GetPixelFormat();
+		UINTN ppsl = monitor.GetPixelsPerScanLine();
+
+		UINTN pos = CalculatePixelOffset(xPos, yPos, ppsl);
+		UINTN end = pos + length;
+
+		switch (pf)
+		{
+		case Common::Graphics::RedGreenBlueReserved8BitPerColor:
+		{
+			Pixel1Bpp p = Pixel1Bpp(foreground2Colour.Red, foreground2Colour.Green, foreground2Colour.Blue, foreground2Colour.Alpha);
+			for (UINTN i = pos; i < end; i++)
+			{
+				((Pixel1Bpp*)fb)[i] = p;
+			}
+			return;
+		}
+		case Common::Graphics::BlueGreenRedReserved8BitPerColor:
+		{
+			Pixel1Bpp p = Pixel1Bpp(foreground2Colour.Blue, foreground2Colour.Green, foreground2Colour.Red, foreground2Colour.Alpha);
+			for (UINTN i = pos; i < end; i++)
+			{
+				((Pixel1Bpp*)fb)[i] = p;
+			}
+			return;
+		}
+		case Common::Graphics::BitMask:
+			return;
+		case Common::Graphics::BltOnly:
+			return;
+		case Common::Graphics::FormatMax:
+			return;
+		default:
+			return;
+		}
+	}
+
+	void RenderContext::SetPixelForeground2Colour(const UINT32 xPos, const UINT32 yPos,const Colour colour)
+	{
+		foreground2Colour = colour;
+		SetPixelForeground2Colour(xPos, yPos);
+	}
+
+	void RenderContext::SetPixelForeground2Colour(const UINT32 xPos, const UINT32 yPos, const Colour* colour)
+	{
+		foreground2Colour = *colour;
+		SetPixelForeground2Colour(xPos, yPos);
+	}
+
+	void RenderContext::SetPixelForeground2Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 colour)
+	{
+		foreground2Colour = Colour(colour);
+		SetPixelForeground2Colour(xPos, yPos);
+	}
+
+	void RenderContext::SetPixelForeground2Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a)
+	{
+		foreground2Colour = Colour(r, g, b, a);
+		SetPixelForeground2Colour(xPos, yPos);
+	}
+
 	MonitorContext* RenderContext::GetMonitorContext()
 	{
 		return &monitor;

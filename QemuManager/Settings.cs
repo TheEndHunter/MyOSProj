@@ -10,19 +10,22 @@ namespace QemuManager
 
         public Settings(IConfigurationRoot root) : this()
         {
+            OVMFConfiguration = null;
             root.GetRequiredSection("Configurations").Bind(Configurations);
             root.GetRequiredSection("Architectures").Bind(Architectures);
 
             var ovmf = root.GetRequiredSection("OVMFConfig");
 
-            OVMFConfiguration = new GitConfiguration()
+            if (ovmf != null)
             {
-                Author = ovmf["Author"] ?? string.Empty,
-                Repo = ovmf["Repo"] ?? string.Empty,
-                OVMFBinPath = ovmf["OVMFBinPath"] ?? string.Empty,
-                Branch = ovmf["Branch"] ?? "main",
-            };
-
+                OVMFConfiguration = new GitConfiguration()
+                {
+                    Author = ovmf["Author"] ?? string.Empty,
+                    Repo = ovmf["Repo"] ?? string.Empty,
+                    OVMFBinPath = ovmf["OVMFBinPath"] ?? string.Empty,
+                    Branch = ovmf["Branch"] ?? "main",
+                };
+            }
         }
     }
 }

@@ -11,100 +11,126 @@ namespace Common::Graphics
 	struct RenderContext
 	{
     private:
-		RenderContext(EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL* ptr, Colour fg, Colour bg);
+		RenderContext(EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL* ptr, Colour txt, Colour bg, Colour fg1, Colour fg2);
 	public:
-        static RenderContext* Initialize(EFI::EFI_SYSTEM_TABLE* sysTbl,EFI::EFI_HANDLE imgHndl, Colour fg = Colours::White, Colour bg = Colours::Black);
+        static RenderContext* Initialize(EFI::EFI_SYSTEM_TABLE* sysTbl,EFI::EFI_HANDLE imgHndl, Colour txt = Colours::White, Colour bg = Colours::Black, Colour fg1 = Colours::WhiteSmoke, Colour fg2 = Colours::AliceBlue);
 
-		Colour GetBackground();
-		Colour GetForeground();
-
-        void ResetToDefaultColours();
-        void ResetBackground();
-        void ResetForeground();
+		Colour GetBackgroundColour();
+		Colour GetForeground1Colour();
+        Colour GetForeground2Colour();
+        Colour GetTextColour();
 
         void ClearScreen(BOOLEAN resetColours = FALSE);
-        void ClearScreen(Colour colour);
-        void ClearScreen(Colour* colour);
-        void ClearScreen(UINT32 colour);
-        void ClearScreen(UINT32 r, UINT32 g, UINT32 b, UINT32 a = (UINT8)0xFF);
+        void ClearScreen(const Colour colour);
+        void ClearScreen(const Colour* colour);
+        void ClearScreen(const UINT32 colour);
+        void ClearScreen(const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a = 0xFFFFFFFFu);
 
-        void DrawCircle(UINT32 xPos, UINT32 yPos, UINT32 radius, UINT32 thickness);
-        void DrawCircle(UINT32 xPos, UINT32 yPos, UINT32 radius, UINT32 thickness, Colour colour);
-        void DrawCircle(UINT32 xPos, UINT32 yPos, UINT32 radius, UINT32 thickness, Colour* colour);
-        void DrawCircle(UINT32 xPos, UINT32 yPos, UINT32 radius, UINT32 thickness, UINT32 colour);
-        void DrawCircle(UINT32 xPos, UINT32 yPos, UINT32 radius, UINT32 thickness, UINT32 r, UINT32 g, UINT32 b, UINT32 a = (UINT8)0xFF);
+        void DrawCircle(const UINT32 xPos, const UINT32 yPos, const UINT32 radius, const UINT32 thickness);
+        void DrawCircle(const UINT32 xPos, const UINT32 yPos, const UINT32 radius, const UINT32 thickness, const Colour colour);
+        void DrawCircle(const UINT32 xPos, const UINT32 yPos, const UINT32 radius, const UINT32 thickness, const Colour* colour);
+        void DrawCircle(const UINT32 xPos, const UINT32 yPos, const UINT32 radius, const UINT32 thickness, const UINT32 colour);
+        void DrawCircle(const UINT32 xPos, const UINT32 yPos, const UINT32 radius, const UINT32 thickness, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a = 0xFFFFFFFFu);
 
-        void DrawFilledCircle(UINT32 xPos, UINT32 yPos, UINT32 radius);
-        void DrawFilledCircle(UINT32 xPos, UINT32 yPos, UINT32 radius, Colour colour);
-        void DrawFilledCircle(UINT32 xPos, UINT32 yPos, UINT32 radius, Colour* colour);
-        void DrawFilledCircle(UINT32 xPos, UINT32 yPos, UINT32 radius, UINT32 colour);
-        void DrawFilledCircle(UINT32 xPos, UINT32 yPos, UINT32 radius, UINT32 r, UINT32 g, UINT32 b, UINT32 a = (UINT8)0xFF);
+        void DrawFilledCircle(const UINT32 xPos, const UINT32 yPos, const UINT32 radius);
+        void DrawFilledCircle(const UINT32 xPos, const UINT32 yPos, const UINT32 radius, const Colour colour);
+        void DrawFilledCircle(const UINT32 xPos, const UINT32 yPos, const UINT32 radius, const Colour* colour);
+        void DrawFilledCircle(const UINT32 xPos, const UINT32 yPos, const UINT32 radius, const UINT32 colour);
+        void DrawFilledCircle(const UINT32 xPos, const UINT32 yPos, const UINT32 radius, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a = 0xFFFFFFFFu);
 
-        /*uses foregound and background colours*/
-        void DrawFilledRectangle(UINT32 xPos, UINT32 yPos, UINT32 width, UINT32 height,UINT32 thickness);
-        void DrawFilledRectangle(UINT32 xPos, UINT32 yPos, UINT32 width, UINT32 height,UINT32 thickness, Colour fg, Colour bg);
-        void DrawFilledRectangle(UINT32 xPos, UINT32 yPos, UINT32 width, UINT32 height,UINT32 thickness, Colour* fg, Colour* bg);
-        void DrawFilledRectangle(UINT32 xPos, UINT32 yPos, UINT32 width, UINT32 height,UINT32 thickness, UINT32 fg,UINT32 bg);
-        void DrawFilledRectangle(UINT32 xPos, UINT32 yPos, UINT32 width, UINT32 height,UINT32 thickness, UINT8 fgR, UINT8 fgG, UINT8 fbB, UINT32 bgR, UINT32 bgG, UINT32 bgB, UINT8 fbA = (UINT8)0xFF, UINT32 bgA = (UINT8)0xFF);
+        void DrawFilledRectangle(const UINT32 xPos, const UINT32 yPos, const UINT32 width, const UINT32 height,const UINT32 thickness);
+        void DrawFilledRectangle(const UINT32 xPos, const UINT32 yPos, const UINT32 width, const UINT32 height,const UINT32 thickness, const Colour c1, const Colour c2);
+        void DrawFilledRectangle(const UINT32 xPos, const UINT32 yPos, const UINT32 width, const UINT32 height,const UINT32 thickness, const Colour* c1, const Colour* c2);
+        void DrawFilledRectangle(const UINT32 xPos, const UINT32 yPos, const UINT32 width, const UINT32 height,const UINT32 thickness, const UINT32 c1,const UINT32 c2);
+        void DrawFilledRectangle(const UINT32 xPos, const UINT32 yPos, const UINT32 width, const UINT32 height,const UINT32 thickness, const UINT32 c1R, const UINT32 c1G, const UINT32 c1B, const UINT32 c1A, const UINT32 c2R, const UINT32 c2G, const UINT32 c2B, const UINT32 c2A);
 
-        void DrawLine(UINT32 sXPos, UINT32 sYPos, UINT32 eXPos, UINT32 eYPos, UINT32 thickness);
-        void DrawLine(UINT32 sXPos, UINT32 sYPos, UINT32 eXPos, UINT32 eYPos, UINT32 thickness, Colour colour);
-        void DrawLine(UINT32 sXPos, UINT32 sYPos, UINT32 eXPos, UINT32 eYPos, UINT32 thickness, Colour* colour);
-        void DrawLine(UINT32 sXPos, UINT32 sYPos, UINT32 eXPos, UINT32 eYPos, UINT32 thickness, UINT32 colour);
-        void DrawLine(UINT32 sXPos, UINT32 sYPos, UINT32 eXPos, UINT32 eYPos, UINT32 thickness, UINT32 r, UINT32 g, UINT32 b, UINT32 a = (UINT8)0xFF);
+        void DrawLine(const UINT32 sXPos, const UINT32 sYPos, const UINT32 eXPos, const UINT32 eYPos, const UINT32 thickness);
+        void DrawLine(const UINT32 sXPos, const UINT32 sYPos, const UINT32 eXPos, const UINT32 eYPos, const UINT32 thickness, const Colour colour);
+        void DrawLine(const UINT32 sXPos, const UINT32 sYPos, const UINT32 eXPos, const UINT32 eYPos, const UINT32 thickness, const Colour* colour);
+        void DrawLine(const UINT32 sXPos, const UINT32 sYPos, const UINT32 eXPos, const UINT32 eYPos, const UINT32 thickness, const UINT32 colour);
+        void DrawLine(const UINT32 sXPos, const UINT32 sYPos, const UINT32 eXPos, const UINT32 eYPos, const UINT32 thickness, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a = 0xFFFFFFFFu);
 
-        void DrawRectangle(UINT32 xPos, UINT32 yPos, UINT32 width, UINT32 height);
-        void DrawRectangle(UINT32 xPos, UINT32 yPos, UINT32 width, UINT32 height,Colour colour);
-        void DrawRectangle(UINT32 xPos, UINT32 yPos, UINT32 width, UINT32 height,Colour* colour);
-        void DrawRectangle(UINT32 xPos, UINT32 yPos, UINT32 width, UINT32 height,UINT32 colour);
-        void DrawRectangle(UINT32 xPos, UINT32 yPos, UINT32 width, UINT32 height,UINT32 r, UINT32 g, UINT32 b, UINT32 a = (UINT8)0xFF);
+        void DrawRectangle(const UINT32 xPos, const UINT32 yPos, const UINT32 width, const UINT32 height);
+        void DrawRectangle(const UINT32 xPos, const UINT32 yPos, const UINT32 width, const UINT32 height,const Colour colour);
+        void DrawRectangle(const UINT32 xPos, const UINT32 yPos, const UINT32 width, const UINT32 height,const Colour* colour);
+        void DrawRectangle(const UINT32 xPos, const UINT32 yPos, const UINT32 width, const UINT32 height,const UINT32 colour);
+        void DrawRectangle(const UINT32 xPos, const UINT32 yPos, const UINT32 width, const UINT32 height,const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a = 0xFFFFFFFFu);
 
-        void SetBackground(Colour colour);
-        void SetBackground(Colour* colour);
-        void SetBackground(UINT32 colour);
-        void SetBackground(UINT32 r, UINT32 g, UINT32 b, UINT32 a = (UINT8)0xFF);
+        void ResetBackgroundColour();
+        void ResetForeground1Colour();
+        void ResetForeground2Colour();
+        void ResetTextColour();
+        void ResetToDefaultColours();
 
-        void SetForeground(Colour colour);
-        void SetForeground(Colour* colour);
-        void SetForeground(UINT32 colour);
-        void SetForeground(UINT32 r, UINT32 g, UINT32 b, UINT32 a = (UINT8)0xFF);
+        void SetBackgroundColour(const Colour colour);
+        void SetBackgroundColour(const Colour* colour);
+        void SetBackgroundColour(const UINT32 colour);
+        void SetBackgroundColour(const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a = 0xFFFFFFFFu);
 
-        void SetPixelBackground(UINT32 xPos, UINT32 yPos);
-        void SetPixelBackground(UINT32 xPos, UINT32 yPos, Colour colour);
-        void SetPixelBackground(UINT32 xPos, UINT32 yPos, Colour* colour);
-        void SetPixelBackground(UINT32 xPos, UINT32 yPos, UINT32 colour);
-        void SetPixelBackground(UINT32 xPos, UINT32 yPos, UINT32 r, UINT32 g, UINT32 b, UINT32 a = (UINT8)0xFF);
+        void SetForeground1Colour(const Colour colour);
+        void SetForeground1Colour(const Colour* colour);
+        void SetForeground1Colour(const UINT32 colour);
+        void SetForeground1Colour(const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a = 0xFFFFFFFFu);
 
-        void SetPixelRowBackground(UINT32 xPos, UINT32 yPos,UINT32 length);
-        void SetPixelRowBackground(UINT32 xPos, UINT32 yPos,UINT32 length, Colour colour);
-        void SetPixelRowBackground(UINT32 xPos, UINT32 yPos,UINT32 length, Colour* colour);
-        void SetPixelRowBackground(UINT32 xPos, UINT32 yPos,UINT32 length, UINT32 colour);
-        void SetPixelRowBackground(UINT32 xPos, UINT32 yPos,UINT32 length, UINT32 r, UINT32 g, UINT32 b, UINT32 a = (UINT8)0xFF);
+        void SetForeground2Colour(const Colour colour);
+        void SetForeground2Colour(const Colour* colour);
+        void SetForeground2Colour(const UINT32 colour);
+        void SetForeground2Colour(const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a = 0xFFFFFFFFu);
 
-        void SetPixelForeground(UINT32 xPos, UINT32 yPos);
-        void SetPixelForeground(UINT32 xPos, UINT32 yPos, Colour colour);
-        void SetPixelForeground(UINT32 xPos, UINT32 yPos, Colour* colour);
-        void SetPixelForeground(UINT32 xPos, UINT32 yPos, UINT32 colour);
-        void SetPixelForeground(UINT32 xPos, UINT32 yPos, UINT32 r, UINT32 g, UINT32 b, UINT32 a = (UINT8)0xFF);
+        void SetPixelBackgroundColour(const UINT32 xPos, const UINT32 yPos);
+        void SetPixelBackgroundColour(const UINT32 xPos, const UINT32 yPos, const Colour colour);
+        void SetPixelBackgroundColour(const UINT32 xPos, const UINT32 yPos, const Colour* colour);
+        void SetPixelBackgroundColour(const UINT32 xPos, const UINT32 yPos, const UINT32 colour);
+        void SetPixelBackgroundColour(const UINT32 xPos, const UINT32 yPos, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a = 0xFFFFFFFFu);
 
-        void SetPixelRowForeground(UINT32 xPos, UINT32 yPos, UINT32 length);
-        void SetPixelRowForeground(UINT32 xPos, UINT32 yPos, UINT32 length, Colour colour);
-        void SetPixelRowForeground(UINT32 xPos, UINT32 yPos, UINT32 length, Colour* colour);
-        void SetPixelRowForeground(UINT32 xPos, UINT32 yPos, UINT32 length, UINT32 colour);
-        void SetPixelRowForeground(UINT32 xPos, UINT32 yPos, UINT32 length, UINT32 r, UINT32 g, UINT32 b, UINT32 a = (UINT8)0xFF);
+        void SetPixelForeground1Colour(const UINT32 xPos, const UINT32 yPos);
+        void SetPixelForeground1Colour(const UINT32 xPos, const UINT32 yPos, const Colour colour);
+        void SetPixelForeground1Colour(const UINT32 xPos, const UINT32 yPos, const Colour* colour);
+        void SetPixelForeground1Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 colour);
+        void SetPixelForeground1Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a = 0xFFFFFFFFu);
+
+        void SetPixelForeground2Colour(const UINT32 xPos, const UINT32 yPos);
+        void SetPixelForeground2Colour(const UINT32 xPos, const UINT32 yPos, const Colour colour);
+        void SetPixelForeground2Colour(const UINT32 xPos, const UINT32 yPos, const Colour* colour);
+        void SetPixelForeground2Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 colour);
+        void SetPixelForeground2Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a = 0xFFFFFFFFu);
+
+        void SetPixelRowBackgroundColour(const UINT32 xPos, const UINT32 yPos,const UINT32 length);
+        void SetPixelRowBackgroundColour(const UINT32 xPos, const UINT32 yPos,const UINT32 length, const Colour colour);
+        void SetPixelRowBackgroundColour(const UINT32 xPos, const UINT32 yPos,const UINT32 length, const Colour* colour);
+        void SetPixelRowBackgroundColour(const UINT32 xPos, const UINT32 yPos,const UINT32 length, const UINT32 colour);
+        void SetPixelRowBackgroundColour(const UINT32 xPos, const UINT32 yPos,const UINT32 length, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a = 0xFFFFFFFFu);
+
+        void SetPixelRowForeground1Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 length);
+        void SetPixelRowForeground1Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 length, const Colour colour);
+        void SetPixelRowForeground1Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 length, const Colour* colour);
+        void SetPixelRowForeground1Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 length, const UINT32 colour);
+        void SetPixelRowForeground1Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 length, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a = 0xFFFFFFFFu);
+
+        void SetPixelRowForeground2Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 length);
+        void SetPixelRowForeground2Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 length, const Colour colour);
+        void SetPixelRowForeground2Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 length, const Colour* colour);
+        void SetPixelRowForeground2Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 length, const UINT32 colour);
+        void SetPixelRowForeground2Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 length, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a = 0xFFFFFFFFu);
+
+        void SetTextColour(Colour colour);
+        void SetTextColour(const Colour* colour);
+        void SetTextColour(UINT32 colour);
+        void SetTextColour(UINT32 r, UINT32 g, UINT32 b, UINT32 a = 0xFFFFFFFFu);
 
         void Terminate(EFI::EFI_HANDLE hnd, EFI::EFI_SYSTEM_TABLE* sysTable);
-
 
         MonitorContext* GetMonitorContext();
 
 	private:
+		Colour backgroundColour;
+        Colour defaultBackgroundColour;
+        Colour defaultForeground1Colour;
+        Colour defaultForeground2Colour;
+        Colour defaultText;
+		Colour foreground1Colour;
+        Colour foreground2Colour;
+        Colour textColour;
         MonitorContext monitor;
-        Colour defaultBg;
-        Colour defaultFg;
-		Colour background;
-		Colour foreground;
 	};
-    void SetPixel1Bpp(unsigned long long vRes, unsigned long long ppsl, unsigned long long hRes, void* fb, const Common::Graphics::Pixel1Bpp& bgP);
-    void SetRectangle1Bpp(unsigned long long finalY, unsigned long long size, unsigned long long finalX, unsigned int yPos, unsigned long long ppsl, unsigned int xPos, void* fb, const Common::Graphics::Pixel1Bpp& bgP);
 }

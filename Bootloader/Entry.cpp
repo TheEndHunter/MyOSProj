@@ -167,8 +167,8 @@ namespace Bootloader
 
         UINTN modeInfoSize = sizeof(EFI_GRAPHICS_OUTPUT_MODE_INFORMATION);
 
-        UINTN maxH = 0;
-        UINTN maxV = 0;
+        UINTN maxH = 1280;
+        UINTN maxV = 720;
         UINT32 HighestResMode = 0;
 
         MonitorMode* info = nullptr;
@@ -176,8 +176,9 @@ namespace Bootloader
         for (UINT32 i = 0; i < modes; i++)
         {
             info = monitor->GetMode(i);
+            UINTN r = info->HorizontalResolution / info->VerticalResolution;
 
-            if (info->VerticalResolution > maxV || info->HorizontalResolution > maxH)
+            if (info->VerticalResolution == maxV && info->HorizontalResolution == maxH)
             {
                 maxH = info->HorizontalResolution;
                 maxV = info->VerticalResolution;
@@ -335,9 +336,22 @@ namespace Bootloader
         Print(sysTbl, u"Kernel Entry Point Virtual Offset: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
         PrintDebug(sysTbl, UTF16::ToHex(entryPVO));
 
-        render->ClearScreen(Colours::White);
+        /* print values of current monitor mode*/
+        Print(sysTbl, u"Current Mode: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
+        Print(sysTbl, UTF16::ToString(monitor->GetCurrentMode()), EFI::EFI_CONSOLE_COLOR::DEBUG);
+        Print(sysTbl, u" Width: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
+        Print(sysTbl, UTF16::ToString(monitor->GetHorizontalResolution()), EFI::EFI_CONSOLE_COLOR::DEBUG);
+        Print(sysTbl, u" Height: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
+        PrintDebug(sysTbl, UTF16::ToString(monitor->GetVerticalResolution()));
 
+        /* print Pixel Format and bpp*/
+        Print(sysTbl, u"Pixel Format: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
+        Print(sysTbl, UTF16::ToString(monitor->GetPixelFormat()), EFI::EFI_CONSOLE_COLOR::DEBUG);
+        Print(sysTbl, u" Pixels Per Scanline: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
+        Print(sysTbl, UTF16::ToString(monitor->GetPixelsPerScanLine()));
+        
         WaitForKey(sysTbl);
+        render->ClearScreen(Colours::Aqua);
         UINTN status = main(render, monitor);
 
         Print(sysTbl, u"Kernel Returned: ", EFI::EFI_CONSOLE_COLOR::DEBUG);

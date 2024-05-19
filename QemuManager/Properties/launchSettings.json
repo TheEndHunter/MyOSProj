@@ -3,7 +3,8 @@
     "QemuManager": {
       "commandName": "Project",
       "commandLineArgs": "$(Platform)\r\n$(Configuration)\r\n$(SolutionDir)bin\\$(Platform)\\$(Configuration)\\",
-      "workingDirectory": "$(SolutionDir)\\Tools\\QemuRunner\\"
+      "workingDirectory": "$(SolutionDir)\\Tools\\QemuRunner\\",
+      "nativeDebugging": true
     },
     "WSL": {
       "commandName": "WSL2",

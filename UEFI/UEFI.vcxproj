@@ -261,6 +261,8 @@
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <SupportJustMyCode>false</SupportJustMyCode>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -314,6 +316,8 @@
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <SupportJustMyCode>false</SupportJustMyCode>
     </ClCompile>
     <Link>
       <SubSystem>EFI Application</SubSystem>
@@ -365,6 +369,7 @@
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <SupportJustMyCode>false</SupportJustMyCode>
     </ClCompile>
     <Lib>
       <SubSystem>EFI Application</SubSystem>
@@ -401,6 +406,8 @@
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <SupportJustMyCode>false</SupportJustMyCode>
     </ClCompile>
     <Lib>
       <SubSystem>EFI Application</SubSystem>

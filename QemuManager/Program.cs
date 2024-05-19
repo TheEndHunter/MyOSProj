@@ -8,7 +8,7 @@ using System.Text;
 
 namespace QemuManager
 {
-    internal class Program
+    internal static class Program
     {
         static string BuildDrives(string directory)
         {
@@ -25,8 +25,8 @@ namespace QemuManager
             return sb.ToString();
         }
 
-        private static Process qemu;
-        private static async Task UpdateOVMF(Settings config, string? sha1 = null)
+        private static Process? qemu;
+        private static async Task UpdateOVMFAsync(Settings config, string? sha1 = null)
         {
             Console.WriteLine("Checking for Updates...");
 
@@ -105,7 +105,8 @@ namespace QemuManager
             if (!DownloadTask.IsCompletedSuccessfully)
             {
                 Console.WriteLine("Failed to download OVMF Repository");
-                throw DownloadTask.Exception;
+
+                throw DownloadTask.Exception ?? new Exception("Failed to download OVMF Repository");
             }
         }
 
@@ -117,7 +118,7 @@ namespace QemuManager
 
             if (File.Exists(SettingsPath))
             {
-                IConfigurationBuilder builder = new ConfigurationBuilder();
+                ConfigurationBuilder builder = new();
                 builder.SetBasePath(Dir);
                 builder.AddJsonFile(SettingsPath);
 
@@ -152,7 +153,7 @@ namespace QemuManager
                     return -1;
                 }
 
-                UpdateOVMF(config).Wait();
+                UpdateOVMFAsync(config).Wait();
             }
 
             var verPath = Path.Combine(Dir, "OVMF", "Version.txt");
@@ -162,11 +163,11 @@ namespace QemuManager
                 var data = File.ReadLines(verPath);
                 if (data.Any())
                 {
-                    UpdateOVMF(config, data.ElementAt(0)!).Wait();
+                    UpdateOVMFAsync(config, data.ElementAt(0)!).Wait();
                 }
                 else
                 {
-                    UpdateOVMF(config).Wait();
+                    UpdateOVMFAsync(config).Wait();
                 }
             }
 
@@ -203,7 +204,7 @@ namespace QemuManager
                     );
                     configuration = Console.ReadLine();
 
-                    if (config.Configurations.Contains(configuration))
+                    if (config.Configurations.Contains(configuration!))
                     {
                         break;
                     }
@@ -293,22 +294,25 @@ namespace QemuManager
                 filename += ".exe";
                 var path = Environment.GetEnvironmentVariable("Path");
 
-                string[] paths = path.Split(";");
+                if (path != null)
+                {
+                    string[] paths = path.Split(";");
 
-                foreach (string s in paths)
-                {
-                    if (File.Exists(Path.Combine(s, filename)))
+                    foreach (string s in paths)
                     {
-                        qemuPath = s;
-                        exePath = Path.Combine(s, filename);
-                        break;
+                        if (File.Exists(Path.Combine(s, filename)))
+                        {
+                            qemuPath = s;
+                            exePath = Path.Combine(s, filename);
+                            break;
+                        }
                     }
-                }
-                if (exePath == string.Empty)
-                {
-                    Console.WriteLine("Could not find Qemu in Path");
-                    Console.ReadKey();
-                    return -1;
+                    if (exePath?.Length == 0)
+                    {
+                        Console.WriteLine("Could not find Qemu in Path");
+                        Console.ReadKey();
+                        return -1;
+                    }
                 }
             }
             else

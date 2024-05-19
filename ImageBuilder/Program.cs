@@ -4,7 +4,7 @@
     using System.Collections.Frozen;
     using System.Diagnostics;
 
-    internal class Program
+    internal static class Program
     {
         private static readonly FrozenDictionary<string, string> bootfileMap = new Dictionary<string, string>()
                 {
@@ -17,8 +17,6 @@
         static int Main(string[] args)
         {
             Console.Title = "Virtual Disk Builder Tool";
-
-            string Dir = Path.GetFullPath(Directory.GetCurrentDirectory());
 
             string? architecture = null;
             string? configuration = null;
@@ -62,7 +60,7 @@
                 while (string.IsNullOrEmpty(SrcPath) && string.IsNullOrWhiteSpace(SrcPath))
                 {
                     Console.Clear();
-                    Console.WriteLine($"Current Dir: {Directory.GetCurrentDirectory()}");
+                    Console.WriteLine($"Current cwd: {Directory.GetCurrentDirectory()}");
                     Console.WriteLine("Please enter path of the to the src directory being used(e.g. C:\\Build\\Src)");
                     var test = Console.ReadLine();
 
@@ -82,7 +80,7 @@
                 while (string.IsNullOrEmpty(DestPath) && string.IsNullOrWhiteSpace(DestPath))
                 {
                     Console.Clear();
-                    Console.WriteLine($"Current Dir: {Directory.GetCurrentDirectory()}");
+                    Console.WriteLine($"Current cwd: {Directory.GetCurrentDirectory()}");
                     Console.WriteLine("Please enter path of the to the src directory being used(e.g. C:\\Build\\Dest)");
                     var test = Console.ReadLine();
 
@@ -112,8 +110,8 @@
             {
                 architecture = args[0];
                 configuration = args[1];
-                SrcPath = Path.GetFullPath(Path.Combine(Dir, args[2]));
-                DestPath = Path.GetFullPath(Path.Combine(Dir, args[3]));
+                SrcPath = Path.GetFullPath(Path.Combine(Path.GetFullPath(Directory.GetCurrentDirectory()), args[2]));
+                DestPath = Path.GetFullPath(Path.Combine(Path.GetFullPath(Directory.GetCurrentDirectory()), args[3]));
                 imgName = args[4];
 
                 if (bootfileMap.TryGetValue(architecture, out string? bf))
@@ -245,6 +243,11 @@
                 "Z:\\"
             ];
 
+            if (assigned.Length < 1)
+            {
+                Console.Error.WriteLine("No drive letter assignments free");
+                return -1;
+            }
             foreach (var drive in assigned)
             {
                 free.Remove(drive);
@@ -315,7 +318,7 @@
                 _src.CopyDirectoriesAndFiles(_src!.Parent!.FullName, _dest);
             }
 
-            res = Detach(DestPath, architecture, configuration, vhdxPath, ref _partitions);
+            res = Detach(DestPath, architecture!, configuration, vhdxPath, ref _partitions);
             if (res != 0)
             {
                 return res;
