@@ -37,14 +37,14 @@
   <ItemGroup>
     <ClInclude Include="Debugging\EFI\EFIDebugger.h" />
     <ClInclude Include="Debugging\IDebugger.h" />
-    <ClInclude Include="Enviroment\StringComparisonMode.h" />
-    <ClInclude Include="Enviroment\StringCulture.h" />
+    <ClInclude Include="Environment\StringComparisonMode.h" />
+    <ClInclude Include="Environment\StringCulture.h" />
     <ClInclude Include="FileSystem\ESP\FileAttribute.h" />
     <ClInclude Include="FileSystem\ESP\FileHandle.h" />
     <ClInclude Include="FileSystem\ESP\FileMode.h" />
     <ClInclude Include="FileSystem\ESP\FileStatus.h" />
     <ClInclude Include="FileSystem\ESP\FileSystemContext.h" />
-    <ClInclude Include="Enviroment\Unicode.h" />
+    <ClInclude Include="Environment\Unicode.h" />
     <ClInclude Include="FileSystem\ESP\VolumeHandle.h" />
     <ClInclude Include="FileTypes\ELF\ELF.h" />
     <ClInclude Include="FileTypes\ELF\ELF64.h" />
@@ -86,7 +86,7 @@
     <ClCompile Include="FileSystem\ESP\FileHandle.cpp" />
     <ClCompile Include="FileSystem\ESP\FileInfo.cpp" />
     <ClCompile Include="FileSystem\ESP\FileSystemContext.cpp" />
-    <ClCompile Include="Enviroment\Unicode.cpp" />
+    <ClCompile Include="Environment\Unicode.cpp" />
     <ClCompile Include="FileSystem\ESP\FileInfo.h" />
     <ClCompile Include="FileSystem\ESP\VolumeHandle.cpp" />
     <ClCompile Include="FileSystem\ESP\VolumeInfo.cpp" />

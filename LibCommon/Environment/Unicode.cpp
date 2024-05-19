@@ -4,7 +4,7 @@
 #include <EFI_STATUS.h>
 #include "Unicode.h"
 
-namespace Common::Enviroment
+namespace Common::Environment
 {
 #pragma region UTF16
 	CHAR16 _UTF16_GUIDTOSTRING[43] = { u'{',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'-',u'\0',u'\0',u'\0',u'\0',u'-',u'\0',u'\0',u'\0',u'\0',u'-',u'\0',u'\0',u'\0',u'\0',u'-',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'}',u'\0' };
@@ -12,7 +12,7 @@ namespace Common::Enviroment
 	CHAR16 _UTF16_HEXSTRING[18] = { u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
 	CHAR16 _UTF16_VALUETOSTRING[23] = { u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
 	CHAR16 _UTF16_WHITESPACECHARS[30] = { 0x0009,0x000A,0x000B,0x000C,0x000D,0x0020,0x0085,0x00A0,0x1680,0x2000,0x2001,0x2003,0x2004,0x2005,0x2006,0x2007,0x02008,0x2009,0x200A,0x2028,0x2029,0x202F,0x205F,0x3000,0x180E,0x200B,0x200C,0x200D,0x2060,0xFEFF };
-	const CHAR16* Common::Enviroment::UTF16::NewLine = u"\r\n";
+	const CHAR16* Common::Environment::UTF16::NewLine = u"\r\n";
 	constinit const CHAR16* _UTF16_ABORTED = u"ABORTED";
 	constinit const CHAR16* _UTF16_ACCESS_DENIED = u"ACCESS_DENIED";
 	constinit const CHAR16* _UTF16_ALREADY_STARTED = u"ALREADY_STARTED";
@@ -684,9 +684,9 @@ namespace Common::Enviroment
 
 		switch (culture)
 		{
-		case Common::Enviroment::InvariantCulture:
-		case Common::Enviroment::CurrentCulture:
-		case Common::Enviroment::Ordinal:
+		case Common::Environment::InvariantCulture:
+		case Common::Environment::CurrentCulture:
+		case Common::Environment::Ordinal:
 		{
 			/*Binary Comparison of string*/
 
@@ -699,9 +699,9 @@ namespace Common::Enviroment
 			}
 			return TRUE;
 		}
-		case Common::Enviroment::InvariantCultureIgnoreCase:
-		case Common::Enviroment::CurrentCultureIgnoreCase:
-		case Common::Enviroment::OrdinalIgnoreCase:
+		case Common::Environment::InvariantCultureIgnoreCase:
+		case Common::Environment::CurrentCultureIgnoreCase:
+		case Common::Environment::OrdinalIgnoreCase:
 		{
 			/*Binary Comparison, Ignoring Case of string*/
 
@@ -759,9 +759,9 @@ namespace Common::Enviroment
 
 		switch (culture)
 		{
-		case Common::Enviroment::InvariantCulture:
-		case Common::Enviroment::CurrentCulture:
-		case Common::Enviroment::Ordinal:
+		case Common::Environment::InvariantCulture:
+		case Common::Environment::CurrentCulture:
+		case Common::Environment::Ordinal:
 		{
 			for (UINTN index = 0; index < valueLength; index++)
 			{
@@ -772,9 +772,9 @@ namespace Common::Enviroment
 			}
 			return TRUE;
 		}
-		case Common::Enviroment::InvariantCultureIgnoreCase:
-		case Common::Enviroment::CurrentCultureIgnoreCase:
-		case Common::Enviroment::OrdinalIgnoreCase:
+		case Common::Environment::InvariantCultureIgnoreCase:
+		case Common::Environment::CurrentCultureIgnoreCase:
+		case Common::Environment::OrdinalIgnoreCase:
 		{
 			for (UINTN index = 0; index < valueLength; index++)
 			{
@@ -827,9 +827,9 @@ namespace Common::Enviroment
 
 		switch (culture)
 		{
-		case Common::Enviroment::InvariantCulture:
-		case Common::Enviroment::CurrentCulture:
-		case Common::Enviroment::Ordinal:
+		case Common::Environment::InvariantCulture:
+		case Common::Environment::CurrentCulture:
+		case Common::Environment::Ordinal:
 		{
 			UINTN index = 0;
 			for (UINTN index = 0; index < valueLength; index++)
@@ -841,9 +841,9 @@ namespace Common::Enviroment
 			}
 			return TRUE;
 		}
-		case Common::Enviroment::InvariantCultureIgnoreCase:
-		case Common::Enviroment::CurrentCultureIgnoreCase:
-		case Common::Enviroment::OrdinalIgnoreCase:
+		case Common::Environment::InvariantCultureIgnoreCase:
+		case Common::Environment::CurrentCultureIgnoreCase:
+		case Common::Environment::OrdinalIgnoreCase:
 		{
 			UINTN index = 0;
 			for (UINTN index = 0; index < valueLength; index++)
@@ -898,9 +898,9 @@ namespace Common::Enviroment
 
 		switch (culture)
 		{
-		case Common::Enviroment::InvariantCulture:
-		case Common::Enviroment::CurrentCulture:
-		case Common::Enviroment::Ordinal:
+		case Common::Environment::InvariantCulture:
+		case Common::Environment::CurrentCulture:
+		case Common::Environment::Ordinal:
 		{
 			UINTN index = 0;
 			for (UINTN index = 0; index < strLength - valueLength; index++)
@@ -925,9 +925,9 @@ namespace Common::Enviroment
 			}
 			return FALSE;
 		}
-		case Common::Enviroment::InvariantCultureIgnoreCase:
-		case Common::Enviroment::CurrentCultureIgnoreCase:
-		case Common::Enviroment::OrdinalIgnoreCase:
+		case Common::Environment::InvariantCultureIgnoreCase:
+		case Common::Environment::CurrentCultureIgnoreCase:
+		case Common::Environment::OrdinalIgnoreCase:
 		{
 			UINTN index = 0;
 			for (UINTN index = 0; index < strLength - valueLength; index++)
@@ -1103,7 +1103,7 @@ namespace Common::Enviroment
 	CHAR8 _UTF8_HEXSTRING[18] = { u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0' };
 	CHAR8 _UTF8_VALUETOSTRING[23] = { u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0' };
 	CHAR8 _UTF8_WHITESPACECHARS[8] = { 0x09,0x0A,0x0B,0x0C,0x0D,0x20,0x85,0xA0 };
-	const CHAR8* Common::Enviroment::UTF8::NewLine = u8"\r\n";
+	const CHAR8* Common::Environment::UTF8::NewLine = u8"\r\n";
 	constinit const CHAR8* _UTF8_ABORTED = u8"ABORTED";
 	constinit const CHAR8* _UTF8_ACCESS_DENIED = u8"ACCESS_DENIED";
 	constinit const CHAR8* _UTF8_ALREADY_STARTED = u8"ALREADY_STARTED";
@@ -1769,9 +1769,9 @@ namespace Common::Enviroment
 
 		switch (culture)
 		{
-		case Common::Enviroment::InvariantCulture:
-		case Common::Enviroment::CurrentCulture:
-		case Common::Enviroment::Ordinal:
+		case Common::Environment::InvariantCulture:
+		case Common::Environment::CurrentCulture:
+		case Common::Environment::Ordinal:
 		{
 			/*Binary Comparison of string*/
 
@@ -1784,9 +1784,9 @@ namespace Common::Enviroment
 			}
 			return TRUE;
 		}
-		case Common::Enviroment::InvariantCultureIgnoreCase:
-		case Common::Enviroment::CurrentCultureIgnoreCase:
-		case Common::Enviroment::OrdinalIgnoreCase:
+		case Common::Environment::InvariantCultureIgnoreCase:
+		case Common::Environment::CurrentCultureIgnoreCase:
+		case Common::Environment::OrdinalIgnoreCase:
 		{
 			/*Binary Comparison, Ignoring Case of string*/
 
@@ -1843,9 +1843,9 @@ namespace Common::Enviroment
 
 		switch (culture)
 		{
-		case Common::Enviroment::InvariantCulture:
-		case Common::Enviroment::CurrentCulture:
-		case Common::Enviroment::Ordinal:
+		case Common::Environment::InvariantCulture:
+		case Common::Environment::CurrentCulture:
+		case Common::Environment::Ordinal:
 		{
 			for (UINTN index = 0; index < valueLength; index++)
 			{
@@ -1856,9 +1856,9 @@ namespace Common::Enviroment
 			}
 			return TRUE;
 		}
-		case Common::Enviroment::InvariantCultureIgnoreCase:
-		case Common::Enviroment::CurrentCultureIgnoreCase:
-		case Common::Enviroment::OrdinalIgnoreCase:
+		case Common::Environment::InvariantCultureIgnoreCase:
+		case Common::Environment::CurrentCultureIgnoreCase:
+		case Common::Environment::OrdinalIgnoreCase:
 		{
 			for (UINTN index = 0; index < valueLength; index++)
 			{
@@ -1911,9 +1911,9 @@ namespace Common::Enviroment
 
 		switch (culture)
 		{
-		case Common::Enviroment::InvariantCulture:
-		case Common::Enviroment::CurrentCulture:
-		case Common::Enviroment::Ordinal:
+		case Common::Environment::InvariantCulture:
+		case Common::Environment::CurrentCulture:
+		case Common::Environment::Ordinal:
 		{
 			UINTN index = 0;
 			for (UINTN index = 0; index < valueLength; index++)
@@ -1925,9 +1925,9 @@ namespace Common::Enviroment
 			}
 			return TRUE;
 		}
-		case Common::Enviroment::InvariantCultureIgnoreCase:
-		case Common::Enviroment::CurrentCultureIgnoreCase:
-		case Common::Enviroment::OrdinalIgnoreCase:
+		case Common::Environment::InvariantCultureIgnoreCase:
+		case Common::Environment::CurrentCultureIgnoreCase:
+		case Common::Environment::OrdinalIgnoreCase:
 		{
 			UINTN index = 0;
 			for (UINTN index = 0; index < valueLength; index++)
@@ -1982,9 +1982,9 @@ namespace Common::Enviroment
 
 		switch (culture)
 		{
-		case Common::Enviroment::InvariantCulture:
-		case Common::Enviroment::CurrentCulture:
-		case Common::Enviroment::Ordinal:
+		case Common::Environment::InvariantCulture:
+		case Common::Environment::CurrentCulture:
+		case Common::Environment::Ordinal:
 		{
 			UINTN index = 0;
 			for (UINTN index = 0; index < strLength - valueLength; index++)
@@ -2009,9 +2009,9 @@ namespace Common::Enviroment
 			}
 			return FALSE;
 		}
-		case Common::Enviroment::InvariantCultureIgnoreCase:
-		case Common::Enviroment::CurrentCultureIgnoreCase:
-		case Common::Enviroment::OrdinalIgnoreCase:
+		case Common::Environment::InvariantCultureIgnoreCase:
+		case Common::Environment::CurrentCultureIgnoreCase:
+		case Common::Environment::OrdinalIgnoreCase:
 		{
 			UINTN index = 0;
 			for (UINTN index = 0; index < strLength - valueLength; index++)
@@ -2176,7 +2176,7 @@ namespace Common::Enviroment
 	CCHAR _CSTR_HEXSTRING[18] = { '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0' };
 	CCHAR _CSTR_VALUETOSTRING[23] = { '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0' };
 	CCHAR _CSTR_WHITESPACECHARS[6] = { 0x09,0x0A,0x0B,0x0C,0x0D,0x20 };
-	const CCHAR* Common::Enviroment::CString::NewLine = "\r\n";
+	const CCHAR* Common::Environment::CString::NewLine = "\r\n";
 
 	constinit const CCHAR* _CSTR_ABORTED = "ABORTED";
 	constinit const CCHAR* _CSTR_ACCESS_DENIED = "ACCESS_DENIED";
@@ -2845,9 +2845,9 @@ namespace Common::Enviroment
 
 		switch (culture)
 		{
-		case Common::Enviroment::InvariantCulture:
-		case Common::Enviroment::CurrentCulture:
-		case Common::Enviroment::Ordinal:
+		case Common::Environment::InvariantCulture:
+		case Common::Environment::CurrentCulture:
+		case Common::Environment::Ordinal:
 		{
 			/*Binary Comparison of string*/
 
@@ -2860,9 +2860,9 @@ namespace Common::Enviroment
 			}
 			return TRUE;
 		}
-		case Common::Enviroment::InvariantCultureIgnoreCase:
-		case Common::Enviroment::CurrentCultureIgnoreCase:
-		case Common::Enviroment::OrdinalIgnoreCase:
+		case Common::Environment::InvariantCultureIgnoreCase:
+		case Common::Environment::CurrentCultureIgnoreCase:
+		case Common::Environment::OrdinalIgnoreCase:
 		{
 			/*Binary Comparison, Ignoring Case of string*/
 
@@ -2920,9 +2920,9 @@ namespace Common::Enviroment
 
 		switch (culture)
 		{
-		case Common::Enviroment::InvariantCulture:
-		case Common::Enviroment::CurrentCulture:
-		case Common::Enviroment::Ordinal:
+		case Common::Environment::InvariantCulture:
+		case Common::Environment::CurrentCulture:
+		case Common::Environment::Ordinal:
 		{
 			for (UINTN index = 0; index < valueLength; index++)
 			{
@@ -2933,9 +2933,9 @@ namespace Common::Enviroment
 			}
 			return TRUE;
 		}
-		case Common::Enviroment::InvariantCultureIgnoreCase:
-		case Common::Enviroment::CurrentCultureIgnoreCase:
-		case Common::Enviroment::OrdinalIgnoreCase:
+		case Common::Environment::InvariantCultureIgnoreCase:
+		case Common::Environment::CurrentCultureIgnoreCase:
+		case Common::Environment::OrdinalIgnoreCase:
 		{
 			for (UINTN index = 0; index < valueLength; index++)
 			{
@@ -2988,9 +2988,9 @@ namespace Common::Enviroment
 
 		switch (culture)
 		{
-		case Common::Enviroment::InvariantCulture:
-		case Common::Enviroment::CurrentCulture:
-		case Common::Enviroment::Ordinal:
+		case Common::Environment::InvariantCulture:
+		case Common::Environment::CurrentCulture:
+		case Common::Environment::Ordinal:
 		{
 			UINTN index = 0;
 			for (UINTN index = 0; index < valueLength; index++)
@@ -3002,9 +3002,9 @@ namespace Common::Enviroment
 			}
 			return TRUE;
 		}
-		case Common::Enviroment::InvariantCultureIgnoreCase:
-		case Common::Enviroment::CurrentCultureIgnoreCase:
-		case Common::Enviroment::OrdinalIgnoreCase:
+		case Common::Environment::InvariantCultureIgnoreCase:
+		case Common::Environment::CurrentCultureIgnoreCase:
+		case Common::Environment::OrdinalIgnoreCase:
 		{
 			UINTN index = 0;
 			for (UINTN index = 0; index < valueLength; index++)
@@ -3059,9 +3059,9 @@ namespace Common::Enviroment
 
 		switch (culture)
 		{
-		case Common::Enviroment::InvariantCulture:
-		case Common::Enviroment::CurrentCulture:
-		case Common::Enviroment::Ordinal:
+		case Common::Environment::InvariantCulture:
+		case Common::Environment::CurrentCulture:
+		case Common::Environment::Ordinal:
 		{
 			UINTN index = 0;
 			for (UINTN index = 0; index < strLength - valueLength; index++)
@@ -3086,9 +3086,9 @@ namespace Common::Enviroment
 			}
 			return FALSE;
 		}
-		case Common::Enviroment::InvariantCultureIgnoreCase:
-		case Common::Enviroment::CurrentCultureIgnoreCase:
-		case Common::Enviroment::OrdinalIgnoreCase:
+		case Common::Environment::InvariantCultureIgnoreCase:
+		case Common::Environment::CurrentCultureIgnoreCase:
+		case Common::Environment::OrdinalIgnoreCase:
 		{
 			UINTN index = 0;
 			for (UINTN index = 0; index < strLength - valueLength; index++)

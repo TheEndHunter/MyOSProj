@@ -7,6 +7,7 @@
 namespace Common::FileSystem::ESP
 {
 	const FileSystemContext FileSystemContext::EmptyFS = FileSystemContext();
+
 	const CHAR16* RootPath = u"\\";
 
 	FileSystemContext::FileSystemContext(EFI::EFI_HANDLE hnd, EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL* fsp)
@@ -69,9 +70,9 @@ namespace Common::FileSystem::ESP
 		return FileSystemContext(FsHndl, fsProtocol);
 	}
 
-	FileSystemContext FileSystemContext::GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, const CHAR16* label, OUT EFI::EFI_STATUS* status, Enviroment::StringComparisonMode mode, Enviroment::StringCulture culture)
+	FileSystemContext FileSystemContext::GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, const CHAR16* label, OUT EFI::EFI_STATUS* status, Environment::StringComparisonMode mode, Environment::StringCulture culture)
 	{
-		if (Common::Enviroment::UTF16::IsNullOrEmpty(label))
+		if (Common::Environment::UTF16::IsNullOrEmpty(label))
 		{
 			*status = EFI::EFI_STATUS::INVALID_PARAMETER;
 			return EmptyFS;
@@ -139,7 +140,7 @@ namespace Common::FileSystem::ESP
 				continue;
 			}
 
-			if (Common::Enviroment::UTF16::IsNullOrEmpty((CHAR16*)&volLbl->VolumeLabel))
+			if (Common::Environment::UTF16::IsNullOrEmpty((CHAR16*)&volLbl->VolumeLabel))
 			{
 				sysTable->BootServices->FreePool(volLbl);
 				root->Close(root);
@@ -151,17 +152,17 @@ namespace Common::FileSystem::ESP
 
 			switch (mode)
 			{
-			case Common::Enviroment::Compare:
-				comparison = Common::Enviroment::UTF16::Compare((const CHAR16*)&volLbl->VolumeLabel, label, culture);
+			case Common::Environment::Compare:
+				comparison = Common::Environment::UTF16::Compare((const CHAR16*)&volLbl->VolumeLabel, label, culture);
 				break;
-			case Common::Enviroment::Contains:
-				comparison = Common::Enviroment::UTF16::Contains((const CHAR16*)&volLbl->VolumeLabel, label, culture);
+			case Common::Environment::Contains:
+				comparison = Common::Environment::UTF16::Contains((const CHAR16*)&volLbl->VolumeLabel, label, culture);
 				break;
-			case Common::Enviroment::StartsWith:
-				comparison = Common::Enviroment::UTF16::StartsWith((const CHAR16*)&volLbl->VolumeLabel, label, culture);
+			case Common::Environment::StartsWith:
+				comparison = Common::Environment::UTF16::StartsWith((const CHAR16*)&volLbl->VolumeLabel, label, culture);
 				break;
-			case Common::Enviroment::EndsWith:
-				comparison = Common::Enviroment::UTF16::EndsWith((const CHAR16*)&volLbl->VolumeLabel, label, culture);
+			case Common::Environment::EndsWith:
+				comparison = Common::Environment::UTF16::EndsWith((const CHAR16*)&volLbl->VolumeLabel, label, culture);
 				break;
 			}
 
@@ -375,7 +376,7 @@ namespace Common::FileSystem::ESP
 	Common::FileSystem::ESP::FileInfo FileSystemContext::GetFileInfo(EFI::EFI_SYSTEM_TABLE* sysTable, const CHAR16* path)
 	{
 		/*Check path to see if it's null or empty, if it is return an empty FileSystem, putting INVALID_PARAMETER status into LastStatus Member*/
-		if (Common::Enviroment::UTF16::IsNullOrEmpty(path))
+		if (Common::Environment::UTF16::IsNullOrEmpty(path))
 		{
 			LastStatus = EFI::EFI_STATUS::INVALID_PARAMETER;
 			return Empty_FileInfo;
@@ -459,7 +460,7 @@ namespace Common::FileSystem::ESP
 			return Empty_FileHandle;
 		}
 
-		if (Common::Enviroment::UTF16::IsNullOrEmpty(fileInfo->FileName))
+		if (Common::Environment::UTF16::IsNullOrEmpty(fileInfo->FileName))
 		{
 			LastStatus = EFI::EFI_STATUS::INVALID_PARAMETER;
 			return Empty_FileHandle;

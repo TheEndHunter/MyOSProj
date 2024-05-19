@@ -1,7 +1,7 @@
 #pragma once
 #include "TypeDefs.h"
 
-namespace Common::Enviroment
+namespace Common::Environment
 {
 	enum StringComparisonMode
 	{

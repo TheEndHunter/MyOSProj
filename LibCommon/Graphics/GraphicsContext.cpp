@@ -7,7 +7,7 @@
 #include <EFI_BOOT_SERVICES.h>
 #include <Protocols/Graphics/EFI_GRAPHICS_OUTPUT_BLT_OPERATION.h>
 #include <Protocols/Graphics/EFI_GRAPHICS_OUTPUT_MODE_INFORMATION.h>
-#include <Enviroment/Unicode.h>
+#include <Environment/Unicode.h>
 #include "GraphicsContext.h"
 #include <Numerics/Math.h>
 
@@ -41,7 +41,7 @@ namespace Common::Graphics
 			EFI::EFI_HANDLE* handleBuffer;
 			LastStatus = sysTable->BootServices->LocateHandleBuffer(EFI_LOCATE_SEARCH_TYPE::ByProtocol, &EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID, nullptr, &handleCount, &handleBuffer);
 
-			sysTable->ConOut->OutputString(sysTable->ConOut, Enviroment::UTF16::ToString(handleCount));
+			sysTable->ConOut->OutputString(sysTable->ConOut, Environment::UTF16::ToString(handleCount));
 
 			if (LastStatus != EFI::EFI_STATUS::SUCCESS)
 			{

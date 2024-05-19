@@ -4,7 +4,7 @@
 #include <Graphics/GraphicsContext.h>
 #include <EFIConsole.h>
 #include <Graphics/Colour.h>
-#include <Enviroment/Unicode.h>
+#include <Environment/Unicode.h>
 #include <FileSystem/ESP/FileSystemContext.h>
 #include <System/Allocator.h>
 #include <System//AllocatorStatus.h>
@@ -15,7 +15,7 @@
 
 namespace Bootloader
 {
-    using namespace Common::Enviroment;
+    using namespace Common::Environment;
     using namespace Common::FileSystem::ESP;
     using namespace Common::Graphics;
     using namespace Common::FileTypes::PE;

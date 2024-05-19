@@ -2,10 +2,10 @@
 #include "TypeDefs.h"
 #include <EFI_GUID.h>
 #include <EFI_STATUS.h>
-#include <Enviroment/StringCulture.h>
+#include <Environment/StringCulture.h>
 #include <System/AllocatorStatus.h>
 
-namespace Common::Enviroment
+namespace Common::Environment
 {
 	class UTF16
 	{

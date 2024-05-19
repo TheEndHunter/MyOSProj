@@ -10,30 +10,23 @@
 #include "FileHandle.h"
 #include "FileMode.h"
 #include "FileAttribute.h"
-#include <Enviroment/StringComparisonMode.h>
+#include <Environment/StringComparisonMode.h>
 
 namespace Common::FileSystem::ESP
 {
-	
 	class FileSystemContext
 	{
 	protected:
 		FileSystemContext(EFI::EFI_HANDLE hnd, EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL* fsp);
-		const FileSystemContext()
+		FileSystemContext() : _deviceHandle(nullptr), _fs(nullptr), _root(nullptr), _cwd(nullptr), _isVolumeOpen(false), LastStatus(EFI::EFI_STATUS::SUCCESS)
 		{
-			_deviceHandle = nullptr;
-			_fs = nullptr;
-			_root = nullptr;
-			_cwd = nullptr;
-			_isVolumeOpen = false;
-			LastStatus = EFI::EFI_STATUS::SUCCESS;
 		}
 		
 	public:
 		static const UINTN QueryFSCount(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd);
 		static FileSystemContext GetBootFS(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd);
 		static FileSystemContext GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, UINTN index, OUT EFI::EFI_STATUS* status);
-		static FileSystemContext GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, const CHAR16* label, OUT EFI::EFI_STATUS* status, Enviroment::StringComparisonMode mode = Enviroment::StringComparisonMode::Compare, Enviroment::StringCulture culture = Enviroment::StringCulture::InvariantCulture);
+		static FileSystemContext GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, const CHAR16* label, OUT EFI::EFI_STATUS* status, Environment::StringComparisonMode mode = Environment::StringComparisonMode::Compare, Environment::StringCulture culture = Environment::StringCulture::InvariantCulture);
 		static const FileSystemContext EmptyFS;
 
 		BOOLEAN OpenVolume();

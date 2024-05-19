@@ -1,6 +1,6 @@
 
 #include "FileInfo.h"
-#include <Enviroment/Unicode.h>
+#include <Environment/Unicode.h>
 
 namespace Common::FileSystem::ESP
 {
@@ -43,7 +43,7 @@ namespace Common::FileSystem::ESP
 		if (Attribute != right.Attribute)
 			return false;
 
-		if (Enviroment::UTF16::Compare(FileName,right.FileName) == FALSE)
+		if (Environment::UTF16::Compare(FileName,right.FileName) == FALSE)
 			return false;
 
 		return true;

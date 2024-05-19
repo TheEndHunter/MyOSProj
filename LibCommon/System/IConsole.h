@@ -11,7 +11,6 @@ namespace Common::System
 	class IConsole
 	{
 	public:
-
 		virtual void Write(const CCHAR* message) = 0;
 		virtual void WriteLine(const CCHAR* message) = 0;
 		virtual void Write(const CHAR8* message) = 0;

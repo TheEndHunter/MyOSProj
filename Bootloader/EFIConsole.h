@@ -4,14 +4,14 @@
 #include "EFI_STATUS.h"
 #include "Protocols/IO/Console/EFI_CONSOLE_COLOR.h"
 #include "EFI_SYSTEM_TABLE.h"
-#include <Enviroment/Unicode.h>
+#include <Environment/Unicode.h>
 
 // Bootloader.cpp : This file contains the 'EfiMain' function. Program execution begins and ends there.
 //
 namespace Bootloader
 {
     using namespace EFI;
-    using namespace Common::Enviroment;
+    using namespace Common::Environment;
 
     static void ClearConIn(EFI_SYSTEM_TABLE* systemTable)
     {

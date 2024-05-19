@@ -41,7 +41,7 @@
 	[P] Hardware Accelerated Graphics (Kernel)
 
 #### Bootloader
-	this is the first stage of the OS, it is responsible for setting up the Enviroment for the kernel to run, it will be responsible for setting up the GDT, IDT, and other tables, and then
+	this is the first stage of the OS, it is responsible for setting up the Environment for the kernel to run, it will be responsible for setting up the GDT, IDT, and other tables, and then
 	loadin the kernel into memory and calling into it's entry point. this may change as the project progresses, but this is the initial plan.
 
 #### Kernel
