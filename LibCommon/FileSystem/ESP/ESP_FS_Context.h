@@ -5,29 +5,33 @@
 #include <Protocols/IO/Media/EFI_SIMPLE_FILE_SYSTEM_PROTOCOL.h>
 #include <Protocols/Time/EFI_TIME.h>
 #include <Protocols/IO/Media/EFI_FILE_INFO.h>
-#include "VolumeInfo.h"
-#include "FileInfo.h"
-#include "FileHandle.h"
-#include "FileMode.h"
-#include "FileAttribute.h"
+#include <FileSystem/FileInfo.h>
+#include <FileSystem/FileMode.h>
+#include <FileSystem/FileAttribute.h>
+#include <FileSystem/VolumeInfo.h>
+
+#include <FileSystem/VolumeHandle.h>
+#include <FileSystem/FileHandle.h>
+
+
 #include <Environment/StringComparisonMode.h>
 
 namespace Common::FileSystem::ESP
 {
-	class FileSystemContext
+	class ESP_FS_Context
 	{
 	protected:
-		FileSystemContext(EFI::EFI_HANDLE hnd, EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL* fsp);
-		FileSystemContext() : _deviceHandle(nullptr), _fs(nullptr), _root(nullptr), _cwd(nullptr), _isVolumeOpen(false), LastStatus(EFI::EFI_STATUS::SUCCESS)
+		ESP_FS_Context(EFI::EFI_HANDLE hnd, EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL* fsp);
+		ESP_FS_Context() : _deviceHandle(nullptr), _fs(nullptr), _root(nullptr), _cwd(nullptr), _isVolumeOpen(false), LastStatus(EFI::EFI_STATUS::SUCCESS)
 		{
 		}
 		
 	public:
 		static const UINTN QueryFSCount(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd);
-		static FileSystemContext GetBootFS(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd);
-		static FileSystemContext GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, UINTN index, OUT EFI::EFI_STATUS* status);
-		static FileSystemContext GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, const CHAR16* label, OUT EFI::EFI_STATUS* status, Environment::StringComparisonMode mode = Environment::StringComparisonMode::Compare, Environment::StringCulture culture = Environment::StringCulture::InvariantCulture);
-		static const FileSystemContext EmptyFS;
+		static ESP_FS_Context GetBootFS(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd);
+		static ESP_FS_Context GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, UINTN index, OUT EFI::EFI_STATUS* status);
+		static ESP_FS_Context GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, const CHAR16* label, OUT EFI::EFI_STATUS* status, Environment::StringComparisonMode mode = Environment::StringComparisonMode::Compare, Environment::StringCulture culture = Environment::StringCulture::InvariantCulture);
+		static const ESP_FS_Context EmptyFS;
 
 		BOOLEAN OpenVolume();
 		void CloseVolume(EFI::EFI_SYSTEM_TABLE* sysTbl, EFI::EFI_HANDLE imgHndl);
@@ -46,7 +50,7 @@ namespace Common::FileSystem::ESP
 		FileInfo GetDirectoryInfo(EFI::EFI_SYSTEM_TABLE* sysTable);
 		FileInfo GetFileInfo(EFI::EFI_SYSTEM_TABLE* sysTable, const CHAR16* path);
 
-		bool operator ==(const FileSystemContext& right)
+		bool operator ==(const ESP_FS_Context& right)
 		{
 			/*Compare all members for equality, if one fails return false, otherwise return true*/
 
@@ -68,7 +72,7 @@ namespace Common::FileSystem::ESP
 			return true;
 		}
 
-		bool operator !=(const FileSystemContext& right)
+		bool operator !=(const ESP_FS_Context& right)
 		{
 			return !(*this == right);
 		}

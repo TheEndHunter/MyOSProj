@@ -1,7 +1,7 @@
 #pragma once
 #include <TypeDefs.h>
 #include <FileTypes/ELF/ELFCommon.h>
-#include <FileSystem/ESP/FileHandle.h>
+#include <FileSystem/FileHandle.h>
 
 namespace Common::FileTypes::ELF
 {

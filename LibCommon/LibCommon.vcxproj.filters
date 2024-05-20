@@ -30,7 +30,7 @@
     <ClInclude Include="Environment\Unicode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileSystem\ESP\FileSystemContext.h">
+    <ClInclude Include="FileSystem\ESP\ESP_FS_Context.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\Font\Font.h">
@@ -39,19 +39,19 @@
     <ClInclude Include="Numerics\Math.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileSystem\ESP\FileHandle.h">
+    <ClInclude Include="FileSystem\FileHandle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileSystem\ESP\VolumeHandle.h">
+    <ClInclude Include="FileSystem\VolumeHandle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileSystem\ESP\FileMode.h">
+    <ClInclude Include="FileSystem\FileMode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileSystem\ESP\FileAttribute.h">
+    <ClInclude Include="FileSystem\FileAttribute.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileSystem\ESP\FileStatus.h">
+    <ClInclude Include="FileSystem\FileStatus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="System\BitMathCompat.h">
@@ -129,10 +129,10 @@
     <ClInclude Include="FileTypes\ELF\ELF.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileTypes\PCSF\PCSF1.h">
+    <ClInclude Include="Graphics\Font\PCSF\PCSF1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileTypes\PCSF\PCSF2.h">
+    <ClInclude Include="Graphics\Font\PCSF\PCSF2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Numerics\NumberBase.h">
@@ -164,25 +164,25 @@
     <ClCompile Include="Environment\Unicode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileSystem\ESP\FileSystemContext.cpp">
+    <ClCompile Include="FileSystem\ESP\ESP_FS_Context.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileSystem\ESP\FileInfo.h">
+    <ClCompile Include="FileSystem\FileInfo.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileSystem\ESP\VolumeInfo.h">
+    <ClCompile Include="FileSystem\VolumeInfo.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileSystem\ESP\VolumeInfo.cpp">
+    <ClCompile Include="FileSystem\VolumeInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileSystem\ESP\FileInfo.cpp">
+    <ClCompile Include="FileSystem\FileInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileSystem\ESP\FileHandle.cpp">
+    <ClCompile Include="FileSystem\FileHandle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileSystem\ESP\VolumeHandle.cpp">
+    <ClCompile Include="FileSystem\VolumeHandle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="System\Allocator.cpp">
@@ -233,10 +233,10 @@
     <ClCompile Include="FileTypes\ELF\ELF64.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileTypes\PCSF\PCSF1.cpp">
+    <ClCompile Include="Graphics\Font\PCSF\PCSF1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileTypes\PCSF\PCSF2.cpp">
+    <ClCompile Include="Graphics\Font\PCSF\PCSF2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\Pixel.cpp">

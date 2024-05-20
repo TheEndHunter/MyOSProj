@@ -1,6 +1,6 @@
 #pragma once
 #include <TypeDefs.h>
-#include <FileSystem/ESP/FileHandle.h>
+#include <FileSystem/FileHandle.h>
 #include <FileTypes/ELF/ELFCommon.h>
 #include <FileTypes/ELF/ELF32.h>
 #include <FileTypes/ELF/ELF64.h>

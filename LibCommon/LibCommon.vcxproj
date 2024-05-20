@@ -39,13 +39,13 @@
     <ClInclude Include="Debugging\IDebugger.h" />
     <ClInclude Include="Environment\StringComparisonMode.h" />
     <ClInclude Include="Environment\StringCulture.h" />
-    <ClInclude Include="FileSystem\ESP\FileAttribute.h" />
-    <ClInclude Include="FileSystem\ESP\FileHandle.h" />
-    <ClInclude Include="FileSystem\ESP\FileMode.h" />
-    <ClInclude Include="FileSystem\ESP\FileStatus.h" />
-    <ClInclude Include="FileSystem\ESP\FileSystemContext.h" />
+    <ClInclude Include="FileSystem\FileAttribute.h" />
+    <ClInclude Include="FileSystem\FileHandle.h" />
+    <ClInclude Include="FileSystem\FileMode.h" />
+    <ClInclude Include="FileSystem\FileStatus.h" />
+    <ClInclude Include="FileSystem\ESP\ESP_FS_Context.h" />
     <ClInclude Include="Environment\Unicode.h" />
-    <ClInclude Include="FileSystem\ESP\VolumeHandle.h" />
+    <ClInclude Include="FileSystem\VolumeHandle.h" />
     <ClInclude Include="FileTypes\ELF\ELF.h" />
     <ClInclude Include="FileTypes\ELF\ELF64.h" />
     <ClInclude Include="FileTypes\ELF\ELF32.h" />
@@ -59,8 +59,8 @@
     <ClInclude Include="FileTypes\PE\PE32OptionHeader32.h" />
     <ClInclude Include="FileTypes\PE\PE32OptionHeader64.h" />
     <ClInclude Include="FileTypes\PE\PE32SectionHeader.h" />
-    <ClInclude Include="FileTypes\PCSF\PCSF1.h" />
-    <ClInclude Include="FileTypes\PCSF\PCSF2.h" />
+    <ClInclude Include="Graphics\Font\PCSF\PCSF1.h" />
+    <ClInclude Include="Graphics\Font\PCSF\PCSF2.h" />
     <ClInclude Include="Graphics\Colour.h" />
     <ClInclude Include="Graphics\Font\Font.h" />
     <ClInclude Include="Graphics\GraphicsContext.h" />
@@ -83,14 +83,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Debugging\EFI\EFIDebugger.cpp" />
-    <ClCompile Include="FileSystem\ESP\FileHandle.cpp" />
-    <ClCompile Include="FileSystem\ESP\FileInfo.cpp" />
-    <ClCompile Include="FileSystem\ESP\FileSystemContext.cpp" />
+    <ClCompile Include="FileSystem\FileHandle.cpp" />
+    <ClCompile Include="FileSystem\FileInfo.cpp" />
+    <ClCompile Include="FileSystem\ESP\ESP_FS_Context.cpp" />
     <ClCompile Include="Environment\Unicode.cpp" />
-    <ClCompile Include="FileSystem\ESP\FileInfo.h" />
-    <ClCompile Include="FileSystem\ESP\VolumeHandle.cpp" />
-    <ClCompile Include="FileSystem\ESP\VolumeInfo.cpp" />
-    <ClCompile Include="FileSystem\ESP\VolumeInfo.h" />
+    <ClCompile Include="FileSystem\FileInfo.h" />
+    <ClCompile Include="FileSystem\VolumeHandle.cpp" />
+    <ClCompile Include="FileSystem\VolumeInfo.cpp" />
+    <ClCompile Include="FileSystem\VolumeInfo.h" />
     <ClCompile Include="FileTypes\ELF\ELF.cpp" />
     <ClCompile Include="FileTypes\ELF\ELF32.cpp" />
     <ClCompile Include="FileTypes\ELF\ELF64.cpp" />
@@ -102,8 +102,8 @@
     <ClCompile Include="FileTypes\PE\PE32OptionHeader32.cpp" />
     <ClCompile Include="FileTypes\PE\PE32OptionHeader64.cpp" />
     <ClCompile Include="FileTypes\PE\PE32SectionHeader.cpp" />
-    <ClCompile Include="FileTypes\PCSF\PCSF1.cpp" />
-    <ClCompile Include="FileTypes\PCSF\PCSF2.cpp" />
+    <ClCompile Include="Graphics\Font\PCSF\PCSF1.cpp" />
+    <ClCompile Include="Graphics\Font\PCSF\PCSF2.cpp" />
     <ClCompile Include="Graphics\GraphicsContext.cpp" />
     <ClCompile Include="Graphics\MonitorContext.cpp" />
     <ClCompile Include="Graphics\MonitorMode.cpp" />

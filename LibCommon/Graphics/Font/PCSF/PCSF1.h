@@ -1,10 +1,16 @@
 #pragma once
 #include <Typedefs.h>
-#include <FileSystem/ESP/FileHandle.h>
+#include <FileSystem/FileHandle.h>
 
-namespace Common::FileTypes::PCSF
+namespace Common::Graphics::Font::PCSF
 {
 	const CCHAR PSF1_MAGIC[2] = { 0x36, 0x04 };
+
+	struct UnicodeSequence
+	{
+		UINT8 length;
+		UINT8* sequence;
+	};
 
 	enum PSF1Mode : UINT8
 	{
@@ -35,7 +41,6 @@ namespace Common::FileTypes::PCSF
 
 		PSF1Mode Mode;
 		UINT8 CharSize;
-
 	};
 #pragma pack(pop)
 
@@ -45,19 +50,16 @@ namespace Common::FileTypes::PCSF
 	public:
 		PSF1();
 		PSF1(Common::FileSystem::ESP::FileHandle* handle);
+		~PSF1();
 
 		PSF1Hdr Header;
+		UINT16 CharCount;
 		BOOLEAN IsValid();
-		UINT8 GetGlyph(UINT8 index);
-		UINT16 GetGlyphUnicode(UINT8 index);
+		UINT8* GetGlyph(UINT16 index);
+
 	private:
-
-		union
-		{
-			UINT8* _8;
-			UINT16* _16;
-
-		}Glyphs;
+		UINT8* Glyphs;
+		UnicodeSequence* UnicodeTable;
 		BOOLEAN _isValid;
 	};
 #pragma pack(pop)

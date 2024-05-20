@@ -8,7 +8,7 @@ namespace Common::FileSystem::ESP
 {
 	struct VolumeHandle
 	{
-		friend class FileSystemContext;
+		friend class ESP_FS_Context;
 	protected:
 		VolumeHandle(EFI::EFI_FILE_PROTOCOL* file, VolumeInfo& i, FileMode mode, FileAttribute attribs) : Mode(mode), Attributes(attribs), Info(i), Size(i.Size), _File(file) {};
 

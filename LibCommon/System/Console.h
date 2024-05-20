@@ -1,14 +1,14 @@
 #pragma once
 #include <TypeDefs.h>
 #include <Graphics/Colour.h>
-#include <Graphics/GraphicsContext.h>
+#include <Graphics/RenderContext.h>
 
 namespace Common::System
 {
 	class Console
 	{
 	public:
-		Console(Graphics::GraphicsContext* c);
+		Console(Graphics::RenderContext* c);
 
 		void Write(const CHAR16* str);
 		void Write(const CHAR16* fmt, ...);
@@ -61,6 +61,6 @@ namespace Common::System
 
 		~Console();
 	private:
-		Graphics::GraphicsContext* context;
+		Graphics::RenderContext* context;
 	};
 }

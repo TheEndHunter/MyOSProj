@@ -1,6 +1,6 @@
 #pragma once
 #include <TypeDefs.h>
-#include <FileSystem/ESP/FileHandle.h>
+#include <FileSystem/FileHandle.h>
 #include <FileTypes/PE/PE32OptionHeader32.h>
 #include <FileTypes/PE/PE32OptionHeader64.h>
 

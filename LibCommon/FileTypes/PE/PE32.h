@@ -9,7 +9,7 @@
 #include <FileTypes/PE/PE32SectionHeader.h>
 #include <FileTypes/PE/PE32DLLCharacteristics.h>
 #include <System/Allocator.h>
-#include <FileSystem/ESP/FileHandle.h>
+#include <FileSystem/FileHandle.h>
 
 namespace Common::FileTypes::PE
 {

@@ -2,10 +2,10 @@
 
 namespace QemuManager
 {
-    public struct Settings
+    public record struct Settings
     {
-        public List<string> Configurations;
-        public List<string> Architectures;
+        public List<string>? Configurations;
+        public List<string>? Architectures;
         public GitConfiguration? OVMFConfiguration;
 
         public Settings(IConfigurationRoot root) : this()

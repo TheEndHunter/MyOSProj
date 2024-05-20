@@ -5,10 +5,9 @@
 #include <EFIConsole.h>
 #include <Graphics/Colour.h>
 #include <Environment/Unicode.h>
-#include <FileSystem/ESP/FileSystemContext.h>
+#include <FileSystem/ESP/ESP_FS_Context.h>
 #include <System/Allocator.h>
 #include <System//AllocatorStatus.h>
-
 #include <FileTypes/PE/PE32.h>
 #include <Graphics/RenderContext.h>
 
@@ -207,7 +206,7 @@ namespace Bootloader
         Print(sysTbl, u" Height: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
         PrintDebug(sysTbl, UTF16::ToString(h));
 
-        UINTN fsCount = FileSystemContext::QueryFSCount(sysTbl, imgHndl);
+        UINTN fsCount = ESP_FS_Context::QueryFSCount(sysTbl, imgHndl);
         Print(sysTbl, u"Number of File Systems: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
         PrintDebug(sysTbl, UTF16::ToString(fsCount));
 
@@ -217,9 +216,9 @@ namespace Bootloader
         }
 
         EFI_STATUS fsStatus = EFI_STATUS::SUCCESS;
-        FileSystemContext sysFs = FileSystemContext::GetFileSystem(sysTbl, imgHndl, u"SYS", &fsStatus);
+        ESP_FS_Context sysFs = ESP_FS_Context::GetFileSystem(sysTbl, imgHndl, u"SYS", &fsStatus);
 
-        if (sysFs == FileSystemContext::EmptyFS)
+        if (sysFs == ESP_FS_Context::EmptyFS)
         {
             ThrowException(sysTbl, imgHndl, u"Could Not Locate File System with Label: \"Sys\"", fsStatus);
         }

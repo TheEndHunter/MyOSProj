@@ -1,6 +1,6 @@
 ﻿namespace QemuManager
 {
-    public struct GitConfiguration
+    public record struct GitConfiguration
     {
         public string Author;
         public string Repo;

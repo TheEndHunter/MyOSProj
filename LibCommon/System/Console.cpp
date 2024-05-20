@@ -1,11 +1,11 @@
 #include "Console.h"
 #include "Graphics/Colour.h"
-#include "Graphics/GraphicsContext.h"
+#include "Graphics/RenderContext.h"
 #include "TypeDefs.h"
 
 namespace Common::System
 {
-	Console::Console(Graphics::GraphicsContext* c)
+	Console::Console(Graphics::RenderContext* c)
 	{
 		context = c;
 	}

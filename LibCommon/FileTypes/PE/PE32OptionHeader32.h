@@ -1,7 +1,7 @@
 #pragma once
 #include <TypeDefs.h>
 #include <FileTypes/PE/PE32DLLCharacteristics.h>
-#include <FileSystem/ESP/FileHandle.h>
+#include <FileSystem/FileHandle.h>
 #include <FileTypes/PE/PE32DataDirectory.h>
 
 namespace Common::FileTypes::PE

@@ -1,8 +1,8 @@
 #pragma once
 #include <Typedefs.h>
-#include <FileSystem/ESP/FileHandle.h>
+#include <FileSystem/FileHandle.h>
 
-namespace Common::FileTypes::PCSF
+namespace Common::Graphics::Font::PCSF
 {
 	const CCHAR PCSF2_MAGIC[4] = { 0x72,0xb5,0x4a,0x86 };
 

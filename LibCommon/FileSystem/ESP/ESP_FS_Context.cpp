@@ -1,21 +1,22 @@
-#include "FileSystemContext.h"
+#include "ESP_FS_Context.h"
 #include <Protocols/EFI_LOADED_IMAGE_PROTOCOL.h>
-#include <FileSystem/ESP/FileAttribute.h>
+#include <FileSystem/FileAttribute.h>
 #include <Protocols/IO/Media/EFI_FILE_INFO.h>
 #include <Protocols/IO/Media/EFI_FILE_SYSTEM_VOLUME_LABEL.h>
+#include <Environment/Unicode.h>
 
 namespace Common::FileSystem::ESP
 {
-	const FileSystemContext FileSystemContext::EmptyFS = FileSystemContext();
+	const ESP_FS_Context ESP_FS_Context::EmptyFS = ESP_FS_Context();
 
 	const CHAR16* RootPath = u"\\";
 
-	FileSystemContext::FileSystemContext(EFI::EFI_HANDLE hnd, EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL* fsp)
+	ESP_FS_Context::ESP_FS_Context(EFI::EFI_HANDLE hnd, EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL* fsp)
 		: _deviceHandle(hnd), _fs(fsp), _root(nullptr), _cwd(nullptr), _isVolumeOpen(false), LastStatus(EFI::EFI_STATUS::SUCCESS)
 	{
 	};
 
-	const UINTN FileSystemContext::QueryFSCount(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd)
+	const UINTN ESP_FS_Context::QueryFSCount(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd)
 	{
 		EFI::EFI_HANDLE* handles;
 		UINTN fsCount;
@@ -24,7 +25,7 @@ namespace Common::FileSystem::ESP
 		return fsCount;
 	};
 
-	FileSystemContext FileSystemContext::GetBootFS(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd)
+	ESP_FS_Context ESP_FS_Context::GetBootFS(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd)
 	{
 		EFI::EFI_LOADED_IMAGE_PROTOCOL* lImg = nullptr;
 		EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL* fsProtocol = nullptr;
@@ -35,10 +36,10 @@ namespace Common::FileSystem::ESP
 
 		sysTable->BootServices->CloseProtocol(hnd, &EFI::EFI_LOADED_IMAGE_PROTOCOL_GUID, hnd, nullptr);
 
-		return FileSystemContext(lImg->DeviceHandle, fsProtocol);
+		return ESP_FS_Context(lImg->DeviceHandle, fsProtocol);
 	};
 
-	FileSystemContext FileSystemContext::GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, UINTN index, OUT EFI::EFI_STATUS* status)
+	ESP_FS_Context ESP_FS_Context::GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, UINTN index, OUT EFI::EFI_STATUS* status)
 	{
 		EFI::EFI_HANDLE* handles;
 		UINTN fsCount;
@@ -67,10 +68,10 @@ namespace Common::FileSystem::ESP
 		}
 
 		sysTable->BootServices->FreePool(handles);
-		return FileSystemContext(FsHndl, fsProtocol);
+		return ESP_FS_Context(FsHndl, fsProtocol);
 	}
 
-	FileSystemContext FileSystemContext::GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, const CHAR16* label, OUT EFI::EFI_STATUS* status, Environment::StringComparisonMode mode, Environment::StringCulture culture)
+	ESP_FS_Context ESP_FS_Context::GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, const CHAR16* label, OUT EFI::EFI_STATUS* status, Environment::StringComparisonMode mode, Environment::StringCulture culture)
 	{
 		if (Common::Environment::UTF16::IsNullOrEmpty(label))
 		{
@@ -92,7 +93,7 @@ namespace Common::FileSystem::ESP
 			return EmptyFS;
 		};
 
-		FileSystemContext fsContext = EmptyFS;
+		ESP_FS_Context fsContext = EmptyFS;
 		for (UINTN fsIndex = 0; fsIndex < fsCount; fsIndex++)
 		{
 			EFI::EFI_HANDLE fsHndl = handles[fsIndex];
@@ -170,7 +171,7 @@ namespace Common::FileSystem::ESP
 			{
 				sysTable->BootServices->FreePool(volLbl);
 				root->Close(root);
-				fsContext = FileSystemContext(fsHndl, fsProtocol);
+				fsContext = ESP_FS_Context(fsHndl, fsProtocol);
 				break;
 			}
 
@@ -190,7 +191,7 @@ namespace Common::FileSystem::ESP
 		return fsContext;
 	};
 
-	BOOLEAN FileSystemContext::OpenVolume()
+	BOOLEAN ESP_FS_Context::OpenVolume()
 	{
 		if (_fs == nullptr)
 		{
@@ -213,7 +214,7 @@ namespace Common::FileSystem::ESP
 		return true;
 	};
 
-	BOOLEAN FileSystemContext::OpenDirectory(const CHAR16* path)
+	BOOLEAN ESP_FS_Context::OpenDirectory(const CHAR16* path)
 	{
 		if (_fs == nullptr)
 		{
@@ -239,7 +240,7 @@ namespace Common::FileSystem::ESP
 		return true;
 	};
 
-	void FileSystemContext::CloseVolume(EFI::EFI_SYSTEM_TABLE* sysTbl, EFI::EFI_HANDLE imgHndl)
+	void ESP_FS_Context::CloseVolume(EFI::EFI_SYSTEM_TABLE* sysTbl, EFI::EFI_HANDLE imgHndl)
 	{
 		if (_fs == nullptr)
 		{
@@ -263,7 +264,7 @@ namespace Common::FileSystem::ESP
 		sysTbl->BootServices->CloseProtocol(_deviceHandle, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, nullptr, imgHndl);
 	};
 
-	Common::FileSystem::ESP::VolumeInfo FileSystemContext::GetVolumeInfo(EFI::EFI_SYSTEM_TABLE* sysTable)
+	Common::FileSystem::ESP::VolumeInfo ESP_FS_Context::GetVolumeInfo(EFI::EFI_SYSTEM_TABLE* sysTable)
 	{
 		UINTN size = 0;
 		LastStatus = _root->GetInfo(_root, &EFI::EFI_FILE_SYSTEM_INFO_ID, &size, nullptr);
@@ -292,7 +293,7 @@ namespace Common::FileSystem::ESP
 		return volumeInfo;
 	};
 
-	Common::FileSystem::ESP::VolumeLabel FileSystemContext::GetVolumeLabel(EFI::EFI_SYSTEM_TABLE* sysTable)
+	Common::FileSystem::ESP::VolumeLabel ESP_FS_Context::GetVolumeLabel(EFI::EFI_SYSTEM_TABLE* sysTable)
 	{
 		UINTN size = 0;
 		EFI::EFI_FILE_SYSTEM_VOLUME_LABEL* info = nullptr;
@@ -329,7 +330,7 @@ namespace Common::FileSystem::ESP
 		return volLabel;
 	}
 
-	Common::FileSystem::ESP::FileInfo FileSystemContext::GetDirectoryInfo(EFI::EFI_SYSTEM_TABLE* sysTable)
+	Common::FileSystem::ESP::FileInfo ESP_FS_Context::GetDirectoryInfo(EFI::EFI_SYSTEM_TABLE* sysTable)
 	{
 		UINTN size = 0;
 		EFI::EFI_FILE_SYSTEM_INFO* info = nullptr;
@@ -358,7 +359,7 @@ namespace Common::FileSystem::ESP
 		return Empty_FileInfo;
 	}
 
-	void FileSystemContext::CloseDirectory()
+	void ESP_FS_Context::CloseDirectory()
 	{
 		if (_fs == nullptr)
 		{
@@ -373,7 +374,7 @@ namespace Common::FileSystem::ESP
 		}
 	};
 
-	Common::FileSystem::ESP::FileInfo FileSystemContext::GetFileInfo(EFI::EFI_SYSTEM_TABLE* sysTable, const CHAR16* path)
+	Common::FileSystem::ESP::FileInfo ESP_FS_Context::GetFileInfo(EFI::EFI_SYSTEM_TABLE* sysTable, const CHAR16* path)
 	{
 		/*Check path to see if it's null or empty, if it is return an empty FileSystem, putting INVALID_PARAMETER status into LastStatus Member*/
 		if (Common::Environment::UTF16::IsNullOrEmpty(path))
@@ -446,7 +447,7 @@ namespace Common::FileSystem::ESP
 		return fileInfo;
 	}
 
-	FileHandle FileSystemContext::OpenFile(EFI::EFI_SYSTEM_TABLE* sysTable, FileInfo* fileInfo, FileMode mode, UINT64 attribs)
+	FileHandle ESP_FS_Context::OpenFile(EFI::EFI_SYSTEM_TABLE* sysTable, FileInfo* fileInfo, FileMode mode, UINT64 attribs)
 	{
 		if (_fs == nullptr)
 		{
@@ -486,7 +487,7 @@ namespace Common::FileSystem::ESP
 		return FileHandle::Create(file, fileInfo, mode, attribs);
 	};
 
-	FileHandle FileSystemContext::CreateFile(EFI::EFI_SYSTEM_TABLE* sysTable, const CHAR16* name, UINT64 attribs)
+	FileHandle ESP_FS_Context::CreateFile(EFI::EFI_SYSTEM_TABLE* sysTable, const CHAR16* name, UINT64 attribs)
 	{
 		if (_fs == nullptr)
 		{
@@ -508,7 +509,7 @@ namespace Common::FileSystem::ESP
 		return FileHandle::Create(file,&i, FileMode::Create, attribs);
 	}
 
-	void FileSystemContext::CloseFile(EFI::EFI_SYSTEM_TABLE* sysTable, FileHandle& handle)
+	void ESP_FS_Context::CloseFile(EFI::EFI_SYSTEM_TABLE* sysTable, FileHandle& handle)
 	{
 		if (_fs == nullptr)
 		{

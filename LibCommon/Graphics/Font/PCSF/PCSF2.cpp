@@ -1,6 +1,6 @@
-#include <FileTypes/PCSF/PCSF2.h>
+#include <Graphics/Font/PCSF/PCSF2.h>
 
-namespace Common::FileTypes::PCSF
+namespace Common::Graphics::Font::PCSF
 {
 	PCSF2::PCSF2()
 	{
