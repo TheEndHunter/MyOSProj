@@ -15,27 +15,4 @@ namespace Common::Graphics
 		Format((PixelFormat)mode->Info->PixelFormat), BitMask(PixelBitMask(mode->Info->PixelInformation)), FrameBufferBase(mode->FrameBufferBase)
 	{
 	}
-
-	PixelBitMask::PixelBitMask()
-	{
-		RedMask = 0;
-		GreenMask = 0;
-		BlueMask = 0;
-		AlphaMask = 0;
-	};
-
-	PixelBitMask::PixelBitMask(UINT32 red, UINT32 green, UINT32 blue, UINT32 alpha)
-	{
-		RedMask = red;
-		GreenMask = green;
-		BlueMask = blue;
-		AlphaMask = alpha;
-	};
-	PixelBitMask::PixelBitMask(EFI::EFI_PIXEL_BITMASK& mask)
-	{
-		RedMask = mask.RedMask;
-		GreenMask = mask.GreenMask;
-		BlueMask = mask.BlueMask;
-		AlphaMask = mask.ReservedMask;
-	};
 }

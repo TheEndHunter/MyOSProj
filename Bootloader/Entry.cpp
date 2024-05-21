@@ -11,7 +11,6 @@
 #include <FileTypes/PE/PE32.h>
 #include <Graphics/RenderContext.h>
 
-
 namespace Bootloader
 {
     using namespace Common::Environment;
@@ -190,8 +189,6 @@ namespace Bootloader
             ThrowException(sysTbl, imgHndl, u"Could Not Set Highest Resolution Mode", EFI::EFI_STATUS::DEVICE_ERROR);
         }
 
-        WaitForKey(sysTbl);
-
         render->ClearScreen(Colours::White);
 
         sysTbl->ConOut->SetCursorPosition(sysTbl->ConOut, 0, 0);
@@ -249,6 +246,8 @@ namespace Bootloader
         
         PE32 krnlPE = PE32(&kernelHandle);
 
+		sysFs.CloseFile(sysTbl,kernelHandle);
+
         PrintDebug(sysTbl, u"Kernel Loaded");
 
         if (!krnlPE.IsDosHdrValid())
@@ -274,6 +273,7 @@ namespace Bootloader
             Exit(sysTbl, imgHndl, Common::System::ToEfiStatus(Common::System::Allocator::LastStatus()));
             //ThrowException(sysTbl, imgHndl, u"Invalid PE32 Section Header", EFI::EFI_STATUS::INVALID_PARAMETER);
         }
+
 
         PrintDebug(sysTbl, UTF16::ToHex(krnlPE.OptHdrCommon.AddressOfEntryPoint));
 
@@ -348,9 +348,10 @@ namespace Bootloader
         Print(sysTbl, UTF16::ToString(monitor->GetPixelFormat()), EFI::EFI_CONSOLE_COLOR::DEBUG);
         Print(sysTbl, u" Pixels Per Scanline: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
         Print(sysTbl, UTF16::ToString(monitor->GetPixelsPerScanLine()));
-        
+
         WaitForKey(sysTbl);
         render->ClearScreen(Colours::Aqua);
+        sysTbl->ConOut->SetCursorPosition(sysTbl->ConOut, 0, 0);
         UINTN status = main(render, monitor);
 
         Print(sysTbl, u"Kernel Returned: ", EFI::EFI_CONSOLE_COLOR::DEBUG);

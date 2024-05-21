@@ -5,7 +5,6 @@
 #include <Graphics/Pixel.h>
 #include <Graphics/PixelBitMask.h>
 #include <Graphics/PixelFormat.h>
-
 #include <Protocols/Graphics/EFI_GRAPHICS_OUTPUT_PROTOCOL.h>
 
 

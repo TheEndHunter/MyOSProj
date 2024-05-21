@@ -108,6 +108,7 @@
     <ClCompile Include="Graphics\MonitorContext.cpp" />
     <ClCompile Include="Graphics\MonitorMode.cpp" />
     <ClCompile Include="Graphics\Pixel.cpp" />
+    <ClCompile Include="Graphics\PixelBitMask.cpp" />
     <ClCompile Include="Graphics\RenderContext.cpp" />
     <ClCompile Include="System\Allocator.cpp" />
     <ClCompile Include="System\Console.cpp" />

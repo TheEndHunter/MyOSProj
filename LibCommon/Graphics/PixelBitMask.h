@@ -7,8 +7,8 @@ namespace Common::Graphics
 	struct PixelBitMask
 	{
 	public:
-		const PixelBitMask();
-		const PixelBitMask(UINT32 red, UINT32 green, UINT32 blue, UINT32 alpha);
+		PixelBitMask();
+		PixelBitMask(const UINT32 red, const  UINT32 green, const  UINT32 blue, const  UINT32 alpha);
 		PixelBitMask(EFI::EFI_PIXEL_BITMASK& mask);
 
 		UINT32 RedMask;

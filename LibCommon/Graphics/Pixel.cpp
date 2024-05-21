@@ -37,6 +37,7 @@ namespace Common::Graphics
 		B3 = b3;
 		B4 = b4;
 	}
+
 	Pixel2Bpp::Pixel2Bpp()
 	{
 		B1 = 0;

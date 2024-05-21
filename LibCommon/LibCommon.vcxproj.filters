@@ -239,10 +239,13 @@
     <ClCompile Include="Graphics\Font\PCSF\PCSF2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Graphics\Pixel.cpp">
+    <ClCompile Include="Debugging\EFI\EFIDebugger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Debugging\EFI\EFIDebugger.cpp">
+    <ClCompile Include="Graphics\PixelBitMask.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Pixel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
