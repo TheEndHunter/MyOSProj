@@ -11,8 +11,8 @@ namespace Common::FileSystem::ESP
 
 	const CHAR16* RootPath = u"\\";
 
-	ESP_FS_Context::ESP_FS_Context(EFI::EFI_HANDLE hnd, EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL* fsp)
-		: _deviceHandle(hnd), _fs(fsp), _root(nullptr), _cwd(nullptr), _isVolumeOpen(false), LastStatus(EFI::EFI_STATUS::SUCCESS)
+	ESP_FS_Context::ESP_FS_Context(EFI::EFI_SYSTEM_TABLE* sysTbl, EFI::EFI_HANDLE imgHndl, EFI::EFI_HANDLE devHNDL, EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL* fsp)
+		: _sysTable(sysTbl), _deviceHandle(devHNDL),_imgHndl(imgHndl), _fs(fsp), _root(nullptr), _cwd(nullptr), _isVolumeOpen(false), LastStatus(EFI::EFI_STATUS::SUCCESS)
 	{
 	};
 
@@ -36,7 +36,7 @@ namespace Common::FileSystem::ESP
 
 		sysTable->BootServices->CloseProtocol(hnd, &EFI::EFI_LOADED_IMAGE_PROTOCOL_GUID, hnd, nullptr);
 
-		return ESP_FS_Context(lImg->DeviceHandle, fsProtocol);
+		return ESP_FS_Context(sysTable, hnd,lImg->DeviceHandle, fsProtocol);
 	};
 
 	ESP_FS_Context ESP_FS_Context::GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, UINTN index, OUT EFI::EFI_STATUS* status)
@@ -68,7 +68,7 @@ namespace Common::FileSystem::ESP
 		}
 
 		sysTable->BootServices->FreePool(handles);
-		return ESP_FS_Context(FsHndl, fsProtocol);
+		return ESP_FS_Context(sysTable, hnd, FsHndl, fsProtocol);
 	}
 
 	ESP_FS_Context ESP_FS_Context::GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, const CHAR16* label, OUT EFI::EFI_STATUS* status, Environment::StringComparisonMode mode, Environment::StringCulture culture)
@@ -171,7 +171,7 @@ namespace Common::FileSystem::ESP
 			{
 				sysTable->BootServices->FreePool(volLbl);
 				root->Close(root);
-				fsContext = ESP_FS_Context(fsHndl, fsProtocol);
+				fsContext = ESP_FS_Context(sysTable,hnd,fsHndl, fsProtocol);
 				break;
 			}
 
@@ -240,7 +240,7 @@ namespace Common::FileSystem::ESP
 		return true;
 	};
 
-	void ESP_FS_Context::CloseVolume(EFI::EFI_SYSTEM_TABLE* sysTbl, EFI::EFI_HANDLE imgHndl)
+	void ESP_FS_Context::CloseVolume()
 	{
 		if (_fs == nullptr)
 		{
@@ -261,10 +261,10 @@ namespace Common::FileSystem::ESP
 			_isVolumeOpen = false;
 		}
 
-		sysTbl->BootServices->CloseProtocol(_deviceHandle, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, nullptr, imgHndl);
+		_sysTable->BootServices->CloseProtocol(_deviceHandle, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, nullptr, _imgHndl);
 	};
 
-	Common::FileSystem::VolumeInfo ESP_FS_Context::GetVolumeInfo(EFI::EFI_SYSTEM_TABLE* sysTable)
+	Common::FileSystem::VolumeInfo ESP_FS_Context::GetVolumeInfo()
 	{
 		UINTN size = 0;
 		LastStatus = _root->GetInfo(_root, &EFI::EFI_FILE_SYSTEM_INFO_ID, &size, nullptr);
@@ -275,7 +275,7 @@ namespace Common::FileSystem::ESP
 		};
 
 		EFI::EFI_FILE_SYSTEM_INFO* info = nullptr;
-		LastStatus = sysTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, size, (void**)&info);
+		LastStatus = _sysTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, size, (void**)&info);
 		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
 		{
 			return Empty_VolInfo;
@@ -285,7 +285,7 @@ namespace Common::FileSystem::ESP
 
 		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
 		{
-			LastStatus = sysTable->BootServices->FreePool(info);
+			LastStatus = _sysTable->BootServices->FreePool(info);
 			return Empty_VolInfo;
 		}
 
@@ -293,7 +293,7 @@ namespace Common::FileSystem::ESP
 		return volumeInfo;
 	};
 
-	Common::FileSystem::VolumeLabel ESP_FS_Context::GetVolumeLabel(EFI::EFI_SYSTEM_TABLE* sysTable)
+	Common::FileSystem::VolumeLabel ESP_FS_Context::GetVolumeLabel()
 	{
 		UINTN size = 0;
 		EFI::EFI_FILE_SYSTEM_VOLUME_LABEL* info = nullptr;
@@ -310,7 +310,7 @@ namespace Common::FileSystem::ESP
 			return Empty_VolLabel;
 		};
 
-		LastStatus = sysTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, size, (void**)&info);
+		LastStatus = _sysTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, size, (void**)&info);
 		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
 		{
 			return Empty_VolLabel;
@@ -320,17 +320,17 @@ namespace Common::FileSystem::ESP
 
 		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
 		{
-			LastStatus = sysTable->BootServices->FreePool(info);
+			LastStatus = _sysTable->BootServices->FreePool(info);
 			return Empty_VolLabel;
 		}
 
 		VolumeLabel volLabel = VolumeLabel(*info);
-		LastStatus = sysTable->BootServices->FreePool(info);
+		LastStatus = _sysTable->BootServices->FreePool(info);
 
 		return volLabel;
 	}
 
-	Common::FileSystem::FileInfo ESP_FS_Context::GetDirectoryInfo(EFI::EFI_SYSTEM_TABLE* sysTable)
+	Common::FileSystem::FileInfo ESP_FS_Context::GetDirectoryInfo()
 	{
 		UINTN size = 0;
 		EFI::EFI_FILE_SYSTEM_INFO* info = nullptr;
@@ -341,7 +341,7 @@ namespace Common::FileSystem::ESP
 			return Empty_FileInfo;
 		};
 
-		LastStatus = sysTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, size, (void**)&info);
+		LastStatus = _sysTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, size, (void**)&info);
 		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
 		{
 			return Empty_FileInfo;
@@ -351,7 +351,7 @@ namespace Common::FileSystem::ESP
 
 		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
 		{
-			LastStatus = sysTable->BootServices->FreePool(info);
+			LastStatus = _sysTable->BootServices->FreePool(info);
 			return Empty_FileInfo;
 		}
 
@@ -374,7 +374,7 @@ namespace Common::FileSystem::ESP
 		}
 	};
 
-	Common::FileSystem::FileInfo ESP_FS_Context::GetFileInfo(EFI::EFI_SYSTEM_TABLE* sysTable, const CHAR16* path)
+	Common::FileSystem::FileInfo ESP_FS_Context::GetFileInfo(const CHAR16* path)
 	{
 		/*Check path to see if it's null or empty, if it is return an empty FileSystem, putting INVALID_PARAMETER status into LastStatus Member*/
 		if (Common::Environment::UTF16::IsNullOrEmpty(path))
@@ -424,7 +424,7 @@ namespace Common::FileSystem::ESP
 		size += sizeof(EFI::EFI_FILE_INFO);
 		/*Allocate a buffer for the FileInfo struct*/
 		EFI::EFI_FILE_INFO* info = nullptr;
-		LastStatus = sysTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, size, (void**)&info);
+		LastStatus = _sysTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, size, (void**)&info);
 
 		/*if the LastStatus is Not a success, return an Empty FileInfo*/
 		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
@@ -438,7 +438,7 @@ namespace Common::FileSystem::ESP
 		/*if the LastStatus is Not a success, return an Empty FileInfo*/
 		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
 		{
-			LastStatus = sysTable->BootServices->FreePool(info);
+			LastStatus = _sysTable->BootServices->FreePool(info);
 			return Empty_FileInfo;
 		}
 
@@ -447,7 +447,7 @@ namespace Common::FileSystem::ESP
 		return fileInfo;
 	}
 
-	FileHandle ESP_FS_Context::OpenFile(EFI::EFI_SYSTEM_TABLE* sysTable, FileInfo* fileInfo, FileMode mode, UINT64 attribs)
+	FileHandle ESP_FS_Context::OpenFile(FileInfo* fileInfo, FileMode mode, UINT64 attribs)
 	{
 		if (_fs == nullptr)
 		{
@@ -487,7 +487,7 @@ namespace Common::FileSystem::ESP
 		return FileHandle::Create(file, fileInfo, mode, attribs);
 	};
 
-	FileHandle ESP_FS_Context::CreateFile(EFI::EFI_SYSTEM_TABLE* sysTable, const CHAR16* name, UINT64 attribs)
+	FileHandle ESP_FS_Context::CreateFile(const CHAR16* name, UINT64 attribs)
 	{
 		if (_fs == nullptr)
 		{
@@ -503,13 +503,13 @@ namespace Common::FileSystem::ESP
 		UINTN size = 0;
 		EFI::EFI_FILE_INFO* info = nullptr;
 		LastStatus = file->GetInfo(file, &EFI::EFI_FILE_INFO_ID, &size, (void**)&info);
-		LastStatus = sysTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, size, (void**)&info);
+		LastStatus = _sysTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, size, (void**)&info);
 		LastStatus = file->GetInfo(file, &EFI::EFI_FILE_INFO_ID, &size, info);
 		FileInfo i = FileInfo::Create(info);
 		return FileHandle::Create(file,&i, FileMode::Create, attribs);
 	}
 
-	void ESP_FS_Context::CloseFile(EFI::EFI_SYSTEM_TABLE* sysTable, FileHandle& handle)
+	void ESP_FS_Context::CloseFile(FileHandle& handle)
 	{
 		if (_fs == nullptr)
 		{
@@ -523,6 +523,6 @@ namespace Common::FileSystem::ESP
 			return;
 		}
 
-		LastStatus = sysTable->BootServices->FreePool(handle._File);
+		LastStatus = _sysTable->BootServices->FreePool(handle._File);
 	}
 }

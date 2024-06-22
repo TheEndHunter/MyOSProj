@@ -150,6 +150,9 @@
     <ClInclude Include="Graphics\Font\IFont.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Environment\Unicode\UTF.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TypeDefs.cpp">
@@ -246,6 +249,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\Font\FontManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Environment\Unicode\UTF.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

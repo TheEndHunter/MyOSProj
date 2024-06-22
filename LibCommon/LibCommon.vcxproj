@@ -39,6 +39,7 @@
     <ClInclude Include="Debugging\IDebugger.h" />
     <ClInclude Include="Environment\StringComparisonMode.h" />
     <ClInclude Include="Environment\StringCulture.h" />
+    <ClInclude Include="Environment\Unicode\UTF.h" />
     <ClInclude Include="FileSystem\FileAttribute.h" />
     <ClInclude Include="FileSystem\FileHandle.h" />
     <ClInclude Include="FileSystem\FileMode.h" />
@@ -83,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Debugging\EFI\EFIDebugger.cpp" />
+    <ClCompile Include="Environment\Unicode\UTF.cpp" />
     <ClCompile Include="FileSystem\FileHandle.cpp" />
     <ClCompile Include="FileSystem\FileInfo.cpp" />
     <ClCompile Include="FileSystem\ESP\ESP_FS_Context.cpp" />

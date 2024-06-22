@@ -9,10 +9,8 @@
 #include <FileSystem/FileMode.h>
 #include <FileSystem/FileAttribute.h>
 #include <FileSystem/VolumeInfo.h>
-
 #include <FileSystem/VolumeHandle.h>
 #include <FileSystem/FileHandle.h>
-
 
 #include <Environment/StringComparisonMode.h>
 
@@ -21,8 +19,8 @@ namespace Common::FileSystem::ESP
 	class ESP_FS_Context
 	{
 	protected:
-		ESP_FS_Context(EFI::EFI_HANDLE hnd, EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL* fsp);
-		ESP_FS_Context() : _deviceHandle(nullptr), _fs(nullptr), _root(nullptr), _cwd(nullptr), _isVolumeOpen(false), LastStatus(EFI::EFI_STATUS::SUCCESS)
+		ESP_FS_Context(EFI::EFI_SYSTEM_TABLE* sysTbl, EFI::EFI_HANDLE imgHndl, EFI::EFI_HANDLE devHNDL, EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL* fsp);
+		ESP_FS_Context() : _sysTable(nullptr),_imgHndl(nullptr), _deviceHandle(nullptr), _fs(nullptr), _root(nullptr), _cwd(nullptr), _isVolumeOpen(false), LastStatus(EFI::EFI_STATUS::SUCCESS)
 		{
 		}
 		
@@ -34,26 +32,24 @@ namespace Common::FileSystem::ESP
 		static const ESP_FS_Context EmptyFS;
 
 		BOOLEAN OpenVolume();
-		void CloseVolume(EFI::EFI_SYSTEM_TABLE* sysTbl, EFI::EFI_HANDLE imgHndl);
+		void CloseVolume();
 
 		BOOLEAN OpenDirectory(const CHAR16* path);
 		void CloseDirectory();
 
-		FileHandle OpenFile(EFI::EFI_SYSTEM_TABLE* sysTable, FileInfo* fileInfo, FileMode mode, UINT64 attribs);
-		FileHandle CreateFile(EFI::EFI_SYSTEM_TABLE* sysTable, const CHAR16* name, UINT64 attribs);
-		void CloseFile(EFI::EFI_SYSTEM_TABLE* sysTable, FileHandle& handle);
+		FileHandle OpenFile(FileInfo* fileInfo, FileMode mode, UINT64 attribs);
+		FileHandle CreateFile(const CHAR16* name, UINT64 attribs);
+		void CloseFile(FileHandle& handle);
 
-		VolumeInfo GetVolumeInfo(EFI::EFI_SYSTEM_TABLE* sysTable);
-		VolumeLabel GetVolumeLabel(EFI::EFI_SYSTEM_TABLE* sysTable);
+		VolumeInfo GetVolumeInfo();
+		VolumeLabel GetVolumeLabel();
 		
-
-		FileInfo GetDirectoryInfo(EFI::EFI_SYSTEM_TABLE* sysTable);
-		FileInfo GetFileInfo(EFI::EFI_SYSTEM_TABLE* sysTable, const CHAR16* path);
+		FileInfo GetDirectoryInfo();
+		FileInfo GetFileInfo(const CHAR16* path);
 
 		bool operator ==(const ESP_FS_Context& right)
 		{
 			/*Compare all members for equality, if one fails return false, otherwise return true*/
-
 			if (_deviceHandle != right._deviceHandle)
 				return false;
 
@@ -69,6 +65,9 @@ namespace Common::FileSystem::ESP
 			if (_isVolumeOpen != right._isVolumeOpen)
 				return false;
 
+			if (_sysTable != right._sysTable)
+				return false;
+
 			return true;
 		}
 
@@ -82,6 +81,8 @@ namespace Common::FileSystem::ESP
 	private:
 		bool _isVolumeOpen;
 		EFI::EFI_HANDLE _deviceHandle;
+		EFI::EFI_SYSTEM_TABLE* _sysTable;
+		EFI::EFI_HANDLE _imgHndl;
 		EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL* _fs;
 		EFI::EFI_FILE_PROTOCOL* _root;
 		EFI::EFI_FILE_PROTOCOL* _cwd;

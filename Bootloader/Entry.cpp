@@ -222,7 +222,7 @@ namespace Bootloader
 
         sysFs.OpenVolume();
 
-        FileInfo kernel = sysFs.GetFileInfo(sysTbl, u"Kernel.bin");
+        FileInfo kernel = sysFs.GetFileInfo(u"Kernel.bin");
 
         if (sysFs.LastStatus != EFI::EFI_STATUS::SUCCESS)
         {
@@ -234,7 +234,7 @@ namespace Bootloader
             ThrowException(sysTbl, imgHndl, u"Kernel Not Found", EFI::EFI_STATUS::NOT_FOUND);
         }
 
-        FileHandle kernelHandle = sysFs.OpenFile(sysTbl, &kernel, FileMode::Read, kernel.Attribute);
+        FileHandle kernelHandle = sysFs.OpenFile(&kernel, FileMode::Read, kernel.Attribute);
 
         if (sysFs.LastStatus != EFI::EFI_STATUS::SUCCESS)
         {
