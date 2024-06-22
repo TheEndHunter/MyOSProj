@@ -1,6 +1,9 @@
 #pragma once
 #include <Typedefs.h>
 #include <FileSystem/FileHandle.h>
+#include <Graphics/Font/IFont.h>
+
+
 
 namespace Common::Graphics::Font::PCSF
 {
@@ -12,7 +15,7 @@ namespace Common::Graphics::Font::PCSF
 		UINT8* sequence;
 	};
 
-	enum PSF1Mode : UINT8
+	enum class PCSF1Mode : UINT8
 	{
 		None = 0,
 		// If this bit is set, the font face will have 512 glyphs.If it is unset, then the font face will have just 256 glyphs.
@@ -20,18 +23,19 @@ namespace Common::Graphics::Font::PCSF
 		//If this bit is set, the font face will have a unicode table.
 		MODEHASTAB = 2,
 		//Equivalent to PSF1_MODEHASTAB
-		MODESEQ = 4,
-	};
+		MODESEQ = 4
+
+	};	
 
 	const UINT16 PSF1_SEPARATOR  = 0xFFFF;
 	const UINT16 PSF1_STARTSEQ = 0xFFFE;
 
 #pragma pack(push, 1)
-	struct PSF1Hdr
+	struct PCSF1Hdr
 	{
 	public:
-		PSF1Hdr();
-		PSF1Hdr(Common::FileSystem::ESP::FileHandle* handle);
+		PCSF1Hdr();
+		PCSF1Hdr(Common::FileSystem::FileHandle* handle);
 
 		union
 		{
@@ -39,20 +43,20 @@ namespace Common::Graphics::Font::PCSF
 			UINT16 Value;
 		}Magic;
 
-		PSF1Mode Mode;
+		PCSF1Mode Mode;
 		UINT8 CharSize;
 	};
 #pragma pack(pop)
 
 #pragma pack(push, 1)
-	struct PSF1
+	struct PCSF1 : IFont
 	{
 	public:
-		PSF1();
-		PSF1(Common::FileSystem::ESP::FileHandle* handle);
-		~PSF1();
+		PCSF1();
+		PCSF1(Common::FileSystem::FileHandle* handle);
+		~PCSF1();
 
-		PSF1Hdr Header;
+		PCSF1Hdr Header;
 		UINT16 CharCount;
 		BOOLEAN IsValid();
 		UINT8* GetGlyph(UINT16 index);
@@ -61,6 +65,12 @@ namespace Common::Graphics::Font::PCSF
 		UINT8* Glyphs;
 		UnicodeSequence* UnicodeTable;
 		BOOLEAN _isValid;
+
+		// Inherited via Font
+		UINT64 GetCharWidth() override;
+		UINT64 GetCharHeight() override;
+		BOOLEAN SupportsUnicode() override;
+		VOID_PTR GetGlyph(UINT64 codePoint) override;
 	};
 #pragma pack(pop)
 }

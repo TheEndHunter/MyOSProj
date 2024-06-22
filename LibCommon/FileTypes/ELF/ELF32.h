@@ -113,7 +113,7 @@ namespace Common::FileTypes::ELF
 	struct ELF32
 	{
 	public:
-		ELF32(Common::FileSystem::ESP::FileHandle* handle);
+		ELF32(Common::FileSystem::FileHandle* handle);
 		ElfHeader32 EntryHeader;
 		ElfProgramHeader32* ProgHeader;
 		ElfSectionHeader32* SectHeader;

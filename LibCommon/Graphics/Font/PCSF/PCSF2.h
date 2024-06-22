@@ -1,26 +1,27 @@
 #pragma once
 #include <Typedefs.h>
 #include <FileSystem/FileHandle.h>
+#include <Graphics/Font/IFont.h>
 
 namespace Common::Graphics::Font::PCSF
 {
 	const CCHAR PCSF2_MAGIC[4] = { 0x72,0xb5,0x4a,0x86 };
 
-	enum PCSF2Flags : UINT32
+	enum class PCSF2Flags : UINT32
 	{
 		None = 0x00000000,
 		HasUnicodeTable = 0x00000001,
 	};
 
-	const UINT16 PSF1_SEPARATOR  = 0xFFFF;
-	const UINT16 PSF1_STARTSEQ = 0xFFFE;
+	const UINT16 PSF2_SEPARATOR  = 0xFFFF;
+	const UINT16 PSF2_STARTSEQ = 0xFFFE;
 
 #pragma pack(push, 1)
 	struct PCSF2Hdr
 	{
 	public:
 		PCSF2Hdr();
-		PCSF2Hdr(Common::FileSystem::ESP::FileHandle* handle);
+		PCSF2Hdr(Common::FileSystem::FileHandle* handle);
 
 		union
 		{
@@ -38,11 +39,11 @@ namespace Common::Graphics::Font::PCSF
 #pragma pack(pop)
 
 #pragma pack(push, 1)
-	struct PCSF2
+	struct PCSF2 : IFont
 	{
 	public:
 		PCSF2();
-		PCSF2(Common::FileSystem::ESP::FileHandle* handle);
+		PCSF2(Common::FileSystem::FileHandle* handle);
 
 		PCSF2Hdr Header;
 		BOOLEAN IsValid();
@@ -61,6 +62,12 @@ namespace Common::Graphics::Font::PCSF
 			UINT64* _64;
 		}Glyphs;
 		BOOLEAN _isValid;
+
+		// Inherited via IFont
+		UINT64 GetCharWidth() override;
+		UINT64 GetCharHeight() override;
+		BOOLEAN SupportsUnicode() override;
+		VOID_PTR GetGlyph(UINT64 codePoint) override;
 	};
 #pragma pack(pop)
 }

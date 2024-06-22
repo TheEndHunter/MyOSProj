@@ -95,7 +95,7 @@ namespace Common::FileTypes::PE
 	public:
 		PE32Header();
 
-		PE32Header(FileSystem::ESP::FileHandle* handle);
+		PE32Header(FileSystem::FileHandle* handle);
 
 		union
 		{

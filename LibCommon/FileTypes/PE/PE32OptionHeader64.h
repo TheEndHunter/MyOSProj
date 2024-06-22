@@ -10,7 +10,7 @@ namespace Common::FileTypes::PE
 	struct PE32OptionHeader64
 	{
     public:
-        PE32OptionHeader64(FileSystem::ESP::FileHandle* handle);
+        PE32OptionHeader64(FileSystem::FileHandle* handle);
         /*
         *  NT additional fields
         */

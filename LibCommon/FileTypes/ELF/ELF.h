@@ -11,7 +11,7 @@ namespace Common::FileTypes::ELF
 	struct ELF
 	{
 	public:
-		ELF(Common::FileSystem::ESP::FileHandle* handle);
+		ELF(Common::FileSystem::FileHandle* handle);
 
 		BOOLEAN IsValidElf();
 

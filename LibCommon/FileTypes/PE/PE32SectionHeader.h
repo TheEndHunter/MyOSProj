@@ -95,7 +95,7 @@ namespace Common::FileTypes::PE
 	{
 	public:
 		PE32SectionHeader();
-		PE32SectionHeader(FileSystem::ESP::FileHandle* handle);
+		PE32SectionHeader(FileSystem::FileHandle* handle);
 
 		CCHAR Name[8];
 

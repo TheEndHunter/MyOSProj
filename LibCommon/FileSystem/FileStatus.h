@@ -2,7 +2,7 @@
 #include <TypeDefs.h>
 
 
-namespace Common::FileSystem::ESP
+namespace Common::FileSystem
 {
 	/* All Status enums for file status */
 	enum FileStatus

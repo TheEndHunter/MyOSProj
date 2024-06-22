@@ -44,7 +44,7 @@ namespace Common::FileTypes::PE
 	{
 	public:
 		PE32DataDirectory();
-		PE32DataDirectory(Common::FileSystem::ESP::FileHandle* hndl);
+		PE32DataDirectory(Common::FileSystem::FileHandle* hndl);
 		UINT32 VirtualAddress;
 		UINT32 Size;
 	};

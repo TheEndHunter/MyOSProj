@@ -3,7 +3,7 @@
 
 namespace Common::FileTypes::PE
 {
-	PE32OptionHeader32::PE32OptionHeader32(FileSystem::ESP::FileHandle* handle)
+	PE32OptionHeader32::PE32OptionHeader32(FileSystem::FileHandle* handle)
 	{
 		handle->Read<UINT32>(&BaseOfData);
 		handle->Read<UINT32>(&ImageBase);

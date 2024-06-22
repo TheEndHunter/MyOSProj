@@ -264,7 +264,7 @@ namespace Common::FileSystem::ESP
 		sysTbl->BootServices->CloseProtocol(_deviceHandle, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, nullptr, imgHndl);
 	};
 
-	Common::FileSystem::ESP::VolumeInfo ESP_FS_Context::GetVolumeInfo(EFI::EFI_SYSTEM_TABLE* sysTable)
+	Common::FileSystem::VolumeInfo ESP_FS_Context::GetVolumeInfo(EFI::EFI_SYSTEM_TABLE* sysTable)
 	{
 		UINTN size = 0;
 		LastStatus = _root->GetInfo(_root, &EFI::EFI_FILE_SYSTEM_INFO_ID, &size, nullptr);
@@ -293,7 +293,7 @@ namespace Common::FileSystem::ESP
 		return volumeInfo;
 	};
 
-	Common::FileSystem::ESP::VolumeLabel ESP_FS_Context::GetVolumeLabel(EFI::EFI_SYSTEM_TABLE* sysTable)
+	Common::FileSystem::VolumeLabel ESP_FS_Context::GetVolumeLabel(EFI::EFI_SYSTEM_TABLE* sysTable)
 	{
 		UINTN size = 0;
 		EFI::EFI_FILE_SYSTEM_VOLUME_LABEL* info = nullptr;
@@ -330,7 +330,7 @@ namespace Common::FileSystem::ESP
 		return volLabel;
 	}
 
-	Common::FileSystem::ESP::FileInfo ESP_FS_Context::GetDirectoryInfo(EFI::EFI_SYSTEM_TABLE* sysTable)
+	Common::FileSystem::FileInfo ESP_FS_Context::GetDirectoryInfo(EFI::EFI_SYSTEM_TABLE* sysTable)
 	{
 		UINTN size = 0;
 		EFI::EFI_FILE_SYSTEM_INFO* info = nullptr;
@@ -374,7 +374,7 @@ namespace Common::FileSystem::ESP
 		}
 	};
 
-	Common::FileSystem::ESP::FileInfo ESP_FS_Context::GetFileInfo(EFI::EFI_SYSTEM_TABLE* sysTable, const CHAR16* path)
+	Common::FileSystem::FileInfo ESP_FS_Context::GetFileInfo(EFI::EFI_SYSTEM_TABLE* sysTable, const CHAR16* path)
 	{
 		/*Check path to see if it's null or empty, if it is return an empty FileSystem, putting INVALID_PARAMETER status into LastStatus Member*/
 		if (Common::Environment::UTF16::IsNullOrEmpty(path))

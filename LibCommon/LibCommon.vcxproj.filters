@@ -21,9 +21,6 @@
     <ClInclude Include="Graphics\Colour.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Graphics\GraphicsContext.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="System\Console.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -33,7 +30,7 @@
     <ClInclude Include="FileSystem\ESP\ESP_FS_Context.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Graphics\Font\Font.h">
+    <ClInclude Include="Graphics\Font\FontManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Numerics\Math.h">
@@ -150,12 +147,12 @@
     <ClInclude Include="Debugging\EFI\EFIDebugger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\Font\IFont.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TypeDefs.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\GraphicsContext.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="System\Console.cpp">
@@ -246,6 +243,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\Pixel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Font\FontManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

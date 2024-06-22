@@ -40,7 +40,7 @@ namespace Common::FileTypes::PE
 		PEHeaderOffset = 0;
 	}
 
-	DOSHeader::DOSHeader(Common::FileSystem::ESP::FileHandle* handle)
+	DOSHeader::DOSHeader(Common::FileSystem::FileHandle* handle)
 	{
 		handle->SetPosition(0UL);
 		handle->Read<UINT16>(&Magic.Value);

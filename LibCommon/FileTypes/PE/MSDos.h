@@ -9,7 +9,7 @@ namespace Common::FileTypes::PE
 	{
 	public:
 		DOSHeader();
-		DOSHeader(Common::FileSystem::ESP::FileHandle* handle);
+		DOSHeader(Common::FileSystem::FileHandle* handle);
 
 		union
 		{

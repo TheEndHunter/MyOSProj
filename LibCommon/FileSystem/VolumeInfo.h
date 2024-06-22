@@ -6,7 +6,7 @@
 #include <Environment/Unicode.h>
 #include <Protocols/IO/Media/EFI_FILE_SYSTEM_VOLUME_LABEL.h>
 
-namespace Common::FileSystem::ESP
+namespace Common::FileSystem
 {
 	struct VolumeInfo
 	{

@@ -7,7 +7,7 @@ namespace Common::FileTypes::PE
 		VirtualAddress = 0;
 		Size = 0;
 	}
-	PE32DataDirectory::PE32DataDirectory(Common::FileSystem::ESP::FileHandle* hndl)
+	PE32DataDirectory::PE32DataDirectory(Common::FileSystem::FileHandle* hndl)
 	{
 		hndl->Read<UINT32>(&VirtualAddress);
 		hndl->Read<UINT32>(&Size);

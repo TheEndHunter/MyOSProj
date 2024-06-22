@@ -14,7 +14,7 @@ namespace Common::FileTypes::PE
 		BaseOfCode = 0;
 	}
 
-	PE32OptionHeader::PE32OptionHeader(FileSystem::ESP::FileHandle* handle)
+	PE32OptionHeader::PE32OptionHeader(FileSystem::FileHandle* handle)
 	{
 		handle->Read<UINT16>(&Magic.Value);
 		handle->Read<UINT8>(&MajorLinkerVersion);

@@ -2,7 +2,7 @@
 #include <TypeDefs.h>
 #include <Protocols/IO/Media/EFI_FILE_ATTRIBUTES.h>
 
-namespace Common::FileSystem::ESP
+namespace Common::FileSystem
 {
 	enum FileAttribute : UINT64
 	{

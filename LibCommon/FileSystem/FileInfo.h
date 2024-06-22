@@ -4,7 +4,7 @@
 #include <Protocols/IO/Media/EFI_FILE_PROTOCOL.h>
 #include <Protocols/IO/Media/EFI_FILE_INFO.h>
 
-namespace Common::FileSystem::ESP
+namespace Common::FileSystem
 {
 	struct FileInfo
 	{

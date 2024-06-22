@@ -1,6 +1,6 @@
 #include "FileHandle.h"
 
-namespace Common::FileSystem::ESP
+namespace Common::FileSystem
 {
 	FileHandle FileHandle::Create(EFI::EFI_FILE_PROTOCOL* file, FileInfo* i, FileMode mode, UINT64 attribs)
 	{

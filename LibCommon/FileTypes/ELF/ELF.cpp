@@ -2,7 +2,7 @@
 
 namespace Common::FileTypes::ELF
 {
-	ELF::ELF(Common::FileSystem::ESP::FileHandle* handle)
+	ELF::ELF(Common::FileSystem::FileHandle* handle)
 	{
 		handle->SetPosition(0UL);
 		handle->Read<ElfHeaderCommon>(&CommonHeader);

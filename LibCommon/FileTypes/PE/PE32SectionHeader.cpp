@@ -23,7 +23,7 @@ namespace Common::FileTypes::PE
 		Characteristics = PE32SectionFlags::SectionFlagReserved1;
 	}
 
-	PE32SectionHeader::PE32SectionHeader(FileSystem::ESP::FileHandle * handle)
+	PE32SectionHeader::PE32SectionHeader(FileSystem::FileHandle * handle)
 	{
 		handle->Read<CCHAR>(&Name[0], 8);
 		handle->Read<UINT32>(&Misc.Value);

@@ -2,7 +2,7 @@
 
 namespace Common::FileTypes::ELF
 {
-	ELF64::ELF64(Common::FileSystem::ESP::FileHandle* handle)
+	ELF64::ELF64(Common::FileSystem::FileHandle* handle)
 	{
 		handle->Read<ElfHeader64>(&EntryHeader);
 

@@ -8,7 +8,7 @@ namespace Common::Graphics::Font::PCSF
 		Header = PCSF2Hdr();
 	}
 
-	PCSF2::PCSF2(Common::FileSystem::ESP::FileHandle* handle)
+	PCSF2::PCSF2(Common::FileSystem::FileHandle* handle)
 	{
 		Header = PCSF2Hdr(handle);
 		if (Header.Magic.Char[0] != PCSF2_MAGIC[0] || Header.Magic.Char[1] != PCSF2_MAGIC[1]
@@ -38,7 +38,7 @@ namespace Common::Graphics::Font::PCSF
 		Width = 0;
 	}
 
-	PCSF2Hdr::PCSF2Hdr(Common::FileSystem::ESP::FileHandle* handle)
+	PCSF2Hdr::PCSF2Hdr(Common::FileSystem::FileHandle* handle)
 	{
 		handle->SetPosition(0UL);
 		handle->Read<UINT32>(&Magic.Value);
@@ -86,6 +86,26 @@ namespace Common::Graphics::Font::PCSF
 		if (index < 256)
 		{
 			return Glyphs._64[index];
+		}
+		return 0;
+	}
+	UINT64 PCSF2::GetCharWidth()
+	{
+		return Header.Width;
+	}
+	UINT64 PCSF2::GetCharHeight()
+	{
+		return Header.Height;
+	}
+	BOOLEAN PCSF2::SupportsUnicode()
+	{
+		return (UINT32)Header.Flags & (UINT32)PCSF2Flags::HasUnicodeTable;
+	}
+	VOID_PTR PCSF2::GetGlyph(UINT64 codePoint)
+	{
+		if (codePoint < 256)
+		{
+			return (VOID_PTR) & Glyphs._8[codePoint];
 		}
 		return 0;
 	}

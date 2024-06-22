@@ -156,7 +156,7 @@ namespace Common::FileTypes::ELF
 	struct ELF64
 	{
 	public:
-		ELF64(Common::FileSystem::ESP::FileHandle* handle);
+		ELF64(Common::FileSystem::FileHandle* handle);
 		ElfHeader64 EntryHeader;
 		ElfProgramHeader64* ProgHeader;
 		ElfSectionHeader64* SectHeader;

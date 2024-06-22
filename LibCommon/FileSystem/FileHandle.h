@@ -7,11 +7,16 @@
 #include <FileSystem/FileMode.h>
 #include <FileSystem/FileAttribute.h>
 
-namespace Common::FileSystem::ESP
+namespace Common::FileSystem
 {
+	namespace ESP
+	{
+		struct ESP_FS_Context;
+	}
+
 	struct FileHandle
 	{
-		friend class ESP_FS_Context;
+		friend class ESP::ESP_FS_Context;
 	protected:
 		FileHandle(EFI::EFI_FILE_PROTOCOL* file, FileInfo* i, FileMode mode, UINT64 attribs) : Mode(mode),Attributes(attribs), Info(*i), Size(i->Size), _File(file) {};
 

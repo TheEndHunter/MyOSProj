@@ -1,7 +1,7 @@
 #include "ELF32.h"
 namespace Common::FileTypes::ELF
 {
-	ELF32::ELF32(Common::FileSystem::ESP::FileHandle* handle)
+	ELF32::ELF32(Common::FileSystem::FileHandle* handle)
 	{
 		handle->Read<ElfHeader32>(&EntryHeader);
 

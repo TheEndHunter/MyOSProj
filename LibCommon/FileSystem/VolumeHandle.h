@@ -4,7 +4,7 @@
 #include <EFI_STATUS.h>
 #include "VolumeInfo.h"
 
-namespace Common::FileSystem::ESP
+namespace Common::FileSystem
 {
 	struct VolumeHandle
 	{

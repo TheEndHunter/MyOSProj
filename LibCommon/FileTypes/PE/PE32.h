@@ -17,7 +17,7 @@ namespace Common::FileTypes::PE
 	struct PE32
 	{
 	public:
-		PE32(FileSystem::ESP::FileHandle* handle);
+		PE32(FileSystem::FileHandle* handle);
 
 		BOOLEAN IsDosHdrValid() const;
 		BOOLEAN IsPEHdrValid() const;

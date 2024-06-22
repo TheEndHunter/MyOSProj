@@ -2,18 +2,18 @@
 
 namespace Common::Graphics::Font::PCSF
 {
-	PSF1::PSF1()
+	PCSF1::PCSF1()
 	{
 		_isValid = false;
-		Header = PSF1Hdr();
+		Header = PCSF1Hdr();
 		CharCount = 0;
 		Glyphs = nullptr;
 		UnicodeTable = nullptr;
 	}
 
-	PSF1::PSF1(Common::FileSystem::ESP::FileHandle* handle)
+	PCSF1::PCSF1(Common::FileSystem::FileHandle* handle)
 	{
-		Header = PSF1Hdr(handle);
+		Header = PCSF1Hdr(handle);
 		if (Header.Magic.Char[0] != PSF1_MAGIC[0] || Header.Magic.Char[1] != PSF1_MAGIC[1])
 		{
 			_isValid = false;
@@ -23,7 +23,7 @@ namespace Common::Graphics::Font::PCSF
 		_isValid = true;
 		UINT32 length;
 
-		if(Header.Mode & PSF1Mode::MODE512)
+		if((UINT8)Header.Mode & (UINT8)PCSF1Mode::MODE512)
 		{
 			length = 512;
 		}
@@ -40,7 +40,7 @@ namespace Common::Graphics::Font::PCSF
 		
 		
 
-		if (Header.Mode & PSF1Mode::MODEHASTAB)
+		if ((UINT8)Header.Mode & (UINT8)PCSF1Mode::MODEHASTAB)
 		{
 			UnicodeTable = new UnicodeSequence[CharCount];
 			if (UnicodeTable == nullptr)
@@ -118,28 +118,28 @@ namespace Common::Graphics::Font::PCSF
 
 	}
 
-	PSF1Hdr::PSF1Hdr()
+	PCSF1Hdr::PCSF1Hdr()
 	{
 		Magic.Char[0] = 0;
 		Magic.Char[1] = 0;
-		Mode = PSF1Mode::None;
+		Mode = PCSF1Mode::None;
 		CharSize = 0;
 	}
 
-	PSF1Hdr::PSF1Hdr(Common::FileSystem::ESP::FileHandle* handle)
+	PCSF1Hdr::PCSF1Hdr(Common::FileSystem::FileHandle* handle)
 	{
 		handle->SetPosition(0UL);
 		handle->Read<UINT16>(&Magic.Value);
-		handle->Read<PSF1Mode>(&Mode);
+		handle->Read<PCSF1Mode>(&Mode);
 		handle->Read<UINT8>(&CharSize);
 	}
 
-	BOOLEAN PSF1::IsValid()
+	BOOLEAN PCSF1::IsValid()
 	{
 		return _isValid;
 	}
 
-	UINT8* PSF1::GetGlyph(UINT16 index)
+	UINT8* PCSF1::GetGlyph(UINT16 index)
 	{
 		if (index < CharCount)
 		{
@@ -148,7 +148,56 @@ namespace Common::Graphics::Font::PCSF
 		return nullptr;
 	}
 
-	PSF1::~PSF1()
+	UINT64 PCSF1::GetCharWidth()
+	{
+		return Header.CharSize;
+	}
+
+	UINT64 PCSF1::GetCharHeight()
+	{
+		return Header.CharSize;
+	}
+
+	BOOLEAN PCSF1::SupportsUnicode()
+	{
+		return (UINT8)Header.Mode & (UINT8)PCSF1Mode::MODEHASTAB;
+	}
+
+	VOID_PTR PCSF1::GetGlyph(UINT64 codePoint)
+	{
+		if (UnicodeTable == nullptr)
+		{
+			return nullptr;
+		}
+
+		for (UINT32 i = 0; i < CharCount; i++)
+		{
+			if (UnicodeTable[i].sequence != nullptr)
+			{
+				if (UnicodeTable[i].length == 1)
+				{
+					if (UnicodeTable[i].sequence[0] == codePoint)
+					{
+						return (VOID_PTR)&Glyphs[i];
+					}
+				}
+				else
+				{
+					if (UnicodeTable[i].sequence[0] == PSF1_STARTSEQ)
+					{
+						if (UnicodeTable[i].sequence[1] == codePoint)
+						{
+							return (VOID_PTR)&Glyphs[i];
+						}
+					}
+				}
+			}
+		}
+
+		return nullptr;
+	}
+
+	PCSF1::~PCSF1()
 	{
 		delete[] Glyphs;
 		Glyphs = nullptr;

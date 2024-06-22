@@ -2,7 +2,7 @@
 
 #include "TypeDefs.h"
 
-namespace Common::FileSystem::ESP
+namespace Common::FileSystem
 {
 	enum FileMode : UINT64
 	{

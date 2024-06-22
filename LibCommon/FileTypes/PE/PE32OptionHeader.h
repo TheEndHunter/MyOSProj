@@ -10,7 +10,7 @@ namespace Common::FileTypes::PE
 	public:
 		PE32OptionHeader();
 
-		PE32OptionHeader(FileSystem::ESP::FileHandle* handle);
+		PE32OptionHeader(FileSystem::FileHandle* handle);
 		/*
 		*  Standard Fields
 		*/

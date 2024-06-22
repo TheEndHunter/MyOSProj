@@ -3,7 +3,7 @@
     "Name": "Run Quemu",
     "Projects": [
       {
-        "Name": "QemuManager\\QemuRunner.csproj",
+        "Path": "QemuManager\\QemuRunner.csproj",
         "Action": "Start",
         "DebugTarget": "QemuManager"
       }

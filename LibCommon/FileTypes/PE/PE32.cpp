@@ -2,7 +2,7 @@
 
 namespace Common::FileTypes::PE
 {
-	PE32::PE32(FileSystem::ESP::FileHandle* handle)
+	PE32::PE32(FileSystem::FileHandle* handle)
 	{
 		_dosHdrValid = FALSE;
 		_peHdrValid = FALSE;

@@ -3,7 +3,7 @@
 
 namespace Common::FileTypes::PE
 {
-	PE32OptionHeader64::PE32OptionHeader64(FileSystem::ESP::FileHandle* handle)
+	PE32OptionHeader64::PE32OptionHeader64(FileSystem::FileHandle* handle)
 	{
 		handle->Read<UINT64>(&ImageBase);
 		handle->Read<UINT32>(&SectionAlignment);

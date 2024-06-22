@@ -2,7 +2,7 @@
 #include "FileInfo.h"
 #include <Environment/Unicode.h>
 
-namespace Common::FileSystem::ESP
+namespace Common::FileSystem
 {
 	FileInfo::FileInfo(EFI::EFI_FILE_INFO* info)
 		: Size(info->Size), FileSize(info->FileSize), PhysicalSize(info->PhysicalSize),
