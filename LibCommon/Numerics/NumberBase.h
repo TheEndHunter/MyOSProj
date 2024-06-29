@@ -276,6 +276,9 @@ namespace Common::Numerics
 		{ a* b } -> NumberBase;
 		{ a / b } -> NumberBase;
 		{ -a } -> NumberBase;
+		{ 0 } -> NumberBase;
+		{ 1 } -> NumberBase;
+		{ -1 } -> NumberBase;
 			requires((Type(-1) < Type(0))); // Check if T is signed
 	};
 
@@ -286,6 +289,8 @@ namespace Common::Numerics
 		{ a* b } -> NumberBase;
 		{ a / b } -> NumberBase;
 		{ -a } -> NumberBase;
+		{ 0 } -> NumberBase;
+		{ 1 } -> NumberBase;
 			requires(!(Type(-1) < Type(0))); // Check if T is unsigned
 	};
 

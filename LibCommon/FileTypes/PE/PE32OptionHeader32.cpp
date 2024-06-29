@@ -1,5 +1,5 @@
 #include <FileTypes/PE/PE32OptionHeader32.h>
-#include <System/Allocator.h>
+#include <System/MemoryManagement/Allocator.h>
 
 namespace Common::FileTypes::PE
 {

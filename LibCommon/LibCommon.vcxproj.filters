@@ -60,10 +60,10 @@
     <ClInclude Include="Environment\StringComparisonMode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="System\Allocator.h">
+    <ClInclude Include="System\MemoryManagement\Allocator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="System\AllocatorStatus.h">
+    <ClInclude Include="System\MemoryManagement\AllocatorStatus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="System\MemFuncs.h">
@@ -153,6 +153,12 @@
     <ClInclude Include="Environment\Unicode\UTF.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="System\MemoryManagement\KernelAllocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System\MemoryManagement\EfiAllocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TypeDefs.cpp">
@@ -185,7 +191,7 @@
     <ClCompile Include="FileSystem\VolumeHandle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="System\Allocator.cpp">
+    <ClCompile Include="System\MemoryManagement\Allocator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="System\MemFuncs.cpp">
@@ -252,6 +258,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Environment\Unicode\UTF.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System\MemoryManagement\KernelAllocator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System\MemoryManagement\EfiAllocator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

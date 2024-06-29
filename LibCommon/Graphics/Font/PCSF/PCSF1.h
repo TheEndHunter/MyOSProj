@@ -73,5 +73,7 @@ namespace Common::Graphics::Font::PCSF
 		VOID_PTR GetGlyph(UINT64 codePoint) override;
 	};
 #pragma pack(pop)
+
+	const static PCSF1 Empty_PCSF1 = PCSF1();
 }
 

@@ -5,7 +5,7 @@
 
 #include <Protocols/Graphics/EFI_GRAPHICS_OUTPUT_PROTOCOL.h>
 
-#include <System/Allocator.h>
+#include <System/MemoryManagement/Allocator.h>
 
 #include <Environment/Unicode.h>
 

@@ -74,11 +74,13 @@
     <ClInclude Include="Numerics\Math.h" />
     <ClInclude Include="Numerics\NumberBase.h" />
     <ClInclude Include="Numerics\Vectors.h" />
-    <ClInclude Include="System\Allocator.h" />
-    <ClInclude Include="System\AllocatorStatus.h" />
+    <ClInclude Include="System\MemoryManagement\Allocator.h" />
+    <ClInclude Include="System\MemoryManagement\AllocatorStatus.h" />
     <ClInclude Include="System\BitMathCompat.h" />
     <ClInclude Include="System\Console.h" />
     <ClInclude Include="System\IConsole.h" />
+    <ClInclude Include="System\MemoryManagement\EfiAllocator.h" />
+    <ClInclude Include="System\MemoryManagement\KernelAllocator.h" />
     <ClInclude Include="System\MemFuncs.h" />
     <ClInclude Include="TypeDefs.h" />
   </ItemGroup>
@@ -112,8 +114,10 @@
     <ClCompile Include="Graphics\Pixel.cpp" />
     <ClCompile Include="Graphics\PixelBitMask.cpp" />
     <ClCompile Include="Graphics\RenderContext.cpp" />
-    <ClCompile Include="System\Allocator.cpp" />
+    <ClCompile Include="System\MemoryManagement\Allocator.cpp" />
     <ClCompile Include="System\Console.cpp" />
+    <ClCompile Include="System\MemoryManagement\EfiAllocator.cpp" />
+    <ClCompile Include="System\MemoryManagement\KernelAllocator.cpp" />
     <ClCompile Include="System\MemFuncs.cpp" />
     <ClCompile Include="TypeDefs.cpp" />
   </ItemGroup>

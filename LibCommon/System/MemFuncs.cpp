@@ -2,63 +2,91 @@
 
 namespace Common::System
 {
-    VOID MemSet(VOID* dest, UINT8 value, UINTN size)
+    VOID MemSet(VOID* dest, UINT8 value, UINT64 size)
     {
         UINT8* p = (UINT8*)dest;
-		for (UINTN i = 0; i < size; i++)
+		for (UINT64 i = 0; i < size; i++)
 		{
-			*p = value;
-			p++;
+			p[i] = value;
 		}
     }
 
-	VOID MemCpy(VOID* dest, VOID* src, UINTN size)
+	VOID MemCpy(VOID* dest, VOID* src, UINT64 size)
 	{
 		UINT8* p = (UINT8*)dest;
 		UINT8* q = (UINT8*)src;
-		for (UINTN i = 0; i < size; i++)
+
+		for (UINT64 i = 0; i < size; i++)
 		{
-			*p = *q;
-			p++;
-			q++;
+			p[i] = q[i];
 		}
 	}
 
-	VOID MemMove(VOID* dest, VOID* src, UINTN size)
+	VOID MemMove(VOID* dest, VOID* src, UINT64 size)
 	{
 		UINT8* p = (UINT8*)dest;
 		UINT8* q = (UINT8*)src;
-		for (UINTN i = 0; i < size; i++)
+
+		UINT8* temp = new UINT8[size];
+
+		for (UINT64 i = 0; i < size; i++)
 		{
-			*p = *q;
-			*q = 0;
-			p++;
-			q++;
+			temp[i] = q[i];	
 		}
+
+		for (UINT64 i = 0; i < size; i++)
+		{
+			p[i] = temp[i];
+		}
+
+		delete[size] temp;
 	}
 
-	VOID MemZero(VOID* dest, UINTN size)
+	VOID MemZero(VOID* dest, UINT64 size)
 	{
 		UINT8* p = (UINT8*)dest;
-		for (UINTN i = 0; i < size; i++)
+		for (UINT64 i = 0; i < size; i++)
 		{
 			*p = 0;
 			p++;
 		}
 	}
 
-	VOID MemReverse(VOID* dest, UINTN size)
+	VOID MemReverse(VOID* dest, UINT64 size)
 	{
 		UINT8* p = (UINT8*)dest;
-		UINT8* q = (UINT8*)dest + size - 1;
-		for (UINTN i = 0; i < size / 2; i++)
+
+		UINT8* temp = new UINT8[size];
+
+		for (UINT64 i = 0; i < size; i++)
 		{
-			UINT8 temp = *p;
-			*p = *q;
-			*q = temp;
-			p++;
-			q--;
+			temp[i] = p[i];
 		}
+
+		UINT64 s;
+		for (UINT64 i = size - 1; i > 0; i--)
+		{
+			p[s] = temp[i];
+			s++;
+		}
+
+		delete[size] temp;
+	}
+
+	BOOLEAN MemCmp(VOID* cmpA, VOID* cmpB, UINT64 size)
+	{
+		UINT8* p = (UINT8*)cmpA;
+		UINT8* q = (UINT8*)cmpB;
+
+		for (UINT64 i = 0; i < size; i++)
+		{
+			if (p[i] != q[i])
+			{
+				return FALSE;
+			}
+		}
+
+		return TRUE;
 	}
 
 }

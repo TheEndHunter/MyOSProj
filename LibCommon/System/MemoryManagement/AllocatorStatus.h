@@ -2,7 +2,7 @@
 #include <TypeDefs.h>
 #include <EFI_STATUS.h>
 
-namespace Common::System
+namespace Common::System::MemoryManagement
 {
 	enum class AllocatorStatus : UINT64
 	{

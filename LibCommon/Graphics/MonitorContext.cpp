@@ -1,5 +1,5 @@
 #include "MonitorContext.h"
-#include <System\Allocator.h>
+#include <System\MemoryManagement\Allocator.h>
 
 namespace Common::Graphics
 {
@@ -25,7 +25,7 @@ namespace Common::Graphics
 		currentModeNumber = ptr->Mode->Mode;
 		currentMode = &modes[currentModeNumber];
 
-		modes = System::Allocator::AllocateZeroedArray<MonitorMode>(maxMode);
+		modes = System::MemoryManagement::Allocator::AllocateZeroedArray<MonitorMode>(maxMode);
 
 		if (modes == nullptr)
 		{

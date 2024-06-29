@@ -16,4 +16,8 @@
 		<DefineConstants>$(DefineConstants);$(Configuration)</DefineConstants>
 		<DefineConstants>$(DefineConstants);$(Platform)</DefineConstants>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Folder Include="Properties\" />
+	</ItemGroup>
 </Project>

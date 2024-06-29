@@ -5,7 +5,7 @@
 
 namespace Common::Graphics::Font::PCSF
 {
-	const CCHAR PCSF2_MAGIC[4] = { 0x72,0xb5,0x4a,0x86 };
+	const CCHAR PCSF2_MAGIC[4] = { 0x72, 0xb5, 0x4a, 0x86 };
 
 	enum class PCSF2Flags : UINT32
 	{
@@ -70,5 +70,7 @@ namespace Common::Graphics::Font::PCSF
 		VOID_PTR GetGlyph(UINT64 codePoint) override;
 	};
 #pragma pack(pop)
+
+	const static PCSF2 Empty_PCSF2 = PCSF2();
 }
 

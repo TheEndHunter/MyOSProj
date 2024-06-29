@@ -8,12 +8,11 @@
 #include <FileTypes/PE/PE32DataDirectory.h>
 #include <FileTypes/PE/PE32SectionHeader.h>
 #include <FileTypes/PE/PE32DLLCharacteristics.h>
-#include <System/Allocator.h>
+#include <System/MemoryManagement/Allocator.h>
 #include <FileSystem/FileHandle.h>
 
 namespace Common::FileTypes::PE
 {
-
 	struct PE32
 	{
 	public:

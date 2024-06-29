@@ -395,19 +395,19 @@ namespace Common::Environment
 		}
 	}
 
-	CHAR16* UTF16::ToString(const Common::System::AllocatorStatus status)
+	CHAR16* UTF16::ToString(const Common::System::MemoryManagement::AllocatorStatus status)
 	{
 		switch (status)
 		{
-		case Common::System::AllocatorStatus::Success:
+		case Common::System::MemoryManagement::AllocatorStatus::Success:
 			return (CHAR16*)_UTF16_ALLOC_STATUS_SUCCESS;
-		case Common::System::AllocatorStatus::Invalid_Parameters:
+		case Common::System::MemoryManagement::AllocatorStatus::Invalid_Parameters:
 			return (CHAR16*)_UTF16_ALLOC_STATUS_INVALID_PARAMETER;
-		case Common::System::AllocatorStatus::Not_Enough_Memory:
+		case Common::System::MemoryManagement::AllocatorStatus::Not_Enough_Memory:
 			return (CHAR16*)_UTF16_ALLOC_STATUS_NOT_ENOUGH_MEMORY;
-		case Common::System::AllocatorStatus::Not_Enough_Pages:
+		case Common::System::MemoryManagement::AllocatorStatus::Not_Enough_Pages:
 			return (CHAR16*)_UTF16_ALLOC_STATUS_NOT_ENOUGH_PAGES;
-		case Common::System::AllocatorStatus::Access_Denied:
+		case Common::System::MemoryManagement::AllocatorStatus::Access_Denied:
 			return (CHAR16*)_UTF16_ALLOC_STATUS_ACCESS_DENIED;
 		}
 	}
@@ -1480,19 +1480,19 @@ namespace Common::Environment
 		}
 	}
 
-	CHAR8* UTF8::ToString(const Common::System::AllocatorStatus status)
+	CHAR8* UTF8::ToString(const Common::System::MemoryManagement::AllocatorStatus status)
 	{
 		switch (status)
 		{
-		case Common::System::AllocatorStatus::Success:
+		case Common::System::MemoryManagement::AllocatorStatus::Success:
 			return (CHAR8*)_UTF8_ALLOC_STATUS_SUCCESS;
-		case Common::System::AllocatorStatus::Invalid_Parameters:
+		case Common::System::MemoryManagement::AllocatorStatus::Invalid_Parameters:
 			return (CHAR8*)_UTF8_ALLOC_STATUS_INVALID_PARAMETER;
-		case Common::System::AllocatorStatus::Not_Enough_Memory:
+		case Common::System::MemoryManagement::AllocatorStatus::Not_Enough_Memory:
 			return (CHAR8*)_UTF8_ALLOC_STATUS_NOT_ENOUGH_MEMORY;
-		case Common::System::AllocatorStatus::Not_Enough_Pages:
+		case Common::System::MemoryManagement::AllocatorStatus::Not_Enough_Pages:
 			return (CHAR8*)_UTF8_ALLOC_STATUS_NOT_ENOUGH_PAGES;
-		case Common::System::AllocatorStatus::Access_Denied:
+		case Common::System::MemoryManagement::AllocatorStatus::Access_Denied:
 			return (CHAR8*)_UTF8_ALLOC_STATUS_ACCESS_DENIED;
 		}
 	}
@@ -2554,19 +2554,19 @@ namespace Common::Environment
 		}
 	}
 
-	CCHAR* CString::ToString(const Common::System::AllocatorStatus status)
+	CCHAR* CString::ToString(const Common::System::MemoryManagement::AllocatorStatus status)
 	{
 		switch (status)
 		{
-		case Common::System::AllocatorStatus::Success:
+		case Common::System::MemoryManagement::AllocatorStatus::Success:
 			return (CCHAR*)_CSTR_ALLOC_STATUS_SUCCESS;
-		case Common::System::AllocatorStatus::Invalid_Parameters:
+		case Common::System::MemoryManagement::AllocatorStatus::Invalid_Parameters:
 			return (CCHAR*)_CSTR_ALLOC_STATUS_INVALID_PARAMETER;
-		case Common::System::AllocatorStatus::Not_Enough_Memory:
+		case Common::System::MemoryManagement::AllocatorStatus::Not_Enough_Memory:
 			return (CCHAR*)_CSTR_ALLOC_STATUS_NOT_ENOUGH_MEMORY;
-		case Common::System::AllocatorStatus::Not_Enough_Pages:
+		case Common::System::MemoryManagement::AllocatorStatus::Not_Enough_Pages:
 			return (CCHAR*)_CSTR_ALLOC_STATUS_NOT_ENOUGH_PAGES;
-		case Common::System::AllocatorStatus::Access_Denied:
+		case Common::System::MemoryManagement::AllocatorStatus::Access_Denied:
 			return (CCHAR*)_CSTR_ALLOC_STATUS_ACCESS_DENIED;
 		}
 	}

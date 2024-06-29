@@ -3,7 +3,7 @@
 #include <EFI_GUID.h>
 #include <EFI_STATUS.h>
 #include <Environment/StringCulture.h>
-#include <System/AllocatorStatus.h>
+#include <System/MemoryManagement/AllocatorStatus.h>
 
 namespace Common::Environment
 {
@@ -29,7 +29,7 @@ namespace Common::Environment
 
 		static CHAR16* ToString(const EFI::EFI_GUID guid);
 		static CHAR16* ToString(const EFI::EFI_STATUS status);
-		static CHAR16* ToString(const Common::System::AllocatorStatus status);
+		static CHAR16* ToString(const Common::System::MemoryManagement::AllocatorStatus status);
 		static CHAR16* ToString(const INT16 value);
 		static CHAR16* ToString(const INT32 value);
 		static CHAR16* ToString(const INT64 value);
@@ -76,7 +76,7 @@ namespace Common::Environment
 
 		static CHAR8* ToString(const EFI::EFI_GUID guid);
 		static CHAR8* ToString(const EFI::EFI_STATUS status);
-		static CHAR8* ToString(const Common::System::AllocatorStatus status);
+		static CHAR8* ToString(const Common::System::MemoryManagement::AllocatorStatus status);
 		static CHAR8* ToString(const INT16 value);
 		static CHAR8* ToString(const INT32 value);
 		static CHAR8* ToString(const INT64 value);
@@ -123,7 +123,7 @@ namespace Common::Environment
 
 		static CCHAR* ToString(const EFI::EFI_GUID guid);
 		static CCHAR* ToString(const EFI::EFI_STATUS status);
-		static CCHAR* ToString(const Common::System::AllocatorStatus status);
+		static CCHAR* ToString(const Common::System::MemoryManagement::AllocatorStatus status);
 		static CCHAR* ToString(const INT16 value);
 		static CCHAR* ToString(const INT32 value);
 		static CCHAR* ToString(const INT64 value);

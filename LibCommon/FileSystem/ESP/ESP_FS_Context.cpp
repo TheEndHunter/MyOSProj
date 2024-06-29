@@ -525,4 +525,35 @@ namespace Common::FileSystem::ESP
 
 		LastStatus = _sysTable->BootServices->FreePool(handle._File);
 	}
+	BOOLEAN ESP_FS_Context::IsRootDirectory()
+	{
+		if (_cwd == _root)
+		{
+			return TRUE;
+		}
+		return FALSE;
+	}
+	BOOLEAN ESP_FS_Context::ReturnToRootDirectory()
+	{
+		if (_cwd == _root)
+		{
+			return TRUE;
+		}
+
+		EFI::EFI_FILE_PROTOCOL* parent = nullptr;
+		LastStatus = _cwd->Close(_cwd);
+
+		while (_cwd != _root)
+		{
+			LastStatus = _cwd->Close(_cwd);
+
+			if (LastStatus != EFI::EFI_STATUS::SUCCESS)
+			{
+				return FALSE;
+			}
+		}
+		
+		_cwd = _root;
+		return TRUE;
+	}
 }

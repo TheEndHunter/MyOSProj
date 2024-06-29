@@ -41,6 +41,10 @@ namespace Common::FileSystem::ESP
 		FileHandle CreateFile(const CHAR16* name, UINT64 attribs);
 		void CloseFile(FileHandle& handle);
 
+		BOOLEAN IsRootDirectory();
+		BOOLEAN ReturnToRootDirectory();
+
+
 		VolumeInfo GetVolumeInfo();
 		VolumeLabel GetVolumeLabel();
 		

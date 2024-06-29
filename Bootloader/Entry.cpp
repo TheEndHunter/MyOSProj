@@ -1,14 +1,14 @@
 #include "Entry.h"
 #include <EFI_RESET_TYPE.h>
 #include <Protocols/IO/Console/EFI_CONSOLE_COLOR.h>
-#include <EFIConsole.h>
 #include <Graphics/Colour.h>
 #include <Environment/Unicode.h>
 #include <FileSystem/ESP/ESP_FS_Context.h>
-#include <System/Allocator.h>
-#include <System//AllocatorStatus.h>
+#include <System/MemoryManagement/Allocator.h>
+#include <System/MemoryManagement/AllocatorStatus.h>
 #include <FileTypes/PE/PE32.h>
 #include <Graphics/RenderContext.h>
+#include <EFIConsole.h>
 
 namespace Bootloader
 {
@@ -18,89 +18,16 @@ namespace Bootloader
     using namespace Common::FileTypes::PE;
     using namespace EFI;
 
-    typedef UINTN(CDECL*KrnlMain)(RenderContext* rendererCtx, MonitorContext* monitorCtx);
-
-    void PrintInfo(EFI_SYSTEM_TABLE* sysTbl, UINT8 color, const CHAR16* errorMessage, EFI_STATUS status)
-    {
-        SetConsoleColor(sysTbl, color);
-        PrintLine(sysTbl, errorMessage);
-        if (status != EFI_STATUS::SUCCESS)
-        {
-            PrintLine(sysTbl, UTF16::ToString(status));
-        };
-    }
-
-    void PrintDebug(EFI_SYSTEM_TABLE* sysTbl, const CHAR16* errorMessage, EFI_STATUS status)
-    {
-        SetConsoleColor(sysTbl, EFI_CONSOLE_COLOR::DEBUG);
-        PrintLine(sysTbl, errorMessage);
-        if (status != EFI_STATUS::SUCCESS)
-        {
-            PrintLine(sysTbl, UTF16::ToString(status));
-        };
-    }
-
-    void PrintError(EFI_SYSTEM_TABLE* sysTbl, const CHAR16* errorMessage, EFI_STATUS status)
-    {
-        SetConsoleColor(sysTbl, EFI_CONSOLE_COLOR::ERROR);
-        PrintLine(sysTbl, errorMessage);
-        if (status != EFI_STATUS::SUCCESS)
-        {
-            PrintLine(sysTbl, UTF16::ToString(status));
-        };
-    }
-    void PrintWarning(EFI_SYSTEM_TABLE* sysTbl, const CHAR16* errorMessage, EFI_STATUS status)
-    {
-        SetConsoleColor(sysTbl, EFI_CONSOLE_COLOR::WARNING);
-        PrintLine(sysTbl, errorMessage);
-        if (status != EFI_STATUS::SUCCESS)
-        {
-            PrintLine(sysTbl, UTF16::ToString(status));
-        };
-    };
-
-    void ThrowException(EFI_SYSTEM_TABLE* sysTbl, EFI_HANDLE imgHndl, const CHAR16* errorMessage, EFI_STATUS status)
-    {
-        SetConsoleColor(sysTbl, EFI_CONSOLE_COLOR::FATAL);
-        ClearConOut(sysTbl);
-        PrintLine(sysTbl, errorMessage);
-        PrintLine(sysTbl, UTF16::ToString(status));
-        WaitForKey(sysTbl);
-        Exit(sysTbl, imgHndl, status);
-    }
-
-    void Exit(EFI_SYSTEM_TABLE* sysTable, EFI_HANDLE imgHndl, EFI_STATUS Status, UINTN exitDataSize, CHAR16* exitData)
-    {
-        sysTable->BootServices->Exit(imgHndl, Status, exitDataSize, exitData);
-    }
-
-    EFI_INPUT_KEY WaitForKey(EFI_SYSTEM_TABLE* sysTable)
-    {
-        EFI_STATUS status = EFI_STATUS::SUCCESS;
-        EFI_INPUT_KEY key;
-        UINTN index = 0;
-
-        status = sysTable->BootServices->WaitForEvent(1, &sysTable->ConIn->WaitForKey, &index);
-        if (status != EFI_STATUS::SUCCESS)
-        {
-            PrintError(sysTable, u"Error in WaitForEvent", status);
-        }
-        status = sysTable->ConIn->ReadKeyStroke(sysTable->ConIn, &key);
-        if (status != EFI_STATUS::SUCCESS)
-        {
-            PrintError(sysTable, u"Error in ReadKeyStroke", status);
-        }
-        ClearConIn(sysTable);
-        return key;
-    }
+    typedef UINTN(CDECL*KrnlMain)(RenderContext* rendererCtx, MonitorContext* monitorCtx, Common::FileSystem::ESP::ESP_FS_Context* efiSysPart, Common::FileSystem::ESP::ESP_FS_Context* sysPart, Common::FileSystem::ESP::ESP_FS_Context* libPart);
+       
 
     EFI_STATUS EfiMain(EFI_HANDLE imgHndl, EFI_SYSTEM_TABLE* sysTbl)
     {
-        Common::System::Allocator::SetEfiAllocator(sysTbl);
+        Common::System::MemoryManagement::Allocator::SetEfiAllocator(sysTbl);
 
-        if (!Common::System::Allocator::IsInitalized())
+        if (!Common::System::MemoryManagement::Allocator::IsInitalized())
 		{
-            ThrowException(sysTbl, imgHndl, u"Could Not Set EFI Allocator", Common::System::ToEfiStatus(Common::System::Allocator::LastStatus()));
+            ThrowException(sysTbl, imgHndl, u"Could Not Set EFI Allocator", Common::System::MemoryManagement::ToEfiStatus(Common::System::MemoryManagement::Allocator::LastStatus()));
 		}
 
         UINT32 mm = sysTbl->ConOut->Mode->MaxMode;
@@ -159,9 +86,6 @@ namespace Bootloader
 
         UINT32 modes = monitor->GetMaxMode();
 
-        Print(sysTbl, u"Number of Modes: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
-        PrintDebug(sysTbl, UTF16::ToString(modes));
-
         UINTN modeInfoSize = sizeof(EFI_GRAPHICS_OUTPUT_MODE_INFORMATION);
 
         UINTN maxH = 1280;
@@ -188,24 +112,10 @@ namespace Bootloader
             ThrowException(sysTbl, imgHndl, u"Could Not Set Highest Resolution Mode", EFI::EFI_STATUS::DEVICE_ERROR);
         }
 
-        render->ClearScreen(Colours::White);
-
+		ClearConOut(sysTbl);
         sysTbl->ConOut->SetCursorPosition(sysTbl->ConOut, 0, 0);
 
-        UINTN w = monitor->GetHorizontalResolution();
-        UINTN h = monitor->GetVerticalResolution();
-
-        Print(sysTbl, u"Selected Mode: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
-        Print(sysTbl, UTF16::ToString(monitor->GetCurrentMode()), EFI::EFI_CONSOLE_COLOR::DEBUG);
-        Print(sysTbl, u" Width: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
-        Print(sysTbl, UTF16::ToString(w), EFI::EFI_CONSOLE_COLOR::DEBUG);
-        Print(sysTbl, u" Height: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
-        PrintDebug(sysTbl, UTF16::ToString(h));
-
         UINTN fsCount = ESP::ESP_FS_Context::QueryFSCount(sysTbl, imgHndl);
-        Print(sysTbl, u"Number of File Systems: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
-        PrintDebug(sysTbl, UTF16::ToString(fsCount));
-
         if (fsCount == 0)
         {
             ThrowException(sysTbl, imgHndl, u"No File Systems Found", EFI_STATUS::NOT_FOUND);
@@ -216,9 +126,8 @@ namespace Bootloader
 
         if (sysFs == ESP::ESP_FS_Context::EmptyFS)
         {
-            ThrowException(sysTbl, imgHndl, u"Could Not Locate File System with Label: \"Sys\"", fsStatus);
+            ThrowException(sysTbl, imgHndl, u"Could Not Locate File System with Label: \"SYS\"", fsStatus);
         }
-        PrintDebug(sysTbl, u"FS Found Found");
 
         sysFs.OpenVolume();
 
@@ -241,15 +150,9 @@ namespace Bootloader
             ThrowException(sysTbl, imgHndl, u"Could Not Open Kernel", sysFs.LastStatus);
         }
 
-        PrintDebug(sysTbl, u"Kernel Found");
-        
         PE32 krnlPE = PE32(&kernelHandle);
 
         kernelHandle.Close();
-
-        PrintDebug(sysTbl, u"Kernel Loaded");
-
-
 
         if (!krnlPE.IsDosHdrValid())
         {
@@ -269,27 +172,21 @@ namespace Bootloader
         if (!krnlPE.IsSectionHdrValid())
         {
             PrintError(sysTbl, u"Invalid PE32 Section Header", EFI::EFI_STATUS::INVALID_PARAMETER);
-            Print(sysTbl, UTF16::ToString(Common::System::Allocator::LastStatus()), EFI::EFI_CONSOLE_COLOR::ERROR);
+            Print(sysTbl, UTF16::ToString(Common::System::MemoryManagement::Allocator::LastStatus()), EFI::EFI_CONSOLE_COLOR::ERROR);
             WaitForKey(sysTbl);
-            Exit(sysTbl, imgHndl, Common::System::ToEfiStatus(Common::System::Allocator::LastStatus()));
+            Exit(sysTbl, imgHndl, Common::System::MemoryManagement::ToEfiStatus(Common::System::MemoryManagement::Allocator::LastStatus()),0,nullptr);
             //ThrowException(sysTbl, imgHndl, u"Invalid PE32 Section Header", EFI::EFI_STATUS::INVALID_PARAMETER);
         }
-
-
-        PrintDebug(sysTbl, UTF16::ToHex(krnlPE.OptHdrCommon.AddressOfEntryPoint));
 
         UINTN imgBase;
         if (krnlPE.PE32hdr.Machine == MachineTypes::I386)
         {
-            Print(sysTbl, u"Machine Type: I386 ", EFI::EFI_CONSOLE_COLOR::DEBUG);
             if (krnlPE.OptHdrCommon.Magic.Value == 0x010b)
             {
-                PrintDebug(sysTbl, u"File Type: PE32");
                 imgBase = krnlPE.OptHdr.PE32->ImageBase;
             }
             else if (krnlPE.OptHdrCommon.Magic.Value == 0x020b)
             {
-                PrintDebug(sysTbl, u"File Type: PE32+");
                 imgBase = krnlPE.OptHdr.PE32PLUS->ImageBase;
             }
             else
@@ -299,15 +196,12 @@ namespace Bootloader
         }
         else if (krnlPE.PE32hdr.Machine == MachineTypes::Amd64)
         {
-            Print(sysTbl, u"Machine Type: AMD64 ", EFI::EFI_CONSOLE_COLOR::DEBUG);
             if (krnlPE.OptHdrCommon.Magic.Value == 0x010b)
             {
-                PrintDebug(sysTbl, u"File Type: PE32");
                 imgBase = krnlPE.OptHdr.PE32->ImageBase;
             }
             else if (krnlPE.OptHdrCommon.Magic.Value == 0x020b)
             {
-                PrintDebug(sysTbl, u"File Type: PE32+");
                 imgBase = krnlPE.OptHdr.PE32PLUS->ImageBase;
             }
             else
@@ -320,40 +214,33 @@ namespace Bootloader
             ThrowException(sysTbl, imgHndl, u"Invalid Machine Type", EFI::EFI_STATUS::INVALID_PARAMETER);
         }
 
-        Print(sysTbl, u"Image Base: ",EFI::EFI_CONSOLE_COLOR::DEBUG);
-        Print(sysTbl, UTF16::ToHex(imgBase),EFI::EFI_CONSOLE_COLOR::DEBUG);
-        Print(sysTbl, u" Kernel Image Size: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
-        PrintDebug(sysTbl, UTF16::ToHex(krnlPE.OptHdr.PE32PLUS->SizeOfImage));
+		if (!sysFs.IsRootDirectory())
+		{
+			PrintDebug(sysTbl, u"Returning to Root Directory");
+			if(!sysFs.ReturnToRootDirectory());
+            {
+				ThrowException(sysTbl, imgHndl, u"Could Not Return to Root Directory", sysFs.LastStatus);
+            }
+		}
 
-        Print(sysTbl, u"Kernel Buffer Size: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
-        Print(sysTbl, UTF16::ToString(krnlPE.SizeOfDataBuffer), EFI::EFI_CONSOLE_COLOR::DEBUG);
-        Print(sysTbl, u" Kernel Entry Point: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
-        KrnlMain main = (KrnlMain)(krnlPE.GetEntryPoint());
-        PrintDebug(sysTbl, UTF16::ToHex(main));
+        ESP::ESP_FS_Context efiFs = ESP::ESP_FS_Context::GetFileSystem(sysTbl, imgHndl, u"EFI", &fsStatus);
 
-        UINTN entryPVO = krnlPE.GetEntryPointOffset() + (UINTN)&krnlPE.DataBuffer[0];
+        if (efiFs == ESP::ESP_FS_Context::EmptyFS)
+        {
+            ThrowException(sysTbl, imgHndl, u"Could Not Locate File System with Label: \"EFI\"", fsStatus);
+        }
+		ESP::ESP_FS_Context libFs = ESP::ESP_FS_Context::GetFileSystem(sysTbl, imgHndl, u"LIBS", &fsStatus);
 
-        Print(sysTbl, u"Kernel Entry Point Virtual Offset: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
-        PrintDebug(sysTbl, UTF16::ToHex(entryPVO));
+        if (libFs == ESP::ESP_FS_Context::EmptyFS)
+        {
+            ThrowException(sysTbl, imgHndl, u"Could Not Locate File System with Label: \"LIBS\"", fsStatus);
+        }
 
-        /* print values of current monitor mode*/
-        Print(sysTbl, u"Current Mode: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
-        Print(sysTbl, UTF16::ToString(monitor->GetCurrentMode()), EFI::EFI_CONSOLE_COLOR::DEBUG);
-        Print(sysTbl, u" Width: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
-        Print(sysTbl, UTF16::ToString(monitor->GetHorizontalResolution()), EFI::EFI_CONSOLE_COLOR::DEBUG);
-        Print(sysTbl, u" Height: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
-        PrintDebug(sysTbl, UTF16::ToString(monitor->GetVerticalResolution()));
-
-        /* print Pixel Format and bpp*/
-        Print(sysTbl, u"Pixel Format: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
-        Print(sysTbl, UTF16::ToString(monitor->GetPixelFormat()), EFI::EFI_CONSOLE_COLOR::DEBUG);
-        Print(sysTbl, u" Pixels Per Scanline: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
-        Print(sysTbl, UTF16::ToString(monitor->GetPixelsPerScanLine()));
-
-        WaitForKey(sysTbl);
-        render->ClearScreen(Colours::Aqua);
+		render->ClearScreen();
+        ClearConOut(sysTbl);
         sysTbl->ConOut->SetCursorPosition(sysTbl->ConOut, 0, 0);
-        UINTN status = main(render, monitor);
+        KrnlMain main = (KrnlMain)(krnlPE.GetEntryPoint());
+        UINTN status = main(render, monitor,&efiFs,&sysFs,&libFs);
 
         Print(sysTbl, u"Kernel Returned: ", EFI::EFI_CONSOLE_COLOR::DEBUG);
         PrintDebug(sysTbl, UTF16::ToString(status));

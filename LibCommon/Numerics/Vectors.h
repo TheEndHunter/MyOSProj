@@ -10,8 +10,8 @@ namespace Common::Numerics
 	{
 		Vect2D()
 		{
-			X = Type::Zero;
-			Y = Type::Zero;
+			X = 0;
+			Y = 0;
 		}
 
 		Vect2D(Type x, Type y)
@@ -30,9 +30,9 @@ namespace Common::Numerics
 	{
 		Vect3D()
 		{
-			X = Type::Zero;
-			Y = Type::Zero;
-			Z = Type::Zero;
+			X = 0;
+			Y = 0;
+			Z = 0;
 		}
 
 		Vect3D(Type x, Type y, Type z)
@@ -53,10 +53,10 @@ namespace Common::Numerics
 	{
 		Vect4D()
 		{
-			X = Type::Zero;
-			Y = Type::Zero;
-			Z = Type::Zero;
-			W = Type::Zero;
+			X = 0;
+			Y = 0;
+			Z = 0;
+			W = 0;
 		}
 
 		Vect4D(Type x, Type y, Type z, Type w)

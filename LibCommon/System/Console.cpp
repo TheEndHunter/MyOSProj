@@ -176,6 +176,38 @@ namespace Common::System
 	{
 	}
 
+	void Console::SetCursorPosition(UINT32 x, UINT32 y)
+	{
+	}
+
+	void Console::SetCursorPosition(Common::Numerics::Vect2D<UINT32> pos)
+	{
+	}
+
+	void Console::SetCursorVisibility(BOOLEAN visible)
+	{
+	}
+
+	Common::Numerics::Vect2D<UINT32> Console::GetCursorPosition()
+	{
+		return Common::Numerics::Vect2D<UINT32>();
+	}
+
+	BOOLEAN Console::GetCursorVisibility()
+	{
+		return BOOLEAN();
+	}
+
+	UINT64 Console::GetScreenCharWidth()
+	{
+		return UINT64();
+	}
+
+	UINT64 Console::GetScreenCharHeight()
+	{
+		return UINT64();
+	}
+
 	Console::~Console()
 	{
 	}

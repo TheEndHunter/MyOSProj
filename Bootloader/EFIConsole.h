@@ -33,6 +33,8 @@ namespace Bootloader
         systemTable->ConOut->SetAttribute(systemTable->ConOut, fg | bg);
     }
 
+   
+
     static void Print(EFI_SYSTEM_TABLE* systemTable, const CHAR16* str)
     {
         if (UTF16::IsNullOrEmpty(str) == TRUE)
@@ -206,5 +208,84 @@ namespace Bootloader
         systemTable->ConOut->SetAttribute(systemTable->ConOut, fg | bg);
         systemTable->ConOut->OutputString(systemTable->ConOut, &_u16_print[0]);
         systemTable->ConOut->OutputString(systemTable->ConOut, UTF16::NewLine);
+    }
+
+    static void PrintInfo(EFI_SYSTEM_TABLE* sysTbl, UINT8 color, const CHAR16* errorMessage, EFI_STATUS status = EFI::EFI_STATUS::SUCCESS)
+    {
+        SetConsoleColor(sysTbl, color);
+        PrintLine(sysTbl, errorMessage);
+        if (status != EFI_STATUS::SUCCESS)
+        {
+            PrintLine(sysTbl, UTF16::ToString(status));
+        };
+    }
+
+    static  void PrintDebug(EFI_SYSTEM_TABLE* sysTbl, const CHAR16* errorMessage, EFI_STATUS status = EFI::EFI_STATUS::SUCCESS)
+    {
+        SetConsoleColor(sysTbl, EFI_CONSOLE_COLOR::DEBUG);
+        PrintLine(sysTbl, errorMessage);
+        if (status != EFI_STATUS::SUCCESS)
+        {
+            PrintLine(sysTbl, UTF16::ToString(status));
+        };
+    }
+
+    static void PrintError(EFI_SYSTEM_TABLE* sysTbl, const CHAR16* errorMessage, EFI_STATUS status)
+    {
+        SetConsoleColor(sysTbl, EFI_CONSOLE_COLOR::ERROR);
+        PrintLine(sysTbl, errorMessage);
+        if (status != EFI_STATUS::SUCCESS)
+        {
+            PrintLine(sysTbl, UTF16::ToString(status));
+        };
+    
+    }
+
+    static EFI_INPUT_KEY WaitForKey(EFI_SYSTEM_TABLE* sysTable)
+    {
+        EFI_STATUS status = EFI_STATUS::SUCCESS;
+        EFI_INPUT_KEY key;
+        UINTN index = 0;
+
+        status = sysTable->BootServices->WaitForEvent(1, &sysTable->ConIn->WaitForKey, &index);
+        if (status != EFI_STATUS::SUCCESS)
+        {
+            PrintError(sysTable, u"Error in WaitForEvent", status);
+        }
+        status = sysTable->ConIn->ReadKeyStroke(sysTable->ConIn, &key);
+        if (status != EFI_STATUS::SUCCESS)
+        {
+            PrintError(sysTable, u"Error in ReadKeyStroke", status);
+        }
+        ClearConIn(sysTable);
+        return key;
+    }
+
+    static void PrintWarning(EFI_SYSTEM_TABLE* sysTbl, const CHAR16* errorMessage, EFI_STATUS status = EFI::EFI_STATUS::SUCCESS)
+    {
+        SetConsoleColor(sysTbl, EFI_CONSOLE_COLOR::WARNING);
+        PrintLine(sysTbl, errorMessage);
+        if (status != EFI_STATUS::SUCCESS)
+        {
+            PrintLine(sysTbl, UTF16::ToString(status));
+        };
+    };
+
+    static void Exit(EFI_SYSTEM_TABLE* sysTable, EFI_HANDLE imgHndl, EFI_STATUS Status = EFI::EFI_STATUS::SUCCESS, UINTN exitDataSize = 0, CHAR16* exitData = nullptr)
+    {
+        sysTable->BootServices->Exit(imgHndl, Status, exitDataSize, exitData);
+    }
+
+    static void ThrowException(EFI_SYSTEM_TABLE* sysTbl, EFI_HANDLE imgHndl, const CHAR16* errorMessage, EFI_STATUS status = EFI::EFI_STATUS::SUCCESS)
+    {
+        SetConsoleColor(sysTbl, EFI_CONSOLE_COLOR::FATAL);
+        ClearConOut(sysTbl);
+        PrintLine(sysTbl, errorMessage);
+        if (status != EFI_STATUS::SUCCESS)
+        {
+            PrintLine(sysTbl, UTF16::ToString(status));
+        };
+        WaitForKey(sysTbl);
+        Exit(sysTbl, imgHndl, status);
     }
 }
