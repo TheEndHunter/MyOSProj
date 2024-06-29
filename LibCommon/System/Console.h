@@ -2,6 +2,9 @@
 #include <TypeDefs.h>
 #include <Graphics/Colour.h>
 #include <Graphics/RenderContext.h>
+#include <Numerics/Vectors.h>
+#include <Graphics/Font/PCSF/PCSF1.h>
+#include <Graphics/Font/PCSF/PCSF2.h>
 
 namespace Common::System
 {
@@ -58,6 +61,15 @@ namespace Common::System
 		void ClearScreen();
 		void ClearScreen(Graphics::Colour bg);
 		void ClearScreen(Graphics::Colour bg, Graphics::Colour fg);
+
+		void SetCursorPosition(UINT32 x, UINT32 y);
+		void SetCursorPosition(Common::Numerics::Vect2D<UINT32> pos);
+		void SetCursorVisibility(BOOLEAN visible);
+		Common::Numerics::Vect2D<UINT32> GetCursorPosition();
+		BOOLEAN GetCursorVisibility();
+
+		UINT64 GetScreenCharWidth();
+		UINT64 GetScreenCharHeight();
 
 		~Console();
 	private:

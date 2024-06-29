@@ -69,7 +69,7 @@
     <ClInclude Include="System\MemFuncs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FileTypes\PE\MSDos.h">
+    <ClInclude Include="FileTypes\MSDOS\MSDos.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FileTypes\PE\PE32Header.h">
@@ -191,7 +191,7 @@
     <ClCompile Include="System\MemFuncs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileTypes\PE\MSDos.cpp">
+    <ClCompile Include="FileTypes\MSDOS\MSDos.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FileTypes\PE\PE32Header.cpp">

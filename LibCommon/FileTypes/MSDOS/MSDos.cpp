@@ -1,6 +1,6 @@
-#include <FileTypes/PE/MSDos.h>
+#include <FileTypes/MSDos/MSDos.h>
 
-namespace Common::FileTypes::PE
+namespace Common::FileTypes::MSDOS
 {
 	const CCHAR DosHeaderSignature[2] = { 'M', 'Z' };
 

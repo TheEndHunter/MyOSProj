@@ -9,10 +9,18 @@ namespace Common::Graphics
 	MonitorMode::MonitorMode(UINT32 version, UINT32 horizonalRes, UINT32 verticalRes, PixelFormat format, PixelBitMask bitMask, UINT32 pixelsPerScanLine, UINTN fbSize, VOID_PTR* fbPtr): Version(version),
 		HorizontalResolution(horizonalRes), VerticalResolution(verticalRes), Format(format), BitMask(bitMask), PixelsPerScanLine(pixelsPerScanLine), FrameBufferSize(fbSize), FrameBufferBase(fbPtr)
 	{
+		if (PixelsPerScanLine < HorizontalResolution)
+		{
+			PixelsPerScanLine = HorizontalResolution;
+		}
 	}
 
 	MonitorMode::MonitorMode(EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL_MODE* mode) : Version(mode->Info->Version), HorizontalResolution(mode->Info->HorizontalResolution), VerticalResolution(mode->Info->VerticalResolution), PixelsPerScanLine(mode->Info->PixelsPerScanLine), FrameBufferSize(mode->FrameBufferSize),
 		Format((PixelFormat)mode->Info->PixelFormat), BitMask(PixelBitMask(mode->Info->PixelInformation)), FrameBufferBase(mode->FrameBufferBase)
 	{
+		if (PixelsPerScanLine < HorizontalResolution)
+		{
+			PixelsPerScanLine = HorizontalResolution;
+		}
 	}
 }

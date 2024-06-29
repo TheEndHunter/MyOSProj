@@ -95,6 +95,12 @@ namespace Common::Graphics
         void SetPixelForeground2Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 colour);
         void SetPixelForeground2Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a = 0xFFFFFFFFu);
 
+        void SetPixelTextColour(const UINT32 xPos, const UINT32 yPos);
+        void SetPixelTextColour(const UINT32 xPos, const UINT32 yPos, const Colour colour);
+        void SetPixelTextColour(const UINT32 xPos, const UINT32 yPos, const Colour* colour);
+        void SetPixelTextColour(const UINT32 xPos, const UINT32 yPos, const UINT32 colour);
+        void SetPixelTextColour(const UINT32 xPos, const UINT32 yPos, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a = 0xFFFFFFFFu);
+
         void SetPixelRowBackgroundColour(const UINT32 xPos, const UINT32 yPos,const UINT32 length);
         void SetPixelRowBackgroundColour(const UINT32 xPos, const UINT32 yPos,const UINT32 length, const Colour colour);
         void SetPixelRowBackgroundColour(const UINT32 xPos, const UINT32 yPos,const UINT32 length, const Colour* colour);
@@ -112,6 +118,12 @@ namespace Common::Graphics
         void SetPixelRowForeground2Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 length, const Colour* colour);
         void SetPixelRowForeground2Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 length, const UINT32 colour);
         void SetPixelRowForeground2Colour(const UINT32 xPos, const UINT32 yPos, const UINT32 length, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a = 0xFFFFFFFFu);
+
+		void SetPixelRowTextColour(const UINT32 xPos, const UINT32 yPos, const UINT32 length);
+		void SetPixelRowTextColour(const UINT32 xPos, const UINT32 yPos, const UINT32 length, const Colour colour);
+		void SetPixelRowTextColour(const UINT32 xPos, const UINT32 yPos, const UINT32 length, const Colour* colour);
+		void SetPixelRowTextColour(const UINT32 xPos, const UINT32 yPos, const UINT32 length, const UINT32 colour);
+		void SetPixelRowTextColour(const UINT32 xPos, const UINT32 yPos, const UINT32 length, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a = 0xFFFFFFFFu);
 
         void SetTextColour(Colour colour);
         void SetTextColour(const Colour* colour);

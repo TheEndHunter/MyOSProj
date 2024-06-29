@@ -11,7 +11,7 @@ namespace Common::FileTypes::PE
 		_dataBufferValid = FALSE;
 
 		// Read DOSHeader
-		DOSHdr = DOSHeader(handle);
+		DOSHdr = MSDOS::DOSHeader(handle);
 
 		if(DOSHdr.Magic.Value != 0x5A4D)
 		{

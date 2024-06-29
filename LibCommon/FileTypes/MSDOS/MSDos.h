@@ -2,7 +2,7 @@
 #include <TypeDefs.h>
 #include <FileSystem/FileHandle.h>
 
-namespace Common::FileTypes::PE
+namespace Common::FileTypes::MSDOS
 {
 #pragma pack(push, 1)
 	struct DOSHeader

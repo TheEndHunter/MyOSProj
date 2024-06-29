@@ -12,10 +12,7 @@
 
 INT64 __alldiv(INT64 a, INT64 b)
 {
-
 }
-
-
 
 #endif
 

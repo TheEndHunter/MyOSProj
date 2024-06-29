@@ -1,6 +1,6 @@
 #pragma once
 #include <TypeDefs.h>
-#include <FileTypes/PE/MSDos.h>
+#include <FileTypes/MSDos/MSDos.h>
 #include <FileTypes/PE/PE32Header.h>
 #include <FileTypes/PE/PE32OptionHeader.h>
 #include <FileTypes/PE/PE32OptionHeader32.h>
@@ -25,7 +25,7 @@ namespace Common::FileTypes::PE
 		BOOLEAN IsSectionHdrValid() const;
 		BOOLEAN IsDataBufferValid() const;
 
-		DOSHeader DOSHdr;
+		MSDOS::DOSHeader DOSHdr;
 		PE32Header PE32hdr;
 		PE32OptionHeader OptHdrCommon;
 		union
