@@ -4,6 +4,6 @@
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup>
-    <ActiveDebugProfile>QemuManager</ActiveDebugProfile>
+    <ActiveDebugProfile>Qemu</ActiveDebugProfile>
   </PropertyGroup>
 </Project>

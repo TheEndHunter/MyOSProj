@@ -1,10 +1,12 @@
 {
+
   "OVMFConfig": {
     "Author": "TheEndHunter",
     "Repo": "OVMF_BIN",
     "OVMFBinPath": "Latest",
     "Branch": "main"
   },
+
   "Configurations": [
     {
       "Name": "Debug"
@@ -13,6 +15,7 @@
       "Name": "Release"
     }
   ],
+
   "Architectures": [
     {
       "Name": "x86"
@@ -25,6 +28,57 @@
     },
     {
       "Name": "ARM64"
+    }
+  ],
+
+  "QemuConfig": [
+    {
+      "Architecture": "x86",
+      "Configuration": "release",
+      "Name": "qemu-system-i386",
+      "AdditionalArgs": "-machine q35 -accel tcg -display gtk -m 2048M"
+    },
+    {
+      "Architecture": "x64",
+      "Configuration": "Release",
+      "Name": "qemu-system-x86_64",
+      "AdditionalArgs": "-machine q35 -accel tcg -display gtk -m 2048M"
+    },
+    {
+      "Architecture": "arm",
+      "Configuration": "release",
+      "Name": "qemu-system-arm",
+      "AdditionalArgs": "-machine virt -cpu cortex-a15 -accel tcg -display gtk -m 2048M"
+    },
+    {
+      "Architecture": "ARM64",
+      "Configuration": "release",
+      "Name": "qemu-system-aarch64",
+      "AdditionalArgs": "-machine virt -cpu cortex-a710 -accel tcg -display gtk -m 2048M"
+    },
+    {
+      "Architecture": "x86",
+      "Configuration": "debug",
+      "Name": "qemu-system-i386",
+      "AdditionalArgs": "-machine q35 -accel tcg -display gtk -m 2048M -gdb tcp::4242 -S"
+    },
+    {
+      "Architecture": "x64",
+      "Configuration": "debug",
+      "Name": "qemu-system-x86_64",
+      "AdditionalArgs": "-machine q35 -accel tcg -display gtk -m 2048M -gdb tcp::4242 -S"
+    },
+    {
+      "Architecture": "arm",
+      "Configuration": "debug",
+      "Name": "qemu-system-arm",
+      "AdditionalArgs": "-machine virt -cpu cortex-a15 -accel tcg -display gtk -m 2048M -gdb tcp::4242 -S"
+    },
+    {
+      "Architecture": "ARM64",
+      "Configuration": "debug",
+      "Name": "qemu-system-aarch64",
+      "AdditionalArgs": "-machine virt -cpu cortex-a710 -accel tcg -display gtk -m 2048M -gdb tcp::4242 -S"
     }
   ]
 

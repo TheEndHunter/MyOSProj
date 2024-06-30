@@ -5,6 +5,10 @@
       "commandLineArgs": "$(Platform) $(Configuration) $(SolutionDir)bin\\$(Platform)\\$(Configuration)\\",
       "workingDirectory": "$(SolutionDir)\\Tools\\QemuRunner\\",
       "nativeDebugging": true
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
     }
   }
 }

@@ -1,4 +1,4 @@
-﻿namespace QemuManager
+﻿namespace QemuRunner
 {
     public record struct GitConfiguration
     {
