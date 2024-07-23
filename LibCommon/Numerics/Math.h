@@ -7,13 +7,6 @@ namespace Common::Numerics
 	class Math
 	{
 	public:
-		template<typename Type>
-			requires NumberBase<Type>
-		constexpr static Type Zero = Type(0);
-		template<typename Type>
-			requires NumberBase<Type>
-		constexpr static Type One = Type(1);
-
 		template<typename SingedType>
 			requires SignedNumber<SingedType>
 		static SingedType Abs(SingedType num)
@@ -53,5 +46,15 @@ namespace Common::Numerics
 		{
 			return value > 0 ? 1 : value < 0 ? -1 : 0;
 		}
+
+		template<typename Type>
+			requires NumberBase<Type>
+		constexpr static Type Zero = Type(0);
+		template<typename Type>
+			requires NumberBase<Type>
+		constexpr static Type One = Type(1);
+		template<typename Type>
+			requires SignedNumber<Type>
+		constexpr static Type NegativeOne = Type(-1);
 	};
 }

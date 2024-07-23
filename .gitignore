@@ -41,3 +41,4 @@ binInt/
 /QemuManager/obj
 /Tools
 /workload-install.ps1
+*.vhd

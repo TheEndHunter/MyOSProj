@@ -292,3 +292,16 @@ struct uint128
 #else
 #error "Unknown compiler"
 #endif
+
+/*
+* define an ALLOCATE attribute for marking functions as constructors for the following compilers: MSVC & GCC
+*/
+
+#if defined(_MSC_VER)
+#define ALLOCATE(x) __declspec(allocate(x))
+#elif defined(__GNUC__)
+#define ALLOCATE(x) __attribute__((section(x)))
+#else
+#error "Unknown compiler"
+#endif
+

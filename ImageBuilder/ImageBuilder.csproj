@@ -2,10 +2,10 @@
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net9.0</TargetFramework>
+		<PreviewFeatures>enable</PreviewFeatures>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<PublishAot>true</PublishAot>
 		<InvariantGlobalization>true</InvariantGlobalization>
 
 		<Platforms>x86;x64;ARM;ARM64</Platforms>
@@ -19,5 +19,21 @@
 
 	<ItemGroup>
 	  <Folder Include="Properties\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="LTRData.DiscUtils" Version="1.0.46" />
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0-preview.6.24327.7" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.0-preview.6.24327.7" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="9.0.0-preview.6.24327.7" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Ini" Version="9.0.0-preview.6.24327.7" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0-preview.6.24327.7" />
+		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.0-preview.6.24327.7" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="Settings.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 </Project>

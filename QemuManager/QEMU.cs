@@ -3,9 +3,9 @@
     using System.Diagnostics;
     using System.Text;
 
-    internal static class QEMU
+    public static class QEMU
     {
-        internal static string BuildDrives(string directory)
+        public static string BuildDrives(string directory)
         {
             if (!Directory.Exists(directory)) return string.Empty;
 
@@ -21,7 +21,7 @@
         }
 
 
-        internal static string FindPath(string qemuExecutableName)
+        public static string FindPath(string qemuExecutableName)
         {
             string qemuExe = qemuExecutableName;
             /*Append the correct extension based on the platform*/
@@ -56,7 +56,7 @@
         }
 
         private static Process? qemuProcess = null;
-        internal static int StartProcess(QemuConfig config, string ovmfPath, string imagePath)
+        public static int StartProcess(QemuConfig config, string ovmfPath, string imagePath)
         {
             try
             {

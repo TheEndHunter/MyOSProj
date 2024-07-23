@@ -272,9 +272,6 @@
     <ClInclude Include="Protocols\IO\Console\EFI_UNICODE_CTRL_CHAR.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Protocols\IO\Console\EFI_CONSOLE_COLOR.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Protocols\IO\Media\EFI_LOAD_FILE_PROTOCOL.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -303,6 +300,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Protocols\IO\Media\EFI_FILE_SYSTEM_VOLUME_LABEL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Protocols\IO\Console\EFI_CONSOLE_COLOR.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

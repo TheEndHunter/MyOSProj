@@ -6,9 +6,9 @@
     using System.IO.Compression;
     using System.Threading.Tasks;
 
-    internal static class OVMF
+    public static class OVMF
     {
-        internal static async Task UpdateAsync(Settings config, string? sha1 = null)
+        public static async Task UpdateAsync(Settings config, string? sha1 = null)
         {
             Console.WriteLine("Checking for Updates...");
 
@@ -19,13 +19,23 @@
 
             var client = new GitHubClient(new ProductHeaderValue("QemuRunner"));
             var ovmf = config.OVMFConfiguration!.Value;
-            var repo = await client.Repository.Get(ovmf.Author, ovmf.Repo);
+            Repository? repo;
+            try
+            {
+                repo = await client.Repository.Get(ovmf.Author, ovmf.Repo);
+            }
+            catch
+            {
+                Console.Error.WriteLine("Unable to get repository at this time.");
+                return;
+            }
 
             if (repo == null)
             {
                 Console.WriteLine("Could not find Repository");
                 return;
             }
+
             var branch = await client.Repository.Branch.Get(repo.Id, ovmf.Branch);
             if (branch == null)
             {

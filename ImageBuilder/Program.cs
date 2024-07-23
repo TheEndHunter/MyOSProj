@@ -1,11 +1,19 @@
 ﻿namespace ImageBuilder
 {
+    using DiscUtils;
+
+    using ImageBuilder.Serialization;
+
+    using Microsoft.Extensions.Configuration;
+
     using System;
     using System.Collections.Frozen;
     using System.Diagnostics;
+    using System.Linq;
 
-    internal static class Program
+    public static partial class Program
     {
+
         private static readonly FrozenDictionary<string, string> bootfileMap = new Dictionary<string, string>()
                 {
                     { "x86", "BOOTIA32.efi" },
@@ -14,523 +22,451 @@
                     { "arm64", "BOOTAA64.efi" }
                 }.ToFrozenDictionary();
 
-        static int Main(string[] args)
+        static int Main(string[] Args)
         {
-            Console.Title = "Virtual Disk Builder Tool";
+            Console.Title = "Virtual Disc Builder Tool";
+            DiscUtils.Complete.SetupHelper.SetupComplete();
+            ImageBuilderConfigs? configs = GenerateConfig();
 
-            string? architecture = null;
-            string? configuration = null;
-            string? SrcPath = null;
-            string? DestPath = null;
-            string? imgName = null;
-            string? bootfile = null;
-
-            int l = args.Length;
-            if (l != 5)
+            if (configs is null)
             {
-                Console.WriteLine("Invalid amount of arguments specified (min/max of 5 arguments). switching to manual entry");
+                Console.WriteLine("Invalid Settings.json");
+                return -1;
+            }
 
+            var configurations = SelectConfigurations(configs.Value);
 
+            if (configurations is null || !configurations.Any())
+            {
+                Console.WriteLine("No Configurations Found");
+                return -1;
+            }
 
-                while (string.IsNullOrEmpty(architecture) && string.IsNullOrWhiteSpace(architecture))
-                {
-                    Console.Clear();
-                    Console.WriteLine("Please enter the architecture being used (Select from: x86,x64,ARM,ARM64)");
-                    architecture = Console.ReadLine()!.ToLower();
+            var architectures = SelectArchitectures(configs.Value);
 
-                    if (bootfileMap.TryGetValue(architecture, out string? bf))
-                    {
-                        bootfile = bf;
-                    }
-                    else
-                    {
-                        architecture = null;
-                        bootfile = null;
-                    }
+            if (architectures is null || !architectures.Any())
+            {
+                Console.WriteLine("No Architectures Found");
+                return -1;
+            }
 
-                }
+            var profiles = SelectProfiles(configs.Value, configurations, architectures);
 
-                while (string.IsNullOrEmpty(configuration) && string.IsNullOrWhiteSpace(configuration))
-                {
-                    Console.Clear();
-                    Console.WriteLine("Please enter the configuration being used(e.g. Debug, Release)");
-                    configuration = Console.ReadLine();
-                }
+            if (profiles is null || !profiles.Any())
+            {
+                Console.WriteLine("No Profiles Selected");
+                return -1;
+            }
 
-                while (string.IsNullOrEmpty(SrcPath) && string.IsNullOrWhiteSpace(SrcPath))
-                {
-                    Console.Clear();
-                    Console.WriteLine($"Current cwd: {Directory.GetCurrentDirectory()}");
-                    Console.WriteLine("Please enter path of the to the src directory being used(e.g. C:\\Build\\Src)");
-                    var test = Console.ReadLine();
+            var formats = SelectDiscFormatAndVariants(configs.Value);
+            if (formats is null || !formats.Any())
+            {
+                Console.WriteLine("No Disc Formats Selected");
+                return -1;
+            }
 
-                    test = Path.GetFullPath(test!);
+            foreach (var profile in profiles)
+            {
+                VirtualDiskBuilder.BuildDiscImage(profile, formats, configs.Value.BaseOutputDir, configs.Value.BaseImageSourceDir);
+            }
 
-                    if (Directory.Exists(test))
-                    {
-                        SrcPath = test;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid path specified");
-                        Console.ReadKey();
-                    }
-                }
+            return 0;
+        }
 
-                while (string.IsNullOrEmpty(DestPath) && string.IsNullOrWhiteSpace(DestPath))
-                {
-                    Console.Clear();
-                    Console.WriteLine($"Current cwd: {Directory.GetCurrentDirectory()}");
-                    Console.WriteLine("Please enter path of the to the src directory being used(e.g. C:\\Build\\Dest)");
-                    var test = Console.ReadLine();
+        private static ImageBuilderConfigs? GenerateConfig()
+        {
+            ImageBuilderConfigs config;
+            string Dir = Path.GetFullPath(Directory.GetCurrentDirectory());
+            string SettingsPath = Path.Combine(Dir, "Settings.json");
 
-                    test = Path.GetFullPath(test!);
+            IEnumerable<string> sdts = DiscUtils.VirtualDiskManager.SupportedDiskTypes;
 
-                    if (Directory.Exists(test))
-                    {
-                        DestPath = test;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid path specified");
-                        Console.ReadKey();
-                    }
-                }
+            if (File.Exists(SettingsPath))
+            {
+                ConfigurationBuilder builder = new();
+                builder.SetBasePath(Dir);
+                builder.AddJsonFile(SettingsPath, false);
 
-                while (string.IsNullOrEmpty(imgName) && string.IsNullOrWhiteSpace(imgName))
-                {
-                    Console.Clear();
-                    Console.WriteLine("Please enter the name to use for the file (e.g. 'virtualOS')(prefixes the Architecture and Configuration)");
-                    imgName = Console.ReadLine()!.ToLower();
+                IConfigurationRoot root = builder.Build();
 
-                    Console.Clear();
-                }
+                config = new ImageBuilderConfigs(root);
             }
             else
             {
-                architecture = args[0];
-                configuration = args[1];
-                SrcPath = Path.GetFullPath(Path.Combine(Path.GetFullPath(Directory.GetCurrentDirectory()), args[2]));
-                DestPath = Path.GetFullPath(Path.Combine(Path.GetFullPath(Directory.GetCurrentDirectory()), args[3]));
-                imgName = args[4];
+                throw new FileNotFoundException("Settings.json not found");
+            }
 
-                if (bootfileMap.TryGetValue(architecture, out string? bf))
+
+            if (config.Configurations is null || config.Configurations.Count < 1)
+            {
+                Console.WriteLine($"No Configurations found!");
+                return null;
+            }
+
+            if (config.Architectures is null || config.Architectures.Count < 1)
+            {
+                Console.WriteLine($"No Architectures found!");
+                return null;
+            }
+
+            if (config.DiscFormats is null || config.DiscFormats.Count < 1)
+            {
+                Console.WriteLine($"No Disc Formats found!");
+                return null;
+            }
+
+            if (config.ImageConfigs is null || config.ImageConfigs.Count < 1)
+            {
+                Console.WriteLine($"No Image Configs found!");
+                return null;
+            }
+
+            List<DiscFormat> DiscFormats = [];
+            foreach (var DiscFormat in config.DiscFormats)
+            {
+                if (string.IsNullOrEmpty(DiscFormat.Format) || string.IsNullOrWhiteSpace(DiscFormat.Format))
                 {
-                    bootfile = bf;
+                    Console.WriteLine("Invalid Disk Format: Format is null, empty or whitespace");
+                    continue;
                 }
-                else
+
+                if (!sdts.Contains(DiscFormat.Format.ToUpperInvariant()))
                 {
-                    architecture = null;
-                    bootfile = null;
+                    Console.WriteLine($"Invalid Disk Format: {DiscFormat.Format}, Not Supported");
+                    continue;
+                }
+
+                var variants = DiscUtils.VirtualDisk.GetSupportedDiskVariants(DiscFormat.Format);
+
+                if (variants is not null)
+                {
+                    if (string.IsNullOrEmpty(DiscFormat.Variant) || string.IsNullOrWhiteSpace(DiscFormat.Variant))
+                    {
+                        Console.WriteLine($"Invalid Disk Format: {DiscFormat.Format}, variant is null, empty or whitespace when required");
+                        continue;
+                    }
+
+                    if (!variants.Select(x =>
+                    {
+                        return string.Equals(x, DiscFormat.Variant, StringComparison.InvariantCultureIgnoreCase);
+                    }).Any())
+                    {
+                        Console.WriteLine($"Invalid Disk Format: {DiscFormat.Format}, Variant {DiscFormat.Variant} Not Supported");
+                        continue;
+                    }
+                }
+                DiscFormats.Add(DiscFormat);
+            }
+
+            if (DiscFormats.Count < 1)
+            {
+                return null;
+            }
+
+            /*validate configurations and architectures in ImageConfig, Removing Invalid Configurations*/
+
+            List<ImageConfig> _imageConfigs = [];
+            foreach (var imageConfig in config.ImageConfigs)
+            {
+                if (string.IsNullOrEmpty(imageConfig.Configuration) || string.IsNullOrWhiteSpace(imageConfig.Configuration) || !config.Configurations.Contains(imageConfig.Configuration))
+                {
+                    Console.WriteLine($"Invalid Configuration: Configuration is null, empty or whitespace... removing profile");
+                    continue;
+                }
+
+                if (string.IsNullOrEmpty(imageConfig.Architecture) || string.IsNullOrWhiteSpace(imageConfig.Architecture) || !config.Architectures.Contains(imageConfig.Architecture))
+                {
+                    Console.WriteLine($"Invalid Architecture: Architecture is null, empty or whitespace... removing profile");
+                    continue;
+                }
+
+                if (string.IsNullOrEmpty(imageConfig.Name) || string.IsNullOrWhiteSpace(imageConfig.Name))
+                {
+                    Console.WriteLine($"Invalid Image Profile Name: Image Profile Name is null, empty or whitespace... removing profile");
+                    continue;
+                }
+
+                if (imageConfig.Partitions.Count < 1)
+                {
+                    continue;
+                }
+
+                int pCount = imageConfig.Partitions.Count;
+
+                bool valid = true;
+                foreach (var partition in imageConfig.Partitions)
+                {
+
+                    if (string.IsNullOrEmpty(partition.Label) || string.IsNullOrWhiteSpace(partition.Label))
+                    {
+                        Console.WriteLine($"Invalid Partition Label: Partition Label is null, empty or whitespace... removing profile");
+                        valid = false;
+                        break;
+                    }
+
+                    if (string.IsNullOrEmpty(partition.SourceDir) || string.IsNullOrWhiteSpace(partition.SourceDir))
+                    {
+                        Console.WriteLine($"Invalid Partition Source Directory: Partition Source Directory is null, empty or whitespace... removing profile");
+                        valid = false;
+                        break;
+                    }
+
+                    if (!Directory.Exists(partition.SourceDir))
+                    {
+                        Console.WriteLine($"Invalid Partition Source Directory: {partition.SourceDir} does not exist... removing profile");
+                        valid = false;
+                        break;
+                    }
+
+                    if (partition.MinSizeBytes < 1)
+                    {
+                        Console.WriteLine($"Invalid Partition Min Size: Partition Min Size is less than 1... removing profile");
+                        valid = false;
+                        break;
+                    }
+
+                    if (string.IsNullOrEmpty(partition.FileFormat) || string.IsNullOrWhiteSpace(partition.FileFormat))
+                    {
+                        Console.WriteLine($"Invalid Partition File Format: Partition File Format is null, empty or whitespace... removing profile");
+                        valid = false;
+                        break;
+                    }
+                }
+
+                if (valid == false)
+                {
+                    continue;
+                }
+
+                _imageConfigs.Add(imageConfig);
+            }
+
+            if (_imageConfigs.Count < 1)
+            {
+                return null;
+            }
+
+            config.ImageConfigs.Clear();
+            config.ImageConfigs.AddRange(_imageConfigs);
+
+            config.Architectures = config.ImageConfigs.Select(x => x.Architecture).Distinct().ToList();
+            config.Configurations = config.ImageConfigs.Select(x => x.Configuration).Distinct().ToList();
+
+            return config;
+        }
+
+        public static IEnumerable<string>? SelectConfigurations(ImageBuilderConfigs config)
+        {
+            if (config.Configurations is null)
+            {
+                return null;
+            }
+
+            if (config.Configurations.Count > 1)
+            {
+                Checkbox c = new("Select Configuration(s)", options: config.Configurations, multiSelect: true);
+
+                c.Show();
+                IEnumerable<CheckboxReturn> selected = c.Select();
+                Console.Clear();
+                /*
+                 *  Select all configurations from ImageConfigs where the Configuration matches the selectedDiscFormats Configuration(s)
+                 */
+
+                return from conf in config.Configurations
+                       from sel in selected
+                       where sel.Option == conf
+                       orderby conf
+                       select conf;
+            }
+            else
+            {
+
+                return config.Configurations;
+            }
+        }
+
+        public static IEnumerable<string>? SelectArchitectures(ImageBuilderConfigs config)
+        {
+            if (config.Architectures is null)
+            {
+                return null;
+            }
+
+            if (config.Architectures.Count > 1)
+            {
+                Checkbox c = new(displayText: "Select Architecture(s)", options: config.Architectures, multiSelect: true);
+
+                c.Show();
+                IEnumerable<CheckboxReturn> selected = c.Select();
+                Console.Clear();
+                /*
+                 *  Select all Architectures from ImageConfigs where the Architecture matches the selectedDiscFormats Architecture(s)
+                 */
+
+                return from arch in config.Architectures
+                       from sel in selected
+                       where sel.Option == arch
+                       orderby arch
+                       select arch;
+            }
+            else
+            {
+                return config.Architectures;
+            }
+        }
+
+        public static IEnumerable<ImageConfig>? SelectProfiles(ImageBuilderConfigs config, IEnumerable<string> configurations, IEnumerable<string> architecures)
+        {
+            if (configurations is null || architecures is null)
+            {
+                return null;
+            }
+
+            var profiles = from profile in config.ImageConfigs
+                           from conf in configurations
+                           from arch in architecures
+                           where profile.Configuration == conf && profile.Architecture == arch
+                           select profile.Name;
+
+            if (profiles is null)
+            {
+                return null;
+            }
+
+            if (profiles.Count() > 1)
+            {
+                Checkbox c = new(displayText: "Select Architecture(s)", options: profiles, multiSelect: true);
+
+                c.Show();
+                IEnumerable<CheckboxReturn> selected = c.Select();
+
+                /*
+                 *  Select all Architectures from ImageConfigs where the Architecture matches the selectedDiscFormats Architecture(s)
+                 */
+
+                return from profile in config.ImageConfigs
+                       from sel in selected
+                       where profile.Name == sel.Option
+                       orderby profile.Name
+                       select profile;
+            }
+            else
+            {
+                return config.ImageConfigs.Where(predicate: x =>
+                {
+                    return x.Name == profiles.ElementAt(0);
+                }).OrderBy(x => x.Name);
+            }
+        }
+
+        public static IEnumerable<DiscFormat>? SelectDiscFormatAndVariants(ImageBuilderConfigs config)
+        {
+            List<DiscFormat> discFormats = [];
+
+            foreach (var disc in VirtualDiskManager.SupportedDiskFormats)
+            {
+                try
+                {
+                    ICollection<string>? variants = VirtualDisk.GetSupportedDiskVariants(disc);
+
+                    if (variants is null)
+                    {
+                        discFormats.Add(new DiscFormat(disc));
+                        continue;
+                    }
+
+                    foreach (var variant in variants)
+                    {
+                        discFormats.Add(new DiscFormat(disc, variant));
+                    }
+                }
+                catch
+                {
+                    discFormats.Add(new DiscFormat(disc));
                 }
             }
 
-            var dirs = Directory.EnumerateDirectories(SrcPath);
-
-            List<Partition> _partitions = [];
-            foreach (var dir in dirs)
+            if (discFormats is null)
             {
-                DirectoryInfo info = new(dir);
-                Partition p = new()
-                {
-                    SrcPath = info.FullName,
-                    DestPath = null,
-                    Size = Math.Max(500, info.CalculateSize())
-                };
+                return null;
+            }
 
-                if (string.Equals(info.Name, "EFI", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    p.Label = "EFI";
-                    p.Type = PartitionType.EFI;
+            if (discFormats.Count > 1)
+            {
+                IEnumerable<DiscFormat> distinctFormats = discFormats.DistinctBy(x => x.Format);
 
-                    var startupPath = Path.Combine(p.SrcPath, "startup.nsh");
-                    if (File.Exists(startupPath))
+                Checkbox discFormatsCheckBox = new(displayText: "Select Disc Format(s)", options: distinctFormats.Select(x => x.Format), selected: config.DiscFormats.Select(x => x.Format), multiSelect: true);
+
+                discFormatsCheckBox.Show();
+                IEnumerable<CheckboxReturn> selectedDiscFormats = discFormatsCheckBox.Select();
+                Console.Clear();
+
+                /*
+                 *  Select all Disc Formats select all selectedDiscFormats options
+                 */
+
+                var formats = from disc in distinctFormats
+                              from sel in selectedDiscFormats
+                              where string.Equals(disc.Format, sel.Option, StringComparison.CurrentCultureIgnoreCase)
+                              orderby disc.Format
+                              select disc;
+
+                if (formats is null)
+                {
+                    return null;
+                }
+                /*
+                 *  For each Disc Format, ask user for selection of input, in cases where there are no variants,
+                 *  just select the format and continue itterating
+                 */
+
+                List<DiscFormat> results = [];
+                foreach (var format in formats)
+                {
+                    string strFormat = format.Format;
+
+                    if (format.Variant is null)
                     {
-                        File.Delete(startupPath);
+                        results.Add(format);
+                        continue;
                     }
-                    using var f = File.CreateText(startupPath);
-                    f.AutoFlush = true;
-                    f.WriteLine("echo -off");
-                    f.WriteLine("mode 80 25");
-                    f.WriteLine("cls");
-
-                    if (configuration == "Debug")
+                    var f = format.Format;
+                    var selectedVartiants = discFormats.Where(x => string.Equals(x.Format, f, StringComparison.CurrentCultureIgnoreCase))
+                        .Select(x => x.Variant!) ?? throw new NotSupportedException("No Variants Selected");
+                    if (selectedVartiants.Count() > 1)
                     {
-                        for (int i = 0; i < 16; i++)
+                        Checkbox discVariantsCheckBox = new(displayText: $"Select Variant for {format.Format}", options: selectedVartiants, selected: config.DiscFormats.Where(x =>
                         {
-                            f.WriteLine($"if exists fs{i}:\\efi\\boot\\{bootfile} then");
-                            f.WriteLine($"fs{i}:");
+                            return string.Equals(x.Format,f, StringComparison.CurrentCultureIgnoreCase);
+                        }).Select(x => x.Variant!), multiSelect: true);
+                        discVariantsCheckBox.Show();
+                        IEnumerable<CheckboxReturn> selectedDiscVariants = discVariantsCheckBox.Select();
+                        Console.Clear();
 
-                            f.WriteLine($"echo found Bootloader on fs{i}:");
-                            f.WriteLine($"efi\\boot\\{bootfile}");
-                            f.WriteLine("goto END");
-                            f.WriteLine("endif");
-                            f.Flush();
-                        }
+                        results.AddRange(from disc in discFormats
+                                         from sel in selectedDiscVariants
+                                         where string.Equals(disc.Variant, sel.Option, StringComparison.CurrentCultureIgnoreCase) && string.Equals(disc.Format, f, StringComparison.CurrentCultureIgnoreCase)
+                                         orderby disc.Format
+                                         select disc);
                     }
                     else
                     {
-                        for (int i = 0; i < 16; i++)
-                        {
-                            f.WriteLine($"if exists fs{i}:\\efi\\boot\\{bootfile} then");
-                            f.WriteLine($"fs{i}:");
-                            f.WriteLine($"efi\\boot\\{bootfile}");
-                            f.WriteLine("goto END");
-                            f.WriteLine("endif");
+                        results.AddRange(from disc in discFormats
+                                         from sel in selectedVartiants
+                                         where string.Equals(disc.Variant,sel, StringComparison.CurrentCultureIgnoreCase) && string.Equals(disc.Format, f, StringComparison.CurrentCultureIgnoreCase)
+                                         orderby disc.Format
+                                         select disc);
 
-                            f.Flush();
-                        }
                     }
-                    f.WriteLine("echo Unable to find Bootloader");
-                    f.WriteLine(":END");
-                    f.Close();
-                }
-                else
-                {
-                    p.Label = info.Name.ToUpper();
-                    p.Type = PartitionType.PRIMARY;
-                }
-                _partitions.Add(p);
-            }
-
-            /*
-             *  We have all the folders linked to a Partition in the Partitions list
-             *  We can start to build the ImageFile we Need:
-             *  On Windows this is a .VHDX file
-             *  On Linux this is a .IMG file
-             *  
-             *  to do this we need to create a new file with the size of the total size of all the partitions
-             *  formatted as a GPT disk with the correct partition types and sizes for each partition,
-             *  then we need to mount each partition and copy the files from the source directory to the mounted partition
-             *  
-             *  when finished we unmount, and close the file
-             *  
-             *  if there are any errors, we unmount(if needed) close the file, delete it and exit with an error code
-             *  
-             */
-
-            DriveInfo[] drives = DriveInfo.GetDrives();
-
-            var assigned = drives.Select(d => d.Name).ToArray();
-
-            List<string> free =
-            [
-                "A:\\",
-                "B:\\",
-                "C:\\",
-                "D:\\",
-                "E:\\",
-                "F:\\",
-                "G:\\",
-                "H:\\",
-                "I:\\",
-                "J:\\",
-                "K:\\",
-                "L:\\",
-                "M:\\",
-                "N:\\",
-                "O:\\",
-                "P:\\",
-                "Q:\\",
-                "R:\\",
-                "S:\\",
-                "T:\\",
-                "U:\\",
-                "V:\\",
-                "W:\\",
-                "X:\\",
-                "Y:\\",
-                "Z:\\"
-            ];
-
-            if (assigned.Length < 1)
-            {
-                Console.Error.WriteLine("No drive letter assignments free");
-                return -1;
-            }
-            foreach (var drive in assigned)
-            {
-                free.Remove(drive);
-            }
-
-            var max = _partitions.Count;
-            if (free.Count < max)
-            {
-                Console.WriteLine("Not Enough Free Drive letter to create partitions");
-                Console.ReadLine();
-
-            }
-
-            for (int i = 0; i < max; i++)
-            {
-                var p = _partitions[i];
-                var _key = free.First();
-                p.DestPath = _key;
-                _partitions[i] = p;
-                free.Remove(_key);
-            }
-
-
-            string vhdxPath = Path.GetFullPath(Path.Combine(DestPath, $"{architecture}_{configuration}_{imgName}"));
-            string vhdPath = vhdxPath.Replace(".vhdx", ".vhd");
-            int res;
-
-            if (File.Exists(vhdxPath))
-            {
-                try
-                {
-                    File.Delete(vhdxPath);
-                }
-                catch
-                {
-                    Console.WriteLine("Unable to delete existing vhdx file");
-                    Console.ReadLine();
-                    return -1;
-                }
-            }
-
-            if (File.Exists(vhdPath))
-            {
-                try
-                {
-                    File.Delete(vhdPath);
-                }
-                catch
-                {
-                    Console.WriteLine("Unable to delete existing vhd file");
-                    Console.ReadLine();
-                    return -1;
-                }
-            }
-
-            res = Create(DestPath, architecture!, configuration, vhdxPath, ref _partitions);
-            if (res != 0)
-            {
-                return res;
-            }
-
-            res = Mount(DestPath, architecture!, configuration, vhdxPath, ref _partitions);
-
-            foreach (Partition p in _partitions)
-            {
-                DirectoryInfo _src = new(p.SrcPath);
-                DirectoryInfo _dest = new(p.DestPath!);
-                _src.CopyDirectoriesAndFiles(_src!.Parent!.FullName, _dest);
-            }
-
-            res = Detach(DestPath, architecture!, configuration, vhdxPath, ref _partitions);
-            if (res != 0)
-            {
-                return res;
-            }
-
-            res = Convert(vhdxPath, vhdPath);
-            if (res != 0)
-            {
-                return res;
-            }
-
-            return 0;
-        }
-
-        private static int Mount(string DestPath, string architecture, string configuration, string vhdxPath, ref List<Partition> _partitions)
-        {
-            try
-            {
-                string mScript = CreateMountScript(DestPath, architecture, configuration, vhdxPath, ref _partitions);
-
-                ProcessStartInfo m = new()
-                {
-                    FileName = "Diskpart.exe",
-                    WorkingDirectory = Environment.SystemDirectory,
-                    Arguments = $"/s {mScript}",
-                    WindowStyle = ProcessWindowStyle.Normal,
-                    CreateNoWindow = true,
-                    UseShellExecute = true,
-                    ErrorDialog = true,
-                };
-                Process.Start(m)!.WaitForExit();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                Console.ReadKey();
-                return e.HResult;
-            }
-            return 0;
-        }
-        private static int Convert(string vhdxPath, string vhdPath)
-        {
-            try
-            {
-                //Convert - VHD - Path c:\test\child1vhdx.vhdx - DestinationPath c:\test\child1vhd.vhd - VHDType Differencing
-                string cScript = CreateConvertScript(vhdxPath, vhdPath);
-
-                ProcessStartInfo d = new()
-                {
-                    FileName = "powershell.exe",
-                    Verb = "RunAs",
-                    WorkingDirectory = Environment.SystemDirectory,
-                    Arguments = $"{cScript}",
-                    WindowStyle = ProcessWindowStyle.Normal,
-                    CreateNoWindow = true,
-                    UseShellExecute = true,
-                    ErrorDialog = true,
-                };
-                Process.Start(d)!.WaitForExit();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                Console.ReadKey();
-                return e.HResult;
-            }
-            return 0;
-        }
-        private static int Detach(string DestPath, string architecture, string configuration, string vhdxPath, ref List<Partition> partitions)
-        {
-            try
-            {
-                string dtScript = CreateDetachScript(DestPath, architecture, configuration, vhdxPath, ref partitions);
-
-                ProcessStartInfo d = new()
-                {
-                    FileName = "Diskpart.exe",
-                    WorkingDirectory = Environment.SystemDirectory,
-                    Arguments = $"/s {dtScript}",
-                    WindowStyle = ProcessWindowStyle.Normal,
-                    CreateNoWindow = true,
-                    UseShellExecute = true,
-                    ErrorDialog = true,
-                };
-                Process.Start(d)!.WaitForExit();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                Console.ReadKey();
-                return e.HResult;
-            }
-            return 0;
-        }
-
-        private static int Create(string DestPath, string architecture, string configuration, string vhdxPath, ref List<Partition> _partitions)
-        {
-            string atScript = CreateAttachScript(DestPath, architecture, configuration, vhdxPath, ref _partitions);
-            try
-            {
-                ProcessStartInfo a = new()
-                {
-                    FileName = "Diskpart.exe",
-                    WorkingDirectory = Environment.SystemDirectory,
-                    Arguments = $"/s {atScript}",
-                    WindowStyle = ProcessWindowStyle.Normal,
-                    CreateNoWindow = true,
-                    UseShellExecute = true,
-                    ErrorDialog = true,
-                };
-                Process.Start(a!)!.WaitForExit();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                Console.ReadKey();
-                return e.HResult;
-            }
-            return 0;
-        }
-        private static string CreateConvertScript(string vhdxPath, string vhdPath)
-        {
-            return $"Convert-VHD -Path {vhdxPath} -DestinationPath {vhdPath} -VHDType Fixed";
-        }
-        private static string CreateDetachScript(string destPath, string architecture, string configuration, string imgPath, ref List<Partition> partitions)
-        {
-            string diskPartDetach = Path.Combine(destPath, $"{architecture}_{configuration}_DetachScript.txt");
-
-            if (File.Exists(diskPartDetach))
-            {
-                File.Delete(diskPartDetach);
-            }
-
-            {
-                using var f = File.CreateText(diskPartDetach);
-                f.WriteLine($"select vdisk file ={imgPath}");
-
-                int index = 2;
-                foreach (var part in partitions)
-                {
-                    f.WriteLine($"select partition {index}");
-                    f.WriteLine($"remove letter = {part!.DestPath!.Replace(":\\", "")}");
-                    index++;
                 }
 
-                f.WriteLine($"detach vdisk");
-                f.Close();
+                return results.OrderBy(x => x.Format);
             }
-
-            return diskPartDetach;
-        }
-
-        private static string CreateMountScript(string destPath, string architecture, string configuration, string imgPath, ref List<Partition> partitions)
-        {
-            string diskPartMount = Path.Combine(destPath, $"{architecture}_{configuration}_MountScript.txt");
-
-            if (File.Exists(diskPartMount))
+            else
             {
-                File.Delete(diskPartMount);
+                return discFormats.OrderBy(x => x.Format);
             }
-
-            {
-                using var f = File.CreateText(diskPartMount);
-                f.WriteLine($"select vdisk file ={imgPath}");
-                f.WriteLine("attach vdisk");
-
-                int index = 2;
-                foreach (var part in partitions)
-                {
-                    f.WriteLine($"select partition {index}");
-                    f.WriteLine($"assign letter = {part!.DestPath!.Replace(":\\", "")}");
-                    index++;
-                }
-                f.Close();
-            }
-            return diskPartMount;
-        }
-
-        public static string CreateAttachScript(string dest, string arch, string conf, string imgPath, ref List<Partition> partitions)
-        {
-            string diskPartAttach = Path.Combine(dest, $"{arch}_{conf}_AttachScript.txt");
-
-            if (File.Exists(diskPartAttach))
-            {
-                File.Delete(diskPartAttach);
-            }
-
-            {
-                long size = partitions.Sum(x => x.Size) + 18; // Size of all partitions and 16MB for the GPT Header
-                using var f = File.CreateText(diskPartAttach);
-
-                f.WriteLine($"create vdisk file ={imgPath} maximum = {size}");
-                f.WriteLine($"select vdisk file ={imgPath}");
-                f.WriteLine("attach vdisk");
-                f.WriteLine("convert gpt");
-                foreach (var part in partitions)
-                {
-                    switch (part.Type)
-                    {
-                        case PartitionType.EFI:
-                            f.WriteLine($"create partition efi size={part.Size}");
-                            break;
-                        default:
-                            f.WriteLine($"create partition primary size={part.Size}");
-                            break;
-                    }
-                    f.WriteLine($"format quick fs = fat32 label = \"{part.Label.ToUpper()}\"");
-                }
-                f.WriteLine("detach vdisk");
-                f.Close();
-            }
-            return diskPartAttach;
         }
     }
 }

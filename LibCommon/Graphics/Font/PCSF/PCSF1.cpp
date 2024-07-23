@@ -4,7 +4,7 @@ namespace Common::Graphics::Font::PCSF
 {
 	PCSF1::PCSF1()
 	{
-		_isValid = false;
+		_isValid = FALSE;
 		Header = PCSF1Hdr();
 		CharCount = 0;
 		Glyphs = nullptr;
@@ -16,37 +16,33 @@ namespace Common::Graphics::Font::PCSF
 		Header = PCSF1Hdr(handle);
 		if (Header.Magic.Char[0] != PSF1_MAGIC[0] || Header.Magic.Char[1] != PSF1_MAGIC[1])
 		{
-			_isValid = false;
+			_isValid = FALSE;
 			return;
 		}
 
-		_isValid = true;
-		UINT32 length;
+		_isValid = TRUE;
+		UINT32 charSize = Header.CharSize;
 
 		if((UINT8)Header.Mode & (UINT8)PCSF1Mode::MODE512)
 		{
-			length = 512;
+			CharCount = 512;
 		}
 		else
 		{
-			length = 256;
+			CharCount = 256;
 		}
 
-		CharCount = length;
-		length *= Header.CharSize;
 
-		Glyphs = new UINT8[length];
-		handle->Read<UINT8>(Glyphs, length);
+		Glyphs = (UINT8**)new UINT8[CharCount * charSize];
+		handle->Read<UINT8>(&Glyphs[0][0], CharCount);
 		
-		
-
 		if ((UINT8)Header.Mode & (UINT8)PCSF1Mode::MODEHASTAB)
 		{
 			UnicodeTable = new UnicodeSequence[CharCount];
 			if (UnicodeTable == nullptr)
 			{
 				// Memory allocation failed, handle this case
-				_isValid = false;
+				_isValid = FALSE;
 				delete[] Glyphs;
 				Glyphs = nullptr;
 				return;
@@ -76,7 +72,7 @@ namespace Common::Graphics::Font::PCSF
 					if (UnicodeTable[i].sequence == nullptr)
 					{
 						// Memory allocation failed, handle this case
-						_isValid = false;
+						_isValid = FALSE;
 						for (UINT16 j = 0; j < i; j++)
 						{
 							delete[] UnicodeTable[j].sequence;
@@ -107,7 +103,7 @@ namespace Common::Graphics::Font::PCSF
 				Glyphs = nullptr;
 
 				// The Unicode table is shorter than expected, handle this case
-				_isValid = false;
+				_isValid = FALSE;
 				return;
 			}
 		}
@@ -134,6 +130,31 @@ namespace Common::Graphics::Font::PCSF
 		handle->Read<UINT8>(&CharSize);
 	}
 
+	BOOLEAN PCSF1Hdr::operator==(const PCSF1Hdr& other)
+	{
+		if (Magic.Value != other.Magic.Value)
+		{
+			return FALSE;
+		}
+
+		if (Mode != other.Mode)
+		{
+			return FALSE;
+		}
+
+		if (CharSize != other.CharSize)
+		{
+			return FALSE;
+		}
+
+		return TRUE;
+	}
+
+	BOOLEAN PCSF1Hdr::operator!=(const PCSF1Hdr& other)
+	{
+		return !(this->operator==(other));
+	}
+
 	BOOLEAN PCSF1::IsValid()
 	{
 		return _isValid;
@@ -143,73 +164,78 @@ namespace Common::Graphics::Font::PCSF
 	{
 		if (index < CharCount)
 		{
-			return &Glyphs[index];
+			return Glyphs[index];
 		}
 		return nullptr;
 	}
-
-	UINT64 PCSF1::GetCharWidth()
+	BOOLEAN PCSF1::operator==(const PCSF1& other)
 	{
-		return Header.CharSize;
-	}
+		/*Check all Members of PCSF1*/
 
-	UINT64 PCSF1::GetCharHeight()
-	{
-		return Header.CharSize;
-	}
-
-	BOOLEAN PCSF1::SupportsUnicode()
-	{
-		return (UINT8)Header.Mode & (UINT8)PCSF1Mode::MODEHASTAB;
-	}
-
-	VOID_PTR PCSF1::GetGlyph(UINT64 codePoint)
-	{
-		if (UnicodeTable == nullptr)
+		if (Header != other.Header)
 		{
-			return nullptr;
+			return FALSE;
 		}
 
-		for (UINT32 i = 0; i < CharCount; i++)
+		if (CharCount != other.CharCount)
 		{
-			if (UnicodeTable[i].sequence != nullptr)
+			return FALSE;
+		}
+
+		if (UnicodeTable == nullptr && other.UnicodeTable != nullptr)
+		{
+			return FALSE;
+		}
+
+		if (UnicodeTable != nullptr && other.UnicodeTable == nullptr)
+		{
+			return FALSE;
+		}
+
+		if (UnicodeTable != nullptr && other.UnicodeTable != nullptr)
+		{
+			if (UnicodeTable->length != other.UnicodeTable->length)
 			{
-				if (UnicodeTable[i].length == 1)
+				return FALSE;
+			}
+
+			for (UINT16 i = 0; i < CharCount; i++)
+			{
+				if (UnicodeTable[i].length != other.UnicodeTable[i].length)
 				{
-					if (UnicodeTable[i].sequence[0] == codePoint)
-					{
-						return (VOID_PTR)&Glyphs[i];
-					}
+					return FALSE;
 				}
-				else
+
+				for (UINT8 j = 0; j < UnicodeTable[i].length; j++)
 				{
-					if (UnicodeTable[i].sequence[0] == PSF1_STARTSEQ)
+					if (UnicodeTable[i].sequence[j] != other.UnicodeTable[i].sequence[j])
 					{
-						if (UnicodeTable[i].sequence[1] == codePoint)
-						{
-							return (VOID_PTR)&Glyphs[i];
-						}
+						return FALSE;
 					}
 				}
 			}
 		}
 
-		return nullptr;
+		/*Check Glphys to make sure they match*/
+
+		for (UINT64 i = 0; i < CharCount; i++)
+		{
+			UINT8* glyph1 = Glyphs[i];
+			UINT8* glyph2 = other.Glyphs[i];
+
+			for(UINT16 j = 0; j < Header.CharSize; j++)
+			{
+				if (glyph1[j] != glyph2[j])
+				{
+					return FALSE;
+				}
+			}
+		}
+		return TRUE;
 	}
 
-	PCSF1::~PCSF1()
+	BOOLEAN PCSF1::operator!=(const PCSF1& other)
 	{
-		delete[] Glyphs;
-		Glyphs = nullptr;
-
-		if (UnicodeTable != nullptr)
-		{
-			for (UINT32 i = 0; i < CharCount; i++)
-			{
-				delete[] UnicodeTable[i].sequence;
-			}
-			delete[] UnicodeTable;
-			UnicodeTable = nullptr;
-		}
+		return !(this->operator==(other));
 	}
 }

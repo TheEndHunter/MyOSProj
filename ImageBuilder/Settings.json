@@ -1,0 +1,298 @@
+{
+  "Configurations": [
+    {
+      "Name": "Debug"
+    },
+    {
+      "Name": "Release"
+    }
+  ],
+
+  "Architectures": [
+    {
+      "Name": "x86"
+    },
+    {
+      "Name": "x64"
+    },
+    {
+      "Name": "ARM"
+    },
+    {
+      "Name": "ARM64"
+    }
+  ],
+  "ImageBuilderConfigs": {
+    "ImageBaseName": "OS",
+    "BaseOutputDir": "../../DiskImages/",
+    "BaseImageSourceDir": "../../bin/",
+    "DiscFormats": [
+      {
+        "Format": "VHD",
+        "Variant": "Fixed"
+      },
+      {
+        "Format": "VHDX",
+        "Variant": "Fixed"
+      }
+    ],
+    "ImageConfigs": [
+      {
+        "Name": "Debug_x86",
+        "Configuration": "Debug",
+        "Architecture": "x86",
+        "ImageMinSizeBytes": 1610612736,
+        "GenerateStartupScript": true,
+        "Partitions": [
+          {
+            "Label": "EFI",
+            "MinSizeBytes": 536870912,
+            "PartitionTypeGUID": "C12A7328-F81F-11D2-BA4B-00A0C93EC93B",
+            "FileFormat": "FAT32",
+            "SourceDir": "EFI"
+          },
+          {
+            "Label": "SYS",
+            "MinSizeBytes": 536870912,
+            "PartitionTypeGUID": "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7",
+            "AttributeFlags": 0,
+            "FileFormat": "FAT32",
+            "SourceDir": "SYS"
+          },
+          {
+            "Label": "LIBS",
+            "MinSizeBytes": 536870912,
+            "PartitionTypeGUID": "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7",
+            "AttributeFlags": 0,
+            "FileFormat": "FAT32",
+            "SourceDir": "LIBS"
+          }
+        ]
+      },
+      {
+        "Name": "Release_x86",
+        "Configuration": "Release",
+        "Architecture": "x86",
+        "ImageMinSizeBytes": 1610612736,
+        "GenerateStartupScript": true,
+        "Partitions": [
+          {
+            "Label": "EFI",
+            "MinSizeBytes": 536870912,
+            "PartitionTypeGUID": "C12A7328-F81F-11D2-BA4B-00A0C93EC93B",
+            "FileFormat": "FAT32",
+            "SourceDir": "EFI"
+          },
+          {
+            "Label": "SYS",
+            "MinSizeBytes": 536870912,
+            "PartitionTypeGUID": "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7",
+            "AttributeFlags": 0,
+            "FileFormat": "FAT32",
+            "SourceDir": "SYS"
+          },
+          {
+            "Label": "LIBS",
+            "MinSizeBytes": 536870912,
+            "PartitionTypeGUID": "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7",
+            "AttributeFlags": 0,
+            "FileFormat": "FAT32",
+            "SourceDir": "LIBS"
+          }
+        ]
+      },
+      {
+        "Name": "Debug_x64",
+        "Configuration": "Debug",
+        "Architecture": "x64",
+        "ImageMinSizeBytes": 1610612736,
+        "GenerateStartupScript": true,
+        "Partitions": [
+          {
+            "Label": "EFI",
+            "MinSizeBytes": 536870912,
+            "PartitionTypeGUID": "C12A7328-F81F-11D2-BA4B-00A0C93EC93B",
+            "FileFormat": "FAT32",
+            "SourceDir": "EFI"
+          },
+          {
+            "Label": "SYS",
+            "MinSizeBytes": 536870912,
+            "PartitionTypeGUID": "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7",
+            "AttributeFlags": 0,
+            "FileFormat": "FAT32",
+            "SourceDir": "SYS"
+          },
+          {
+            "Label": "LIBS",
+            "MinSizeBytes": 536870912,
+            "PartitionTypeGUID": "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7",
+            "AttributeFlags": 0,
+            "FileFormat": "FAT32",
+            "SourceDir": "LIBS"
+          }
+        ]
+      },
+      {
+        "Name": "Release_x64",
+        "Configuration": "Release",
+        "Architecture": "x64",
+        "ImageMinSizeBytes": 1610612736,
+        "GenerateStartupScript": true,
+        "Partitions": [
+          {
+            "Label": "EFI",
+            "MinSizeBytes": 536870912,
+            "PartitionTypeGUID": "C12A7328-F81F-11D2-BA4B-00A0C93EC93B",
+            "FileFormat": "FAT32",
+            "SourceDir": "EFI"
+          },
+          {
+            "Label": "SYS",
+            "MinSizeBytes": 536870912,
+            "PartitionTypeGUID": "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7",
+            "AttributeFlags": 0,
+            "FileFormat": "FAT32",
+            "SourceDir": "SYS"
+          },
+          {
+            "Label": "LIBS",
+            "MinSizeBytes": 536870912,
+            "PartitionTypeGUID": "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7",
+            "AttributeFlags": 0,
+            "FileFormat": "FAT32",
+            "SourceDir": "LIBS"
+          }
+        ]
+      },
+      {
+        "Name": "Debug_ARM",
+        "Configuration": "Debug",
+        "Architecture": "ARM",
+        "ImageMinSizeBytes": 1610612736,
+        "GenerateStartupScript": true,
+        "Partitions": [
+          {
+            "Label": "EFI",
+            "MinSizeBytes": 536870912,
+            "PartitionTypeGUID": "C12A7328-F81F-11D2-BA4B-00A0C93EC93B",
+            "FileFormat": "FAT32",
+            "SourceDir": "EFI"
+          },
+          {
+            "Label": "SYS",
+            "MinSizeBytes": 536870912,
+            "PartitionTypeGUID": "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7",
+            "AttributeFlags": 0,
+            "FileFormat": "FAT32",
+            "SourceDir": "SYS"
+          },
+          {
+            "Label": "LIBS",
+            "MinSizeBytes": 536870912,
+            "PartitionTypeGUID": "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7",
+            "AttributeFlags": 0,
+            "FileFormat": "FAT32",
+            "SourceDir": "LIBS"
+          }
+        ]
+      },
+      {
+        "Name": "Release_ARM",
+        "Configuration": "Release",
+        "Architecture": "ARM",
+        "ImageMinSizeBytes": 1610612736,
+        "GenerateStartupScript": true,
+        "Partitions": [
+          {
+            "Label": "EFI",
+            "MinSizeBytes": 536870912,
+            "PartitionTypeGUID": "C12A7328-F81F-11D2-BA4B-00A0C93EC93B",
+            "FileFormat": "FAT32",
+            "SourceDir": "EFI"
+          },
+          {
+            "Label": "SYS",
+            "MinSizeBytes": 536870912,
+            "PartitionTypeGUID": "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7",
+            "AttributeFlags": 0,
+            "FileFormat": "FAT32",
+            "SourceDir": "SYS"
+          },
+          {
+            "Label": "LIBS",
+            "MinSizeBytes": 536870912,
+            "PartitionTypeGUID": "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7",
+            "AttributeFlags": 0,
+            "FileFormat": "FAT32",
+            "SourceDir": "LIBS"
+          }
+        ]
+      },
+      {
+        "Name": "Debug_ARM64",
+        "Configuration": "Debug",
+        "Architecture": "ARM64",
+        "ImageMinSizeBytes": 1610612736,
+        "GenerateStartupScript": true,
+        "Partitions": [
+          {
+            "Label": "EFI",
+            "MinSizeBytes": 536870912,
+            "PartitionTypeGUID": "C12A7328-F81F-11D2-BA4B-00A0C93EC93B",
+            "FileFormat": "FAT32",
+            "SourceDir": "EFI"
+          },
+          {
+            "Label": "SYS",
+            "MinSizeBytes": 536870912,
+            "PartitionTypeGUID": "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7",
+            "AttributeFlags": 0,
+            "FileFormat": "FAT32",
+            "SourceDir": "SYS"
+          },
+          {
+            "Label": "LIBS",
+            "MinSizeBytes": 536870912,
+            "PartitionTypeGUID": "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7",
+            "AttributeFlags": 0,
+            "FileFormat": "FAT32",
+            "SourceDir": "LIBS"
+          }
+        ]
+      },
+      {
+        "Name": "Release_ARM64",
+        "Configuration": "Release",
+        "Architecture": "ARM64",
+        "ImageMinSizeBytes": 1610612736,
+        "GenerateStartupScript": true,
+        "Partitions": [
+          {
+            "Label": "EFI",
+            "MinSizeBytes": 536870912,
+            "PartitionTypeGUID": "C12A7328-F81F-11D2-BA4B-00A0C93EC93B",
+            "FileFormat": "FAT32",
+            "SourceDir": "EFI"
+          },
+          {
+            "Label": "SYS",
+            "MinSizeBytes": 536870912,
+            "PartitionTypeGUID": "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7",
+            "AttributeFlags": 0,
+            "FileFormat": "FAT32",
+            "SourceDir": "SYS"
+          },
+          {
+            "Label": "LIBS",
+            "MinSizeBytes": 536870912,
+            "PartitionTypeGUID": "EBD0A0A2-B9E5-4433-87C0-68B6B72699C7",
+            "AttributeFlags": 0,
+            "FileFormat": "FAT32",
+            "SourceDir": "LIBS"
+          }
+        ]
+      }
+    ]
+  }
+}

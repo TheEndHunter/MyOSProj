@@ -56,56 +56,36 @@ namespace Common::Graphics::Font::PCSF
 		return _isValid;
 	}
 
-	UINT8 PCSF2::GetGlyph8(UINT8 index)
+	UINT8* PCSF2::GetGlyph8(UINT8 index)
 	{
-		if (index < 256)
+		if (index < Header.Length)
 		{
-			return Glyphs._8[index];
+			return &Glyphs._8[index * Header.Height];
 		}
 		return 0;
 	}
 
-	UINT16 PCSF2::GetGlyph16(UINT8 index)
+	UINT16* PCSF2::GetGlyph16(UINT8 index)
 	{
-		if (index < 256)
+		if (index < Header.Length)
 		{
-			return Glyphs._16[index];
+			return &Glyphs._16[index * Header.Height];
 		}
 		return 0;
 	}
-	UINT32 PCSF2::GetGlyph32(UINT8 index)
+	UINT32* PCSF2::GetGlyph32(UINT8 index)
 	{
-		if (index < 256)
+		if (index < Header.Length)
 		{
-			return Glyphs._32[index];
+			return &Glyphs._32[index * Header.Height];
 		}
 		return 0;
 	}
-	UINT64 PCSF2::GetGlyph64(UINT8 index)
+	UINT64* PCSF2::GetGlyph64(UINT8 index)
 	{
-		if (index < 256)
+		if (index < Header.Length)
 		{
-			return Glyphs._64[index];
-		}
-		return 0;
-	}
-	UINT64 PCSF2::GetCharWidth()
-	{
-		return Header.Width;
-	}
-	UINT64 PCSF2::GetCharHeight()
-	{
-		return Header.Height;
-	}
-	BOOLEAN PCSF2::SupportsUnicode()
-	{
-		return (UINT32)Header.Flags & (UINT32)PCSF2Flags::HasUnicodeTable;
-	}
-	VOID_PTR PCSF2::GetGlyph(UINT64 codePoint)
-	{
-		if (codePoint < 256)
-		{
-			return (VOID_PTR) & Glyphs._8[codePoint];
+			return &Glyphs._64[index * Header.Height];
 		}
 		return 0;
 	}

@@ -235,6 +235,18 @@ namespace Common::FileSystem::ESP
 			LastStatus = EFI::EFI_STATUS::DEVICE_ERROR;
 			return FALSE;
 		}
+		
+		if (Common::Environment::UTF16::IsNullEmptyOrWhiteSpace(path))
+		{
+			LastStatus = EFI::EFI_STATUS::INVALID_PARAMETER;
+			return FALSE;
+		}
+
+		if (Common::Environment::UTF16::StartsWith(path,u"\\"))
+		{
+			_cwd = _root;
+			return true;
+		}
 
 		LastStatus = _cwd->Open(_cwd, &_cwd, (CHAR16*)path, EFI::EFI_FILE_MODES::ReadWrite, EFI::EFI_FILE_ATTRIBUTES::Directory);
 		return true;
@@ -377,7 +389,7 @@ namespace Common::FileSystem::ESP
 	Common::FileSystem::FileInfo ESP_FS_Context::GetFileInfo(const CHAR16* path)
 	{
 		/*Check path to see if it's null or empty, if it is return an empty FileSystem, putting INVALID_PARAMETER status into LastStatus Member*/
-		if (Common::Environment::UTF16::IsNullOrEmpty(path))
+		if (Common::Environment::UTF16::IsNullEmptyOrWhiteSpace(path))
 		{
 			LastStatus = EFI::EFI_STATUS::INVALID_PARAMETER;
 			return Empty_FileInfo;

@@ -42,15 +42,16 @@ namespace Common::Environment
 		static CHAR16* ToString(const VOID_PTR ptr);
 		static CHAR16* ToString(const BOOLEAN boolean);
 
-		static UINTN Length(const CHAR16* str);
+		static UINT64 Length(const CHAR16* str);
 		static BOOLEAN Compare(const CHAR16* l,const CHAR16* r, StringCulture culture = InvariantCulture);
 		static BOOLEAN StartsWith(const CHAR16* str, const CHAR16* value, StringCulture culture = InvariantCulture);
 		static BOOLEAN EndsWith(const CHAR16* str, const CHAR16* value, StringCulture culture = InvariantCulture);
 		static BOOLEAN Contains(const CHAR16* str, const CHAR16* value, StringCulture culture = InvariantCulture);
 		static BOOLEAN IsNullOrEmpty(const CHAR16* str);
 		static BOOLEAN IsNullOrWhiteSpace(const CHAR16* str);
+		static BOOLEAN IsNullEmptyOrWhiteSpace(const CHAR16* str);
 
-		static CHAR16* FromCharArray(CHAR16 arr[], UINTN Length);
+		static CHAR16* FromCharArray(CHAR16 arr[], UINT64 Length);
 		static CHAR16* FromUTF8String(const CHAR8* str);
 		static CHAR16* FromCString(const CCHAR* str);
 	};
@@ -88,15 +89,16 @@ namespace Common::Environment
 		static CHAR8* ToString(const VOID_PTR ptr);
 		static CHAR8* ToString(const BOOLEAN boolean);
 
-		static UINTN Length(const CHAR8* str);
+		static UINT64 Length(const CHAR8* str);
 		static BOOLEAN Compare(const CHAR8* l, const CHAR8* r, StringCulture culture = InvariantCulture);
 		static BOOLEAN StartsWith(const CHAR8* str, const CHAR8* value, StringCulture culture = InvariantCulture);
 		static BOOLEAN EndsWith(const CHAR8* str, const CHAR8* value, StringCulture culture = InvariantCulture);
 		static BOOLEAN Contains(const CHAR8* str, const CHAR8* value, StringCulture culture = InvariantCulture);
 		static BOOLEAN IsNullOrEmpty(const CHAR8* str);
 		static BOOLEAN IsNullOrWhiteSpace(const CHAR8* str);
+		static BOOLEAN IsNullEmptyOrWhiteSpace(const CHAR8* str);
 
-		static CHAR8* FromCharArray(CHAR8 arr[], UINTN Length);
+		static CHAR8* FromCharArray(CHAR8 arr[], UINT64 Length);
 		static CHAR8* FromUTF16String(const CHAR16* str);
 		static CHAR8* FromCString(const CCHAR* str);
 	};
@@ -136,7 +138,7 @@ namespace Common::Environment
 		static CCHAR* ToString(const VOID_PTR ptr);
 		static CCHAR* ToString(const BOOLEAN boolean);
 
-		static UINTN Length(const CCHAR* str);
+		static UINT64 Length(const CCHAR* str);
 		static BOOLEAN Compare(const CCHAR* l, const CCHAR* r, StringCulture culture = InvariantCulture);
 		static BOOLEAN StartsWith(const CCHAR* str, const CCHAR* value, StringCulture culture = InvariantCulture);
 		static BOOLEAN EndsWith(const CCHAR* str, const CCHAR* value, StringCulture culture = InvariantCulture);
@@ -144,7 +146,7 @@ namespace Common::Environment
 		static BOOLEAN IsNullOrEmpty(const CCHAR* str);
 		static BOOLEAN IsNullOrWhiteSpace(const CCHAR* str);
 
-		static CCHAR* FromCharArray(CCHAR arr[], UINTN Length);
+		static CCHAR* FromCharArray(CCHAR arr[], UINT64 Length);
 		static CCHAR* FromUTF16String(const CHAR16* str);
 		static CCHAR* FromUTF8String(const CHAR8* str);
 	};

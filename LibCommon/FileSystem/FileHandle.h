@@ -11,7 +11,7 @@ namespace Common::FileSystem
 {
 	namespace ESP
 	{
-		struct ESP_FS_Context;
+		class ESP_FS_Context;
 	}
 
 	struct FileHandle

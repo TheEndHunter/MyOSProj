@@ -135,9 +135,6 @@
     <ClInclude Include="Numerics\NumberBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="System\IConsole.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Numerics\Vectors.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -147,9 +144,6 @@
     <ClInclude Include="Debugging\EFI\EFIDebugger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Graphics\Font\IFont.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Environment\Unicode\UTF.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -157,6 +151,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="System\MemoryManagement\EfiAllocator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Array.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -266,64 +263,11 @@
     <ClCompile Include="System\MemoryManagement\EfiAllocator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Numerics\Vectors.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\COPYING" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\Makefile" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\NEWS" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\README" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\sha1sum" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-ext-light16.psf" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-ext-light16.psftx" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-ext-light18.psf" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-ext-light18.psftx" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-ext-light20.psf" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-ext-light20.psftx" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-ext-light24.psf" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-ext-light24.psftx" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-ext-light32.psf" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-ext-light32.psftx" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-ext-vga09.psf" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-ext-vga09.psftx" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-ext-vga16.psf" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-ext-vga16.psftx" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-ext-vga32.psf" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-ext-vga32.psftx" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-light16.psf" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-light16.psftx" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-light18.psf" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-light18.psftx" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-light20.psf" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-light20.psftx" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-light24.psf" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-light24.psftx" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-light32.psf" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-light32.psftx" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-vga09.psf" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-vga09.psftx" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-vga16.psf" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-vga16.psftx" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-vga32.psf" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\zap-vga32.psftx" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\utils\.git" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\utils\.gitignore" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\utils\COPYING" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\utils\freebsdvfnt2psftx" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\utils\freebsdvfntio.py" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\utils\psf2psftx" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\utils\psffont.py" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\utils\psfio.py" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\utils\psftx2freebsdvfnt" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\utils\psftx2psf" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\utils\psftx-codechart" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\utils\psftx-encodings" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\utils\psftxio.py" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\utils\psftx-sampler" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\utils\psftx-screenshot" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\utils\psftx-template" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\utils\rawfnt2psftx" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\utils\rawfntio.py" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\utils\README" />
-    <CopyFileToFolders Include="Assets\Fonts\ZapV24\utils\unicustom.py" />
+    <None Include="Assets\Fonts\ZapV24\zap-ext-light16.psf" />
   </ItemGroup>
 </Project>

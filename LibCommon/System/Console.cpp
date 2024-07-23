@@ -1,157 +1,273 @@
-#include "Console.h"
-#include "Graphics/Colour.h"
-#include "Graphics/RenderContext.h"
-#include "TypeDefs.h"
+#include <System/Console.h>
+#include <Environment/Unicode.h>
+#include <Numerics/Math.h>
 
 namespace Common::System
 {
-	Console::Console(Graphics::RenderContext* c)
+	Common::Numerics::Vect2D<UINT32> Empty_V2DU32 = Common::Numerics::Vect2D<UINT32>();
+
+	Console::Console(Graphics::RenderContext* c, ConsoleColour backgroundDefault, ConsoleColour foregroundDefault, Graphics::Font::PCSF::PCSF1* pcsf1)
 	{
-		context = c;
+		_context = c;
+		_context->SetPCSF1Font(pcsf1);
+		_pcsf1 = pcsf1;
+		_pcsf2 = nullptr;
+
+		_bgColour = backgroundDefault;
+		_bgColourDefault = backgroundDefault;
+		_fgColour = foregroundDefault;
+		_fgColourDefault = foregroundDefault;
+
+		_cursorPos = Empty_V2DU32;
+
+		_usePCSF1 = TRUE;
+		_usePCSF2 = FALSE;
+		_cursorVisible = FALSE;
+	}
+
+	Console::Console(Graphics::RenderContext* c, ConsoleColour backgroundDefault, ConsoleColour foregroundDefault, Graphics::Font::PCSF::PCSF2* pcsf2)
+	{
+		_context = c;
+		_context->SetPCSF2Font(pcsf2);
+		_pcsf1 = nullptr;
+		_pcsf2 = pcsf2;
+		_bgColour = backgroundDefault;
+		_bgColourDefault = backgroundDefault;
+		_fgColour = foregroundDefault;
+		_fgColourDefault = foregroundDefault;
+		_cursorPos = Empty_V2DU32;
+		
+		_usePCSF1 = FALSE;
+		_usePCSF2 = TRUE;
+		_cursorVisible = FALSE;
+	}
+
+	Console::Console(Graphics::RenderContext* c, ConsoleColour backgroundDefault, ConsoleColour foregroundDefault, Graphics::Font::PCSF::PCSF1* pcsf1, Graphics::Font::PCSF::PCSF2* pcsf2)
+	{
+		_context = c;
+		_context->SetPCSF1Font(pcsf1);
+		_context->SetPCSF2Font(pcsf2);
+		_pcsf1 = pcsf1;
+		_pcsf2 = pcsf2;
+		_bgColour = backgroundDefault;
+		_bgColourDefault = backgroundDefault;
+		_fgColour = foregroundDefault;
+		_fgColourDefault = foregroundDefault;
+		_cursorPos = Empty_V2DU32;
+		_usePCSF1 = TRUE;
+		_usePCSF2 = TRUE;
+		_cursorVisible = FALSE;
 	}
 
 	void Console::Write(const CHAR16* str)
 	{
-	}
+		if (_context == nullptr)
+		{
+			return;
+		}
 
-	void Console::Write(const CHAR16* fmt, ...)
-	{
-	}
+		if (_usePCSF1)
+		{
+			/*Draw each Character, if the max width of the screen is reached, jump to new line*/
+			UINT64 width = GetScreenCharWidth();
+			UINT64 height = GetScreenCharHeight();
+			UINT64 x = _cursorPos.X;
+			UINT64 y = _cursorPos.Y;
 
-	void Console::Write(const CHAR16* str, Graphics::Colour c)
-	{
-	}
+			for (UINT64 i = 0; str[i] != '\0'; i++)
+			{
+				if (str[i] == '\n')
+				{
+					x = 0;
+					y+= _pcsf1->Header.CharSize;
+				}
+				else
+				{
+					/*Draw the character*/
+					_context->DrawPCSF1Char(x, y, str[i]);
+					x += _pcsf1->Header.CharSize;
+				}
 
-	void Console::Write(const CHAR16* fmt, Graphics::Colour c, ...)
-	{
-	}
+				if (x >= width)
+				{
+					x = 0;
+					y += _pcsf1->Header.CharSize;
+				}
 
-	void Console::Write(const CHAR16* str, Graphics::Colour bg, Graphics::Colour fg)
-	{
-	}
+				if (y >= height)
+				{
+					break;
+				}
+			}
+		}
+		else
+		{
+			/*Draw each Character, if the max width of the screen is reached, jump to new line*/
+			UINT64 width = GetScreenCharWidth();
+			UINT64 height = GetScreenCharHeight();
+			UINT64 x = _cursorPos.X;
+			UINT64 y = _cursorPos.Y;
 
-	void Console::Write(const CHAR16* fmt, Graphics::Colour bg, Graphics::Colour fg, ...)
-	{
+			for (UINT64 i = 0; str[i] != '\0'; i++)
+			{
+				if (str[i] == '\n')
+				{
+					x = 0;
+					y += _pcsf2->Header.Height;
+				}
+				else
+				{
+					/*Draw the character*/
+					_context->DrawPCSF2Char(x, y, str[i]);
+					x += _pcsf2->Header.Width;
+				}
+
+				if (x >= width)
+				{
+					x = 0;
+					y += _pcsf2->Header.Height;
+				}
+
+				if (y >= height)
+				{
+					break;
+				}
+			}
+		}
 	}
 
 	void Console::WriteLine(const CHAR16* str)
 	{
-	}
+		if (_context == nullptr)
+		{
+			return;
+		}
 
-	void Console::WriteLine(const CHAR16* fmt, ...)
-	{
-	}
-
-	void Console::WriteLine(const CHAR16* str, Graphics::Colour c)
-	{
-	}
-
-	void Console::WriteLine(const CHAR16* fmt, Graphics::Colour c, ...)
-	{
-	}
-
-	void Console::WriteLine(const CHAR16* str, Graphics::Colour bg, Graphics::Colour fg)
-	{
-	}
-
-	void Console::WriteLine(const CHAR16* fmt, Graphics::Colour bg, Graphics::Colour fg ...)
-	{
+		Write(str);
+		Write(Common::Environment::UTF16::NewLine);
 	}
 
 	void Console::Write(const CHAR8* str)
 	{
-	}
-
-	void Console::Write(const CHAR8* fmt, ...)
-	{
-	}
-
-	void Console::Write(const CHAR8* str, Graphics::Colour c)
-	{
-	}
-
-	void Console::Write(const CHAR8* fmt, Graphics::Colour c, ...)
-	{
-	}
-
-	void Console::Write(const CHAR8* str, Graphics::Colour bg, Graphics::Colour fg)
-	{
-	}
-
-	void Console::Write(const CHAR8* fmt, Graphics::Colour bg, Graphics::Colour fg, ...)
-	{
+		if (_context == nullptr)
+		{
+			return;
+		}
 	}
 
 	void Console::WriteLine(const CHAR8* str)
 	{
+		if (_context == nullptr)
+		{
+			return;
+		}
+
+		Write(str);
+		Write(Common::Environment::UTF8::NewLine);
 	}
 
-	void Console::WriteLine(const CHAR8* fmt, ...)
+	void Console::Write(const CHAR16 c)
 	{
+		if (_context == nullptr)
+		{
+			return;
+		}
+
+		if (_usePCSF1)
+		{
+			/*Draw the character*/
+			_context->DrawPCSF1Char(_cursorPos.X, _cursorPos.Y, c);
+		}
 	}
 
-	void Console::WriteLine(const CHAR8* str, Graphics::Colour c)
+	void Console::WriteLine(const CHAR16 c)
 	{
+		if (_context == nullptr)
+		{
+			return;
+		}
+
+		Write(c);
+		Write(Common::Environment::UTF16::NewLine);
 	}
 
-	void Console::WriteLine(const CHAR8* fmt, Graphics::Colour c, ...)
+	void Console::Write(const CHAR8 c)
 	{
+		if (_context == nullptr)
+		{
+			return;
+		}
+
+		if (_usePCSF1)
+		{
+			/*Draw the character*/
+			_context->DrawPCSF1Char(_cursorPos.X, _cursorPos.Y, (CHAR16)c);
+		}
 	}
 
-	void Console::WriteLine(const CHAR8* str, Graphics::Colour bg, Graphics::Colour fg)
+	void Console::WriteLine(const CHAR8 c)
 	{
+		if (_context == nullptr)
+		{
+			return;
+		}
+
+		Write(c);
+		Write(Common::Environment::UTF8::NewLine);
 	}
 
-	void Console::WriteLine(const CHAR8* fmt, Graphics::Colour bg, Graphics::Colour fg ...)
+	void Console::SetConsoleColours(ConsoleColour bg, ConsoleColour fg)
 	{
+		if (_context == nullptr)
+		{
+			return;
+		}
+
+		_bgColour = bg;
+		_fgColour = fg;
+
+		_context->SetBackgroundColour(GetColour(_bgColour));
+		_context->SetForeground1Colour(GetColour(fg));
+
 	}
 
-	void Console::Write(const CCHAR str)
+	void Console::SetConsoleBackground(ConsoleColour bg)
 	{
+		if (_context == nullptr)
+		{
+			return;
+		}
+
+		_bgColour = bg;
+
+		_context->SetBackgroundColour(GetColour(_bgColour));
 	}
 
-	void Console::Write(const CCHAR fmt, ...)
+	void Console::SetConsoleForeground(ConsoleColour fg)
 	{
+		if (_context == nullptr)
+		{
+			return;
+		}
+
+		_fgColour = fg;
+
+		_context->SetForeground1Colour(GetColour(_fgColour));
 	}
 
-	void Console::Write(const CCHAR str, Graphics::Colour bg)
+	void Console::ResetConsoleColour()
 	{
-	}
+		if (_context == nullptr)
+		{
+			return;
+		}
 
-	void Console::Write(const CCHAR fmt, Graphics::Colour bg, ...)
-	{
-	}
+		_bgColour = _bgColourDefault;
+		_fgColour = _fgColourDefault;
 
-	void Console::Write(const CCHAR str, Graphics::Colour bg, Graphics::Colour fg)
-	{
-	}
+		_context->SetBackgroundColour(GetColour(_bgColour));
+		_context->SetForeground1Colour(GetColour(_fgColour));
 
-	void Console::Write(const CCHAR fmt, Graphics::Colour bg, Graphics::Colour fg, ...)
-	{
-	}
-
-	void Console::WriteLine(const CCHAR str)
-	{
-	}
-
-	void Console::WriteLine(const CCHAR fmt, ...)
-	{
-	}
-
-	void Console::WriteLine(const CCHAR str, Graphics::Colour bg)
-	{
-	}
-
-	void Console::WriteLine(const CCHAR fmt, Graphics::Colour bg, ...)
-	{
-	}
-
-	void Console::WriteLine(const CCHAR str, Graphics::Colour bg, Graphics::Colour fg)
-	{
-	}
-
-	void Console::WriteLine(const CCHAR fmt, Graphics::Colour bg, Graphics::Colour fg ...)
-	{
 	}
 
 	CHAR16 Console::ReadKey()
@@ -166,49 +282,198 @@ namespace Common::System
 
 	void Console::ClearScreen()
 	{
+		if (_context == nullptr)
+		{
+			return;
+		}
 	}
 
-	void Console::ClearScreen(Graphics::Colour bg)
+	void Console::ClearScreen(ConsoleColour bg)
 	{
+		if (_context == nullptr)
+		{
+			return;
+		}
+
+		_bgColour = bg;
+
+		_context->SetBackgroundColour(GetColour(bg));
 	}
 
-	void Console::ClearScreen(Graphics::Colour bg, Graphics::Colour fg)
+	void Console::ClearScreen(ConsoleColour bg, ConsoleColour fg)
 	{
+		if (_context == nullptr)
+		{
+			return;
+		}
+
+		_bgColour = bg;
+		_fgColour = fg;
+
+		_context->SetBackgroundColour(GetColour(bg));
+		_context->SetForeground1Colour(GetColour(fg));
+
+		_context->ClearScreen();
+
+
 	}
 
 	void Console::SetCursorPosition(UINT32 x, UINT32 y)
 	{
+		if (_context == nullptr)
+		{
+			return;
+		}
+
+		_cursorPos = Common::Numerics::Vect2D<UINT32>(x, y);
 	}
 
 	void Console::SetCursorPosition(Common::Numerics::Vect2D<UINT32> pos)
 	{
+		if (_context == nullptr)
+		{
+			return;
+		}
+
+		_cursorPos = pos;
 	}
 
 	void Console::SetCursorVisibility(BOOLEAN visible)
 	{
+		if (_context == nullptr)
+		{
+			return;
+		}
+
+		_cursorVisible = visible;
 	}
 
 	Common::Numerics::Vect2D<UINT32> Console::GetCursorPosition()
 	{
-		return Common::Numerics::Vect2D<UINT32>();
+		if (_context == nullptr)
+		{
+			return Empty_V2DU32;
+		}
+
+		return _cursorPos;
 	}
 
 	BOOLEAN Console::GetCursorVisibility()
 	{
-		return BOOLEAN();
+		return _cursorVisible;
 	}
 
 	UINT64 Console::GetScreenCharWidth()
 	{
-		return UINT64();
+		if (_context == nullptr)
+		{
+			return 0;
+		}
+
+		// Get the width of the screen (in pixels)
+		UINT64 width = _context->GetWidth();
+
+		if (_pcsf1 == nullptr && _pcsf2 == nullptr)
+		{
+			return 0;
+		}
+		else if (_pcsf1 != nullptr && _pcsf2 != nullptr)
+		{
+			/*get the bigger width of the 2 fonts*/
+			return width / Common::Numerics::Math::Max((UINT64)_pcsf1->Header.CharSize, (UINT64)_pcsf2->Header.Width);
+		}
+		else if(_pcsf1 != nullptr && _pcsf2 == nullptr)
+		{
+			return width / _pcsf1->Header.CharSize;
+		}
+		else
+		{
+			return width / _pcsf2->Header.Width;
+		}
 	}
 
 	UINT64 Console::GetScreenCharHeight()
 	{
-		return UINT64();
+		if (_context == nullptr)
+		{
+			return 0;
+		}
+
+		// Get the height of the screen (in pixels)
+		UINT64 height = _context->GetHeight();
+
+		if (_pcsf1 == nullptr && _pcsf2 == nullptr)
+		{
+			return 0;
+		}
+		else if (_pcsf1 != nullptr && _pcsf2 != nullptr)
+		{
+			return height / Common::Numerics::Math::Max((UINT64)_pcsf1->Header.CharSize, (UINT64)_pcsf2->Header.Height);
+		}
+		else if (_pcsf1 != nullptr && _pcsf2 == nullptr)
+		{
+			return height / _pcsf1->Header.CharSize;
+		}
+		else
+		{
+			return height / _pcsf2->Header.Height;
+		}
+	}
+
+	void Console::UsePCSF1()
+	{
+		_usePCSF1 = TRUE;
+		_usePCSF2 = FALSE;
+	}
+
+	void Console::UsePCSF2()
+	{
+		_usePCSF1 = FALSE;
+		_usePCSF2 = TRUE;
 	}
 
 	Console::~Console()
 	{
+	}
+
+	Graphics::Colour GetColour(const ConsoleColour colour)
+	{
+		switch (colour)
+		{
+		case ConsoleColour::Black:
+			return Graphics::Colours::Black;
+		case ConsoleColour::Blue:
+			return Graphics::Colours::Blue;
+		case ConsoleColour::Green:
+			return Graphics::Colours::Green;
+		case ConsoleColour::Cyan:
+			return Graphics::Colours::Cyan;
+		case ConsoleColour::Red:
+			return Graphics::Colours::Red;
+		case ConsoleColour::Magenta:
+			return Graphics::Colours::Magenta;
+		case ConsoleColour::Brown:
+			return Graphics::Colours::Brown;
+		case ConsoleColour::LightGray:
+			return Graphics::Colours::LightGray;
+		case ConsoleColour::DarkGray:
+			return Graphics::Colours::DarkGray;
+		case ConsoleColour::LightBlue:
+			return Graphics::Colours::LightBlue;
+		case ConsoleColour::LightGreen:
+			return Graphics::Colours::LightGreen;
+		case ConsoleColour::LightCyan:
+			return Graphics::Colours::LightCyan;
+		case ConsoleColour::LightRed:
+			return Graphics::Colours::LightRed;
+		case ConsoleColour::LightMagenta:
+			return Graphics::Colours::LightMagenta;
+		case ConsoleColour::LightBrown:
+			return Graphics::Colours::LightBrown;
+		case ConsoleColour::White:
+			return Graphics::Colours::White;
+		default:
+			return Graphics::Colours::Black;
+		}
 	}
 }

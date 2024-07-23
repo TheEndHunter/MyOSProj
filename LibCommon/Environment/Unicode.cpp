@@ -211,7 +211,7 @@ namespace Common::Environment
 
 	CHAR16* UTF16::ToHex(const UINT64 value)
 	{
-		UINTN i = value;
+		UINT64 i = value;
 		for (;i > 0; i >>= 4)
 		{
 			_UTF16_HEXSTRING[i] = _UTF16_HEXCHARS[i & 0xF];
@@ -636,7 +636,7 @@ namespace Common::Environment
 		}
 	}
 
-	UINTN UTF16::Length(const CHAR16* str)
+	UINT64 UTF16::Length(const CHAR16* str)
 	{
 		if (str == nullptr)
 		{
@@ -648,8 +648,8 @@ namespace Common::Environment
 			return 1;
 		}
 
-		UINTN index = 0;
-		UINTN len = 1;
+		UINT64 index = 0;
+		UINT64 len = 1;
 		while (str[index] != u'\0')
 		{
 			len++;
@@ -674,8 +674,8 @@ namespace Common::Environment
 			return TRUE;
 		}
 
-		UINTN lLength = Length(l);
-		UINTN rLength = Length(r);
+		UINT64 lLength = Length(l);
+		UINT64 rLength = Length(r);
 
 		if (lLength != rLength)
 		{
@@ -690,7 +690,7 @@ namespace Common::Environment
 		{
 			/*Binary Comparison of string*/
 
-			for (UINTN index = 0; index < lLength; index++)
+			for (UINT64 index = 0; index < lLength; index++)
 			{
 				if (l[index] != r[index])
 				{
@@ -705,9 +705,9 @@ namespace Common::Environment
 		{
 			/*Binary Comparison, Ignoring Case of string*/
 
-			UINTN index = 0;
+			UINT64 index = 0;
 
-			for (UINTN index = 0; index < lLength; index++)
+			for (UINT64 index = 0; index < lLength; index++)
 			{
 				CHAR16 lChar = l[index];
 				CHAR16 rChar = r[index];
@@ -749,8 +749,8 @@ namespace Common::Environment
 			return TRUE;
 		}
 
-		UINTN strLength = Length(str);
-		UINTN valueLength = Length(value);
+		UINT64 strLength = Length(str);
+		UINT64 valueLength = Length(value);
 
 		if (strLength < valueLength)
 		{
@@ -763,7 +763,7 @@ namespace Common::Environment
 		case Common::Environment::CurrentCulture:
 		case Common::Environment::Ordinal:
 		{
-			for (UINTN index = 0; index < valueLength; index++)
+			for (UINT64 index = 0; index < valueLength; index++)
 			{
 				if (str[index] != value[index])
 				{
@@ -776,7 +776,7 @@ namespace Common::Environment
 		case Common::Environment::CurrentCultureIgnoreCase:
 		case Common::Environment::OrdinalIgnoreCase:
 		{
-			for (UINTN index = 0; index < valueLength; index++)
+			for (UINT64 index = 0; index < valueLength; index++)
 			{
 				CHAR16 lChar = str[index];
 				CHAR16 rChar = value[index];
@@ -817,8 +817,8 @@ namespace Common::Environment
 			return TRUE;
 		}
 
-		UINTN strLength = Length(str);
-		UINTN valueLength = Length(value);
+		UINT64 strLength = Length(str);
+		UINT64 valueLength = Length(value);
 
 		if (strLength < valueLength)
 		{
@@ -831,8 +831,8 @@ namespace Common::Environment
 		case Common::Environment::CurrentCulture:
 		case Common::Environment::Ordinal:
 		{
-			UINTN index = 0;
-			for (UINTN index = 0; index < valueLength; index++)
+			UINT64 index = 0;
+			for (UINT64 index = 0; index < valueLength; index++)
 			{
 				if (str[strLength - valueLength + index] != value[index])
 				{
@@ -845,8 +845,8 @@ namespace Common::Environment
 		case Common::Environment::CurrentCultureIgnoreCase:
 		case Common::Environment::OrdinalIgnoreCase:
 		{
-			UINTN index = 0;
-			for (UINTN index = 0; index < valueLength; index++)
+			UINT64 index = 0;
+			for (UINT64 index = 0; index < valueLength; index++)
 			{
 				CHAR16 lChar = str[strLength - valueLength + index];
 				CHAR16 rChar = value[index];
@@ -888,8 +888,8 @@ namespace Common::Environment
 			return TRUE;
 		}
 
-		UINTN strLength = Length(str);
-		UINTN valueLength = Length(value);
+		UINT64 strLength = Length(str);
+		UINT64 valueLength = Length(value);
 
 		if (strLength < valueLength)
 		{
@@ -902,13 +902,13 @@ namespace Common::Environment
 		case Common::Environment::CurrentCulture:
 		case Common::Environment::Ordinal:
 		{
-			UINTN index = 0;
-			for (UINTN index = 0; index < strLength - valueLength; index++)
+			UINT64 index = 0;
+			for (UINT64 index = 0; index < strLength - valueLength; index++)
 			{
 				if (str[index] == value[0])
 				{
 					BOOLEAN match = TRUE;
-					for (UINTN i = 0; i < valueLength; i++)
+					for (UINT64 i = 0; i < valueLength; i++)
 					{
 						if (str[index + i] != value[i])
 						{
@@ -929,8 +929,8 @@ namespace Common::Environment
 		case Common::Environment::CurrentCultureIgnoreCase:
 		case Common::Environment::OrdinalIgnoreCase:
 		{
-			UINTN index = 0;
-			for (UINTN index = 0; index < strLength - valueLength; index++)
+			UINT64 index = 0;
+			for (UINT64 index = 0; index < strLength - valueLength; index++)
 			{
 				CHAR16 lChar = str[index];
 				CHAR16 rChar = value[0];
@@ -949,7 +949,7 @@ namespace Common::Environment
 				if (lChar == rChar)
 				{
 					BOOLEAN match = TRUE;
-					for (UINTN i = 0; i < valueLength; i++)
+					for (UINT64 i = 0; i < valueLength; i++)
 					{
 						CHAR16 lChar2 = str[index + i];
 						CHAR16 rChar2 = value[i];
@@ -1005,28 +1005,58 @@ namespace Common::Environment
 			return TRUE;
 		};
 
+		UINT64 index = 0;
+		INT64 charindex = -1;
+		while (str[index] != u'\0')
+		{
+			UINT64 i = 0;
+			for (UINT64 i = 0; i < 30; i++)
+			{
+				if (str[index] != _UTF16_WHITESPACECHARS[i])
+				{
+					charindex = index;
+				}
+			}
+			index++;
+		}
+
+		return charindex == -1;
+	}
+
+	BOOLEAN UTF16::IsNullEmptyOrWhiteSpace(const CHAR16* str)
+	{
+		if (str == nullptr)
+		{
+			return TRUE;
+		};
+
 		if (str[0] == u'\0')
 		{
 			return TRUE;
 		}
 
-		UINTN index = 0;
+		/*Check Entire string, if any of that characters are non whitespace characters, return false otherwise return true*/
+
+		UINT64 index = 0;
+		INT64 charindex = -1;
+
 		while (str[index] != u'\0')
 		{
-			UINTN i = 0;
-			for (UINTN i = 0; i < 30; i++)
+			UINT64 i = 0;
+			for (UINT64 i = 0; i < 30; i++)
 			{
-				if (str[index] == _UTF16_WHITESPACECHARS[i])
+				if (str[index] != _UTF16_WHITESPACECHARS[i])
 				{
-					return TRUE;
+					charindex = index;
 				}
 			}
 			index++;
 		}
-		return FALSE;
+
+		return charindex == -1;
 	}
 
-	CHAR16* UTF16::FromCharArray(CHAR16 arr[], UINTN Length)
+	CHAR16* UTF16::FromCharArray(CHAR16 arr[], UINT64 Length)
 	{
 		if (arr == nullptr)
 		{
@@ -1040,7 +1070,7 @@ namespace Common::Environment
 
 		CHAR16* result = new CHAR16[Length + 1];
 
-		for (UINTN i = 0; i < Length; i++)
+		for (UINT64 i = 0; i < Length; i++)
 		{
 			result[i] = arr[i];
 		}
@@ -1060,11 +1090,11 @@ namespace Common::Environment
 			return (CHAR16*)u"\0";
 		}
 
-		UINTN len = UTF8::Length(str);
+		UINT64 len = UTF8::Length(str);
 
 		CHAR16* result = new CHAR16[len];
 
-		for (UINTN i = 0; i < len; i++)
+		for (UINT64 i = 0; i < len; i++)
 		{
 			result[i] = (CHAR16)str[i];
 		}
@@ -1084,11 +1114,11 @@ namespace Common::Environment
 			return (CHAR16*)u"\0";
 		}
 
-		UINTN len = CString::Length(str);
+		UINT64 len = CString::Length(str);
 
 		CHAR16* result = new CHAR16[len];
 
-		for (UINTN i = 0; i < len; i++)
+		for (UINT64 i = 0; i < len; i++)
 		{
 			result[i] = (CHAR16)(INT16)(str[i]);
 		}
@@ -1721,7 +1751,7 @@ namespace Common::Environment
 		}
 	}
 
-	UINTN UTF8::Length(const CHAR8* str)
+	UINT64 UTF8::Length(const CHAR8* str)
 	{
 		if (str == nullptr)
 		{
@@ -1733,8 +1763,8 @@ namespace Common::Environment
 			return 1;
 		}
 
-		UINTN index = 0;
-		UINTN len = 1;
+		UINT64 index = 0;
+		UINT64 len = 1;
 		while (str[index] != u8'\0')
 		{
 			len++;
@@ -1759,8 +1789,8 @@ namespace Common::Environment
 			return TRUE;
 		}
 
-		UINTN lLength = Length(l);
-		UINTN rLength = Length(r);
+		UINT64 lLength = Length(l);
+		UINT64 rLength = Length(r);
 
 		if (lLength != rLength)
 		{
@@ -1775,7 +1805,7 @@ namespace Common::Environment
 		{
 			/*Binary Comparison of string*/
 
-			for (UINTN index = 0; index < lLength; index++)
+			for (UINT64 index = 0; index < lLength; index++)
 			{
 				if (l[index] != r[index])
 				{
@@ -1790,9 +1820,9 @@ namespace Common::Environment
 		{
 			/*Binary Comparison, Ignoring Case of string*/
 
-			UINTN index = 0;
+			UINT64 index = 0;
 
-			for (UINTN index = 0; index < lLength; index++)
+			for (UINT64 index = 0; index < lLength; index++)
 			{
 				CHAR8 lChar = l[index];
 				CHAR8 rChar = r[index];
@@ -1833,8 +1863,8 @@ namespace Common::Environment
 			return TRUE;
 		}
 
-		UINTN strLength = Length(str);
-		UINTN valueLength = Length(value);
+		UINT64 strLength = Length(str);
+		UINT64 valueLength = Length(value);
 
 		if (strLength < valueLength)
 		{
@@ -1847,7 +1877,7 @@ namespace Common::Environment
 		case Common::Environment::CurrentCulture:
 		case Common::Environment::Ordinal:
 		{
-			for (UINTN index = 0; index < valueLength; index++)
+			for (UINT64 index = 0; index < valueLength; index++)
 			{
 				if (str[index] != value[index])
 				{
@@ -1860,7 +1890,7 @@ namespace Common::Environment
 		case Common::Environment::CurrentCultureIgnoreCase:
 		case Common::Environment::OrdinalIgnoreCase:
 		{
-			for (UINTN index = 0; index < valueLength; index++)
+			for (UINT64 index = 0; index < valueLength; index++)
 			{
 				CHAR8 lChar = str[index];
 				CHAR8 rChar = value[index];
@@ -1901,8 +1931,8 @@ namespace Common::Environment
 			return TRUE;
 		}
 
-		UINTN strLength = Length(str);
-		UINTN valueLength = Length(value);
+		UINT64 strLength = Length(str);
+		UINT64 valueLength = Length(value);
 
 		if (strLength < valueLength)
 		{
@@ -1915,8 +1945,8 @@ namespace Common::Environment
 		case Common::Environment::CurrentCulture:
 		case Common::Environment::Ordinal:
 		{
-			UINTN index = 0;
-			for (UINTN index = 0; index < valueLength; index++)
+			UINT64 index = 0;
+			for (UINT64 index = 0; index < valueLength; index++)
 			{
 				if (str[strLength - valueLength + index] != value[index])
 				{
@@ -1929,8 +1959,8 @@ namespace Common::Environment
 		case Common::Environment::CurrentCultureIgnoreCase:
 		case Common::Environment::OrdinalIgnoreCase:
 		{
-			UINTN index = 0;
-			for (UINTN index = 0; index < valueLength; index++)
+			UINT64 index = 0;
+			for (UINT64 index = 0; index < valueLength; index++)
 			{
 				CHAR8 lChar = str[strLength - valueLength + index];
 				CHAR8 rChar = value[index];
@@ -1972,8 +2002,8 @@ namespace Common::Environment
 			return TRUE;
 		}
 
-		UINTN strLength = Length(str);
-		UINTN valueLength = Length(value);
+		UINT64 strLength = Length(str);
+		UINT64 valueLength = Length(value);
 
 		if (strLength < valueLength)
 		{
@@ -1986,13 +2016,13 @@ namespace Common::Environment
 		case Common::Environment::CurrentCulture:
 		case Common::Environment::Ordinal:
 		{
-			UINTN index = 0;
-			for (UINTN index = 0; index < strLength - valueLength; index++)
+			UINT64 index = 0;
+			for (UINT64 index = 0; index < strLength - valueLength; index++)
 			{
 				if (str[index] == value[0])
 				{
 					BOOLEAN match = TRUE;
-					for (UINTN i = 0; i < valueLength; i++)
+					for (UINT64 i = 0; i < valueLength; i++)
 					{
 						if (str[index + i] != value[i])
 						{
@@ -2013,8 +2043,8 @@ namespace Common::Environment
 		case Common::Environment::CurrentCultureIgnoreCase:
 		case Common::Environment::OrdinalIgnoreCase:
 		{
-			UINTN index = 0;
-			for (UINTN index = 0; index < strLength - valueLength; index++)
+			UINT64 index = 0;
+			for (UINT64 index = 0; index < strLength - valueLength; index++)
 			{
 				CHAR8 lChar = str[index];
 				CHAR8 rChar = value[0];
@@ -2033,7 +2063,7 @@ namespace Common::Environment
 				if (lChar == rChar)
 				{
 					BOOLEAN match = TRUE;
-					for (UINTN i = 0; i < valueLength; i++)
+					for (UINT64 i = 0; i < valueLength; i++)
 					{
 						CHAR8 lChar2 = str[index + i];
 						CHAR8 rChar2 = value[i];
@@ -2094,22 +2124,53 @@ namespace Common::Environment
 			return TRUE;
 		}
 
-		UINTN index = 0;
-		while (str[index] != u8'\0')
+		UINT64 index = 0;
+		INT64 charindex = -1;
+		while (str[index] != u'\0')
 		{
-			UINTN i = 0;
-			for (UINTN i = 0; i < 30; i++)
+			UINT64 i = 0;
+			for (UINT64 i = 0; i < 30; i++)
 			{
-				if (str[index] == _UTF8_WHITESPACECHARS[i])
+				if (str[index] != _UTF8_WHITESPACECHARS[i])
 				{
-					return TRUE;
+					charindex = index;
 				}
 			}
 			index++;
 		}
-		return FALSE;
+
+		return charindex == -1;
 	}
-	CHAR8* UTF8::FromCharArray(CHAR8 arr[], UINTN Length)
+	BOOLEAN UTF8::IsNullEmptyOrWhiteSpace(const CHAR8* str)
+	{
+		if (str == nullptr)
+		{
+			return TRUE;
+		};
+
+		if (str[0] == '\0')
+		{
+			return TRUE;
+		}
+
+		UINT64 index = 0;
+		INT64 charindex = -1;
+		while (str[index] != u'\0')
+		{
+			UINT64 i = 0;
+			for (UINT64 i = 0; i < 30; i++)
+			{
+				if (str[index] != _UTF8_WHITESPACECHARS[i])
+				{
+					charindex = index;
+				}
+			}
+			index++;
+		}
+
+		return charindex == -1;
+	}
+	CHAR8* UTF8::FromCharArray(CHAR8 arr[], UINT64 Length)
 	{
 		/*Convert from CHAR8 Array to UTF8 String*/
 
@@ -2119,7 +2180,7 @@ namespace Common::Environment
 		}
 		CHAR8* result = new CHAR8[Length + 1];
 
-		for (UINTN i = 0; i < Length; i++)
+		for (UINT64 i = 0; i < Length; i++)
 		{
 			result[i] = arr[i];
 		}
@@ -2136,11 +2197,11 @@ namespace Common::Environment
 			return nullptr;
 		}
 
-		UINTN len = UTF16::Length(str);
+		UINT64 len = UTF16::Length(str);
 
 		CHAR8* result = new CHAR8[len];
 
-		for (UINTN i = 0; i < len; i++)
+		for (UINT64 i = 0; i < len; i++)
 		{
 			result[i] = (CHAR8)str[i];
 		}
@@ -2156,11 +2217,11 @@ namespace Common::Environment
 			return nullptr;
 		}
 
-		UINTN len = CString::Length(str);
+		UINT64 len = CString::Length(str);
 
 		CHAR8* result = new CHAR8[len];
 
-		for (UINTN i = 0; i < len; i++)
+		for (UINT64 i = 0; i < len; i++)
 		{
 			result[i] = (CHAR8)str[i];
 		}
@@ -2795,7 +2856,7 @@ namespace Common::Environment
 		}
 	}
 
-	UINTN CString::Length(const CCHAR* str)
+	UINT64 CString::Length(const CCHAR* str)
 	{
 		if (str == nullptr)
 		{
@@ -2807,8 +2868,8 @@ namespace Common::Environment
 			return 1;
 		}
 
-		UINTN index = 0;
-		UINTN len = 1;
+		UINT64 index = 0;
+		UINT64 len = 1;
 		while (str[index] != '\0')
 		{
 			len++;
@@ -2833,8 +2894,8 @@ namespace Common::Environment
 			return TRUE;
 		}
 
-		UINTN lLength = Length(l);
-		UINTN rLength = Length(r);
+		UINT64 lLength = Length(l);
+		UINT64 rLength = Length(r);
 
 		if (lLength != rLength)
 		{
@@ -2851,7 +2912,7 @@ namespace Common::Environment
 		{
 			/*Binary Comparison of string*/
 
-			for (UINTN index = 0; index < lLength; index++)
+			for (UINT64 index = 0; index < lLength; index++)
 			{
 				if (l[index] != r[index])
 				{
@@ -2866,9 +2927,9 @@ namespace Common::Environment
 		{
 			/*Binary Comparison, Ignoring Case of string*/
 
-			UINTN index = 0;
+			UINT64 index = 0;
 
-			for (UINTN index = 0; index < lLength; index++)
+			for (UINT64 index = 0; index < lLength; index++)
 			{
 				CHAR8 lChar = l[index];
 				CHAR8 rChar = r[index];
@@ -2910,8 +2971,8 @@ namespace Common::Environment
 			return TRUE;
 		}
 
-		UINTN strLength = Length(str);
-		UINTN valueLength = Length(value);
+		UINT64 strLength = Length(str);
+		UINT64 valueLength = Length(value);
 
 		if (strLength < valueLength)
 		{
@@ -2924,7 +2985,7 @@ namespace Common::Environment
 		case Common::Environment::CurrentCulture:
 		case Common::Environment::Ordinal:
 		{
-			for (UINTN index = 0; index < valueLength; index++)
+			for (UINT64 index = 0; index < valueLength; index++)
 			{
 				if (str[index] != value[index])
 				{
@@ -2937,7 +2998,7 @@ namespace Common::Environment
 		case Common::Environment::CurrentCultureIgnoreCase:
 		case Common::Environment::OrdinalIgnoreCase:
 		{
-			for (UINTN index = 0; index < valueLength; index++)
+			for (UINT64 index = 0; index < valueLength; index++)
 			{
 				CHAR8 lChar = str[index];
 				CHAR8 rChar = value[index];
@@ -2978,8 +3039,8 @@ namespace Common::Environment
 			return TRUE;
 		}
 
-		UINTN strLength = Length(str);
-		UINTN valueLength = Length(value);
+		UINT64 strLength = Length(str);
+		UINT64 valueLength = Length(value);
 
 		if (strLength < valueLength)
 		{
@@ -2992,8 +3053,8 @@ namespace Common::Environment
 		case Common::Environment::CurrentCulture:
 		case Common::Environment::Ordinal:
 		{
-			UINTN index = 0;
-			for (UINTN index = 0; index < valueLength; index++)
+			UINT64 index = 0;
+			for (UINT64 index = 0; index < valueLength; index++)
 			{
 				if (str[strLength - valueLength + index] != value[index])
 				{
@@ -3006,8 +3067,8 @@ namespace Common::Environment
 		case Common::Environment::CurrentCultureIgnoreCase:
 		case Common::Environment::OrdinalIgnoreCase:
 		{
-			UINTN index = 0;
-			for (UINTN index = 0; index < valueLength; index++)
+			UINT64 index = 0;
+			for (UINT64 index = 0; index < valueLength; index++)
 			{
 				CHAR8 lChar = str[strLength - valueLength + index];
 				CHAR8 rChar = value[index];
@@ -3049,8 +3110,8 @@ namespace Common::Environment
 			return TRUE;
 		}
 
-		UINTN strLength = Length(str);
-		UINTN valueLength = Length(value);
+		UINT64 strLength = Length(str);
+		UINT64 valueLength = Length(value);
 
 		if (strLength < valueLength)
 		{
@@ -3063,13 +3124,13 @@ namespace Common::Environment
 		case Common::Environment::CurrentCulture:
 		case Common::Environment::Ordinal:
 		{
-			UINTN index = 0;
-			for (UINTN index = 0; index < strLength - valueLength; index++)
+			UINT64 index = 0;
+			for (UINT64 index = 0; index < strLength - valueLength; index++)
 			{
 				if (str[index] == value[0])
 				{
 					BOOLEAN match = TRUE;
-					for (UINTN i = 0; i < valueLength; i++)
+					for (UINT64 i = 0; i < valueLength; i++)
 					{
 						if (str[index + i] != value[i])
 						{
@@ -3090,8 +3151,8 @@ namespace Common::Environment
 		case Common::Environment::CurrentCultureIgnoreCase:
 		case Common::Environment::OrdinalIgnoreCase:
 		{
-			UINTN index = 0;
-			for (UINTN index = 0; index < strLength - valueLength; index++)
+			UINT64 index = 0;
+			for (UINT64 index = 0; index < strLength - valueLength; index++)
 			{
 				CHAR8 lChar = str[index];
 				CHAR8 rChar = value[0];
@@ -3110,7 +3171,7 @@ namespace Common::Environment
 				if (lChar == rChar)
 				{
 					BOOLEAN match = TRUE;
-					for (UINTN i = 0; i < valueLength; i++)
+					for (UINT64 i = 0; i < valueLength; i++)
 					{
 						CHAR8 lChar2 = str[index + i];
 						CHAR8 rChar2 = value[i];
@@ -3171,11 +3232,11 @@ namespace Common::Environment
 			return TRUE;
 		}
 
-		UINTN index = 0;
+		UINT64 index = 0;
 		while (str[index] != '\0')
 		{
-			UINTN i = 0;
-			for (UINTN i = 0; i < 30; i++)
+			UINT64 i = 0;
+			for (UINT64 i = 0; i < 30; i++)
 			{
 				if (str[index] == _CSTR_WHITESPACECHARS[i])
 				{
@@ -3186,7 +3247,7 @@ namespace Common::Environment
 		}
 		return FALSE;
 	}
-	CCHAR* CString::FromCharArray(CCHAR arr[], UINTN Length)
+	CCHAR* CString::FromCharArray(CCHAR arr[], UINT64 Length)
 	{
 		if (arr == nullptr)
 		{
@@ -3195,7 +3256,7 @@ namespace Common::Environment
 
 		CCHAR* result = new CCHAR[Length + 1];
 
-		for (UINTN i = 0; i < Length; i++)
+		for (UINT64 i = 0; i < Length; i++)
 		{
 			result[i] = arr[i];
 		}
@@ -3215,9 +3276,9 @@ namespace Common::Environment
 			return (CCHAR*)"\0";
 		}
 
-		UINTN len = UTF16::Length(str);
+		UINT64 len = UTF16::Length(str);
 		CCHAR* result = new CCHAR[len];
-		for (UINTN i = 0; i < len; i++)
+		for (UINT64 i = 0; i < len; i++)
 		{
 			result[i] = (CCHAR)(str[i] & 0x00FF);
 		}
@@ -3235,9 +3296,9 @@ namespace Common::Environment
 			return (CCHAR*)"\0";
 		}
 
-		UINTN len = UTF8::Length(str);
+		UINT64 len = UTF8::Length(str);
 		CCHAR* result = new CCHAR[len];
-		for (UINTN i = 0; i < len; i++)
+		for (UINT64 i = 0; i < len; i++)
 		{
 			result[i] = str[i];
 		}

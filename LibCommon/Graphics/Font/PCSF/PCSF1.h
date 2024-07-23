@@ -1,7 +1,6 @@
 #pragma once
 #include <Typedefs.h>
 #include <FileSystem/FileHandle.h>
-#include <Graphics/Font/IFont.h>
 
 
 
@@ -45,32 +44,33 @@ namespace Common::Graphics::Font::PCSF
 
 		PCSF1Mode Mode;
 		UINT8 CharSize;
+
+		BOOLEAN operator==(const PCSF1Hdr& other);
+
+		BOOLEAN operator!=(const PCSF1Hdr& other);
 	};
 #pragma pack(pop)
 
 #pragma pack(push, 1)
-	struct PCSF1 : IFont
+	struct PCSF1
 	{
 	public:
 		PCSF1();
 		PCSF1(Common::FileSystem::FileHandle* handle);
-		~PCSF1();
 
 		PCSF1Hdr Header;
 		UINT16 CharCount;
 		BOOLEAN IsValid();
 		UINT8* GetGlyph(UINT16 index);
 
+		BOOLEAN operator==(const PCSF1& other);
+
+		BOOLEAN operator!=(const PCSF1& other);
+
 	private:
-		UINT8* Glyphs;
+		UINT8** Glyphs;
 		UnicodeSequence* UnicodeTable;
 		BOOLEAN _isValid;
-
-		// Inherited via Font
-		UINT64 GetCharWidth() override;
-		UINT64 GetCharHeight() override;
-		BOOLEAN SupportsUnicode() override;
-		VOID_PTR GetGlyph(UINT64 codePoint) override;
 	};
 #pragma pack(pop)
 

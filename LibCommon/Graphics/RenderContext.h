@@ -2,6 +2,9 @@
 #include <TypeDefs.h>
 #include <Graphics/Colour.h>
 #include <Graphics/MonitorContext.h>
+#include <Graphics/Font/PCSF/PCSF1.h>
+#include <Graphics/Font/PCSF/PCSF2.h>
+
 #include <Protocols/Graphics/EFI_GRAPHICS_OUTPUT_PROTOCOL.h>
 #include <EFI_SYSTEM_TABLE.h>
 #include <EFI_HANDLE.h>
@@ -130,9 +133,40 @@ namespace Common::Graphics
         void SetTextColour(UINT32 colour);
         void SetTextColour(UINT32 r, UINT32 g, UINT32 b, UINT32 a = 0xFFFFFFFFu);
 
+		void SetPCSF1Font(Graphics::Font::PCSF::PCSF1* font);
+        void SetPCSF2Font(Graphics::Font::PCSF::PCSF2* font);
+		void SetFonts(Graphics::Font::PCSF::PCSF1* pcsf1, Graphics::Font::PCSF::PCSF2* pcsf2);
+
+        void DrawPCSF1Char(const UINT32 xPos, const UINT32 yPos, const CHAR16 c);
+		void DrawPCSF1Char(const UINT32 xPos, const UINT32 yPos, const CHAR16 c, const Colour colour);
+		void DrawPCSF1Char(const UINT32 xPos, const UINT32 yPos, const CHAR16 c, const Colour* colour);
+		void DrawPCSF1Char(const UINT32 xPos, const UINT32 yPos, const CHAR16 c, const UINT32 colour);
+		void DrawPCSF1Char(const UINT32 xPos, const UINT32 yPos, const CHAR16 c, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a = 0xFFFFFFFFu);
+        
+        void DrawPCSF1Char(const UINT32 xPos, const UINT32 yPos, const CHAR8 c);
+        void DrawPCSF1Char(const UINT32 xPos, const UINT32 yPos, const CHAR8 c, const Colour colour);
+        void DrawPCSF1Char(const UINT32 xPos, const UINT32 yPos, const CHAR8 c, const Colour* colour);
+        void DrawPCSF1Char(const UINT32 xPos, const UINT32 yPos, const CHAR8 c, const UINT32 colour);
+        void DrawPCSF1Char(const UINT32 xPos, const UINT32 yPos, const CHAR8 c, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a = 0xFFFFFFFFu);
+
+        void DrawPCSF2Char(const UINT32 xPos, const UINT32 yPos, const CHAR16 c);
+        void DrawPCSF2Char(const UINT32 xPos, const UINT32 yPos, const CHAR16 c, const Colour colour);
+        void DrawPCSF2Char(const UINT32 xPos, const UINT32 yPos, const CHAR16 c, const Colour* colour);
+        void DrawPCSF2Char(const UINT32 xPos, const UINT32 yPos, const CHAR16 c, const UINT32 colour);
+        void DrawPCSF2Char(const UINT32 xPos, const UINT32 yPos, const CHAR16 c, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a = 0xFFFFFFFFu);
+
+        void DrawPCSF2Char(const UINT32 xPos, const UINT32 yPos, const CHAR8 c);
+        void DrawPCSF2Char(const UINT32 xPos, const UINT32 yPos, const CHAR8 c, const Colour colour);
+        void DrawPCSF2Char(const UINT32 xPos, const UINT32 yPos, const CHAR8 c, const Colour* colour);
+        void DrawPCSF2Char(const UINT32 xPos, const UINT32 yPos, const CHAR8 c, const UINT32 colour);
+        void DrawPCSF2Char(const UINT32 xPos, const UINT32 yPos, const CHAR8 c, const UINT32 r, const UINT32 g, const UINT32 b, const UINT32 a = 0xFFFFFFFFu);
+
         void Terminate(EFI::EFI_HANDLE hnd, EFI::EFI_SYSTEM_TABLE* sysTable);
 
         MonitorContext* GetMonitorContext();
+
+		UINT64 GetWidth();
+		UINT64 GetHeight();
 
 	private:
 		Colour backgroundColour;
@@ -144,5 +178,8 @@ namespace Common::Graphics
         Colour foreground2Colour;
         Colour textColour;
         MonitorContext monitor;
+
+		Font::PCSF::PCSF1* pcsf1;
+		Font::PCSF::PCSF2* pcsf2;
 	};
 }

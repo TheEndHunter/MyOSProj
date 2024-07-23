@@ -3,7 +3,7 @@
 
 namespace EFI
 {
-	enum class EFI_FOREGROUND_COLOR : UINT8
+	enum class EfiForegroundColor : UINT8
 	{
 		BLACK = 0x00,
 		BLUE = 0x01,
@@ -25,7 +25,7 @@ namespace EFI
 
 	};
 
-	enum class EFI_BACKGROUND_COLOR : UINT8
+	enum class EfiBackgroundColor : UINT8
 	{
 		BLACK = 0x00,
 		BLUE = 0x10,
@@ -37,21 +37,21 @@ namespace EFI
 		LIGHTGRAY = 0x70,
 	};
 
-	constexpr UINT8 operator | (const EFI_FOREGROUND_COLOR fore, const EFI_BACKGROUND_COLOR back)
+	constexpr UINT8 operator | (const EfiForegroundColor fore, const EfiBackgroundColor back)
 	{
 			return static_cast<UINT8>(fore) | static_cast<UINT8>(back);
 	}
 	
 
-	class EFI_CONSOLE_COLOR
+	class EfiConsoleColor
 	{
 	public:
-		static const UINT8 SUCCESS = EFI_FOREGROUND_COLOR::GREEN | EFI_BACKGROUND_COLOR::BLACK;
-		static const UINT8 DEFAULT = EFI_FOREGROUND_COLOR::WHITE | EFI_BACKGROUND_COLOR::BLACK;
-		static const UINT8 WARNING = EFI_FOREGROUND_COLOR::YELLOW | EFI_BACKGROUND_COLOR::BLACK;
-		static const UINT8 ERROR = EFI_FOREGROUND_COLOR::RED | EFI_BACKGROUND_COLOR::BLACK;
-		static const UINT8 TRACE = EFI_FOREGROUND_COLOR::LIGHTCYAN | EFI_BACKGROUND_COLOR::BLACK;
-		static const UINT8 DEBUG = EFI_FOREGROUND_COLOR::CYAN | EFI_BACKGROUND_COLOR::BLACK;
-		static const UINT8 FATAL = EFI_FOREGROUND_COLOR::WHITE | EFI_BACKGROUND_COLOR::BLUE;
+		static const UINT8 _Success = EfiForegroundColor::GREEN | EfiBackgroundColor::BLACK;
+		static const UINT8 _Default = EfiForegroundColor::WHITE | EfiBackgroundColor::BLACK;
+		static const UINT8 _Warning = EfiForegroundColor::YELLOW | EfiBackgroundColor::BLACK;
+		static const UINT8 _Error = EfiForegroundColor::RED | EfiBackgroundColor::BLACK;
+		static const UINT8 _Trace = EfiForegroundColor::LIGHTCYAN | EfiBackgroundColor::BLACK;
+		static const UINT8 _Debug = EfiForegroundColor::CYAN | EfiBackgroundColor::BLACK;
+		static const UINT8 _Fatal = EfiForegroundColor::WHITE | EfiBackgroundColor::BLUE;
 	};
 }

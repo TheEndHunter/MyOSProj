@@ -8,6 +8,5 @@
 namespace Bootloader
 {
 	using namespace EFI;
-
 	EFI_STATUS EfiMain(EFI_HANDLE imgHndl, EFI_SYSTEM_TABLE* sysTbl);
 }

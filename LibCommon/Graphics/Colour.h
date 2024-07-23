@@ -123,7 +123,7 @@ namespace Common::Graphics
 
 		Colour() : Blue(0), Green(0), Red(0), Alpha(255) {};
 		Colour(const UINT32 rgba) : Blue((UINT8)((rgba & 0x0000FF00) >> 8)), Green((UINT8)((rgba & 0x00FF0000) >> 16)), Red((UINT8)((rgba & 0xFF000000) >> 24)), Alpha((UINT8)(rgba & 0x000000FF)) {}
-		constexpr Colour(const UINT8 red, UINT8 green, UINT8 blue, UINT8 alpha = 255) : Blue(blue), Green(green), Red(red), Alpha(alpha) {}
+		constexpr Colour(const UINT8 red,const UINT8 green,const UINT8 blue,const UINT8 alpha = 255) : Blue(blue), Green(green), Red(red), Alpha(alpha) {}
 		Colour(const Colour& color) : Blue(color.Blue), Green(color.Green), Red(color.Red), Alpha(color.Alpha) {}
 		Colour(const Colour* color) : Blue(color->Blue), Green(color->Green), Red(color->Red), Alpha(color->Alpha) {}
 
@@ -200,6 +200,7 @@ namespace Common::Graphics
 	/// </summary>
 	namespace Colours
 	{
+		constinit const Colour Transparent = Colour(0,0,0,0);
 		/* Pink colors */
 		constinit const Colour DeepPink = Colour(255, 20, 147);
 		constinit const Colour HotPink = Colour(255, 105, 180);
@@ -216,6 +217,7 @@ namespace Common::Graphics
 		constinit const Colour LightCoral = Colour(240, 128, 128);
 		constinit const Colour LightSalmon = Colour(255, 160, 122);
 		constinit const Colour Red = Colour(255, 0, 0);
+		constinit const Colour LightRed = Colour(240, 102, 102);
 		constinit const Colour Salmon = Colour(250, 128, 114);
 		/* Orange colors */
 		constinit const Colour Coral = Colour(255, 127, 80);
@@ -238,6 +240,7 @@ namespace Common::Graphics
 		/* Brown colors */
 		constinit const Colour Bisque = Colour(255, 228, 196);
 		constinit const Colour BlanchedAlmond = Colour(255, 235, 205);
+		constinit const Colour LightBrown = Colour(196, 164, 132);
 		constinit const Colour Brown = Colour(165, 42, 42);
 		constinit const Colour Burlywood = Colour(222, 184, 135);
 		constinit const Colour Chocolate = Colour(210, 105, 30);
@@ -262,8 +265,9 @@ namespace Common::Graphics
 		constinit const Colour Fuchsia = Colour(255, 0, 255);
 		constinit const Colour Indigo = Colour(75, 0, 130);
 		constinit const Colour Lavender = Colour(230, 230, 250);
+		constinit const Colour LightMagenta = Colour(255, 102, 255);
 		constinit const Colour Magenta = Colour(255, 0, 255);
-		constexpr Colour MediumOrchid = Colour(186, 85, 211);
+		constinit const Colour MediumOrchid = Colour(186, 85, 211);
 		constinit const Colour MediumPurple = Colour(147, 112, 219);
 		constinit const Colour MediumSlateBlue = Colour(123, 104, 238);
 		constinit const Colour Orchid = Colour(218, 112, 214);

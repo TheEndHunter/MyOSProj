@@ -2,9 +2,9 @@
 
 namespace QemuRunner
 {
-    internal static class Program
+    public static class Program
     {
-        static int Main(string[] args)
+        static async Task<int> Main(string[] args)
         {
             Settings config;
             string Dir = Path.GetFullPath(Directory.GetCurrentDirectory());
@@ -24,8 +24,8 @@ namespace QemuRunner
             {
                 config = new Settings()
                 {
-                    Architectures = new List<string> { "x86", "x64", "arm", "arm64" },
-                    Configurations = new List<string> { "debug", "release" },
+                    Architectures = ["x86", "x64", "arm", "arm64"],
+                    Configurations = ["debug", "release"],
                     OVMFConfiguration = null,
                 };
             }
@@ -34,7 +34,7 @@ namespace QemuRunner
 
             if (!Directory.Exists(Path.Combine(Dir, "OVMF")) && config.OVMFConfiguration.HasValue)
             {
-                OVMF.UpdateAsync(config).Wait();
+                await OVMF.UpdateAsync(config);
             }
 
             var verPath = Path.Combine(Dir, "OVMF", "Version.txt");
@@ -43,11 +43,11 @@ namespace QemuRunner
                 var sha1 = File.ReadLines(verPath).FirstOrDefault();
                 if (!string.IsNullOrEmpty(sha1))
                 {
-                    OVMF.UpdateAsync(config, sha1).Wait();
+                    await OVMF.UpdateAsync(config, sha1);
                 }
                 else
                 {
-                    OVMF.UpdateAsync(config).Wait();
+                    await OVMF.UpdateAsync(config);
                 }
             }
 
