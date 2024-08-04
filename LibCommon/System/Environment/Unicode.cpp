@@ -4,7 +4,7 @@
 #include <EFI_STATUS.h>
 #include "Unicode.h"
 
-namespace Common::Environment
+namespace Common::System::Environment
 {
 #pragma region UTF16
 	CHAR16 _UTF16_GUIDTOSTRING[43] = { u'{',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'-',u'\0',u'\0',u'\0',u'\0',u'-',u'\0',u'\0',u'\0',u'\0',u'-',u'\0',u'\0',u'\0',u'\0',u'-',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'}',u'\0' };
@@ -12,7 +12,7 @@ namespace Common::Environment
 	CHAR16 _UTF16_HEXSTRING[18] = { u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
 	CHAR16 _UTF16_VALUETOSTRING[23] = { u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
 	CHAR16 _UTF16_WHITESPACECHARS[30] = { 0x0009,0x000A,0x000B,0x000C,0x000D,0x0020,0x0085,0x00A0,0x1680,0x2000,0x2001,0x2003,0x2004,0x2005,0x2006,0x2007,0x02008,0x2009,0x200A,0x2028,0x2029,0x202F,0x205F,0x3000,0x180E,0x200B,0x200C,0x200D,0x2060,0xFEFF };
-	const CHAR16* Common::Environment::UTF16::NewLine = u"\r\n";
+	const CHAR16* Common::System::Environment::UTF16::NewLine = u"\r\n";
 	constinit const CHAR16* _UTF16_ABORTED = u"ABORTED";
 	constinit const CHAR16* _UTF16_ACCESS_DENIED = u"ACCESS_DENIED";
 	constinit const CHAR16* _UTF16_ALREADY_STARTED = u"ALREADY_STARTED";
@@ -64,7 +64,7 @@ namespace Common::Environment
 	constinit const CHAR16* _UTF16_ALLOC_STATUS_ACCESS_DENIED = u"ACCESS_DENIED";
 	constinit const CHAR16* _UTF16_ALLOC_STATUS_UNKNOWN = u"UNKNOWN";
 
-	
+
 	CHAR16* UTF16::ToHex(const INT16 value)
 	{
 		if (value < 0)
@@ -212,7 +212,7 @@ namespace Common::Environment
 	CHAR16* UTF16::ToHex(const UINT64 value)
 	{
 		UINT64 i = value;
-		for (;i > 0; i >>= 4)
+		for (; i > 0; i >>= 4)
 		{
 			_UTF16_HEXSTRING[i] = _UTF16_HEXCHARS[i & 0xF];
 		}
@@ -684,9 +684,9 @@ namespace Common::Environment
 
 		switch (culture)
 		{
-		case Common::Environment::InvariantCulture:
-		case Common::Environment::CurrentCulture:
-		case Common::Environment::Ordinal:
+		case Common::System::Environment::InvariantCulture:
+		case Common::System::Environment::CurrentCulture:
+		case Common::System::Environment::Ordinal:
 		{
 			/*Binary Comparison of string*/
 
@@ -699,9 +699,9 @@ namespace Common::Environment
 			}
 			return TRUE;
 		}
-		case Common::Environment::InvariantCultureIgnoreCase:
-		case Common::Environment::CurrentCultureIgnoreCase:
-		case Common::Environment::OrdinalIgnoreCase:
+		case Common::System::Environment::InvariantCultureIgnoreCase:
+		case Common::System::Environment::CurrentCultureIgnoreCase:
+		case Common::System::Environment::OrdinalIgnoreCase:
 		{
 			/*Binary Comparison, Ignoring Case of string*/
 
@@ -759,9 +759,9 @@ namespace Common::Environment
 
 		switch (culture)
 		{
-		case Common::Environment::InvariantCulture:
-		case Common::Environment::CurrentCulture:
-		case Common::Environment::Ordinal:
+		case Common::System::Environment::InvariantCulture:
+		case Common::System::Environment::CurrentCulture:
+		case Common::System::Environment::Ordinal:
 		{
 			for (UINT64 index = 0; index < valueLength; index++)
 			{
@@ -772,9 +772,9 @@ namespace Common::Environment
 			}
 			return TRUE;
 		}
-		case Common::Environment::InvariantCultureIgnoreCase:
-		case Common::Environment::CurrentCultureIgnoreCase:
-		case Common::Environment::OrdinalIgnoreCase:
+		case Common::System::Environment::InvariantCultureIgnoreCase:
+		case Common::System::Environment::CurrentCultureIgnoreCase:
+		case Common::System::Environment::OrdinalIgnoreCase:
 		{
 			for (UINT64 index = 0; index < valueLength; index++)
 			{
@@ -827,9 +827,9 @@ namespace Common::Environment
 
 		switch (culture)
 		{
-		case Common::Environment::InvariantCulture:
-		case Common::Environment::CurrentCulture:
-		case Common::Environment::Ordinal:
+		case Common::System::Environment::InvariantCulture:
+		case Common::System::Environment::CurrentCulture:
+		case Common::System::Environment::Ordinal:
 		{
 			UINT64 index = 0;
 			for (UINT64 index = 0; index < valueLength; index++)
@@ -841,9 +841,9 @@ namespace Common::Environment
 			}
 			return TRUE;
 		}
-		case Common::Environment::InvariantCultureIgnoreCase:
-		case Common::Environment::CurrentCultureIgnoreCase:
-		case Common::Environment::OrdinalIgnoreCase:
+		case Common::System::Environment::InvariantCultureIgnoreCase:
+		case Common::System::Environment::CurrentCultureIgnoreCase:
+		case Common::System::Environment::OrdinalIgnoreCase:
 		{
 			UINT64 index = 0;
 			for (UINT64 index = 0; index < valueLength; index++)
@@ -898,9 +898,9 @@ namespace Common::Environment
 
 		switch (culture)
 		{
-		case Common::Environment::InvariantCulture:
-		case Common::Environment::CurrentCulture:
-		case Common::Environment::Ordinal:
+		case Common::System::Environment::InvariantCulture:
+		case Common::System::Environment::CurrentCulture:
+		case Common::System::Environment::Ordinal:
 		{
 			UINT64 index = 0;
 			for (UINT64 index = 0; index < strLength - valueLength; index++)
@@ -925,9 +925,9 @@ namespace Common::Environment
 			}
 			return FALSE;
 		}
-		case Common::Environment::InvariantCultureIgnoreCase:
-		case Common::Environment::CurrentCultureIgnoreCase:
-		case Common::Environment::OrdinalIgnoreCase:
+		case Common::System::Environment::InvariantCultureIgnoreCase:
+		case Common::System::Environment::CurrentCultureIgnoreCase:
+		case Common::System::Environment::OrdinalIgnoreCase:
 		{
 			UINT64 index = 0;
 			for (UINT64 index = 0; index < strLength - valueLength; index++)
@@ -1101,7 +1101,7 @@ namespace Common::Environment
 		return result;
 	}
 
-	CHAR16* UTF16::FromCString(const CCHAR* str)
+	CHAR16* UTF16::FromCString(const CHAR* str)
 	{
 		/*Convert from ascii cstr to proper UTF16-2 byte string*/
 		if (str == nullptr)
@@ -1126,6 +1126,533 @@ namespace Common::Environment
 
 	}
 
+	INT64 UTF16::IndexOf(const CHAR16* str, const CHAR16* value, UINT64 startIndex, StringCulture culture)
+	{
+		// Get the first occurance of the 'value' in thr 'str' and return it's index
+		BOOLEAN l = IsNullOrEmpty(str);
+		BOOLEAN r = IsNullOrEmpty(value);
+
+		if (l || r)
+		{
+			return -1;
+		}
+
+		if (l && r)
+		{
+			return 0;
+		}
+
+		UINT64 strLength = Length(str);
+
+		if (startIndex >= strLength)
+		{
+			return -1;
+		}
+
+		UINT64 valueLength = Length(value);
+
+		if (strLength < valueLength)
+		{
+			return -1;
+		}
+
+		switch (culture)
+		{
+
+		case Common::System::Environment::InvariantCulture:
+		case Common::System::Environment::CurrentCulture:
+		case Common::System::Environment::Ordinal:
+		{
+			for (UINT64 index = startIndex; index < strLength - valueLength; index++)
+			{
+				if (str[index] == value[0])
+				{
+					BOOLEAN match = TRUE;
+					for (UINT64 i = 0; i < valueLength; i++)
+					{
+						if (str[index + i] != value[i])
+						{
+							match = FALSE;
+							break;
+						}
+					}
+
+					if (match)
+					{
+						return index;
+					}
+				}
+			}
+			return -1;
+		}
+
+		case Common::System::Environment::InvariantCultureIgnoreCase:
+		case Common::System::Environment::CurrentCultureIgnoreCase:
+		case Common::System::Environment::OrdinalIgnoreCase:
+		{
+			for (UINT64 index = startIndex; index < strLength - valueLength; index++)
+			{
+				CHAR16 lChar = str[index];
+				CHAR16 rChar = value[0];
+
+				/*If the character is a lower case letter, switch it to upper for comparison*/
+
+				if (lChar >= u'a' && lChar <= u'z')
+				{
+					lChar -= 32;
+				}
+				if (rChar >= u'a' && rChar <= u'z')
+				{
+					rChar -= 32;
+				}
+
+				if (lChar == rChar)
+				{
+					BOOLEAN match = TRUE;
+					for (UINT64 i = 0; i < valueLength; i++)
+					{
+						CHAR16 lChar2 = str[index + i];
+						CHAR16 rChar2 = value[i];
+						/*If the character is a lower case letter, switch it to upper for comparison*/
+						if (lChar2 >= u'a' && lChar2 <= u'z')
+						{
+							lChar2 -= 32;
+						}
+						if (rChar2 >= u'a' && rChar2 <= u'z')
+						{
+							rChar2 -= 32;
+						}
+
+						if (lChar != rChar)
+						{
+							match = FALSE;
+							break;
+						}
+					}
+
+					if (match)
+					{
+						return index;
+					}
+				}
+			}
+			return -1;
+		}
+
+		default:
+			return -1;
+		}
+	}
+
+	INT64 UTF16::IndexOf(const CHAR16* str, const CHAR16 value, UINT64 startIndex, StringCulture culture)
+	{
+		// Get the first occurance of the 'value' in thr 'str' and return it's index
+		BOOLEAN l = IsNullOrEmpty(str);
+
+		if (l)
+		{
+			return -1;
+		}
+
+		UINT64 strLength = Length(str);
+
+		if (startIndex >= strLength)
+		{
+			return -1;
+		}
+
+		switch (culture)
+		{
+
+		case Common::System::Environment::InvariantCulture:
+		case Common::System::Environment::CurrentCulture:
+		case Common::System::Environment::Ordinal:
+		{
+			for (UINT64 index = startIndex; index < strLength; index++)
+			{
+				if (str[index] == value)
+				{
+					return index;
+				}
+			}
+			return -1;
+		}
+
+		case Common::System::Environment::InvariantCultureIgnoreCase:
+		case Common::System::Environment::CurrentCultureIgnoreCase:
+		case Common::System::Environment::OrdinalIgnoreCase:
+		{
+			CHAR16 rChar = value;
+
+			/*If the character is a lower case letter, switch it to upper for comparison*/
+
+			if (rChar >= u'a' && rChar <= u'z')
+			{
+				rChar -= 32;
+			}
+
+			for (UINT64 index = startIndex; index < strLength; index++)
+			{
+				CHAR16 lChar = str[index];
+
+				/*If the character is a lower case letter, switch it to upper for comparison*/
+
+				if (lChar >= u'a' && lChar <= u'z')
+				{
+					lChar -= 32;
+				}
+
+				if (lChar == rChar)
+				{
+					return index;
+				}
+			}
+			return -1;
+		}
+
+		default:
+			return -1;
+		}
+	}
+
+	INT64 UTF16::LastIndexOf(const CHAR16* str, const CHAR16* value, UINT64 startIndex, StringCulture culture)
+	{
+		// Get the first occurance of the 'value' in thr 'str' and return it's index
+		BOOLEAN l = IsNullOrEmpty(str);
+		BOOLEAN r = IsNullOrEmpty(value);
+
+		if (l || r)
+		{
+			return -1;
+		}
+
+		if (l && r)
+		{
+			return 0;
+		}
+
+		UINT64 strLength = Length(str);
+
+		if (startIndex >= strLength)
+		{
+			return -1;
+		}
+
+		UINT64 valueLength = Length(value);
+
+		if (strLength < valueLength)
+		{
+			return -1;
+		}
+
+		switch (culture)
+		{
+
+		case Common::System::Environment::InvariantCulture:
+		case Common::System::Environment::CurrentCulture:
+		case Common::System::Environment::Ordinal:
+		{
+			int lastIndex = -1;
+			for (UINT64 index = startIndex; index < strLength - valueLength; index++)
+			{
+				if (str[index] == value[0])
+				{
+					BOOLEAN match = TRUE;
+					for (UINT64 i = 0; i < valueLength; i++)
+					{
+						if (str[index + i] != value[i])
+						{
+							match = FALSE;
+							break;
+						}
+					}
+
+					if (match)
+					{
+						lastIndex = index;
+					}
+				}
+			}
+			return lastIndex;
+		}
+
+		case Common::System::Environment::InvariantCultureIgnoreCase:
+		case Common::System::Environment::CurrentCultureIgnoreCase:
+		case Common::System::Environment::OrdinalIgnoreCase:
+		{
+			INT64 lastIndex = -1;
+			for (UINT64 index = startIndex; index < strLength - valueLength; index++)
+			{
+				CHAR16 lChar = str[index];
+				CHAR16 rChar = value[0];
+
+				/*If the character is a lower case letter, switch it to upper for comparison*/
+
+				if (lChar >= u'a' && lChar <= u'z')
+				{
+					lChar -= 32;
+				}
+				if (rChar >= u'a' && rChar <= u'z')
+				{
+					rChar -= 32;
+				}
+
+				if (lChar == rChar)
+				{
+					BOOLEAN match = TRUE;
+					for (UINT64 i = 0; i < valueLength; i++)
+					{
+						CHAR16 lChar2 = str[index + i];
+						CHAR16 rChar2 = value[i];
+						/*If the character is a lower case letter, switch it to upper for comparison*/
+						if (lChar2 >= u'a' && lChar2 <= u'z')
+						{
+							lChar2 -= 32;
+						}
+						if (rChar2 >= u'a' && rChar2 <= u'z')
+						{
+							rChar2 -= 32;
+						}
+
+						if (lChar != rChar)
+						{
+							match = FALSE;
+							break;
+						}
+					}
+
+					if (match)
+					{
+						lastIndex = index;
+					}
+				}
+			}
+			return lastIndex;
+		}
+
+		default:
+			return -1;
+		}
+	}
+
+
+	INT64 UTF16::LastIndexOf(const CHAR16* str, const CHAR16 value, UINT64 startIndex, StringCulture culture)
+	{
+		// Get the first occurance of the 'value' in thr 'str' and return it's index
+		BOOLEAN l = IsNullOrEmpty(str);
+
+		if (l)
+		{
+			return -1;
+		}
+
+		UINT64 strLength = Length(str);
+
+		if (startIndex >= strLength)
+		{
+			return -1;
+		}
+
+		switch (culture)
+		{
+
+		case Common::System::Environment::InvariantCulture:
+		case Common::System::Environment::CurrentCulture:
+		case Common::System::Environment::Ordinal:
+		{
+			INT64 lastIndex = -1;
+			for (UINT64 index = startIndex; index < strLength; index++)
+			{
+				if (str[index] == value)
+				{
+					lastIndex = index;
+				}
+			}
+			return lastIndex;
+		}
+
+		case Common::System::Environment::InvariantCultureIgnoreCase:
+		case Common::System::Environment::CurrentCultureIgnoreCase:
+		case Common::System::Environment::OrdinalIgnoreCase:
+		{
+			CHAR16 rChar = value;
+
+			/*If the character is a lower case letter, switch it to upper for comparison*/
+
+			if (rChar >= u'a' && rChar <= u'z')
+			{
+				rChar -= 32;
+			}
+
+			INT64 lastIndex = -1;
+			for (UINT64 index = startIndex; index < strLength; index++)
+			{
+				CHAR16 lChar = str[index];
+
+				/*If the character is a lower case letter, switch it to upper for comparison*/
+
+				if (lChar >= u'a' && lChar <= u'z')
+				{
+					lChar -= 32;
+				}
+
+				if (lChar == rChar)
+				{
+					lastIndex = index;
+				}
+			}
+			return lastIndex;
+		}
+
+		default:
+			return -1;
+		}
+	}
+
+	CHAR16** UTF16::Split(const CHAR16* str, const CHAR16* separator, OUT UINT64* count)
+	{
+		if (IsNullOrEmpty(str)) return nullptr;
+		if (IsNullOrEmpty(separator)) return nullptr;
+
+		UINT64 strLen = Length(str);
+		UINT64 sepLen = Length(separator);
+
+		if (strLen <= sepLen) return nullptr;
+
+
+	}
+
+	CHAR16** UTF16::Split(const CHAR16* str, const CHAR16 separator, OUT UINT64* count)
+	{
+		if (IsNullOrEmpty(str)) return nullptr;
+		UINT64 strLen = Length(str);
+
+		// First, count the number of substrings
+		UINT64 cnt = 1; // At least one substring
+
+		for (UINT64 i = 0; i < strLen; i++)
+		{
+			if (str[i] == separator)
+			{
+				cnt++;
+			}
+		}
+
+		*count = cnt;
+		// Allocate memory for the array of substrings
+		CHAR16** substrings = new CHAR16 * [cnt];
+		// Extract substrings
+		const CHAR16* start = str;
+		size_t substringIndex = 0;
+
+		const CHAR16* ptr = str;
+		for(UINT64 i = 0; i < strLen; i++)
+		{
+			if (*ptr == separator)
+			{
+				// Calculate the length of the substring
+				size_t length = ptr - start;
+				// Allocate memory for the substring
+				CHAR16* substring = new CHAR16[length + 1];
+				// Copy the substring
+				for (size_t i = 0; i < length; ++i)
+				{
+					substring[i] = start[i];
+				}
+
+				substring[length] = u'\0';
+				// Add the substring to the array
+				substrings[substringIndex++] = substring;
+				// Move the start pointer to the next character
+				start = ptr + 1;
+			}
+			if (*ptr == u'\0')
+			{
+				break;
+			}
+		}
+		
+		return substrings;
+	}
+
+	CHAR16* UTF16::Join(const CHAR16** str, const CHAR16* separator,UINT64 count)
+	{
+		if(count == 0) return nullptr;
+		if (separator == nullptr) return nullptr;
+		if (str == nullptr) return nullptr;
+
+		UINT64 len = 0;
+		UINT64 sepLen = Length(separator);
+
+		for (UINT64 i = 0; i < count; i++)
+		{
+			if (!IsNullOrEmpty(str[i]))
+			{
+				len += Length(str[i]) + sepLen;
+			}
+		}
+
+		CHAR16* result = new CHAR16[len];
+
+		UINT64 index = 0;
+		for (UINT64 i = 0; i < count; i++)
+		{
+			if (!IsNullOrEmpty(str[i]))
+			{
+				const CHAR16* ptr = str[i];
+				UINT64 c = 0;
+				while (*ptr != u'\0')
+				{
+					result[index++] = *ptr;
+					ptr++;
+				}
+				for (UINT64 j = 0; j < sepLen; j++)
+				{
+					result[index++] = separator[j];
+				}
+			}
+		}
+
+		result[len - 1] = '\0';
+		return result;
+	}
+
+	CHAR16* UTF16::Join(const CHAR16** str, const CHAR16 separator, UINT64 count)
+	{
+		if (count == 0) return nullptr;
+		if (str == nullptr) return nullptr;
+
+		UINT64 len = 0;
+
+		for (UINT64 i = 0; i < count; i++)
+		{
+			if (!IsNullOrEmpty(str[i]))
+			{
+				len += Length(str[i]) + 1;
+			}
+		}
+
+		CHAR16* result = new CHAR16[len];
+
+		UINT64 index = 0;
+		for (UINT64 i = 0; i < count; i++)
+		{
+			if (!IsNullOrEmpty(str[i]))
+			{
+				const CHAR16* ptr = str[i];
+				UINT64 c = 0;
+				while (*ptr != u'\0')
+				{
+					result[index++] = *ptr;
+					ptr++;
+				}
+				result[index++] = separator;
+			}
+		}
+		result[len -1] = '\0';
+		return result;
+	}
+
 #pragma endregion
 #pragma region UTF8
 	CHAR8 _UTF8_GUIDTOSTRING[43] = { u8'{',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'-',u8'\0',u8'\0',u8'\0',u8'\0',u8'-',u8'\0',u8'\0',u8'\0',u8'\0',u8'-',u8'\0',u8'\0',u8'\0',u8'\0',u8'-',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'}',u8'\0' };
@@ -1133,7 +1660,7 @@ namespace Common::Environment
 	CHAR8 _UTF8_HEXSTRING[18] = { u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0' };
 	CHAR8 _UTF8_VALUETOSTRING[23] = { u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0' };
 	CHAR8 _UTF8_WHITESPACECHARS[8] = { 0x09,0x0A,0x0B,0x0C,0x0D,0x20,0x85,0xA0 };
-	const CHAR8* Common::Environment::UTF8::NewLine = u8"\r\n";
+	const CHAR8* Common::System::Environment::UTF8::NewLine = u8"\r\n";
 	constinit const CHAR8* _UTF8_ABORTED = u8"ABORTED";
 	constinit const CHAR8* _UTF8_ACCESS_DENIED = u8"ACCESS_DENIED";
 	constinit const CHAR8* _UTF8_ALREADY_STARTED = u8"ALREADY_STARTED";
@@ -1799,9 +2326,9 @@ namespace Common::Environment
 
 		switch (culture)
 		{
-		case Common::Environment::InvariantCulture:
-		case Common::Environment::CurrentCulture:
-		case Common::Environment::Ordinal:
+		case Common::System::Environment::InvariantCulture:
+		case Common::System::Environment::CurrentCulture:
+		case Common::System::Environment::Ordinal:
 		{
 			/*Binary Comparison of string*/
 
@@ -1814,9 +2341,9 @@ namespace Common::Environment
 			}
 			return TRUE;
 		}
-		case Common::Environment::InvariantCultureIgnoreCase:
-		case Common::Environment::CurrentCultureIgnoreCase:
-		case Common::Environment::OrdinalIgnoreCase:
+		case Common::System::Environment::InvariantCultureIgnoreCase:
+		case Common::System::Environment::CurrentCultureIgnoreCase:
+		case Common::System::Environment::OrdinalIgnoreCase:
 		{
 			/*Binary Comparison, Ignoring Case of string*/
 
@@ -1873,9 +2400,9 @@ namespace Common::Environment
 
 		switch (culture)
 		{
-		case Common::Environment::InvariantCulture:
-		case Common::Environment::CurrentCulture:
-		case Common::Environment::Ordinal:
+		case Common::System::Environment::InvariantCulture:
+		case Common::System::Environment::CurrentCulture:
+		case Common::System::Environment::Ordinal:
 		{
 			for (UINT64 index = 0; index < valueLength; index++)
 			{
@@ -1886,9 +2413,9 @@ namespace Common::Environment
 			}
 			return TRUE;
 		}
-		case Common::Environment::InvariantCultureIgnoreCase:
-		case Common::Environment::CurrentCultureIgnoreCase:
-		case Common::Environment::OrdinalIgnoreCase:
+		case Common::System::Environment::InvariantCultureIgnoreCase:
+		case Common::System::Environment::CurrentCultureIgnoreCase:
+		case Common::System::Environment::OrdinalIgnoreCase:
 		{
 			for (UINT64 index = 0; index < valueLength; index++)
 			{
@@ -1941,9 +2468,9 @@ namespace Common::Environment
 
 		switch (culture)
 		{
-		case Common::Environment::InvariantCulture:
-		case Common::Environment::CurrentCulture:
-		case Common::Environment::Ordinal:
+		case Common::System::Environment::InvariantCulture:
+		case Common::System::Environment::CurrentCulture:
+		case Common::System::Environment::Ordinal:
 		{
 			UINT64 index = 0;
 			for (UINT64 index = 0; index < valueLength; index++)
@@ -1955,9 +2482,9 @@ namespace Common::Environment
 			}
 			return TRUE;
 		}
-		case Common::Environment::InvariantCultureIgnoreCase:
-		case Common::Environment::CurrentCultureIgnoreCase:
-		case Common::Environment::OrdinalIgnoreCase:
+		case Common::System::Environment::InvariantCultureIgnoreCase:
+		case Common::System::Environment::CurrentCultureIgnoreCase:
+		case Common::System::Environment::OrdinalIgnoreCase:
 		{
 			UINT64 index = 0;
 			for (UINT64 index = 0; index < valueLength; index++)
@@ -2012,9 +2539,9 @@ namespace Common::Environment
 
 		switch (culture)
 		{
-		case Common::Environment::InvariantCulture:
-		case Common::Environment::CurrentCulture:
-		case Common::Environment::Ordinal:
+		case Common::System::Environment::InvariantCulture:
+		case Common::System::Environment::CurrentCulture:
+		case Common::System::Environment::Ordinal:
 		{
 			UINT64 index = 0;
 			for (UINT64 index = 0; index < strLength - valueLength; index++)
@@ -2039,9 +2566,9 @@ namespace Common::Environment
 			}
 			return FALSE;
 		}
-		case Common::Environment::InvariantCultureIgnoreCase:
-		case Common::Environment::CurrentCultureIgnoreCase:
-		case Common::Environment::OrdinalIgnoreCase:
+		case Common::System::Environment::InvariantCultureIgnoreCase:
+		case Common::System::Environment::CurrentCultureIgnoreCase:
+		case Common::System::Environment::OrdinalIgnoreCase:
 		{
 			UINT64 index = 0;
 			for (UINT64 index = 0; index < strLength - valueLength; index++)
@@ -2208,7 +2735,7 @@ namespace Common::Environment
 
 		return result;
 	}
-	CHAR8* UTF8::FromCString(const CCHAR* str)
+	CHAR8* UTF8::FromCString(const CHAR* str)
 	{
 		/*Convert from Ascii CString to UTF8*/
 
@@ -2232,65 +2759,65 @@ namespace Common::Environment
 
 #pragma endregion
 #pragma region CString
-	CCHAR _CSTR_GUIDTOSTRING[43] = { '{','\0','\0','\0','\0','\0','\0','\0','\0','-','\0','\0','\0','\0','-','\0','\0','\0','\0','-','\0','\0','\0','\0','-','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','}','\0' };
-	CCHAR _CSTR_HEXCHARS[17] = { '0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F' };
-	CCHAR _CSTR_HEXSTRING[18] = { '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0' };
-	CCHAR _CSTR_VALUETOSTRING[23] = { '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0' };
-	CCHAR _CSTR_WHITESPACECHARS[6] = { 0x09,0x0A,0x0B,0x0C,0x0D,0x20 };
-	const CCHAR* Common::Environment::CString::NewLine = "\r\n";
+	CHAR _CSTR_GUIDTOSTRING[43] = { '{','\0','\0','\0','\0','\0','\0','\0','\0','-','\0','\0','\0','\0','-','\0','\0','\0','\0','-','\0','\0','\0','\0','-','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','}','\0' };
+	CHAR _CSTR_HEXCHARS[17] = { '0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F' };
+	CHAR _CSTR_HEXSTRING[18] = { '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0' };
+	CHAR _CSTR_VALUETOSTRING[23] = { '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0' };
+	CHAR _CSTR_WHITESPACECHARS[6] = { 0x09,0x0A,0x0B,0x0C,0x0D,0x20 };
+	const CHAR* Common::System::Environment::CString::NewLine = "\r\n";
 
-	constinit const CCHAR* _CSTR_ABORTED = "ABORTED";
-	constinit const CCHAR* _CSTR_ACCESS_DENIED = "ACCESS_DENIED";
-	constinit const CCHAR* _CSTR_ALREADY_STARTED = "ALREADY_STARTED";
-	constinit const CCHAR* _CSTR_BAD_BUFFER_SIZE = "BAD_BUFFER_SIZE";
-	constinit const CCHAR* _CSTR_BOOLEAN_FALSE = "False";
-	constinit const CCHAR* _CSTR_BOOLEAN_TRUE = "True";
-	constinit const CCHAR* _CSTR_BUFFER_TOO_SMALL = "BUFFER_TOO_SMALL";
-	constinit const CCHAR* _CSTR_COMPROMISED_DATA = "COMPROMISED_DATA";
-	constinit const CCHAR* _CSTR_CRC_ERROR = "CRC_ERROR";
-	constinit const CCHAR* _CSTR_DEVICE_ERROR = "DEVICE_ERROR";
-	constinit const CCHAR* _CSTR_END_OF_FILE = "END_OF_FILE";
-	constinit const CCHAR* _CSTR_END_OF_MEDIA = "END_OF_MEDIA";
-	constinit const CCHAR* _CSTR_HTTP_ERROR = "HTTP_ERROR";
-	constinit const CCHAR* _CSTR_ICMP_ERROR = "ICMP_ERROR";
-	constinit const CCHAR* _CSTR_INCOMPATIBLE_VERSION = "INCOMPATIBLE_VERSION";
-	constinit const CCHAR* _CSTR_INVALID_LANGUAGE = "INVALID_LANGUAGE";
-	constinit const CCHAR* _CSTR_INVALID_PARAMETER = "INVALID_PARAMETER";
-	constinit const CCHAR* _CSTR_IP_ADDRESS_CONFLICT = "IP_ADDRESS_CONFLICT";
-	constinit const CCHAR* _CSTR_LOAD_ERROR = "LOAD_ERROR";
-	constinit const CCHAR* _CSTR_MEDIA_CHANGED = "MEDIA_CHANGED";
-	constinit const CCHAR* _CSTR_NO_MAPPING = "NO_MAPPING";
-	constinit const CCHAR* _CSTR_NO_MEDIA = "NO_MEDIA";
-	constinit const CCHAR* _CSTR_NO_RESPONSE = "NO_RESPONSE";
-	constinit const CCHAR* _CSTR_NOT_FOUND = "NOT_FOUND";
-	constinit const CCHAR* _CSTR_NOT_READY = "NOT_READY";
-	constinit const CCHAR* _CSTR_NOT_STARTED = "NOT_STARTED";
-	constinit const CCHAR* _CSTR_OUT_OF_RESOURCES = "OUT_OF_RESOURCES";
-	constinit const CCHAR* _CSTR_PROTOCOL_ERROR = "PROTOCOL_ERROR";
-	constinit const CCHAR* _CSTR_SECURITY_VIOLATION = "SECURITY_VIOLATION";
-	constinit const CCHAR* _CSTR_SUCCESS = "SUCCESS";
-	constinit const CCHAR* _CSTR_TFTP_ERROR = "TFTP_ERROR";
-	constinit const CCHAR* _CSTR_TIMEOUT = "TIMEOUT";
-	constinit const CCHAR* _CSTR_UNSUPPORTED = "UNSUPPORTED";
-	constinit const CCHAR* _CSTR_VOLUME_CORRUPTED = "VOLUME_CORRUPTED";
-	constinit const CCHAR* _CSTR_VOLUME_FULL = "VOLUME_FULL";
-	constinit const CCHAR* _CSTR_WARN_BUFFER_TOO_SMALL = "WARN_BUFFER_TOO_SMALL";
-	constinit const CCHAR* _CSTR_WARN_DELETE_FAILURE = "WARN_DELETE_FAILURE";
-	constinit const CCHAR* _CSTR_WARN_FILE_SYSTEM = "WARN_FILE_SYSTEM";
-	constinit const CCHAR* _CSTR_WARN_RESET_REQUIRED = "WARN_RESET_REQUIRED";
-	constinit const CCHAR* _CSTR_WARN_STALE_DATA = "WARN_STALE_DATA";
-	constinit const CCHAR* _CSTR_WARN_UNKNOWN_GLYPH = "WARN_UNKNOWN_GLYPH";
-	constinit const CCHAR* _CSTR_WARN_WRITE_FAILURE = "WARN_WRITE_FAILURE";
-	constinit const CCHAR* _CSTR_WRITE_PROTECTED = "WRITE_PROTECTED";
+	constinit const CHAR* _CSTR_ABORTED = "ABORTED";
+	constinit const CHAR* _CSTR_ACCESS_DENIED = "ACCESS_DENIED";
+	constinit const CHAR* _CSTR_ALREADY_STARTED = "ALREADY_STARTED";
+	constinit const CHAR* _CSTR_BAD_BUFFER_SIZE = "BAD_BUFFER_SIZE";
+	constinit const CHAR* _CSTR_BOOLEAN_FALSE = "False";
+	constinit const CHAR* _CSTR_BOOLEAN_TRUE = "True";
+	constinit const CHAR* _CSTR_BUFFER_TOO_SMALL = "BUFFER_TOO_SMALL";
+	constinit const CHAR* _CSTR_COMPROMISED_DATA = "COMPROMISED_DATA";
+	constinit const CHAR* _CSTR_CRC_ERROR = "CRC_ERROR";
+	constinit const CHAR* _CSTR_DEVICE_ERROR = "DEVICE_ERROR";
+	constinit const CHAR* _CSTR_END_OF_FILE = "END_OF_FILE";
+	constinit const CHAR* _CSTR_END_OF_MEDIA = "END_OF_MEDIA";
+	constinit const CHAR* _CSTR_HTTP_ERROR = "HTTP_ERROR";
+	constinit const CHAR* _CSTR_ICMP_ERROR = "ICMP_ERROR";
+	constinit const CHAR* _CSTR_INCOMPATIBLE_VERSION = "INCOMPATIBLE_VERSION";
+	constinit const CHAR* _CSTR_INVALID_LANGUAGE = "INVALID_LANGUAGE";
+	constinit const CHAR* _CSTR_INVALID_PARAMETER = "INVALID_PARAMETER";
+	constinit const CHAR* _CSTR_IP_ADDRESS_CONFLICT = "IP_ADDRESS_CONFLICT";
+	constinit const CHAR* _CSTR_LOAD_ERROR = "LOAD_ERROR";
+	constinit const CHAR* _CSTR_MEDIA_CHANGED = "MEDIA_CHANGED";
+	constinit const CHAR* _CSTR_NO_MAPPING = "NO_MAPPING";
+	constinit const CHAR* _CSTR_NO_MEDIA = "NO_MEDIA";
+	constinit const CHAR* _CSTR_NO_RESPONSE = "NO_RESPONSE";
+	constinit const CHAR* _CSTR_NOT_FOUND = "NOT_FOUND";
+	constinit const CHAR* _CSTR_NOT_READY = "NOT_READY";
+	constinit const CHAR* _CSTR_NOT_STARTED = "NOT_STARTED";
+	constinit const CHAR* _CSTR_OUT_OF_RESOURCES = "OUT_OF_RESOURCES";
+	constinit const CHAR* _CSTR_PROTOCOL_ERROR = "PROTOCOL_ERROR";
+	constinit const CHAR* _CSTR_SECURITY_VIOLATION = "SECURITY_VIOLATION";
+	constinit const CHAR* _CSTR_SUCCESS = "SUCCESS";
+	constinit const CHAR* _CSTR_TFTP_ERROR = "TFTP_ERROR";
+	constinit const CHAR* _CSTR_TIMEOUT = "TIMEOUT";
+	constinit const CHAR* _CSTR_UNSUPPORTED = "UNSUPPORTED";
+	constinit const CHAR* _CSTR_VOLUME_CORRUPTED = "VOLUME_CORRUPTED";
+	constinit const CHAR* _CSTR_VOLUME_FULL = "VOLUME_FULL";
+	constinit const CHAR* _CSTR_WARN_BUFFER_TOO_SMALL = "WARN_BUFFER_TOO_SMALL";
+	constinit const CHAR* _CSTR_WARN_DELETE_FAILURE = "WARN_DELETE_FAILURE";
+	constinit const CHAR* _CSTR_WARN_FILE_SYSTEM = "WARN_FILE_SYSTEM";
+	constinit const CHAR* _CSTR_WARN_RESET_REQUIRED = "WARN_RESET_REQUIRED";
+	constinit const CHAR* _CSTR_WARN_STALE_DATA = "WARN_STALE_DATA";
+	constinit const CHAR* _CSTR_WARN_UNKNOWN_GLYPH = "WARN_UNKNOWN_GLYPH";
+	constinit const CHAR* _CSTR_WARN_WRITE_FAILURE = "WARN_WRITE_FAILURE";
+	constinit const CHAR* _CSTR_WRITE_PROTECTED = "WRITE_PROTECTED";
 
-	constinit const CCHAR* _CSTR_ALLOC_STATUS_SUCCESS = "SUCCESS";
-	constinit const CCHAR* _CSTR_ALLOC_STATUS_INVALID_PARAMETER = "INVALID_PARAMETER";
-	constinit const CCHAR* _CSTR_ALLOC_STATUS_NOT_ENOUGH_MEMORY = "NOT_ENOUGH_MEMORY";
-	constinit const CCHAR* _CSTR_ALLOC_STATUS_NOT_ENOUGH_PAGES = "NOT_ENOUGH_PAGES";
-	constinit const CCHAR* _CSTR_ALLOC_STATUS_ACCESS_DENIED = "ACCESS_DENIED";
-	constinit const CCHAR* _CSTR_ALLOC_STATUS_UNKNOWN = "UNKNOWN";
+	constinit const CHAR* _CSTR_ALLOC_STATUS_SUCCESS = "SUCCESS";
+	constinit const CHAR* _CSTR_ALLOC_STATUS_INVALID_PARAMETER = "INVALID_PARAMETER";
+	constinit const CHAR* _CSTR_ALLOC_STATUS_NOT_ENOUGH_MEMORY = "NOT_ENOUGH_MEMORY";
+	constinit const CHAR* _CSTR_ALLOC_STATUS_NOT_ENOUGH_PAGES = "NOT_ENOUGH_PAGES";
+	constinit const CHAR* _CSTR_ALLOC_STATUS_ACCESS_DENIED = "ACCESS_DENIED";
+	constinit const CHAR* _CSTR_ALLOC_STATUS_UNKNOWN = "UNKNOWN";
 
-	CCHAR* CString::ToHex(const INT16 value)
+	CHAR* CString::ToHex(const INT16 value)
 	{
 		if (value < 0)
 		{
@@ -2313,7 +2840,7 @@ namespace Common::Environment
 		return &_CSTR_HEXSTRING[0];
 	}
 
-	CCHAR* CString::ToHex(const INT32 value)
+	CHAR* CString::ToHex(const INT32 value)
 	{
 		if (value < 0)
 		{
@@ -2344,7 +2871,7 @@ namespace Common::Environment
 		return &_CSTR_HEXSTRING[0];
 	}
 
-	CCHAR* CString::ToHex(const INT64 value)
+	CHAR* CString::ToHex(const INT64 value)
 	{
 		if (value < 0)
 		{
@@ -2391,7 +2918,7 @@ namespace Common::Environment
 		return &_CSTR_HEXSTRING[0];
 	}
 
-	CCHAR* CString::ToHex(const INT8 value)
+	CHAR* CString::ToHex(const INT8 value)
 	{
 		if (value < 0)
 		{
@@ -2410,7 +2937,7 @@ namespace Common::Environment
 		return &_CSTR_HEXSTRING[0];
 	}
 
-	CCHAR* CString::ToHex(const UINT16 value)
+	CHAR* CString::ToHex(const UINT16 value)
 	{
 		_CSTR_HEXSTRING[0] = _CSTR_HEXCHARS[(value >> 12) & 0xF];
 		_CSTR_HEXSTRING[1] = _CSTR_HEXCHARS[(value >> 8) & 0xF];
@@ -2420,7 +2947,7 @@ namespace Common::Environment
 		return &_CSTR_HEXSTRING[0];
 	}
 
-	CCHAR* CString::ToHex(const UINT32 value)
+	CHAR* CString::ToHex(const UINT32 value)
 	{
 		_CSTR_HEXSTRING[0] = _CSTR_HEXCHARS[(value >> 28) & 0xF];
 		_CSTR_HEXSTRING[1] = _CSTR_HEXCHARS[(value >> 24) & 0xF];
@@ -2434,7 +2961,7 @@ namespace Common::Environment
 		return &_CSTR_HEXSTRING[0];
 	}
 
-	CCHAR* CString::ToHex(const UINT64 value)
+	CHAR* CString::ToHex(const UINT64 value)
 	{
 		_CSTR_HEXSTRING[0] = _CSTR_HEXCHARS[(value >> 60) & 0xF];
 		_CSTR_HEXSTRING[1] = _CSTR_HEXCHARS[(value >> 56) & 0xF];
@@ -2456,7 +2983,7 @@ namespace Common::Environment
 		return &_CSTR_HEXSTRING[0];
 	}
 
-	CCHAR* CString::ToHex(const UINT8 value)
+	CHAR* CString::ToHex(const UINT8 value)
 	{
 		_CSTR_HEXSTRING[0] = _CSTR_HEXCHARS[(value >> 4) & 0xF];
 		_CSTR_HEXSTRING[1] = _CSTR_HEXCHARS[value & 0xF];
@@ -2464,7 +2991,7 @@ namespace Common::Environment
 		return &_CSTR_HEXSTRING[0];
 	}
 
-	CCHAR* CString::ToHex(const VOID_PTR ptr)
+	CHAR* CString::ToHex(const VOID_PTR ptr)
 	{
 		UINT64 value = (UINT64)ptr;
 		_CSTR_HEXSTRING[0] = _CSTR_HEXCHARS[(value >> 60) & 0xF];
@@ -2487,7 +3014,7 @@ namespace Common::Environment
 		return &_CSTR_HEXSTRING[0];
 	}
 
-	CCHAR* CString::ToString(const EFI::EFI_GUID guid)
+	CHAR* CString::ToString(const EFI::EFI_GUID guid)
 	{
 		_CSTR_GUIDTOSTRING[1] = _CSTR_HEXCHARS[(guid.Data1 >> 28) & 0xF];
 		_CSTR_GUIDTOSTRING[2] = _CSTR_HEXCHARS[(guid.Data1 >> 24) & 0xF];
@@ -2524,115 +3051,115 @@ namespace Common::Environment
 		return &_CSTR_GUIDTOSTRING[0];
 	}
 
-	CCHAR* CString::ToString(const EFI::EFI_STATUS status)
+	CHAR* CString::ToString(const EFI::EFI_STATUS status)
 	{
 		switch (status)
 		{
 		case EFI::EFI_STATUS::ABORTED:
-			return (CCHAR*)_CSTR_ABORTED;
+			return (CHAR*)_CSTR_ABORTED;
 		case EFI::EFI_STATUS::ACCESS_DENIED:
-			return (CCHAR*)_CSTR_ACCESS_DENIED;
+			return (CHAR*)_CSTR_ACCESS_DENIED;
 		case EFI::EFI_STATUS::ALREADY_STARTED:
-			return (CCHAR*)_CSTR_ALREADY_STARTED;
+			return (CHAR*)_CSTR_ALREADY_STARTED;
 		case EFI::EFI_STATUS::BAD_BUFFER_SIZE:
-			return (CCHAR*)_CSTR_BAD_BUFFER_SIZE;
+			return (CHAR*)_CSTR_BAD_BUFFER_SIZE;
 		case EFI::EFI_STATUS::BUFFER_TOO_SMALL:
-			return (CCHAR*)_CSTR_BUFFER_TOO_SMALL;
+			return (CHAR*)_CSTR_BUFFER_TOO_SMALL;
 		case EFI::EFI_STATUS::COMPROMISED_DATA:
-			return (CCHAR*)_CSTR_COMPROMISED_DATA;
+			return (CHAR*)_CSTR_COMPROMISED_DATA;
 		case EFI::EFI_STATUS::CRC_ERROR:
-			return (CCHAR*)_CSTR_CRC_ERROR;
+			return (CHAR*)_CSTR_CRC_ERROR;
 		case EFI::EFI_STATUS::DEVICE_ERROR:
-			return (CCHAR*)_CSTR_DEVICE_ERROR;
+			return (CHAR*)_CSTR_DEVICE_ERROR;
 		case EFI::EFI_STATUS::END_OF_FILE:
-			return (CCHAR*)_CSTR_END_OF_FILE;
+			return (CHAR*)_CSTR_END_OF_FILE;
 		case EFI::EFI_STATUS::END_OF_MEDIA:
-			return (CCHAR*)_CSTR_END_OF_MEDIA;
+			return (CHAR*)_CSTR_END_OF_MEDIA;
 		case EFI::EFI_STATUS::HTTP_ERROR:
-			return (CCHAR*)_CSTR_HTTP_ERROR;
+			return (CHAR*)_CSTR_HTTP_ERROR;
 		case EFI::EFI_STATUS::ICMP_ERROR:
-			return (CCHAR*)_CSTR_ICMP_ERROR;
+			return (CHAR*)_CSTR_ICMP_ERROR;
 		case EFI::EFI_STATUS::INCOMPATIBLE_VERSION:
-			return (CCHAR*)_CSTR_INCOMPATIBLE_VERSION;
+			return (CHAR*)_CSTR_INCOMPATIBLE_VERSION;
 		case EFI::EFI_STATUS::INVALID_LANGUAGE:
-			return (CCHAR*)_CSTR_INVALID_LANGUAGE;
+			return (CHAR*)_CSTR_INVALID_LANGUAGE;
 		case EFI::EFI_STATUS::INVALID_PARAMETER:
-			return (CCHAR*)_CSTR_INVALID_PARAMETER;
+			return (CHAR*)_CSTR_INVALID_PARAMETER;
 		case EFI::EFI_STATUS::IP_ADDRESS_CONFLICT:
-			return (CCHAR*)_CSTR_IP_ADDRESS_CONFLICT;
+			return (CHAR*)_CSTR_IP_ADDRESS_CONFLICT;
 		case EFI::EFI_STATUS::LOAD_ERROR:
-			return (CCHAR*)_CSTR_LOAD_ERROR;
+			return (CHAR*)_CSTR_LOAD_ERROR;
 		case EFI::EFI_STATUS::MEDIA_CHANGED:
-			return (CCHAR*)_CSTR_MEDIA_CHANGED;
+			return (CHAR*)_CSTR_MEDIA_CHANGED;
 		case EFI::EFI_STATUS::NO_MAPPING:
-			return (CCHAR*)_CSTR_NO_MAPPING;
+			return (CHAR*)_CSTR_NO_MAPPING;
 		case EFI::EFI_STATUS::NO_MEDIA:
-			return (CCHAR*)_CSTR_NO_MEDIA;
+			return (CHAR*)_CSTR_NO_MEDIA;
 		case EFI::EFI_STATUS::NO_RESPONSE:
-			return (CCHAR*)_CSTR_NO_RESPONSE;
+			return (CHAR*)_CSTR_NO_RESPONSE;
 		case EFI::EFI_STATUS::NOT_FOUND:
-			return (CCHAR*)_CSTR_NOT_FOUND;
+			return (CHAR*)_CSTR_NOT_FOUND;
 		case EFI::EFI_STATUS::NOT_READY:
-			return (CCHAR*)_CSTR_NOT_READY;
+			return (CHAR*)_CSTR_NOT_READY;
 		case EFI::EFI_STATUS::NOT_STARTED:
-			return (CCHAR*)_CSTR_NOT_STARTED;
+			return (CHAR*)_CSTR_NOT_STARTED;
 		case EFI::EFI_STATUS::OUT_OF_RESOURCES:
-			return (CCHAR*)_CSTR_OUT_OF_RESOURCES;
+			return (CHAR*)_CSTR_OUT_OF_RESOURCES;
 		case EFI::EFI_STATUS::PROTOCOL_ERROR:
-			return (CCHAR*)_CSTR_PROTOCOL_ERROR;
+			return (CHAR*)_CSTR_PROTOCOL_ERROR;
 		case EFI::EFI_STATUS::SECURITY_VIOLATION:
-			return (CCHAR*)_CSTR_SECURITY_VIOLATION;
+			return (CHAR*)_CSTR_SECURITY_VIOLATION;
 		case EFI::EFI_STATUS::SUCCESS:
-			return (CCHAR*)_CSTR_SUCCESS;
+			return (CHAR*)_CSTR_SUCCESS;
 		case EFI::EFI_STATUS::TFTP_ERROR:
-			return (CCHAR*)_CSTR_TFTP_ERROR;
+			return (CHAR*)_CSTR_TFTP_ERROR;
 		case EFI::EFI_STATUS::TIMEOUT:
-			return (CCHAR*)_CSTR_TIMEOUT;
+			return (CHAR*)_CSTR_TIMEOUT;
 		case EFI::EFI_STATUS::UNSUPPORTED:
-			return (CCHAR*)_CSTR_UNSUPPORTED;
+			return (CHAR*)_CSTR_UNSUPPORTED;
 		case EFI::EFI_STATUS::VOLUME_CORRUPTED:
-			return (CCHAR*)_CSTR_VOLUME_CORRUPTED;
+			return (CHAR*)_CSTR_VOLUME_CORRUPTED;
 		case EFI::EFI_STATUS::VOLUME_FULL:
-			return (CCHAR*)_CSTR_VOLUME_FULL;
+			return (CHAR*)_CSTR_VOLUME_FULL;
 		case EFI::EFI_STATUS::WARN_BUFFER_TOO_SMALL:
-			return (CCHAR*)_CSTR_WARN_BUFFER_TOO_SMALL;
+			return (CHAR*)_CSTR_WARN_BUFFER_TOO_SMALL;
 		case EFI::EFI_STATUS::WARN_DELETE_FAILURE:
-			return (CCHAR*)_CSTR_WARN_DELETE_FAILURE;
+			return (CHAR*)_CSTR_WARN_DELETE_FAILURE;
 		case EFI::EFI_STATUS::WARN_FILE_SYSTEM:
-			return (CCHAR*)_CSTR_WARN_FILE_SYSTEM;
+			return (CHAR*)_CSTR_WARN_FILE_SYSTEM;
 		case EFI::EFI_STATUS::WARN_RESET_REQUIRED:
-			return (CCHAR*)_CSTR_WARN_RESET_REQUIRED;
+			return (CHAR*)_CSTR_WARN_RESET_REQUIRED;
 		case EFI::EFI_STATUS::WARN_STALE_DATA:
-			return (CCHAR*)_CSTR_WARN_STALE_DATA;
+			return (CHAR*)_CSTR_WARN_STALE_DATA;
 		case EFI::EFI_STATUS::WARN_UNKNOWN_GLYPH:
-			return (CCHAR*)_CSTR_WARN_UNKNOWN_GLYPH;
+			return (CHAR*)_CSTR_WARN_UNKNOWN_GLYPH;
 		case EFI::EFI_STATUS::WARN_WRITE_FAILURE:
-			return (CCHAR*)_CSTR_WARN_WRITE_FAILURE;
+			return (CHAR*)_CSTR_WARN_WRITE_FAILURE;
 		case EFI::EFI_STATUS::WRITE_PROTECTED:
-			return (CCHAR*)_CSTR_WRITE_PROTECTED;
+			return (CHAR*)_CSTR_WRITE_PROTECTED;
 		default:
 			return nullptr;
 		}
 	}
 
-	CCHAR* CString::ToString(const Common::System::MemoryManagement::AllocatorStatus status)
+	CHAR* CString::ToString(const Common::System::MemoryManagement::AllocatorStatus status)
 	{
 		switch (status)
 		{
 		case Common::System::MemoryManagement::AllocatorStatus::Success:
-			return (CCHAR*)_CSTR_ALLOC_STATUS_SUCCESS;
+			return (CHAR*)_CSTR_ALLOC_STATUS_SUCCESS;
 		case Common::System::MemoryManagement::AllocatorStatus::Invalid_Parameters:
-			return (CCHAR*)_CSTR_ALLOC_STATUS_INVALID_PARAMETER;
+			return (CHAR*)_CSTR_ALLOC_STATUS_INVALID_PARAMETER;
 		case Common::System::MemoryManagement::AllocatorStatus::Not_Enough_Memory:
-			return (CCHAR*)_CSTR_ALLOC_STATUS_NOT_ENOUGH_MEMORY;
+			return (CHAR*)_CSTR_ALLOC_STATUS_NOT_ENOUGH_MEMORY;
 		case Common::System::MemoryManagement::AllocatorStatus::Not_Enough_Pages:
-			return (CCHAR*)_CSTR_ALLOC_STATUS_NOT_ENOUGH_PAGES;
+			return (CHAR*)_CSTR_ALLOC_STATUS_NOT_ENOUGH_PAGES;
 		case Common::System::MemoryManagement::AllocatorStatus::Access_Denied:
-			return (CCHAR*)_CSTR_ALLOC_STATUS_ACCESS_DENIED;
+			return (CHAR*)_CSTR_ALLOC_STATUS_ACCESS_DENIED;
 		}
 	}
 
-	CCHAR* CString::ToString(const INT16 value)
+	CHAR* CString::ToString(const INT16 value)
 	{
 		if (value == 0)
 		{
@@ -2661,7 +3188,7 @@ namespace Common::Environment
 		return &_CSTR_VALUETOSTRING[len];
 	}
 
-	CCHAR* CString::ToString(const INT32 value)
+	CHAR* CString::ToString(const INT32 value)
 	{
 		if (value == 0)
 		{
@@ -2690,7 +3217,7 @@ namespace Common::Environment
 		return &_CSTR_VALUETOSTRING[len];
 	}
 
-	CCHAR* CString::ToString(const INT64 value)
+	CHAR* CString::ToString(const INT64 value)
 	{
 		if (value == 0)
 		{
@@ -2719,7 +3246,7 @@ namespace Common::Environment
 		return &_CSTR_VALUETOSTRING[len];
 	}
 
-	CCHAR* CString::ToString(const INT8 value)
+	CHAR* CString::ToString(const INT8 value)
 	{
 		if (value == 0)
 		{
@@ -2748,7 +3275,7 @@ namespace Common::Environment
 		return &_CSTR_VALUETOSTRING[len];
 	}
 
-	CCHAR* CString::ToString(const UINT16 value)
+	CHAR* CString::ToString(const UINT16 value)
 	{
 		if (value == 0)
 		{
@@ -2767,7 +3294,7 @@ namespace Common::Environment
 		return &_CSTR_VALUETOSTRING[len];
 	}
 
-	CCHAR* CString::ToString(const UINT32 value)
+	CHAR* CString::ToString(const UINT32 value)
 	{
 		if (value == 0)
 		{
@@ -2786,7 +3313,7 @@ namespace Common::Environment
 		return &_CSTR_VALUETOSTRING[len];
 	}
 
-	CCHAR* CString::ToString(const UINT64 value)
+	CHAR* CString::ToString(const UINT64 value)
 	{
 		if (value == 0)
 		{
@@ -2805,7 +3332,7 @@ namespace Common::Environment
 		return &_CSTR_VALUETOSTRING[len];
 	}
 
-	CCHAR* CString::ToString(const UINT8 value)
+	CHAR* CString::ToString(const UINT8 value)
 	{
 		if (value == 0)
 		{
@@ -2824,7 +3351,7 @@ namespace Common::Environment
 		return &_CSTR_VALUETOSTRING[len];
 	}
 
-	CCHAR* CString::ToString(const VOID_PTR ptr)
+	CHAR* CString::ToString(const VOID_PTR ptr)
 	{
 		UINT64 value = (UINT64)ptr;
 		if (value == 0)
@@ -2844,19 +3371,19 @@ namespace Common::Environment
 		return &_CSTR_VALUETOSTRING[len];
 	}
 
-	CCHAR* CString::ToString(const BOOLEAN boolean)
+	CHAR* CString::ToString(const BOOLEAN boolean)
 	{
 		if (boolean)
 		{
-			return (CCHAR*)_CSTR_BOOLEAN_TRUE;
+			return (CHAR*)_CSTR_BOOLEAN_TRUE;
 		}
 		else
 		{
-			return (CCHAR*)_CSTR_BOOLEAN_FALSE;
+			return (CHAR*)_CSTR_BOOLEAN_FALSE;
 		}
 	}
 
-	UINT64 CString::Length(const CCHAR* str)
+	UINT64 CString::Length(const CHAR* str)
 	{
 		if (str == nullptr)
 		{
@@ -2878,7 +3405,7 @@ namespace Common::Environment
 		return len;
 	}
 
-	BOOLEAN CString::Compare(const CCHAR* l, const CCHAR* r, StringCulture culture)
+	BOOLEAN CString::Compare(const CHAR* l, const CHAR* r, StringCulture culture)
 	{
 		/*Check for isNullOrEmpty and Lengths, if they don't match, return FALSE*/
 		BOOLEAN lBool = IsNullOrEmpty(l);
@@ -2906,9 +3433,9 @@ namespace Common::Environment
 
 		switch (culture)
 		{
-		case Common::Environment::InvariantCulture:
-		case Common::Environment::CurrentCulture:
-		case Common::Environment::Ordinal:
+		case Common::System::Environment::InvariantCulture:
+		case Common::System::Environment::CurrentCulture:
+		case Common::System::Environment::Ordinal:
 		{
 			/*Binary Comparison of string*/
 
@@ -2921,9 +3448,9 @@ namespace Common::Environment
 			}
 			return TRUE;
 		}
-		case Common::Environment::InvariantCultureIgnoreCase:
-		case Common::Environment::CurrentCultureIgnoreCase:
-		case Common::Environment::OrdinalIgnoreCase:
+		case Common::System::Environment::InvariantCultureIgnoreCase:
+		case Common::System::Environment::CurrentCultureIgnoreCase:
+		case Common::System::Environment::OrdinalIgnoreCase:
 		{
 			/*Binary Comparison, Ignoring Case of string*/
 
@@ -2956,7 +3483,7 @@ namespace Common::Environment
 
 	}
 
-	BOOLEAN CString::StartsWith(const CCHAR* str, const CCHAR* value, StringCulture culture)
+	BOOLEAN CString::StartsWith(const CHAR* str, const CHAR* value, StringCulture culture)
 	{
 		BOOLEAN l = IsNullOrEmpty(str);
 		BOOLEAN r = IsNullOrEmpty(value);
@@ -2981,9 +3508,9 @@ namespace Common::Environment
 
 		switch (culture)
 		{
-		case Common::Environment::InvariantCulture:
-		case Common::Environment::CurrentCulture:
-		case Common::Environment::Ordinal:
+		case Common::System::Environment::InvariantCulture:
+		case Common::System::Environment::CurrentCulture:
+		case Common::System::Environment::Ordinal:
 		{
 			for (UINT64 index = 0; index < valueLength; index++)
 			{
@@ -2994,9 +3521,9 @@ namespace Common::Environment
 			}
 			return TRUE;
 		}
-		case Common::Environment::InvariantCultureIgnoreCase:
-		case Common::Environment::CurrentCultureIgnoreCase:
-		case Common::Environment::OrdinalIgnoreCase:
+		case Common::System::Environment::InvariantCultureIgnoreCase:
+		case Common::System::Environment::CurrentCultureIgnoreCase:
+		case Common::System::Environment::OrdinalIgnoreCase:
 		{
 			for (UINT64 index = 0; index < valueLength; index++)
 			{
@@ -3024,7 +3551,7 @@ namespace Common::Environment
 		}
 	}
 
-	BOOLEAN CString::EndsWith(const CCHAR* str, const CCHAR* value, StringCulture culture)
+	BOOLEAN CString::EndsWith(const CHAR* str, const CHAR* value, StringCulture culture)
 	{
 		BOOLEAN l = IsNullOrEmpty(str);
 		BOOLEAN r = IsNullOrEmpty(value);
@@ -3049,9 +3576,9 @@ namespace Common::Environment
 
 		switch (culture)
 		{
-		case Common::Environment::InvariantCulture:
-		case Common::Environment::CurrentCulture:
-		case Common::Environment::Ordinal:
+		case Common::System::Environment::InvariantCulture:
+		case Common::System::Environment::CurrentCulture:
+		case Common::System::Environment::Ordinal:
 		{
 			UINT64 index = 0;
 			for (UINT64 index = 0; index < valueLength; index++)
@@ -3063,9 +3590,9 @@ namespace Common::Environment
 			}
 			return TRUE;
 		}
-		case Common::Environment::InvariantCultureIgnoreCase:
-		case Common::Environment::CurrentCultureIgnoreCase:
-		case Common::Environment::OrdinalIgnoreCase:
+		case Common::System::Environment::InvariantCultureIgnoreCase:
+		case Common::System::Environment::CurrentCultureIgnoreCase:
+		case Common::System::Environment::OrdinalIgnoreCase:
 		{
 			UINT64 index = 0;
 			for (UINT64 index = 0; index < valueLength; index++)
@@ -3095,7 +3622,7 @@ namespace Common::Environment
 
 	}
 
-	BOOLEAN CString::Contains(const CCHAR* str, const CCHAR* value, StringCulture culture)
+	BOOLEAN CString::Contains(const CHAR* str, const CHAR* value, StringCulture culture)
 	{
 		BOOLEAN l = IsNullOrEmpty(str);
 		BOOLEAN r = IsNullOrEmpty(value);
@@ -3120,9 +3647,9 @@ namespace Common::Environment
 
 		switch (culture)
 		{
-		case Common::Environment::InvariantCulture:
-		case Common::Environment::CurrentCulture:
-		case Common::Environment::Ordinal:
+		case Common::System::Environment::InvariantCulture:
+		case Common::System::Environment::CurrentCulture:
+		case Common::System::Environment::Ordinal:
 		{
 			UINT64 index = 0;
 			for (UINT64 index = 0; index < strLength - valueLength; index++)
@@ -3147,9 +3674,9 @@ namespace Common::Environment
 			}
 			return FALSE;
 		}
-		case Common::Environment::InvariantCultureIgnoreCase:
-		case Common::Environment::CurrentCultureIgnoreCase:
-		case Common::Environment::OrdinalIgnoreCase:
+		case Common::System::Environment::InvariantCultureIgnoreCase:
+		case Common::System::Environment::CurrentCultureIgnoreCase:
+		case Common::System::Environment::OrdinalIgnoreCase:
 		{
 			UINT64 index = 0;
 			for (UINT64 index = 0; index < strLength - valueLength; index++)
@@ -3205,7 +3732,7 @@ namespace Common::Environment
 		}
 	}
 
-	BOOLEAN CString::IsNullOrEmpty(const CCHAR* str)
+	BOOLEAN CString::IsNullOrEmpty(const CHAR* str)
 	{
 		if (str == nullptr)
 		{
@@ -3220,7 +3747,7 @@ namespace Common::Environment
 		return FALSE;
 	}
 
-	BOOLEAN CString::IsNullOrWhiteSpace(const CCHAR* str)
+	BOOLEAN CString::IsNullOrWhiteSpace(const CHAR* str)
 	{
 		if (str == nullptr)
 		{
@@ -3247,14 +3774,14 @@ namespace Common::Environment
 		}
 		return FALSE;
 	}
-	CCHAR* CString::FromCharArray(CCHAR arr[], UINT64 Length)
+	CHAR* CString::FromCharArray(CHAR arr[], UINT64 Length)
 	{
 		if (arr == nullptr)
 		{
 			return nullptr;
 		}
 
-		CCHAR* result = new CCHAR[Length + 1];
+		CHAR* result = new CHAR[Length + 1];
 
 		for (UINT64 i = 0; i < Length; i++)
 		{
@@ -3264,7 +3791,7 @@ namespace Common::Environment
 
 		return result;
 	}
-	CCHAR* CString::FromUTF16String(const CHAR16* str)
+	CHAR* CString::FromUTF16String(const CHAR16* str)
 	{
 		if (str == nullptr)
 		{
@@ -3273,18 +3800,18 @@ namespace Common::Environment
 
 		if (str[0] == '\0')
 		{
-			return (CCHAR*)"\0";
+			return (CHAR*)"\0";
 		}
 
 		UINT64 len = UTF16::Length(str);
-		CCHAR* result = new CCHAR[len];
+		CHAR* result = new CHAR[len];
 		for (UINT64 i = 0; i < len; i++)
 		{
-			result[i] = (CCHAR)(str[i] & 0x00FF);
+			result[i] = (CHAR)(str[i] & 0x00FF);
 		}
 		return result;
 	}
-	CCHAR* CString::FromUTF8String(const CHAR8* str)
+	CHAR* CString::FromUTF8String(const CHAR8* str)
 	{
 		if (str == nullptr)
 		{
@@ -3293,11 +3820,11 @@ namespace Common::Environment
 
 		if (str[0] == '\0')
 		{
-			return (CCHAR*)"\0";
+			return (CHAR*)"\0";
 		}
 
 		UINT64 len = UTF8::Length(str);
-		CCHAR* result = new CCHAR[len];
+		CHAR* result = new CHAR[len];
 		for (UINT64 i = 0; i < len; i++)
 		{
 			result[i] = str[i];

@@ -6,7 +6,7 @@
 
 namespace Common::Graphics::Font::PCSF
 {
-	const CCHAR PSF1_MAGIC[2] = { 0x36, 0x04 };
+	const CHAR PSF1_MAGIC[2] = { 0x36, 0x04 };
 
 	struct UnicodeSequence
 	{
@@ -38,7 +38,7 @@ namespace Common::Graphics::Font::PCSF
 
 		union
 		{
-			CCHAR Char[2];
+			CHAR Char[2];
 			UINT16 Value;
 		}Magic;
 

@@ -26,7 +26,7 @@
 #define VOID_PTR void*
 #define VOID_PTR_PTR void**
 #define PTR_SIZE (UINTN)sizeof(VOID_PTR)
-#define CCHAR char
+#define CHAR char
 
 #if defined(__cpp_unicode_characters)
 #define CHAR8 char8_t

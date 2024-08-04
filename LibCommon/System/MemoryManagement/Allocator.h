@@ -7,13 +7,13 @@
 
 namespace Common::System::MemoryManagement
 {
-	typedef VOID_PTR (*AllocFunc) (UINTN size);
-	typedef VOID_PTR (*AllocZeroedFunc) (UINTN size);
-	typedef VOID_PTR (*AllocPageFunc) (UINTN size);
-	typedef VOID_PTR (*AllocPageZeroedFunc) (UINTN size);
+	typedef VOID_PTR (*AllocFunc) (UINTN length);
+	typedef VOID_PTR (*AllocZeroedFunc) (UINTN length);
+	typedef VOID_PTR (*AllocPageFunc) (UINTN length);
+	typedef VOID_PTR (*AllocPageZeroedFunc) (UINTN length);
 
 	typedef VOID (*FreeFunc) (VOID_PTR ptr);
-	typedef VOID (*FreePageFunc)(VOID* ptr, UINTN size);
+	typedef VOID (*FreePageFunc)(VOID* ptr, UINTN length);
 
 	typedef AllocatorStatus GetStatusFunc();
 	typedef VOID SetStatusFunc(AllocatorStatus status);
@@ -29,8 +29,8 @@ namespace Common::System::MemoryManagement
 		friend class KernelAllocator;
 
 	public:
-		static VOID_PTR	Allocate(UINTN size);
-		static VOID_PTR	AllocateZeroed(UINTN size);
+		static VOID_PTR	Allocate(UINTN length);
+		static VOID_PTR	AllocateZeroed(UINTN length);
 		static VOID		Free(VOID_PTR ptr);
 		static VOID_PTR	AllocatePage(UINTN pageCount);
 		static VOID_PTR	AllocatePageZeroed(UINTN pageCount);
@@ -80,14 +80,14 @@ namespace Common::System::MemoryManagement
 }
 
 /*Declare all overridable new and delete operator variants*/
-VOID_PTR operator new(UINTN size);
-VOID_PTR operator new[](UINTN size);
-VOID_PTR operator new(UINTN size, VOID_PTR ptr);
-VOID_PTR operator new[](UINTN size, VOID_PTR ptr);
+VOID_PTR operator new(UINTN length);
+VOID_PTR operator new[](UINTN length);
+VOID_PTR operator new(UINTN length, VOID_PTR ptr);
+VOID_PTR operator new[](UINTN length, VOID_PTR ptr);
 
 void operator delete(VOID_PTR ptr);
 void operator delete[](VOID_PTR ptr);
-void operator delete(VOID_PTR ptr, UINTN size);
-void operator delete[](VOID_PTR ptr, UINTN size);
+void operator delete(VOID_PTR ptr, UINTN length);
+void operator delete[](VOID_PTR ptr, UINTN length);
 void operator delete(VOID_PTR ptr, VOID_PTR ptr2);
 void operator delete[](VOID_PTR ptr, VOID_PTR ptr2);

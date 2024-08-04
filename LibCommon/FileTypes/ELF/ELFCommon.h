@@ -415,7 +415,7 @@ namespace Common::FileTypes::ELF
 	public:
 		union
 		{
-			CCHAR Char[4];
+			CHAR Char[4];
 			UINT32 Value;
 		}Magic;
 		ELFClass Class;

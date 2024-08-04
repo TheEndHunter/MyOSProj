@@ -8,7 +8,7 @@ namespace Common::Debugging
 		_sysTable = systbl;		
 	}
 
-	void EfiDebugger::Log(const CCHAR* message)
+	void EfiDebugger::Log(const CHAR* message)
 	{
 
 	}
@@ -23,7 +23,7 @@ namespace Common::Debugging
 
 	}
 
-	void EfiDebugger::Log(const CCHAR* message, const CCHAR* file, const CCHAR* function, int line)
+	void EfiDebugger::Log(const CHAR* message, const CHAR* file, const CHAR* function, int line)
 	{
 
 	}
@@ -38,7 +38,7 @@ namespace Common::Debugging
 
 	}
 
-	void EfiDebugger::Assert(bool condition, const CCHAR* message)
+	void EfiDebugger::Assert(bool condition, const CHAR* message)
 	{
 
 	}
@@ -53,7 +53,7 @@ namespace Common::Debugging
 
 	}
 
-	void EfiDebugger::Assert(bool condition, const CCHAR* message, const CCHAR* file, const CCHAR* function, int line)
+	void EfiDebugger::Assert(bool condition, const CHAR* message, const CHAR* file, const CHAR* function, int line)
 	{
 
 	}

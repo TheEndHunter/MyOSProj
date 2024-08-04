@@ -2,7 +2,7 @@
 #include <EFI_RESET_TYPE.h>
 #include <Protocols/IO/Console/EFI_CONSOLE_COLOR.h>
 #include <Graphics/Colour.h>
-#include <Environment/Unicode.h>
+#include <System/Environment/Unicode.h>
 #include <FileSystem/ESP/ESP_FS_Context.h>
 #include <System/MemoryManagement/Allocator.h>
 #include <System/MemoryManagement/AllocatorStatus.h>
@@ -42,7 +42,7 @@ extern "C" {
 namespace Bootloader
 {
     using namespace Common::FileSystem;
-    using namespace Common::Environment;
+    using namespace Common::System::Environment;
     using namespace Common::Graphics;
     using namespace Common::FileTypes::PE;
     using namespace EFI;

@@ -99,7 +99,7 @@ namespace Common::FileTypes::PE
 
 		union
 		{
-			CCHAR Char[4];
+			CHAR Char[4];
 			UINT32 Value;
 		}Signature;
 

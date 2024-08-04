@@ -1,5 +1,4 @@
 #pragma once
-
 #include <TypeDefs.h>
 
 namespace Common::System
@@ -9,27 +8,27 @@ namespace Common::System
 	{
 	public:
 
-		Array(UINT64 size)
+		Array(const UINT64 length)
 		{
-			_size = size;
-			_data = new Type[size];
+			_length = length;
+			_data = new Type[length];
 		}
 
-		Array(UINT64 size, Type value)
+		Array(Type value, const UINT64 length)
 		{
-			_size = size;
-			_data = new Type[size];
-			for (UINT64 i = 0; i < size; i++)
+			_length = length;
+			_data = new Type[length];
+			for (UINT64 i = 0; i < length; i++)
 			{
 				_data[i] = value;
 			}
 		}
 
-		Array(UINT64 size, Type[size] data)
+		Array(Type* data, UINT64 length)
 		{
-			_size = size;
-			_data = new Type[size];
-			for (UINT64 i = 0; i < size; i++)
+			_length = length;
+			_data = new Type[length];
+			for (UINT64 i = 0; i < length; i++)
 			{
 				_data[i] = data[i];
 			}
@@ -37,9 +36,9 @@ namespace Common::System
 
 		Array(const Array<Type>& other)
 		{
-			_size = other._size;
-			_data = new Type[_size];
-			for (UINT64 i = 0; i < _size; i++)
+			_length = other._length;
+			_data = new Type[_length];
+			for (UINT64 i = 0; i < _length; i++)
 			{
 				_data[i] = other._data[i];
 			}
@@ -52,7 +51,7 @@ namespace Common::System
 
 		UINT64 Length()
 		{
-			return _size;
+			return _length;
 		}
 
 		Type& operator[](UINT64 index)
@@ -62,7 +61,7 @@ namespace Common::System
 
 		BOOLEAN Contains(const Type& value)
 		{
-			for (UINT64 i = 0; i < _size; i++)
+			for (UINT64 i = 0; i < _length; i++)
 			{
 				if (_data[i] == value)
 				{
@@ -79,12 +78,11 @@ namespace Common::System
 
 		Type& Last()
 		{
-			return _data[_size - 1];
+			return _data[_length - 1];
 		}
 
 	private:
-		UINT64 _size;
+		UINT64 _length;
 		Type* _data;
-
 	};
 }

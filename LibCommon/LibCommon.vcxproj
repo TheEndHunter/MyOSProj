@@ -37,15 +37,16 @@
   <ItemGroup>
     <ClInclude Include="Debugging\EFI\EFIDebugger.h" />
     <ClInclude Include="Debugging\IDebugger.h" />
-    <ClInclude Include="Environment\StringComparisonMode.h" />
-    <ClInclude Include="Environment\StringCulture.h" />
-    <ClInclude Include="Environment\Unicode\UTF.h" />
+    <ClInclude Include="FileSystem\DirectoryInfo.h" />
+    <ClInclude Include="System\Environment\string.h" />
+    <ClInclude Include="System\Environment\StringComparisonMode.h" />
+    <ClInclude Include="System\Environment\StringCulture.h" />
     <ClInclude Include="FileSystem\FileAttribute.h" />
     <ClInclude Include="FileSystem\FileHandle.h" />
     <ClInclude Include="FileSystem\FileMode.h" />
     <ClInclude Include="FileSystem\FileStatus.h" />
     <ClInclude Include="FileSystem\ESP\ESP_FS_Context.h" />
-    <ClInclude Include="Environment\Unicode.h" />
+    <ClInclude Include="System\Environment\Unicode.h" />
     <ClInclude Include="FileSystem\VolumeHandle.h" />
     <ClInclude Include="FileTypes\ELF\ELF.h" />
     <ClInclude Include="FileTypes\ELF\ELF64.h" />
@@ -85,11 +86,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Debugging\EFI\EFIDebugger.cpp" />
-    <ClCompile Include="Environment\Unicode\UTF.cpp" />
+    <ClCompile Include="FileSystem\DirectoryInfo.cpp" />
     <ClCompile Include="FileSystem\FileHandle.cpp" />
     <ClCompile Include="FileSystem\FileInfo.cpp" />
     <ClCompile Include="FileSystem\ESP\ESP_FS_Context.cpp" />
-    <ClCompile Include="Environment\Unicode.cpp" />
+    <ClCompile Include="System\Environment\IsChar.h" />
+    <ClCompile Include="System\Environment\string.cpp" />
+    <ClCompile Include="System\Environment\Unicode.cpp" />
     <ClCompile Include="FileSystem\FileInfo.h" />
     <ClCompile Include="FileSystem\VolumeHandle.cpp" />
     <ClCompile Include="FileSystem\VolumeInfo.cpp" />

@@ -17,17 +17,17 @@ namespace Common::System::MemoryManagement
 	void  (*Allocator::_freeFunc)(VOID_PTR) = nullptr;
 	void  (*Allocator::_freePageFunc)(VOID_PTR, UINT64) = nullptr;
 
-	VOID_PTR Allocator::Allocate(UINTN size)
+	VOID_PTR Allocator::Allocate(UINTN length)
 	{
 		if (!_isInitalized)
 		{
 			return nullptr;
 		}
 
-		VOID_PTR p = _allocFunc(size);
+		VOID_PTR p = _allocFunc(length);
 		return p;
 	}
-	VOID_PTR Allocator::AllocateZeroed(UINTN size)
+	VOID_PTR Allocator::AllocateZeroed(UINTN length)
 	{
 		if (!_isInitalized)
 		{
@@ -35,7 +35,7 @@ namespace Common::System::MemoryManagement
 			return nullptr;
 		}
 
-		VOID_PTR p = _allocZeroedFunc(size);
+		VOID_PTR p = _allocZeroedFunc(length);
 		
 		return p;
 	}
@@ -127,30 +127,30 @@ namespace Common::System::MemoryManagement
 
 }
 
-VOID_PTR operator new(UINTN size)
+VOID_PTR operator new(UINTN length)
 {
 	if (!Common::System::MemoryManagement::Allocator::IsInitalized())
 	{
 		return nullptr;
 	}
-	return Common::System::MemoryManagement::Allocator::Allocate(size);
+	return Common::System::MemoryManagement::Allocator::Allocate(length);
 }
 
-VOID_PTR operator new[](UINTN size)
+VOID_PTR operator new[](UINTN length)
 {
 	if (!Common::System::MemoryManagement::Allocator::IsInitalized())
 	{
 		return nullptr;
 	}
-	return Common::System::MemoryManagement::Allocator::Allocate(size);
+	return Common::System::MemoryManagement::Allocator::Allocate(length);
 }
 
-VOID_PTR operator new(UINTN size, VOID_PTR ptr)
+VOID_PTR operator new(UINTN length, VOID_PTR ptr)
 {
 	return ptr;
 }
 
-VOID_PTR operator new[](UINTN size, VOID_PTR ptr)
+VOID_PTR operator new[](UINTN length, VOID_PTR ptr)
 {
 	return ptr;
 }
@@ -174,7 +174,7 @@ void operator delete[](VOID_PTR ptr)
 	Common::System::MemoryManagement::Allocator::Free(ptr);
 }
 
-void operator delete(VOID_PTR ptr, UINTN size)
+void operator delete(VOID_PTR ptr, UINTN length)
 {
 	if (!Common::System::MemoryManagement::Allocator::IsInitalized())
 	{
@@ -183,7 +183,7 @@ void operator delete(VOID_PTR ptr, UINTN size)
 	Common::System::MemoryManagement::Allocator::Free(ptr);
 }
 
-void operator delete[](VOID_PTR ptr, UINTN size)
+void operator delete[](VOID_PTR ptr, UINTN length)
 {
 	if (!Common::System::MemoryManagement::Allocator::IsInitalized())
 	{

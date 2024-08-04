@@ -2,7 +2,7 @@
 
 namespace Common::FileTypes::MSDOS
 {
-	const CCHAR DosHeaderSignature[2] = { 'M', 'Z' };
+	const CHAR DosHeaderSignature[2] = { 'M', 'Z' };
 
 	DOSHeader::DOSHeader()
 	{

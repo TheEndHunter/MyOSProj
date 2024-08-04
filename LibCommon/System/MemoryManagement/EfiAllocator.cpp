@@ -11,7 +11,7 @@ namespace Common::System::MemoryManagement
 	EFI::EFI_SYSTEM_TABLE* EfiAllocator::_efiSystemTable = nullptr; // Definition for the EFI_SYSTEM_TABLE pointer
 	AllocatorStatus EfiAllocator::_lastStatus = AllocatorStatus::Not_Initialized; // Definition for the AllocatorStatus
 
-	VOID_PTR EfiAllocator::Allocate(UINTN size)
+	VOID_PTR EfiAllocator::Allocate(UINTN length)
 	{
 		if (EfiAllocator::_efiSystemTable == nullptr)
 		{
@@ -20,7 +20,7 @@ namespace Common::System::MemoryManagement
 
 		EFI::EFI_STATUS status;
 		VOID* buffer;
-		status = EfiAllocator::_efiSystemTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, size, &buffer);
+		status = EfiAllocator::_efiSystemTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, length, &buffer);
 		if (status != EFI::EFI_STATUS::SUCCESS)
 		{
 			switch (status)
@@ -38,7 +38,7 @@ namespace Common::System::MemoryManagement
 		_lastStatus = AllocatorStatus::Success;
 		return buffer;
 	}
-	VOID_PTR EfiAllocator::AllocateZeroed(UINTN size)
+	VOID_PTR EfiAllocator::AllocateZeroed(UINTN length)
 	{
 		if (EfiAllocator::_efiSystemTable == nullptr)
 		{
@@ -47,7 +47,7 @@ namespace Common::System::MemoryManagement
 
 		EFI::EFI_STATUS status;
 		VOID* buffer;
-		status = EfiAllocator::_efiSystemTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, size, &buffer);
+		status = EfiAllocator::_efiSystemTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, length, &buffer);
 		if (status != EFI::EFI_STATUS::SUCCESS)
 		{
 			switch (status)
@@ -62,7 +62,7 @@ namespace Common::System::MemoryManagement
 			return nullptr;
 		}
 
-		status = EfiAllocator::_efiSystemTable->BootServices->SetMem(buffer, size, 0);
+		status = EfiAllocator::_efiSystemTable->BootServices->SetMem(buffer, length, 0);
 
 		_lastStatus = AllocatorStatus::Success;
 		return buffer;

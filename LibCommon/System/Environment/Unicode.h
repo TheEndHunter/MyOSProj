@@ -2,10 +2,10 @@
 #include "TypeDefs.h"
 #include <EFI_GUID.h>
 #include <EFI_STATUS.h>
-#include <Environment/StringCulture.h>
+#include <System/Environment/StringCulture.h>
 #include <System/MemoryManagement/AllocatorStatus.h>
 
-namespace Common::Environment
+namespace Common::System::Environment
 {
 	class UTF16
 	{
@@ -53,7 +53,18 @@ namespace Common::Environment
 
 		static CHAR16* FromCharArray(CHAR16 arr[], UINT64 Length);
 		static CHAR16* FromUTF8String(const CHAR8* str);
-		static CHAR16* FromCString(const CCHAR* str);
+		static CHAR16* FromCString(const CHAR* str);
+
+		static INT64 IndexOf(const CHAR16* str, const CHAR16* value, UINT64 startIndex = 0, StringCulture culture = InvariantCulture);
+		static INT64 IndexOf(const CHAR16* str, const CHAR16 value, UINT64 startIndex = 0, StringCulture culture = InvariantCulture);
+		static INT64 LastIndexOf(const CHAR16* str, const CHAR16* value, UINT64 startIndex = 0, StringCulture culture = InvariantCulture);
+		static INT64 LastIndexOf(const CHAR16* str, const CHAR16 value, UINT64 startIndex = 0, StringCulture culture = InvariantCulture);
+
+		static CHAR16** Split(const CHAR16* str, const CHAR16* separator, OUT UINT64* count);
+		static CHAR16** Split(const CHAR16* str, const CHAR16 separator,OUT UINT64* count);
+		static CHAR16* Join(const CHAR16** str, const CHAR16* separator,UINT64 count);
+		static CHAR16* Join(const CHAR16** str, const CHAR16 separator,UINT64 count);
+
 	};
 
 	class UTF8
@@ -100,54 +111,54 @@ namespace Common::Environment
 
 		static CHAR8* FromCharArray(CHAR8 arr[], UINT64 Length);
 		static CHAR8* FromUTF16String(const CHAR16* str);
-		static CHAR8* FromCString(const CCHAR* str);
+		static CHAR8* FromCString(const CHAR* str);
 	};
 
 	struct CString
 	{
 	public:
-		const static CCHAR  NULL = '\0';
-		const static CCHAR* NewLine;
-		const static CCHAR  Space = ' ';
-		const static CCHAR  Tab = '\t';
-		const static CCHAR  Backspace = '\b';
+		const static CHAR  NULL = '\0';
+		const static CHAR* NewLine;
+		const static CHAR  Space = ' ';
+		const static CHAR  Tab = '\t';
+		const static CHAR  Backspace = '\b';
 
-		static CCHAR* ToHex(const INT16 value);
-		static CCHAR* ToHex(const INT32 value);
-		static CCHAR* ToHex(const INT64 value);
-		static CCHAR* ToHex(const INT8 valueC);
+		static CHAR* ToHex(const INT16 value);
+		static CHAR* ToHex(const INT32 value);
+		static CHAR* ToHex(const INT64 value);
+		static CHAR* ToHex(const INT8 valueC);
 
-		static CCHAR* ToHex(const UINT16 value);
-		static CCHAR* ToHex(const UINT32 value);
-		static CCHAR* ToHex(const UINT64 value);
-		static CCHAR* ToHex(const UINT8 value);
-		static CCHAR* ToHex(const VOID_PTR ptrC);
+		static CHAR* ToHex(const UINT16 value);
+		static CHAR* ToHex(const UINT32 value);
+		static CHAR* ToHex(const UINT64 value);
+		static CHAR* ToHex(const UINT8 value);
+		static CHAR* ToHex(const VOID_PTR ptrC);
 
-		static CCHAR* ToString(const EFI::EFI_GUID guid);
-		static CCHAR* ToString(const EFI::EFI_STATUS status);
-		static CCHAR* ToString(const Common::System::MemoryManagement::AllocatorStatus status);
-		static CCHAR* ToString(const INT16 value);
-		static CCHAR* ToString(const INT32 value);
-		static CCHAR* ToString(const INT64 value);
-		static CCHAR* ToString(const INT8 valueC);
+		static CHAR* ToString(const EFI::EFI_GUID guid);
+		static CHAR* ToString(const EFI::EFI_STATUS status);
+		static CHAR* ToString(const Common::System::MemoryManagement::AllocatorStatus status);
+		static CHAR* ToString(const INT16 value);
+		static CHAR* ToString(const INT32 value);
+		static CHAR* ToString(const INT64 value);
+		static CHAR* ToString(const INT8 valueC);
 
-		static CCHAR* ToString(const UINT16 value);
-		static CCHAR* ToString(const UINT32 value);
-		static CCHAR* ToString(const UINT64 value);
-		static CCHAR* ToString(const UINT8 value);
-		static CCHAR* ToString(const VOID_PTR ptr);
-		static CCHAR* ToString(const BOOLEAN boolean);
+		static CHAR* ToString(const UINT16 value);
+		static CHAR* ToString(const UINT32 value);
+		static CHAR* ToString(const UINT64 value);
+		static CHAR* ToString(const UINT8 value);
+		static CHAR* ToString(const VOID_PTR ptr);
+		static CHAR* ToString(const BOOLEAN boolean);
 
-		static UINT64 Length(const CCHAR* str);
-		static BOOLEAN Compare(const CCHAR* l, const CCHAR* r, StringCulture culture = InvariantCulture);
-		static BOOLEAN StartsWith(const CCHAR* str, const CCHAR* value, StringCulture culture = InvariantCulture);
-		static BOOLEAN EndsWith(const CCHAR* str, const CCHAR* value, StringCulture culture = InvariantCulture);
-		static BOOLEAN Contains(const CCHAR* str, const CCHAR* value, StringCulture culture = InvariantCulture);
-		static BOOLEAN IsNullOrEmpty(const CCHAR* str);
-		static BOOLEAN IsNullOrWhiteSpace(const CCHAR* str);
+		static UINT64 Length(const CHAR* str);
+		static BOOLEAN Compare(const CHAR* l, const CHAR* r, StringCulture culture = InvariantCulture);
+		static BOOLEAN StartsWith(const CHAR* str, const CHAR* value, StringCulture culture = InvariantCulture);
+		static BOOLEAN EndsWith(const CHAR* str, const CHAR* value, StringCulture culture = InvariantCulture);
+		static BOOLEAN Contains(const CHAR* str, const CHAR* value, StringCulture culture = InvariantCulture);
+		static BOOLEAN IsNullOrEmpty(const CHAR* str);
+		static BOOLEAN IsNullOrWhiteSpace(const CHAR* str);
 
-		static CCHAR* FromCharArray(CCHAR arr[], UINT64 Length);
-		static CCHAR* FromUTF16String(const CHAR16* str);
-		static CCHAR* FromUTF8String(const CHAR8* str);
+		static CHAR* FromCharArray(CHAR arr[], UINT64 Length);
+		static CHAR* FromUTF16String(const CHAR16* str);
+		static CHAR* FromUTF8String(const CHAR8* str);
 	};
 }

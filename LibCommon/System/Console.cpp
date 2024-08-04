@@ -1,5 +1,5 @@
 #include <System/Console.h>
-#include <Environment/Unicode.h>
+#include <System/Environment/Unicode.h>
 #include <Numerics/Math.h>
 
 namespace Common::System
@@ -144,7 +144,7 @@ namespace Common::System
 		}
 
 		Write(str);
-		Write(Common::Environment::UTF16::NewLine);
+		Write(Common::System::Environment::UTF16::NewLine);
 	}
 
 	void Console::Write(const CHAR8* str)
@@ -163,7 +163,7 @@ namespace Common::System
 		}
 
 		Write(str);
-		Write(Common::Environment::UTF8::NewLine);
+		Write(Common::System::Environment::UTF8::NewLine);
 	}
 
 	void Console::Write(const CHAR16 c)
@@ -188,7 +188,7 @@ namespace Common::System
 		}
 
 		Write(c);
-		Write(Common::Environment::UTF16::NewLine);
+		Write(Common::System::Environment::UTF16::NewLine);
 	}
 
 	void Console::Write(const CHAR8 c)
@@ -213,7 +213,7 @@ namespace Common::System
 		}
 
 		Write(c);
-		Write(Common::Environment::UTF8::NewLine);
+		Write(Common::System::Environment::UTF8::NewLine);
 	}
 
 	void Console::SetConsoleColours(ConsoleColour bg, ConsoleColour fg)

@@ -97,7 +97,7 @@ namespace Common::FileTypes::PE
 		PE32SectionHeader();
 		PE32SectionHeader(FileSystem::FileHandle* handle);
 
-		CCHAR Name[8];
+		CHAR Name[8];
 
 		union
 		{

@@ -25,7 +25,7 @@ namespace Common::FileTypes::PE
 
 	PE32SectionHeader::PE32SectionHeader(FileSystem::FileHandle * handle)
 	{
-		handle->Read<CCHAR>(&Name[0], 8);
+		handle->Read<CHAR>(&Name[0], 8);
 		handle->Read<UINT32>(&Misc.Value);
 		handle->Read<UINT32>(&VirtualAddress);
 		handle->Read<UINT32>(&SizeOfRawData);

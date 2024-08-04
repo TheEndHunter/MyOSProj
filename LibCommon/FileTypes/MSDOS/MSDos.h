@@ -13,7 +13,7 @@ namespace Common::FileTypes::MSDOS
 
 		union
 		{
-			CCHAR Char[2];
+			CHAR Char[2];
 			UINT16 Value;
 		} Magic;
 

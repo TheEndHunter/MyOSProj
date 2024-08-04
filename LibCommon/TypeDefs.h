@@ -25,17 +25,23 @@
 #define VOID_PTR void*
 #define VOID_PTR_PTR void**
 #define PTR_SIZE (UINTN)sizeof(VOID_PTR)
-#define CCHAR char
+#define CHAR char
 
 #if defined(__cpp_unicode_characters)
 #define CHAR8 char8_t
 #define CHAR16 char16_t
+#define CHAR32 char32_t
+#define WCHAR wchar_t
 #elif defined(_NATIVE_WCHAR_T_DEFINED)
 #define CHAR8 char
 #define CHAR16 wchar_t
+#define CHAR32 INT32
+#define WCHAR wchar_t
 #else
 #define CHAR8 INT8
 #define CHAR16 INT16
+#define CHAR16 INT32
+#define WCHAR INT16
 #endif
 
 #define UINT8 unsigned char

@@ -3,7 +3,7 @@
 #include <Protocols/Time/EFI_TIME.h>
 #include <Protocols/IO/Media/EFI_FILE_PROTOCOL.h>
 #include <Protocols/IO/Media/EFI_FILE_SYSTEM_INFO.h>
-#include <Environment/Unicode.h>
+#include <System/Environment/Unicode.h>
 #include <Protocols/IO/Media/EFI_FILE_SYSTEM_VOLUME_LABEL.h>
 
 namespace Common::FileSystem
@@ -50,8 +50,8 @@ namespace Common::FileSystem
 			if (BlockSize != right.BlockSize)
 				return false;
 
-			BOOLEAN lb = Environment::UTF16::IsNullOrEmpty(VolumeLabel);
-			BOOLEAN rb = Environment::UTF16::IsNullOrEmpty(right.VolumeLabel);
+			BOOLEAN lb = System::Environment::UTF16::IsNullOrEmpty(VolumeLabel);
+			BOOLEAN rb = System::Environment::UTF16::IsNullOrEmpty(right.VolumeLabel);
 
 			if (lb && rb)
 				return TRUE;
@@ -59,7 +59,7 @@ namespace Common::FileSystem
 			if (lb || rb)
 				return FALSE;
 
-			return Environment::UTF16::Compare(VolumeLabel, right.VolumeLabel) == TRUE;
+			return System::Environment::UTF16::Compare(VolumeLabel, right.VolumeLabel) == TRUE;
 		}
 
 		bool operator !=(const VolumeInfo& right)
@@ -89,8 +89,8 @@ namespace Common::FileSystem
 			if(right == nullptr || this == nullptr)
 				return false;
 
-			BOOLEAN lb = Environment::UTF16::IsNullOrEmpty(Label);
-			BOOLEAN rb = Environment::UTF16::IsNullOrEmpty(right->Label);
+			BOOLEAN lb = System::Environment::UTF16::IsNullOrEmpty(Label);
+			BOOLEAN rb = System::Environment::UTF16::IsNullOrEmpty(right->Label);
 
 			if (lb == TRUE && rb == TRUE)
 				return TRUE;
@@ -98,7 +98,7 @@ namespace Common::FileSystem
 			if (lb || rb)
 				return FALSE;
 
-			return Environment::UTF16::Compare(Label, right->Label) == TRUE;
+			return System::Environment::UTF16::Compare(Label, right->Label) == TRUE;
 		};
 
 		bool operator !=(const VolumeLabel* right)
@@ -108,8 +108,8 @@ namespace Common::FileSystem
 
 		bool operator ==(const VolumeLabel right)
 		{
-			BOOLEAN lb = Environment::UTF16::IsNullOrEmpty(Label);
-			BOOLEAN rb = Environment::UTF16::IsNullOrEmpty(right.Label);
+			BOOLEAN lb = System::Environment::UTF16::IsNullOrEmpty(Label);
+			BOOLEAN rb = System::Environment::UTF16::IsNullOrEmpty(right.Label);
 
 			if(lb == TRUE && rb == TRUE)
 				return TRUE;
@@ -117,7 +117,7 @@ namespace Common::FileSystem
 			if(lb || rb)
 				return FALSE;
 
-			return Environment::UTF16::Compare(Label, right.Label) == TRUE;
+			return System::Environment::UTF16::Compare(Label, right.Label) == TRUE;
 		}
 
 		bool operator !=(const VolumeLabel right)

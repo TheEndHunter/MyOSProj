@@ -23,7 +23,7 @@ namespace kernel
          rendererCtx->DrawRectangle(220, 220, 160, 160, Colours::Blue);
          rendererCtx->DrawRectangle(230, 230, 140, 140, Colours::White);
 
-		 Common::Graphics::Font::PCSF::PCSF1 font1 = Common::Graphics::Font::FontManager::LoadPSF1Font(libPart, u".\\Assets\\Fonts\\ZapV24\\ZapVGA09.psf");
+		 Common::Graphics::Font::PCSF::PCSF1 font1 = Common::Graphics::Font::FontManager::LoadPSF1Font(libPart, u"\\Assets\\Fonts\\ZapV24\\ZapVGA09.psf");
          rendererCtx->ClearScreen(Colours::Azure);
 
          if (font1 == Common::Graphics::Font::PCSF::Empty_PCSF1)

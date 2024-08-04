@@ -7,7 +7,7 @@
 
 #include <System/MemoryManagement/Allocator.h>
 
-#include <Environment/Unicode.h>
+#include <System/Environment/Unicode.h>
 
 
 namespace Common::Graphics
@@ -131,7 +131,7 @@ namespace Common::Graphics
 		EFI::EFI_HANDLE* handleBuffer;
 		LastStatus = sysTbl->BootServices->LocateHandleBuffer(EFI::EFI_LOCATE_SEARCH_TYPE::ByProtocol, &EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID, nullptr, &handleCount, &handleBuffer);
 
-		sysTbl->ConOut->OutputString(sysTbl->ConOut, Environment::UTF16::ToString(handleCount));
+		sysTbl->ConOut->OutputString(sysTbl->ConOut, System::Environment::UTF16::ToString(handleCount));
 
 		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
 		{

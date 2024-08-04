@@ -1,7 +1,7 @@
 #pragma once
 #include "TypeDefs.h"
 
-namespace Common::Environment
+namespace Common::System::Environment
 {
 	enum StringCulture
 	{
