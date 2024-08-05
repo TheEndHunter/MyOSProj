@@ -1,0 +1,12 @@
+[
+  {
+    "Name": "Run Quemu",
+    "Projects": [
+      {
+        "Path": "QemuManager\\QemuRunner.csproj",
+        "Action": "Start",
+        "DebugTarget": "QemuManager"
+      }
+    ]
+  }
+]
