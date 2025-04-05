@@ -91,32 +91,32 @@ namespace Common::Graphics
 			return *this;
 		}
 
-		bool operator==(const Colour& other)
+		BOOLEAN operator==(const Colour& other)
 		{
 			return Blue == other.Blue && Green == other.Green && Red == other.Red && Alpha == other.Alpha;
 		}
 
-		bool operator!=(const Colour& other)
+		BOOLEAN operator!=(const Colour& other)
 		{
 			return Blue != other.Blue || Green != other.Green || Red != other.Red || Alpha != other.Alpha;
 		}
 
-		bool operator<(const Colour& other)
+		BOOLEAN operator<(const Colour& other)
 		{
 			return Blue < other.Blue && Green < other.Green && Red < other.Red && Alpha < other.Alpha;
 		}
 
-		bool operator>(const Colour& other)
+		BOOLEAN operator>(const Colour& other)
 		{
 			return Blue > other.Blue && Green > other.Green && Red > other.Red && Alpha > other.Alpha;
 		}
 
-		bool operator<=(const Colour& other)
+		BOOLEAN operator<=(const Colour& other)
 		{
 			return Blue <= other.Blue && Green <= other.Green && Red <= other.Red && Alpha <= other.Alpha;
 		}
 
-		bool operator>=(const Colour& other)
+		BOOLEAN operator>=(const Colour& other)
 		{
 			return Blue >= other.Blue && Green >= other.Green && Red >= other.Red && Alpha >= other.Alpha;
 		}

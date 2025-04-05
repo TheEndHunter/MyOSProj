@@ -21,7 +21,7 @@ namespace EFI
 		EFI::EFI_FILE_ATTRIBUTES Attribute;
 		CHAR16 FileName[];
 
-		bool operator ==(const EFI_FILE_INFO& right)
+		BOOLEAN operator ==(const EFI_FILE_INFO& right)
 		{
 			/*Compare all members for equality, if one fails return false, otherwise return true*/
 
@@ -52,7 +52,7 @@ namespace EFI
 			return true;
 		};
 
-		bool operator !=(const EFI_FILE_INFO& right)
+		BOOLEAN operator !=(const EFI_FILE_INFO& right)
 		{
 			return !(*this == right);
 		};

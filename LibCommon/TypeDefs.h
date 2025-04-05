@@ -201,10 +201,10 @@ struct uint128
 #define DllExport __declspec(dllexport)
 #define DllImport __declspec(dllimport)
 #elif defined(DynamicLibrary)
-#define DllImport
-#define DllExport
+#define DllImport __declspec(dllimport)
+#define DllExport __declspec(dllexport)
 #else
-#define DllImport
+#define DllImport 
 #define DllExport
 #endif
 #elif defined(__GNUC__)
@@ -218,6 +218,16 @@ struct uint128
 #else
 #error "Unknown compiler"
 #endif
+
+#ifndef StaticLibrary
+#ifdef IMPORT_DLL
+#define API_DLL DllImport
+#else
+#define API_DLL DllExport
+#endif // IMPORT_DLL
+#else
+#define API_DLL
+#endif // !StaticLibary
 
 /*
 *  Setup Calling conventions and attributes for EFIAPI

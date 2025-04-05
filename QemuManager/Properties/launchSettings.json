@@ -3,7 +3,7 @@
     "Qemu": {
       "commandName": "Project",
       "commandLineArgs": "$(Platform) $(Configuration) $(SolutionDir)bin\\$(Platform)\\$(Configuration)\\",
-      "workingDirectory": "$(SolutionDir)\\Tools\\QemuRunner\\",
+      "workingDirectory": "$(SolutionDir)\\Tools\\$(Platform)\\QemuRunner\\",
       "nativeDebugging": true
     },
     "WSL": {

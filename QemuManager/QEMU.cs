@@ -83,7 +83,12 @@
                     throw new FileNotFoundException($"OVMF Var file not found in location: {ovmfVarPath}");
                 }
 
-                string qemuArguments = $"{config.AdditionalArgs} -drive if=pflash,format=raw,readonly=on,file=\"{ovmfCodePath}\" -drive if=pflash,format=raw,file=\"{ovmfVarPath}\" {BuildDrives(imagePath)}";
+                string logName = Path.Combine(Directory.GetCurrentDirectory(), $"qemu_{DateTime.Now:dd_mm_yyyy-HH_mm_ss_ff}.log");
+                var s = File.Create(logName);
+                s.Flush(true);
+                s.Close();
+                s.Dispose();
+                string qemuArguments = $"{config.AdditionalArgs} -serial file:{logName} -drive if=pflash,format=raw,readonly=on,file=\"{ovmfCodePath}\" -drive if=pflash,format=raw,file=\"{ovmfVarPath}\" {BuildDrives(imagePath)}";
 
                 using (qemuProcess = new())
                 {

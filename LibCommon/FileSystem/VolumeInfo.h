@@ -31,7 +31,7 @@ namespace Common::FileSystem
 		UINT32 BlockSize;
 		CHAR16* VolumeLabel;
 
-		bool operator ==(const VolumeInfo& right)
+		BOOLEAN operator ==(const VolumeInfo& right)
 		{
 			/*Compare all members for equality, if one fails return false, otherwise return true*/
 
@@ -50,8 +50,8 @@ namespace Common::FileSystem
 			if (BlockSize != right.BlockSize)
 				return false;
 
-			BOOLEAN lb = System::Environment::UTF16::IsNullOrEmpty(VolumeLabel);
-			BOOLEAN rb = System::Environment::UTF16::IsNullOrEmpty(right.VolumeLabel);
+			BOOLEAN lb = System::Environment::UTF<CHAR16>::IsNullOrEmpty(VolumeLabel);
+			BOOLEAN rb = System::Environment::UTF<CHAR16>::IsNullOrEmpty(right.VolumeLabel);
 
 			if (lb && rb)
 				return TRUE;
@@ -59,10 +59,10 @@ namespace Common::FileSystem
 			if (lb || rb)
 				return FALSE;
 
-			return System::Environment::UTF16::Compare(VolumeLabel, right.VolumeLabel) == TRUE;
+			return System::Environment::UTF<CHAR16>::Compare(VolumeLabel, right.VolumeLabel) == TRUE;
 		}
 
-		bool operator !=(const VolumeInfo& right)
+		BOOLEAN operator !=(const VolumeInfo& right)
 		{
 			return !(*this == right);
 		}
@@ -81,7 +81,7 @@ namespace Common::FileSystem
 
 		CHAR16* Label;
 
-		bool operator ==(const VolumeLabel* right)
+		BOOLEAN operator ==(const VolumeLabel* right)
 		{
 			if(right == nullptr && this == nullptr)
 				return true;
@@ -89,8 +89,8 @@ namespace Common::FileSystem
 			if(right == nullptr || this == nullptr)
 				return false;
 
-			BOOLEAN lb = System::Environment::UTF16::IsNullOrEmpty(Label);
-			BOOLEAN rb = System::Environment::UTF16::IsNullOrEmpty(right->Label);
+			BOOLEAN lb = System::Environment::UTF<CHAR16>::IsNullOrEmpty(Label);
+			BOOLEAN rb = System::Environment::UTF<CHAR16>::IsNullOrEmpty(right->Label);
 
 			if (lb == TRUE && rb == TRUE)
 				return TRUE;
@@ -98,18 +98,18 @@ namespace Common::FileSystem
 			if (lb || rb)
 				return FALSE;
 
-			return System::Environment::UTF16::Compare(Label, right->Label) == TRUE;
+			return System::Environment::UTF<CHAR16>::Compare(Label, right->Label) == TRUE;
 		};
 
-		bool operator !=(const VolumeLabel* right)
+		BOOLEAN operator !=(const VolumeLabel* right)
 		{
 			return !this->operator==(right);
 		}
 
-		bool operator ==(const VolumeLabel right)
+		BOOLEAN operator ==(const VolumeLabel right)
 		{
-			BOOLEAN lb = System::Environment::UTF16::IsNullOrEmpty(Label);
-			BOOLEAN rb = System::Environment::UTF16::IsNullOrEmpty(right.Label);
+			BOOLEAN lb = System::Environment::UTF<CHAR16>::IsNullOrEmpty(Label);
+			BOOLEAN rb = System::Environment::UTF<CHAR16>::IsNullOrEmpty(right.Label);
 
 			if(lb == TRUE && rb == TRUE)
 				return TRUE;
@@ -117,16 +117,16 @@ namespace Common::FileSystem
 			if(lb || rb)
 				return FALSE;
 
-			return System::Environment::UTF16::Compare(Label, right.Label) == TRUE;
+			return System::Environment::UTF<CHAR16>::Compare(Label, right.Label) == TRUE;
 		}
 
-		bool operator !=(const VolumeLabel right)
+		BOOLEAN operator !=(const VolumeLabel right)
 		{
 			return !this->operator==(right);
 		}
 
 	private:
-		bool IsNullOrEmpty(VolumeLabel* right)
+		BOOLEAN IsNullOrEmpty(VolumeLabel* right)
 		{
 			if(right == nullptr)
 				return TRUE;

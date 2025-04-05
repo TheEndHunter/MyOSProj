@@ -9,35 +9,9 @@
 #include <FileTypes/PE/PE32.h>
 #include <Graphics/RenderContext.h>
 #include <EFIConsole.h>
-
-extern "C" {
-    extern ALLOCATE(".CRT$XCA") VOID (**__start_crt)(VOID) = nullptr;
-    extern ALLOCATE(".CRT$XCZ") VOID (**__end_crt)(VOID) = nullptr;
-
-    static UINT64 _CRT_INIT()
-    {
-        /*if __end_crt is less thann __start_crt return 0*/
-		if (__end_crt <= __start_crt)
-		{
-			return 0;
-		}
-		// Calculate the number of initializers
-		UINT64 count = (UINT64)__end_crt - (UINT64)__start_crt;
-
-        if (count < 1)
-		{
-			return 0;
-		}
-
-		// Call the initializers
-		for (UINT64 i = 0; i < count; i++)
-		{
-			__start_crt[i]();
-		}
-
-		return count;
-    }
-}
+#include <Debugging/Debugger.h>
+#include <CRT_ENTRIES.h>
+#include <System/Environment/KernelErrors.h>
 
 namespace Bootloader
 {
@@ -47,21 +21,24 @@ namespace Bootloader
     using namespace Common::FileTypes::PE;
     using namespace EFI;
 
-    typedef UINT64(CDECL*KrnlMain)(RenderContext* rendererCtx, MonitorContext* monitorCtx, Common::FileSystem::ESP::ESP_FS_Context* efiSysPart, Common::FileSystem::ESP::ESP_FS_Context* sysPart, Common::FileSystem::ESP::ESP_FS_Context* libPart);
-       
+    typedef Common::System::Environment::KernelError(CDECL*KrnlMain)(Common::System::MemoryManagement::Allocator* efiAlloc, Common::Debugging::Debugger* debugger,RenderContext* rendererCtx, MonitorContext* monitorCtx, Common::FileSystem::ESP::ESP_FS_Context* efiSysPart, Common::FileSystem::ESP::ESP_FS_Context* sysPart, Common::FileSystem::ESP::ESP_FS_Context* libPart);
+    
 
     EFI_STATUS EfiMain(EFI_HANDLE imgHndl, EFI_SYSTEM_TABLE* sysTbl)
     {
-        UINT64 allocated = _CRT_INIT();
-        Common::System::MemoryManagement::Allocator::SetEfiAllocator(sysTbl);
-        if (!Common::System::MemoryManagement::Allocator::IsInitalized())
-		{
-            ThrowException(sysTbl, imgHndl, u"Could Not Set EFI Allocator", Common::System::MemoryManagement::ToEfiStatus(Common::System::MemoryManagement::Allocator::LastStatus()));
-		}
+        _CRT_INIT();
 
-		if (allocated == 0)
+        UTF<CHAR>();
+        UTF<CHAR8>();
+        UTF<CHAR16>();
+
+        Common::System::MemoryManagement::Allocator::SetEfiAllocator(sysTbl);
+        auto* alloc = Common::System::MemoryManagement::Allocator::GetInstance();
+
+
+        if (!alloc->IsInitalized())
 		{
-			PrintWarning(sysTbl, u"No CRT Initializers found.", EFI::EFI_STATUS::NOT_FOUND);
+            ThrowException(sysTbl, imgHndl, u"Could Not Set EFI Allocator", Common::System::MemoryManagement::ToEfiStatus(alloc->LastStatus()));
 		}
 
         UINT32 mm = sysTbl->ConOut->Mode->MaxMode;
@@ -86,7 +63,7 @@ namespace Bootloader
                 continue;
 			}
 
-            PrintWarning(sysTbl, u"Query Mode returned an error: ", queryStat);
+            PrintWarningLine(sysTbl, u"Query Mode returned an error: ", queryStat);
         }
 
         EFI_STATUS conStat = sysTbl->ConOut->SetMode(sysTbl->ConOut,mode);
@@ -99,12 +76,13 @@ namespace Bootloader
             }
             else
             {
-                PrintWarning(sysTbl, u"Does not support setting console mode", conStat);
+                PrintWarningLine(sysTbl, u"Does not support setting console mode", conStat);
             }
 		}
 
-        sysTbl->ConOut->Reset(sysTbl->ConOut, false);
-        sysTbl->ConIn->Reset(sysTbl->ConIn, false);
+        ClearConIn(sysTbl);
+		ClearConOut(sysTbl);
+
 
         RenderContext* render = RenderContext::Initialize(sysTbl, imgHndl);
         MonitorContext* monitor = render->GetMonitorContext();
@@ -205,10 +183,10 @@ namespace Bootloader
 
         if (!krnlPE.IsSectionHdrValid())
         {
-            PrintError(sysTbl, u"Invalid PE32 Section Header", EFI::EFI_STATUS::INVALID_PARAMETER);
-            Print(sysTbl, UTF16::ToString(Common::System::MemoryManagement::Allocator::LastStatus()), EFI::EfiConsoleColor::_Error);
+            PrintErrorLine(sysTbl, u"Invalid PE32 Section Header", EFI::EFI_STATUS::INVALID_PARAMETER);
+            Print(sysTbl, UTF<CHAR16>::ToString(alloc->LastStatus()), EFI::EfiConsoleColor::_Error);
             WaitForAnyKey(sysTbl);
-            Exit(sysTbl, imgHndl, Common::System::MemoryManagement::ToEfiStatus(Common::System::MemoryManagement::Allocator::LastStatus()),0,nullptr);
+            Exit(sysTbl, imgHndl, Common::System::MemoryManagement::ToEfiStatus(alloc->LastStatus()),0,nullptr);
             //ThrowException(sysTbl, imgHndl, u"Invalid PE32 Section Header", EFI::EFI_STATUS::INVALID_PARAMETER);
         }
 
@@ -250,8 +228,8 @@ namespace Bootloader
 
 		if (!sysFs.IsRootDirectory())
 		{
-			PrintDebug(sysTbl, u"Returning to Root Directory");
-			if(!sysFs.ReturnToRootDirectory());
+			PrintDebugLine(sysTbl, u"Returning to Root Directory");
+			if(!sysFs.ReturnToRootDirectory())
             {
 				ThrowException(sysTbl, imgHndl, u"Could Not Return to Root Directory", sysFs.LastStatus);
             }
@@ -276,21 +254,34 @@ namespace Bootloader
         sysTbl->ConOut->SetCursorPosition(sysTbl->ConOut, 0, 0);
 
 
+        Common::Debugging::Debugger debug = Common::Debugging::Debugger(sysTbl);
+
 		PrintLine(sysTbl, u"Press Enter to start Kernel...");
         WaitForKey(sysTbl, u'\r');
 
         KrnlMain main = (KrnlMain)(krnlPE.GetEntryPoint());
-        UINT64 status = main(render, monitor,&efiFs,&sysFs,&libFs);
+        Common::System::Environment::KernelError status = main(alloc,&debug,render, monitor,&efiFs,&sysFs,&libFs);
 
-        Print(sysTbl, u"Kernel Returned: ", EFI::EfiConsoleColor::_Debug);
-        PrintDebug(sysTbl, UTF16::ToString(status));
+        switch (status)
+        {
+        case Common::System::Environment::KernelError::Success:
+            break;
+        default:
+			Print(sysTbl, u"Kernel Error: ",EfiConsoleColor::_Error);
+			Print(sysTbl, UTF<CHAR16>::ToString((UINT64)status), EfiConsoleColor::_Error);
+            Print(sysTbl, UTF<CHAR16>::NewLine, EfiConsoleColor::_Error);
+			PrintLine(sysTbl, u"Press Enter to continue...",EfiConsoleColor::_Error);
+            break;
+        }
 
         render->Terminate(imgHndl, sysTbl);
 
         WaitForAnyKey(sysTbl);
         sysTbl->RuntimeServices->ResetSystem(EFI_RESET_TYPE::SHUTDOWN, EFI_STATUS::SUCCESS, 0, nullptr);
 
-        return EFI::EFI_STATUS::END_OF_MEDIA;
+        _CRT_TERM();
+
+        return EFI::EFI_STATUS::NOT_STARTED;
     }
 }
 

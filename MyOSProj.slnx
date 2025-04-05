@@ -10,7 +10,7 @@
     <File Path=".gitignore" />
     <File Path="README.md" />
   </Folder>
-  <Project Path="Bootloader\Bootloader.vcxproj" />
+  <Project Path="Bootloader\Bootloader.vcxproj" Id="93114b72-b03a-45c4-9928-f71537dfcbf1" />
   <Project Path="ImageBuilder\ImageBuilder.csproj">
     <BuildDependency Project="Bootloader\Bootloader.vcxproj" />
     <BuildDependency Project="QemuManager\QemuRunner.csproj" />
@@ -19,10 +19,11 @@
     <Platform Solution="*|x64" Project="x64" />
     <Build Solution="*|ARM" Project="false" />
   </Project>
-  <Project Path="Kernel\Kernel.vcxproj">
+  <Project Path="Kernel\Kernel.vcxproj" Id="dacf7e02-b3a0-449f-9cb3-47f52848ff6e">
     <BuildDependency Project="Bootloader\Bootloader.vcxproj" />
   </Project>
-  <Project Path="LibCommon\LibCommon.vcxproj" />
+  <Project Path="LibCommon\LibCommon.vcxproj" Id="c23c7061-59fe-4df9-a5d5-113d3dc74b32" />
+  <Project Path="LibCPP\LibCPP.vcxproj.vcxproj" Id="30033bc1-4c5f-45c5-932e-c667f58138da" />
   <Project Path="QemuManager\QemuRunner.csproj">
     <BuildDependency Project="Bootloader\Bootloader.vcxproj" />
     <BuildDependency Project="Kernel\Kernel.vcxproj" />
@@ -34,39 +35,5 @@
     <Platform Solution="*|x86" Project="x86" />
     <Build Solution="*|ARM" Project="false" />
   </Project>
-  <Project Path="UEFI\UEFI.vcxproj" />
-  <Properties Name="Visual Studio">
-    <Property Name="OpenWith" Value="17" />
-  </Properties>
-  <Project Path="LibSys\LibSys.vcxproj" />
-  <Project Path="A:\Dev\Projects\MyOSProj\Bootloader\Bootloader.vcxproj" />
-  <Project Path="A:\Dev\Projects\MyOSProj\ImageBuilder\ImageBuilder.csproj">
-    <BuildDependency Project="A:\Dev\Projects\MyOSProj\Bootloader\Bootloader.vcxproj" />
-    <BuildDependency Project="A:\Dev\Projects\MyOSProj\QemuManager\QemuRunner.csproj" />
-    <Platform Solution="*|ARM" Project="ARM" />
-    <Platform Solution="*|ARM64" Project="ARM64" />
-    <Platform Solution="*|x64" Project="x64" />
-    <Build Solution="*|ARM" Project="false" />
-  </Project>
-  <Project Path="A:\Dev\Projects\MyOSProj\Kernel\Kernel.vcxproj">
-    <BuildDependency Project="A:\Dev\Projects\MyOSProj\Bootloader\Bootloader.vcxproj" />
-  </Project>
-  <Project Path="A:\Dev\Projects\MyOSProj\LibCommon\LibCommon.vcxproj" />
-  <Project Path="A:\Dev\Projects\MyOSProj\LibDebug\LibDebug.vcxproj.vcxproj" DisplayName="LibDebug" />
-  <Project Path="A:\Dev\Projects\MyOSProj\LibFS\LibFS.vcxproj.vcxproj" DisplayName="LibFS" />
-  <Project Path="A:\Dev\Projects\MyOSProj\LibSys\LibSys.vcxproj" />
-  <Project Path="A:\Dev\Projects\MyOSProj\QemuManager\QemuRunner.csproj">
-    <BuildDependency Project="A:\Dev\Projects\MyOSProj\Bootloader\Bootloader.vcxproj" />
-    <BuildDependency Project="A:\Dev\Projects\MyOSProj\Kernel\Kernel.vcxproj" />
-    <BuildDependency Project="A:\Dev\Projects\MyOSProj\LibCommon\LibCommon.vcxproj" />
-    <BuildDependency Project="A:\Dev\Projects\MyOSProj\UEFI\UEFI.vcxproj" />
-    <Platform Solution="*|ARM" Project="ARM" />
-    <Platform Solution="*|ARM64" Project="ARM64" />
-    <Platform Solution="*|x64" Project="x64" />
-    <Platform Solution="*|x86" Project="x86" />
-    <Build Solution="*|ARM" Project="false" />
-  </Project>
-  <Project Path="A:\Dev\Projects\MyOSProj\UEFI\UEFI.vcxproj" />
-  <Project Path="LibDebug\LibDebug.vcxproj.vcxproj" DisplayName="LibDebug" />
-  <Project Path="LibFS\LibFS.vcxproj.vcxproj" DisplayName="LibFS" />
+  <Project Path="UEFI\UEFI.vcxproj" Id="c2e4250f-7a7a-4567-8d76-5f42f610b204" />
 </Solution>

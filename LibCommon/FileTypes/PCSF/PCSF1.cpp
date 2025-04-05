@@ -1,7 +1,14 @@
-#include <Graphics/Font/PCSF/PCSF1.h>
+#include <FileTypes/PCSF/PCSF1.h>
+#include <System/Environment/Unicode.h>
+#include<System/MemoryManagement/Allocator.h>
 
 namespace Common::Graphics::Font::PCSF
 {
+	const Debugging::Debugger* _debugger;
+	void PCSF1::LoadDebugger(Debugging::Debugger* debugger)
+	{
+		_debugger = debugger;
+	}
 	PCSF1::PCSF1()
 	{
 		_isValid = FALSE;
@@ -13,31 +20,47 @@ namespace Common::Graphics::Font::PCSF
 
 	PCSF1::PCSF1(Common::FileSystem::FileHandle* handle)
 	{
+		_debugger->PrintInfoLine(u"Reading PCSF1 Header");
+
+		if (handle == nullptr) {
+			_isValid = false;
+			return;
+		}
+		_debugger->PrintInfoLine(u"Reading PCSF1 Header");
+		
 		Header = PCSF1Hdr(handle);
+
 		if (Header.Magic.Char[0] != PSF1_MAGIC[0] || Header.Magic.Char[1] != PSF1_MAGIC[1])
 		{
 			_isValid = FALSE;
 			return;
 		}
 
+		_debugger->PrintInfoLine(u"PCSF1 Magic is valid");
+
 		_isValid = TRUE;
 		UINT32 charSize = Header.CharSize;
 
 		if((UINT8)Header.Mode & (UINT8)PCSF1Mode::MODE512)
 		{
+			_debugger->PrintInfoLine(u"PCSF1 Header Mode 512");
 			CharCount = 512;
 		}
 		else
 		{
+			_debugger->PrintInfoLine(u"PCSF1 Header Mode 256");
 			CharCount = 256;
 		}
 
 
 		Glyphs = (UINT8**)new UINT8[CharCount * charSize];
+
+		_debugger->PrintInfoLine(u"Allocated Glyphs Pointer");
 		handle->Read<UINT8>(&Glyphs[0][0], CharCount);
 		
 		if ((UINT8)Header.Mode & (UINT8)PCSF1Mode::MODEHASTAB)
 		{
+			_debugger->PrintInfoLine(u"PCSF1 Has Unicode Table");
 			UnicodeTable = new UnicodeSequence[CharCount];
 			if (UnicodeTable == nullptr)
 			{
@@ -124,9 +147,15 @@ namespace Common::Graphics::Font::PCSF
 
 	PCSF1Hdr::PCSF1Hdr(Common::FileSystem::FileHandle* handle)
 	{
+		_debugger->PrintInfo(u"Reading PCSF1 Header From Handle: Address: ");
+		_debugger->PrintInfoLine(Common::System::Environment::UTF<CHAR16>::ToHex(handle));
+		_debugger->PrintInfo(u"SetPosition");
 		handle->SetPosition(0UL);
+		_debugger->PrintInfo(u"MagicValue");
 		handle->Read<UINT16>(&Magic.Value);
+		_debugger->PrintInfo(u"Mode");
 		handle->Read<PCSF1Mode>(&Mode);
+		_debugger->PrintInfo(u"CharSize");
 		handle->Read<UINT8>(&CharSize);
 	}
 
@@ -160,7 +189,7 @@ namespace Common::Graphics::Font::PCSF
 		return _isValid;
 	}
 
-	UINT8* PCSF1::GetGlyph(UINT16 index)
+	UINT8* PCSF1::GetGlyph(UINT32 index)
 	{
 		if (index < CharCount)
 		{

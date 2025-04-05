@@ -1,27 +1,76 @@
 #include <System/MemoryManagement/Allocator.h>
 #include <System/MemoryManagement/AllocatorStatus.h>
+#include <System/Environment/Unicode.h>
 
 namespace Common::System::MemoryManagement
 {
 #pragma region Allocator
-	BOOLEAN _isInitalized;
+	BOOLEAN _init = FALSE;
+	Allocator* _allocatorInstance;
 
-	AllocatorStatus _defaultStatus = AllocatorStatus::Not_Initialized;
-	AllocatorStatus* Allocator::_lastStatus = &_defaultStatus;
+	Allocator::Allocator(AllocatorStatus* allocStatus, AllocFunc allocFunc, AllocZeroedFunc allocZeroedFunc, AllocPageFunc allocPageFunc, AllocPageZeroedFunc allocPageZeroedFunc, FreeFunc freeFunc, FreePageFunc freePageFunc)
+	{
+		_lastStatus = allocStatus;
+		_allocFunc = allocFunc;
+		_allocZeroedFunc = allocZeroedFunc;
+		_allocPageFunc = allocPageFunc;
+		_allocPageZeroedFunc = allocPageZeroedFunc;
+		_freeFunc = freeFunc;
+		_freePageFunc = freePageFunc;
+	}
 
-	// Definitions for the function pointers in Allocator
-	VOID_PTR (*Allocator::_allocFunc)(UINT64) = nullptr;
-	VOID_PTR (*Allocator::_allocZeroedFunc)(UINT64) = nullptr;
-	VOID_PTR (*Allocator::_allocPageFunc)(UINT64) = nullptr;
-	VOID_PTR (*Allocator::_allocPageZeroedFunc)(UINT64) = nullptr;
-	void  (*Allocator::_freeFunc)(VOID_PTR) = nullptr;
-	void  (*Allocator::_freePageFunc)(VOID_PTR, UINT64) = nullptr;
+	Debugging::Debugger* _debug;
+	void Allocator::SetDebugger(Debugging::Debugger* debugger)
+	{
+		_debug = debugger;
+	}
+
+	Allocator::Allocator()
+	{
+	}
+
+	Allocator* Allocator::GetInstance()
+	{
+		if (_init == FALSE)
+		{
+			return nullptr;
+		}
+		return _allocatorInstance;
+	}
+
+	AllocatorStatus Allocator::SetWithExistingAllocator(Allocator* allocator)
+	{
+		if (allocator == nullptr)
+		{
+			if (!_allocatorInstance->IsInitalized())
+			{
+				return AllocatorStatus::Invalid_Parameters;
+			}
+			else
+			{
+				return AllocatorStatus::Not_Initialized;
+			}
+		}
+
+		_allocatorInstance = allocator;
+		_init = TRUE;
+
+		*_allocatorInstance->_lastStatus = AllocatorStatus::Success;
+		return *_allocatorInstance->_lastStatus;
+	}
 
 	VOID_PTR Allocator::Allocate(UINTN length)
 	{
-		if (!_isInitalized)
+		if (!_initialized)
 		{
 			return nullptr;
+		}
+
+		if (_debug != nullptr)
+		{
+			_debug->PrintInfo(u"Allocating: ");
+			_debug->PrintInfo(Common::System::Environment::UTF<CHAR16>::ToString(length));
+			_debug->PrintInfoLine(u" bytes");
 		}
 
 		VOID_PTR p = _allocFunc(length);
@@ -29,33 +78,53 @@ namespace Common::System::MemoryManagement
 	}
 	VOID_PTR Allocator::AllocateZeroed(UINTN length)
 	{
-		if (!_isInitalized)
+		if (!_initialized)
 		{
 			*_lastStatus = AllocatorStatus::Not_Initialized;
 			return nullptr;
 		}
-
+		if (_debug != nullptr)
+		{
+			_debug->PrintInfo(u"Allocating Zeroed: ");
+			_debug->PrintInfo(Common::System::Environment::UTF<CHAR16>::ToString(length));
+			_debug->PrintInfoLine(u" bytes");
+		}
 		VOID_PTR p = _allocZeroedFunc(length);
 		
 		return p;
 	}
 	VOID Allocator::Free(VOID_PTR ptr)
 	{
-		if (!_isInitalized)
+		if (!_initialized)
 		{
 			*_lastStatus = AllocatorStatus::Not_Initialized;
 			return;
 		}
+
+		if (_debug != nullptr)
+		{
+			_debug->PrintInfo(u"Freeing Address: ");
+			_debug->PrintInfoLine(Common::System::Environment::UTF<CHAR16>::ToHex(ptr));
+		}
+
 		_freeFunc(ptr);
 		
 	}
 	VOID_PTR Allocator::AllocatePage(UINTN pageCount)
 	{
-		if (!_isInitalized)
+		if (!_initialized)
 		{
 			*_lastStatus = AllocatorStatus::Not_Initialized;
 			return nullptr;
 		}
+
+		if (_debug != nullptr)
+		{
+			_debug->PrintInfo(u"Allocating: ");
+			_debug->PrintInfo(Common::System::Environment::UTF<CHAR16>::ToString(pageCount));
+			_debug->PrintInfoLine(u" pages");
+		}
+
 		VOID_PTR p = _allocPageFunc(pageCount);
 		
 		return p;
@@ -63,11 +132,19 @@ namespace Common::System::MemoryManagement
 
 	VOID_PTR Allocator::AllocatePageZeroed(UINTN pageCount)
 	{
-		if (!_isInitalized)
+		if (!_initialized)
 		{
 			*_lastStatus = AllocatorStatus::Not_Initialized;
 			return nullptr;
 		}
+
+		if (_debug != nullptr)
+		{
+			_debug->PrintInfo(u"Allocating Zeroed: ");
+			_debug->PrintInfo(Common::System::Environment::UTF<CHAR16>::ToString(pageCount));
+			_debug->PrintInfoLine(u" pages");
+		}
+
 		VOID_PTR p = _allocPageZeroedFunc(pageCount);
 		
 		return p;
@@ -75,18 +152,28 @@ namespace Common::System::MemoryManagement
 
 	VOID Allocator::FreePage(VOID_PTR ptr, UINTN pageCount)
 	{
-		if (!_isInitalized)
+		if (!_initialized)
 		{
 			*_lastStatus = AllocatorStatus::Not_Initialized;
 			return;
 		}
+
+		if (_debug != nullptr)
+		{
+			_debug->PrintInfo(u"Freeing Pages From Address: ");
+			_debug->PrintInfo(Common::System::Environment::UTF<CHAR16>::ToHex(ptr));
+			_debug->PrintInfo(u" Page Count: ");
+			_debug->PrintInfoLine(Common::System::Environment::UTF<CHAR16>::ToString(pageCount));
+
+		}
+
 		_freePageFunc(ptr, pageCount);
 		
 	}
 
 	BOOLEAN Allocator::IsInitalized()
 	{
-		return _isInitalized;
+		return _initialized;
 	}
 
 	AllocatorStatus Allocator::LastStatus()
@@ -96,24 +183,20 @@ namespace Common::System::MemoryManagement
 
 	AllocatorStatus Allocator::SetEfiAllocator(EFI::EFI_SYSTEM_TABLE* systemTable)
 	{
-		if(_isInitalized)
+		if (_init)
 		{
-			*_lastStatus = AllocatorStatus::Success;
-			return *_lastStatus;
+				*_allocatorInstance->_lastStatus = AllocatorStatus::Success;
+				return *_allocatorInstance->_lastStatus;
 		}
+
 		EfiAllocator::_efiSystemTable = systemTable;
 
-		_lastStatus = &EfiAllocator::_lastStatus;
-		_allocFunc = EfiAllocator::Allocate;
-		_allocZeroedFunc = EfiAllocator::AllocateZeroed;
-		_allocPageFunc = EfiAllocator::AllocatePage;
-		_allocPageZeroedFunc = EfiAllocator::AllocatePageZeroed;
-		_freeFunc = EfiAllocator::Free;
-		_freePageFunc = EfiAllocator::FreePage;
+		_allocatorInstance  = (Allocator*)EfiAllocator::Allocate(sizeof(Allocator));
+		_allocatorInstance = new(_allocatorInstance) Allocator(&EfiAllocator::_lastStatus, EfiAllocator::Allocate, EfiAllocator::AllocateZeroed, EfiAllocator::AllocatePage, EfiAllocator::AllocatePageZeroed, EfiAllocator::Free, EfiAllocator::FreePage);
 
-		*_lastStatus = AllocatorStatus::Success;
-		_isInitalized = TRUE;
-		return *_lastStatus;
+		*_allocatorInstance->_lastStatus = AllocatorStatus::Success;
+		_init = TRUE;
+		return *_allocatorInstance->_lastStatus;
 	}
 
 
@@ -123,90 +206,127 @@ namespace Common::System::MemoryManagement
 	}
 
 #pragma endregion
-
-
 }
 
-VOID_PTR operator new(UINTN length)
+extern VOID_PTR operator new(UINTN length)
 {
-	if (!Common::System::MemoryManagement::Allocator::IsInitalized())
+	auto* allocator = Common::System::MemoryManagement::Allocator::GetInstance();
+	if (allocator == nullptr)
 	{
 		return nullptr;
 	}
-	return Common::System::MemoryManagement::Allocator::Allocate(length);
-}
-
-VOID_PTR operator new[](UINTN length)
-{
-	if (!Common::System::MemoryManagement::Allocator::IsInitalized())
+	if (!allocator->IsInitalized())
 	{
 		return nullptr;
 	}
-	return Common::System::MemoryManagement::Allocator::Allocate(length);
+	return allocator->Allocate(length);
 }
 
-VOID_PTR operator new(UINTN length, VOID_PTR ptr)
+extern VOID_PTR operator new[](UINTN length)
+{
+	auto* allocator = Common::System::MemoryManagement::Allocator::GetInstance();
+	if (allocator == nullptr)
+	{
+		return nullptr;
+	}
+	if (!allocator->IsInitalized())
+	{
+		return nullptr;
+	}
+	return allocator->Allocate(length);
+}
+
+extern VOID_PTR operator new(UINTN length, VOID_PTR ptr)
 {
 	return ptr;
 }
 
-VOID_PTR operator new[](UINTN length, VOID_PTR ptr)
+extern VOID_PTR operator new[](UINTN length, VOID_PTR ptr)
 {
 	return ptr;
 }
 
-void operator delete(VOID_PTR ptr)
+extern void operator delete(VOID_PTR ptr)
 {
-	if (!Common::System::MemoryManagement::Allocator::IsInitalized())
+	auto* allocator = Common::System::MemoryManagement::Allocator::GetInstance();
+	if (allocator == nullptr)
 	{
 		return;
 	}
-
-	Common::System::MemoryManagement::Allocator::Free(ptr);
+	if (!allocator->IsInitalized())
+	{
+		return;
+	}
+	return allocator->Free(ptr);
 }
 
-void operator delete[](VOID_PTR ptr)
+extern void operator delete[](VOID_PTR ptr)
 {
-	if (!Common::System::MemoryManagement::Allocator::IsInitalized())
+	auto* allocator = Common::System::MemoryManagement::Allocator::GetInstance();
+	if (allocator == nullptr)
 	{
 		return;
 	}
-	Common::System::MemoryManagement::Allocator::Free(ptr);
+	if (!allocator->IsInitalized())
+	{
+		return;
+	}
+	return allocator->Free(ptr);
 }
 
-void operator delete(VOID_PTR ptr, UINTN length)
+extern void operator delete(VOID_PTR ptr, UINTN length)
 {
-	if (!Common::System::MemoryManagement::Allocator::IsInitalized())
+	auto* allocator = Common::System::MemoryManagement::Allocator::GetInstance();
+	if (allocator == nullptr)
 	{
 		return;
 	}
-	Common::System::MemoryManagement::Allocator::Free(ptr);
+	if (!allocator->IsInitalized())
+	{
+		return;
+	}
+	return allocator->Free(ptr);
 }
 
-void operator delete[](VOID_PTR ptr, UINTN length)
+extern void operator delete[](VOID_PTR ptr, UINTN length)
 {
-	if (!Common::System::MemoryManagement::Allocator::IsInitalized())
+	auto* allocator = Common::System::MemoryManagement::Allocator::GetInstance();
+	if (allocator == nullptr)
 	{
 		return;
 	}
-	Common::System::MemoryManagement::Allocator::Free(ptr);
+	if (!allocator->IsInitalized())
+	{
+		return;
+	}
+	return allocator->Free(ptr);
 }
 
-void operator delete(VOID_PTR ptr, VOID_PTR place)
+extern void operator delete(VOID_PTR ptr, VOID_PTR place)
 {
-	if (!Common::System::MemoryManagement::Allocator::IsInitalized())
+	auto* allocator = Common::System::MemoryManagement::Allocator::GetInstance();
+	if (allocator == nullptr)
 	{
 		return;
 	}
-	Common::System::MemoryManagement::Allocator::Free(ptr);
+	if (!allocator->IsInitalized())
+	{
+		return;
+	}
+	return allocator->Free(ptr);
 }
 
-void operator delete[](VOID_PTR ptr, VOID_PTR place)
+extern void operator delete[](VOID_PTR ptr, VOID_PTR place)
 {
-	if (!Common::System::MemoryManagement::Allocator::IsInitalized())
+	auto* allocator = Common::System::MemoryManagement::Allocator::GetInstance();
+	if (allocator == nullptr)
 	{
 		return;
 	}
-	Common::System::MemoryManagement::Allocator::Free(ptr);
+	if (!allocator->IsInitalized())
+	{
+		return;
+	}
+	return allocator->Free(ptr);
 }
 

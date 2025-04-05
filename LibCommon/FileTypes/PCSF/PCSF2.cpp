@@ -1,4 +1,5 @@
-#include <Graphics/Font/PCSF/PCSF2.h>
+#include <FileTypes/PCSF/PCSF2.h>
+#include<System/MemoryManagement/Allocator.h>
 
 namespace Common::Graphics::Font::PCSF
 {
@@ -56,7 +57,7 @@ namespace Common::Graphics::Font::PCSF
 		return _isValid;
 	}
 
-	UINT8* PCSF2::GetGlyph8(UINT8 index)
+	UINT8* PCSF2::GetGlyph8(UINT32 index)
 	{
 		if (index < Header.Length)
 		{
@@ -65,7 +66,7 @@ namespace Common::Graphics::Font::PCSF
 		return 0;
 	}
 
-	UINT16* PCSF2::GetGlyph16(UINT8 index)
+	UINT16* PCSF2::GetGlyph16(UINT32 index)
 	{
 		if (index < Header.Length)
 		{
@@ -73,7 +74,7 @@ namespace Common::Graphics::Font::PCSF
 		}
 		return 0;
 	}
-	UINT32* PCSF2::GetGlyph32(UINT8 index)
+	UINT32* PCSF2::GetGlyph32(UINT32 index)
 	{
 		if (index < Header.Length)
 		{
@@ -81,7 +82,7 @@ namespace Common::Graphics::Font::PCSF
 		}
 		return 0;
 	}
-	UINT64* PCSF2::GetGlyph64(UINT8 index)
+	UINT64* PCSF2::GetGlyph64(UINT32 index)
 	{
 		if (index < Header.Length)
 		{

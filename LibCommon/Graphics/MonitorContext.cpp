@@ -25,7 +25,8 @@ namespace Common::Graphics
 		currentModeNumber = ptr->Mode->Mode;
 		currentMode = &modes[currentModeNumber];
 
-		modes = System::MemoryManagement::Allocator::AllocateZeroedArray<MonitorMode>(maxMode);
+		auto* allocator = System::MemoryManagement::Allocator::GetInstance();
+		modes = allocator->AllocateZeroedArray<MonitorMode>(maxMode);
 
 		if (modes == nullptr)
 		{

@@ -39,19 +39,20 @@ namespace EFI
 
 	constexpr UINT8 operator | (const EfiForegroundColor fore, const EfiBackgroundColor back)
 	{
-			return static_cast<UINT8>(fore) | static_cast<UINT8>(back);
+		return static_cast<UINT8>(fore) | static_cast<UINT8>(back);
 	}
 	
 
 	class EfiConsoleColor
 	{
 	public:
-		static const UINT8 _Success = EfiForegroundColor::GREEN | EfiBackgroundColor::BLACK;
-		static const UINT8 _Default = EfiForegroundColor::WHITE | EfiBackgroundColor::BLACK;
-		static const UINT8 _Warning = EfiForegroundColor::YELLOW | EfiBackgroundColor::BLACK;
-		static const UINT8 _Error = EfiForegroundColor::RED | EfiBackgroundColor::BLACK;
-		static const UINT8 _Trace = EfiForegroundColor::LIGHTCYAN | EfiBackgroundColor::BLACK;
 		static const UINT8 _Debug = EfiForegroundColor::CYAN | EfiBackgroundColor::BLACK;
-		static const UINT8 _Fatal = EfiForegroundColor::WHITE | EfiBackgroundColor::BLUE;
+		static const UINT8 _Default = EfiForegroundColor::WHITE | EfiBackgroundColor::BLACK;
+		static const UINT8 _Error = EfiForegroundColor::LIGHTRED | EfiBackgroundColor::BLACK;
+		static const UINT8 _Fatal = EfiForegroundColor::RED | EfiBackgroundColor::BLACK;
+		static const UINT8 _Info = EfiForegroundColor::LIGHTGREEN | EfiBackgroundColor::BLACK;
+		static const UINT8 _Success = EfiForegroundColor::GREEN | EfiBackgroundColor::BLACK;
+		static const UINT8 _Trace = EfiForegroundColor::LIGHTCYAN | EfiBackgroundColor::BLACK;
+		static const UINT8 _Warning = EfiForegroundColor::YELLOW | EfiBackgroundColor::BLACK;
 	};
 }

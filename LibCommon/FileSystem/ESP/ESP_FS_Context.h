@@ -51,8 +51,8 @@ namespace Common::FileSystem::ESP
 		BOOLEAN IsRootDirectory();
 		BOOLEAN ReturnToRootDirectory();
 
-		static bool IsDirectory(const CHAR16* path);
-		static bool IsFile(const CHAR16* path);
+		static BOOLEAN IsDirectory(const CHAR16* path);
+		static BOOLEAN IsFile(const CHAR16* path);
 
 		CHAR16* GetFullPath(const CHAR16* path);
 		CHAR16* GetRelativePath(const CHAR16* path);
@@ -68,7 +68,7 @@ namespace Common::FileSystem::ESP
 
 		FileInfo GetFileInfo(const CHAR16* path);
 
-		bool operator ==(const ESP_FS_Context& right)
+		BOOLEAN operator ==(const ESP_FS_Context& right)
 		{
 			/*Compare all members for equality, if one fails return false, otherwise return true*/
 			if (_deviceHandle != right._deviceHandle)
@@ -92,7 +92,7 @@ namespace Common::FileSystem::ESP
 			return true;
 		}
 
-		bool operator !=(const ESP_FS_Context& right)
+		BOOLEAN operator !=(const ESP_FS_Context& right)
 		{
 			return !(*this == right);
 		}
@@ -100,7 +100,7 @@ namespace Common::FileSystem::ESP
 		EFI::EFI_STATUS LastStatus;
 
 	private:
-		bool _isVolumeOpen;
+		BOOLEAN _isVolumeOpen;
 		EFI::EFI_HANDLE _deviceHandle;
 		EFI::EFI_SYSTEM_TABLE* _sysTable;
 		EFI::EFI_HANDLE _imgHndl;

@@ -186,7 +186,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);$(Configuration);$(Platform);$(Configuration);$(Platform);$(ConfigurationType)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>IMPORT_DLL;$(Configuration);$(Platform);$(ConfigurationType);WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);$(Configuration);$(Platform);$(Configuration);$(Platform);$(ConfigurationType)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -225,7 +225,7 @@
       </FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);$(Configuration);$(Platform);$(Configuration);$(Platform);$(ConfigurationType)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>IMPORT_DLL;$(Configuration);$(Platform);$(ConfigurationType);WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);$(Configuration);$(Platform);$(Configuration);$(Platform);$(ConfigurationType)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -260,7 +260,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);$(Configuration);$(Platform);$(Configuration);$(Platform);$(ConfigurationType)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>IMPORT_DLL;$(Configuration);$(Platform);$(ConfigurationType);_DEBUG;_CONSOLE;%(PreprocessorDefinitions);$(Configuration);$(Platform);$(Configuration);$(Platform);$(ConfigurationType)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -299,7 +299,7 @@
       </FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);$(Configuration);$(Platform);$(Configuration);$(Platform);$(ConfigurationType)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>IMPORT_DLL;$(Configuration);$(Platform);$(ConfigurationType);NDEBUG;_CONSOLE;%(PreprocessorDefinitions);$(Configuration);$(Platform);$(Configuration);$(Platform);$(ConfigurationType)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -332,7 +332,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
-      <PreprocessorDefinitions>_ARM_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE=1;%(ClCompile.PreprocessorDefinitions);$(Configuration);$(Platform);$(Configuration);$(Platform);$(ConfigurationType)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>IMPORT_DLL;$(Configuration);$(Platform);$(ConfigurationType);_ARM_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE=1;%(ClCompile.PreprocessorDefinitions);$(Configuration);$(Platform);$(Configuration);$(Platform);$(ConfigurationType)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)LibCommon\;$(SolutionDir)UEFI\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -363,7 +363,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
-      <PreprocessorDefinitions>_ARM_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE=1;%(ClCompile.PreprocessorDefinitions);$(Configuration);$(Platform);$(Configuration);$(Platform);$(ConfigurationType)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>IMPORT_DLL;$(Configuration);$(Platform);$(ConfigurationType);_ARM_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE=1;%(ClCompile.PreprocessorDefinitions);$(Configuration);$(Platform);$(Configuration);$(Platform);$(ConfigurationType)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)LibCommon\;$(SolutionDir)UEFI\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -395,7 +395,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
-      <PreprocessorDefinitions>_ARM64_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE=1;%(ClCompile.PreprocessorDefinitions);$(Configuration);$(Platform);$(Configuration);$(Platform);$(ConfigurationType)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>IMPORT_DLL;$(Configuration);$(Platform);$(ConfigurationType);_ARM64_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE=1;%(ClCompile.PreprocessorDefinitions);$(Configuration);$(Platform);$(Configuration);$(Platform);$(ConfigurationType)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)LibCommon\;$(SolutionDir)UEFI\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -426,7 +426,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <ClCompile>
-      <PreprocessorDefinitions>_ARM64_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE=1;%(ClCompile.PreprocessorDefinitions);$(Configuration);$(Platform);$(Configuration);$(Platform);$(ConfigurationType)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>IMPORT_DLL;$(Configuration);$(Platform);$(ConfigurationType);_ARM64_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE=1;%(ClCompile.PreprocessorDefinitions);$(Configuration);$(Platform);$(Configuration);$(Platform);$(ConfigurationType)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir);$(SolutionDir)LibCommon\;$(SolutionDir)UEFI\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>

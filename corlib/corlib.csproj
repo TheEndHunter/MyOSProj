@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<LangVersion>Preview</LangVersion>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<NoStdLib>true</NoStdLib>
+		<NoConfig>true</NoConfig>
+		<RuntimeMetadataVersion>v4.0.30319</RuntimeMetadataVersion>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+
+		<IlcSystemModule>corlib</IlcSystemModule>
+		<LinkerSubsystem>EFI_APPLICATION</LinkerSubsystem>
+
+		<PublishAot>true</PublishAot>
+
+	</PropertyGroup>
+
+</Project>

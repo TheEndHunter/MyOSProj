@@ -1,14 +1,14 @@
-#include <System/Environment/string.h>
+#include <System/Environment/String.h>
 
 namespace Common::System::Environment
 {
-	template<IsChar Type>
-	string<Type>::string(const UINT64 length)
+	template<IsChar StrType>
+	string<StrType>::string(const UINT64 length)
 	{
 		if (length > 0)
 		{
 			_length = length;
-			_data = new Type[length];
+			_data = new StrType[length];
 			_data[length - 1] = 0;
 		}
 		else
@@ -18,20 +18,20 @@ namespace Common::System::Environment
 		}
 	}
 
-	template<IsChar Type>
+	template<IsChar StrType>
 	
-	string<Type>::string(const Array<Type> arr)
+	string<StrType>::string(const Array<StrType> arr)
 	{
 		_length = arr.Length();
-		_data = new Type[_length];
+		_data = new StrType[_length];
 		for (UINT64 i = 0; i < _length; i++)
 		{
 			_data[i] = arr[i];
 		}
 	}
 
-	template<IsChar Type>
-	string<Type>::string(const Type* ptr)
+	template<IsChar StrType>
+	string<StrType>::string(const StrType* ptr)
 	{
 		if (ptr == nullptr)
 		{
@@ -47,7 +47,7 @@ namespace Common::System::Environment
 		}
 
 		_length = dLen + 1;
-		_data = new Type[dLen];
+		_data = new StrType[dLen];
 		for (UINT64 i = 0; i < _length; i++)
 		{
 			_data[i] = ptr[i];
@@ -55,8 +55,8 @@ namespace Common::System::Environment
 		_data[_length] = 0;
 	}
 
-	template<IsChar Type>
-	string<Type>::string(const Type& str)
+	template<IsChar StrType>
+	string<StrType>::string(const StrType& str)
 	{
 		UINT64 dLen = 0;
 		while (str[dLen] != 0)
@@ -65,7 +65,7 @@ namespace Common::System::Environment
 		}
 
 		_length = dLen + 1;
-		_data = new Type[dLen];
+		_data = new StrType[dLen];
 		for (UINT64 i = 0; i < _length; i++)
 		{
 			_data[i] = str[i];
@@ -73,8 +73,8 @@ namespace Common::System::Environment
 		_data[_length] = 0;
 	}
 
-	template<IsChar Type>
-	string<Type>::string(const Type* ptr, UINT64 length)
+	template<IsChar StrType>
+	string<StrType>::string(const StrType* ptr, UINT64 length)
 	{
 		if (ptr == nullptr)
 		{
@@ -92,7 +92,7 @@ namespace Common::System::Environment
 			}
 
 			_length = dLen + 1;
-			_data = new Type[dLen];
+			_data = new StrType[dLen];
 			for (UINT64 i = 0; i < _length; i++)
 			{
 				_data[i] = ptr[i];
@@ -102,7 +102,7 @@ namespace Common::System::Environment
 		else
 		{
 			_length = length;
-			_data = new Type[length];
+			_data = new StrType[length];
 			for (UINT64 i = 0; i < _length; i++)
 			{
 				_data[i] = ptr[i];
@@ -110,8 +110,8 @@ namespace Common::System::Environment
 		}
 	}
 
-	template<IsChar Type>
-	string<Type>::string(const Type& str, UINT64 length)
+	template<IsChar StrType>
+	string<StrType>::string(const StrType& str, UINT64 length)
 	{
 		if (length == 0)
 		{
@@ -122,7 +122,7 @@ namespace Common::System::Environment
 			}
 
 			_length = dLen + 1;
-			_data = new Type[dLen];
+			_data = new StrType[dLen];
 			for (UINT64 i = 0; i < _length; i++)
 			{
 				_data[i] = str[i];
@@ -132,7 +132,7 @@ namespace Common::System::Environment
 		else
 		{
 			_length = length;
-			_data = new Type[length];
+			_data = new StrType[length];
 			for (UINT64 i = 0; i < _length; i++)
 			{
 				_data[i] = str[i];
@@ -140,19 +140,19 @@ namespace Common::System::Environment
 		}
 	}
 
-	template<IsChar Type>
-	string<Type>::string(const string<Type>& other)
+	template<IsChar StrType>
+	string<StrType>::string(const string<StrType>& other)
 	{
 		_length = other._length;
-		_data = new Type[_length];
+		_data = new StrType[_length];
 		for (UINT64 i = 0; i < _length; i++)
 		{
 			_data[i] = other._data[i];
 		}
 	}
 
-	template<IsChar Type>
-	string<Type>::~string()
+	template<IsChar StrType>
+	string<StrType>::~string()
 	{
 		delete[] _data;
 	}

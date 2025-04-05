@@ -1,12 +1,14 @@
 #pragma once
 #include <Typedefs.h>
 #include <FileSystem/FileHandle.h>
-
+#include <Debugging/Debugger.h>
 
 
 namespace Common::Graphics::Font::PCSF
 {
 	const CHAR PSF1_MAGIC[2] = { 0x36, 0x04 };
+
+	
 
 	struct UnicodeSequence
 	{
@@ -54,6 +56,7 @@ namespace Common::Graphics::Font::PCSF
 #pragma pack(push, 1)
 	struct PCSF1
 	{
+		static void LoadDebugger(Debugging::Debugger* debugger);
 	public:
 		PCSF1();
 		PCSF1(Common::FileSystem::FileHandle* handle);
@@ -61,7 +64,7 @@ namespace Common::Graphics::Font::PCSF
 		PCSF1Hdr Header;
 		UINT16 CharCount;
 		BOOLEAN IsValid();
-		UINT8* GetGlyph(UINT16 index);
+		UINT8* GetGlyph(UINT32 index);
 
 		BOOLEAN operator==(const PCSF1& other);
 

@@ -78,6 +78,7 @@ namespace QemuRunner
                 Console.WriteLine("Image path does not exist.");
                 return -1;
             }
+
             QemuConfig qemuConf = config.QemuConfigs!.Find(x => { return x.Architecture == architecture && x.Configuration == configuration; });
 
             return QEMU.StartProcess(qemuConf, Path.Combine(Dir, "OVMF", architecture, configuration), imagePath);

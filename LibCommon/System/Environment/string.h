@@ -5,23 +5,23 @@
 
 namespace Common::System::Environment
 {
-	template<IsChar Type>
+	template<IsChar StrType>
 	class string
 	{
 	public:
 		string(const UINT64 length = 0);
 
-		string(const Array<Type> arr);
+		string(const Array<StrType> arr);
 
-		string(const Type* ptr);
+		string(const StrType* ptr);
 
-		string(const Type& str);
+		string(const StrType& str);
 
-		string(const Type* ptr, UINT64 length);
+		string(const StrType* ptr, UINT64 length);
 
-		string(const Type& str, UINT64 length);
+		string(const StrType& str, UINT64 length);
 
-		string(const string<Type>& other);
+		string(const string<StrType>& other);
 
 		~string();
 
@@ -30,12 +30,12 @@ namespace Common::System::Environment
 			return _length;
 		}
 
-		Type& operator[](UINT64 index)
+		StrType& operator[](UINT64 index)
 		{
 			return _data[index];
 		}
 
-		bool operator ==(const string<Type>& right)
+		BOOLEAN operator ==(const string<StrType>& right)
 		{
 			if (_length != right._length)
 				return false;
@@ -49,7 +49,7 @@ namespace Common::System::Environment
 			return true;
 		}
 
-		bool operator !=(const string<Type>& right)
+		BOOLEAN operator !=(const string<StrType>& right)
 		{
 			if (_length != right._length)
 				return true;
@@ -63,10 +63,10 @@ namespace Common::System::Environment
 			return false;
 		}
 
-		string<Type> operator +(const string<Type>& right)
+		string<StrType> operator +(const string<StrType>& right)
 		{
 			UINT64 newLen = _length + right._length;
-			Type* newData = new Type[newLen];
+			StrType* newData = new StrType[newLen];
 			for (UINT64 i = 0; i < _length; i++)
 			{
 				newData[i] = _data[i];
@@ -77,10 +77,10 @@ namespace Common::System::Environment
 				newData[_length + i] = right._data[i];
 			}
 
-			return string<Type>(newData);
+			return string<StrType>(newData);
 		}
 
-		string<Type> operator +(const Type* right)
+		string<StrType> operator +(const StrType* right)
 		{
 			UINT64 rLen = 0;
 			while (right[rLen] != 0)
@@ -89,7 +89,7 @@ namespace Common::System::Environment
 			}
 
 			UINT64 newLen = _length + rLen;
-			Type* newData = new Type[newLen];
+			StrType* newData = new StrType[newLen];
 			for (UINT64 i = 0; i < _length; i++)
 			{
 				newData[i] = _data[i];
@@ -100,13 +100,13 @@ namespace Common::System::Environment
 				newData[_length + i] = right[i];
 			}
 
-			return string<Type>(newData);
+			return string<StrType>(newData);
 		}
 
-		string<Type> operator +(const Type right)
+		string<StrType> operator +(const StrType right)
 		{
 			UINT64 newLen = _length + 1;
-			Type* newData = new Type[newLen];
+			StrType* newData = new StrType[newLen];
 			for (UINT64 i = 0; i < _length; i++)
 			{
 				newData[i] = _data[i];
@@ -114,16 +114,18 @@ namespace Common::System::Environment
 
 			newData[_length] = right;
 
-			return string<Type>(newData);
+			return string<StrType>(newData);
 		}
 
-		Type* AsPointer()
+		StrType* AsPointer()
 		{
 			return _data;
 		}
+
+		const UINT8 CharByteWidth = sizeof(StrType);
 	private:
 		UINT64 _length;
-		Type* _data;
+		StrType* _data;
 	};
 }
 

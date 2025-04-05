@@ -36,9 +36,9 @@ namespace Common::FileSystem
 		UINT64 Attribute;
 		CHAR16* DirectoryName;
 
-		bool operator ==(const DirectoryInfo& right);
+		BOOLEAN operator ==(const DirectoryInfo& right);
 
-		bool operator !=(const DirectoryInfo& right);
+		BOOLEAN operator !=(const DirectoryInfo& right);
 	};
 
 	constinit const DirectoryInfo Empty_DirectoryInfo = DirectoryInfo();

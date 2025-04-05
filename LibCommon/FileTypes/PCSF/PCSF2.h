@@ -47,10 +47,10 @@ namespace Common::Graphics::Font::PCSF
 		PCSF2Hdr Header;
 		BOOLEAN IsValid();
 
-		UINT8* GetGlyph8(UINT8 index);
-		UINT16* GetGlyph16(UINT8 index);
-		UINT32* GetGlyph32(UINT8 index);
-		UINT64* GetGlyph64(UINT8 index);
+		UINT8* GetGlyph8(UINT32 index);
+		UINT16* GetGlyph16(UINT32 index);
+		UINT32* GetGlyph32(UINT32 index);
+		UINT64* GetGlyph64(UINT32 index);
 	private:
 
 		union

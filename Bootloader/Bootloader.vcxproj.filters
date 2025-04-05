@@ -24,9 +24,15 @@
     <ClCompile Include="EFIConsole.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CRT_ENTRIES.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CRT_ENTRIES.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

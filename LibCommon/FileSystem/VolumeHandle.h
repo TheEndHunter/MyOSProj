@@ -40,8 +40,8 @@ namespace Common::FileSystem
 		EFI::EFI_STATUS FlushAsync(EFI::EFI_FILE_IO_TOKEN* token);
 
 
-		bool operator ==(const VolumeHandle& right);
-		bool operator !=(const VolumeHandle& right);
+		BOOLEAN operator ==(const VolumeHandle& right);
+		BOOLEAN operator !=(const VolumeHandle& right);
 
 	protected:
 		EFI::EFI_FILE_PROTOCOL* _File;

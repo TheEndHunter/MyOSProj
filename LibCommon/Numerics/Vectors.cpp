@@ -6,14 +6,14 @@ namespace Common::Numerics
 		requires NumberBase<Type>
 	Vect2D<Type>::operator Common::Numerics::Vect3D<Type>()
 	{
-		return Vect3D<Type>(X, Y, default(Type));
+		return Vect3D<Type>(X, Y, Type());
 	}
 
 	template<typename Type>
 		requires NumberBase<Type>
 	Vect2D<Type>::operator Common::Numerics::Vect4D<Type>()
 	{
-		return Vect4D<Type>(X, Y, default(Type), default(Type));
+		return Vect4D<Type>(X, Y, Type(), Type());
 	}
 
 	template<typename Type>
@@ -27,7 +27,7 @@ namespace Common::Numerics
 		requires NumberBase<Type>
 	Vect3D<Type>::operator Common::Numerics::Vect4D<Type>()
 	{
-		return Vect4D<Type>(X, Y, Z, default(Type));
+		return Vect4D<Type>(X, Y, Z, Type());
 	}
 
 	template<typename Type>

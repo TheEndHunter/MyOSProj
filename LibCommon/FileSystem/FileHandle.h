@@ -28,7 +28,10 @@ namespace Common::FileSystem
 		UINT64 Attributes;
 		FileInfo Info;
 		UINT64 Size;
-
+		BOOLEAN IsValid() { return _File != nullptr; };
+		EFI::EFI_FILE_PROTOCOL* GetFileEFIHandle() {
+			return _File;
+		};
 		/*
 		*  Below are all the functions needed to read, write, seek, close and delete, etc.
 		*/
@@ -175,8 +178,8 @@ namespace Common::FileSystem
 
 
 
-		bool operator ==(const FileHandle& right);
-		bool operator !=(const FileHandle& right);
+		BOOLEAN operator ==(const FileHandle& right);
+		BOOLEAN operator !=(const FileHandle& right);
 		
 	protected:
 		EFI::EFI_FILE_PROTOCOL* _File;

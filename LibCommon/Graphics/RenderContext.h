@@ -2,8 +2,8 @@
 #include <TypeDefs.h>
 #include <Graphics/Colour.h>
 #include <Graphics/MonitorContext.h>
-#include <Graphics/Font/PCSF/PCSF1.h>
-#include <Graphics/Font/PCSF/PCSF2.h>
+#include <FileTypes/PCSF/PCSF1.h>
+#include <FileTypes/PCSF/PCSF2.h>
 
 #include <Protocols/Graphics/EFI_GRAPHICS_OUTPUT_PROTOCOL.h>
 #include <EFI_SYSTEM_TABLE.h>

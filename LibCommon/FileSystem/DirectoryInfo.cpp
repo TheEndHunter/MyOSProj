@@ -18,7 +18,7 @@ namespace Common::FileSystem
 
 		return DirectoryInfo(info);
 	}
-	bool DirectoryInfo::operator==(const DirectoryInfo& right)
+	BOOLEAN DirectoryInfo::operator==(const DirectoryInfo& right)
 	{
 		/*Compare all members for equality, if one fails return false, otherwise return true*/
 
@@ -43,12 +43,12 @@ namespace Common::FileSystem
 		if (Attribute != right.Attribute)
 			return false;
 
-		if (System::Environment::UTF16::Compare(DirectoryName,right.DirectoryName) == FALSE)
+		if (System::Environment::UTF<CHAR16>::Compare(DirectoryName,right.DirectoryName) == FALSE)
 			return false;
 
 		return true;
 	}
-	bool DirectoryInfo::operator!=(const DirectoryInfo& right)
+	BOOLEAN DirectoryInfo::operator!=(const DirectoryInfo& right)
 	{
 		return !(*this == right);
 	}

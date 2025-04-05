@@ -18,7 +18,7 @@ namespace EFI
 		UINT8 Daylight;
 		UINT8 Pad2;
 
-		bool operator ==(const EFI_TIME& right)
+		BOOLEAN operator ==(const EFI_TIME& right)
 		{
 			/*Compare all members for equality, if one fails return false, otherwise return true*/
 
@@ -58,7 +58,7 @@ namespace EFI
 			return true;
 		}
 
-		bool operator !=(const EFI_TIME& right)
+		BOOLEAN operator !=(const EFI_TIME& right)
 		{
 			return !(*this == right);
 		}

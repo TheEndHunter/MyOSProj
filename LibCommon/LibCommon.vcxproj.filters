@@ -24,7 +24,7 @@
     <ClInclude Include="System\Console.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="System\Environment\Unicode.h">
+    <ClInclude Include="System\Environment\Unicode\UTFCHAR.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FileSystem\ESP\ESP_FS_Context.h">
@@ -126,10 +126,10 @@
     <ClInclude Include="FileTypes\ELF\ELF.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Graphics\Font\PCSF\PCSF1.h">
+    <ClInclude Include="FileTypes\PCSF\PCSF1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Graphics\Font\PCSF\PCSF2.h">
+    <ClInclude Include="FileTypes\PCSF\PCSF2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Numerics\NumberBase.h">
@@ -138,10 +138,7 @@
     <ClInclude Include="Numerics\Vectors.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Debugging\IDebugger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Debugging\EFI\EFIDebugger.h">
+    <ClInclude Include="Debugging\Debugger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="System\MemoryManagement\KernelAllocator.h">
@@ -153,10 +150,25 @@
     <ClInclude Include="System\Array.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="System\Environment\string.h">
+    <ClInclude Include="System\Environment\String.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FileSystem\DirectoryInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Environment\Unicode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Environment\Unicode\UTFTemplate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Environment\Unicode\UTFCHAR16.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Environment\Unicode\UTFCHAR8.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Environment\KernelErrors.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -167,7 +179,7 @@
     <ClCompile Include="System\Console.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="System\Environment\Unicode.cpp">
+    <ClCompile Include="System\Environment\Unicode\UTFCHAR.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FileSystem\ESP\ESP_FS_Context.cpp">
@@ -239,13 +251,10 @@
     <ClCompile Include="FileTypes\ELF\ELF64.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Graphics\Font\PCSF\PCSF1.cpp">
+    <ClCompile Include="FileTypes\PCSF\PCSF1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Graphics\Font\PCSF\PCSF2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Debugging\EFI\EFIDebugger.cpp">
+    <ClCompile Include="FileTypes\PCSF\PCSF2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\PixelBitMask.cpp">
@@ -266,13 +275,22 @@
     <ClCompile Include="Numerics\Vectors.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="System\Environment\string.cpp">
+    <ClCompile Include="System\Environment\String.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="System\Environment\IsChar.h">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FileSystem\DirectoryInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Debugging\Debugger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System\Environment\Unicode\UTFCHAR16.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System\Environment\Unicode\UTFCHAR8.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

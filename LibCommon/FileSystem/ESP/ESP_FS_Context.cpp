@@ -73,7 +73,7 @@ namespace Common::FileSystem::ESP
 
 	ESP_FS_Context ESP_FS_Context::GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, const CHAR16* label, OUT EFI::EFI_STATUS* status, System::Environment::StringComparisonMode mode, System::Environment::StringCulture culture)
 	{
-		if (Common::System::Environment::UTF16::IsNullOrEmpty(label))
+		if (Common::System::Environment::UTF<CHAR16>::IsNullOrEmpty(label))
 		{
 			*status = EFI::EFI_STATUS::INVALID_PARAMETER;
 			return EmptyFS;
@@ -141,7 +141,7 @@ namespace Common::FileSystem::ESP
 				continue;
 			}
 
-			if (Common::System::Environment::UTF16::IsNullOrEmpty((CHAR16*)&volLbl->VolumeLabel))
+			if (Common::System::Environment::UTF<CHAR16>::IsNullOrEmpty((CHAR16*)&volLbl->VolumeLabel))
 			{
 				sysTable->BootServices->FreePool(volLbl);
 				root->Close(root);
@@ -154,16 +154,16 @@ namespace Common::FileSystem::ESP
 			switch (mode)
 			{
 			case Common::System::Environment::Compare:
-				comparison = Common::System::Environment::UTF16::Compare((const CHAR16*)&volLbl->VolumeLabel, label, culture);
+				comparison = Common::System::Environment::UTF<CHAR16>::Compare((const CHAR16*)&volLbl->VolumeLabel, label, culture);
 				break;
 			case Common::System::Environment::Contains:
-				comparison = Common::System::Environment::UTF16::Contains((const CHAR16*)&volLbl->VolumeLabel, label, culture);
+				comparison = Common::System::Environment::UTF<CHAR16>::Contains((const CHAR16*)&volLbl->VolumeLabel, label, culture);
 				break;
 			case Common::System::Environment::StartsWith:
-				comparison = Common::System::Environment::UTF16::StartsWith((const CHAR16*)&volLbl->VolumeLabel, label, culture);
+				comparison = Common::System::Environment::UTF<CHAR16>::StartsWith((const CHAR16*)&volLbl->VolumeLabel, label, culture);
 				break;
 			case Common::System::Environment::EndsWith:
-				comparison = Common::System::Environment::UTF16::EndsWith((const CHAR16*)&volLbl->VolumeLabel, label, culture);
+				comparison = Common::System::Environment::UTF<CHAR16>::EndsWith((const CHAR16*)&volLbl->VolumeLabel, label, culture);
 				break;
 			}
 
@@ -246,13 +246,13 @@ namespace Common::FileSystem::ESP
 			return FALSE;
 		}
 		
-		if (Common::System::Environment::UTF16::IsNullEmptyOrWhiteSpace(path))
+		if (Common::System::Environment::UTF<CHAR16>::IsNullEmptyOrWhiteSpace(path))
 		{
 			LastStatus = EFI::EFI_STATUS::INVALID_PARAMETER;
 			return FALSE;
 		}
 
-		if (Common::System::Environment::UTF16::StartsWith(path,u"\\"))
+		if (Common::System::Environment::UTF<CHAR16>::StartsWith(path,u"\\"))
 		{
 			_cwd = _root;
 			return true;
@@ -412,7 +412,7 @@ namespace Common::FileSystem::ESP
 	DirectoryInfo ESP_FS_Context::GetDirectoryInfo(const CHAR16* path)
 	{
 		/*Check path to see if it's null or empty, if it is return an empty FileSystem, putting INVALID_PARAMETER status into LastStatus Member*/
-		if (Common::System::Environment::UTF16::IsNullEmptyOrWhiteSpace(path))
+		if (Common::System::Environment::UTF<CHAR16>::IsNullEmptyOrWhiteSpace(path))
 		{
 			LastStatus = EFI::EFI_STATUS::INVALID_PARAMETER;
 			return Empty_DirectoryInfo;
@@ -500,7 +500,7 @@ namespace Common::FileSystem::ESP
 	Common::FileSystem::FileInfo ESP_FS_Context::GetFileInfo(const CHAR16* path)
 	{
 		/*Check path to see if it's null or empty, if it is return an empty FileSystem, putting INVALID_PARAMETER status into LastStatus Member*/
-		if (Common::System::Environment::UTF16::IsNullEmptyOrWhiteSpace(path))
+		if (Common::System::Environment::UTF<CHAR16>::IsNullEmptyOrWhiteSpace(path))
 		{
 			LastStatus = EFI::EFI_STATUS::INVALID_PARAMETER;
 			return Empty_FileInfo;
@@ -584,7 +584,7 @@ namespace Common::FileSystem::ESP
 			return Empty_FileHandle;
 		}
 
-		if (Common::System::Environment::UTF16::IsNullOrEmpty(fileInfo->FileName))
+		if (Common::System::Environment::UTF<CHAR16>::IsNullOrEmpty(fileInfo->FileName))
 		{
 			LastStatus = EFI::EFI_STATUS::INVALID_PARAMETER;
 			return Empty_FileHandle;
@@ -715,12 +715,12 @@ namespace Common::FileSystem::ESP
 		return TRUE;
 	}
 
-	bool ESP_FS_Context::IsDirectory(const CHAR16* path)
+	BOOLEAN ESP_FS_Context::IsDirectory(const CHAR16* path)
 	{
 		return false;
 	}
 
-	bool ESP_FS_Context::IsFile(const CHAR16* path)
+	BOOLEAN ESP_FS_Context::IsFile(const CHAR16* path)
 	{
 		return false;
 	}

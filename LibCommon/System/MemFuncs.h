@@ -129,7 +129,7 @@ inline void memreverse(void* dest, UINT64 length)
 	Common::System::MemReverse(dest, length);
 }
 
-inline bool memcmp(void* cmpA, void* cmpB, UINT64 length)
+inline BOOLEAN memcmp(void* cmpA, void* cmpB, UINT64 length)
 {
 	return Common::System::MemCmp(cmpA, cmpB, length);
 }

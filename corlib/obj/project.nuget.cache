@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "umMNQrCBEGs=",
+  "success": true,
+  "projectFilePath": "A:\\Projects\\MyOSProj\\corlib\\corlib.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\spros\\.nuget\\packages\\microsoft.dotnet.ilcompiler\\10.0.0-preview.1.25080.5\\microsoft.dotnet.ilcompiler.10.0.0-preview.1.25080.5.nupkg.sha512",
+    "C:\\Users\\spros\\.nuget\\packages\\microsoft.net.illink.tasks\\10.0.0-preview.1.25080.5\\microsoft.net.illink.tasks.10.0.0-preview.1.25080.5.nupkg.sha512",
+    "C:\\Users\\spros\\.nuget\\packages\\runtime.win-arm64.microsoft.dotnet.ilcompiler\\10.0.0-preview.1.25080.5\\runtime.win-arm64.microsoft.dotnet.ilcompiler.10.0.0-preview.1.25080.5.nupkg.sha512"
+  ],
+  "logs": []
+}

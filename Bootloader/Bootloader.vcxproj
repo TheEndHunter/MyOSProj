@@ -252,7 +252,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>__USE_EFI_SYS_LIBS__;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);$(Platform);$(Configuration)$(PlatformTarget);$(Configuration);$(Platform);$(ConfigurationType);</PreprocessorDefinitions>
+      <PreprocessorDefinitions>IMPORT_DLL;$(Configuration);$(Platform);$(ConfigurationType);__USE_EFI_SYS_LIBS__;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);$(Platform);$(Configuration)$(PlatformTarget);$(Configuration);$(Platform);$(ConfigurationType);</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -299,7 +299,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>__USE_EFI_SYS_LIBS__;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);$(Platform);$(Configuration)$(PlatformTarget);$(Configuration);$(Platform);$(ConfigurationType);</PreprocessorDefinitions>
+      <PreprocessorDefinitions>IMPORT_DLL;$(Configuration);$(Platform);$(ConfigurationType);__USE_EFI_SYS_LIBS__;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);$(Platform);$(Configuration)$(PlatformTarget);$(Configuration);$(Platform);$(ConfigurationType);</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -348,7 +348,7 @@
       </FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>__USE_EFI_SYS_LIBS__;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);$(Platform);$(Configuration)$(PlatformTarget);$(Configuration);$(Platform);$(ConfigurationType);</PreprocessorDefinitions>
+      <PreprocessorDefinitions>IMPORT_DLL;$(Configuration);$(Platform);$(ConfigurationType);__USE_EFI_SYS_LIBS__;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);$(Platform);$(Configuration)$(PlatformTarget);$(Configuration);$(Platform);$(ConfigurationType);</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -392,7 +392,7 @@
       </FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>__USE_EFI_SYS_LIBS__;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);$(Platform);$(Configuration)$(PlatformTarget);$(Configuration);$(Platform);$(ConfigurationType);</PreprocessorDefinitions>
+      <PreprocessorDefinitions>IMPORT_DLL;$(Configuration);$(Platform);$(ConfigurationType);__USE_EFI_SYS_LIBS__;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);$(Platform);$(Configuration)$(PlatformTarget);$(Configuration);$(Platform);$(ConfigurationType);</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -433,7 +433,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>__USE_EFI_SYS_LIBS__;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);$(Platform);$(Configuration)$(PlatformTarget);$(Configuration);$(Platform);$(ConfigurationType);</PreprocessorDefinitions>
+      <PreprocessorDefinitions>IMPORT_DLL;$(Configuration);$(Platform);$(ConfigurationType);__USE_EFI_SYS_LIBS__;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);$(Platform);$(Configuration)$(PlatformTarget);$(Configuration);$(Platform);$(ConfigurationType);</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -468,6 +468,8 @@
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
       <AssemblyDebug>true</AssemblyDebug>
+      <MergeSections>
+      </MergeSections>
     </Link>
     <Manifest>
       <OutputManifestFile />
@@ -480,7 +482,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>__USE_EFI_SYS_LIBS__;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);$(Platform);$(Configuration)$(PlatformTarget);$(Configuration);$(Platform);$(ConfigurationType);</PreprocessorDefinitions>
+      <PreprocessorDefinitions>IMPORT_DLL;$(Configuration);$(Platform);$(ConfigurationType);__USE_EFI_SYS_LIBS__;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);$(Platform);$(Configuration)$(PlatformTarget);$(Configuration);$(Platform);$(ConfigurationType);</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -530,7 +532,7 @@
       </FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>__USE_EFI_SYS_LIBS__;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);$(Platform);$(Configuration)$(PlatformTarget);$(Configuration);$(Platform);$(ConfigurationType);</PreprocessorDefinitions>
+      <PreprocessorDefinitions>IMPORT_DLL;$(Configuration);$(Platform);$(ConfigurationType);__USE_EFI_SYS_LIBS__;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);$(Platform);$(Configuration)$(PlatformTarget);$(Configuration);$(Platform);$(ConfigurationType);</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -574,7 +576,7 @@
       </FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>__USE_EFI_SYS_LIBS__;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);$(Platform);$(Configuration)$(PlatformTarget);$(Configuration);$(Platform);$(ConfigurationType);</PreprocessorDefinitions>
+      <PreprocessorDefinitions>IMPORT_DLL;$(Configuration);$(Platform);$(ConfigurationType);__USE_EFI_SYS_LIBS__;NDEBUG;_CONSOLE;%(PreprocessorDefinitions);$(Platform);$(Configuration)$(PlatformTarget);$(Configuration);$(Platform);$(ConfigurationType);</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
@@ -612,6 +614,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CRT_ENTRIES.cpp" />
     <ClCompile Include="EFIConsole.cpp" />
     <ClCompile Include="EFIConsole.h" />
     <ClCompile Include="Entry.cpp" />
@@ -625,6 +628,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CRT_ENTRIES.h" />
     <ClInclude Include="Entry.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

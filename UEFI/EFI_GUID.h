@@ -24,17 +24,17 @@ namespace EFI
 			return *this;
 		}
 
-		bool operator==(const EFI_GUID& guid)
+		BOOLEAN operator==(const EFI_GUID& guid)
 		{
 			return Data1 == guid.Data1 && Data2 == guid.Data2 && Data3 == guid.Data3 && Data4[0] == guid.Data4[0] && Data4[1] == guid.Data4[1] && Data4[2] == guid.Data4[2] && Data4[3] == guid.Data4[3];
 		}
 
-		bool operator!=(const EFI_GUID& guid)
+		BOOLEAN operator!=(const EFI_GUID& guid)
 		{
 			return Data1 != guid.Data1 || Data2 != guid.Data2 || Data3 != guid.Data3 || Data4[0] != guid.Data4[0] || Data4[1] != guid.Data4[1] || Data4[2] != guid.Data4[2] || Data4[3] != guid.Data4[3];
 		}
 
-		bool operator<(const EFI_GUID& guid)
+		BOOLEAN operator<(const EFI_GUID& guid)
 		{
 			if (Data1 < guid.Data1)
 			{
@@ -71,7 +71,7 @@ namespace EFI
 			return false;
 		}
 
-		bool operator>(const EFI_GUID& guid)
+		BOOLEAN operator>(const EFI_GUID& guid)
 		{
 			if (Data1 > guid.Data1)
 			{
@@ -108,7 +108,7 @@ namespace EFI
 			return false;
 		}
 
-		bool operator<=(const EFI_GUID& guid)
+		BOOLEAN operator<=(const EFI_GUID& guid)
 		{
 			if (Data1 < guid.Data1)
 			{
@@ -145,7 +145,7 @@ namespace EFI
 			return true;
 		}
 
-		bool operator>=(const EFI_GUID& guid)
+		BOOLEAN operator>=(const EFI_GUID& guid)
 		{
 			if (Data1 > guid.Data1)
 			{

@@ -4,6 +4,7 @@
 #include <System/MemoryManagement/KernelAllocator.h>
 #include <System//MemoryManagement/AllocatorStatus.h>
 #include <EFI_SYSTEM_TABLE.h>
+#include <Debugging/Debugger.h>
 
 namespace Common::System::MemoryManagement
 {
@@ -25,69 +26,75 @@ namespace Common::System::MemoryManagement
 	
 	class Allocator
 	{
+		friend class Allocator;
 		friend class EfiAllocator;
 		friend class KernelAllocator;
-
+	private:
+		Allocator(AllocatorStatus* allocStatus,AllocFunc allocFunc, AllocZeroedFunc allocZeroedFunc, AllocPageFunc allocPageFunc, AllocPageZeroedFunc allocPageZeroedFunc, FreeFunc freeFunc,FreePageFunc freePageFunc);
 	public:
-		static VOID_PTR	Allocate(UINTN length);
-		static VOID_PTR	AllocateZeroed(UINTN length);
-		static VOID		Free(VOID_PTR ptr);
-		static VOID_PTR	AllocatePage(UINTN pageCount);
-		static VOID_PTR	AllocatePageZeroed(UINTN pageCount);
-		static VOID		FreePage(VOID_PTR ptr, UINTN pageCount);
-		
+		static void SetDebugger(Debugging::Debugger* debugger);
+		Allocator();
+		static  Allocator* GetInstance();
+		static AllocatorStatus SetWithExistingAllocator(Allocator* allocator);
 		static AllocatorStatus SetEfiAllocator(EFI::EFI_SYSTEM_TABLE* systemTable);
 		static AllocatorStatus SetKernelAllocator(EFI::EFI_SYSTEM_TABLE* systemTable);
-		
+
+		VOID_PTR	Allocate(UINTN length);
+		VOID_PTR	AllocateZeroed(UINTN length);
+		VOID		Free(VOID_PTR ptr);
+		VOID_PTR	AllocatePage(UINTN pageCount);
+		VOID_PTR	AllocatePageZeroed(UINTN pageCount);
+		VOID		FreePage(VOID_PTR ptr, UINTN pageCount);
 		template<typename Type>
-		static Type* Allocate()
+		Type* Allocate()
 		{
 			return (Type*)Allocate(sizeof(Type));
 		}
 		
 		template<typename Type>
-		static Type* AllocateArray(UINTN length)
+		Type* AllocateArray(UINTN length)
 		{
 
 			return (Type*)Allocate(sizeof(Type) * length);
 		}
 
 		template<typename Type>
-		static Type* AllocateZeroedArray(UINTN length)
+		Type* AllocateZeroedArray(UINTN length)
 		{
 			return (Type*)AllocateZeroed(sizeof(Type)*length);
 		}
 		
 		template<typename Type>
-		static VOID Free(Type* ptr)
+		VOID Free(Type* ptr)
 		{
 			Free((VOID_PTR)ptr);
 		}
 
-		static BOOLEAN IsInitalized();
-		static AllocatorStatus LastStatus();
+		BOOLEAN IsInitalized();
+		AllocatorStatus LastStatus();
 
-	private:
-		static AllocatorStatus* _lastStatus;
+	protected:
+		BOOLEAN _initialized;
+		AllocatorStatus* _lastStatus;
 		
-		static AllocFunc _allocFunc;
-		static AllocZeroedFunc _allocZeroedFunc;
-		static AllocPageFunc _allocPageFunc;
-		static AllocPageZeroedFunc _allocPageZeroedFunc;
-		static FreeFunc _freeFunc;
-		static FreePageFunc _freePageFunc;
+		AllocFunc _allocFunc;
+		AllocZeroedFunc _allocZeroedFunc;
+		AllocPageFunc _allocPageFunc;
+		AllocPageZeroedFunc _allocPageZeroedFunc;
+		FreeFunc _freeFunc;
+		FreePageFunc _freePageFunc;
 	};
 }
 
 /*Declare all overridable new and delete operator variants*/
-VOID_PTR operator new(UINTN length);
-VOID_PTR operator new[](UINTN length);
-VOID_PTR operator new(UINTN length, VOID_PTR ptr);
-VOID_PTR operator new[](UINTN length, VOID_PTR ptr);
+API_DLL VOID_PTR  operator new(UINTN length);
+API_DLL VOID_PTR operator new[](UINTN length);
+API_DLL VOID_PTR operator new(UINTN length, VOID_PTR ptr);
+API_DLL VOID_PTR operator new[](UINTN length, VOID_PTR ptr);
 
-void operator delete(VOID_PTR ptr);
-void operator delete[](VOID_PTR ptr);
-void operator delete(VOID_PTR ptr, UINTN length);
-void operator delete[](VOID_PTR ptr, UINTN length);
-void operator delete(VOID_PTR ptr, VOID_PTR ptr2);
-void operator delete[](VOID_PTR ptr, VOID_PTR ptr2);
+API_DLL void operator delete(VOID_PTR ptr);
+API_DLL void operator delete[](VOID_PTR ptr);
+API_DLL void operator delete(VOID_PTR ptr, UINTN length);
+API_DLL void operator delete[](VOID_PTR ptr, UINTN length);
+API_DLL void operator delete(VOID_PTR ptr, VOID_PTR ptr2);
+API_DLL void operator delete[](VOID_PTR ptr, VOID_PTR ptr2);

@@ -8,7 +8,7 @@ namespace Common::FileSystem
 		return VolumeHandle(file, i, mode, attribs);
 	}
 
-	bool VolumeHandle::operator==(const VolumeHandle& right)
+	BOOLEAN VolumeHandle::operator==(const VolumeHandle& right)
 	{
 		/*Compare all members for equality, if one fails return false, otherwise return true*/
 		if (Info != right.Info)
@@ -23,7 +23,7 @@ namespace Common::FileSystem
 		return true;
 	}
 
-	bool VolumeHandle::operator!=(const VolumeHandle& right)
+	BOOLEAN VolumeHandle::operator!=(const VolumeHandle& right)
 	{
 		return !(*this == right);
 	}

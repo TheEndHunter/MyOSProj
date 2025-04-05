@@ -18,7 +18,7 @@ namespace Common::FileSystem
 
 		return FileInfo(info);
 	}
-	bool FileInfo::operator==(const FileInfo& right)
+	BOOLEAN FileInfo::operator==(const FileInfo& right)
 	{
 		/*Compare all members for equality, if one fails return false, otherwise return true*/
 
@@ -43,12 +43,12 @@ namespace Common::FileSystem
 		if (Attribute != right.Attribute)
 			return false;
 
-		if (System::Environment::UTF16::Compare(FileName,right.FileName) == FALSE)
+		if (System::Environment::UTF<CHAR16>::Compare(FileName,right.FileName) == FALSE)
 			return false;
 
 		return true;
 	}
-	bool FileInfo::operator!=(const FileInfo& right)
+	BOOLEAN FileInfo::operator!=(const FileInfo& right)
 	{
 		return !(*this == right);
 	}

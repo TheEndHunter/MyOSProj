@@ -7,7 +7,7 @@ namespace Common::FileSystem
 		return FileHandle(file, i,mode,attribs);
 	}
 
-	bool FileHandle::operator==(const FileHandle& right)
+	BOOLEAN FileHandle::operator==(const FileHandle& right)
 	{
 		/*Compare all members for equality, if one fails return false, otherwise return true*/
 		if (Info != right.Info)
@@ -22,7 +22,7 @@ namespace Common::FileSystem
 		return true;
 	}
 
-	bool FileHandle::operator!=(const FileHandle& right)
+	BOOLEAN FileHandle::operator!=(const FileHandle& right)
 	{
 		return !(*this == right);
 	};

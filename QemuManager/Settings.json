@@ -36,49 +36,49 @@
       "Architecture": "x86",
       "Configuration": "release",
       "Name": "qemu-system-i386",
-      "AdditionalArgs": "-machine q35 -accel tcg -display gtk -m 2048M"
+      "AdditionalArgs": "-machine q35 -accel tcg -display gtk -m 4096M"
     },
     {
       "Architecture": "x64",
       "Configuration": "Release",
       "Name": "qemu-system-x86_64",
-      "AdditionalArgs": "-machine q35 -accel tcg -display gtk -m 2048M"
+      "AdditionalArgs": "-machine q35 -accel tcg -display gtk -m 4096M"
     },
     {
       "Architecture": "arm",
       "Configuration": "release",
       "Name": "qemu-system-arm",
-      "AdditionalArgs": "-machine virt -cpu cortex-a15 -accel tcg -display gtk -m 2048M"
+      "AdditionalArgs": "-machine virt -cpu cortex-a15 -accel tcg -display gtk -m 4096M"
     },
     {
       "Architecture": "ARM64",
       "Configuration": "release",
       "Name": "qemu-system-aarch64",
-      "AdditionalArgs": "-machine virt -cpu cortex-a710 -accel tcg -display gtk -m 2048M"
+      "AdditionalArgs": "-machine virt -cpu cortex-a710 -accel tcg -display gtk -m 4096M"
     },
     {
       "Architecture": "x86",
       "Configuration": "debug",
       "Name": "qemu-system-i386",
-      "AdditionalArgs": "-machine q35 -accel tcg -display gtk -m 2048M -gdb tcp::4242 -S"
+      "AdditionalArgs": "-machine q35 -accel tcg -display gtk -m 4096M -gdb tcp::4242 -S"
     },
     {
       "Architecture": "x64",
       "Configuration": "debug",
       "Name": "qemu-system-x86_64",
-      "AdditionalArgs": "-machine q35 -accel tcg -display gtk -m 2048M -gdb tcp::4242 -S"
+      "AdditionalArgs": "-machine q35 -accel tcg -display gtk -m 4096M -gdb tcp::4242 -S"
     },
     {
       "Architecture": "arm",
       "Configuration": "debug",
       "Name": "qemu-system-arm",
-      "AdditionalArgs": "-machine virt -cpu cortex-a15 -accel tcg -display gtk -m 2048M -gdb tcp::4242 -S"
+      "AdditionalArgs": "-machine virt -cpu cortex-a15 -accel tcg -display gtk -m 4096M -gdb tcp::4242 -S"
     },
     {
       "Architecture": "ARM64",
       "Configuration": "debug",
       "Name": "qemu-system-aarch64",
-      "AdditionalArgs": "-machine virt -cpu cortex-a710 -accel tcg -display gtk -m 2048M -gdb tcp::4242 -S"
+      "AdditionalArgs": "-machine virt -cpu cortex-a710 -accel tcg -display gtk -m 4096M -gdb tcp::4242 -S"
     }
   ]
 

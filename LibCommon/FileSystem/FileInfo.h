@@ -36,9 +36,9 @@ namespace Common::FileSystem
 		UINT64 Attribute;
 		CHAR16* FileName;
 
-		bool operator ==(const FileInfo& right);
+		BOOLEAN operator ==(const FileInfo& right);
 
-		bool operator !=(const FileInfo& right);
+		BOOLEAN operator !=(const FileInfo& right);
 	};
 
 	constinit const FileInfo Empty_FileInfo = FileInfo();

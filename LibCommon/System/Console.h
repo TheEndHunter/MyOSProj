@@ -3,8 +3,8 @@
 #include <Graphics/Colour.h>
 #include <Graphics/RenderContext.h>
 #include <Numerics/Vectors.h>
-#include <Graphics/Font/PCSF/PCSF1.h>
-#include <Graphics/Font/PCSF/PCSF2.h>
+#include <FileTypes/PCSF/PCSF1.h>
+#include <FileTypes/PCSF/PCSF2.h>
 
 
 namespace Common::System
