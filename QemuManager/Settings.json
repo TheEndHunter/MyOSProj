@@ -60,25 +60,57 @@
       "Architecture": "x86",
       "Configuration": "debug",
       "Name": "qemu-system-i386",
-      "AdditionalArgs": "-machine q35 -accel tcg -display gtk -m 4096M -gdb tcp::4242 -S"
+      "AdditionalArgs": "-machine q35 -accel tcg -display gtk -m 4096M -gdb tcp::4242 -S",
+      "LLDBConfig": {
+        "Remote": "127.0.0.1",
+        "Port": 4242,
+        "WorkingSourceDirectory": "A:\\Dev\\Projects\\MyOSProj\\",
+        "BinaryDir": ".\\bin\\x86\\Debug\\",
+        "RelativeExecutableLocation": ".\\EFI\\efi\\boot\\BOOTIA32.efi",
+        "RelativeSymbolLocation": ".\\EFI\\efi\\boot\\BOOTIA32.pdb"
+      }
     },
     {
       "Architecture": "x64",
       "Configuration": "debug",
       "Name": "qemu-system-x86_64",
-      "AdditionalArgs": "-machine q35 -accel tcg -display gtk -m 4096M -gdb tcp::4242 -S"
+      "AdditionalArgs": "-machine q35 -accel tcg -display gtk -m 4096M -gdb tcp::4242 -S",
+      "LLDBConfig": {
+        "Remote": "127.0.0.1",
+        "Port": 4242,
+        "WorkingSourceDirectory": "A:\\Dev\\Projects\\MyOSProj\\",
+        "BinaryDir": ".\\bin\\x64\\Debug\\",
+        "RelativeExecutableLocation": ".\\EFI\\efi\\boot\\BOOTX64.efi",
+        "RelativeSymbolLocation": ".\\EFI\\efi\\boot\\BOOTX64.pdb"
+      }
     },
     {
       "Architecture": "arm",
       "Configuration": "debug",
       "Name": "qemu-system-arm",
-      "AdditionalArgs": "-machine virt -cpu cortex-a15 -accel tcg -display gtk -m 4096M -gdb tcp::4242 -S"
+      "AdditionalArgs": "-machine virt -cpu cortex-a15 -accel tcg -display gtk -m 4096M -gdb tcp::4242 -S",
+      "LLDBConfig": {
+        "Remote": "127.0.0.1",
+        "Port": 4242,
+        "WorkingSourceDirectory": "A:\\Dev\\Projects\\MyOSProj\\",
+        "BinaryDir": ".\\bin\\ARM\\Debug\\",
+        "RelativeExecutableLocation": ".\\EFI\\efi\\boot\\BOOTARM.efi",
+        "RelativeSymbolLocation": ".\\EFI\\efi\\boot\\BOOTARM.pdb"
+      }
     },
     {
       "Architecture": "ARM64",
       "Configuration": "debug",
       "Name": "qemu-system-aarch64",
-      "AdditionalArgs": "-machine virt -cpu cortex-a710 -accel tcg -display gtk -m 4096M -gdb tcp::4242 -S"
+      "AdditionalArgs": "-machine virt -cpu cortex-a710 -accel tcg -display gtk -m 4096M -gdb tcp::4242 -S",
+      "LLDBConfig": {
+        "Remote": "127.0.0.1",
+        "Port": 4242,
+        "WorkingSourceDirectory": "A:\\Dev\\Projects\\MyOSProj\\",
+        "BinaryDir": ".\\bin\\ARM64\\Debug\\",
+        "RelativeExecutableLocation": ".\\EFI\\efi\\boot\\BOOTAA64.efi",
+        "RelativeSymbolLocation": ".\\EFI\\efi\\boot\\BOOTAA64.pdb"
+      }
     }
   ]
 

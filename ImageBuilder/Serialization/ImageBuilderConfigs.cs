@@ -21,24 +21,12 @@
         {
             var c = root.GetRequiredSection("Configurations");
 
-            Configurations = c.AsEnumerable().Where(x =>
-            {
-                if (string.IsNullOrEmpty(x.Value))
-                {
-                    return false;
-                }
-
-                if (string.IsNullOrWhiteSpace(x.Value))
-                {
-                    return false;
-                }
-                return true;
-            }).Select(x => x.Value!).ToList();
+            Configurations = [.. c.AsEnumerable().Where(x => { if (string.IsNullOrEmpty(x.Value)) { return false; } if (string.IsNullOrWhiteSpace(x.Value)) { return false; } return true; }).Select(x => x.Value!)];
 
 
             var a = root.GetRequiredSection("Architectures");
 
-            Architectures = a.AsEnumerable().Where(x =>
+            Architectures = [.. a.AsEnumerable().Where(x =>
             {
                 if (string.IsNullOrEmpty(x.Value))
                 {
@@ -50,7 +38,7 @@
                     return false;
                 }
                 return true;
-            }).Select(x => x.Value!).ToList();
+            }).Select(x => x.Value!)];
 
 
             var section = root.GetRequiredSection("ImageBuilderConfigs");

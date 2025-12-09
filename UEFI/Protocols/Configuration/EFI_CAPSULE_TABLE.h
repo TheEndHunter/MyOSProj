@@ -8,6 +8,6 @@ namespace EFI
 	{
 	public:
 		UINT32 CapsuleArrayNumber;
-		VOID* CapsulePtr[1];
+		VOID** CapsulePtr;
 	};
 }

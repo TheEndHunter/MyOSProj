@@ -2,7 +2,6 @@
 {
     using System.Linq;
 
-    using DiscUtils;
     using DiscUtils.Fat;
     using DiscUtils.Partitions;
     using DiscUtils.Streams;
@@ -189,12 +188,12 @@
                 {
                     var dirs = file.FullName[(dirInfo.FullName.Length + 1)..].Split('\\', StringSplitOptions.RemoveEmptyEntries);
 
-                    if(dirs is null)
+                    if (dirs is null)
                     {
                         continue;
                     }
 
-                    if(dirs.Length == 0)
+                    if (dirs.Length == 0)
                     {
                         continue;
                     }

@@ -4,7 +4,7 @@
 
 namespace EFI
 {
-	inline const UINTN EFI_MEMORY_DESCRIPTOR_VERSION = 1;
+	const UINTN EFI_MEMORY_DESCRIPTOR_VERSION = 1;
 
 	enum class EFI_MEMORY_ATTRIBUTES : UINT64
 	{		

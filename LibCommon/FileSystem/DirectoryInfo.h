@@ -4,11 +4,16 @@
 #include <Protocols/IO/Media/EFI_FILE_PROTOCOL.h>
 #include <Protocols/IO/Media/EFI_FILE_INFO.h>
 
+namespace Common::FileSystem::ESP
+{
+	class ESP_FS_Context;
+}
+
 namespace Common::FileSystem
 {
 	struct DirectoryInfo
 	{
-		
+		friend ESP::ESP_FS_Context;
 	protected:
 		DirectoryInfo(EFI::EFI_FILE_INFO* info);
 	public:
@@ -34,7 +39,7 @@ namespace Common::FileSystem
 		EFI::EFI_TIME LastAccessTime;
 		EFI::EFI_TIME ModificationTime;
 		UINT64 Attribute;
-		CHAR16* DirectoryName;
+		CONST CHAR16* DirectoryName;
 
 		BOOLEAN operator ==(const DirectoryInfo& right);
 

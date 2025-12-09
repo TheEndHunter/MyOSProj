@@ -79,13 +79,14 @@ namespace Bootloader
                 PrintWarningLine(sysTbl, u"Does not support setting console mode", conStat);
             }
 		}
-
         ClearConIn(sysTbl);
 		ClearConOut(sysTbl);
 
 
         RenderContext* render = RenderContext::Initialize(sysTbl, imgHndl);
         MonitorContext* monitor = render->GetMonitorContext();
+
+        PrintInfoLine(sysTbl, u"Renderer Initalized");
 
         if (render == nullptr)
         {
@@ -124,14 +125,25 @@ namespace Bootloader
             ThrowException(sysTbl, imgHndl, u"Could Not Set Highest Resolution Mode", EFI::EFI_STATUS::DEVICE_ERROR);
         }
 
+		PrintInfoLine(sysTbl, u"Highest Resolution Mode Set");
+        WaitForAnyKey(sysTbl);
 		ClearConOut(sysTbl);
+
         sysTbl->ConOut->SetCursorPosition(sysTbl->ConOut, 0, 0);
 
+        Common::Debugging::Debugger debug = Common::Debugging::Debugger(sysTbl);
+        Common::FileSystem::SetFileSystemDebugger(&debug);
+        Common::FileSystem::ESP::SetESPDebugger(&debug);
+
         UINTN fsCount = ESP::ESP_FS_Context::QueryFSCount(sysTbl, imgHndl);
+
         if (fsCount == 0)
         {
             ThrowException(sysTbl, imgHndl, u"No File Systems Found", EFI_STATUS::NOT_FOUND);
         }
+
+		PrintInfo(sysTbl, u"Found File Systems: ");
+		PrintInfoLine(sysTbl, UTF<CHAR16>::ToString(fsCount));
 
         EFI_STATUS fsStatus = EFI_STATUS::SUCCESS;
         ESP::ESP_FS_Context sysFs = ESP::ESP_FS_Context::GetFileSystem(sysTbl, imgHndl, u"SYS", &fsStatus);
@@ -141,13 +153,17 @@ namespace Bootloader
             ThrowException(sysTbl, imgHndl, u"Could Not Locate File System with Label: \"SYS\"", fsStatus);
         }
 
+		PrintInfoLine(sysTbl, u"Got SYS File System");
+
         sysFs.OpenVolume();
+
+        PrintInfoLine(sysTbl,u"Finding Kernel...");
 
         FileInfo kernel = sysFs.GetFileInfo(u"Kernel.bin");
 
         if (sysFs.LastStatus != EFI::EFI_STATUS::SUCCESS)
         {
-            ThrowException(sysTbl, imgHndl, u"Could Not Locate Kernel", sysFs.LastStatus);
+            ThrowException(sysTbl, imgHndl, u"Could Not Locate Kernel ", sysFs.LastStatus);
         }
 
         if (kernel == Empty_FileInfo)
@@ -236,30 +252,30 @@ namespace Bootloader
 		}
 
         ESP::ESP_FS_Context efiFs = ESP::ESP_FS_Context::GetFileSystem(sysTbl, imgHndl, u"EFI", &fsStatus);
-
+        PrintLine(sysTbl, u"Got efiFS");
         if (efiFs == ESP::ESP_FS_Context::EmptyFS)
         {
             ThrowException(sysTbl, imgHndl, u"Could Not Locate File System with Label: \"EFI\"", fsStatus);
         }
 
 		ESP::ESP_FS_Context libFs = ESP::ESP_FS_Context::GetFileSystem(sysTbl, imgHndl, u"LIBS", &fsStatus);
-
+        PrintLine(sysTbl, u"Got libFS");
         if (libFs == ESP::ESP_FS_Context::EmptyFS)
         {
             ThrowException(sysTbl, imgHndl, u"Could Not Locate File System with Label: \"LIBS\"", fsStatus);
         }
 
+
 		render->ClearScreen(TRUE);
         ClearConOut(sysTbl);
         sysTbl->ConOut->SetCursorPosition(sysTbl->ConOut, 0, 0);
 
-
-        Common::Debugging::Debugger debug = Common::Debugging::Debugger(sysTbl);
-
+        
+        
 		PrintLine(sysTbl, u"Press Enter to start Kernel...");
         WaitForKey(sysTbl, u'\r');
 
-        KrnlMain main = (KrnlMain)(krnlPE.GetEntryPoint());
+        auto main = (KrnlMain)(krnlPE.GetEntryPoint());
         Common::System::Environment::KernelError status = main(alloc,&debug,render, monitor,&efiFs,&sysFs,&libFs);
 
         switch (status)
@@ -268,7 +284,7 @@ namespace Bootloader
             break;
         default:
 			Print(sysTbl, u"Kernel Error: ",EfiConsoleColor::_Error);
-			Print(sysTbl, UTF<CHAR16>::ToString((UINT64)status), EfiConsoleColor::_Error);
+			Print(sysTbl, UTF<CHAR16>::ToHex((UINT64)status), EfiConsoleColor::_Error);
             Print(sysTbl, UTF<CHAR16>::NewLine, EfiConsoleColor::_Error);
 			PrintLine(sysTbl, u"Press Enter to continue...",EfiConsoleColor::_Error);
             break;

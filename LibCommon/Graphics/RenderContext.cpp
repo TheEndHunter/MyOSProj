@@ -1091,7 +1091,7 @@ namespace Common::Graphics
 	void RenderContext::SetPixelForeground2Colour(const UINT32 xPos, const UINT32 yPos)
 	{
 		Pixel1Bpp* fb = (Pixel1Bpp*)monitor.GetFrameBuffer();
-		const UINTN ppsl = monitor.GetPixelsPerScanLine();
+		const UINT64 ppsl = monitor.GetPixelsPerScanLine();
 		PixelFormat pf = monitor.GetPixelFormat();
 
 		const UINTN pos = CalculatePixelOffset(xPos, yPos, ppsl);

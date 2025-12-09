@@ -2,6 +2,44 @@
 
 namespace Common::FileSystem
 {
+	Debugging::Debugger* _FSDebugger = nullptr;
+
+	FileHandle::FileHandle(EFI::EFI_FILE_PROTOCOL* file, FileInfo* i, FileMode mode, UINT64 attribs)
+	{
+		/*Check if the file is null, if it is, return an error*/
+		if (file == nullptr)
+		{
+			if (_FSDebugger != nullptr)
+			{
+				_FSDebugger->PrintErrorLine(u"FileHandle::FileHandle: file == nullptr");
+			}
+			return;
+		}
+		if (i == nullptr)
+		{
+			if (_FSDebugger != nullptr)
+			{
+				_FSDebugger->PrintErrorLine(u"FileHandle::FileHandle: i == nullptr");
+			}
+			return;
+		}
+
+		if (i->Size == 0)
+		{
+			if (_FSDebugger != nullptr)
+			{
+				_FSDebugger->PrintErrorLine(u"FileHandle::FileHandle: i->Size == 0");
+			}
+			return;
+		}
+
+		Mode = mode;
+		Size = i->Size;
+		Info = *i;
+		_File = file;
+		Attributes = attribs;
+	}
+
 	FileHandle FileHandle::Create(EFI::EFI_FILE_PROTOCOL* file, FileInfo* i, FileMode mode, UINT64 attribs)
 	{
 		return FileHandle(file, i,mode,attribs);
@@ -10,16 +48,12 @@ namespace Common::FileSystem
 	BOOLEAN FileHandle::operator==(const FileHandle& right)
 	{
 		/*Compare all members for equality, if one fails return false, otherwise return true*/
-		if (Info != right.Info)
-			return false;
 
-		if (Size != right.Size)
-			return false;
-
-		if (_File != right._File)
-			return false;
-
-		return true;
+		return (_File == right._File) &&
+			(Mode == right.Mode) &&
+			(Size == right.Size) &&
+			(Info == right.Info) &&
+			(Attributes == right.Attributes);
 	}
 
 	BOOLEAN FileHandle::operator!=(const FileHandle& right)
@@ -100,5 +134,10 @@ namespace Common::FileSystem
 	EFI::EFI_STATUS FileHandle::FlushAsync(EFI::EFI_FILE_IO_TOKEN* token)
 	{
 		return _File->FlushEx(_File, token);
+	}
+
+	void SetFileSystemDebugger(Debugging::Debugger* debugger)
+	{
+		_FSDebugger = debugger;
 	}
 }

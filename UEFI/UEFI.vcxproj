@@ -35,9 +35,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Helper Funcs\StringHelpers.cpp" />
     <ClCompile Include="UEFIDef.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Helper Funcs\StringHelpers.h" />
     <ClInclude Include="Protocols\Configuration\EFI_CAPSULE_HEADER.h" />
     <ClInclude Include="Protocols\Configuration\EFI_CAPSULE_TABLE.h" />
     <ClInclude Include="Protocols\Debug\EFI_DEBUGPORT_PROTOCOL.h" />
@@ -144,12 +146,12 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>

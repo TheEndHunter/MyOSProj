@@ -7,6 +7,6 @@ namespace Common::FileSystem
 		if (info == nullptr)
 			return Empty_VolInfo;
 
-		return VolumeInfo(*info);
+		return VolumeInfo(info);
 	}
 }

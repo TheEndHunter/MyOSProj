@@ -4,10 +4,10 @@
 
 namespace Common::Graphics::Font::PCSF
 {
-	const Debugging::Debugger* _debugger;
+	const Debugging::Debugger* _pcsf1Debugger;
 	void PCSF1::LoadDebugger(Debugging::Debugger* debugger)
 	{
-		_debugger = debugger;
+		_pcsf1Debugger = debugger;
 	}
 	PCSF1::PCSF1()
 	{
@@ -20,47 +20,48 @@ namespace Common::Graphics::Font::PCSF
 
 	PCSF1::PCSF1(Common::FileSystem::FileHandle* handle)
 	{
-		_debugger->PrintInfoLine(u"Reading PCSF1 Header");
+		_pcsf1Debugger->PrintInfoLine(u"Reading PCSF1 Header");
 
 		if (handle == nullptr) {
 			_isValid = false;
 			return;
 		}
-		_debugger->PrintInfoLine(u"Reading PCSF1 Header");
+		_pcsf1Debugger->PrintInfoLine(u"Reading PCSF1 Header");
 		
 		Header = PCSF1Hdr(handle);
 
 		if (Header.Magic.Char[0] != PSF1_MAGIC[0] || Header.Magic.Char[1] != PSF1_MAGIC[1])
 		{
 			_isValid = FALSE;
+			_pcsf1Debugger->WaitForKey();
 			return;
 		}
 
-		_debugger->PrintInfoLine(u"PCSF1 Magic is valid");
+		_pcsf1Debugger->PrintInfoLine(u"PCSF1 Magic is valid");
 
 		_isValid = TRUE;
 		UINT32 charSize = Header.CharSize;
 
 		if((UINT8)Header.Mode & (UINT8)PCSF1Mode::MODE512)
 		{
-			_debugger->PrintInfoLine(u"PCSF1 Header Mode 512");
+			_pcsf1Debugger->PrintInfoLine(u"PCSF1 Header Mode 512");
 			CharCount = 512;
 		}
 		else
 		{
-			_debugger->PrintInfoLine(u"PCSF1 Header Mode 256");
+			_pcsf1Debugger->PrintInfoLine(u"PCSF1 Header Mode 256");
 			CharCount = 256;
 		}
 
 
 		Glyphs = (UINT8**)new UINT8[CharCount * charSize];
 
-		_debugger->PrintInfoLine(u"Allocated Glyphs Pointer");
+		_pcsf1Debugger->PrintInfoLine(u"Allocated Glyphs Pointer");
 		handle->Read<UINT8>(&Glyphs[0][0], CharCount);
 		
 		if ((UINT8)Header.Mode & (UINT8)PCSF1Mode::MODEHASTAB)
 		{
-			_debugger->PrintInfoLine(u"PCSF1 Has Unicode Table");
+			_pcsf1Debugger->PrintInfoLine(u"PCSF1 Has Unicode Table");
 			UnicodeTable = new UnicodeSequence[CharCount];
 			if (UnicodeTable == nullptr)
 			{
@@ -69,6 +70,8 @@ namespace Common::Graphics::Font::PCSF
 				delete[] Glyphs;
 				Glyphs = nullptr;
 				return;
+				_pcsf1Debugger->PrintInfoLine(u"PCSF1 Unicode Table Bad Alloc");
+				_pcsf1Debugger->WaitForKey();
 			}
 
 			UINT16 i;
@@ -104,6 +107,8 @@ namespace Common::Graphics::Font::PCSF
 						UnicodeTable = nullptr;
 						delete[] Glyphs;
 						Glyphs = nullptr;
+						_pcsf1Debugger->PrintInfoLine(u"PCSF1 Unicode Table Seq Bad Alloc");
+						_pcsf1Debugger->WaitForKey();
 						return;
 					}
 					UnicodeTable[i].length = seqLength;
@@ -127,6 +132,8 @@ namespace Common::Graphics::Font::PCSF
 
 				// The Unicode table is shorter than expected, handle this case
 				_isValid = FALSE;
+				_pcsf1Debugger->PrintInfoLine(u"PCSF1 Unicode Table Short Table");
+				_pcsf1Debugger->WaitForKey();
 				return;
 			}
 		}
@@ -147,15 +154,15 @@ namespace Common::Graphics::Font::PCSF
 
 	PCSF1Hdr::PCSF1Hdr(Common::FileSystem::FileHandle* handle)
 	{
-		_debugger->PrintInfo(u"Reading PCSF1 Header From Handle: Address: ");
-		_debugger->PrintInfoLine(Common::System::Environment::UTF<CHAR16>::ToHex(handle));
-		_debugger->PrintInfo(u"SetPosition");
+		_pcsf1Debugger->PrintInfo(u"Reading PCSF1 Header From Handle: Address: ");
+		_pcsf1Debugger->PrintInfoLine(Common::System::Environment::UTF<CHAR16>::ToHex(handle));
+		_pcsf1Debugger->PrintInfo(u"SetPosition");
 		handle->SetPosition(0UL);
-		_debugger->PrintInfo(u"MagicValue");
+		_pcsf1Debugger->PrintInfo(u"MagicValue");
 		handle->Read<UINT16>(&Magic.Value);
-		_debugger->PrintInfo(u"Mode");
+		_pcsf1Debugger->PrintInfo(u"Mode");
 		handle->Read<PCSF1Mode>(&Mode);
-		_debugger->PrintInfo(u"CharSize");
+		_pcsf1Debugger->PrintInfo(u"CharSize");
 		handle->Read<UINT8>(&CharSize);
 	}
 

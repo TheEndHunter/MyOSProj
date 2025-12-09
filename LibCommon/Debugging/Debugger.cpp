@@ -8,12 +8,10 @@ namespace Common::Debugging
     {
         systemTable->ConOut->SetAttribute(systemTable->ConOut, v);
     }
-
     inline static void SetConsoleColor(EFI::EFI_SYSTEM_TABLE* systemTable, EFI::EfiForegroundColor fg, EFI::EfiBackgroundColor bg)
     {
         systemTable->ConOut->SetAttribute(systemTable->ConOut, fg | bg);
     }
-
     inline static void PrintLine(EFI::EFI_SYSTEM_TABLE* systemTable, const CHAR16* str)
     {
         if (Common::System::Environment::UTF<CHAR16>::IsNullOrEmpty(str) == TRUE)
@@ -23,7 +21,6 @@ namespace Common::Debugging
         systemTable->ConOut->OutputString(systemTable->ConOut, str);
         systemTable->ConOut->OutputString(systemTable->ConOut, Common::System::Environment::UTF<CHAR16>::NewLine);
     }
-
     inline static void Print(EFI::EFI_SYSTEM_TABLE* systemTable, const CHAR16* str)
     {
         if (Common::System::Environment::UTF<CHAR16>::IsNullOrEmpty(str) == TRUE)
@@ -32,7 +29,6 @@ namespace Common::Debugging
         }
         systemTable->ConOut->OutputString(systemTable->ConOut, str);
     }
-
     void Debugger::PrintDebugLine(const CHAR16* msg) const
     {
         SetConsoleColor(_sysTbl, EFI::EfiConsoleColor::_Debug);
@@ -96,5 +92,62 @@ namespace Common::Debugging
         SetConsoleColor(_sysTbl, EFI::EfiConsoleColor::_Fatal);
         Print(_sysTbl, msg);
         SetConsoleColor(_sysTbl, EFI::EfiConsoleColor::_Default);
+    }
+    void Debugger::WaitForKey(const CHAR16 key) const
+    {
+        EFI::EFI_STATUS status = EFI::EFI_STATUS::SUCCESS;
+        EFI::EFI_INPUT_KEY inputKey = EFI::KEYS::Null;
+        _sysTbl->ConIn->Reset(_sysTbl->ConIn, false);
+        /*Await for a specific key to be entered, otherwise clear ConsoleIn*/
+        do
+        {
+            status = _sysTbl->BootServices->WaitForEvent(1, &_sysTbl->ConIn->WaitForKey, nullptr);
+            if (status != EFI::EFI_STATUS::SUCCESS)
+            {
+                PrintErrorLine(u"Error in WaitForEvent");
+                return;
+            }
+
+            status = _sysTbl->ConIn->ReadKeyStroke(_sysTbl->ConIn, &inputKey);
+			_sysTbl->ConIn->Reset(_sysTbl->ConIn, false);
+
+            if (status != EFI::EFI_STATUS::SUCCESS)
+            {
+                PrintErrorLine(u"Error in ReadKeyStroke");
+                return;
+            }
+        } while (inputKey != key);
+
+        _sysTbl->ConIn->Reset(_sysTbl->ConIn, false);
+    }
+    void Debugger::WaitForKey() const
+    {
+
+        EFI::EFI_STATUS status = EFI::EFI_STATUS::SUCCESS;
+        EFI::EFI_INPUT_KEY inputKey = EFI::KEYS::Null;
+        
+        _sysTbl->ConIn->Reset(_sysTbl->ConIn, false);
+
+        /*Await for a specific key to be entered, otherwise clear ConsoleIn*/
+        do
+        {
+            status = _sysTbl->BootServices->WaitForEvent(1, &_sysTbl->ConIn->WaitForKey, nullptr);
+            if (status != EFI::EFI_STATUS::SUCCESS)
+            {
+                PrintErrorLine(u"Error in WaitForEvent");
+                return;
+            }
+
+            status = _sysTbl->ConIn->ReadKeyStroke(_sysTbl->ConIn, &inputKey);
+            _sysTbl->ConIn->Reset(_sysTbl->ConIn, false);
+
+            if (status != EFI::EFI_STATUS::SUCCESS)
+            {
+                PrintErrorLine(u"Error in ReadKeyStroke");
+                return;
+            }
+        } while (inputKey == EFI::KEYS::Null);
+
+        _sysTbl->ConIn->Reset(_sysTbl->ConIn,false);
     }
 }

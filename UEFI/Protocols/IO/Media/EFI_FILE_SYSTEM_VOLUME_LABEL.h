@@ -4,6 +4,7 @@
 #include "EFI_GUID.h"
 #include <Protocols/Time/EFI_TIME.h>
 #include "EFI_FILE_ATTRIBUTES.h"
+#include <Helper Funcs/StringHelpers.h>
 
 namespace EFI
 {
@@ -12,6 +13,12 @@ namespace EFI
 	struct EFI_FILE_SYSTEM_VOLUME_LABEL
 	{
 	public:
-		CHAR16 VolumeLabel[];
+		const CHAR16* VolumeLabel;
+
+
+		BOOLEAN operator==(const EFI_FILE_SYSTEM_VOLUME_LABEL& other) const
+		{
+			return CompareStrings(VolumeLabel, other.VolumeLabel);
+		}
 	};
 }

@@ -27,7 +27,7 @@ namespace EFI
 		/// A pointer to a null terminated string that identifies
 		///  the vendor that produces the system firmware for the platform.
 		/// </summary>
-		CHAR16* FirmwareVendor;		
+		CONST CHAR16* FirmwareVendor;
 		/// <summary>
 		/// A firmware vendor specific value that identifies the revision of the system firmware for the platform.
 		/// </summary>

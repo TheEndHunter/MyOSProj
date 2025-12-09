@@ -38,19 +38,19 @@ namespace EFI
 		{
 			if (Data1 < guid.Data1)
 			{
-				return true;
+				return TRUE;
 			}
 			else if (Data1 == guid.Data1)
 			{
 				if (Data2 < guid.Data2)
 				{
-					return true;
+					return TRUE;
 				}
 				else if (Data2 == guid.Data2)
 				{
 					if (Data3 < guid.Data3)
 					{
-						return true;
+						return TRUE;
 					}
 					else if (Data3 == guid.Data3)
 					{
@@ -58,36 +58,36 @@ namespace EFI
 						{
 							if (Data4[i] < guid.Data4[i])
 							{
-								return true;
+								return TRUE;
 							}
 							else if (Data4[i] > guid.Data4[i])
 							{
-								return false;
+								return FALSE;
 							}
 						}
 					}
 				}
 			}
-			return false;
+			return FALSE;
 		}
 
 		BOOLEAN operator>(const EFI_GUID& guid)
 		{
 			if (Data1 > guid.Data1)
 			{
-				return true;
+				return TRUE;
 			}
 			else if (Data1 == guid.Data1)
 			{
 				if (Data2 > guid.Data2)
 				{
-					return true;
+					return TRUE;
 				}
 				else if (Data2 == guid.Data2)
 				{
 					if (Data3 > guid.Data3)
 					{
-						return true;
+						return TRUE;
 					}
 					else if (Data3 == guid.Data3)
 					{
@@ -95,36 +95,36 @@ namespace EFI
 						{
 							if (Data4[i] > guid.Data4[i])
 							{
-								return true;
+								return TRUE;
 							}
 							else if (Data4[i] < guid.Data4[i])
 							{
-								return false;
+								return FALSE;
 							}
 						}
 					}
 				}
 			}
-			return false;
+			return FALSE;
 		}
 
 		BOOLEAN operator<=(const EFI_GUID& guid)
 		{
 			if (Data1 < guid.Data1)
 			{
-				return true;
+				return TRUE;
 			}
 			else if (Data1 == guid.Data1)
 			{
 				if (Data2 < guid.Data2)
 				{
-					return true;
+					return TRUE;
 				}
 				else if (Data2 == guid.Data2)
 				{
 					if (Data3 < guid.Data3)
 					{
-						return true;
+						return TRUE;
 					}
 					else if (Data3 == guid.Data3)
 					{
@@ -132,36 +132,36 @@ namespace EFI
 						{
 							if (Data4[i] < guid.Data4[i])
 							{
-								return true;
+								return TRUE;
 							}
 							else if (Data4[i] > guid.Data4[i])
 							{
-								return false;
+								return FALSE;
 							}
 						}
 					}
 				}
 			}
-			return true;
+			return TRUE;
 		}
 
 		BOOLEAN operator>=(const EFI_GUID& guid)
 		{
 			if (Data1 > guid.Data1)
 			{
-				return true;
+				return TRUE;
 			}
 			else if (Data1 == guid.Data1)
 			{
 				if (Data2 > guid.Data2)
 				{
-					return true;
+					return TRUE;
 				}
 				else if (Data2 == guid.Data2)
 				{
 					if (Data3 > guid.Data3)
 					{
-						return true;
+						return TRUE;
 					}
 					else if (Data3 == guid.Data3)
 					{
@@ -169,17 +169,17 @@ namespace EFI
 						{
 							if (Data4[i] > guid.Data4[i])
 							{
-								return true;
+								return TRUE;
 							}
 							else if (Data4[i] < guid.Data4[i])
 							{
-								return false;
+								return FALSE;
 							}
 						}
 					}
 				}
 			}
-			return true;
+			return TRUE;
 		}
 
 	

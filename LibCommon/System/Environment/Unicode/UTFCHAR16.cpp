@@ -2,64 +2,74 @@
 
 namespace Common::System::Environment
 {
-	const CHAR16 UTF<CHAR16>::NewLine[3]{u'\r', u'\n',u'\0'};
+	constexpr const CHAR16 UTF<CHAR16>::NewLine[3]{u'\r', u'\n',u'\0'};
+	constexpr const CHAR16 UTF<CHAR16>::NewLineChar[2]{ u'\r', u'\n' };
 
 	CHAR16 _UTF16_GUIDTOSTRING[43] = { u'{',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'-',u'\0',u'\0',u'\0',u'\0',u'-',u'\0',u'\0',u'\0',u'\0',u'-',u'\0',u'\0',u'\0',u'\0',u'-',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'}',u'\0' };
+	constexpr const UINT64 _UTF16_GUIDTOSTRING_LEN = sizeof(_UTF16_GUIDTOSTRING) / sizeof(CHAR16);
+
 	CHAR16 _UTF16_HEXCHARS[17] = { u'0',u'1',u'2',u'3',u'4',u'5',u'6',u'7',u'8',u'9',u'A',u'B',u'C',u'D',u'E',u'F' };
+	constexpr const UINT64 _UTF16_HEXCHARS_LEN = sizeof(_UTF16_HEXCHARS) / sizeof(CHAR16);
+
 	CHAR16 _UTF16_HEXSTRING[18] = { u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
-	CHAR16 _UTF16_VALUETOSTRING[23] = { u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
-	CHAR16 _UTF16_WHITESPACECHARS[30] = { 0x0009,0x000A,0x000B,0x000C,0x000D,0x0020,0x0085,0x00A0,0x1680,0x2000,0x2001,0x2003,0x2004,0x2005,0x2006,0x2007,0x02008,0x2009,0x200A,0x2028,0x2029,0x202F,0x205F,0x3000,0x180E,0x200B,0x200C,0x200D,0x2060,0xFEFF };
+	constexpr const UINT64 _UTF16_HEXSTRING_LEN = sizeof(_UTF16_HEXSTRING) / sizeof(CHAR16);
 
-	constinit const CHAR16* _UTF16_ABORTED = u"ABORTED";
-	constinit const CHAR16* _UTF16_ACCESS_DENIED = u"ACCESS_DENIED";
-	constinit const CHAR16* _UTF16_ALREADY_STARTED = u"ALREADY_STARTED";
-	constinit const CHAR16* _UTF16_BAD_BUFFER_SIZE = u"BAD_BUFFER_SIZE";
-	constinit const CHAR16* _UTF16_BOOLEAN_FALSE = u"False";
-	constinit const CHAR16* _UTF16_BOOLEAN_TRUE = u"True";
-	constinit const CHAR16* _UTF16_BUFFER_TOO_SMALL = u"BUFFER_TOO_SMALL";
-	constinit const CHAR16* _UTF16_COMPROMISED_DATA = u"COMPROMISED_DATA";
-	constinit const CHAR16* _UTF16_CRC_ERROR = u"CRC_ERROR";
-	constinit const CHAR16* _UTF16_DEVICE_ERROR = u"DEVICE_ERROR";
-	constinit const CHAR16* _UTF16_END_OF_FILE = u"END_OF_FILE";
-	constinit const CHAR16* _UTF16_END_OF_MEDIA = u"END_OF_MEDIA";
-	constinit const CHAR16* _UTF16_HTTP_ERROR = u"HTTP_ERROR";
-	constinit const CHAR16* _UTF16_ICMP_ERROR = u"ICMP_ERROR";
-	constinit const CHAR16* _UTF16_INCOMPATIBLE_VERSION = u"INCOMPATIBLE_VERSION";
-	constinit const CHAR16* _UTF16_INVALID_LANGUAGE = u"INVALID_LANGUAGE";
-	constinit const CHAR16* _UTF16_INVALID_PARAMETER = u"INVALID_PARAMETER";
-	constinit const CHAR16* _UTF16_IP_ADDRESS_CONFLICT = u"IP_ADDRESS_CONFLICT";
-	constinit const CHAR16* _UTF16_LOAD_ERROR = u"LOAD_ERROR";
-	constinit const CHAR16* _UTF16_MEDIA_CHANGED = u"MEDIA_CHANGED";
-	constinit const CHAR16* _UTF16_NO_MAPPING = u"NO_MAPPING";
-	constinit const CHAR16* _UTF16_NO_MEDIA = u"NO_MEDIA";
-	constinit const CHAR16* _UTF16_NO_RESPONSE = u"NO_RESPONSE";
-	constinit const CHAR16* _UTF16_NOT_FOUND = u"NOT_FOUND";
-	constinit const CHAR16* _UTF16_NOT_READY = u"NOT_READY";
-	constinit const CHAR16* _UTF16_NOT_STARTED = u"NOT_STARTED";
-	constinit const CHAR16* _UTF16_OUT_OF_RESOURCES = u"OUT_OF_RESOURCES";
-	constinit const CHAR16* _UTF16_PROTOCOL_ERROR = u"PROTOCOL_ERROR";
-	constinit const CHAR16* _UTF16_SECURITY_VIOLATION = u"SECURITY_VIOLATION";
-	constinit const CHAR16* _UTF16_SUCCESS = u"SUCCESS";
-	constinit const CHAR16* _UTF16_TFTP_ERROR = u"TFTP_ERROR";
-	constinit const CHAR16* _UTF16_TIMEOUT = u"TIMEOUT";
-	constinit const CHAR16* _UTF16_UNSUPPORTED = u"UNSUPPORTED";
-	constinit const CHAR16* _UTF16_VOLUME_CORRUPTED = u"VOLUME_CORRUPTED";
-	constinit const CHAR16* _UTF16_VOLUME_FULL = u"VOLUME_FULL";
-	constinit const CHAR16* _UTF16_WARN_BUFFER_TOO_SMALL = u"WARN_BUFFER_TOO_SMALL";
-	constinit const CHAR16* _UTF16_WARN_DELETE_FAILURE = u"WARN_DELETE_FAILURE";
-	constinit const CHAR16* _UTF16_WARN_FILE_SYSTEM = u"WARN_FILE_SYSTEM";
-	constinit const CHAR16* _UTF16_WARN_RESET_REQUIRED = u"WARN_RESET_REQUIRED";
-	constinit const CHAR16* _UTF16_WARN_STALE_DATA = u"WARN_STALE_DATA";
-	constinit const CHAR16* _UTF16_WARN_UNKNOWN_GLYPH = u"WARN_UNKNOWN_GLYPH";
-	constinit const CHAR16* _UTF16_WARN_WRITE_FAILURE = u"WARN_WRITE_FAILURE";
-	constinit const CHAR16* _UTF16_WRITE_PROTECTED = u"WRITE_PROTECTED";
+	 CHAR16 _UTF16_VALUETOSTRING[23] = { u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0',u'\0' };
+	constexpr const UINT64 _UTF16_VALUETOSTRINGSTRING_LEN = sizeof(_UTF16_VALUETOSTRING) / sizeof(CHAR16);
 
-	constinit const CHAR16* _UTF16_ALLOC_STATUS_SUCCESS = u"SUCCESS";
-	constinit const CHAR16* _UTF16_ALLOC_STATUS_INVALID_PARAMETER = u"INVALID_PARAMETER";
-	constinit const CHAR16* _UTF16_ALLOC_STATUS_NOT_ENOUGH_MEMORY = u"NOT_ENOUGH_MEMORY";
-	constinit const CHAR16* _UTF16_ALLOC_STATUS_NOT_ENOUGH_PAGES = u"NOT_ENOUGH_PAGES";
-	constinit const CHAR16* _UTF16_ALLOC_STATUS_ACCESS_DENIED = u"ACCESS_DENIED";
-	constinit const CHAR16* _UTF16_ALLOC_STATUS_UNKNOWN = u"UNKNOWN";
+	constexpr CHAR16 _UTF16_WHITESPACECHARS[30] = { 0x0009,0x000A,0x000B,0x000C,0x000D,0x0020,0x0085,0x00A0,0x1680,0x2000,0x2001,0x2003,0x2004,0x2005,0x2006,0x2007,0x02008,0x2009,0x200A,0x2028,0x2029,0x202F,0x205F,0x3000,0x180E,0x200B,0x200C,0x200D,0x2060,0xFEFF };
+	constexpr const UINT64 _UTF16_WHITESPACECHARS_LEN = sizeof(_UTF16_WHITESPACECHARS) / sizeof(CHAR16);
+	
+	constexpr const CHAR16* _UTF16_ABORTED = u"ABORTED";
+	constexpr const CHAR16* _UTF16_ACCESS_DENIED = u"ACCESS_DENIED";
+	constexpr const CHAR16* _UTF16_ALREADY_STARTED = u"ALREADY_STARTED";
+	constexpr const CHAR16* _UTF16_BAD_BUFFER_SIZE = u"BAD_BUFFER_SIZE";
+	constexpr const CHAR16* _UTF16_BOOLEAN_FALSE = u"False";
+	constexpr const CHAR16* _UTF16_BOOLEAN_TRUE = u"True";
+	constexpr const CHAR16* _UTF16_BUFFER_TOO_SMALL = u"BUFFER_TOO_SMALL";
+	constexpr const CHAR16* _UTF16_COMPROMISED_DATA = u"COMPROMISED_DATA";
+	constexpr const CHAR16* _UTF16_CRC_ERROR = u"CRC_ERROR";
+	constexpr const CHAR16* _UTF16_DEVICE_ERROR = u"DEVICE_ERROR";
+	constexpr const CHAR16* _UTF16_END_OF_FILE = u"END_OF_FILE";
+	constexpr const CHAR16* _UTF16_END_OF_MEDIA = u"END_OF_MEDIA";
+	constexpr const CHAR16* _UTF16_HTTP_ERROR = u"HTTP_ERROR";
+	constexpr const CHAR16* _UTF16_ICMP_ERROR = u"ICMP_ERROR";
+	constexpr const CHAR16* _UTF16_INCOMPATIBLE_VERSION = u"INCOMPATIBLE_VERSION";
+	constexpr const CHAR16* _UTF16_INVALID_LANGUAGE = u"INVALID_LANGUAGE";
+	constexpr const CHAR16* _UTF16_INVALID_PARAMETER = u"INVALID_PARAMETER";
+	constexpr const CHAR16* _UTF16_IP_ADDRESS_CONFLICT = u"IP_ADDRESS_CONFLICT";
+	constexpr const CHAR16* _UTF16_LOAD_ERROR = u"LOAD_ERROR";
+	constexpr const CHAR16* _UTF16_MEDIA_CHANGED = u"MEDIA_CHANGED";
+	constexpr const CHAR16* _UTF16_NO_MAPPING = u"NO_MAPPING";
+	constexpr const CHAR16* _UTF16_NO_MEDIA = u"NO_MEDIA";
+	constexpr const CHAR16* _UTF16_NO_RESPONSE = u"NO_RESPONSE";
+	constexpr const CHAR16* _UTF16_NOT_FOUND = u"NOT_FOUND";
+	constexpr const CHAR16* _UTF16_NOT_READY = u"NOT_READY";
+	constexpr const CHAR16* _UTF16_NOT_STARTED = u"NOT_STARTED";
+	constexpr const CHAR16* _UTF16_OUT_OF_RESOURCES = u"OUT_OF_RESOURCES";
+	constexpr const CHAR16* _UTF16_PROTOCOL_ERROR = u"PROTOCOL_ERROR";
+	constexpr const CHAR16* _UTF16_SECURITY_VIOLATION = u"SECURITY_VIOLATION";
+	constexpr const CHAR16* _UTF16_SUCCESS = u"SUCCESS";
+	constexpr const CHAR16* _UTF16_TFTP_ERROR = u"TFTP_ERROR";
+	constexpr const CHAR16* _UTF16_TIMEOUT = u"TIMEOUT";
+	constexpr const CHAR16* _UTF16_UNSUPPORTED = u"UNSUPPORTED";
+	constexpr const CHAR16* _UTF16_VOLUME_CORRUPTED = u"VOLUME_CORRUPTED";
+	constexpr const CHAR16* _UTF16_VOLUME_FULL = u"VOLUME_FULL";
+	constexpr const CHAR16* _UTF16_WARN_BUFFER_TOO_SMALL = u"WARN_BUFFER_TOO_SMALL";
+	constexpr const CHAR16* _UTF16_WARN_DELETE_FAILURE = u"WARN_DELETE_FAILURE";
+	constexpr const CHAR16* _UTF16_WARN_FILE_SYSTEM = u"WARN_FILE_SYSTEM";
+	constexpr const CHAR16* _UTF16_WARN_RESET_REQUIRED = u"WARN_RESET_REQUIRED";
+	constexpr const CHAR16* _UTF16_WARN_STALE_DATA = u"WARN_STALE_DATA";
+	constexpr const CHAR16* _UTF16_WARN_UNKNOWN_GLYPH = u"WARN_UNKNOWN_GLYPH";
+	constexpr const CHAR16* _UTF16_WARN_WRITE_FAILURE = u"WARN_WRITE_FAILURE";
+	constexpr const CHAR16* _UTF16_WRITE_PROTECTED = u"WRITE_PROTECTED";
+
+	constexpr const CHAR16* _UTF16_ALLOC_STATUS_SUCCESS = u"SUCCESS";
+	constexpr const CHAR16* _UTF16_ALLOC_STATUS_INVALID_PARAMETER = u"INVALID_PARAMETER";
+	constexpr const CHAR16* _UTF16_ALLOC_STATUS_NOT_ENOUGH_MEMORY = u"NOT_ENOUGH_MEMORY";
+	constexpr const CHAR16* _UTF16_ALLOC_STATUS_NOT_ENOUGH_PAGES = u"NOT_ENOUGH_PAGES";
+	constexpr const CHAR16* _UTF16_ALLOC_STATUS_ACCESS_DENIED = u"ACCESS_DENIED";
+	constexpr const CHAR16* _UTF16_ALLOC_STATUS_UNKNOWN = u"UNKNOWN";
 
 	CHAR16* UTF<CHAR16>::ToHex(const INT16 value)
 	{
@@ -208,10 +218,6 @@ namespace Common::System::Environment
 	CHAR16* UTF<CHAR16>::ToHex(const UINT64 value)
 	{
 		UINT64 i = value;
-		for (; i > 0; i >>= 4)
-		{
-			_UTF16_HEXSTRING[i] = _UTF16_HEXCHARS[i & 0xF];
-		}
 		_UTF16_HEXSTRING[0] = _UTF16_HEXCHARS[(value >> 60) & 0xF];
 		_UTF16_HEXSTRING[1] = _UTF16_HEXCHARS[(value >> 56) & 0xF];
 		_UTF16_HEXSTRING[2] = _UTF16_HEXCHARS[(value >> 52) & 0xF];
@@ -300,111 +306,111 @@ namespace Common::System::Environment
 		return &_UTF16_GUIDTOSTRING[0];
 	}
 
-	CHAR16* UTF<CHAR16>::ToString(const EFI::EFI_STATUS status)
+	const CHAR16* UTF<CHAR16>::ToString(const EFI::EFI_STATUS status)
 	{
 		switch (status)
 		{
 		case EFI::EFI_STATUS::ABORTED:
-			return (CHAR16*)_UTF16_ABORTED;
+			return _UTF16_ABORTED;
 		case EFI::EFI_STATUS::ACCESS_DENIED:
-			return (CHAR16*)_UTF16_ACCESS_DENIED;
+			return _UTF16_ACCESS_DENIED;
 		case EFI::EFI_STATUS::ALREADY_STARTED:
-			return (CHAR16*)_UTF16_ALREADY_STARTED;
+			return _UTF16_ALREADY_STARTED;
 		case EFI::EFI_STATUS::BAD_BUFFER_SIZE:
-			return (CHAR16*)_UTF16_BAD_BUFFER_SIZE;
+			return _UTF16_BAD_BUFFER_SIZE;
 		case EFI::EFI_STATUS::BUFFER_TOO_SMALL:
-			return (CHAR16*)_UTF16_BUFFER_TOO_SMALL;
+			return _UTF16_BUFFER_TOO_SMALL;
 		case EFI::EFI_STATUS::COMPROMISED_DATA:
-			return (CHAR16*)_UTF16_COMPROMISED_DATA;
+			return _UTF16_COMPROMISED_DATA;
 		case EFI::EFI_STATUS::CRC_ERROR:
-			return (CHAR16*)_UTF16_CRC_ERROR;
+			return _UTF16_CRC_ERROR;
 		case EFI::EFI_STATUS::DEVICE_ERROR:
-			return (CHAR16*)_UTF16_DEVICE_ERROR;
+			return _UTF16_DEVICE_ERROR;
 		case EFI::EFI_STATUS::END_OF_FILE:
-			return (CHAR16*)_UTF16_END_OF_FILE;
+			return _UTF16_END_OF_FILE;
 		case EFI::EFI_STATUS::END_OF_MEDIA:
-			return (CHAR16*)_UTF16_END_OF_MEDIA;
+			return _UTF16_END_OF_MEDIA;
 		case EFI::EFI_STATUS::HTTP_ERROR:
-			return (CHAR16*)_UTF16_HTTP_ERROR;
+			return _UTF16_HTTP_ERROR;
 		case EFI::EFI_STATUS::ICMP_ERROR:
-			return (CHAR16*)_UTF16_ICMP_ERROR;
+			return _UTF16_ICMP_ERROR;
 		case EFI::EFI_STATUS::INCOMPATIBLE_VERSION:
-			return (CHAR16*)_UTF16_INCOMPATIBLE_VERSION;
+			return _UTF16_INCOMPATIBLE_VERSION;
 		case EFI::EFI_STATUS::INVALID_LANGUAGE:
-			return (CHAR16*)_UTF16_INVALID_LANGUAGE;
+			return _UTF16_INVALID_LANGUAGE;
 		case EFI::EFI_STATUS::INVALID_PARAMETER:
-			return (CHAR16*)_UTF16_INVALID_PARAMETER;
+			return _UTF16_INVALID_PARAMETER;
 		case EFI::EFI_STATUS::IP_ADDRESS_CONFLICT:
-			return (CHAR16*)_UTF16_IP_ADDRESS_CONFLICT;
+			return _UTF16_IP_ADDRESS_CONFLICT;
 		case EFI::EFI_STATUS::LOAD_ERROR:
-			return (CHAR16*)_UTF16_LOAD_ERROR;
+			return _UTF16_LOAD_ERROR;
 		case EFI::EFI_STATUS::MEDIA_CHANGED:
-			return (CHAR16*)_UTF16_MEDIA_CHANGED;
+			return _UTF16_MEDIA_CHANGED;
 		case EFI::EFI_STATUS::NO_MAPPING:
-			return (CHAR16*)_UTF16_NO_MAPPING;
+			return _UTF16_NO_MAPPING;
 		case EFI::EFI_STATUS::NO_MEDIA:
-			return (CHAR16*)_UTF16_NO_MEDIA;
+			return _UTF16_NO_MEDIA;
 		case EFI::EFI_STATUS::NO_RESPONSE:
-			return (CHAR16*)_UTF16_NO_RESPONSE;
+			return _UTF16_NO_RESPONSE;
 		case EFI::EFI_STATUS::NOT_FOUND:
-			return (CHAR16*)_UTF16_NOT_FOUND;
+			return _UTF16_NOT_FOUND;
 		case EFI::EFI_STATUS::NOT_READY:
-			return (CHAR16*)_UTF16_NOT_READY;
+			return _UTF16_NOT_READY;
 		case EFI::EFI_STATUS::NOT_STARTED:
-			return (CHAR16*)_UTF16_NOT_STARTED;
+			return _UTF16_NOT_STARTED;
 		case EFI::EFI_STATUS::OUT_OF_RESOURCES:
-			return (CHAR16*)_UTF16_OUT_OF_RESOURCES;
+			return _UTF16_OUT_OF_RESOURCES;
 		case EFI::EFI_STATUS::PROTOCOL_ERROR:
-			return (CHAR16*)_UTF16_PROTOCOL_ERROR;
+			return _UTF16_PROTOCOL_ERROR;
 		case EFI::EFI_STATUS::SECURITY_VIOLATION:
-			return (CHAR16*)_UTF16_SECURITY_VIOLATION;
+			return _UTF16_SECURITY_VIOLATION;
 		case EFI::EFI_STATUS::SUCCESS:
-			return (CHAR16*)_UTF16_SUCCESS;
+			return _UTF16_SUCCESS;
 		case EFI::EFI_STATUS::TFTP_ERROR:
-			return (CHAR16*)_UTF16_TFTP_ERROR;
+			return _UTF16_TFTP_ERROR;
 		case EFI::EFI_STATUS::TIMEOUT:
-			return (CHAR16*)_UTF16_TIMEOUT;
+			return _UTF16_TIMEOUT;
 		case EFI::EFI_STATUS::UNSUPPORTED:
-			return (CHAR16*)_UTF16_UNSUPPORTED;
+			return _UTF16_UNSUPPORTED;
 		case EFI::EFI_STATUS::VOLUME_CORRUPTED:
-			return (CHAR16*)_UTF16_VOLUME_CORRUPTED;
+			return _UTF16_VOLUME_CORRUPTED;
 		case EFI::EFI_STATUS::VOLUME_FULL:
-			return (CHAR16*)_UTF16_VOLUME_FULL;
+			return _UTF16_VOLUME_FULL;
 		case EFI::EFI_STATUS::WARN_BUFFER_TOO_SMALL:
-			return (CHAR16*)_UTF16_WARN_BUFFER_TOO_SMALL;
+			return _UTF16_WARN_BUFFER_TOO_SMALL;
 		case EFI::EFI_STATUS::WARN_DELETE_FAILURE:
-			return (CHAR16*)_UTF16_WARN_DELETE_FAILURE;
+			return _UTF16_WARN_DELETE_FAILURE;
 		case EFI::EFI_STATUS::WARN_FILE_SYSTEM:
-			return (CHAR16*)_UTF16_WARN_FILE_SYSTEM;
+			return _UTF16_WARN_FILE_SYSTEM;
 		case EFI::EFI_STATUS::WARN_RESET_REQUIRED:
-			return (CHAR16*)_UTF16_WARN_RESET_REQUIRED;
+			return _UTF16_WARN_RESET_REQUIRED;
 		case EFI::EFI_STATUS::WARN_STALE_DATA:
-			return (CHAR16*)_UTF16_WARN_STALE_DATA;
+			return _UTF16_WARN_STALE_DATA;
 		case EFI::EFI_STATUS::WARN_UNKNOWN_GLYPH:
-			return (CHAR16*)_UTF16_WARN_UNKNOWN_GLYPH;
+			return _UTF16_WARN_UNKNOWN_GLYPH;
 		case EFI::EFI_STATUS::WARN_WRITE_FAILURE:
-			return (CHAR16*)_UTF16_WARN_WRITE_FAILURE;
+			return _UTF16_WARN_WRITE_FAILURE;
 		case EFI::EFI_STATUS::WRITE_PROTECTED:
-			return (CHAR16*)_UTF16_WRITE_PROTECTED;
+			return _UTF16_WRITE_PROTECTED;
 		default:
 			return nullptr;
 		}
 	}
 
-	CHAR16* UTF<CHAR16>::ToString(const Common::System::MemoryManagement::AllocatorStatus status)
+	const CHAR16* UTF<CHAR16>::ToString(const Common::System::MemoryManagement::AllocatorStatus status)
 	{
 		switch (status)
 		{
 		case Common::System::MemoryManagement::AllocatorStatus::Success:
-			return (CHAR16*)_UTF16_ALLOC_STATUS_SUCCESS;
+			return _UTF16_ALLOC_STATUS_SUCCESS;
 		case Common::System::MemoryManagement::AllocatorStatus::Invalid_Parameters:
-			return (CHAR16*)_UTF16_ALLOC_STATUS_INVALID_PARAMETER;
+			return _UTF16_ALLOC_STATUS_INVALID_PARAMETER;
 		case Common::System::MemoryManagement::AllocatorStatus::Not_Enough_Memory:
-			return (CHAR16*)_UTF16_ALLOC_STATUS_NOT_ENOUGH_MEMORY;
+			return _UTF16_ALLOC_STATUS_NOT_ENOUGH_MEMORY;
 		case Common::System::MemoryManagement::AllocatorStatus::Not_Enough_Pages:
-			return (CHAR16*)_UTF16_ALLOC_STATUS_NOT_ENOUGH_PAGES;
+			return _UTF16_ALLOC_STATUS_NOT_ENOUGH_PAGES;
 		case Common::System::MemoryManagement::AllocatorStatus::Access_Denied:
-			return (CHAR16*)_UTF16_ALLOC_STATUS_ACCESS_DENIED;
+			return _UTF16_ALLOC_STATUS_ACCESS_DENIED;
 		}
 	}
 
@@ -619,19 +625,18 @@ namespace Common::System::Environment
 		}
 		return &_UTF16_VALUETOSTRING[len];
 	}
-
-	CHAR16* UTF<CHAR16>::ToString(const BOOLEAN boolean)
+	const CHAR16* UTF<CHAR16>::ToString(const BOOLEAN boolean)
 	{
 		if (boolean)
 		{
-			return (CHAR16*)_UTF16_BOOLEAN_TRUE;
+			return _UTF16_BOOLEAN_TRUE;
 		}
 		else
 		{
-			return (CHAR16*)_UTF16_BOOLEAN_FALSE;
+			return _UTF16_BOOLEAN_FALSE;
 		}
 	}
-
+		
 	UINT64 UTF<CHAR16>::Length(const CHAR16* str)
 	{
 		if (str == nullptr)
@@ -657,25 +662,21 @@ namespace Common::System::Environment
 	BOOLEAN UTF<CHAR16>::Compare(const CHAR16* l, const CHAR16* r, StringCulture culture)
 	{
 		/*Check for isNullOrEmpty and Lengths, if they don't match, return FALSE*/
-		BOOLEAN lBool = IsNullOrEmpty(l);
-		BOOLEAN rBool = IsNullOrEmpty(r);
 
-		if (lBool || rBool)
-		{
-			return FALSE;
-		}
-
-		if (lBool && rBool)
-		{
-			return TRUE;
-		}
-
-		UINT64 lLength = UTF<CHAR16>::Length(l);
-		UINT64 rLength = UTF<CHAR16>::Length(r);
+		UINT64 lLength = Length(l);
+		UINT64 rLength = Length(r);
 
 		if (lLength != rLength)
 		{
 			return FALSE;
+		}
+
+		BOOLEAN lBool = IsNullOrEmpty(l);
+		BOOLEAN rBool = IsNullOrEmpty(r);
+
+		if (lBool == rBool)
+		{
+			return TRUE;
 		}
 
 		switch (culture)
@@ -734,16 +735,16 @@ namespace Common::System::Environment
 	{
 		BOOLEAN l = IsNullOrEmpty(str);
 		BOOLEAN r = IsNullOrEmpty(value);
+		if (l == r)
+		{
+			return TRUE;
+		}
 
 		if (l || r)
 		{
 			return FALSE;
 		}
 
-		if (l && r)
-		{
-			return TRUE;
-		}
 
 		UINT64 strLength = Length(str);
 		UINT64 valueLength = Length(value);
@@ -802,15 +803,14 @@ namespace Common::System::Environment
 	{
 		BOOLEAN l = IsNullOrEmpty(str);
 		BOOLEAN r = IsNullOrEmpty(value);
+		if (l == r)
+		{
+			return TRUE;
+		}
 
 		if (l || r)
 		{
 			return FALSE;
-		}
-
-		if (l && r)
-		{
-			return TRUE;
 		}
 
 		UINT64 strLength = Length(str);
@@ -874,15 +874,16 @@ namespace Common::System::Environment
 		BOOLEAN l = IsNullOrEmpty(str);
 		BOOLEAN r = IsNullOrEmpty(value);
 
+		if (l == r)
+		{
+			return TRUE;
+		}
+
 		if (l || r)
 		{
 			return FALSE;
 		}
 
-		if (l && r)
-		{
-			return TRUE;
-		}
 
 		UINT64 strLength = Length(str);
 		UINT64 valueLength = Length(value);
@@ -984,13 +985,12 @@ namespace Common::System::Environment
 		if (str == nullptr)
 		{
 			return TRUE;
-		};
+		}
 
-		if (str[0] == u'\0')
+		if (str[0] == '\0')
 		{
 			return TRUE;
 		}
-
 		return FALSE;
 	}
 
@@ -999,24 +999,27 @@ namespace Common::System::Environment
 		if (str == nullptr)
 		{
 			return TRUE;
-		};
-
-		UINT64 index = 0;
-		INT64 charindex = -1;
-		while (str[index] != u'\0')
-		{
-			UINT64 i = 0;
-			for (UINT64 i = 0; i < 30; i++)
-			{
-				if (str[index] != _UTF16_WHITESPACECHARS[i])
-				{
-					charindex = index;
-				}
-			}
-			index++;
 		}
 
-		return charindex == -1;
+		for (UINT64 i = 0;; i++)
+		{
+			CHAR16 c = str[i];
+			if (c == 0)
+			{
+				break;
+			}
+
+			for (UINT64 l = 0; l < _UTF16_WHITESPACECHARS_LEN; l++)
+			{
+				CHAR16 c1 = _UTF16_WHITESPACECHARS[l];
+
+				if (c != c1)
+				{
+					return FALSE;
+				}
+
+			}
+		}
 	}
 
 	BOOLEAN UTF<CHAR16>::IsNullEmptyOrWhiteSpace(const CHAR16* str)
@@ -1024,7 +1027,7 @@ namespace Common::System::Environment
 		if (str == nullptr)
 		{
 			return TRUE;
-		};
+		}
 
 		if (str[0] == u'\0')
 		{
@@ -1033,23 +1036,24 @@ namespace Common::System::Environment
 
 		/*Check Entire string, if any of that characters are non whitespace characters, return false otherwise return true*/
 
-		UINT64 index = 0;
-		INT64 charindex = -1;
-
-		while (str[index] != u'\0')
+		for (UINT64 i = 0;; i++)
 		{
-			UINT64 i = 0;
-			for (UINT64 i = 0; i < 30; i++)
+			CHAR16 c = str[i];
+			if (c == 0)
 			{
-				if (str[index] != _UTF16_WHITESPACECHARS[i])
+				break;
+			}
+
+			for (UINT64 l = 0; l < _UTF16_WHITESPACECHARS_LEN; l++)
+			{
+				CHAR16 c1 = _UTF16_WHITESPACECHARS[l];
+
+				if (c != c1)
 				{
-					charindex = index;
+					return FALSE;
 				}
 			}
-			index++;
 		}
-
-		return charindex == -1;
 	}
 
 	CHAR16* UTF<CHAR16>::FromCharArray(CHAR16 arr[], UINT64 Length)
@@ -1119,7 +1123,6 @@ namespace Common::System::Environment
 			result[i] = (CHAR16)(INT16)(str[i]);
 		}
 		return result;
-
 	}
 
 	INT64 UTF<CHAR16>::IndexOf(const CHAR16* str, const CHAR16* value, UINT64 startIndex, StringCulture culture)
@@ -1133,7 +1136,7 @@ namespace Common::System::Environment
 			return -1;
 		}
 
-		if (l && r)
+		if (l == r)
 		{
 			return 0;
 		}
@@ -1322,7 +1325,7 @@ namespace Common::System::Environment
 			return -1;
 		}
 
-		if (l && r)
+		if (l == r)
 		{
 			return 0;
 		}

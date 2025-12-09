@@ -10,6 +10,7 @@ namespace Common::System::Environment
 	public:
 		const static CHAR  NULL = '\0';
 		const static CHAR NewLine[3];
+		const static CHAR NewLineChar[2];
 		const static CHAR  Space = ' ';
 		const static CHAR  Tab = '\t';
 		const static CHAR  Backspace = '\b';
@@ -26,8 +27,8 @@ namespace Common::System::Environment
 		static CHAR* ToHex(const VOID_PTR ptrC);
 
 		static CHAR* ToString(const EFI::EFI_GUID guid);
-		static CHAR* ToString(const EFI::EFI_STATUS status);
-		static CHAR* ToString(const Common::System::MemoryManagement::AllocatorStatus status);
+		static const CHAR* ToString(const EFI::EFI_STATUS status);
+		static const CHAR* ToString(const Common::System::MemoryManagement::AllocatorStatus status);
 		static CHAR* ToString(const INT16 value);
 		static CHAR* ToString(const INT32 value);
 		static CHAR* ToString(const INT64 value);
@@ -38,7 +39,7 @@ namespace Common::System::Environment
 		static CHAR* ToString(const UINT64 value);
 		static CHAR* ToString(const UINT8 value);
 		static CHAR* ToString(const VOID_PTR ptr);
-		static CHAR* ToString(const BOOLEAN boolean);
+		static const CHAR* ToString(const BOOLEAN boolean);
 
 		static UINT64 Length(const CHAR* str);
 		static BOOLEAN Compare(const CHAR* l, const CHAR* r, StringCulture culture = InvariantCulture);

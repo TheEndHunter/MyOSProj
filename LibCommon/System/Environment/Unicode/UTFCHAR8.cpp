@@ -2,63 +2,74 @@
 
 namespace Common::System::Environment
 {
-	const CHAR8 UTF<CHAR8>::NewLine[3]{ u8'\r', u8'\n',u8'\0' };
+	const CHAR8 UTF<CHAR8>::NewLine[3]{ u8'\r', u8'\n',u8'\0'};
+	const CHAR8 UTF<CHAR8>::NewLineChar[2]{ u8'\r', u8'\n' };
+
 	CHAR8 _UTF8_GUIDTOSTRING[43] = { u8'{',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'-',u8'\0',u8'\0',u8'\0',u8'\0',u8'-',u8'\0',u8'\0',u8'\0',u8'\0',u8'-',u8'\0',u8'\0',u8'\0',u8'\0',u8'-',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'}',u8'\0' };
+	constexpr const UINT64 _UTF8_GUIDTOSTRING_LEN = sizeof(_UTF8_GUIDTOSTRING) / sizeof(CHAR8);
+
 	CHAR8 _UTF8_HEXCHARS[17] = { u8'0',u8'1',u8'2',u8'3',u8'4',u8'5',u8'6',u8'7',u8'8',u8'9',u8'A',u8'B',u8'C',u8'D',u8'E',u8'F' };
+	constexpr const UINT64 _UTF8_HEXCHARS_LEN = sizeof(_UTF8_GUIDTOSTRING) / sizeof(CHAR8);
+
 	CHAR8 _UTF8_HEXSTRING[18] = { u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0' };
+	constexpr const UINT64 _UTF8_HEXSTRING_LEN = sizeof(_UTF8_GUIDTOSTRING) / sizeof(CHAR8);
+
 	CHAR8 _UTF8_VALUETOSTRING[23] = { u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0',u8'\0' };
+	constexpr const UINT64 _UTF8_VALUETOSTRING_LEN = sizeof(_UTF8_GUIDTOSTRING) / sizeof(CHAR8);
+
 	CHAR8 _UTF8_WHITESPACECHARS[8] = { 0x09,0x0A,0x0B,0x0C,0x0D,0x20,0x85,0xA0 };
+	constexpr const UINT64 _UTF8_WHITESPACECHARS_LEN = sizeof(_UTF8_GUIDTOSTRING) / sizeof(CHAR8);
 
-	constinit const CHAR8* _UTF8_ABORTED = u8"ABORTED";
-	constinit const CHAR8* _UTF8_ACCESS_DENIED = u8"ACCESS_DENIED";
-	constinit const CHAR8* _UTF8_ALREADY_STARTED = u8"ALREADY_STARTED";
-	constinit const CHAR8* _UTF8_BAD_BUFFER_SIZE = u8"BAD_BUFFER_SIZE";
-	constinit const CHAR8* _UTF8_BOOLEAN_FALSE = u8"False";
-	constinit const CHAR8* _UTF8_BOOLEAN_TRUE = u8"True";
-	constinit const CHAR8* _UTF8_BUFFER_TOO_SMALL = u8"BUFFER_TOO_SMALL";
-	constinit const CHAR8* _UTF8_COMPROMISED_DATA = u8"COMPROMISED_DATA";
-	constinit const CHAR8* _UTF8_CRC_ERROR = u8"CRC_ERROR";
-	constinit const CHAR8* _UTF8_DEVICE_ERROR = u8"DEVICE_ERROR";
-	constinit const CHAR8* _UTF8_END_OF_FILE = u8"END_OF_FILE";
-	constinit const CHAR8* _UTF8_END_OF_MEDIA = u8"END_OF_MEDIA";
-	constinit const CHAR8* _UTF8_HTTP_ERROR = u8"HTTP_ERROR";
-	constinit const CHAR8* _UTF8_ICMP_ERROR = u8"ICMP_ERROR";
-	constinit const CHAR8* _UTF8_INCOMPATIBLE_VERSION = u8"INCOMPATIBLE_VERSION";
-	constinit const CHAR8* _UTF8_INVALID_LANGUAGE = u8"INVALID_LANGUAGE";
-	constinit const CHAR8* _UTF8_INVALID_PARAMETER = u8"INVALID_PARAMETER";
-	constinit const CHAR8* _UTF8_IP_ADDRESS_CONFLICT = u8"IP_ADDRESS_CONFLICT";
-	constinit const CHAR8* _UTF8_LOAD_ERROR = u8"LOAD_ERROR";
-	constinit const CHAR8* _UTF8_MEDIA_CHANGED = u8"MEDIA_CHANGED";
-	constinit const CHAR8* _UTF8_NO_MAPPING = u8"NO_MAPPING";
-	constinit const CHAR8* _UTF8_NO_MEDIA = u8"NO_MEDIA";
-	constinit const CHAR8* _UTF8_NO_RESPONSE = u8"NO_RESPONSE";
-	constinit const CHAR8* _UTF8_NOT_FOUND = u8"NOT_FOUND";
-	constinit const CHAR8* _UTF8_NOT_READY = u8"NOT_READY";
-	constinit const CHAR8* _UTF8_NOT_STARTED = u8"NOT_STARTED";
-	constinit const CHAR8* _UTF8_OUT_OF_RESOURCES = u8"OUT_OF_RESOURCES";
-	constinit const CHAR8* _UTF8_PROTOCOL_ERROR = u8"PROTOCOL_ERROR";
-	constinit const CHAR8* _UTF8_SECURITY_VIOLATION = u8"SECURITY_VIOLATION";
-	constinit const CHAR8* _UTF8_SUCCESS = u8"SUCCESS";
-	constinit const CHAR8* _UTF8_TFTP_ERROR = u8"TFTP_ERROR";
-	constinit const CHAR8* _UTF8_TIMEOUT = u8"TIMEOUT";
-	constinit const CHAR8* _UTF8_UNSUPPORTED = u8"UNSUPPORTED";
-	constinit const CHAR8* _UTF8_VOLUME_CORRUPTED = u8"VOLUME_CORRUPTED";
-	constinit const CHAR8* _UTF8_VOLUME_FULL = u8"VOLUME_FULL";
-	constinit const CHAR8* _UTF8_WARN_BUFFER_TOO_SMALL = u8"WARN_BUFFER_TOO_SMALL";
-	constinit const CHAR8* _UTF8_WARN_DELETE_FAILURE = u8"WARN_DELETE_FAILURE";
-	constinit const CHAR8* _UTF8_WARN_FILE_SYSTEM = u8"WARN_FILE_SYSTEM";
-	constinit const CHAR8* _UTF8_WARN_RESET_REQUIRED = u8"WARN_RESET_REQUIRED";
-	constinit const CHAR8* _UTF8_WARN_STALE_DATA = u8"WARN_STALE_DATA";
-	constinit const CHAR8* _UTF8_WARN_UNKNOWN_GLYPH = u8"WARN_UNKNOWN_GLYPH";
-	constinit const CHAR8* _UTF8_WARN_WRITE_FAILURE = u8"WARN_WRITE_FAILURE";
-	constinit const CHAR8* _UTF8_WRITE_PROTECTED = u8"WRITE_PROTECTED";
+	constexpr const CHAR8* _UTF8_ABORTED = u8"ABORTED";
+	constexpr const CHAR8* _UTF8_ACCESS_DENIED = u8"ACCESS_DENIED";
+	constexpr const CHAR8* _UTF8_ALREADY_STARTED = u8"ALREADY_STARTED";
+	constexpr const CHAR8* _UTF8_BAD_BUFFER_SIZE = u8"BAD_BUFFER_SIZE";
+	constexpr const CHAR8* _UTF8_BOOLEAN_FALSE = u8"False";
+	constexpr const CHAR8* _UTF8_BOOLEAN_TRUE = u8"True";
+	constexpr const CHAR8* _UTF8_BUFFER_TOO_SMALL = u8"BUFFER_TOO_SMALL";
+	constexpr const CHAR8* _UTF8_COMPROMISED_DATA = u8"COMPROMISED_DATA";
+	constexpr const CHAR8* _UTF8_CRC_ERROR = u8"CRC_ERROR";
+	constexpr const CHAR8* _UTF8_DEVICE_ERROR = u8"DEVICE_ERROR";
+	constexpr const CHAR8* _UTF8_END_OF_FILE = u8"END_OF_FILE";
+	constexpr const CHAR8* _UTF8_END_OF_MEDIA = u8"END_OF_MEDIA";
+	constexpr const CHAR8* _UTF8_HTTP_ERROR = u8"HTTP_ERROR";
+	constexpr const CHAR8* _UTF8_ICMP_ERROR = u8"ICMP_ERROR";
+	constexpr const CHAR8* _UTF8_INCOMPATIBLE_VERSION = u8"INCOMPATIBLE_VERSION";
+	constexpr const CHAR8* _UTF8_INVALID_LANGUAGE = u8"INVALID_LANGUAGE";
+	constexpr const CHAR8* _UTF8_INVALID_PARAMETER = u8"INVALID_PARAMETER";
+	constexpr const CHAR8* _UTF8_IP_ADDRESS_CONFLICT = u8"IP_ADDRESS_CONFLICT";
+	constexpr const CHAR8* _UTF8_LOAD_ERROR = u8"LOAD_ERROR";
+	constexpr const CHAR8* _UTF8_MEDIA_CHANGED = u8"MEDIA_CHANGED";
+	constexpr const CHAR8* _UTF8_NO_MAPPING = u8"NO_MAPPING";
+	constexpr const CHAR8* _UTF8_NO_MEDIA = u8"NO_MEDIA";
+	constexpr const CHAR8* _UTF8_NO_RESPONSE = u8"NO_RESPONSE";
+	constexpr const CHAR8* _UTF8_NOT_FOUND = u8"NOT_FOUND";
+	constexpr const CHAR8* _UTF8_NOT_READY = u8"NOT_READY";
+	constexpr const CHAR8* _UTF8_NOT_STARTED = u8"NOT_STARTED";
+	constexpr const CHAR8* _UTF8_OUT_OF_RESOURCES = u8"OUT_OF_RESOURCES";
+	constexpr const CHAR8* _UTF8_PROTOCOL_ERROR = u8"PROTOCOL_ERROR";
+	constexpr const CHAR8* _UTF8_SECURITY_VIOLATION = u8"SECURITY_VIOLATION";
+	constexpr const CHAR8* _UTF8_SUCCESS = u8"SUCCESS";
+	constexpr const CHAR8* _UTF8_TFTP_ERROR = u8"TFTP_ERROR";
+	constexpr const CHAR8* _UTF8_TIMEOUT = u8"TIMEOUT";
+	constexpr const CHAR8* _UTF8_UNSUPPORTED = u8"UNSUPPORTED";
+	constexpr const CHAR8* _UTF8_VOLUME_CORRUPTED = u8"VOLUME_CORRUPTED";
+	constexpr const CHAR8* _UTF8_VOLUME_FULL = u8"VOLUME_FULL";
+	constexpr const CHAR8* _UTF8_WARN_BUFFER_TOO_SMALL = u8"WARN_BUFFER_TOO_SMALL";
+	constexpr const CHAR8* _UTF8_WARN_DELETE_FAILURE = u8"WARN_DELETE_FAILURE";
+	constexpr const CHAR8* _UTF8_WARN_FILE_SYSTEM = u8"WARN_FILE_SYSTEM";
+	constexpr const CHAR8* _UTF8_WARN_RESET_REQUIRED = u8"WARN_RESET_REQUIRED";
+	constexpr const CHAR8* _UTF8_WARN_STALE_DATA = u8"WARN_STALE_DATA";
+	constexpr const CHAR8* _UTF8_WARN_UNKNOWN_GLYPH = u8"WARN_UNKNOWN_GLYPH";
+	constexpr const CHAR8* _UTF8_WARN_WRITE_FAILURE = u8"WARN_WRITE_FAILURE";
+	constexpr const CHAR8* _UTF8_WRITE_PROTECTED = u8"WRITE_PROTECTED";
 
-	constinit const CHAR8* _UTF8_ALLOC_STATUS_SUCCESS = u8"SUCCESS";
-	constinit const CHAR8* _UTF8_ALLOC_STATUS_INVALID_PARAMETER = u8"INVALID_PARAMETER";
-	constinit const CHAR8* _UTF8_ALLOC_STATUS_NOT_ENOUGH_MEMORY = u8"NOT_ENOUGH_MEMORY";
-	constinit const CHAR8* _UTF8_ALLOC_STATUS_NOT_ENOUGH_PAGES = u8"NOT_ENOUGH_PAGES";
-	constinit const CHAR8* _UTF8_ALLOC_STATUS_ACCESS_DENIED = u8"ACCESS_DENIED";
-	constinit const CHAR8* _UTF8_ALLOC_STATUS_UNKNOWN = u8"UNKNOWN";
+	constexpr const CHAR8* _UTF8_ALLOC_STATUS_SUCCESS = u8"SUCCESS";
+	constexpr const CHAR8* _UTF8_ALLOC_STATUS_INVALID_PARAMETER = u8"INVALID_PARAMETER";
+	constexpr const CHAR8* _UTF8_ALLOC_STATUS_NOT_ENOUGH_MEMORY = u8"NOT_ENOUGH_MEMORY";
+	constexpr const CHAR8* _UTF8_ALLOC_STATUS_NOT_ENOUGH_PAGES = u8"NOT_ENOUGH_PAGES";
+	constexpr const CHAR8* _UTF8_ALLOC_STATUS_ACCESS_DENIED = u8"ACCESS_DENIED";
+	constexpr const CHAR8* _UTF8_ALLOC_STATUS_UNKNOWN = u8"UNKNOWN";
 	
 	CHAR8* UTF<CHAR8>::ToHex(const INT16 value)
 	{
@@ -294,111 +305,111 @@ namespace Common::System::Environment
 		return &_UTF8_GUIDTOSTRING[0];
 	}
 
-	CHAR8* UTF<CHAR8>::ToString(const EFI::EFI_STATUS status)
+	const CHAR8* UTF<CHAR8>::ToString(const EFI::EFI_STATUS status)
 	{
 		switch (status)
 		{
 		case EFI::EFI_STATUS::ABORTED:
-			return (CHAR8*)_UTF8_ABORTED;
+			return _UTF8_ABORTED;
 		case EFI::EFI_STATUS::ACCESS_DENIED:
-			return (CHAR8*)_UTF8_ACCESS_DENIED;
+			return _UTF8_ACCESS_DENIED;
 		case EFI::EFI_STATUS::ALREADY_STARTED:
-			return (CHAR8*)_UTF8_ALREADY_STARTED;
+			return _UTF8_ALREADY_STARTED;
 		case EFI::EFI_STATUS::BAD_BUFFER_SIZE:
-			return (CHAR8*)_UTF8_BAD_BUFFER_SIZE;
+			return _UTF8_BAD_BUFFER_SIZE;
 		case EFI::EFI_STATUS::BUFFER_TOO_SMALL:
-			return (CHAR8*)_UTF8_BUFFER_TOO_SMALL;
+			return _UTF8_BUFFER_TOO_SMALL;
 		case EFI::EFI_STATUS::COMPROMISED_DATA:
-			return (CHAR8*)_UTF8_COMPROMISED_DATA;
+			return _UTF8_COMPROMISED_DATA;
 		case EFI::EFI_STATUS::CRC_ERROR:
-			return (CHAR8*)_UTF8_CRC_ERROR;
+			return _UTF8_CRC_ERROR;
 		case EFI::EFI_STATUS::DEVICE_ERROR:
-			return (CHAR8*)_UTF8_DEVICE_ERROR;
+			return _UTF8_DEVICE_ERROR;
 		case EFI::EFI_STATUS::END_OF_FILE:
-			return (CHAR8*)_UTF8_END_OF_FILE;
+			return _UTF8_END_OF_FILE;
 		case EFI::EFI_STATUS::END_OF_MEDIA:
-			return (CHAR8*)_UTF8_END_OF_MEDIA;
+			return _UTF8_END_OF_MEDIA;
 		case EFI::EFI_STATUS::HTTP_ERROR:
-			return (CHAR8*)_UTF8_HTTP_ERROR;
+			return _UTF8_HTTP_ERROR;
 		case EFI::EFI_STATUS::ICMP_ERROR:
-			return (CHAR8*)_UTF8_ICMP_ERROR;
+			return _UTF8_ICMP_ERROR;
 		case EFI::EFI_STATUS::INCOMPATIBLE_VERSION:
-			return (CHAR8*)_UTF8_INCOMPATIBLE_VERSION;
+			return _UTF8_INCOMPATIBLE_VERSION;
 		case EFI::EFI_STATUS::INVALID_LANGUAGE:
-			return (CHAR8*)_UTF8_INVALID_LANGUAGE;
+			return _UTF8_INVALID_LANGUAGE;
 		case EFI::EFI_STATUS::INVALID_PARAMETER:
-			return (CHAR8*)_UTF8_INVALID_PARAMETER;
+			return _UTF8_INVALID_PARAMETER;
 		case EFI::EFI_STATUS::IP_ADDRESS_CONFLICT:
-			return (CHAR8*)_UTF8_IP_ADDRESS_CONFLICT;
+			return _UTF8_IP_ADDRESS_CONFLICT;
 		case EFI::EFI_STATUS::LOAD_ERROR:
-			return (CHAR8*)_UTF8_LOAD_ERROR;
+			return _UTF8_LOAD_ERROR;
 		case EFI::EFI_STATUS::MEDIA_CHANGED:
-			return (CHAR8*)_UTF8_MEDIA_CHANGED;
+			return _UTF8_MEDIA_CHANGED;
 		case EFI::EFI_STATUS::NO_MAPPING:
-			return (CHAR8*)_UTF8_NO_MAPPING;
+			return _UTF8_NO_MAPPING;
 		case EFI::EFI_STATUS::NO_MEDIA:
-			return (CHAR8*)_UTF8_NO_MEDIA;
+			return _UTF8_NO_MEDIA;
 		case EFI::EFI_STATUS::NO_RESPONSE:
-			return (CHAR8*)_UTF8_NO_RESPONSE;
+			return _UTF8_NO_RESPONSE;
 		case EFI::EFI_STATUS::NOT_FOUND:
-			return (CHAR8*)_UTF8_NOT_FOUND;
+			return _UTF8_NOT_FOUND;
 		case EFI::EFI_STATUS::NOT_READY:
-			return (CHAR8*)_UTF8_NOT_READY;
+			return _UTF8_NOT_READY;
 		case EFI::EFI_STATUS::NOT_STARTED:
-			return (CHAR8*)_UTF8_NOT_STARTED;
+			return _UTF8_NOT_STARTED;
 		case EFI::EFI_STATUS::OUT_OF_RESOURCES:
-			return (CHAR8*)_UTF8_OUT_OF_RESOURCES;
+			return _UTF8_OUT_OF_RESOURCES;
 		case EFI::EFI_STATUS::PROTOCOL_ERROR:
-			return (CHAR8*)_UTF8_PROTOCOL_ERROR;
+			return _UTF8_PROTOCOL_ERROR;
 		case EFI::EFI_STATUS::SECURITY_VIOLATION:
-			return (CHAR8*)_UTF8_SECURITY_VIOLATION;
+			return _UTF8_SECURITY_VIOLATION;
 		case EFI::EFI_STATUS::SUCCESS:
-			return (CHAR8*)_UTF8_SUCCESS;
+			return _UTF8_SUCCESS;
 		case EFI::EFI_STATUS::TFTP_ERROR:
-			return (CHAR8*)_UTF8_TFTP_ERROR;
+			return _UTF8_TFTP_ERROR;
 		case EFI::EFI_STATUS::TIMEOUT:
-			return (CHAR8*)_UTF8_TIMEOUT;
+			return _UTF8_TIMEOUT;
 		case EFI::EFI_STATUS::UNSUPPORTED:
-			return (CHAR8*)_UTF8_UNSUPPORTED;
+			return _UTF8_UNSUPPORTED;
 		case EFI::EFI_STATUS::VOLUME_CORRUPTED:
-			return (CHAR8*)_UTF8_VOLUME_CORRUPTED;
+			return _UTF8_VOLUME_CORRUPTED;
 		case EFI::EFI_STATUS::VOLUME_FULL:
-			return (CHAR8*)_UTF8_VOLUME_FULL;
+			return _UTF8_VOLUME_FULL;
 		case EFI::EFI_STATUS::WARN_BUFFER_TOO_SMALL:
-			return (CHAR8*)_UTF8_WARN_BUFFER_TOO_SMALL;
+			return _UTF8_WARN_BUFFER_TOO_SMALL;
 		case EFI::EFI_STATUS::WARN_DELETE_FAILURE:
-			return (CHAR8*)_UTF8_WARN_DELETE_FAILURE;
+			return _UTF8_WARN_DELETE_FAILURE;
 		case EFI::EFI_STATUS::WARN_FILE_SYSTEM:
-			return (CHAR8*)_UTF8_WARN_FILE_SYSTEM;
+			return _UTF8_WARN_FILE_SYSTEM;
 		case EFI::EFI_STATUS::WARN_RESET_REQUIRED:
-			return (CHAR8*)_UTF8_WARN_RESET_REQUIRED;
+			return _UTF8_WARN_RESET_REQUIRED;
 		case EFI::EFI_STATUS::WARN_STALE_DATA:
-			return (CHAR8*)_UTF8_WARN_STALE_DATA;
+			return _UTF8_WARN_STALE_DATA;
 		case EFI::EFI_STATUS::WARN_UNKNOWN_GLYPH:
-			return (CHAR8*)_UTF8_WARN_UNKNOWN_GLYPH;
+			return _UTF8_WARN_UNKNOWN_GLYPH;
 		case EFI::EFI_STATUS::WARN_WRITE_FAILURE:
-			return (CHAR8*)_UTF8_WARN_WRITE_FAILURE;
+			return _UTF8_WARN_WRITE_FAILURE;
 		case EFI::EFI_STATUS::WRITE_PROTECTED:
-			return (CHAR8*)_UTF8_WRITE_PROTECTED;
+			return _UTF8_WRITE_PROTECTED;
 		default:
 			return nullptr;
 		}
 	}
 
-	CHAR8* UTF<CHAR8>::ToString(const Common::System::MemoryManagement::AllocatorStatus status)
+	const CHAR8* UTF<CHAR8>::ToString(const Common::System::MemoryManagement::AllocatorStatus status)
 	{
 		switch (status)
 		{
 		case Common::System::MemoryManagement::AllocatorStatus::Success:
-			return (CHAR8*)_UTF8_ALLOC_STATUS_SUCCESS;
+			return _UTF8_ALLOC_STATUS_SUCCESS;
 		case Common::System::MemoryManagement::AllocatorStatus::Invalid_Parameters:
-			return (CHAR8*)_UTF8_ALLOC_STATUS_INVALID_PARAMETER;
+			return _UTF8_ALLOC_STATUS_INVALID_PARAMETER;
 		case Common::System::MemoryManagement::AllocatorStatus::Not_Enough_Memory:
-			return (CHAR8*)_UTF8_ALLOC_STATUS_NOT_ENOUGH_MEMORY;
+			return _UTF8_ALLOC_STATUS_NOT_ENOUGH_MEMORY;
 		case Common::System::MemoryManagement::AllocatorStatus::Not_Enough_Pages:
-			return (CHAR8*)_UTF8_ALLOC_STATUS_NOT_ENOUGH_PAGES;
+			return _UTF8_ALLOC_STATUS_NOT_ENOUGH_PAGES;
 		case Common::System::MemoryManagement::AllocatorStatus::Access_Denied:
-			return (CHAR8*)_UTF8_ALLOC_STATUS_ACCESS_DENIED;
+			return _UTF8_ALLOC_STATUS_ACCESS_DENIED;
 		}
 	}
 
@@ -614,15 +625,15 @@ namespace Common::System::Environment
 		return &_UTF8_VALUETOSTRING[len];
 	}
 
-	CHAR8* UTF<CHAR8>::ToString(const BOOLEAN boolean)
+	const CHAR8* UTF<CHAR8>::ToString(const BOOLEAN boolean)
 	{
 		if (boolean)
 		{
-			return (CHAR8*)_UTF8_BOOLEAN_TRUE;
+			return _UTF8_BOOLEAN_TRUE;
 		}
 		else
 		{
-			return (CHAR8*)_UTF8_BOOLEAN_FALSE;
+			return _UTF8_BOOLEAN_FALSE;
 		}
 	}
 
@@ -651,18 +662,6 @@ namespace Common::System::Environment
 	BOOLEAN UTF<CHAR8>::Compare(const CHAR8* l, const CHAR8* r, StringCulture culture)
 	{
 		/*Check for isNullOrEmpty and Lengths, if they don't match, return FALSE*/
-		BOOLEAN lBool = IsNullOrEmpty(l);
-		BOOLEAN rBool = IsNullOrEmpty(r);
-
-		if (lBool || rBool)
-		{
-			return FALSE;
-		}
-
-		if (lBool && rBool)
-		{
-			return TRUE;
-		}
 
 		UINT64 lLength = Length(l);
 		UINT64 rLength = Length(r);
@@ -670,6 +669,14 @@ namespace Common::System::Environment
 		if (lLength != rLength)
 		{
 			return FALSE;
+		}
+
+		BOOLEAN lBool = IsNullOrEmpty(l);
+		BOOLEAN rBool = IsNullOrEmpty(r);
+
+		if (lBool == rBool)
+		{
+			return TRUE;
 		}
 
 		switch (culture)
@@ -727,15 +734,13 @@ namespace Common::System::Environment
 	{
 		BOOLEAN l = IsNullOrEmpty(str);
 		BOOLEAN r = IsNullOrEmpty(value);
-
+		if (l == r)
+		{
+			return TRUE;
+		}
 		if (l || r)
 		{
 			return FALSE;
-		}
-
-		if (l && r)
-		{
-			return TRUE;
 		}
 
 		UINT64 strLength = Length(str);
@@ -795,15 +800,13 @@ namespace Common::System::Environment
 	{
 		BOOLEAN l = IsNullOrEmpty(str);
 		BOOLEAN r = IsNullOrEmpty(value);
-
+		if (l == r)
+		{
+			return TRUE;
+		}
 		if (l || r)
 		{
 			return FALSE;
-		}
-
-		if (l && r)
-		{
-			return TRUE;
 		}
 
 		UINT64 strLength = Length(str);
@@ -866,16 +869,16 @@ namespace Common::System::Environment
 	{
 		BOOLEAN l = IsNullOrEmpty(str);
 		BOOLEAN r = IsNullOrEmpty(value);
-
+		if (l == r)
+		{
+			return TRUE;
+		}
 		if (l || r)
 		{
 			return FALSE;
 		}
 
-		if (l && r)
-		{
-			return TRUE;
-		}
+		
 
 		UINT64 strLength = Length(str);
 		UINT64 valueLength = Length(value);

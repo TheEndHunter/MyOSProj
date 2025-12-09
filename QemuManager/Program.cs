@@ -1,9 +1,13 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Diagnostics;
+
+using Microsoft.Extensions.Configuration;
 
 namespace QemuRunner
 {
     public static class Program
     {
+        private static Process? qemu = null;
+        private static Process? lldb = null;
         static async Task<int> Main(string[] args)
         {
             Settings config;
@@ -79,9 +83,102 @@ namespace QemuRunner
                 return -1;
             }
 
-            QemuConfig qemuConf = config.QemuConfigs!.Find(x => { return x.Architecture == architecture && x.Configuration == configuration; });
+            QEMUConfig qemuConf = config.QemuConfigs!.Find(x => { return x.Architecture == architecture && x.Configuration == configuration; });
 
-            return QEMU.StartProcess(qemuConf, Path.Combine(Dir, "OVMF", architecture, configuration), imagePath);
+            if (qemuConf == null)
+            {
+                Console.WriteLine("No QEMU configuration found for the specified architecture and configuration.");
+                return -1;
+            }
+
+
+            AppDomain.CurrentDomain.ProcessExit += (s, e) =>
+            {
+                qemu?.Kill(true);
+                lldb?.Kill(true);
+            };
+
+            qemu = QEMU.StartProcess(qemuConf, Path.Combine(Dir, "OVMF", architecture, configuration), imagePath);
+            lldb = LLDB.StartProcess(qemuConf);
+
+            if (qemu == null)
+            {
+                Console.WriteLine("Failed to start QEMU process.");
+                return -1;
+            }
+
+            qemu.Exited += OnQemuTerminate;
+            lldb?.Exited += OnLLDBTerminate;
+
+            if (!qemu.Start())
+            {
+                Console.WriteLine("Failed to start QEMU process.");
+                return -1;
+            }
+
+            bool windowLoaded = false;
+            while (!windowLoaded)
+            {
+                try
+                {
+                    if (qemu.MainWindowTitle.Length > 0)
+                    {
+                        windowLoaded = true;
+                        break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    continue;
+                }
+                finally
+                {
+                    qemu.Refresh();
+                }
+            }
+
+
+            lldb?.Start();
+            while (!QemuExitCalled && !LLDBExitCalled)
+            {
+                Thread.Yield();
+            }
+
+            return 0;
+        }
+
+        private static bool QemuExitCalled = false;
+        private static bool LLDBExitCalled = false;
+        private static void OnQemuTerminate(object? sender, EventArgs e)
+        {
+            if (QemuExitCalled) return;
+
+            QemuExitCalled = true;
+            if (qemu is null) return;
+            if (lldb is null)
+            {
+                LLDBExitCalled = true;
+                return;
+            }
+
+            if (!lldb.HasExited)
+            {
+                lldb.Kill(true);
+            }
+        }
+
+        private static void OnLLDBTerminate(object? sender, EventArgs e)
+        {
+            if (LLDBExitCalled) return;
+            LLDBExitCalled = true;
+
+            if (lldb is null) return;
+            if (qemu is null) return;
+
+            if (!qemu.HasExited)
+            {
+                qemu.Kill(true);
+            }
         }
     }
 }

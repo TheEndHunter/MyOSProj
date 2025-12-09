@@ -66,7 +66,7 @@
     <ClInclude Include="System\MemoryManagement\AllocatorStatus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="System\MemFuncs.h">
+    <ClInclude Include="System\MemoryManagement\MemFuncs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FileTypes\MSDOS\MSDos.h">
@@ -206,7 +206,7 @@
     <ClCompile Include="System\MemoryManagement\Allocator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="System\MemFuncs.cpp">
+    <ClCompile Include="System\MemoryManagement\MemFuncs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FileTypes\MSDOS\MSDos.cpp">

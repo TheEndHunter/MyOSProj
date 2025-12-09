@@ -10,17 +10,7 @@ namespace Common::FileSystem
 
 	BOOLEAN VolumeHandle::operator==(const VolumeHandle& right)
 	{
-		/*Compare all members for equality, if one fails return false, otherwise return true*/
-		if (Info != right.Info)
-			return false;
-		if (Size != right.Size)
-			return false;
-		if( Mode != right.Mode)
-			return false;	
-		if (Attributes != right.Attributes)
-			return false;
-
-		return true;
+		return Info == right.Info && Size == right.Size && Mode == right.Mode && Attributes == right.Attributes;
 	}
 
 	BOOLEAN VolumeHandle::operator!=(const VolumeHandle& right)

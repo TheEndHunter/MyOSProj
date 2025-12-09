@@ -107,7 +107,6 @@ namespace Bootloader
 		systemTable->ConOut->SetAttribute(systemTable->ConOut, fg | bg);
 		systemTable->ConOut->OutputString(systemTable->ConOut, &_u16_print[0]);
 	}
-
 	static void PrintLine(EFI_SYSTEM_TABLE* systemTable, const CHAR16* str)
 	{
 		if (UTF<CHAR16>::IsNullOrEmpty(str) == TRUE)
@@ -237,6 +236,32 @@ namespace Bootloader
 		};
 	}
 
+	static void PrintInfo(EFI_SYSTEM_TABLE* sysTbl, const CHAR16* errorMessage)
+	{
+		SetConsoleColor(sysTbl, EfiConsoleColor::_Default);
+		Print(sysTbl, errorMessage);
+	}
+	static void PrintDebug(EFI_SYSTEM_TABLE* sysTbl, const CHAR16* errorMessage)
+	{
+		SetConsoleColor(sysTbl, EfiConsoleColor::_Debug);
+		Print(sysTbl, errorMessage);
+	}
+	static void PrintErrorLine(EFI_SYSTEM_TABLE* sysTbl, const CHAR16* errorMessage)
+	{
+		SetConsoleColor(sysTbl, EfiConsoleColor::_Error);
+		Print(sysTbl, errorMessage);
+	}
+	static void PrintWarningLine(EFI_SYSTEM_TABLE* sysTbl, const CHAR16* errorMessage)
+	{
+		SetConsoleColor(sysTbl, EfiConsoleColor::_Warning);
+		Print(sysTbl, errorMessage);
+	}
+	static void PrintCriticalLine(EFI_SYSTEM_TABLE* sysTbl, const CHAR16* errorMessage)
+	{
+		SetConsoleColor(sysTbl, EfiConsoleColor::_Fatal);
+		Print(sysTbl, errorMessage);
+	}
+
 	static EFI_INPUT_KEY WaitForAnyKey(EFI_SYSTEM_TABLE* sysTable)
 	{
 		EFI_STATUS status = EFI_STATUS::SUCCESS;
@@ -287,6 +312,7 @@ namespace Bootloader
 	{
 		EFI_STATUS status = EFI_STATUS::SUCCESS;
 		EFI_INPUT_KEY inputKey = KEYS::Null;
+		sysTable->ConIn->Reset(sysTable->ConIn, false);
 		/*Await for a specific key to be entered, otherwise clear ConsoleIn*/
 		do
 		{
@@ -399,11 +425,14 @@ namespace Bootloader
 	{
 		SetConsoleColor(sysTbl, EfiConsoleColor::_Fatal);
 		ClearConOut(sysTbl);
+		
 		PrintLine(sysTbl, errorMessage);
+
 		if (status != EFI_STATUS::SUCCESS)
 		{
 			PrintLine(sysTbl, UTF<CHAR16>::ToString(status));
-		};
+		}
+
 		WaitForAnyKey(sysTbl);
 		Exit(sysTbl, imgHndl, status);
 	}

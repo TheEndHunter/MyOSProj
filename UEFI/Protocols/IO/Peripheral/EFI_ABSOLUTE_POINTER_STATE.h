@@ -3,8 +3,8 @@
 
 namespace EFI
 {
-    inline const UINT32 EFI_ABSP_TouchActive = 0x00000001;
-    inline const UINT32 EFI_ABS_AltActive = 0x00000002;
+    CONST UINT32 EFI_ABSP_TouchActive = 0x00000001;
+    CONST UINT32 EFI_ABS_AltActive = 0x00000002;
 
     struct EFI_ABSOLUTE_POINTER_STATE
     {

@@ -6,6 +6,7 @@
 #include <FileSystem/FileInfo.h>
 #include <FileSystem/FileMode.h>
 #include <FileSystem/FileAttribute.h>
+#include <Debugging/Debugger.h>
 
 namespace Common::FileSystem
 {
@@ -14,14 +15,18 @@ namespace Common::FileSystem
 		class ESP_FS_Context;
 	}
 
-	struct FileHandle
+	void SetFileSystemDebugger(Debugging::Debugger* debugger);
+
+	ALIGN(8) struct FileHandle
 	{
 		friend class ESP::ESP_FS_Context;
 	protected:
-		FileHandle(EFI::EFI_FILE_PROTOCOL* file, FileInfo* i, FileMode mode, UINT64 attribs) : Mode(mode),Attributes(attribs), Info(*i), Size(i->Size), _File(file) {};
-
+		FileHandle(EFI::EFI_FILE_PROTOCOL* file, FileInfo* i, FileMode mode, UINT64 attribs);
 	public:
-		constexpr FileHandle(): _File(nullptr), Size(0), Mode(FileMode::Create), Attributes(0) {};
+		constexpr FileHandle() : Mode(FileMode::Create), Attributes(0),Info(), Size(0),_File(nullptr){} // Default constructor
+
+		explicit FileHandle(FileHandle* handle) : Mode(handle->Mode), Attributes(handle->Attributes), Info(handle->Info), Size(handle->Info.Size), _File(handle->_File) {};
+		FileHandle(const FileHandle& handle) : Mode(handle.Mode), Attributes(handle.Attributes), Info(handle.Info), Size(handle.Info.Size), _File(handle._File) {};
 
 		static FileHandle Create(EFI::EFI_FILE_PROTOCOL* file, FileInfo* i, FileMode mode, UINT64 attribs);
 		FileMode Mode;

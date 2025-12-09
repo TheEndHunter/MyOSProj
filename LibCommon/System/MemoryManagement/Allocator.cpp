@@ -31,7 +31,7 @@ namespace Common::System::MemoryManagement
 
 	Allocator* Allocator::GetInstance()
 	{
-		if (_init == FALSE)
+		if (!_init)
 		{
 			return nullptr;
 		}
@@ -208,7 +208,7 @@ namespace Common::System::MemoryManagement
 #pragma endregion
 }
 
-extern VOID_PTR operator new(UINTN length)
+VOID_PTR operator new(UINTN length)
 {
 	auto* allocator = Common::System::MemoryManagement::Allocator::GetInstance();
 	if (allocator == nullptr)
@@ -222,7 +222,7 @@ extern VOID_PTR operator new(UINTN length)
 	return allocator->Allocate(length);
 }
 
-extern VOID_PTR operator new[](UINTN length)
+VOID_PTR operator new[](UINTN length)
 {
 	auto* allocator = Common::System::MemoryManagement::Allocator::GetInstance();
 	if (allocator == nullptr)
@@ -236,17 +236,17 @@ extern VOID_PTR operator new[](UINTN length)
 	return allocator->Allocate(length);
 }
 
-extern VOID_PTR operator new(UINTN length, VOID_PTR ptr)
+VOID_PTR operator new(UINTN length, VOID_PTR ptr)
 {
 	return ptr;
 }
 
-extern VOID_PTR operator new[](UINTN length, VOID_PTR ptr)
+VOID_PTR operator new[](UINTN length, VOID_PTR ptr)
 {
 	return ptr;
 }
 
-extern void operator delete(VOID_PTR ptr)
+void operator delete(VOID_PTR ptr)
 {
 	auto* allocator = Common::System::MemoryManagement::Allocator::GetInstance();
 	if (allocator == nullptr)
@@ -260,7 +260,7 @@ extern void operator delete(VOID_PTR ptr)
 	return allocator->Free(ptr);
 }
 
-extern void operator delete[](VOID_PTR ptr)
+void operator delete[](VOID_PTR ptr)
 {
 	auto* allocator = Common::System::MemoryManagement::Allocator::GetInstance();
 	if (allocator == nullptr)
@@ -274,7 +274,7 @@ extern void operator delete[](VOID_PTR ptr)
 	return allocator->Free(ptr);
 }
 
-extern void operator delete(VOID_PTR ptr, UINTN length)
+void operator delete(VOID_PTR ptr, UINTN length)
 {
 	auto* allocator = Common::System::MemoryManagement::Allocator::GetInstance();
 	if (allocator == nullptr)
@@ -288,7 +288,7 @@ extern void operator delete(VOID_PTR ptr, UINTN length)
 	return allocator->Free(ptr);
 }
 
-extern void operator delete[](VOID_PTR ptr, UINTN length)
+void operator delete[](VOID_PTR ptr, UINTN length)
 {
 	auto* allocator = Common::System::MemoryManagement::Allocator::GetInstance();
 	if (allocator == nullptr)
@@ -302,7 +302,7 @@ extern void operator delete[](VOID_PTR ptr, UINTN length)
 	return allocator->Free(ptr);
 }
 
-extern void operator delete(VOID_PTR ptr, VOID_PTR place)
+void operator delete(VOID_PTR ptr, VOID_PTR place)
 {
 	auto* allocator = Common::System::MemoryManagement::Allocator::GetInstance();
 	if (allocator == nullptr)
@@ -316,7 +316,7 @@ extern void operator delete(VOID_PTR ptr, VOID_PTR place)
 	return allocator->Free(ptr);
 }
 
-extern void operator delete[](VOID_PTR ptr, VOID_PTR place)
+void operator delete[](VOID_PTR ptr, VOID_PTR place)
 {
 	auto* allocator = Common::System::MemoryManagement::Allocator::GetInstance();
 	if (allocator == nullptr)

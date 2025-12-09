@@ -16,13 +16,18 @@
 
 namespace Common::FileSystem::ESP
 {
+	void SetESPDebugger(Debugging::Debugger* _debug);
+
 	class ESP_FS_Context
 	{
 	protected:
-		ESP_FS_Context(EFI::EFI_SYSTEM_TABLE* sysTbl, EFI::EFI_HANDLE imgHndl, EFI::EFI_HANDLE devHNDL, EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL* fsp);
-		ESP_FS_Context() : _sysTable(nullptr),_imgHndl(nullptr), _deviceHandle(nullptr), _fs(nullptr), _root(nullptr), _cwd(nullptr), _isVolumeOpen(false), LastStatus(EFI::EFI_STATUS::SUCCESS)
+		ESP_FS_Context(EFI::EFI_SYSTEM_TABLE* sysTbl, EFI::EFI_HANDLE imgHndl, EFI::EFI_HANDLE devHNDL, EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL* fsp) : LastStatus(EFI::EFI_STATUS::NOT_READY), _isVolumeOpen(FALSE), _deviceHandle(devHNDL), _sysTable(sysTbl), _imgHndl(imgHndl), _fs(fsp), _root(nullptr), _cwd(nullptr), _rootInfo(nullptr), _dirInfo(nullptr)
 		{
 		}
+
+		ESP_FS_Context() : LastStatus(EFI::EFI_STATUS::NOT_READY), _isVolumeOpen(FALSE), _deviceHandle(nullptr), _sysTable(nullptr), _imgHndl(nullptr), _fs(nullptr), _root(nullptr), _cwd(nullptr), _rootInfo(nullptr), _dirInfo(nullptr)
+        {  
+        }
 		
 	public:
 		static const CHAR16 DirectorySeparatorChar = '\\';
@@ -35,39 +40,30 @@ namespace Common::FileSystem::ESP
 
 		static CHAR16* GetParentDirectory(CHAR16* path);
 		static CHAR16* GetFileName(CHAR16* path);
-
 		BOOLEAN OpenVolume();
 		void CloseVolume();
-
 		BOOLEAN OpenDirectory(const CHAR16* path);
 		void CloseDirectory();
-
 		FileHandle OpenFile(FileInfo* fileInfo, FileMode mode, UINT64 attribs);
 		FileHandle CreateFile(const CHAR16* name, UINT64 attribs);
 		BOOLEAN DeleteFile(FileHandle* handle);
-
 		void CloseFile(FileHandle& handle);
-
 		BOOLEAN IsRootDirectory();
 		BOOLEAN ReturnToRootDirectory();
-
-		static BOOLEAN IsDirectory(const CHAR16* path);
-		static BOOLEAN IsFile(const CHAR16* path);
-
+		BOOLEAN CheckAttribute(const CHAR16* path, UINT64 attrib);
+		BOOLEAN IsDirectory(const CHAR16* path);
+		BOOLEAN IsFile(const CHAR16* path);
 		CHAR16* GetFullPath(const CHAR16* path);
 		CHAR16* GetRelativePath(const CHAR16* path);
-
 		BOOLEAN DirectoryExists(const CHAR16* path);
 		BOOLEAN FileExists(const CHAR16* path);
-
 		VolumeInfo GetVolumeInfo();
 		VolumeLabel GetVolumeLabel();
-		
 		DirectoryInfo GetDirectoryInfo();
 		DirectoryInfo GetDirectoryInfo(const CHAR16* path);
 
+		FileInfo* EnumerateFiles(OUT UINT64* length);
 		FileInfo GetFileInfo(const CHAR16* path);
-
 		BOOLEAN operator ==(const ESP_FS_Context& right)
 		{
 			/*Compare all members for equality, if one fails return false, otherwise return true*/
@@ -91,14 +87,12 @@ namespace Common::FileSystem::ESP
 
 			return true;
 		}
-
 		BOOLEAN operator !=(const ESP_FS_Context& right)
 		{
 			return !(*this == right);
 		}
 
 		EFI::EFI_STATUS LastStatus;
-
 	private:
 		BOOLEAN _isVolumeOpen;
 		EFI::EFI_HANDLE _deviceHandle;
@@ -107,6 +101,8 @@ namespace Common::FileSystem::ESP
 		EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL* _fs;
 		EFI::EFI_FILE_PROTOCOL* _root;
 		EFI::EFI_FILE_PROTOCOL* _cwd;
+		VolumeInfo* _rootInfo;
+		DirectoryInfo* _dirInfo;
 	};
 }
 

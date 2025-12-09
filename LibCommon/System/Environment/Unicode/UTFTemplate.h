@@ -13,7 +13,8 @@ namespace Common::System::Environment
 	{
 	public:
 		const static StrType  NULL;
-		const static StrType* NewLine;
+		const static StrType NewLine[3];
+		const static StrType NewLineChar[2];
 		const static StrType  Space;
 		const static StrType  Tab;
 		const static StrType  Backspace;
@@ -30,8 +31,8 @@ namespace Common::System::Environment
 		static StrType* ToHex(const VOID_PTR ptr);
 
 		static StrType* ToString(const EFI::EFI_GUID guid);
-		static StrType* ToString(const EFI::EFI_STATUS status);
-		static StrType* ToString(const Common::System::MemoryManagement::AllocatorStatus status);
+		static const StrType* ToString(const EFI::EFI_STATUS status);
+		static const StrType* ToString(const Common::System::MemoryManagement::AllocatorStatus status);
 		static StrType* ToString(const INT16 value);
 		static StrType* ToString(const INT32 value);
 		static StrType* ToString(const INT64 value);
@@ -42,8 +43,7 @@ namespace Common::System::Environment
 		static StrType* ToString(const UINT64 value);
 		static StrType* ToString(const UINT8 value);
 		static StrType* ToString(const VOID_PTR ptr);
-		static StrType* ToString(const BOOLEAN boolean);
-
+		static const StrType* ToString(const BOOLEAN boolean);
 		static UINT64 Length(const StrType* str);
 		static BOOLEAN Compare(const StrType* l, const StrType* r, StringCulture culture = InvariantCulture);
 		static BOOLEAN StartsWith(const StrType* str, const StrType* value, StringCulture culture = InvariantCulture);

@@ -10,6 +10,7 @@ namespace Common::System::Environment
 	public:
 		const static CHAR16  NULL = u'\0';
 		const static CHAR16 NewLine[3];
+		const static CHAR16 NewLineChar[2];
 		const static CHAR16  Space = u' ';
 		const static CHAR16  Tab = u'\t';
 		const static CHAR16  Backspace = u'\b';
@@ -26,8 +27,8 @@ namespace Common::System::Environment
 		static CHAR16* ToHex(const VOID_PTR ptr);
 
 		static CHAR16* ToString(const EFI::EFI_GUID guid);
-		static CHAR16* ToString(const EFI::EFI_STATUS status);
-		static CHAR16* ToString(const Common::System::MemoryManagement::AllocatorStatus status);
+		static const CHAR16* ToString(const EFI::EFI_STATUS status);
+		static const CHAR16* ToString(const Common::System::MemoryManagement::AllocatorStatus status);
 		static CHAR16* ToString(const INT16 value);
 		static CHAR16* ToString(const INT32 value);
 		static CHAR16* ToString(const INT64 value);
@@ -38,8 +39,13 @@ namespace Common::System::Environment
 		static CHAR16* ToString(const UINT64 value);
 		static CHAR16* ToString(const UINT8 value);
 		static CHAR16* ToString(const VOID_PTR ptr);
-		static CHAR16* ToString(const BOOLEAN boolean);
+		static const CHAR16* ToString(const BOOLEAN boolean);
 
+		/// <summary>
+		/// Length of string(Including the null terminator!) so a  length of 1 is returned for a non nullptr, Empty('\0') string.
+		/// </summary>
+		/// <param name="str"></param>
+		/// <returns></returns>
 		static UINT64 Length(const CHAR16* str);
 		static BOOLEAN Compare(const CHAR16* l, const CHAR16* r, StringCulture culture = InvariantCulture);
 		static BOOLEAN StartsWith(const CHAR16* str, const CHAR16* value, StringCulture culture = InvariantCulture);

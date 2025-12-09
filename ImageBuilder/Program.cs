@@ -1,19 +1,17 @@
 ﻿namespace ImageBuilder
 {
+    using System;
+    using System.Collections.Frozen;
+    using System.Linq;
+
     using DiscUtils;
 
     using ImageBuilder.Serialization;
 
     using Microsoft.Extensions.Configuration;
 
-    using System;
-    using System.Collections.Frozen;
-    using System.Diagnostics;
-    using System.Linq;
-
     public static partial class Program
     {
-
         private static readonly FrozenDictionary<string, string> bootfileMap = new Dictionary<string, string>()
                 {
                     { "x86", "BOOTIA32.efi" },
@@ -79,7 +77,7 @@
             string Dir = Path.GetFullPath(Directory.GetCurrentDirectory());
             string SettingsPath = Path.Combine(Dir, "Settings.json");
 
-            IEnumerable<string> sdts = DiscUtils.VirtualDiskManager.SupportedDiskTypes;
+            ICollection<string> sdts = DiscUtils.VirtualDiskManager.SupportedDiskTypes;
 
             if (File.Exists(SettingsPath))
             {
@@ -249,8 +247,8 @@
             config.ImageConfigs.Clear();
             config.ImageConfigs.AddRange(_imageConfigs);
 
-            config.Architectures = config.ImageConfigs.Select(x => x.Architecture).Distinct().ToList();
-            config.Configurations = config.ImageConfigs.Select(x => x.Configuration).Distinct().ToList();
+            config.Architectures = [.. config.ImageConfigs.Select(x => x.Architecture).Distinct()];
+            config.Configurations = [.. config.ImageConfigs.Select(x => x.Configuration).Distinct()];
 
             return config;
         }
@@ -316,16 +314,16 @@
             }
         }
 
-        public static IEnumerable<ImageConfig>? SelectProfiles(ImageBuilderConfigs config, IEnumerable<string> configurations, IEnumerable<string> architecures)
+        public static IEnumerable<ImageConfig>? SelectProfiles(ImageBuilderConfigs config, IEnumerable<string> configurations, IEnumerable<string> architectures)
         {
-            if (configurations is null || architecures is null)
+            if (configurations is null || architectures is null)
             {
                 return null;
             }
 
             var profiles = from profile in config.ImageConfigs
                            from conf in configurations
-                           from arch in architecures
+                           from arch in architectures
                            where profile.Configuration == conf && profile.Architecture == arch
                            select profile.Name;
 
@@ -418,7 +416,7 @@
                 }
                 /*
                  *  For each Disc Format, ask user for selection of input, in cases where there are no variants,
-                 *  just select the format and continue itterating
+                 *  just select the format and continue iterating
                  */
 
                 List<DiscFormat> results = [];
@@ -432,13 +430,13 @@
                         continue;
                     }
                     var f = format.Format;
-                    var selectedVartiants = discFormats.Where(x => string.Equals(x.Format, f, StringComparison.CurrentCultureIgnoreCase))
+                    var selectedVariants = discFormats.Where(x => string.Equals(x.Format, f, StringComparison.CurrentCultureIgnoreCase))
                         .Select(x => x.Variant!) ?? throw new NotSupportedException("No Variants Selected");
-                    if (selectedVartiants.Count() > 1)
+                    if (selectedVariants.Count() > 1)
                     {
-                        Checkbox discVariantsCheckBox = new(displayText: $"Select Variant for {format.Format}", options: selectedVartiants, selected: config.DiscFormats.Where(x =>
+                        Checkbox discVariantsCheckBox = new(displayText: $"Select Variant for {format.Format}", options: selectedVariants, selected: config.DiscFormats.Where(x =>
                         {
-                            return string.Equals(x.Format,f, StringComparison.CurrentCultureIgnoreCase);
+                            return string.Equals(x.Format, f, StringComparison.CurrentCultureIgnoreCase);
                         }).Select(x => x.Variant!), multiSelect: true);
                         discVariantsCheckBox.Show();
                         IEnumerable<CheckboxReturn> selectedDiscVariants = discVariantsCheckBox.Select();
@@ -453,8 +451,8 @@
                     else
                     {
                         results.AddRange(from disc in discFormats
-                                         from sel in selectedVartiants
-                                         where string.Equals(disc.Variant,sel, StringComparison.CurrentCultureIgnoreCase) && string.Equals(disc.Format, f, StringComparison.CurrentCultureIgnoreCase)
+                                         from sel in selectedVariants
+                                         where string.Equals(disc.Variant, sel, StringComparison.CurrentCultureIgnoreCase) && string.Equals(disc.Format, f, StringComparison.CurrentCultureIgnoreCase)
                                          orderby disc.Format
                                          select disc);
 

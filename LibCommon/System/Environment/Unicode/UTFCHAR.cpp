@@ -4,13 +4,23 @@
 
 namespace Common::System::Environment
 {
+	const CHAR UTF<CHAR>::NewLine[3]{ '\r', '\n','\0'};
+	const CHAR UTF<CHAR>::NewLineChar[2]{ '\r', '\n'};
 
-	const CHAR UTF<CHAR>::NewLine[3]{ '\r', '\n','\0' };
 	CHAR _CSTR_GUIDTOSTRING[43] = { '{','\0','\0','\0','\0','\0','\0','\0','\0','-','\0','\0','\0','\0','-','\0','\0','\0','\0','-','\0','\0','\0','\0','-','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','}','\0' };
+	constexpr const UINT64 _CSTR_GUIDTOSTRING_LEN = sizeof(_CSTR_GUIDTOSTRING) / sizeof(CHAR);
+
 	CHAR _CSTR_HEXCHARS[17] = { '0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F' };
+	constexpr const UINT64 _CSTR_HEXCHARS_LEN = sizeof(_CSTR_GUIDTOSTRING) / sizeof(CHAR);
+
 	CHAR _CSTR_HEXSTRING[18] = { '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0' };
+	constexpr const UINT64 _CSTR_HEXSTRING_LEN = sizeof(_CSTR_GUIDTOSTRING) / sizeof(CHAR);
+
 	CHAR _CSTR_VALUETOSTRING[23] = { '\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0' };
+	constexpr const UINT64 _CSTR_VALUETOSTRING_LEN = sizeof(_CSTR_GUIDTOSTRING) / sizeof(CHAR);
+
 	CHAR _CSTR_WHITESPACECHARS[6] = { 0x09,0x0A,0x0B,0x0C,0x0D,0x20 };
+	constexpr const UINT64 _CSTR_WHITESPACECHARS_LEN = sizeof(_CSTR_GUIDTOSTRING) / sizeof(CHAR);
 
 	constinit const CHAR* _CSTR_ABORTED = "ABORTED";
 	constinit const CHAR* _CSTR_ACCESS_DENIED = "ACCESS_DENIED";
@@ -297,111 +307,111 @@ namespace Common::System::Environment
 		return &_CSTR_GUIDTOSTRING[0];
 	}
 
-	CHAR* UTF<CHAR>::ToString(const EFI::EFI_STATUS status)
+	const CHAR* UTF<CHAR>::ToString(const EFI::EFI_STATUS status)
 	{
 		switch (status)
 		{
 		case EFI::EFI_STATUS::ABORTED:
-			return (CHAR*)_CSTR_ABORTED;
+			return _CSTR_ABORTED;
 		case EFI::EFI_STATUS::ACCESS_DENIED:
-			return (CHAR*)_CSTR_ACCESS_DENIED;
+			return _CSTR_ACCESS_DENIED;
 		case EFI::EFI_STATUS::ALREADY_STARTED:
-			return (CHAR*)_CSTR_ALREADY_STARTED;
+			return _CSTR_ALREADY_STARTED;
 		case EFI::EFI_STATUS::BAD_BUFFER_SIZE:
-			return (CHAR*)_CSTR_BAD_BUFFER_SIZE;
+			return _CSTR_BAD_BUFFER_SIZE;
 		case EFI::EFI_STATUS::BUFFER_TOO_SMALL:
-			return (CHAR*)_CSTR_BUFFER_TOO_SMALL;
+			return _CSTR_BUFFER_TOO_SMALL;
 		case EFI::EFI_STATUS::COMPROMISED_DATA:
-			return (CHAR*)_CSTR_COMPROMISED_DATA;
+			return _CSTR_COMPROMISED_DATA;
 		case EFI::EFI_STATUS::CRC_ERROR:
-			return (CHAR*)_CSTR_CRC_ERROR;
+			return _CSTR_CRC_ERROR;
 		case EFI::EFI_STATUS::DEVICE_ERROR:
-			return (CHAR*)_CSTR_DEVICE_ERROR;
+			return _CSTR_DEVICE_ERROR;
 		case EFI::EFI_STATUS::END_OF_FILE:
-			return (CHAR*)_CSTR_END_OF_FILE;
+			return _CSTR_END_OF_FILE;
 		case EFI::EFI_STATUS::END_OF_MEDIA:
-			return (CHAR*)_CSTR_END_OF_MEDIA;
+			return _CSTR_END_OF_MEDIA;
 		case EFI::EFI_STATUS::HTTP_ERROR:
-			return (CHAR*)_CSTR_HTTP_ERROR;
+			return _CSTR_HTTP_ERROR;
 		case EFI::EFI_STATUS::ICMP_ERROR:
-			return (CHAR*)_CSTR_ICMP_ERROR;
+			return _CSTR_ICMP_ERROR;
 		case EFI::EFI_STATUS::INCOMPATIBLE_VERSION:
-			return (CHAR*)_CSTR_INCOMPATIBLE_VERSION;
+			return _CSTR_INCOMPATIBLE_VERSION;
 		case EFI::EFI_STATUS::INVALID_LANGUAGE:
-			return (CHAR*)_CSTR_INVALID_LANGUAGE;
+			return _CSTR_INVALID_LANGUAGE;
 		case EFI::EFI_STATUS::INVALID_PARAMETER:
-			return (CHAR*)_CSTR_INVALID_PARAMETER;
+			return _CSTR_INVALID_PARAMETER;
 		case EFI::EFI_STATUS::IP_ADDRESS_CONFLICT:
-			return (CHAR*)_CSTR_IP_ADDRESS_CONFLICT;
+			return _CSTR_IP_ADDRESS_CONFLICT;
 		case EFI::EFI_STATUS::LOAD_ERROR:
-			return (CHAR*)_CSTR_LOAD_ERROR;
+			return _CSTR_LOAD_ERROR;
 		case EFI::EFI_STATUS::MEDIA_CHANGED:
-			return (CHAR*)_CSTR_MEDIA_CHANGED;
+			return _CSTR_MEDIA_CHANGED;
 		case EFI::EFI_STATUS::NO_MAPPING:
-			return (CHAR*)_CSTR_NO_MAPPING;
+			return _CSTR_NO_MAPPING;
 		case EFI::EFI_STATUS::NO_MEDIA:
-			return (CHAR*)_CSTR_NO_MEDIA;
+			return _CSTR_NO_MEDIA;
 		case EFI::EFI_STATUS::NO_RESPONSE:
-			return (CHAR*)_CSTR_NO_RESPONSE;
+			return _CSTR_NO_RESPONSE;
 		case EFI::EFI_STATUS::NOT_FOUND:
-			return (CHAR*)_CSTR_NOT_FOUND;
+			return _CSTR_NOT_FOUND;
 		case EFI::EFI_STATUS::NOT_READY:
-			return (CHAR*)_CSTR_NOT_READY;
+			return _CSTR_NOT_READY;
 		case EFI::EFI_STATUS::NOT_STARTED:
-			return (CHAR*)_CSTR_NOT_STARTED;
+			return _CSTR_NOT_STARTED;
 		case EFI::EFI_STATUS::OUT_OF_RESOURCES:
-			return (CHAR*)_CSTR_OUT_OF_RESOURCES;
+			return _CSTR_OUT_OF_RESOURCES;
 		case EFI::EFI_STATUS::PROTOCOL_ERROR:
-			return (CHAR*)_CSTR_PROTOCOL_ERROR;
+			return _CSTR_PROTOCOL_ERROR;
 		case EFI::EFI_STATUS::SECURITY_VIOLATION:
-			return (CHAR*)_CSTR_SECURITY_VIOLATION;
+			return _CSTR_SECURITY_VIOLATION;
 		case EFI::EFI_STATUS::SUCCESS:
-			return (CHAR*)_CSTR_SUCCESS;
+			return _CSTR_SUCCESS;
 		case EFI::EFI_STATUS::TFTP_ERROR:
-			return (CHAR*)_CSTR_TFTP_ERROR;
+			return _CSTR_TFTP_ERROR;
 		case EFI::EFI_STATUS::TIMEOUT:
-			return (CHAR*)_CSTR_TIMEOUT;
+			return _CSTR_TIMEOUT;
 		case EFI::EFI_STATUS::UNSUPPORTED:
-			return (CHAR*)_CSTR_UNSUPPORTED;
+			return _CSTR_UNSUPPORTED;
 		case EFI::EFI_STATUS::VOLUME_CORRUPTED:
-			return (CHAR*)_CSTR_VOLUME_CORRUPTED;
+			return _CSTR_VOLUME_CORRUPTED;
 		case EFI::EFI_STATUS::VOLUME_FULL:
-			return (CHAR*)_CSTR_VOLUME_FULL;
+			return _CSTR_VOLUME_FULL;
 		case EFI::EFI_STATUS::WARN_BUFFER_TOO_SMALL:
-			return (CHAR*)_CSTR_WARN_BUFFER_TOO_SMALL;
+			return _CSTR_WARN_BUFFER_TOO_SMALL;
 		case EFI::EFI_STATUS::WARN_DELETE_FAILURE:
-			return (CHAR*)_CSTR_WARN_DELETE_FAILURE;
+			return _CSTR_WARN_DELETE_FAILURE;
 		case EFI::EFI_STATUS::WARN_FILE_SYSTEM:
-			return (CHAR*)_CSTR_WARN_FILE_SYSTEM;
+			return _CSTR_WARN_FILE_SYSTEM;
 		case EFI::EFI_STATUS::WARN_RESET_REQUIRED:
-			return (CHAR*)_CSTR_WARN_RESET_REQUIRED;
+			return _CSTR_WARN_RESET_REQUIRED;
 		case EFI::EFI_STATUS::WARN_STALE_DATA:
-			return (CHAR*)_CSTR_WARN_STALE_DATA;
+			return _CSTR_WARN_STALE_DATA;
 		case EFI::EFI_STATUS::WARN_UNKNOWN_GLYPH:
-			return (CHAR*)_CSTR_WARN_UNKNOWN_GLYPH;
+			return _CSTR_WARN_UNKNOWN_GLYPH;
 		case EFI::EFI_STATUS::WARN_WRITE_FAILURE:
-			return (CHAR*)_CSTR_WARN_WRITE_FAILURE;
+			return _CSTR_WARN_WRITE_FAILURE;
 		case EFI::EFI_STATUS::WRITE_PROTECTED:
-			return (CHAR*)_CSTR_WRITE_PROTECTED;
+			return _CSTR_WRITE_PROTECTED;
 		default:
 			return nullptr;
 		}
 	}
 
-	CHAR* UTF<CHAR>::ToString(const Common::System::MemoryManagement::AllocatorStatus status)
+	const CHAR* UTF<CHAR>::ToString(const Common::System::MemoryManagement::AllocatorStatus status)
 	{
 		switch (status)
 		{
 		case Common::System::MemoryManagement::AllocatorStatus::Success:
-			return (CHAR*)_CSTR_ALLOC_STATUS_SUCCESS;
+			return _CSTR_ALLOC_STATUS_SUCCESS;
 		case Common::System::MemoryManagement::AllocatorStatus::Invalid_Parameters:
-			return (CHAR*)_CSTR_ALLOC_STATUS_INVALID_PARAMETER;
+			return _CSTR_ALLOC_STATUS_INVALID_PARAMETER;
 		case Common::System::MemoryManagement::AllocatorStatus::Not_Enough_Memory:
-			return (CHAR*)_CSTR_ALLOC_STATUS_NOT_ENOUGH_MEMORY;
+			return _CSTR_ALLOC_STATUS_NOT_ENOUGH_MEMORY;
 		case Common::System::MemoryManagement::AllocatorStatus::Not_Enough_Pages:
-			return (CHAR*)_CSTR_ALLOC_STATUS_NOT_ENOUGH_PAGES;
+			return _CSTR_ALLOC_STATUS_NOT_ENOUGH_PAGES;
 		case Common::System::MemoryManagement::AllocatorStatus::Access_Denied:
-			return (CHAR*)_CSTR_ALLOC_STATUS_ACCESS_DENIED;
+			return _CSTR_ALLOC_STATUS_ACCESS_DENIED;
 		}
 	}
 
@@ -617,15 +627,15 @@ namespace Common::System::Environment
 		return &_CSTR_VALUETOSTRING[len];
 	}
 
-	CHAR* UTF<CHAR>::ToString(const BOOLEAN boolean)
+	const CHAR* UTF<CHAR>::ToString(const BOOLEAN boolean)
 	{
 		if (boolean)
 		{
-			return (CHAR*)_CSTR_BOOLEAN_TRUE;
+			return _CSTR_BOOLEAN_TRUE;
 		}
 		else
 		{
-			return (CHAR*)_CSTR_BOOLEAN_FALSE;
+			return _CSTR_BOOLEAN_FALSE;
 		}
 	}
 
@@ -652,20 +662,8 @@ namespace Common::System::Environment
 	}
 
 	BOOLEAN UTF<CHAR>::Compare(const CHAR* l, const CHAR* r, StringCulture culture)
-	{
+	{		
 		/*Check for isNullOrEmpty and Lengths, if they don't match, return FALSE*/
-		BOOLEAN lBool = IsNullOrEmpty(l);
-		BOOLEAN rBool = IsNullOrEmpty(r);
-
-		if (lBool || rBool)
-		{
-			return FALSE;
-		}
-
-		if (lBool && rBool)
-		{
-			return TRUE;
-		}
 
 		UINT64 lLength = Length(l);
 		UINT64 rLength = Length(r);
@@ -674,8 +672,14 @@ namespace Common::System::Environment
 		{
 			return FALSE;
 		}
-
-
+		
+		BOOLEAN lBool = IsNullOrEmpty(l);
+		BOOLEAN rBool = IsNullOrEmpty(r);
+		
+		if (lBool == rBool)
+		{
+			return TRUE;
+		}
 
 		switch (culture)
 		{
@@ -734,14 +738,14 @@ namespace Common::System::Environment
 		BOOLEAN l = IsNullOrEmpty(str);
 		BOOLEAN r = IsNullOrEmpty(value);
 
+		if (l == r)
+		{
+			return TRUE;
+		}
+
 		if (l || r)
 		{
 			return FALSE;
-		}
-
-		if (l && r)
-		{
-			return TRUE;
 		}
 
 		UINT64 strLength = Length(str);
@@ -801,15 +805,14 @@ namespace Common::System::Environment
 	{
 		BOOLEAN l = IsNullOrEmpty(str);
 		BOOLEAN r = IsNullOrEmpty(value);
+		if (l == r)
+		{
+			return TRUE;
+		}
 
 		if (l || r)
 		{
 			return FALSE;
-		}
-
-		if (l && r)
-		{
-			return TRUE;
 		}
 
 		UINT64 strLength = Length(str);
@@ -872,16 +875,16 @@ namespace Common::System::Environment
 	{
 		BOOLEAN l = IsNullOrEmpty(str);
 		BOOLEAN r = IsNullOrEmpty(value);
-
+		if (l == r)
+		{
+			return TRUE;
+		}
 		if (l || r)
 		{
 			return FALSE;
 		}
 
-		if (l && r)
-		{
-			return TRUE;
-		}
+		
 
 		UINT64 strLength = Length(str);
 		UINT64 valueLength = Length(value);

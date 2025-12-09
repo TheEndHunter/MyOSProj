@@ -20,42 +20,42 @@ namespace EFI
 
 		BOOLEAN operator ==(const EFI_TIME& right)
 		{
-			/*Compare all members for equality, if one fails return false, otherwise return true*/
+			/*Compare all members for equality, if one fails return FALSE, otherwise return TRUE*/
 
 			if (Year != right.Year)
-				return false;
+				return FALSE;
 
 			if (Month != right.Month)
-				return false;
+				return FALSE;
 
 			if (Day != right.Day)
-				return false;
+				return FALSE;
 
 			if (Hour != right.Hour)
-				return false;
+				return FALSE;
 
 			if (Minute != right.Minute)
-				return false;
+				return FALSE;
 
 			if (Second != right.Second)
-				return false;
+				return FALSE;
 
 			if (Pad1 != right.Pad1)
-				return false;
+				return FALSE;
 
 			if (Nanosecond != right.Nanosecond)
-				return false;
+				return FALSE;
 
 			if (TimeZone != right.TimeZone)
-				return false;
+				return FALSE;
 
 			if (Daylight != right.Daylight)
-				return false;
+				return FALSE;
 
 			if (Pad2 != right.Pad2)
-				return false;
+				return FALSE;
 
-			return true;
+			return TRUE;
 		}
 
 		BOOLEAN operator !=(const EFI_TIME& right)
@@ -67,12 +67,12 @@ namespace EFI
 	//***************************************************
 	// Bit Definitions for EFI_TIME.Daylight. See below.
 	//***************************************************
-	inline const UINT8 EFI_TIME_ADJUST_DAYLIGHT = 0x01;
-	inline const UINT8 EFI_TIME_IN_DAYLIGHT = 0x02;
+	CONST UINT8 EFI_TIME_ADJUST_DAYLIGHT = 0x01;
+	CONST UINT8 EFI_TIME_IN_DAYLIGHT = 0x02;
 
 	//***************************************************
 	// Value Definition for EFI_TIME.TimeZone. See below.
 	//***************************************************
-	inline const INT16 EFI_UNSPECIFIED_TIMEZONE = 0x07FF;
+	CONST INT16 EFI_UNSPECIFIED_TIMEZONE = 0x07FF;
 
 }

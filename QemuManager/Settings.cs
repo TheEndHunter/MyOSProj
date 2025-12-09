@@ -7,32 +7,20 @@ namespace QemuRunner
     {
         public List<string> Configurations;
         public List<string> Architectures;
-        public List<QemuConfig> QemuConfigs;
-        public GitConfiguration? OVMFConfiguration;
+        public List<QEMUConfig> QemuConfigs;
+        public GitConfig? OVMFConfiguration;
 
         public Settings(IConfigurationRoot root) : this()
         {
             OVMFConfiguration = null;
             var c = root.GetRequiredSection("Configurations");
 
-            Configurations = c.AsEnumerable().Where(x =>
-            {
-                if (string.IsNullOrEmpty(x.Value))
-                {
-                    return false;
-                }
-
-                if (string.IsNullOrWhiteSpace(x.Value))
-                {
-                    return false;
-                }
-                return true;
-            }).Select(x => x.Value!.ToLower()).ToList();
+            Configurations = [.. c.AsEnumerable().Where(x => { if (string.IsNullOrEmpty(x.Value)) { return false; } if (string.IsNullOrWhiteSpace(x.Value)) { return false; } return true; }).Select(x => x.Value!.ToLower())];
 
 
             var a = root.GetRequiredSection("Architectures");
 
-            Architectures = a.AsEnumerable().Where(x =>
+            Architectures = [.. a.AsEnumerable().Where(x =>
             {
                 if (string.IsNullOrEmpty(x.Value))
                 {
@@ -44,11 +32,11 @@ namespace QemuRunner
                     return false;
                 }
                 return true;
-            }).Select(x => x.Value!.ToLower()).ToList();
+            }).Select(x => x.Value!.ToLower())];
 
-            var qc = root.GetRequiredSection("QemuConfig");
+            var qc = root.GetRequiredSection("QEMUConfig");
 
-            QemuConfigs = qc.Get<List<QemuConfig>>() ?? [];
+            QemuConfigs = qc.Get<List<QEMUConfig>>() ?? [];
 
             int count = QemuConfigs.Count;
 
@@ -69,7 +57,7 @@ namespace QemuRunner
 
             if (ovmf != null)
             {
-                OVMFConfiguration = new GitConfiguration()
+                OVMFConfiguration = new GitConfig()
                 {
                     Author = ovmf["Author"] ?? string.Empty,
                     Repo = ovmf["Repo"] ?? string.Empty,

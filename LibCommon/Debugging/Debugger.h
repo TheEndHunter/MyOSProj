@@ -9,8 +9,8 @@ namespace Common::Debugging
 	typedef void (*LOGWARNINGMSG)(const CHAR16* message);
 	typedef void (*LOGERRORMSG)(const CHAR16* message);
 	typedef void (*LOGCRITICALMSG)(const CHAR16* message);
-
-
+	typedef void (*DGBWAITFORKEY)(CHAR16 key);
+	
 	struct Debugger
 	{
 	public:
@@ -24,13 +24,13 @@ namespace Common::Debugging
 		void PrintWarningLine(const CHAR16* msg) const;
 		void PrintErrorLine(const CHAR16* msg) const;
 		void PrintCriticalLine(const CHAR16* msg) const;
-
 		void PrintDebug(const CHAR16* msg) const;
 		void PrintInfo(const CHAR16* msg) const;
 		void PrintWarning(const CHAR16* msg) const;
 		void PrintError(const CHAR16* msg) const;
 		void PrintCritical(const CHAR16* msg) const;
-
+		void WaitForKey(const CHAR16 key) const;
+		void WaitForKey() const;
 	private:
 		EFI::EFI_SYSTEM_TABLE* _sysTbl;
 	};

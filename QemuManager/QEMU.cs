@@ -55,19 +55,16 @@
             return string.Empty;
         }
 
-        private static Process? qemuProcess = null;
-        public static int StartProcess(QemuConfig config, string ovmfPath, string imagePath)
+        public static Process? StartProcess(QEMUConfig config, string ovmfPath, string imagePath)
         {
             try
             {
-                AppDomain.CurrentDomain.ProcessExit += TerminateQemuProcess;
-
                 string qemuPath = QEMU.FindPath(config.Name);
 
                 if (string.IsNullOrEmpty(qemuPath))
                 {
                     Console.WriteLine("QEMU executable not found in PATH.");
-                    return -1;
+                    return null;
                 }
 
                 var ovmfCodePath = Path.Combine(ovmfPath, "OVMF_CODE.fd");
@@ -84,47 +81,29 @@
                 }
 
                 string logName = Path.Combine(Directory.GetCurrentDirectory(), $"qemu_{DateTime.Now:dd_mm_yyyy-HH_mm_ss_ff}.log");
-                var s = File.Create(logName);
+                using FileStream s = File.Create(logName);
                 s.Flush(true);
                 s.Close();
                 s.Dispose();
+
                 string qemuArguments = $"{config.AdditionalArgs} -serial file:{logName} -drive if=pflash,format=raw,readonly=on,file=\"{ovmfCodePath}\" -drive if=pflash,format=raw,file=\"{ovmfVarPath}\" {BuildDrives(imagePath)}";
+                Console.WriteLine($"Starting Qemu With the Following Configurations:{Environment.NewLine}\tArch: {config.Architecture}");
+                Console.WriteLine($"\tConfig: {config.Configuration}{Environment.NewLine}\tAdditonal Args: {config.AdditionalArgs}");
+                Console.WriteLine($"\tOVMF_CODE path: {ovmfCodePath}{Environment.NewLine}\tOVMF_VARS path: {ovmfVarPath}{Environment.NewLine}");
 
-                using (qemuProcess = new())
+                return new()
                 {
-                    qemuProcess.StartInfo.FileName = qemuPath;
-                    qemuProcess.StartInfo.Arguments = qemuArguments;
-                    qemuProcess.StartInfo.UseShellExecute = false;
-                    qemuProcess.StartInfo.RedirectStandardOutput = false;
-                    qemuProcess.StartInfo.RedirectStandardError = false;
-
-                    Console.WriteLine($"Starting Qemu With the Following Configurations:{Environment.NewLine}\tArch: {config.Architecture}");
-                    Console.WriteLine($"\tConfig: {config.Configuration}{Environment.NewLine}\tAdditonal Args: {config.AdditionalArgs}");
-                    Console.WriteLine($"\tOVMF_CODE path: {ovmfCodePath}{Environment.NewLine}\tOVMF_VARS path: {ovmfVarPath}{Environment.NewLine}");
-
-                    qemuProcess.Start();
-
-                    qemuProcess.WaitForExit();
-
-                    int exitCode = qemuProcess.ExitCode;
-
-                    // Clear the reference after the process exits
-                    qemuProcess = null;
-
-                    return exitCode;
-                }
+                    StartInfo = new ProcessStartInfo(qemuPath, qemuArguments)
+                    {
+                        UseShellExecute = false,
+                    },
+                    EnableRaisingEvents = true,
+                };
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed to start QEMU process: {ex.Message}");
-                return -1;
-            }
-        }
-        private static void TerminateQemuProcess(object? sender, EventArgs e)
-        {
-            if (qemuProcess != null && !qemuProcess.HasExited)
-            {
-                qemuProcess.Kill();
+                return null;
             }
         }
     }

@@ -83,7 +83,7 @@
     <ClInclude Include="System\Console.h" />
     <ClInclude Include="System\MemoryManagement\EfiAllocator.h" />
     <ClInclude Include="System\MemoryManagement\KernelAllocator.h" />
-    <ClInclude Include="System\MemFuncs.h" />
+    <ClInclude Include="System\MemoryManagement\MemFuncs.h" />
     <ClInclude Include="System\Environment\Unicode.h" />
     <ClInclude Include="TypeDefs.h" />
     <ClInclude Include="System\Environment\Unicode\UTFCHAR16.h" />
@@ -126,7 +126,7 @@
     <ClCompile Include="System\Console.cpp" />
     <ClCompile Include="System\MemoryManagement\EfiAllocator.cpp" />
     <ClCompile Include="System\MemoryManagement\KernelAllocator.cpp" />
-    <ClCompile Include="System\MemFuncs.cpp" />
+    <ClCompile Include="System\MemoryManagement\MemFuncs.cpp" />
     <ClCompile Include="TypeDefs.cpp" />
     <ClCompile Include="System\Environment\Unicode\UTFCHAR16.cpp" />
   </ItemGroup>
@@ -155,12 +155,12 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
