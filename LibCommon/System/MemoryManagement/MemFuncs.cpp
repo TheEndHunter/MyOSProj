@@ -31,7 +31,7 @@ namespace Common::System
 
 		for (UINT64 i = 0; i < length; i++)
 		{
-			temp[i] = q[i];	
+			temp[i] = q[i];
 		}
 
 		for (UINT64 i = 0; i < length; i++)
@@ -39,7 +39,7 @@ namespace Common::System
 			p[i] = temp[i];
 		}
 
-		delete[length] temp;
+		delete[] temp;
 	}
 
 	VOID MemZero(VOID* dest, UINT64 length)
@@ -47,14 +47,15 @@ namespace Common::System
 		UINT8* p = (UINT8*)dest;
 		for (UINT64 i = 0; i < length; i++)
 		{
-			*p = 0;
-			p++;
+			p[i] = 0;
 		}
 	}
 
 	VOID MemReverse(VOID* dest, UINT64 length)
 	{
 		UINT8* p = (UINT8*)dest;
+
+		if (length == 0) return;
 
 		UINT8* temp = new UINT8[length];
 
@@ -63,14 +64,14 @@ namespace Common::System
 			temp[i] = p[i];
 		}
 
-		UINT64 s;
-		for (UINT64 i = length - 1; i > 0; i--)
+		UINT64 s = 0;
+		for (UINT64 i = length; i-- > 0; )
 		{
 			p[s] = temp[i];
 			s++;
 		}
 
-		delete[length] temp;
+		delete[] temp;
 	}
 
 	BOOLEAN MemCmp(VOID* cmpA, VOID* cmpB, UINT64 length)

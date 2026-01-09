@@ -71,28 +71,29 @@ namespace Common::System::Environment
 	constexpr const CHAR8* _UTF8_ALLOC_STATUS_ACCESS_DENIED = u8"ACCESS_DENIED";
 	constexpr const CHAR8* _UTF8_ALLOC_STATUS_UNKNOWN = u8"UNKNOWN";
 	
-	CHAR8* UTF<CHAR8>::ToHex(const INT16 value)
-	{
-		if (value < 0)
-		{
-			INT16 abs = -value;
-			_UTF8_HEXSTRING[0] = u8'-';
-			_UTF8_HEXSTRING[1] = _UTF8_HEXCHARS[(abs >> 12) & 0xF];
-			_UTF8_HEXSTRING[2] = _UTF8_HEXCHARS[(abs >> 8) & 0xF];
-			_UTF8_HEXSTRING[3] = _UTF8_HEXCHARS[(abs >> 4) & 0xF];
-			_UTF8_HEXSTRING[4] = _UTF8_HEXCHARS[abs & 0xF];
-			_UTF8_HEXSTRING[5] = u8'\0';
-		}
-		else
-		{
-			_UTF8_HEXSTRING[0] = _UTF8_HEXCHARS[(value >> 12) & 0xF];
-			_UTF8_HEXSTRING[1] = _UTF8_HEXCHARS[(value >> 8) & 0xF];
-			_UTF8_HEXSTRING[2] = _UTF8_HEXCHARS[(value >> 4) & 0xF];
-			_UTF8_HEXSTRING[3] = _UTF8_HEXCHARS[value & 0xF];
-			_UTF8_HEXSTRING[4] = u8'\0';
-		}
-		return &_UTF8_HEXSTRING[0];
-	}
+    CHAR8* UTF<CHAR8>::ToHex(const INT16 value)
+    {
+        if (value < 0)
+        {
+            INT16 abs = -value;
+            _UTF8_HEXSTRING[0] = u8'-';
+            _UTF8_HEXSTRING[1] = _UTF8_HEXCHARS[(abs >> 12) & 0xF];
+            _UTF8_HEXSTRING[2] = _UTF8_HEXCHARS[(abs >> 8) & 0xF];
+            _UTF8_HEXSTRING[3] = _UTF8_HEXCHARS[(abs >> 4) & 0xF];
+            _UTF8_HEXSTRING[4] = _UTF8_HEXCHARS[abs & 0xF];
+        _UTF8_HEXSTRING[5] = u8'\0';
+        }
+        else
+        {
+            _UTF8_HEXSTRING[0] = _UTF8_HEXCHARS[(value >> 12) & 0xF];
+            _UTF8_HEXSTRING[1] = _UTF8_HEXCHARS[(value >> 8) & 0xF];
+            _UTF8_HEXSTRING[2] = _UTF8_HEXCHARS[(value >> 4) & 0xF];
+            _UTF8_HEXSTRING[3] = _UTF8_HEXCHARS[value & 0xF];
+            _UTF8_HEXSTRING[4] = u8'\0';
+        }
+        return &_UTF8_HEXSTRING[0];
+    }
+
 
 	CHAR8* UTF<CHAR8>::ToHex(const INT32 value)
 	{
@@ -391,8 +392,8 @@ namespace Common::System::Environment
 			return _UTF8_WARN_WRITE_FAILURE;
 		case EFI::EFI_STATUS::WRITE_PROTECTED:
 			return _UTF8_WRITE_PROTECTED;
-		default:
-			return nullptr;
+        default:
+            return _UTF8_ABORTED; // fallback string for unknown status
 		}
 	}
 
@@ -410,6 +411,8 @@ namespace Common::System::Environment
 			return _UTF8_ALLOC_STATUS_NOT_ENOUGH_PAGES;
 		case Common::System::MemoryManagement::AllocatorStatus::Access_Denied:
 			return _UTF8_ALLOC_STATUS_ACCESS_DENIED;
+		default:
+			return _UTF8_ALLOC_STATUS_UNKNOWN;
 		}
 	}
 
@@ -637,47 +640,37 @@ namespace Common::System::Environment
 		}
 	}
 
-	UINT64 UTF<CHAR8>::Length(const CHAR8* str)
-	{
-		if (str == nullptr)
-		{
-			return 0;
-		}
+    UINT64 UTF<CHAR8>::Length(const CHAR8* str)
+    {
+        if (str == nullptr)
+        {
+            return 0;
+        }
 
-		if (str[0] == u8'\0')
-		{
-			return 1;
-		}
-
-		UINT64 index = 0;
-		UINT64 len = 1;
-		while (str[index] != u8'\0')
-		{
-			len++;
-			index++;
-		}
-		return len;
-	}
+        UINT64 len = 0;
+        while (str[len] != u8'\0')
+        {
+            len++;
+        }
+        return len;
+    }
 
 	BOOLEAN UTF<CHAR8>::Compare(const CHAR8* l, const CHAR8* r, StringCulture culture)
 	{
 		/*Check for isNullOrEmpty and Lengths, if they don't match, return FALSE*/
 
-		UINT64 lLength = Length(l);
-		UINT64 rLength = Length(r);
+        if (l == nullptr || r == nullptr)
+        {
+            return FALSE;
+        }
 
-		if (lLength != rLength)
-		{
-			return FALSE;
-		}
+        UINT64 lLength = Length(l);
+        UINT64 rLength = Length(r);
 
-		BOOLEAN lBool = IsNullOrEmpty(l);
-		BOOLEAN rBool = IsNullOrEmpty(r);
-
-		if (lBool == rBool)
-		{
-			return TRUE;
-		}
+        if (lLength != rLength)
+        {
+            return FALSE;
+        }
 
 		switch (culture)
 		{
@@ -732,24 +725,33 @@ namespace Common::System::Environment
 
 	BOOLEAN UTF<CHAR8>::StartsWith(const CHAR8* str, const CHAR8* value, StringCulture culture)
 	{
-		BOOLEAN l = IsNullOrEmpty(str);
-		BOOLEAN r = IsNullOrEmpty(value);
-		if (l == r)
-		{
-			return TRUE;
-		}
-		if (l || r)
-		{
-			return FALSE;
-		}
+        if (str == nullptr || value == nullptr)
+        {
+            return FALSE;
+        }
 
-		UINT64 strLength = Length(str);
-		UINT64 valueLength = Length(value);
+        BOOLEAN l = IsNullOrEmpty(str);
+        BOOLEAN r = IsNullOrEmpty(value);
+        if (l && r)
+        {
+            return TRUE;
+        }
+        if (l || r)
+        {
+            return FALSE;
+        }
 
-		if (strLength < valueLength)
-		{
-			return FALSE;
-		}
+        UINT64 strLength = Length(str);
+        UINT64 valueLength = Length(value);
+        if (valueLength == 0)
+        {
+            return FALSE;
+        }
+
+        if (strLength < valueLength)
+        {
+            return FALSE;
+        }
 
 		switch (culture)
 		{
@@ -809,13 +811,17 @@ namespace Common::System::Environment
 			return FALSE;
 		}
 
-		UINT64 strLength = Length(str);
-		UINT64 valueLength = Length(value);
+        UINT64 strLength = Length(str);
+        UINT64 valueLength = Length(value);
+        if (valueLength == 0)
+        {
+            return FALSE;
+        }
 
-		if (strLength < valueLength)
-		{
-			return FALSE;
-		}
+        if (strLength < valueLength)
+        {
+            return FALSE;
+        }
 
 		switch (culture)
 		{
@@ -823,25 +829,23 @@ namespace Common::System::Environment
 		case Common::System::Environment::CurrentCulture:
 		case Common::System::Environment::Ordinal:
 		{
-			UINT64 index = 0;
-			for (UINT64 index = 0; index < valueLength; index++)
-			{
-				if (str[strLength - valueLength + index] != value[index])
-				{
-					return FALSE;
-				}
-			}
-			return TRUE;
+            for (UINT64 index = 0; index < valueLength; index++)
+            {
+                if (str[strLength - valueLength + index] != value[index])
+                {
+                    return FALSE;
+                }
+            }
+            return TRUE;
 		}
 		case Common::System::Environment::InvariantCultureIgnoreCase:
 		case Common::System::Environment::CurrentCultureIgnoreCase:
 		case Common::System::Environment::OrdinalIgnoreCase:
 		{
-			UINT64 index = 0;
-			for (UINT64 index = 0; index < valueLength; index++)
-			{
-				CHAR8 lChar = str[strLength - valueLength + index];
-				CHAR8 rChar = value[index];
+            for (UINT64 index = 0; index < valueLength; index++)
+            {
+                CHAR8 lChar = str[strLength - valueLength + index];
+                CHAR8 rChar = value[index];
 				/*If the character is a lower case letter, switch it to upper for comparison*/
 				if (lChar >= u8'a' && lChar <= u8'z')
 				{
@@ -880,8 +884,12 @@ namespace Common::System::Environment
 
 		
 
-		UINT64 strLength = Length(str);
-		UINT64 valueLength = Length(value);
+        UINT64 strLength = Length(str);
+        UINT64 valueLength = Length(value);
+        if (strLength == 0 || valueLength == 0)
+        {
+            return FALSE;
+        }
 
 		if (strLength < valueLength)
 		{
@@ -895,7 +903,7 @@ namespace Common::System::Environment
 		case Common::System::Environment::Ordinal:
 		{
 			UINT64 index = 0;
-			for (UINT64 index = 0; index < strLength - valueLength; index++)
+            for (UINT64 index = 0; index <= strLength - valueLength; index++)
 			{
 				if (str[index] == value[0])
 				{
@@ -922,7 +930,7 @@ namespace Common::System::Environment
 		case Common::System::Environment::OrdinalIgnoreCase:
 		{
 			UINT64 index = 0;
-			for (UINT64 index = 0; index < strLength - valueLength; index++)
+            for (UINT64 index = 0; index <= strLength - valueLength; index++)
 			{
 				CHAR8 lChar = str[index];
 				CHAR8 rChar = value[0];
@@ -938,7 +946,7 @@ namespace Common::System::Environment
 					rChar -= 32;
 				}
 
-				if (lChar == rChar)
+                if (lChar == rChar)
 				{
 					BOOLEAN match = TRUE;
 					for (UINT64 i = 0; i < valueLength; i++)
@@ -955,7 +963,7 @@ namespace Common::System::Environment
 							rChar2 -= 32;
 						}
 
-						if (lChar != rChar)
+                        if (lChar2 != rChar2)
 						{
 							match = FALSE;
 							break;
@@ -975,79 +983,57 @@ namespace Common::System::Environment
 		}
 	}
 
-	BOOLEAN UTF<CHAR8>::IsNullOrEmpty(const CHAR8* str)
-	{
-		if (str == nullptr)
-		{
-			return TRUE;
-		};
+    BOOLEAN UTF<CHAR8>::IsNullOrEmpty(const CHAR8* str)
+    {
+        if (str == nullptr)
+        {
+            return TRUE;
+        }
 
-		if (str[0] == u8'\0')
-		{
-			return TRUE;
-		}
+        if (str[0] == u8'\0')
+        {
+            return TRUE;
+        }
 
-		return FALSE;
-	}
+        return FALSE;
+    }
 
 	BOOLEAN UTF<CHAR8>::IsNullOrWhiteSpace(const CHAR8* str)
 	{
-		if (str == nullptr)
-		{
-			return TRUE;
-		};
+        if (str == nullptr)
+        {
+            return TRUE;
+        }
 
-		if (str[0] == u8'\0')
-		{
-			return TRUE;
-		}
+        if (str[0] == u8'\0')
+        {
+            return TRUE;
+        }
 
-		UINT64 index = 0;
-		INT64 charindex = -1;
-		while (str[index] != u'\0')
-		{
-			UINT64 i = 0;
-			for (UINT64 i = 0; i < 30; i++)
-			{
-				if (str[index] != _UTF8_WHITESPACECHARS[i])
-				{
-					charindex = index;
-				}
-			}
-			index++;
-		}
-
-		return charindex == -1;
+        UINT64 index = 0;
+        while (str[index] != u8'\0')
+        {
+            BOOLEAN isWhite = FALSE;
+            for (UINT64 i = 0; i < _UTF8_WHITESPACECHARS_LEN; i++)
+            {
+                if ((unsigned char)str[index] == (unsigned char)_UTF8_WHITESPACECHARS[i])
+                {
+                    isWhite = TRUE;
+                    break;
+                }
+            }
+            if (!isWhite)
+            {
+                return FALSE;
+            }
+            index++;
+        }
+        return TRUE;
 	}
-	BOOLEAN UTF<CHAR8>::IsNullEmptyOrWhiteSpace(const CHAR8* str)
-	{
-		if (str == nullptr)
-		{
-			return TRUE;
-		};
-
-		if (str[0] == '\0')
-		{
-			return TRUE;
-		}
-
-		UINT64 index = 0;
-		INT64 charindex = -1;
-		while (str[index] != u'\0')
-		{
-			UINT64 i = 0;
-			for (UINT64 i = 0; i < 30; i++)
-			{
-				if (str[index] != _UTF8_WHITESPACECHARS[i])
-				{
-					charindex = index;
-				}
-			}
-			index++;
-		}
-
-		return charindex == -1;
-	}
+    BOOLEAN UTF<CHAR8>::IsNullEmptyOrWhiteSpace(const CHAR8* str)
+    {
+        return IsNullOrWhiteSpace(str) || IsNullOrEmpty(str);
+    }
 	CHAR8* UTF<CHAR8>::FromCharArray(CHAR8 arr[], UINT64 Length)
 	{
 		/*Convert from CHAR8 Array to UTF<CHAR8> String*/
@@ -1062,28 +1048,125 @@ namespace Common::System::Environment
 		{
 			result[i] = arr[i];
 		}
-		result[Length] = u8'\0';
+        result[Length] = u8'\0';
 
 		return result;
 	}
 	CHAR8* UTF<CHAR8>::FromUTF16String(const CHAR16* str)
 	{
-		/*Convert from UTF16 String to UTF<CHAR8> String*/
+		/* Convert full UTF-16 to UTF-8, handling surrogate pairs and invalid sequences.
+		   Invalid sequences are replaced with U+FFFD. */
 
 		if (str == nullptr)
 		{
 			return nullptr;
 		}
 
-		UINT64 len = UTF<CHAR16>::Length(str);
+		UINT64 srcLen = UTF<CHAR16>::Length(str);
 
-		CHAR8* result = new CHAR8[len];
-
-		for (UINT64 i = 0; i < len; i++)
+		// First pass: compute needed UTF-8 bytes
+		UINT64 needed = 0;
+		for (UINT64 i = 0; i < srcLen; ++i)
 		{
-			result[i] = (CHAR8)str[i];
+			UINT16 w1 = (UINT16)str[i];
+			if (w1 >= 0xD800 && w1 <= 0xDBFF)
+			{
+				// high surrogate
+				if (i + 1 < srcLen)
+				{
+					UINT16 w2 = (UINT16)str[i + 1];
+					if (w2 >= 0xDC00 && w2 <= 0xDFFF)
+					{
+						needed += 4; // valid pair -> U+10000..U+10FFFF
+						i++; // consume low surrogate
+						continue;
+					}
+				}
+				// unpaired high surrogate -> replacement U+FFFD
+				needed += 3;
+			}
+			else if (w1 >= 0xDC00 && w1 <= 0xDFFF)
+			{
+				// unpaired low surrogate
+				needed += 3;
+			}
+			else if (w1 < 0x80)
+			{
+				needed += 1;
+			}
+			else if (w1 < 0x800)
+			{
+				needed += 2;
+			}
+			else
+			{
+				needed += 3;
+			}
 		}
 
+		CHAR8* result = new CHAR8[needed + 1];
+		UINT64 out = 0;
+
+		for (UINT64 i = 0; i < srcLen; ++i)
+		{
+			UINT32 codepoint;
+			UINT16 w1 = (UINT16)str[i];
+			if (w1 >= 0xD800 && w1 <= 0xDBFF)
+			{
+				// potential surrogate pair
+				if (i + 1 < srcLen)
+				{
+					UINT16 w2 = (UINT16)str[i + 1];
+					if (w2 >= 0xDC00 && w2 <= 0xDFFF)
+					{
+						codepoint = 0x10000 + (((UINT32)w1 - 0xD800) << 10) + ((UINT32)w2 - 0xDC00);
+						i++; // consume low surrogate
+					}
+					else
+					{
+						codepoint = 0xFFFD;
+					}
+				}
+				else
+				{
+					codepoint = 0xFFFD;
+				}
+			}
+			else if (w1 >= 0xDC00 && w1 <= 0xDFFF)
+			{
+				codepoint = 0xFFFD;
+			}
+			else
+			{
+				codepoint = w1;
+			}
+
+			// encode codepoint to UTF-8
+			if (codepoint <= 0x7F)
+			{
+				result[out++] = (CHAR8)(unsigned char)codepoint;
+			}
+			else if (codepoint <= 0x7FF)
+			{
+				result[out++] = (CHAR8)(unsigned char)(0xC0 | ((codepoint >> 6) & 0x1F));
+				result[out++] = (CHAR8)(unsigned char)(0x80 | (codepoint & 0x3F));
+			}
+			else if (codepoint <= 0xFFFF)
+			{
+				result[out++] = (CHAR8)(unsigned char)(0xE0 | ((codepoint >> 12) & 0x0F));
+				result[out++] = (CHAR8)(unsigned char)(0x80 | ((codepoint >> 6) & 0x3F));
+				result[out++] = (CHAR8)(unsigned char)(0x80 | (codepoint & 0x3F));
+			}
+			else
+			{
+				result[out++] = (CHAR8)(unsigned char)(0xF0 | ((codepoint >> 18) & 0x07));
+				result[out++] = (CHAR8)(unsigned char)(0x80 | ((codepoint >> 12) & 0x3F));
+				result[out++] = (CHAR8)(unsigned char)(0x80 | ((codepoint >> 6) & 0x3F));
+				result[out++] = (CHAR8)(unsigned char)(0x80 | (codepoint & 0x3F));
+			}
+		}
+
+		result[out] = (CHAR8)u8'\0';
 		return result;
 	}
 	CHAR8* UTF<CHAR8>::FromCString(const CHAR* str)
@@ -1094,17 +1177,21 @@ namespace Common::System::Environment
 		{
 			return nullptr;
 		}
+        Common::System::Optional<UINT64> lenOpt = UTF<CHAR>::Length(str);
+        if (!lenOpt.HasValue())
+        {
+            return nullptr;
+        }
+        UINT64 len = lenOpt.GetValue();
 
-		UINT64 len = UTF<CHAR>::Length(str);
+        CHAR8* result = new CHAR8[len + 1];
 
-		CHAR8* result = new CHAR8[len];
+        for (UINT64 i = 0; i < len; i++)
+        {
+            result[i] = (CHAR8)str[i];
+        }
+        result[len] = u8'\0';
 
-		for (UINT64 i = 0; i < len; i++)
-		{
-			result[i] = (CHAR8)str[i];
-		}
-		result[len - 1] = u8'\0';
-
-		return result;
+        return result;
 	}
 }

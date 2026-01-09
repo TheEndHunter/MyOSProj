@@ -4,6 +4,8 @@ namespace Common::FileTypes::ELF
 {
 	ELF::ELF(Common::FileSystem::FileHandle* handle)
 	{
+		Hdrs.Elf32 = nullptr;
+		Hdrs.Elf64 = nullptr;
 		handle->SetPosition(0UL);
 		handle->Read<ElfHeaderCommon>(&CommonHeader);
 

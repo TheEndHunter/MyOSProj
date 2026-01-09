@@ -33,6 +33,8 @@ namespace Common::FileTypes::ELF
 	struct ElfHeader32
 	{
 	public:
+    // Common ELF header fields: ident, type, machine
+    ElfHeaderCommon Common;
 		UINT32 Version;
 		UINT32 EntryPoint;
 		UINT32 ProgramHdrOffset;
@@ -114,9 +116,11 @@ namespace Common::FileTypes::ELF
 	{
 	public:
 		ELF32(Common::FileSystem::FileHandle* handle);
+    ~ELF32();
+    bool Valid{false};
 		ElfHeader32 EntryHeader;
-		ElfProgramHeader32* ProgHeader;
-		ElfSectionHeader32* SectHeader;
+    ElfProgramHeader32* ProgHeader{nullptr};
+    ElfSectionHeader32* SectHeader{nullptr};
 	};
 #pragma pack(pop)
 }

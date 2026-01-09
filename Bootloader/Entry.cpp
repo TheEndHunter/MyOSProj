@@ -10,8 +10,9 @@
 #include <Graphics/RenderContext.h>
 #include <EFIConsole.h>
 #include <Debugging/Debugger.h>
-#include <CRT_ENTRIES.h>
+#include <CRT/CRT_Stubs.h>
 #include <System/Environment/KernelErrors.h>
+#include <Protocols/IO/Serial/EFI_SERIAL_IO_PROTOCOL.h>
 
 namespace Bootloader
 {
@@ -24,9 +25,27 @@ namespace Bootloader
     typedef Common::System::Environment::KernelError(CDECL*KrnlMain)(Common::System::MemoryManagement::Allocator* efiAlloc, Common::Debugging::Debugger* debugger,RenderContext* rendererCtx, MonitorContext* monitorCtx, Common::FileSystem::ESP::ESP_FS_Context* efiSysPart, Common::FileSystem::ESP::ESP_FS_Context* sysPart, Common::FileSystem::ESP::ESP_FS_Context* libPart);
     
 
-    EFI_STATUS EfiMain(EFI_HANDLE imgHndl, EFI_SYSTEM_TABLE* sysTbl)
+    extern "C" EFI_STATUS EFIAPI EfiMain(EFI_HANDLE imgHndl, EFI_SYSTEM_TABLE* sysTbl)
     {
-        _CRT_INIT();
+        // Attempt to write an early diagnostic to any Serial IO protocol (COM) so -serial stdio can capture it
+        {
+            EFI::EFI_SERIAL_IO_PROTOCOL* serial = nullptr;
+            EFI_STATUS serStat = sysTbl->BootServices->LocateProtocol((EFI::EFI_GUID*)&EFI::EFI_SERIAL_IO_PROTOCOL_GUID, nullptr, (void**)&serial);
+            if (serStat == EFI::EFI_STATUS::SUCCESS && serial != nullptr)
+            {
+            const CHAR8 testMsg[] = u8"*** EfiMain reached (serial test) ***\r\n";
+            // Use sizeof to get the byte length (exclude terminating NUL)
+            UINTN writeSize = sizeof(testMsg) - 1;
+            // Serial Write expects a buffer size in bytes and returns a status
+            EFI_STATUS writeStat = serial->Write(serial, &writeSize, (VOID*)testMsg);
+            if (writeStat != EFI::EFI_STATUS::SUCCESS)
+            {
+                PrintWarningLine(sysTbl, u"Serial Write returned error: ", writeStat);
+            }
+            }
+        }
+        PrintLine(sysTbl, u"*** EfiMain reached (serial test) ***");
+        CRT_Initialize();
 
         UTF<CHAR>();
         UTF<CHAR8>();
@@ -34,7 +53,6 @@ namespace Bootloader
 
         Common::System::MemoryManagement::Allocator::SetEfiAllocator(sysTbl);
         auto* alloc = Common::System::MemoryManagement::Allocator::GetInstance();
-
 
         if (!alloc->IsInitalized())
 		{
@@ -44,29 +62,39 @@ namespace Bootloader
         UINT32 mm = sysTbl->ConOut->Mode->MaxMode;
         UINTN Columns = 0;
         UINTN Rows = 0;
-        UINTN mode = 0;
+        UINTN bestMode = 0;
+        UINT64 bestArea = 0;
 
-        for (; mode < mm; mode++)
+        for (UINTN m = 0; m < mm; m++)
         {
             UINTN CurrentC = 0;
             UINTN CurrentR = 0;
 
-            EFI_STATUS queryStat = sysTbl->ConOut->QueryMode(sysTbl->ConOut, mode,&CurrentC,&CurrentR);
-			
+            EFI_STATUS queryStat = sysTbl->ConOut->QueryMode(sysTbl->ConOut, m, &CurrentC, &CurrentR);
+
             if (queryStat == EFI_STATUS::SUCCESS)
-			{
-                if (CurrentC > Columns && CurrentR > Rows)
+            {
+                // Protect against weird zero values
+                if (CurrentC == 0 || CurrentR == 0)
                 {
+                    continue;
+                }
+
+                UINT64 area = (UINT64)CurrentC * (UINT64)CurrentR;
+                if (area > bestArea)
+                {
+                    bestArea = area;
                     Columns = CurrentC;
                     Rows = CurrentR;
+                    bestMode = m;
                 }
                 continue;
-			}
+            }
 
             PrintWarningLine(sysTbl, u"Query Mode returned an error: ", queryStat);
         }
 
-        EFI_STATUS conStat = sysTbl->ConOut->SetMode(sysTbl->ConOut,mode);
+        EFI_STATUS conStat = sysTbl->ConOut->SetMode(sysTbl->ConOut, bestMode);
 
         if (conStat != EFI_STATUS::SUCCESS)
 		{
@@ -110,9 +138,12 @@ namespace Bootloader
         for (UINT32 i = 0; i < modes; i++)
         {
             info = monitor->GetMode(i);
-            UINTN r = info->HorizontalResolution / info->VerticalResolution;
+            if (info == nullptr) continue;
+            if (info->VerticalResolution == 0) continue;
 
-            if (info->VerticalResolution == maxV && info->HorizontalResolution == maxH)
+            // choose the mode with the largest area (width * height)
+            UINT64 area = (UINT64)info->HorizontalResolution * (UINT64)info->VerticalResolution;
+            if (area > (UINT64)maxH * (UINT64)maxV)
             {
                 maxH = info->HorizontalResolution;
                 maxV = info->VerticalResolution;
@@ -142,8 +173,9 @@ namespace Bootloader
             ThrowException(sysTbl, imgHndl, u"No File Systems Found", EFI_STATUS::NOT_FOUND);
         }
 
-		PrintInfo(sysTbl, u"Found File Systems: ");
-		PrintInfoLine(sysTbl, UTF<CHAR16>::ToString(fsCount));
+        // Use EFIConsole helpers to print info
+        Bootloader::Print(sysTbl, u"Found File Systems: ");
+        Bootloader::PrintLine(sysTbl, UTF<CHAR16>::ToString(fsCount));
 
         EFI_STATUS fsStatus = EFI_STATUS::SUCCESS;
         ESP::ESP_FS_Context sysFs = ESP::ESP_FS_Context::GetFileSystem(sysTbl, imgHndl, u"SYS", &fsStatus);
@@ -274,6 +306,46 @@ namespace Bootloader
         
 		PrintLine(sysTbl, u"Press Enter to start Kernel...");
         WaitForKey(sysTbl, u'\r');
+
+        // Diagnostic: dump first bytes at the computed entry point to help detect loader/mapping issues
+        {
+            const void* entryPtrConst = krnlPE.GetEntryPoint();
+            void* entryPtr = const_cast<void*>(entryPtrConst);
+            UINT8* bytes = (UINT8*)entryPtr;
+            Bootloader::Print(sysTbl, u"Kernel Entry Point: ");
+            Bootloader::PrintLine(sysTbl, UTF<CHAR16>::ToHex((UINT64)(UINTN)entryPtr));
+
+            const UINTN DUMP_BYTES = 64;
+            UINTN zeroCount = 0;
+            for (UINTN off = 0; off < DUMP_BYTES; off += 8)
+            {
+                // print address
+                Print(sysTbl, UTF<CHAR16>::ToHex((UINT64)(UINTN)(bytes + off)));
+                Print(sysTbl, u": ");
+
+                UINT64 chunk = 0;
+                for (UINTN b = 0; b < 8; ++b)
+                {
+                    UINTN idx = off + b;
+                    UINT8 v = 0;
+                    // avoid reading past a bogus pointer - try/catch not available; assume readable
+                    v = bytes[idx];
+                    chunk |= ((UINT64)v) << (b * 8);
+                    if (v == 0) zeroCount++;
+                }
+
+                PrintLine(sysTbl, UTF<CHAR16>::ToHex(chunk));
+            }
+
+            if (zeroCount >= DUMP_BYTES)
+            {
+                // All zeros in the first region - likely mapped incorrectly
+                PrintErrorLine(sysTbl, u"Kernel entry region appears to be all zeros; loader may have mapped data incorrectly.", EFI::EFI_STATUS::LOAD_ERROR);
+                PrintErrorLine(sysTbl, u"Aborting jump to kernel for safety.", EFI::EFI_STATUS::LOAD_ERROR);
+                WaitForAnyKey(sysTbl);
+                Exit(sysTbl, imgHndl, EFI::EFI_STATUS::LOAD_ERROR);
+            }
+        }
 
         auto main = (KrnlMain)(krnlPE.GetEntryPoint());
         Common::System::Environment::KernelError status = main(alloc,&debug,render, monitor,&efiFs,&sysFs,&libFs);

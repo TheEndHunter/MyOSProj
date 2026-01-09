@@ -83,9 +83,10 @@ namespace Common::System::Environment
 			_CSTR_HEXSTRING[2] = _CSTR_HEXCHARS[(abs >> 8) & 0xF];
 			_CSTR_HEXSTRING[3] = _CSTR_HEXCHARS[(abs >> 4) & 0xF];
 			_CSTR_HEXSTRING[4] = _CSTR_HEXCHARS[abs & 0xF];
-			_CSTR_HEXSTRING[5] = '\0';
-		}
-		else
+        _CSTR_HEXSTRING[5] = '\0';
+    }
+
+    else
 		{
 			_CSTR_HEXSTRING[0] = _CSTR_HEXCHARS[(value >> 12) & 0xF];
 			_CSTR_HEXSTRING[1] = _CSTR_HEXCHARS[(value >> 8) & 0xF];
@@ -95,6 +96,18 @@ namespace Common::System::Environment
 		}
 		return &_CSTR_HEXSTRING[0];
 	}
+
+void UTF<CHAR>::FreeSplit(CHAR** arr, UINT64 count)
+{
+    if (arr == nullptr) return;
+    for (UINT64 i = 0; i < count; ++i) if (arr[i] != nullptr) delete[] arr[i];
+    delete[] arr;
+}
+
+void UTF<CHAR>::Free(CHAR* str)
+{
+    if (str != nullptr) delete[] str;
+}
 
 	CHAR* UTF<CHAR>::ToHex(const INT32 value)
 	{
@@ -393,11 +406,10 @@ namespace Common::System::Environment
 			return _CSTR_WARN_WRITE_FAILURE;
 		case EFI::EFI_STATUS::WRITE_PROTECTED:
 			return _CSTR_WRITE_PROTECTED;
-		default:
-			return nullptr;
-		}
-	}
-
+        default:
+            return _CSTR_ABORTED; // fallback string for unknown status
+        }
+        }
 	const CHAR* UTF<CHAR>::ToString(const Common::System::MemoryManagement::AllocatorStatus status)
 	{
 		switch (status)
@@ -412,6 +424,8 @@ namespace Common::System::Environment
 			return _CSTR_ALLOC_STATUS_NOT_ENOUGH_PAGES;
 		case Common::System::MemoryManagement::AllocatorStatus::Access_Denied:
 			return _CSTR_ALLOC_STATUS_ACCESS_DENIED;
+		default:
+			return _CSTR_ALLOC_STATUS_UNKNOWN;
 		}
 	}
 
@@ -646,27 +660,98 @@ namespace Common::System::Environment
 			return 0;
 		}
 
-		if (str[0] == '\0')
-		{
-			return 1;
-		}
-
-		UINT64 index = 0;
-		UINT64 len = 1;
-		while (str[index] != '\0')
+		UINT64 len = 0;
+		while (str[len] != '\0')
 		{
 			len++;
-			index++;
 		}
 		return len;
+	}
+
+	Common::System::Optional<UINT64> UTF<CHAR>::IndexOf(const CHAR* str, const CHAR* value, UINT64 startIndex, StringCulture culture)
+	{
+		if (str == nullptr || value == nullptr)
+		{
+			return Common::System::Optional<UINT64>();
+		}
+
+		UINT64 strLength = Length(str);
+		UINT64 valueLength = Length(value);
+
+		if (startIndex >= strLength || valueLength == 0 || strLength < valueLength)
+		{
+			return Common::System::Optional<UINT64>();
+		}
+
+		for (UINT64 idx = startIndex; idx <= strLength - valueLength; ++idx)
+		{
+			BOOLEAN match = FALSE;
+			for (UINT64 j = 0; j < valueLength; ++j)
+			{
+				if (str[idx + j] != value[j])
+				{
+					break;
+				}
+
+				match = TRUE;
+			}
+			if (match)
+			{
+				return Common::System::Optional<UINT64>(idx);
+			}
+		}
+		return Common::System::Optional<UINT64>();
+	}
+
+	Common::System::Optional<UINT64> UTF<CHAR>::IndexOf(const CHAR* str, const CHAR value, UINT64 startIndex, StringCulture culture)
+	{
+		CHAR tmp[2] = { value, '\0' };
+		return IndexOf(str, &tmp[0], startIndex, culture);
+	}
+
+	Common::System::Optional<UINT64> UTF<CHAR>::LastIndexOf(const CHAR* str, const CHAR* value, UINT64 startIndex, StringCulture culture)
+	{
+		if (str == nullptr || value == nullptr)
+		{
+			return Common::System::Optional<UINT64>();
+		}
+
+		UINT64 strLength = Length(str);
+		UINT64 valueLength = Length(value);
+
+		if (valueLength == 0 || strLength < valueLength)
+		{
+			return Common::System::Optional<UINT64>();
+		}
+
+		UINT64 start = (startIndex == 0 || startIndex > strLength - valueLength) ? (strLength - valueLength) : startIndex;
+		for (INT64 idx = (INT64)start; idx >= 0; --idx)
+		{
+			BOOLEAN match = TRUE;
+			for (UINT64 j = 0; j < valueLength; ++j)
+			{
+				if (str[idx + j] != value[j])
+				{
+					match = FALSE;
+					break;
+				}
+			}
+			if (match)
+			{
+				return Common::System::Optional<UINT64>((UINT64)idx);
+			}
+		}
+		return Common::System::Optional<UINT64>();
 	}
 
 	BOOLEAN UTF<CHAR>::Compare(const CHAR* l, const CHAR* r, StringCulture culture)
 	{		
 		/*Check for isNullOrEmpty and Lengths, if they don't match, return FALSE*/
 
-		UINT64 lLength = Length(l);
-		UINT64 rLength = Length(r);
+		Common::System::Optional<UINT64> lLenOpt = Length(l);
+		Common::System::Optional<UINT64> rLenOpt = Length(r);
+		UINT64 lLength = lLenOpt.HasValue() ? lLenOpt.GetValue() : 0;
+		UINT64 rLength = rLenOpt.HasValue() ? rLenOpt.GetValue() : 0;
 
 		if (lLength != rLength)
 		{
@@ -676,7 +761,7 @@ namespace Common::System::Environment
 		BOOLEAN lBool = IsNullOrEmpty(l);
 		BOOLEAN rBool = IsNullOrEmpty(r);
 		
-		if (lBool == rBool)
+		if (lBool && rBool)
 		{
 			return TRUE;
 		}
@@ -706,19 +791,19 @@ namespace Common::System::Environment
 
 			UINT64 index = 0;
 
-			for (UINT64 index = 0; index < lLength; index++)
+		for (UINT64 index = 0; index < lLength; index++)
 			{
-				CHAR8 lChar = l[index];
-				CHAR8 rChar = r[index];
+			CHAR lChar = l[index];
+			CHAR rChar = r[index];
 				/*If the character is a lower case letter, switch it to upper for comparison*/
-				if (lChar >= 'a' && lChar <= 'z')
-				{
-					lChar -= 32;
-				}
-				if (rChar >= 'a' && rChar <= 'z')
-				{
-					rChar -= 32;
-				}
+			if (lChar >= 'a' && lChar <= 'z')
+			{
+				lChar -= 32;
+			}
+			if (rChar >= 'a' && rChar <= 'z')
+			{
+				rChar -= 32;
+			}
 
 				if (lChar != rChar)
 				{
@@ -751,6 +836,7 @@ namespace Common::System::Environment
 		UINT64 strLength = Length(str);
 		UINT64 valueLength = Length(value);
 
+		// For StartsWith we only require valueLength <= strLength
 		if (strLength < valueLength)
 		{
 			return FALSE;
@@ -901,7 +987,7 @@ namespace Common::System::Environment
 		case Common::System::Environment::Ordinal:
 		{
 			UINT64 index = 0;
-			for (UINT64 index = 0; index < strLength - valueLength; index++)
+		for (UINT64 index = 0; index <= strLength - valueLength; index++)
 			{
 				if (str[index] == value[0])
 				{
@@ -928,7 +1014,7 @@ namespace Common::System::Environment
 		case Common::System::Environment::OrdinalIgnoreCase:
 		{
 			UINT64 index = 0;
-			for (UINT64 index = 0; index < strLength - valueLength; index++)
+		for (UINT64 index = 0; index <= strLength - valueLength; index++)
 			{
 				CHAR8 lChar = str[index];
 				CHAR8 rChar = value[0];
@@ -944,24 +1030,24 @@ namespace Common::System::Environment
 					rChar -= 32;
 				}
 
-				if (lChar == rChar)
+			if (lChar == rChar)
 				{
 					BOOLEAN match = TRUE;
 					for (UINT64 i = 0; i < valueLength; i++)
 					{
-						CHAR8 lChar2 = str[index + i];
-						CHAR8 rChar2 = value[i];
+					CHAR lChar2 = str[index + i];
+					CHAR rChar2 = value[i];
 						/*If the character is a lower case letter, switch it to upper for comparison*/
-						if (lChar2 >= 'a' && lChar2 <= 'z')
-						{
-							lChar2 -= 32;
-						}
-						if (rChar2 >= 'a' && rChar2 <= 'z')
-						{
-							rChar2 -= 32;
-						}
+					if (lChar2 >= 'a' && lChar2 <= 'z')
+					{
+						lChar2 -= 32;
+					}
+					if (rChar2 >= 'a' && rChar2 <= 'z')
+					{
+						rChar2 -= 32;
+					}
 
-						if (lChar != rChar)
+					if (lChar2 != rChar2)
 						{
 							match = FALSE;
 							break;
@@ -986,7 +1072,7 @@ namespace Common::System::Environment
 		if (str == nullptr)
 		{
 			return TRUE;
-		};
+		}
 
 		if (str[0] == '\0')
 		{
@@ -1001,7 +1087,7 @@ namespace Common::System::Environment
 		if (str == nullptr)
 		{
 			return TRUE;
-		};
+		}
 
 		if (str[0] == '\0')
 		{
@@ -1011,17 +1097,22 @@ namespace Common::System::Environment
 		UINT64 index = 0;
 		while (str[index] != '\0')
 		{
-			UINT64 i = 0;
-			for (UINT64 i = 0; i < 30; i++)
+			BOOLEAN isWhite = FALSE;
+			for (UINT64 i = 0; i < _CSTR_WHITESPACECHARS_LEN; i++)
 			{
-				if (str[index] == _CSTR_WHITESPACECHARS[i])
+				if ((unsigned char)str[index] == (unsigned char)_CSTR_WHITESPACECHARS[i])
 				{
-					return TRUE;
+					isWhite = TRUE;
+					break;
 				}
+			}
+			if (!isWhite)
+			{
+				return FALSE;
 			}
 			index++;
 		}
-		return FALSE;
+		return TRUE;
 	}
 	CHAR* UTF<CHAR>::FromCharArray(CHAR arr[], UINT64 Length)
 	{
@@ -1042,42 +1133,311 @@ namespace Common::System::Environment
 	}
 	CHAR* UTF<CHAR>::FromUTF16String(const CHAR16* str)
 	{
+		/* Encode UTF-16 to UTF-8 into CHAR* (bytes). Replaces invalid sequences with U+FFFD. */
+
 		if (str == nullptr)
 		{
 			return nullptr;
 		}
 
-		if (str[0] == '\0')
+		UINT64 srcLen = UTF<CHAR16>::Length(str);
+
+		// First pass: compute needed bytes
+		UINT64 needed = 0;
+		for (UINT64 i = 0; i < srcLen; ++i)
 		{
-			return (CHAR*)"\0";
+			UINT16 w1 = (UINT16)str[i];
+			if (w1 >= 0xD800 && w1 <= 0xDBFF)
+			{
+				if (i + 1 < srcLen)
+				{
+					UINT16 w2 = (UINT16)str[i + 1];
+					if (w2 >= 0xDC00 && w2 <= 0xDFFF)
+					{
+						needed += 4;
+						i++;
+						continue;
+					}
+				}
+				needed += 3; // replacement
+			}
+			else if (w1 >= 0xDC00 && w1 <= 0xDFFF)
+			{
+				needed += 3; // replacement
+			}
+			else if (w1 < 0x80)
+			{
+				needed += 1;
+			}
+			else if (w1 < 0x800)
+			{
+				needed += 2;
+			}
+			else
+			{
+				needed += 3;
+			}
 		}
 
-		UINT64 len = UTF<CHAR16>::Length(str);
-		CHAR* result = new CHAR[len];
-		for (UINT64 i = 0; i < len; i++)
+		CHAR* result = new CHAR[needed + 1];
+		UINT64 out = 0;
+
+		for (UINT64 i = 0; i < srcLen; ++i)
 		{
-			result[i] = (CHAR)(str[i] & 0x00FF);
+			UINT32 codepoint;
+			UINT16 w1 = (UINT16)str[i];
+			if (w1 >= 0xD800 && w1 <= 0xDBFF)
+			{
+				if (i + 1 < srcLen)
+				{
+					UINT16 w2 = (UINT16)str[i + 1];
+					if (w2 >= 0xDC00 && w2 <= 0xDFFF)
+					{
+						codepoint = 0x10000 + (((UINT32)w1 - 0xD800) << 10) + ((UINT32)w2 - 0xDC00);
+						i++;
+					}
+					else
+					{
+						codepoint = 0xFFFD;
+					}
+				}
+				else
+				{
+					codepoint = 0xFFFD;
+				}
+			}
+			else if (w1 >= 0xDC00 && w1 <= 0xDFFF)
+			{
+				codepoint = 0xFFFD;
+			}
+			else
+			{
+				codepoint = w1;
+			}
+
+			if (codepoint <= 0x7F)
+			{
+				result[out++] = (CHAR)(unsigned char)codepoint;
+			}
+			else if (codepoint <= 0x7FF)
+			{
+				result[out++] = (CHAR)(unsigned char)(0xC0 | ((codepoint >> 6) & 0x1F));
+				result[out++] = (CHAR)(unsigned char)(0x80 | (codepoint & 0x3F));
+			}
+			else if (codepoint <= 0xFFFF)
+			{
+				result[out++] = (CHAR)(unsigned char)(0xE0 | ((codepoint >> 12) & 0x0F));
+				result[out++] = (CHAR)(unsigned char)(0x80 | ((codepoint >> 6) & 0x3F));
+				result[out++] = (CHAR)(unsigned char)(0x80 | (codepoint & 0x3F));
+			}
+			else
+			{
+				result[out++] = (CHAR)(unsigned char)(0xF0 | ((codepoint >> 18) & 0x07));
+				result[out++] = (CHAR)(unsigned char)(0x80 | ((codepoint >> 12) & 0x3F));
+				result[out++] = (CHAR)(unsigned char)(0x80 | ((codepoint >> 6) & 0x3F));
+				result[out++] = (CHAR)(unsigned char)(0x80 | (codepoint & 0x3F));
+			}
 		}
+
+		result[out] = '\0';
 		return result;
 	}
+
+    Common::System::Optional<UINT64> UTF<CHAR>::FromUTF16String(const CHAR16* src, CHAR* outBuffer, UINT64 outBufferSize)
+    {
+        if (src == nullptr || outBuffer == nullptr) return Common::System::Optional<UINT64>();
+        UINT64 srcLen = UTF<CHAR16>::Length(src);
+        UINT64 needed = 0;
+        for (UINT64 i = 0; i < srcLen; ++i)
+        {
+            UINT16 w1 = (UINT16)src[i];
+            if (w1 >= 0xD800 && w1 <= 0xDBFF)
+            {
+                if (i + 1 < srcLen)
+                {
+                    UINT16 w2 = (UINT16)src[i+1];
+                    if (w2 >= 0xDC00 && w2 <= 0xDFFF) { needed += 4; ++i; continue; }
+                }
+                needed += 3;
+            }
+            else if (w1 >= 0xDC00 && w1 <= 0xDFFF) needed += 3;
+            else if (w1 < 0x80) needed += 1;
+            else if (w1 < 0x800) needed += 2;
+            else needed += 3;
+        }
+        if (outBufferSize < needed + 1) return Common::System::Optional<UINT64>();
+        UINT64 out = 0;
+        for (UINT64 i = 0; i < srcLen; ++i)
+        {
+            UINT32 codepoint;
+            UINT16 w1 = (UINT16)src[i];
+            if (w1 >= 0xD800 && w1 <= 0xDBFF)
+            {
+                if (i + 1 < srcLen)
+                {
+                    UINT16 w2 = (UINT16)src[i + 1];
+                    if (w2 >= 0xDC00 && w2 <= 0xDFFF)
+                    {
+                        codepoint = 0x10000 + (((UINT32)w1 - 0xD800) << 10) + ((UINT32)w2 - 0xDC00);
+                        i++;
+                    }
+                    else codepoint = 0xFFFD;
+                }
+                else codepoint = 0xFFFD;
+            }
+            else if (w1 >= 0xDC00 && w1 <= 0xDFFF) codepoint = 0xFFFD;
+            else codepoint = w1;
+
+            if (codepoint <= 0x7F)
+            {
+                outBuffer[out++] = (CHAR)(unsigned char)codepoint;
+            }
+            else if (codepoint <= 0x7FF)
+            {
+                outBuffer[out++] = (CHAR)(unsigned char)(0xC0 | ((codepoint >> 6) & 0x1F));
+                outBuffer[out++] = (CHAR)(unsigned char)(0x80 | (codepoint & 0x3F));
+            }
+            else if (codepoint <= 0xFFFF)
+            {
+                outBuffer[out++] = (CHAR)(unsigned char)(0xE0 | ((codepoint >> 12) & 0x0F));
+                outBuffer[out++] = (CHAR)(unsigned char)(0x80 | ((codepoint >> 6) & 0x3F));
+                outBuffer[out++] = (CHAR)(unsigned char)(0x80 | (codepoint & 0x3F));
+            }
+            else
+            {
+                outBuffer[out++] = (CHAR)(unsigned char)(0xF0 | ((codepoint >> 18) & 0x07));
+                outBuffer[out++] = (CHAR)(unsigned char)(0x80 | ((codepoint >> 12) & 0x3F));
+                outBuffer[out++] = (CHAR)(unsigned char)(0x80 | ((codepoint >> 6) & 0x3F));
+                outBuffer[out++] = (CHAR)(unsigned char)(0x80 | (codepoint & 0x3F));
+            }
+        }
+        outBuffer[out] = '\0';
+        return Common::System::Optional<UINT64>(out);
+    }
+
+    Common::System::Optional<UINT64> UTF<CHAR>::FromUTF8String(const CHAR8* src, CHAR* outBuffer, UINT64 outBufferSize)
+    {
+        if (src == nullptr || outBuffer == nullptr) return Common::System::Optional<UINT64>();
+        UINT64 srcLen = UTF<CHAR8>::Length(src);
+        UINT64 needed = 0;
+        for (UINT64 i = 0; i < srcLen; )
+        {
+            unsigned char c = (unsigned char)src[i];
+            if (c <= 0x7F) { needed += 1; i += 1; }
+            else if ((c & 0xE0) == 0xC0 && i + 1 < srcLen) { needed += 2; i += 2; }
+            else if ((c & 0xF0) == 0xE0 && i + 2 < srcLen) { needed += 3; i += 3; }
+            else if ((c & 0xF8) == 0xF0 && i + 3 < srcLen) { needed += 4; i += 4; }
+            else { needed += 3; i += 1; }
+        }
+        if (outBufferSize < needed + 1) return Common::System::Optional<UINT64>();
+        UINT64 out = 0;
+        for (UINT64 i = 0; i < srcLen; )
+        {
+            unsigned char c = (unsigned char)src[i];
+            if (c <= 0x7F) { outBuffer[out++] = (CHAR)c; i += 1; continue; }
+            else if ((c & 0xE0) == 0xC0 && i + 1 < srcLen) { unsigned char c1 = (unsigned char)src[i+1]; if ((c1 & 0xC0) == 0x80) { outBuffer[out++] = (CHAR)c; outBuffer[out++] = (CHAR)c1; i += 2; continue; } }
+            else if ((c & 0xF0) == 0xE0 && i + 2 < srcLen) { unsigned char c1 = (unsigned char)src[i+1]; unsigned char c2 = (unsigned char)src[i+2]; if (((c1 & 0xC0) == 0x80) && ((c2 & 0xC0) == 0x80)) { outBuffer[out++] = (CHAR)c; outBuffer[out++] = (CHAR)c1; outBuffer[out++] = (CHAR)c2; i += 3; continue; } }
+            else if ((c & 0xF8) == 0xF0 && i + 3 < srcLen) { unsigned char c1 = (unsigned char)src[i+1]; unsigned char c2 = (unsigned char)src[i+2]; unsigned char c3 = (unsigned char)src[i+3]; if (((c1 & 0xC0) == 0x80) && ((c2 & 0xC0) == 0x80) && ((c3 & 0xC0) == 0x80)) { outBuffer[out++] = (CHAR)c; outBuffer[out++] = (CHAR)c1; outBuffer[out++] = (CHAR)c2; outBuffer[out++] = (CHAR)c3; i += 4; continue; } }
+            outBuffer[out++] = (CHAR)0xEF; outBuffer[out++] = (CHAR)0xBF; outBuffer[out++] = (CHAR)0xBD; i += 1;
+        }
+        outBuffer[out] = '\0';
+        return Common::System::Optional<UINT64>(out);
+    }
 	CHAR* UTF<CHAR>::FromUTF8String(const CHAR8* str)
 	{
+		/* Validate UTF-8 and copy bytes into CHAR*; invalid sequences replaced by U+FFFD (EF BF BD). */
+
 		if (str == nullptr)
 		{
 			return nullptr;
 		}
 
-		if (str[0] == '\0')
+		UINT64 srcLen = UTF<CHAR8>::Length(str);
+
+		// First pass: estimate needed bytes (invalid sequences become 3 bytes U+FFFD)
+		UINT64 needed = 0;
+		for (UINT64 i = 0; i < srcLen; )
 		{
-			return (CHAR*)"\0";
+			unsigned char c = (unsigned char)str[i];
+			if (c <= 0x7F)
+			{
+				needed += 1; i += 1;
+			}
+			else if ((c & 0xE0) == 0xC0 && i + 1 < srcLen)
+			{
+				unsigned char c1 = (unsigned char)str[i+1];
+				if ((c1 & 0xC0) == 0x80)
+				{
+					needed += 2; i += 2;
+				}
+				else { needed += 3; i += 1; }
+			}
+			else if ((c & 0xF0) == 0xE0 && i + 2 < srcLen)
+			{
+				unsigned char c1 = (unsigned char)str[i+1];
+				unsigned char c2 = (unsigned char)str[i+2];
+				if (((c1 & 0xC0) == 0x80) && ((c2 & 0xC0) == 0x80)) { needed += 3; i += 3; }
+				else { needed += 3; i += 1; }
+			}
+			else if ((c & 0xF8) == 0xF0 && i + 3 < srcLen)
+			{
+				unsigned char c1 = (unsigned char)str[i+1];
+				unsigned char c2 = (unsigned char)str[i+2];
+				unsigned char c3 = (unsigned char)str[i+3];
+				if (((c1 & 0xC0) == 0x80) && ((c2 & 0xC0) == 0x80) && ((c3 & 0xC0) == 0x80)) { needed += 4; i += 4; }
+				else { needed += 3; i += 1; }
+			}
+			else { needed += 3; i += 1; }
 		}
 
-		UINT64 len = UTF<CHAR8>::Length(str);
-		CHAR* result = new CHAR[len];
-		for (UINT64 i = 0; i < len; i++)
+		CHAR* result = new CHAR[needed + 1];
+		UINT64 out = 0;
+
+		for (UINT64 i = 0; i < srcLen; )
 		{
-			result[i] = str[i];
+			unsigned char c = (unsigned char)str[i];
+			if (c <= 0x7F)
+			{
+				result[out++] = (CHAR)c; i += 1; continue;
+			}
+			else if ((c & 0xE0) == 0xC0 && i + 1 < srcLen)
+			{
+				unsigned char c1 = (unsigned char)str[i+1];
+				if ((c1 & 0xC0) == 0x80)
+				{
+					// copy two bytes
+					result[out++] = (CHAR)c;
+					result[out++] = (CHAR)c1;
+					i += 2; continue;
+				}
+			}
+			else if ((c & 0xF0) == 0xE0 && i + 2 < srcLen)
+			{
+				unsigned char c1 = (unsigned char)str[i+1];
+				unsigned char c2 = (unsigned char)str[i+2];
+				if (((c1 & 0xC0) == 0x80) && ((c2 & 0xC0) == 0x80))
+				{
+					result[out++] = (CHAR)c; result[out++] = (CHAR)c1; result[out++] = (CHAR)c2;
+					i += 3; continue;
+				}
+			}
+			else if ((c & 0xF8) == 0xF0 && i + 3 < srcLen)
+			{
+				unsigned char c1 = (unsigned char)str[i+1];
+				unsigned char c2 = (unsigned char)str[i+2];
+				unsigned char c3 = (unsigned char)str[i+3];
+				if (((c1 & 0xC0) == 0x80) && ((c2 & 0xC0) == 0x80) && ((c3 & 0xC0) == 0x80))
+				{
+					result[out++] = (CHAR)c; result[out++] = (CHAR)c1; result[out++] = (CHAR)c2; result[out++] = (CHAR)c3;
+					i += 4; continue;
+				}
+			}
+			// invalid sequence -> insert UTF-8 replacement U+FFFD (EF BF BD)
+			result[out++] = (CHAR)0xEF; result[out++] = (CHAR)0xBF; result[out++] = (CHAR)0xBD;
+			i += 1;
 		}
+
+		result[out] = '\0';
 		return result;
 	}
 }

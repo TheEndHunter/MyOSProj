@@ -6,6 +6,13 @@ namespace Common::FileSystem
 
 	FileHandle::FileHandle(EFI::EFI_FILE_PROTOCOL* file, FileInfo* i, FileMode mode, UINT64 attribs)
 	{
+		// Initialize members to safe defaults so early returns don't leave members uninitialized
+		Mode = FileMode::Create;
+		Attributes = 0;
+		Info = FileInfo();
+		Size = 0;
+		_File = nullptr;
+
 		/*Check if the file is null, if it is, return an error*/
 		if (file == nullptr)
 		{

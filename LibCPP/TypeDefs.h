@@ -40,7 +40,7 @@
 #else
 #define CHAR8 INT8
 #define CHAR16 INT16
-#define CHAR16 INT32
+#define CHAR32 INT32
 #define WCHAR INT16
 #endif
 
@@ -144,7 +144,7 @@ struct uint128
 #endif
 #define MAX_UINT128 0xffffffffffffffffffffffffffffffff
 #define MIN_INT128 0x80000000000000000000000000000000
-#elif defined(__GNUC__) & defined(__int128)
+#elif defined(__GNUC__) && defined(__int128)
 #define UNICODE
 #define UINT128 unsigned __int128
 #define INT128 __int128

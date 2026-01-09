@@ -4,7 +4,7 @@
 
 namespace Common::Graphics::Font::PCSF
 {
-	const CHAR PCSF2_MAGIC[4] = { 0x72, 0xb5, 0x4a, 0x86 };
+    const UINT8 PCSF2_MAGIC[4] = { (UINT8)0x72, (UINT8)0xb5, (UINT8)0x4a, (UINT8)0x86 };
 
 	enum class PCSF2Flags : UINT32
 	{

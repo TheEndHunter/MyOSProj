@@ -8,5 +8,20 @@
         "DebugTarget": "QemuManager"
       }
     ]
+  },
+  {
+    "Name": "Attach Qemu",
+    "Projects": [
+      {
+        "Path": "QemuManager\\QemuRunner.csproj",
+        "Action": "StartWithoutDebugging",
+        "DebugTarget": "Qemu"
+      },
+      {
+        "Path": "Bootloader\\Bootloader.vcxproj",
+        "Action": "Start",
+        "DebugTarget": "Remote Windows Debugger"
+      }
+    ]
   }
 ]

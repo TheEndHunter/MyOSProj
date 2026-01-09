@@ -74,9 +74,9 @@ namespace Common::System
 			UINT64 x = _cursorPos.X;
 			UINT64 y = _cursorPos.Y;
 
-			for (UINT64 i = 0; str[i] != '\0'; i++)
+			for (UINT64 i = 0; str[i] != u'\0'; i++)
 			{
-				if (str[i] == '\n')
+			if (str[i] == u'\n')
 				{
 					x = 0;
 					y+= _pcsf1->Header.CharSize;
@@ -108,9 +108,9 @@ namespace Common::System
 			UINT64 x = _cursorPos.X;
 			UINT64 y = _cursorPos.Y;
 
-			for (UINT64 i = 0; str[i] != '\0'; i++)
+			for (UINT64 i = 0; str[i] != u'\0'; i++)
 			{
-				if (str[i] == '\n')
+			if (str[i] == u'\n')
 				{
 					x = 0;
 					y += _pcsf2->Header.Height;

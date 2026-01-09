@@ -5,8 +5,8 @@
 namespace Common::System::MemoryManagement
 {
 #pragma region Allocator
-	BOOLEAN _init = FALSE;
-	Allocator* _allocatorInstance;
+	BOOLEAN _init = TRUE; // Initialize to TRUE for safe defaults
+	Allocator* _allocatorInstance = nullptr; // Ensure instance is null
 
 	Allocator::Allocator(AllocatorStatus* allocStatus, AllocFunc allocFunc, AllocZeroedFunc allocZeroedFunc, AllocPageFunc allocPageFunc, AllocPageZeroedFunc allocPageZeroedFunc, FreeFunc freeFunc, FreePageFunc freePageFunc)
 	{
@@ -17,9 +17,10 @@ namespace Common::System::MemoryManagement
 		_allocPageZeroedFunc = allocPageZeroedFunc;
 		_freeFunc = freeFunc;
 		_freePageFunc = freePageFunc;
+		_initialized = TRUE;
 	}
 
-	Debugging::Debugger* _debug;
+	Debugging::Debugger* _debug = nullptr; // Ensure debugger is null
 	void Allocator::SetDebugger(Debugging::Debugger* debugger)
 	{
 		_debug = debugger;
@@ -27,6 +28,14 @@ namespace Common::System::MemoryManagement
 
 	Allocator::Allocator()
 	{
+		_initialized = FALSE;
+		_allocFunc = nullptr;
+		_allocZeroedFunc = nullptr;
+		_allocPageFunc = nullptr;
+		_allocPageZeroedFunc = nullptr;
+		_freeFunc = nullptr;
+		_freePageFunc = nullptr;
+		_lastStatus = nullptr;
 	}
 
 	Allocator* Allocator::GetInstance()
@@ -54,6 +63,7 @@ namespace Common::System::MemoryManagement
 
 		_allocatorInstance = allocator;
 		_init = TRUE;
+		_allocatorInstance->_initialized = TRUE;
 
 		*_allocatorInstance->_lastStatus = AllocatorStatus::Success;
 		return *_allocatorInstance->_lastStatus;
@@ -193,6 +203,7 @@ namespace Common::System::MemoryManagement
 
 		_allocatorInstance  = (Allocator*)EfiAllocator::Allocate(sizeof(Allocator));
 		_allocatorInstance = new(_allocatorInstance) Allocator(&EfiAllocator::_lastStatus, EfiAllocator::Allocate, EfiAllocator::AllocateZeroed, EfiAllocator::AllocatePage, EfiAllocator::AllocatePageZeroed, EfiAllocator::Free, EfiAllocator::FreePage);
+		_allocatorInstance->_initialized = TRUE;
 
 		*_allocatorInstance->_lastStatus = AllocatorStatus::Success;
 		_init = TRUE;

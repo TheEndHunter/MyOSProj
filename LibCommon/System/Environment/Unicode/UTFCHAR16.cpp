@@ -80,19 +80,247 @@ namespace Common::System::Environment
 			_UTF16_HEXSTRING[1] = _UTF16_HEXCHARS[(abs >> 12) & 0xF];
 			_UTF16_HEXSTRING[2] = _UTF16_HEXCHARS[(abs >> 8) & 0xF];
 			_UTF16_HEXSTRING[3] = _UTF16_HEXCHARS[(abs >> 4) & 0xF];
-			_UTF16_HEXSTRING[4] = _UTF16_HEXCHARS[abs & 0xF];
-			_UTF16_HEXSTRING[5] = u'\0';
-		}
-		else
-		{
-			_UTF16_HEXSTRING[0] = _UTF16_HEXCHARS[(value >> 12) & 0xF];
-			_UTF16_HEXSTRING[1] = _UTF16_HEXCHARS[(value >> 8) & 0xF];
-			_UTF16_HEXSTRING[2] = _UTF16_HEXCHARS[(value >> 4) & 0xF];
-			_UTF16_HEXSTRING[3] = _UTF16_HEXCHARS[value & 0xF];
-			_UTF16_HEXSTRING[4] = u'\0';
-		}
-		return &_UTF16_HEXSTRING[0];
-	}
+            _UTF16_HEXSTRING[4] = _UTF16_HEXCHARS[abs & 0xF];
+            _UTF16_HEXSTRING[5] = u'\0';
+        }
+        else
+        {
+            _UTF16_HEXSTRING[0] = _UTF16_HEXCHARS[(value >> 12) & 0xF];
+            _UTF16_HEXSTRING[1] = _UTF16_HEXCHARS[(value >> 8) & 0xF];
+            _UTF16_HEXSTRING[2] = _UTF16_HEXCHARS[(value >> 4) & 0xF];
+            _UTF16_HEXSTRING[3] = _UTF16_HEXCHARS[value & 0xF];
+            _UTF16_HEXSTRING[4] = u'\0';
+        }
+        return &_UTF16_HEXSTRING[0];
+    }
+
+CHAR16* UTF<CHAR16>::SanitizeToUcs2(const CHAR16* src)
+{
+    if (src == nullptr) return nullptr;
+    UINT64 len = Length(src);
+    CHAR16* out = new CHAR16[len + 1];
+    UINT64 outIdx = 0;
+    for (UINT64 i = 0; i < len; ++i)
+    {
+        UINT16 w = (UINT16)src[i];
+        if (w >= 0xD800 && w <= 0xDBFF)
+        {
+            // high surrogate - not representable in UCS-2 => replace
+            out[outIdx++] = (CHAR16)0xFFFD;
+            // skip potential low surrogate if present
+            if (i + 1 < len)
+            {
+                UINT16 w2 = (UINT16)src[i+1];
+                if (w2 >= 0xDC00 && w2 <= 0xDFFF) i++; // consume but replace
+            }
+        }
+        else if (w >= 0xDC00 && w <= 0xDFFF)
+        {
+            // unpaired low surrogate -> replacement
+            out[outIdx++] = (CHAR16)0xFFFD;
+        }
+        else
+        {
+            // BMP codepoint, keep as-is
+            out[outIdx++] = (CHAR16)w;
+        }
+    }
+    out[outIdx] = u'\0';
+    return out;
+}
+
+CHAR8* UTF<CHAR16>::ToUTF8String(const CHAR16* str)
+{
+    if (str == nullptr) return nullptr;
+    UINT64 srcLen = UTF<CHAR16>::Length(str);
+    // Use existing UTF<CHAR8>::FromUTF16String by creating a buffer via buffer overload
+    // First compute required size
+    UINT64 needed = 0;
+    for (UINT64 i = 0; i < srcLen; ++i)
+    {
+        UINT16 w1 = (UINT16)str[i];
+        if (w1 >= 0xD800 && w1 <= 0xDBFF)
+        {
+            if (i + 1 < srcLen)
+            {
+                UINT16 w2 = (UINT16)str[i+1];
+                if (w2 >= 0xDC00 && w2 <= 0xDFFF) { needed += 4; i++; continue; }
+            }
+            needed += 3; // replacement U+FFFD
+        }
+        else if (w1 >= 0xDC00 && w1 <= 0xDFFF)
+        {
+            needed += 3; // replacement
+        }
+        else if (w1 < 0x80) needed += 1;
+        else if (w1 < 0x800) needed += 2;
+        else needed += 3;
+    }
+
+    CHAR8* out = new CHAR8[needed + 1];
+    UINT64 outIdx = 0;
+    for (UINT64 i = 0; i < srcLen; ++i)
+    {
+        UINT32 codepoint = 0;
+        UINT16 w1 = (UINT16)str[i];
+        if (w1 >= 0xD800 && w1 <= 0xDBFF)
+        {
+            if (i + 1 < srcLen)
+            {
+                UINT16 w2 = (UINT16)str[i+1];
+                if (w2 >= 0xDC00 && w2 <= 0xDFFF)
+                {
+                    codepoint = 0x10000 + (((w1 - 0xD800) << 10) | (w2 - 0xDC00));
+                    i++; // consumed
+                }
+                else codepoint = 0xFFFD;
+            }
+            else codepoint = 0xFFFD;
+        }
+        else if (w1 >= 0xDC00 && w1 <= 0xDFFF) codepoint = 0xFFFD;
+        else codepoint = w1;
+
+        if (codepoint <= 0x7F)
+        {
+            out[outIdx++] = (CHAR8)codepoint;
+        }
+        else if (codepoint <= 0x7FF)
+        {
+            out[outIdx++] = (CHAR8)(0xC0 | ((codepoint >> 6) & 0x1F));
+            out[outIdx++] = (CHAR8)(0x80 | (codepoint & 0x3F));
+        }
+        else if (codepoint <= 0xFFFF)
+        {
+            out[outIdx++] = (CHAR8)(0xE0 | ((codepoint >> 12) & 0x0F));
+            out[outIdx++] = (CHAR8)(0x80 | ((codepoint >> 6) & 0x3F));
+            out[outIdx++] = (CHAR8)(0x80 | (codepoint & 0x3F));
+        }
+        else
+        {
+            out[outIdx++] = (CHAR8)(0xF0 | ((codepoint >> 18) & 0x07));
+            out[outIdx++] = (CHAR8)(0x80 | ((codepoint >> 12) & 0x3F));
+            out[outIdx++] = (CHAR8)(0x80 | ((codepoint >> 6) & 0x3F));
+            out[outIdx++] = (CHAR8)(0x80 | (codepoint & 0x3F));
+        }
+    }
+    out[outIdx] = u8'\0';
+    return out;
+}
+
+Common::System::Optional<UINT64> UTF<CHAR16>::ToUTF8String(const CHAR16* src, CHAR8* outBuffer, UINT64 outBufferSize)
+{
+    if (src == nullptr || outBuffer == nullptr) return Common::System::Optional<UINT64>();
+    UINT64 srcLen = UTF<CHAR16>::Length(src);
+    // compute needed bytes
+    UINT64 needed = 0;
+    for (UINT64 i = 0; i < srcLen; ++i)
+    {
+        UINT16 w1 = (UINT16)src[i];
+        if (w1 >= 0xD800 && w1 <= 0xDBFF)
+        {
+            if (i + 1 < srcLen)
+            {
+                UINT16 w2 = (UINT16)src[i+1];
+                if (w2 >= 0xDC00 && w2 <= 0xDFFF) { needed += 4; i++; continue; }
+            }
+            needed += 3;
+        }
+        else if (w1 >= 0xDC00 && w1 <= 0xDFFF) needed += 3;
+        else if (w1 < 0x80) needed += 1;
+        else if (w1 < 0x800) needed += 2;
+        else needed += 3;
+    }
+    if (outBufferSize < needed + 1) return Common::System::Optional<UINT64>();
+
+    UINT64 outIdx = 0;
+    for (UINT64 i = 0; i < srcLen; ++i)
+    {
+        UINT32 codepoint = 0;
+        UINT16 w1 = (UINT16)src[i];
+        if (w1 >= 0xD800 && w1 <= 0xDBFF)
+        {
+            if (i + 1 < srcLen)
+            {
+                UINT16 w2 = (UINT16)src[i+1];
+                if (w2 >= 0xDC00 && w2 <= 0xDFFF)
+                {
+                    codepoint = 0x10000 + (((w1 - 0xD800) << 10) | (w2 - 0xDC00));
+                    i++;
+                }
+                else codepoint = 0xFFFD;
+            }
+            else codepoint = 0xFFFD;
+        }
+        else if (w1 >= 0xDC00 && w1 <= 0xDFFF) codepoint = 0xFFFD;
+        else codepoint = w1;
+
+        if (codepoint <= 0x7F)
+        {
+            outBuffer[outIdx++] = (CHAR8)codepoint;
+        }
+        else if (codepoint <= 0x7FF)
+        {
+            outBuffer[outIdx++] = (CHAR8)(0xC0 | ((codepoint >> 6) & 0x1F));
+            outBuffer[outIdx++] = (CHAR8)(0x80 | (codepoint & 0x3F));
+        }
+        else if (codepoint <= 0xFFFF)
+        {
+            outBuffer[outIdx++] = (CHAR8)(0xE0 | ((codepoint >> 12) & 0x0F));
+            outBuffer[outIdx++] = (CHAR8)(0x80 | ((codepoint >> 6) & 0x3F));
+            outBuffer[outIdx++] = (CHAR8)(0x80 | (codepoint & 0x3F));
+        }
+        else
+        {
+            outBuffer[outIdx++] = (CHAR8)(0xF0 | ((codepoint >> 18) & 0x07));
+            outBuffer[outIdx++] = (CHAR8)(0x80 | ((codepoint >> 12) & 0x3F));
+            outBuffer[outIdx++] = (CHAR8)(0x80 | ((codepoint >> 6) & 0x3F));
+            outBuffer[outIdx++] = (CHAR8)(0x80 | (codepoint & 0x3F));
+        }
+    }
+    outBuffer[outIdx] = u8'\0';
+    return Common::System::Optional<UINT64>(outIdx);
+}
+
+CHAR* UTF<CHAR16>::ToCString(const CHAR16* str)
+{
+    if (str == nullptr) return nullptr;
+    UINT64 len = UTF<CHAR16>::Length(str);
+    CHAR* out = new CHAR[len + 1];
+    for (UINT64 i = 0; i < len; ++i)
+    {
+        CHAR16 c = str[i];
+        if (c <= 0xFF) out[i] = (CHAR)(c & 0xFF);
+        else out[i] = '?';
+    }
+    out[len] = '\0';
+    return out;
+}
+
+Common::System::Optional<UINT64> UTF<CHAR16>::ToCString(const CHAR16* src, CHAR* outBuffer, UINT64 outBufferSize)
+{
+    if (src == nullptr || outBuffer == nullptr) return Common::System::Optional<UINT64>();
+    UINT64 len = UTF<CHAR16>::Length(src);
+    if (outBufferSize < len + 1) return Common::System::Optional<UINT64>();
+    for (UINT64 i = 0; i < len; ++i)
+    {
+        CHAR16 c = src[i];
+        outBuffer[i] = (c <= 0xFF) ? (CHAR)(c & 0xFF) : '?';
+    }
+    outBuffer[len] = '\0';
+    return Common::System::Optional<UINT64>(len);
+}
+
+void UTF<CHAR16>::FreeSplit(CHAR16** arr, UINT64 count)
+{
+    if (arr == nullptr) return;
+    for (UINT64 i = 0; i < count; ++i) if (arr[i] != nullptr) delete[] arr[i];
+    delete[] arr;
+}
+
+void UTF<CHAR16>::Free(CHAR16* str)
+{
+    if (str != nullptr) delete[] str;
+}
 
 	CHAR16* UTF<CHAR16>::ToHex(const INT32 value)
 	{
@@ -663,7 +891,7 @@ namespace Common::System::Environment
 	{
 		/*Check for isNullOrEmpty and Lengths, if they don't match, return FALSE*/
 
-		UINT64 lLength = Length(l);
+		UINT64 lLength = Length(l);;
 		UINT64 rLength = Length(r);
 
 		if (lLength != rLength)
@@ -1080,26 +1308,254 @@ namespace Common::System::Environment
 
 	CHAR16* UTF<CHAR16>::FromUTF8String(const CHAR8* str)
 	{
+		/* Decode UTF-8 to UTF-16, handling multi-byte sequences and invalid sequences.
+		   Invalid sequences produce U+FFFD. */
+
 		if (str == nullptr)
 		{
 			return nullptr;
 		}
 
-		if (str[0] == '\0')
+		UINT64 srcLen = UTF<CHAR8>::Length(str);
+
+		// First pass: determine required number of UTF-16 code units
+		UINT64 needed = 0;
+		for (UINT64 i = 0; i < srcLen; )
 		{
-			return (CHAR16*)u"\0";
+			unsigned char c = (unsigned char)str[i];
+			if (c <= 0x7F)
+			{
+				needed += 1;
+				i++;
+			}
+			else if ((c & 0xE0) == 0xC0)
+			{
+				needed += 1;
+				i += 2;
+			}
+			else if ((c & 0xF0) == 0xE0)
+			{
+				needed += 1;
+				i += 3;
+			}
+			else if ((c & 0xF8) == 0xF0)
+			{
+				needed += 2; // will become surrogate pair
+				i += 4;
+			}
+			else
+			{
+				// invalid leading byte, consume one and produce replacement
+				needed += 1;
+				i++;
+			}
 		}
 
-		UINT64 len = UTF<CHAR8>::Length(str);
+		CHAR16* result = new CHAR16[needed + 1];
+		UINT64 out = 0;
 
-		CHAR16* result = new CHAR16[len];
-
-		for (UINT64 i = 0; i < len; i++)
+		for (UINT64 i = 0; i < srcLen; )
 		{
-			result[i] = (CHAR16)str[i];
+			unsigned char c = (unsigned char)str[i];
+			UINT32 codepoint = 0;
+			UINT64 remaining = srcLen - i;
+
+			if (c <= 0x7F)
+			{
+				codepoint = c;
+				i++;
+			}
+			else if ((c & 0xE0) == 0xC0 && remaining >= 2)
+			{
+				unsigned char c1 = (unsigned char)str[i+1];
+				if ((c1 & 0xC0) == 0x80)
+				{
+					codepoint = ((c & 0x1F) << 6) | (c1 & 0x3F);
+					if (codepoint < 0x80) // overlong
+						codepoint = 0xFFFD;
+				}
+				else
+				{
+					codepoint = 0xFFFD;
+				}
+				i += 2;
+			}
+			else if ((c & 0xF0) == 0xE0 && remaining >= 3)
+			{
+				unsigned char c1 = (unsigned char)str[i+1];
+				unsigned char c2 = (unsigned char)str[i+2];
+				if (((c1 & 0xC0) == 0x80) && ((c2 & 0xC0) == 0x80))
+				{
+					codepoint = ((c & 0x0F) << 12) | ((c1 & 0x3F) << 6) | (c2 & 0x3F);
+					if (codepoint < 0x800) // overlong
+						codepoint = 0xFFFD;
+					// UTF-8 encodings of surrogates are invalid
+					if (codepoint >= 0xD800 && codepoint <= 0xDFFF)
+						codepoint = 0xFFFD;
+				}
+				else
+				{
+					codepoint = 0xFFFD;
+				}
+				i += 3;
+			}
+			else if ((c & 0xF8) == 0xF0 && remaining >= 4)
+			{
+				unsigned char c1 = (unsigned char)str[i+1];
+				unsigned char c2 = (unsigned char)str[i+2];
+				unsigned char c3 = (unsigned char)str[i+3];
+				if (((c1 & 0xC0) == 0x80) && ((c2 & 0xC0) == 0x80) && ((c3 & 0xC0) == 0x80))
+				{
+					codepoint = ((c & 0x07) << 18) | ((c1 & 0x3F) << 12) | ((c2 & 0x3F) << 6) | (c3 & 0x3F);
+					if (codepoint < 0x10000 || codepoint > 0x10FFFF)
+						codepoint = 0xFFFD;
+				}
+				else
+				{
+					codepoint = 0xFFFD;
+				}
+				i += 4;
+			}
+			else
+			{
+				// invalid byte or insufficient continuation bytes
+				codepoint = 0xFFFD;
+				i++;
+			}
+
+			if (codepoint <= 0xFFFF)
+			{
+				result[out++] = (CHAR16)codepoint;
+			}
+			else
+			{
+				// encode as surrogate pair
+				UINT32 cp = codepoint - 0x10000;
+				result[out++] = (CHAR16)(0xD800 + ((cp >> 10) & 0x3FF));
+				result[out++] = (CHAR16)(0xDC00 + (cp & 0x3FF));
+			}
 		}
+
+		result[out] = u'\0';
 		return result;
 	}
+
+    Common::System::Optional<UINT64> UTF<CHAR16>::FromUTF8String(const CHAR8* src, CHAR16* outBuffer, UINT64 outBufferSize)
+    {
+        if (src == nullptr || outBuffer == nullptr) return Common::System::Optional<UINT64>();
+        UINT64 srcLen = UTF<CHAR8>::Length(src);
+
+        // First pass: determine required number of UTF-16 code units
+        UINT64 needed = 0;
+        for (UINT64 i = 0; i < srcLen; )
+        {
+            unsigned char c = (unsigned char)src[i];
+            if (c <= 0x7F)
+            {
+                needed += 1; i += 1;
+            }
+            else if ((c & 0xE0) == 0xC0)
+            {
+                // 2-byte sequence -> 1 code unit
+                needed += 1; i += 2;
+            }
+            else if ((c & 0xF0) == 0xE0)
+            {
+                // 3-byte sequence -> 1 code unit
+                needed += 1; i += 3;
+            }
+            else if ((c & 0xF8) == 0xF0)
+            {
+                // 4-byte sequence -> surrogate pair -> 2 code units
+                needed += 2; i += 4;
+            }
+            else
+            {
+                // invalid leading byte -> replacement U+FFFD (1 code unit)
+                needed += 1; i += 1;
+            }
+        }
+
+        if (outBufferSize < needed + 1) return Common::System::Optional<UINT64>();
+
+        UINT64 out = 0;
+        for (UINT64 i = 0; i < srcLen; )
+        {
+            unsigned char c = (unsigned char)src[i];
+            UINT32 codepoint = 0;
+            UINT64 remaining = srcLen - i;
+
+            if (c <= 0x7F)
+            {
+                codepoint = c; i++;
+            }
+            else if ((c & 0xE0) == 0xC0 && remaining >= 2)
+            {
+                unsigned char c1 = (unsigned char)src[i+1];
+                if ((c1 & 0xC0) == 0x80)
+                {
+                    codepoint = ((c & 0x1F) << 6) | (c1 & 0x3F);
+                    if (codepoint < 0x80) codepoint = 0xFFFD; // overlong
+                }
+                else codepoint = 0xFFFD;
+                i += 2;
+            }
+            else if ((c & 0xF0) == 0xE0 && remaining >= 3)
+            {
+                unsigned char c1 = (unsigned char)src[i+1];
+                unsigned char c2 = (unsigned char)src[i+2];
+                if (((c1 & 0xC0) == 0x80) && ((c2 & 0xC0) == 0x80))
+                {
+                    codepoint = ((c & 0x0F) << 12) | ((c1 & 0x3F) << 6) | (c2 & 0x3F);
+                    if (codepoint < 0x800) codepoint = 0xFFFD; // overlong
+                    if (codepoint >= 0xD800 && codepoint <= 0xDFFF) codepoint = 0xFFFD; // surrogates invalid
+                }
+                else codepoint = 0xFFFD;
+                i += 3;
+            }
+            else if ((c & 0xF8) == 0xF0 && remaining >= 4)
+            {
+                unsigned char c1 = (unsigned char)src[i+1];
+                unsigned char c2 = (unsigned char)src[i+2];
+                unsigned char c3 = (unsigned char)src[i+3];
+                if (((c1 & 0xC0) == 0x80) && ((c2 & 0xC0) == 0x80) && ((c3 & 0xC0) == 0x80))
+                {
+                    codepoint = ((c & 0x07) << 18) | ((c1 & 0x3F) << 12) | ((c2 & 0x3F) << 6) | (c3 & 0x3F);
+                    if (codepoint < 0x10000 || codepoint > 0x10FFFF) codepoint = 0xFFFD;
+                }
+                else codepoint = 0xFFFD;
+                i += 4;
+            }
+            else
+            {
+                codepoint = 0xFFFD; i += 1;
+            }
+
+            if (codepoint <= 0xFFFF)
+            {
+                outBuffer[out++] = (CHAR16)codepoint;
+            }
+            else
+            {
+                UINT32 cp = codepoint - 0x10000;
+                outBuffer[out++] = (CHAR16)(0xD800 + ((cp >> 10) & 0x3FF));
+                outBuffer[out++] = (CHAR16)(0xDC00 + (cp & 0x3FF));
+            }
+        }
+
+        outBuffer[out] = u'\0';
+        return Common::System::Optional<UINT64>(out);
+    }
+
+    Common::System::Optional<UINT64> UTF<CHAR16>::FromCString(const CHAR* src, CHAR16* outBuffer, UINT64 outBufferSize)
+    {
+        if (src == nullptr || outBuffer == nullptr) return Common::System::Optional<UINT64>();
+        UINT64 len = UTF<CHAR>::Length(src);
+        if (outBufferSize < len + 1) return Common::System::Optional<UINT64>();
+        for (UINT64 i = 0; i < len; ++i) outBuffer[i] = (CHAR16)(unsigned char)src[i];
+        outBuffer[len] = u'\0';
+        return Common::System::Optional<UINT64>(len);
+    }
 
 	CHAR16* UTF<CHAR16>::FromCString(const CHAR* str)
 	{
@@ -1125,35 +1581,28 @@ namespace Common::System::Environment
 		return result;
 	}
 
-	INT64 UTF<CHAR16>::IndexOf(const CHAR16* str, const CHAR16* value, UINT64 startIndex, StringCulture culture)
+	Common::System::Optional<UINT64> UTF<CHAR16>::IndexOf(const CHAR16* str, const CHAR16* value, UINT64 startIndex, StringCulture culture)
 	{
 		// Get the first occurance of the 'value' in thr 'str' and return it's index
 		BOOLEAN l = IsNullOrEmpty(str);
 		BOOLEAN r = IsNullOrEmpty(value);
 
-		if (l || r)
-		{
-			return -1;
-		}
+        if (l || r)
+        {
+            return Common::System::Optional<UINT64>();
+        }
 
-		if (l == r)
-		{
-			return 0;
-		}
+        if (l == r)
+        {
+            return Common::System::Optional<UINT64>(0);
+        }
 
-		UINT64 strLength = Length(str);
-
-		if (startIndex >= strLength)
-		{
-			return -1;
-		}
-
-		UINT64 valueLength = Length(value);
-
-		if (strLength < valueLength)
-		{
-			return -1;
-		}
+        UINT64 strLength = Length(str);
+        UINT64 valueLength = Length(value);
+        if (strLength != valueLength)
+        {
+            return Common::System::Optional<UINT64>();
+        }
 
 		switch (culture)
 		{
@@ -1176,13 +1625,13 @@ namespace Common::System::Environment
 						}
 					}
 
-					if (match)
-					{
-						return index;
-					}
+            if (match)
+            {
+                return Common::System::Optional<UINT64>(index);
+            }
 				}
 			}
-			return -1;
+            return Common::System::Optional<UINT64>();
 		}
 
 		case Common::System::Environment::InvariantCultureIgnoreCase:
@@ -1229,35 +1678,34 @@ namespace Common::System::Environment
 						}
 					}
 
-					if (match)
-					{
-						return index;
-					}
+            if (match)
+            {
+                return Common::System::Optional<UINT64>(index);
+            }
 				}
 			}
-			return -1;
+            return Common::System::Optional<UINT64>();
 		}
 
 		default:
-			return -1;
+            return Common::System::Optional<UINT64>();
 		}
 	}
 
-	INT64 UTF<CHAR16>::IndexOf(const CHAR16* str, const CHAR16 value, UINT64 startIndex, StringCulture culture)
+    Common::System::Optional<UINT64> UTF<CHAR16>::IndexOf(const CHAR16* str, const CHAR16 value, UINT64 startIndex, StringCulture culture)
 	{
 		// Get the first occurance of the 'value' in thr 'str' and return it's index
 		BOOLEAN l = IsNullOrEmpty(str);
 
-		if (l)
-		{
-			return -1;
-		}
+        if (l)
+        {
+            return Common::System::Optional<UINT64>();
+        }
 
-		UINT64 strLength = Length(str);
-
-		if (startIndex >= strLength)
+        UINT64 strLength = Length(str);
+		if (strLength == 0)
 		{
-			return -1;
+			return Common::System::Optional<UINT64>();
 		}
 
 		switch (culture)
@@ -1269,12 +1717,12 @@ namespace Common::System::Environment
 		{
 			for (UINT64 index = startIndex; index < strLength; index++)
 			{
-				if (str[index] == value)
-				{
-					return index;
-				}
+                if (str[index] == value)
+                {
+                    return Common::System::Optional<UINT64>(index);
+                }
 			}
-			return -1;
+            return Common::System::Optional<UINT64>();
 		}
 
 		case Common::System::Environment::InvariantCultureIgnoreCase:
@@ -1314,35 +1762,33 @@ namespace Common::System::Environment
 		}
 	}
 
-	INT64 UTF<CHAR16>::LastIndexOf(const CHAR16* str, const CHAR16* value, UINT64 startIndex, StringCulture culture)
+    Common::System::Optional<UINT64> UTF<CHAR16>::LastIndexOf(const CHAR16* str, const CHAR16* value, UINT64 startIndex, StringCulture culture)
 	{
 		// Get the first occurance of the 'value' in thr 'str' and return it's index
 		BOOLEAN l = IsNullOrEmpty(str);
 		BOOLEAN r = IsNullOrEmpty(value);
 
-		if (l || r)
-		{
-			return -1;
-		}
+        if (l || r)
+        {
+            return Common::System::Optional<UINT64>();
+        }
 
-		if (l == r)
-		{
-			return 0;
-		}
+        if (l == r)
+        {
+            return Common::System::Optional<UINT64>(0);
+        }
 
-		UINT64 strLength = Length(str);
+        UINT64 strLength = Length(str);
+        UINT64 valueLength = Length(value);
+        if (strLength < valueLength)
+        {
+            return Common::System::Optional<UINT64>();
+        }
 
-		if (startIndex >= strLength)
-		{
-			return -1;
-		}
-
-		UINT64 valueLength = Length(value);
-
-		if (strLength < valueLength)
-		{
-			return -1;
-		}
+        if (startIndex >= strLength)
+        {
+            return Common::System::Optional<UINT64>();
+        }
 
 		switch (culture)
 		{
@@ -1351,7 +1797,7 @@ namespace Common::System::Environment
 		case Common::System::Environment::CurrentCulture:
 		case Common::System::Environment::Ordinal:
 		{
-			int lastIndex = -1;
+			UINT64 lastIndex;
 			for (UINT64 index = startIndex; index < strLength - valueLength; index++)
 			{
 				if (str[index] == value[0])
@@ -1372,14 +1818,14 @@ namespace Common::System::Environment
 					}
 				}
 			}
-			return lastIndex;
+            return Common::System::Optional<UINT64>(lastIndex);
 		}
 
 		case Common::System::Environment::InvariantCultureIgnoreCase:
 		case Common::System::Environment::CurrentCultureIgnoreCase:
 		case Common::System::Environment::OrdinalIgnoreCase:
 		{
-			INT64 lastIndex = -1;
+			UINT64 lastIndex = 0;
 			for (UINT64 index = startIndex; index < strLength - valueLength; index++)
 			{
 				CHAR16 lChar = str[index];
@@ -1426,97 +1872,102 @@ namespace Common::System::Environment
 					}
 				}
 			}
-			return lastIndex;
+            return Common::System::Optional<UINT64>(lastIndex);
 		}
 
 		default:
-			return -1;
+            return Common::System::Optional<UINT64>();
 		}
 	}
 
 
-	INT64 UTF<CHAR16>::LastIndexOf(const CHAR16* str, const CHAR16 value, UINT64 startIndex, StringCulture culture)
-	{
-		// Get the first occurance of the 'value' in thr 'str' and return it's index
-		BOOLEAN l = IsNullOrEmpty(str);
+    Common::System::Optional<UINT64> UTF<CHAR16>::LastIndexOf(const CHAR16* str, const CHAR16 value, UINT64 startIndex, StringCulture culture)
+    {
+        // Get the first occurance of the 'value' in thr 'str' and return it's index
+        BOOLEAN l = IsNullOrEmpty(str);
 
-		if (l)
-		{
-			return -1;
-		}
+        if (l)
+        {
+            return Common::System::Optional<UINT64>();
+        }
 
-		UINT64 strLength = Length(str);
+        UINT64 strLength = Length(str);
+        if (strLength == 0)
+        {
+            return Common::System::Optional<UINT64>();
+        }
 
-		if (startIndex >= strLength)
-		{
-			return -1;
-		}
+        if (startIndex >= strLength)
+        {
+            return Common::System::Optional<UINT64>();
+        }
 
-		switch (culture)
-		{
+        switch (culture)
+        {
 
-		case Common::System::Environment::InvariantCulture:
-		case Common::System::Environment::CurrentCulture:
-		case Common::System::Environment::Ordinal:
-		{
-			INT64 lastIndex = -1;
-			for (UINT64 index = startIndex; index < strLength; index++)
-			{
-				if (str[index] == value)
-				{
-					lastIndex = index;
-				}
-			}
-			return lastIndex;
-		}
+        case Common::System::Environment::InvariantCulture:
+        case Common::System::Environment::CurrentCulture:
+        case Common::System::Environment::Ordinal:
+        {
+            UINT64 lastIndex =0;
+            for (UINT64 index = startIndex; index < strLength; index++)
+            {
+                if (str[index] == value)
+                {
+                    lastIndex = index;
+                }
+            }
+            return Common::System::Optional<UINT64>(lastIndex);
+        }
 
-		case Common::System::Environment::InvariantCultureIgnoreCase:
-		case Common::System::Environment::CurrentCultureIgnoreCase:
-		case Common::System::Environment::OrdinalIgnoreCase:
-		{
-			CHAR16 rChar = value;
+        case Common::System::Environment::InvariantCultureIgnoreCase:
+        case Common::System::Environment::CurrentCultureIgnoreCase:
+        case Common::System::Environment::OrdinalIgnoreCase:
+        {
+            CHAR16 rChar = value;
 
-			/*If the character is a lower case letter, switch it to upper for comparison*/
+            /*If the character is a lower case letter, switch it to upper for comparison*/
 
-			if (rChar >= u'a' && rChar <= u'z')
-			{
-				rChar -= 32;
-			}
+            if (rChar >= u'a' && rChar <= u'z')
+            {
+                rChar -= 32;
+            }
 
-			INT64 lastIndex = -1;
-			for (UINT64 index = startIndex; index < strLength; index++)
-			{
-				CHAR16 lChar = str[index];
+            UINT64 lastIndex = 0;
+            for (UINT64 index = startIndex; index < strLength; index++)
+            {
+                CHAR16 lChar = str[index];
 
-				/*If the character is a lower case letter, switch it to upper for comparison*/
+                /*If the character is a lower case letter, switch it to upper for comparison*/
 
-				if (lChar >= u'a' && lChar <= u'z')
-				{
-					lChar -= 32;
-				}
+                if (lChar >= u'a' && lChar <= u'z')
+                {
+                    lChar -= 32;
+                }
 
-				if (lChar == rChar)
-				{
-					lastIndex = index;
-				}
-			}
-			return lastIndex;
-		}
+                if (lChar == rChar)
+                {
+                    lastIndex = index;
+                }
+            }
+            return Common::System::Optional<UINT64>(lastIndex);
+        }
 
-		default:
-			return -1;
-		}
-	}
+        default:
+            return Common::System::Optional<UINT64>();
+        }
+    }
 
 	CHAR16** UTF<CHAR16>::Split(const CHAR16* str, const CHAR16* separator, OUT UINT64* count)
 	{
 		if (IsNullOrEmpty(str)) return nullptr;
 		if (IsNullOrEmpty(separator)) return nullptr;
 
-		UINT64 strLen = Length(str);
-		UINT64 sepLen = Length(separator);
+        UINT64 strLen = Length(str);
+        UINT64 sepLen = Length(separator);
+        if (strLen == 0 || sepLen == 0) return nullptr;
 
-		if (strLen <= sepLen) return nullptr;
+        if (strLen <= sepLen) return nullptr;
 
 
 	}
@@ -1524,7 +1975,8 @@ namespace Common::System::Environment
 	CHAR16** UTF<CHAR16>::Split(const CHAR16* str, const CHAR16 separator, OUT UINT64* count)
 	{
 		if (IsNullOrEmpty(str)) return nullptr;
-		UINT64 strLen = Length(str);
+        UINT64 strLen = Length(str);
+        if (strLen == 0) return nullptr;
 
 		// First, count the number of substrings
 		UINT64 cnt = 1; // At least one substring
@@ -1581,13 +2033,17 @@ namespace Common::System::Environment
 		if (str == nullptr) return nullptr;
 
 		UINT64 len = 0;
-		UINT64 sepLen = Length(separator);
+        Common::System::Optional<UINT64> sepLenOpt2 = Length(separator);
+        if (!sepLenOpt2.HasValue()) return nullptr;
+        UINT64 sepLen = sepLenOpt2.GetValue();
 
 		for (UINT64 i = 0; i < count; i++)
 		{
 			if (!IsNullOrEmpty(str[i]))
 			{
-				len += Length(str[i]) + sepLen;
+                Common::System::Optional<UINT64> tmpLenOpt = Length(str[i]);
+                if (!tmpLenOpt.HasValue()) return nullptr;
+                len += tmpLenOpt.GetValue() + sepLen;
 			}
 		}
 
@@ -1623,13 +2079,15 @@ namespace Common::System::Environment
 
 		UINT64 len = 0;
 
-		for (UINT64 i = 0; i < count; i++)
-		{
-			if (!IsNullOrEmpty(str[i]))
-			{
-				len += Length(str[i]) + 1;
-			}
-		}
+        for (UINT64 i = 0; i < count; i++)
+        {
+            if (!IsNullOrEmpty(str[i]))
+            {
+                Common::System::Optional<UINT64> tmpLenOpt = Length(str[i]);
+                if (!tmpLenOpt.HasValue()) return nullptr;
+                len += tmpLenOpt.GetValue() + 1;
+            }
+        }
 
 		CHAR16* result = new CHAR16[len];
 

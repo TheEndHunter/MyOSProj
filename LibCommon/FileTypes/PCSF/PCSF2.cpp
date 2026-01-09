@@ -7,21 +7,20 @@ namespace Common::Graphics::Font::PCSF
 	{
 		_isValid = false;
 		Header = PCSF2Hdr();
+		Glyphs._8 = nullptr;
 	}
 
 	PCSF2::PCSF2(Common::FileSystem::FileHandle* handle)
 	{
 		Header = PCSF2Hdr(handle);
+		Glyphs = { 0 };
 		if (Header.Magic.Char[0] != PCSF2_MAGIC[0] || Header.Magic.Char[1] != PCSF2_MAGIC[1]
 			|| Header.Magic.Char[2] != PCSF2_MAGIC[2] || Header.Magic.Char[3] != PCSF2_MAGIC[3])
-		{
-			_isValid = true;
-		}
-		else
 		{
 			_isValid = false;
 			return;
 		}
+		_isValid = true;
 	}
 
 	PCSF2Hdr::PCSF2Hdr()

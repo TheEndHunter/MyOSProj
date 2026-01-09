@@ -55,14 +55,45 @@ namespace Common::System::Environment
 		static BOOLEAN IsNullOrWhiteSpace(const CHAR16* str);
 		static BOOLEAN IsNullEmptyOrWhiteSpace(const CHAR16* str);
 
-		static CHAR16* FromCharArray(CHAR16 arr[], UINT64 Length);
-		static CHAR16* FromUTF8String(const CHAR8* str);
-		static CHAR16* FromCString(const CHAR* str);
+	/// Returns heap-allocated UTF-16 string. Caller must free with delete[].
+	static CHAR16* FromCharArray(CHAR16 arr[], UINT64 Length);
 
-		static INT64 IndexOf(const CHAR16* str, const CHAR16* value, UINT64 startIndex = 0, StringCulture culture = InvariantCulture);
-		static INT64 IndexOf(const CHAR16* str, const CHAR16 value, UINT64 startIndex = 0, StringCulture culture = InvariantCulture);
-		static INT64 LastIndexOf(const CHAR16* str, const CHAR16* value, UINT64 startIndex = 0, StringCulture culture = InvariantCulture);
-		static INT64 LastIndexOf(const CHAR16* str, const CHAR16 value, UINT64 startIndex = 0, StringCulture culture = InvariantCulture);
+	/// Convert UTF-8 bytes to UTF-16. Returns heap-allocated buffer (caller must delete[]).
+	/// Use the buffer overload to avoid allocation: it writes into caller-provided buffer and returns written units.
+	static CHAR16* FromUTF8String(const CHAR8* str);
+
+	/// Buffer overload: writes UTF-16 code units into outBuffer. Returns Optional<writtenUnits> or empty Optional when buffer too small or input null.
+	static Common::System::Optional<UINT64> FromUTF8String(const CHAR8* src, CHAR16* outBuffer, UINT64 outBufferSize);
+
+	/// Convert C string (ASCII) to UTF-16. Returns heap-allocated buffer (caller must delete[]).
+	static CHAR16* FromCString(const CHAR* str);
+
+	/// Buffer overload for FromCString: writes UTF-16 to outBuffer and returns written length or empty Optional if buffer too small.
+	static Common::System::Optional<UINT64> FromCString(const CHAR* src, CHAR16* outBuffer, UINT64 outBufferSize);
+
+		/// Returns a heap-allocated UCS-2-safe CHAR16 buffer where any surrogate pairs or non-BMP
+		/// code points are replaced by U+FFFD. Caller must delete[] the returned buffer.
+		static CHAR16* SanitizeToUcs2(const CHAR16* src);
+
+		/// Convert UTF-16 to UTF-8. Returns heap-allocated CHAR8* (caller must delete[]).
+		static CHAR8* ToUTF8String(const CHAR16* str);
+
+		/// Buffer overload: writes UTF-8 bytes into outBuffer. Returns Optional<writtenBytes> or empty Optional when buffer too small or input null.
+		static Common::System::Optional<UINT64> ToUTF8String(const CHAR16* src, CHAR8* outBuffer, UINT64 outBufferSize);
+
+		/// Narrow UTF-16 to C string (CHAR) lossy: characters > 0xFF replaced with '?'. Returns heap-allocated CHAR* (caller must delete[]).
+		static CHAR* ToCString(const CHAR16* str);
+
+		/// Buffer overload for ToCString: writes narrow bytes to outBuffer and returns written length or empty Optional if buffer too small.
+		static Common::System::Optional<UINT64> ToCString(const CHAR16* src, CHAR* outBuffer, UINT64 outBufferSize);
+
+	static void FreeSplit(CHAR16** arr, UINT64 count);
+	static void Free(CHAR16* str);
+
+        static Common::System::Optional<UINT64> IndexOf(const CHAR16* str, const CHAR16* value, UINT64 startIndex = 0, StringCulture culture = InvariantCulture);
+        static Common::System::Optional<UINT64> IndexOf(const CHAR16* str, const CHAR16 value, UINT64 startIndex = 0, StringCulture culture = InvariantCulture);
+        static Common::System::Optional<UINT64> LastIndexOf(const CHAR16* str, const CHAR16* value, UINT64 startIndex = 0, StringCulture culture = InvariantCulture);
+        static Common::System::Optional<UINT64> LastIndexOf(const CHAR16* str, const CHAR16 value, UINT64 startIndex = 0, StringCulture culture = InvariantCulture);
 
 		static CHAR16** Split(const CHAR16* str, const CHAR16* separator, OUT UINT64* count);
 		static CHAR16** Split(const CHAR16* str, const CHAR16 separator, OUT UINT64* count);

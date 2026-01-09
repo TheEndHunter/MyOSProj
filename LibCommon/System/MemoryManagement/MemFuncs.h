@@ -31,6 +31,7 @@ namespace Common::System
 			p[i] = q[i];
 		}
 	}
+
 	template<typename T>
 	VOID MemMove(T* dest, T* src, UINT64 length)
 	{

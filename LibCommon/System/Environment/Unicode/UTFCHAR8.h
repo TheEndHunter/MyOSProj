@@ -2,7 +2,6 @@
 #include <TypeDefs.h>
 #include <System/Environment/Unicode/UTFTemplate.h>
 
-
 namespace Common::System::Environment
 {
 	template<>
@@ -52,6 +51,12 @@ namespace Common::System::Environment
 		static CHAR8* FromCharArray(CHAR8 arr[], UINT64 Length);
 		static CHAR8* FromUTF16String(const CHAR16* str);
 		static CHAR8* FromCString(const CHAR* str);
+
+		static Common::System::Optional<UINT64> FromUTF16String(const CHAR16* src, CHAR8* outBuffer, UINT64 outBufferSize);
+		static Common::System::Optional<UINT64> FromCString(const CHAR* src, CHAR8* outBuffer, UINT64 outBufferSize);
+
+		static void FreeSplit(CHAR8** arr, UINT64 count);
+		static void Free(CHAR8* str);
 	};
 }
 

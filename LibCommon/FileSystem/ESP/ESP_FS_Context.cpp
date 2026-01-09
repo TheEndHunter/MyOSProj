@@ -72,7 +72,7 @@ namespace Common::FileSystem::ESP
 		delete[fsCount] handles;
 		return ESP_FS_Context(sysTable, hnd, FsHndl, fsProtocol);
 	}
-	ESP_FS_Context ESP_FS_Context::GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, const CHAR16* label, OUT EFI::EFI_STATUS* status, System::Environment::StringComparisonMode mode, System::Environment::StringCulture culture)
+	ESP_FS_Context ESP_FS_Context::GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, const CHAR16* label, OUT EFI::EFI_STATUS* status, Common::System::Environment::StringComparisonMode mode, Common::System::Environment::StringCulture culture)
 	{
 		if (Common::System::Environment::UTF<CHAR16>::IsNullOrEmpty(label))
 		{

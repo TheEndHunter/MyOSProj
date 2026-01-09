@@ -435,4 +435,49 @@ namespace Common::FileTypes::ELF
 		ElfMachine Machine;
 	};
 
+	inline bool ValidateMagic(const ElfIdentHdr& ident)
+	{
+		// Magic is 0x7F 'E' 'L' 'F'; the union stores raw bytes or value depending on endianness
+		return ident.Magic.Char[0] == '\x7F' && ident.Magic.Char[1] == 'E' && ident.Magic.Char[2] == 'L' && ident.Magic.Char[3] == 'F';
+	}
+
+	inline bool ValidateClass(const ElfIdentHdr& ident)
+	{
+		return ident.Class == ELFClass::ELF32 || ident.Class == ELFClass::ELF64;
+	}
+
+	inline bool ValidateDataType(const ElfIdentHdr& ident)
+	{
+		return ident.DataType == ELFDataType::LSB || ident.DataType == ELFDataType::MSB;
+	}
+
+	inline bool ValidateVersion(const ElfIdentHdr& ident)
+	{
+		return ident.Version == 1; // original ELF version
+	}
+
+	inline bool IsSupportedOSABI(const ElfOSABI abi)
+	{
+		switch (abi)
+		{
+		case ElfOSABI::UnixSVR4:
+		case ElfOSABI::Linux:
+		case ElfOSABI::GNU:
+		case ElfOSABI::FreeBSD:
+		case ElfOSABI::NetBSD:
+		case ElfOSABI::Solaris:
+		case ElfOSABI::AIX:
+		case ElfOSABI::OpenBSD:
+		case ElfOSABI::OpenVMS:
+			return true;
+		default:
+			return false;
+		}
+	}
+
+	inline bool ValidateEndianCompatibility(const ElfIdentHdr& ident)
+	{
+		// Known endianness values
+		return ident.DataType == ELFDataType::LSB || ident.DataType == ELFDataType::MSB;
+	}
 }

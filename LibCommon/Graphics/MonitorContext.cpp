@@ -14,6 +14,10 @@ namespace Common::Graphics
 
 	MonitorContext::MonitorContext(EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL* ptr)
 	{
+		currentMode = nullptr;
+		currentModeNumber = 0;
+		modes = nullptr;
+
 		protocol = ptr;
 		maxMode = ptr->Mode->MaxMode;
 
@@ -23,9 +27,9 @@ namespace Common::Graphics
 		};
 
 		currentModeNumber = ptr->Mode->Mode;
-		currentMode = &modes[currentModeNumber];
+		currentMode = nullptr;
 
-		auto* allocator = System::MemoryManagement::Allocator::GetInstance();
+		auto* allocator = Common::System::MemoryManagement::Allocator::GetInstance();
 		modes = allocator->AllocateZeroedArray<MonitorMode>(maxMode);
 
 		if (modes == nullptr)
@@ -41,6 +45,7 @@ namespace Common::Graphics
 			new(&modes[i]) MonitorMode(ptr->Mode);
 		}
 		ptr->SetMode(ptr, currentModeNumber);
+		currentMode = &modes[currentModeNumber];
 	}
 
 	MonitorMode* MonitorContext::GetCurrentMode()
@@ -110,6 +115,6 @@ namespace Common::Graphics
 
 	void MonitorContext::Terminate()
 	{
-		delete[maxMode] modes;
+		delete[] modes;
 	}
 }

@@ -1,117 +1,167 @@
 {
+    "$Schema": "http://json-schema.org/draft-07/schema#",
+    "OVMFConfig": {
+        "Author": "TheEndHunter",
+        "Repo": "OVMF_BIN",
+        "OVMFBinPath": "Latest",
+        "Branch": "main"
+    },
+    "EnableLogging": true,
+    "EnableRawLogging": true,
+    "RawStdioMode": true,
 
-  "OVMFConfig": {
-    "Author": "TheEndHunter",
-    "Repo": "OVMF_BIN",
-    "OVMFBinPath": "Latest",
-    "Branch": "main"
-  },
+    "Configurations": [
+        {
+            "Name": "Debug"
+        },
+        {
+            "Name": "Release"
+        }
+    ],
 
-  "Configurations": [
-    {
-      "Name": "Debug"
-    },
-    {
-      "Name": "Release"
-    }
-  ],
+    "Architectures": [
+        {
+            "Name": "x86"
+        },
+        {
+            "Name": "x64"
+        },
+        {
+            "Name": "ARM"
+        },
+        {
+            "Name": "ARM64"
+        }
+    ],
 
-  "Architectures": [
-    {
-      "Name": "x86"
-    },
-    {
-      "Name": "x64"
-    },
-    {
-      "Name": "ARM"
-    },
-    {
-      "Name": "ARM64"
-    }
-  ],
-
-  "QemuConfig": [
-    {
-      "Architecture": "x86",
-      "Configuration": "release",
-      "Name": "qemu-system-i386",
-      "AdditionalArgs": "-machine q35 -accel tcg -display gtk -m 4096M"
-    },
-    {
-      "Architecture": "x64",
-      "Configuration": "Release",
-      "Name": "qemu-system-x86_64",
-      "AdditionalArgs": "-machine q35 -accel tcg -display gtk -m 4096M"
-    },
-    {
-      "Architecture": "arm",
-      "Configuration": "release",
-      "Name": "qemu-system-arm",
-      "AdditionalArgs": "-machine virt -cpu cortex-a15 -accel tcg -display gtk -m 4096M"
-    },
-    {
-      "Architecture": "ARM64",
-      "Configuration": "release",
-      "Name": "qemu-system-aarch64",
-      "AdditionalArgs": "-machine virt -cpu cortex-a710 -accel tcg -display gtk -m 4096M"
-    },
-    {
-      "Architecture": "x86",
-      "Configuration": "debug",
-      "Name": "qemu-system-i386",
-      "AdditionalArgs": "-machine q35 -accel tcg -display gtk -m 4096M -gdb tcp::4242 -S",
-      "LLDBConfig": {
-        "Remote": "127.0.0.1",
-        "Port": 4242,
-        "WorkingSourceDirectory": "A:\\Dev\\Projects\\MyOSProj\\",
-        "BinaryDir": ".\\bin\\x86\\Debug\\",
-        "RelativeExecutableLocation": ".\\EFI\\efi\\boot\\BOOTIA32.efi",
-        "RelativeSymbolLocation": ".\\EFI\\efi\\boot\\BOOTIA32.pdb"
-      }
-    },
-    {
-      "Architecture": "x64",
-      "Configuration": "debug",
-      "Name": "qemu-system-x86_64",
-      "AdditionalArgs": "-machine q35 -accel tcg -display gtk -m 4096M -gdb tcp::4242 -S",
-      "LLDBConfig": {
-        "Remote": "127.0.0.1",
-        "Port": 4242,
-        "WorkingSourceDirectory": "A:\\Dev\\Projects\\MyOSProj\\",
-        "BinaryDir": ".\\bin\\x64\\Debug\\",
-        "RelativeExecutableLocation": ".\\EFI\\efi\\boot\\BOOTX64.efi",
-        "RelativeSymbolLocation": ".\\EFI\\efi\\boot\\BOOTX64.pdb"
-      }
-    },
-    {
-      "Architecture": "arm",
-      "Configuration": "debug",
-      "Name": "qemu-system-arm",
-      "AdditionalArgs": "-machine virt -cpu cortex-a15 -accel tcg -display gtk -m 4096M -gdb tcp::4242 -S",
-      "LLDBConfig": {
-        "Remote": "127.0.0.1",
-        "Port": 4242,
-        "WorkingSourceDirectory": "A:\\Dev\\Projects\\MyOSProj\\",
-        "BinaryDir": ".\\bin\\ARM\\Debug\\",
-        "RelativeExecutableLocation": ".\\EFI\\efi\\boot\\BOOTARM.efi",
-        "RelativeSymbolLocation": ".\\EFI\\efi\\boot\\BOOTARM.pdb"
-      }
-    },
-    {
-      "Architecture": "ARM64",
-      "Configuration": "debug",
-      "Name": "qemu-system-aarch64",
-      "AdditionalArgs": "-machine virt -cpu cortex-a710 -accel tcg -display gtk -m 4096M -gdb tcp::4242 -S",
-      "LLDBConfig": {
-        "Remote": "127.0.0.1",
-        "Port": 4242,
-        "WorkingSourceDirectory": "A:\\Dev\\Projects\\MyOSProj\\",
-        "BinaryDir": ".\\bin\\ARM64\\Debug\\",
-        "RelativeExecutableLocation": ".\\EFI\\efi\\boot\\BOOTAA64.efi",
-        "RelativeSymbolLocation": ".\\EFI\\efi\\boot\\BOOTAA64.pdb"
-      }
-    }
-  ]
-
+    "QemuConfig": [
+        {
+            "Architecture": "x86",
+            "Configuration": "release",
+            "Name": "qemu-system-i386",
+            "Machine": "q35",
+            "Accel": "Tcg",
+            "Display": "Gtk",
+            "Memory": "4096M",
+            "SerialTarget": "disabled"
+        },
+        {
+            "Architecture": "x64",
+            "Configuration": "Release",
+            "Name": "qemu-system-x86_64",
+            "Machine": "q35",
+            "Accel": "Tcg",
+            "Display": "Gtk",
+            "Memory": "4096M",
+            "SerialTarget": "disabled"
+        },
+        {
+            "Architecture": "arm",
+            "Configuration": "release",
+            "Name": "qemu-system-arm",
+            "Machine": "virt",
+            "Cpu": "cortex-a15",
+            "Accel": "Tcg",
+            "Display": "Gtk",
+            "Memory": "4096M",
+            "SerialTarget": "disabled"
+        },
+        {
+            "Architecture": "ARM64",
+            "Configuration": "release",
+            "Name": "qemu-system-aarch64",
+            "Machine": "virt",
+            "Cpu": "cortex-a710",
+            "Accel": "Tcg",
+            "Display": "Gtk",
+            "Memory": "4096M",
+            "SerialTarget": "disabled"
+        },
+        {
+            "Architecture": "x86",
+            "Configuration": "debug",
+            "Name": "qemu-system-i386",
+            "Machine": "q35",
+            "Accel": "Tcg",
+            "Display": "Gtk",
+            "Memory": "4096M",
+            "Gdb": "tcp::4242",
+            "HaltOnStart": true,
+            "EnableLLDB": false,
+            "LLDBConfig": {
+                "Remote": "127.0.0.1",
+                "Port": 4242,
+                "WorkingSourceDirectory": "A:\\Dev\\Projects\\MyOSProj\\",
+                "BinaryDir": ".\\bin\\x86\\Debug\\",
+                "RelativeExecutableLocation": ".\\EFI\\efi\\boot\\BOOTIA32.efi",
+                "RelativeSymbolLocation": ".\\EFI\\efi\\boot\\BOOTIA32.pdb"
+            },
+            "SerialTarget": "disabled"
+        },
+        {
+            "Architecture": "x64",
+            "Configuration": "debug",
+            "Name": "qemu-system-x86_64",
+            "Machine": "q35",
+            "Accel": "Tcg",
+            "Display": "Gtk",
+            "Memory": "4096M",
+            "Gdb": "tcp::4242",
+            "HaltOnStart": true,
+            "EnableLLDB": false,
+            "LLDBConfig": {
+                "Remote": "127.0.0.1",
+                "Port": 4242,
+                "WorkingSourceDirectory": "A:\\Dev\\Projects\\MyOSProj\\",
+                "BinaryDir": ".\\bin\\x64\\Debug\\",
+                "RelativeExecutableLocation": ".\\EFI\\efi\\boot\\BOOTX64.efi",
+                "RelativeSymbolLocation": ".\\EFI\\efi\\boot\\BOOTX64.pdb"
+            },
+            "SerialTarget": "disabled"
+        },
+        {
+            "Architecture": "arm",
+            "Configuration": "debug",
+            "Name": "qemu-system-arm",
+            "Machine": "virt",
+            "Cpu": "cortex-a15",
+            "Accel": "Tcg",
+            "Display": "Gtk",
+            "Memory": "4096M",
+            "Gdb": "tcp::4242",
+            "HaltOnStart": true,
+            "EnableLLDB": false,
+            "LLDBConfig": {
+                "Remote": "127.0.0.1",
+                "Port": 4242,
+                "WorkingSourceDirectory": "A:\\Dev\\Projects\\MyOSProj\\",
+                "BinaryDir": ".\\bin\\ARM\\Debug\\",
+                "RelativeExecutableLocation": ".\\EFI\\efi\\boot\\BOOTARM.efi",
+                "RelativeSymbolLocation": ".\\EFI\\efi\\boot\\BOOTARM.pdb"
+            },
+            "SerialTarget": "disabled"
+        },
+        {
+            "Architecture": "ARM64",
+            "Configuration": "debug",
+            "Name": "qemu-system-aarch64",
+            "Machine": "virt",
+            "Cpu": "cortex-a710",
+            "Accel": "Tcg",
+            "Display": "Gtk",
+            "Memory": "4096M",
+            "Gdb": "tcp::4242",
+            "HaltOnStart": true,
+            "EnableLLDB": false,
+            "LLDBConfig": {
+                "Remote": "127.0.0.1",
+                "Port": 4242,
+                "WorkingSourceDirectory": "A:\\Dev\\Projects\\MyOSProj\\",
+                "BinaryDir": ".\\bin\\ARM64\\Debug\\",
+                "RelativeExecutableLocation": ".\\EFI\\efi\\boot\\BOOTAA64.efi",
+                "RelativeSymbolLocation": ".\\EFI\\efi\\boot\\BOOTAA64.pdb"
+            },
+            "SerialTarget": "disabled"
+        }
+    ]
 }

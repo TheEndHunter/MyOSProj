@@ -76,7 +76,8 @@ namespace Common::FileTypes::ELF
 	struct ElfHeader64
 	{
 	public:
-		
+        // Common ELF header fields: ident, type, machine
+        ElfHeaderCommon Common;
 		UINT32 Version;
 		UINT64 EntryPoint;
 		UINT64 ProgramHdrOffset;
@@ -122,7 +123,7 @@ namespace Common::FileTypes::ELF
 #pragma pack(pop)
 
 #pragma pack (push,1)
-	struct ElfRel63
+struct ElfRel64
 	{
 	public:
 		UINT64 Offset;
@@ -148,7 +149,7 @@ namespace Common::FileTypes::ELF
 		UINT64	ProgramVirtAddr;
 		UINT64	ProgramPhysAddr;
 		UINT64	ProgramFileSize;
-		UINT64	ProgramMemSixe;
+    UINT64	ProgramMemSize;
 		UINT64	ProgramAlign;
 	};
 #pragma pack(pop)
@@ -157,9 +158,11 @@ namespace Common::FileTypes::ELF
 	{
 	public:
 		ELF64(Common::FileSystem::FileHandle* handle);
+    ~ELF64();
+    bool Valid{false};
 		ElfHeader64 EntryHeader;
-		ElfProgramHeader64* ProgHeader;
-		ElfSectionHeader64* SectHeader;
+    ElfProgramHeader64* ProgHeader{nullptr};
+    ElfSectionHeader64* SectHeader{nullptr};
 	};
 #pragma pack(pop)
 }

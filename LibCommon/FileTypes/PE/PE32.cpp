@@ -4,6 +4,14 @@ namespace Common::FileTypes::PE
 {
 	PE32::PE32(FileSystem::FileHandle* handle)
 	{
+		_EntryPoint = nullptr;
+		_EntryPointOffset = 0;
+		SizeOfDataBuffer = 0;
+		SectionHeaders = nullptr;
+		OptHdr.PE32 = nullptr;
+		OptHdr.PE32PLUS = nullptr;
+		DataBuffer = nullptr;
+
 		_dosHdrValid = FALSE;
 		_peHdrValid = FALSE;
 		_optHdrValid = FALSE;
@@ -80,14 +88,21 @@ namespace Common::FileTypes::PE
 
 		handle->Read<PE32SectionHeader>(SectionHeaders, PE32hdr.NumberOfSections);
 		_sectionHdrValid = TRUE;
-		DataBuffer = new UINT8[SizeOfDataBuffer];
-		if(DataBuffer == nullptr)
-		{
-			delete SectionHeaders;
-			return;
-		}
+        DataBuffer = new UINT8[SizeOfDataBuffer];
+        if(DataBuffer == nullptr)
+        {
+            delete[] SectionHeaders;
+            return;
+        }
 
-		handle->SetPosition(SectionHeaders[0].PointerToRawData);
+        if (PE32hdr.NumberOfSections == 0)
+        {
+            // nothing to read
+            delete[] SectionHeaders;
+            return;
+        }
+
+        handle->SetPosition(SectionHeaders[0].PointerToRawData);
 		for (UINT16 i = 0; i < PE32hdr.NumberOfSections; i++)
 		{
 			handle->Read(SectionHeaders[i].SizeOfRawData, &DataBuffer[SectionHeaders[i].VirtualAddress]);

@@ -171,6 +171,24 @@
     <ClInclude Include="System\Environment\KernelErrors.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CRT\CRT_Stubs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Optional.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Environment\Unicode\UTFCHAR32.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Environment\Unicode\UTFHelpers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Environment\Unicode\UnicodeCaseFolding.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="System\Environment\Unicode\GenerateCaseFolding.generated.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TypeDefs.cpp">
@@ -275,9 +293,6 @@
     <ClCompile Include="Numerics\Vectors.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="System\Environment\String.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="System\Environment\IsChar.h">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -293,5 +308,21 @@
     <ClCompile Include="System\Environment\Unicode\UTFCHAR8.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="System\Environment\String.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CRT\CRT_Stubs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="System\Environment\Unicode\UTFCHAR32.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="System\Environment\Unicode\CaseFolding.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="System\Environment\Unicode\GenerateCaseFolding.tt" />
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

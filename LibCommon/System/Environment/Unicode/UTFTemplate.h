@@ -4,6 +4,7 @@
 #include <EFI_STATUS.h>
 #include <System/Environment/IsChar.h>
 #include <System/Environment/StringCulture.h>
+#include <System/Optional.h>
 #include <System/MemoryManagement/AllocatorStatus.h>
 
 namespace Common::System::Environment
@@ -44,8 +45,8 @@ namespace Common::System::Environment
 		static StrType* ToString(const UINT8 value);
 		static StrType* ToString(const VOID_PTR ptr);
 		static const StrType* ToString(const BOOLEAN boolean);
-		static UINT64 Length(const StrType* str);
-		static BOOLEAN Compare(const StrType* l, const StrType* r, StringCulture culture = InvariantCulture);
+        static UINT64 Length(const StrType* str);
+        static BOOLEAN Compare(const StrType* l, const StrType* r, StringCulture culture = InvariantCulture);
 		static BOOLEAN StartsWith(const StrType* str, const StrType* value, StringCulture culture = InvariantCulture);
 		static BOOLEAN EndsWith(const StrType* str, const StrType* value, StringCulture culture = InvariantCulture);
 		static BOOLEAN Contains(const StrType* str, const StrType* value, StringCulture culture = InvariantCulture);
@@ -54,15 +55,22 @@ namespace Common::System::Environment
 		static BOOLEAN IsNullEmptyOrWhiteSpace(const StrType* str);
 
 		static StrType* FromCharArray(StrType arr[], UINT64 Length);
+        static Common::System::Optional<UINT64> FromUTF8String(const CHAR8* src, StrType* outBuffer, UINT64 outBufferSize);
+        static Common::System::Optional<UINT64> FromUTF16String(const CHAR16* src, StrType* outBuffer, UINT64 outBufferSize);
+        static Common::System::Optional<UINT64> FromCString(const CHAR* src, StrType* outBuffer, UINT64 outBufferSize);
 
-		static INT64 IndexOf(const StrType* str, const StrType* value, UINT64 startIndex = 0, StringCulture culture = InvariantCulture);
-		static INT64 IndexOf(const StrType* str, const StrType value, UINT64 startIndex = 0, StringCulture culture = InvariantCulture);
-		static INT64 LastIndexOf(const StrType* str, const StrType* value, UINT64 startIndex = 0, StringCulture culture = InvariantCulture);
-		static INT64 LastIndexOf(const StrType* str, const StrType value, UINT64 startIndex = 0, StringCulture culture = InvariantCulture);
+        static Common::System::Optional<UINT64> IndexOf(const StrType* str, const StrType* value, UINT64 startIndex = 0, StringCulture culture = InvariantCulture);
+        static Common::System::Optional<UINT64> IndexOf(const StrType* str, const StrType value, UINT64 startIndex = 0, StringCulture culture = InvariantCulture);
+        static Common::System::Optional<UINT64> LastIndexOf(const StrType* str, const StrType* value, UINT64 startIndex = 0, StringCulture culture = InvariantCulture);
+        static Common::System::Optional<UINT64> LastIndexOf(const StrType* str, const StrType value, UINT64 startIndex = 0, StringCulture culture = InvariantCulture);
 
 		static StrType** Split(const StrType* str, const StrType* separator, OUT UINT64* count);
 		static StrType** Split(const StrType* str, const StrType separator, OUT UINT64* count);
 		static StrType* Join(const StrType** str, const StrType* separator, UINT64 count);
 		static StrType* Join(const StrType** str, const StrType separator, UINT64 count);
+
+		// Helpers to free memory returned by Split and other heap-allocating APIs.
+		static void FreeSplit(StrType** arr, UINT64 count);
+		static void Free(StrType* str);
 	};
 }

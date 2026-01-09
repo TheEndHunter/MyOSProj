@@ -43,7 +43,7 @@ namespace Common::FileSystem
 		if (Attribute != right.Attribute)
 			return false;
 
-		if (System::Environment::UTF<CHAR16>::Compare(DirectoryName,right.DirectoryName) == FALSE)
+		if (Common::System::Environment::UTF<CHAR16>::Compare(DirectoryName,right.DirectoryName) == FALSE)
 			return false;
 
 		return true;

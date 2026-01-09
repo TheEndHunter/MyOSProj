@@ -6,6 +6,7 @@
 #include <System/Environment/Unicode.h>
 #include <Protocols/IO/Media/EFI_FILE_SYSTEM_VOLUME_LABEL.h>
 #include <System/MemoryManagement/MemFuncs.h>
+#include <System/Environment/String.h>
 
 namespace Common::FileSystem::ESP
 {
@@ -17,11 +18,11 @@ namespace Common::FileSystem
 	struct VolumeLabel
 	{
 	public:
-		constexpr VolumeLabel() : Size(0), Label(nullptr)
+    constexpr VolumeLabel() : Size(0), Label(nullptr)
 		{
 		}
 
-		VolumeLabel(const CHAR16* label)
+    VolumeLabel(const CHAR16* label)
 		{
 			if (label == nullptr)
 			{
@@ -30,19 +31,43 @@ namespace Common::FileSystem
 				return;
 			}
 
-			Size = Common::System::Environment::UTF<CHAR16>::Length(label);
-			Label = new CHAR16[Size];
+		//Size always includes null terminaltor
+        Size = Common::System::Environment::UTF<CHAR16>::Length(label);
+        Label = (CHAR16*)Common::System::MemoryManagement::EfiAllocator::Allocate(sizeof(CHAR16) * (Size + 1));
+        if (Label == nullptr)
+        {
+            Size = 0;
+            return;
+        }
 
-			Common::System::MemCpy<CHAR16>(&Label[0], (CHAR16*)label, Size);
+		System::MemCpy<CHAR16>(&Label[0], (CHAR16*)label, Size);
+		Label[Size] = 0;
 
 		}
 
-		VolumeLabel(const EFI::EFI_FILE_SYSTEM_VOLUME_LABEL label)
+    VolumeLabel(const EFI::EFI_FILE_SYSTEM_VOLUME_LABEL label)
 		{
-			Size = Common::System::Environment::UTF<CHAR16>::Length(label.VolumeLabel);
-			Label = new CHAR16[Size];
-			Common::System::MemCpy<CHAR16>(&Label[0], (CHAR16*)&label.VolumeLabel[0], Size);
+        Size = Common::System::Environment::UTF<CHAR16>::Length(label.VolumeLabel);
+        Label = (CHAR16*)Common::System::MemoryManagement::EfiAllocator::Allocate(sizeof(CHAR16) * (Size + 1));
+        if (Label == nullptr)
+        {
+            Size = 0;
+            return;
+        }
+
+		System::MemCpy<CHAR16>(&Label[0], (CHAR16*)&label.VolumeLabel[0], Size);
+		Label[Size] = 0;
 		}
+
+    ~VolumeLabel()
+    {
+        if (Label != nullptr)
+        {
+            Common::System::MemoryManagement::EfiAllocator::Free(Label);
+            Label = nullptr;
+            Size = 0;
+        }
+    }
 
 		UINT64 Size;
 		CHAR16* Label;
@@ -77,7 +102,8 @@ namespace Common::FileSystem
 			VolumeSize = info->VolumeSize;
 			FreeSpace = info->FreeSpace;
 			BlockSize = info->BlockSize;
-			Label = info->VolumeLabel;
+			// Initialize VolumeLabel from EFI struct
+			Label = VolumeLabel(info->VolumeLabel);
 
 		}
 

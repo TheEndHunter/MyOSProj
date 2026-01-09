@@ -2,10 +2,9 @@
 #include <TypeDefs.h>
 
 extern "C" {
+    // Called to run static initializers
+    void _CRT_INIT(void);
 
-    // Custom CRT initialization function
-    VOID _CRT_INIT();
-
-    // Custom CRT termination function
-    void _CRT_TERM();
-};
+    // Called to run static terminators
+    void _CRT_TERM(void);
+}

@@ -1,0 +1,71 @@
+<#@ template language="C#" #>
+<#@ output extension=".generated.h" #>
+<#@ assembly name="System.Net.Http" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.Net.Http" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#
+// T4 template to download Unicode CaseFolding.txt and produce
+// UnicodeCaseFolding.generated.h containing a constexpr Mapping array.
+
+string url = "https://www.unicode.org/Public/UNIDATA/CaseFolding.txt";
+
+var mappings = new System.Collections.Generic.List<Tuple<uint, uint>>();
+
+using (var client = new System.Net.WebClient())
+{
+    var txt = client.DownloadString(url);
+    var lines = txt.Split(new[] {'\n','\r'}, StringSplitOptions.RemoveEmptyEntries);
+
+    foreach (var raw in lines)
+    {
+        var line = raw.Trim();
+        if (line.Length == 0) continue;
+        if (line.StartsWith("#")) continue;
+        var parts = Regex.Split(line, @"\s*;\s*");
+        if (parts.Length < 3) continue;
+        // parts[0] = codepoint, parts[1] = status, parts[2] = mapping
+        var cpStr = parts[0];
+        var status = parts[1];
+        var mapping = parts[2];
+        // We only handle status 'C' and 'F' and 'S' (common/simple/full)
+        // but choose to use simple mapping field for portability.
+        if (status == "C" || status == "F" || status == "S")
+        {
+            try
+            {
+                uint from = Convert.ToUInt32(cpStr, 16);
+                var mapParts = mapping.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                if (mapParts.Length >= 1)
+                {
+                    uint to = Convert.ToUInt32(mapParts[0], 16);
+                    mappings.Add(Tuple.Create(from, to));
+                }
+            }
+            catch { /* ignore parse errors */ }
+        }
+    }
+
+    // Optional: sort and unique
+    mappings.Sort((a,b) => a.Item1.CompareTo(b.Item1));
+
+    // Optional: end using client
+}
+
+    // Emit C++ header
+#>
+#pragma once
+#include <TypeDefs.h>
+
+namespace Common::System::Environment::Unicode
+{
+    struct Mapping { UINT32 from; UINT32 to; };
+
+    static constexpr Mapping _caseFoldTable[] = {
+<# foreach (var m in mappings) { #>
+        { 0x<#= m.Item1.ToString("X") #>u, 0x<#= m.Item2.ToString("X") #>u },
+<# } #>
+    };
+    const UINTN CaseFoldTableSize = sizeof(_caseFoldTable) / sizeof(Mapping);
+}

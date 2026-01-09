@@ -6,7 +6,7 @@
 
 namespace Common::Graphics::Font::PCSF
 {
-	const CHAR PSF1_MAGIC[2] = { 0x36, 0x04 };
+    const UINT8 PSF1_MAGIC[2] = { (UINT8)0x36, (UINT8)0x04 };
 
 	
 

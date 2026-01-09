@@ -16,7 +16,7 @@ namespace Common::Graphics::Font
 	{
 		if (fsCtx == nullptr) return nullptr;
 
-		if (System::Environment::UTF<CHAR16>::IsNullEmptyOrWhiteSpace(path)) return nullptr;
+		if (Common::System::Environment::UTF<CHAR16>::IsNullEmptyOrWhiteSpace(path)) return nullptr;
 
 		_fontDebugger->PrintInfoLine(u"Loading PSF1 Font From Path:");
 		_fontDebugger->PrintInfoLine(path);
@@ -29,11 +29,11 @@ namespace Common::Graphics::Font
 		_fontDebugger->PrintInfo(u"Found File: ");
 		_fontDebugger->PrintInfoLine(fileInfo.FileName);
 		_fontDebugger->PrintInfo(u"File Size: ");
-		_fontDebugger->PrintInfoLine(System::Environment::UTF<CHAR16>::ToString(fileInfo.Size));
+		_fontDebugger->PrintInfoLine(Common::System::Environment::UTF<CHAR16>::ToString(fileInfo.Size));
 		_fontDebugger->PrintInfo(u"File Physical Size: ");
-		_fontDebugger->PrintInfoLine(System::Environment::UTF<CHAR16>::ToString(fileInfo.PhysicalSize));
+		_fontDebugger->PrintInfoLine(Common::System::Environment::UTF<CHAR16>::ToString(fileInfo.PhysicalSize));
 		_fontDebugger->PrintInfo(u"File Attributes: ");
-		_fontDebugger->PrintInfoLine(System::Environment::UTF<CHAR16>::ToHex(fileInfo.Attribute));
+		_fontDebugger->PrintInfoLine(Common::System::Environment::UTF<CHAR16>::ToHex(fileInfo.Attribute));
 
 		auto handle = fsCtx->OpenFile(&fileInfo, Common::FileSystem::FileMode::Read,Common::FileSystem::FileAttribute::ReadOnly);
 
@@ -87,7 +87,7 @@ namespace Common::Graphics::Font
 	{
 		if (fsCtx == nullptr) return nullptr;
 
-		if (System::Environment::UTF<CHAR16>::IsNullEmptyOrWhiteSpace(path)) return nullptr;
+		if (Common::System::Environment::UTF<CHAR16>::IsNullEmptyOrWhiteSpace(path)) return nullptr;
 
 		_fontDebugger->PrintInfoLine(u"Loading PSF1 Font From Path:");
 		_fontDebugger->PrintInfoLine(path);
@@ -100,11 +100,11 @@ namespace Common::Graphics::Font
 		_fontDebugger->PrintInfo(u"Found File: ");
 		_fontDebugger->PrintInfoLine(fileInfo.FileName);
 		_fontDebugger->PrintInfo(u"File Size: ");
-		_fontDebugger->PrintInfoLine(System::Environment::UTF<CHAR16>::ToString(fileInfo.Size));
+		_fontDebugger->PrintInfoLine(Common::System::Environment::UTF<CHAR16>::ToString(fileInfo.Size));
 		_fontDebugger->PrintInfo(u"File Physical Size: ");
-		_fontDebugger->PrintInfoLine(System::Environment::UTF<CHAR16>::ToString(fileInfo.PhysicalSize));
+		_fontDebugger->PrintInfoLine(Common::System::Environment::UTF<CHAR16>::ToString(fileInfo.PhysicalSize));
 		_fontDebugger->PrintInfo(u"File Attributes: ");
-		_fontDebugger->PrintInfoLine(System::Environment::UTF<CHAR16>::ToHex(fileInfo.Attribute));
+		_fontDebugger->PrintInfoLine(Common::System::Environment::UTF<CHAR16>::ToHex(fileInfo.Attribute));
 
 		auto handle = fsCtx->OpenFile(&fileInfo, Common::FileSystem::FileMode::Read, Common::FileSystem::FileAttribute::ReadOnly);
 

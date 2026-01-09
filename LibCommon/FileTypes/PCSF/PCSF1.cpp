@@ -20,6 +20,10 @@ namespace Common::Graphics::Font::PCSF
 
 	PCSF1::PCSF1(Common::FileSystem::FileHandle* handle)
 	{
+		CharCount = 0;
+		Glyphs = nullptr;
+		UnicodeTable = nullptr;
+
 		_pcsf1Debugger->PrintInfoLine(u"Reading PCSF1 Header");
 
 		if (handle == nullptr) {
@@ -54,10 +58,17 @@ namespace Common::Graphics::Font::PCSF
 		}
 
 
-		Glyphs = (UINT8**)new UINT8[CharCount * charSize];
+        // allocate continuous block for glyphs and assign per-glyph pointers
+        Glyphs = new UINT8*[CharCount];
+        UINT8* glyphBlock = new UINT8[CharCount * charSize];
+        for (UINT32 gi = 0; gi < CharCount; gi++)
+        {
+            Glyphs[gi] = &glyphBlock[gi * charSize];
+        }
 
 		_pcsf1Debugger->PrintInfoLine(u"Allocated Glyphs Pointer");
-		handle->Read<UINT8>(&Glyphs[0][0], CharCount);
+        // read full glyph block (CharCount * charSize bytes)
+        handle->Read<UINT8>(glyphBlock, CharCount * charSize);
 		
 		if ((UINT8)Header.Mode & (UINT8)PCSF1Mode::MODEHASTAB)
 		{

@@ -35,7 +35,7 @@ namespace Common::FileSystem::ESP
 		static const UINTN QueryFSCount(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd);
 		static ESP_FS_Context GetBootFS(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd);
 		static ESP_FS_Context GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, UINTN index, OUT EFI::EFI_STATUS* status);
-		static ESP_FS_Context GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, const CHAR16* label, OUT EFI::EFI_STATUS* status, System::Environment::StringComparisonMode mode = System::Environment::StringComparisonMode::Compare, System::Environment::StringCulture culture = System::Environment::StringCulture::InvariantCulture);
+		static ESP_FS_Context GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, const CHAR16* label, OUT EFI::EFI_STATUS* status, Common::System::Environment::StringComparisonMode mode = Common::System::Environment::StringComparisonMode::Compare, Common::System::Environment::StringCulture culture = Common::System::Environment::StringCulture::InvariantCulture);
 		static const ESP_FS_Context EmptyFS;
 
 		static CHAR16* GetParentDirectory(CHAR16* path);
