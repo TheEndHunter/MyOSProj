@@ -1,5 +1,5 @@
 {
-    "$Schema": "http://json-schema.org/draft-07/schema#",
+    "$schema": "https://raw.githubusercontent.com/TheEndHunter/QemuManager/main/Schemas/Settings.schema.json",
     "OVMFConfig": {
         "Author": "TheEndHunter",
         "Repo": "OVMF_BIN",

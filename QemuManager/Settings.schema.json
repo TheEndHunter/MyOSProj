@@ -1,237 +1,222 @@
 {
-    "$schema": "Settings.schema.json",
-    "title": "QemuManager Settings",
-    "type": "object",
-    "properties": {
-        "OVMFConfig": {
-            "type": "object",
-            "properties": {
-                "Author": { "type": "string" },
-                "Repo": { "type": "string" },
-                "OVMFBinPath": { "type": "string" },
-                "Branch": { "type": "string" }
-            }
-        },
-        "EnableLogging": { "type": "boolean" },
-        "EnableRawLogging": { "type": "boolean" },
-        "RawStdioMode": { "type": "boolean" },
-        "Configurations": {
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "QemuManager Settings",
+  "type": "object",
+  "properties": {
+    "OVMFConfig": {
+      "type": "object",
+      "properties": {
+        "Author": { "type": "string" },
+        "Repo": { "type": "string" },
+        "OVMFBinPath": { "type": "string" },
+        "Branch": { "type": "string" }
+      }
+    },
+    "EnableLogging": { "type": "boolean" },
+    "EnableRawLogging": { "type": "boolean" },
+    "RawStdioMode": { "type": "boolean" },
+    "Configurations": { "type": "array", "items": { "type": "object", "properties": { "Name": { "type": "string" } }, "required": ["Name"] } },
+    "Architectures": { "type": "array", "items": { "type": "object", "properties": { "Name": { "type": "string" } }, "required": ["Name"] } },
+    "QemuConfig": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "Architecture": { "type": "string" },
+          "Configuration": { "type": "string" },
+          "Name": { "type": "string" },
+          "Machine": { "type": "string" },
+          "Cpu": { "type": "string" },
+          "Accel": { "type": "string" },
+          "Memory": { "type": "string" },
+          "Display": { "type": "string" },
+          "SerialTarget": { "type": "string", "enum": ["File", "Stdio", "Disabled"] },
+          "SerialFileTemplate": { "type": "string" }
+        ,
+          "Blockdevs": {
             "type": "array",
             "items": {
-                "type": "object",
-                "properties": { "Name": { "type": "string" } },
-                "required": [ "Name" ]
-            }
-        },
-        "Architectures": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": { "Name": { "type": "string" } },
-                "required": [ "Name" ]
-            }
-        },
-        "QemuConfig": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "Architecture": { "type": "string" },
-                    "Configuration": { "type": "string" },
-                    "Name": { "type": "string" },
-                    "Machine": { "type": "string" },
-                    "Cpu": { "type": "string" },
-                    "Accel": { "type": "string" },
-                    "Memory": { "type": "string" },
-                    "Display": { "type": "string" },
-                    "SerialTarget": {
-                        "type": "string",
-                        "enum": [ "File", "Stdio", "Disabled" ]
-                    },
-                    "SerialFileTemplate": { "type": "string" },
-                    "Blockdevs": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "Driver": { "type": "string" },
-                                "NodeName": { "type": "string" },
-                                "File_Filename": { "type": "string" },
-                                "File_Aio": { "type": "string" },
-                                "File_Locking": { "type": "string" }
-                            },
-                            "definitions": {
-                                "virtio-net": {
-                                    "type": "object",
-                                    "properties": {
-                                        "Driver": { "const": "virtio-net-pci" },
-                                        "Id": { "type": "string" },
-                                        "Netdev": { "type": "string" },
-                                        "Mac": { "type": "string" },
-                                        "Vhost": { "type": "boolean" }
-                                    }
-                                },
-                                "virtio-blk": {
-                                    "type": "object",
-                                    "properties": {
-                                        "Driver": { "const": "virtio-blk-pci" },
-                                        "Id": { "type": "string" },
-                                        "DriveId": { "type": "string" },
-                                        "WriteCache": { "type": "boolean" }
-                                    }
-                                },
-                                "e1000": {
-                                    "type": "object",
-                                    "properties": {
-                                        "Driver": { "const": "e1000" },
-                                        "Id": { "type": "string" },
-                                        "Netdev": { "type": "string" },
-                                        "Mac": { "type": "string" }
-                                    }
-                                },
-                                "rtl8139": {
-                                    "type": "object",
-                                    "properties": {
-                                        "Driver": { "const": "rtl8139" },
-                                        "Id": { "type": "string" },
-                                        "Netdev": { "type": "string" },
-                                        "Mac": { "type": "string" }
-                                    }
-                                },
-                                "virtio-scsi": {
-                                    "type": "object",
-                                    "properties": {
-                                        "Driver": { "const": "virtio-scsi-pci" },
-                                        "Id": { "type": "string" },
-                                        "Bus": { "type": "string" },
-                                        "Addr": { "type": "string" }
-                                    }
-                                },
-                                "virtio-gpu": {
-                                    "type": "object",
-                                    "properties": {
-                                        "Driver": { "const": "virtio-vga" },
-                                        "Id": { "type": "string" },
-                                        "Display": { "type": "string" }
-                                    }
-                                },
-                                "virtio-rng": {
-                                    "type": "object",
-                                    "properties": {
-                                        "Driver": { "const": "virtio-rng-pci" },
-                                        "Id": { "type": "string" },
-                                        "RngBackend": { "type": "string" }
-                                    }
-                                },
-                                "virtio-balloon": {
-                                    "type": "object",
-                                    "properties": {
-                                        "Driver": { "const": "virtio-balloon" },
-                                        "Id": { "type": "string" }
-                                    }
-                                },
-                                "hda": {
-                                    "type": "object",
-                                    "properties": {
-                                        "Driver": { "const": "hda" },
-                                        "Id": { "type": "string" },
-                                        "DriverName": { "type": "string" }
-                                    }
-                                },
-                                "qemu-xhci": {
-                                    "type": "object",
-                                    "properties": {
-                                        "Driver": { "const": "qemu-xhci" },
-                                        "Id": { "type": "string" }
-                                    }
-                                },
-                                "vfio-pci": {
-                                    "type": "object",
-                                    "properties": {
-                                        "Driver": { "const": "vfio-pci" },
-                                        "Id": { "type": "string" },
-                                        "Bdf": { "type": "string" }
-                                    },
-                                    "required": [ "Bdf" ]
-                                }
-                            }
-                        }
-                    },
-                    "DeviceConfigs": {
-                        "type": "array",
-                        "items": {
-                            "oneOf": [
-                                { "$ref": "#/definitions/virtio-net" },
-                                { "$ref": "#/definitions/virtio-blk" },
-                                { "$ref": "#/definitions/e1000" },
-                                { "$ref": "#/definitions/rtl8139" },
-                                { "$ref": "#/definitions/virtio-scsi" },
-                                { "$ref": "#/definitions/virtio-gpu" },
-                                { "$ref": "#/definitions/virtio-rng" },
-                                { "$ref": "#/definitions/virtio-balloon" },
-                                { "$ref": "#/definitions/hda" },
-                                { "$ref": "#/definitions/qemu-xhci" },
-                                { "$ref": "#/definitions/vfio-pci" }
-                            ]
-                        }
-                    },
-                    "Netdevs": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "Type": { "type": "string" },
-                                "Id": { "type": "string" },
-                                "Options": { "type": "string" }
-                            }
-                        }
-                    },
-                    "TypedNetdevs": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "$type": { "type": "string" },
-                                "Id": { "type": "string" }
-                            }
-                        }
-                    },
-                    "AudioDevs": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "Id": { "type": "string" },
-                                "Driver": { "type": "string" },
-                                "Options": { "type": "string" }
-                            }
-                        }
-                    },
-                    "Objects": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "Type": { "type": "string" },
-                                "Id": { "type": "string" },
-                                "Options": { "type": "string" }
-                            }
-                        }
-                    },
-                    "MemoryBackends": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "Id": { "type": "string" },
-                                "Type": { "type": "string" },
-                                "Options": { "type": "string" }
-                            }
-                        }
-                    }
-                },
-                "required": [ "Architecture", "Configuration", "Name" ]
-            }
-        }
+              "type": "object",
+              "properties": {
+                "Driver": { "type": "string" },
+                "NodeName": { "type": "string" },
+                "File_Filename": { "type": "string" },
+                "File_Aio": { "type": "string" },
+                "File_Locking": { "type": "string" }
+              }
+  ,
+  "definitions": {
+    "virtio-net": {
+      "type": "object",
+      "properties": {
+        "Driver": { "const": "virtio-net-pci" },
+        "Id": { "type": "string" },
+        "Netdev": { "type": "string" },
+        "Mac": { "type": "string" },
+        "Vhost": { "type": "boolean" }
+      }
+    },
+    "virtio-blk": {
+      "type": "object",
+      "properties": {
+        "Driver": { "const": "virtio-blk-pci" },
+        "Id": { "type": "string" },
+        "DriveId": { "type": "string" },
+        "WriteCache": { "type": "boolean" }
+      }
+    },
+    "e1000": {
+      "type": "object",
+      "properties": {
+        "Driver": { "const": "e1000" },
+        "Id": { "type": "string" },
+        "Netdev": { "type": "string" },
+        "Mac": { "type": "string" }
+      }
+    },
+    "rtl8139": {
+      "type": "object",
+      "properties": {
+        "Driver": { "const": "rtl8139" },
+        "Id": { "type": "string" },
+        "Netdev": { "type": "string" },
+        "Mac": { "type": "string" }
+      }
+    },
+    "virtio-scsi": {
+      "type": "object",
+      "properties": {
+        "Driver": { "const": "virtio-scsi-pci" },
+        "Id": { "type": "string" },
+        "Bus": { "type": "string" },
+        "Addr": { "type": "string" }
+      }
+    },
+    "virtio-gpu": {
+      "type": "object",
+      "properties": {
+        "Driver": { "const": "virtio-vga" },
+        "Id": { "type": "string" },
+        "Display": { "type": "string" }
+      }
+    },
+    "virtio-rng": {
+      "type": "object",
+      "properties": {
+        "Driver": { "const": "virtio-rng-pci" },
+        "Id": { "type": "string" },
+        "RngBackend": { "type": "string" }
+      }
+    },
+    "virtio-balloon": {
+      "type": "object",
+      "properties": {
+        "Driver": { "const": "virtio-balloon" },
+        "Id": { "type": "string" }
+      }
+    },
+    "hda": {
+      "type": "object",
+      "properties": {
+        "Driver": { "const": "hda" },
+        "Id": { "type": "string" },
+        "DriverName": { "type": "string" }
+      }
+    },
+    "qemu-xhci": {
+      "type": "object",
+      "properties": {
+        "Driver": { "const": "qemu-xhci" },
+        "Id": { "type": "string" }
+      }
+    },
+    "vfio-pci": {
+      "type": "object",
+      "properties": {
+        "Driver": { "const": "vfio-pci" },
+        "Id": { "type": "string" },
+        "Bdf": { "type": "string" }
+      },
+      "required": ["Bdf"]
     }
+  }
+}
+          },
+          "DeviceConfigs": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                { "$ref": "#/definitions/virtio-net" },
+                { "$ref": "#/definitions/virtio-blk" },
+                { "$ref": "#/definitions/e1000" },
+                { "$ref": "#/definitions/rtl8139" },
+                { "$ref": "#/definitions/virtio-scsi" },
+                { "$ref": "#/definitions/virtio-gpu" },
+                { "$ref": "#/definitions/virtio-rng" },
+                { "$ref": "#/definitions/virtio-balloon" },
+                { "$ref": "#/definitions/hda" },
+                { "$ref": "#/definitions/qemu-xhci" },
+                { "$ref": "#/definitions/vfio-pci" }
+              ]
+            }
+          },
+          "Netdevs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Type": { "type": "string" },
+                "Id": { "type": "string" },
+                "Options": { "type": "string" }
+              }
+            }
+          },
+          "TypedNetdevs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "$type": { "type": "string" },
+                "Id": { "type": "string" }
+              }
+            }
+          },
+          "AudioDevs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Id": { "type": "string" },
+                "Driver": { "type": "string" },
+                "Options": { "type": "string" }
+              }
+            }
+          },
+          "Objects": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Type": { "type": "string" },
+                "Id": { "type": "string" },
+                "Options": { "type": "string" }
+              }
+            }
+          },
+          "MemoryBackends": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Id": { "type": "string" },
+                "Type": { "type": "string" },
+                "Options": { "type": "string" }
+              }
+            }
+          }
+        },
+        "required": ["Architecture","Configuration","Name"]
+      }
+    }
+  }
 }
