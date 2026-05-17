@@ -17,7 +17,7 @@ namespace Common::Graphics
 		BlueMask = blue;
 		AlphaMask = alpha;
 	};
-	PixelBitMask::PixelBitMask(EFI::EFI_PIXEL_BITMASK& mask)
+	PixelBitMask::PixelBitMask(Efi::PixelBitmask& mask)
 	{
 		RedMask = mask.RedMask;
 		GreenMask = mask.GreenMask;

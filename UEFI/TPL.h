@@ -1,0 +1,13 @@
+#pragma once
+#include "UEFIDef.h"
+
+namespace Efi
+{
+	typedef UINTN TPL;
+	
+
+	CONST TPL EFI_TPL_APPLICATION = 4;
+	CONST TPL EFI_TPL_CALLBACK = 8;
+	CONST TPL EFI_TPL_NOTIFY = 16;
+	CONST TPL EFI_TPL_HIGH_LEVEL = 31;
+};

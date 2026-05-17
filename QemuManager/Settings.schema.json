@@ -30,8 +30,11 @@
           "Accel": { "type": "string" },
           "Memory": { "type": "string" },
           "Display": { "type": "string" },
-          "SerialTarget": { "type": "string", "enum": ["File", "Stdio", "Disabled"] },
-          "SerialFileTemplate": { "type": "string" }
+          "SerialTarget": { "type": "string", "enum": ["File", "Stdio", "Pipes", "Off", "Disabled"] },
+          "SerialFileTemplate": { "type": "string" },
+          "SerialPipeName": { "type": "string" }
+         ,
+          "SerialUdpPort": { "type": "integer", "minimum": 1, "maximum": 65535 }
         ,
           "Blockdevs": {
             "type": "array",

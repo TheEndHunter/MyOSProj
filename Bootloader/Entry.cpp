@@ -1,6 +1,6 @@
 #include "Entry.h"
-#include <EFI_RESET_TYPE.h>
-#include <Protocols/IO/Console/EFI_CONSOLE_COLOR.h>
+#include <ResetType.h>
+#include <Protocols/IO/Console/ConsoleColor.h>
 #include <Graphics/Colour.h>
 #include <System/Environment/Unicode.h>
 #include <FileSystem/ESP/ESP_FS_Context.h>
@@ -12,7 +12,7 @@
 #include <Debugging/Debugger.h>
 #include <CRT/CRT_Stubs.h>
 #include <System/Environment/KernelErrors.h>
-#include <Protocols/IO/Serial/EFI_SERIAL_IO_PROTOCOL.h>
+#include <Protocols/IO/Serial/SerialIOProtocol.h>
 
 namespace Bootloader
 {
@@ -20,33 +20,31 @@ namespace Bootloader
     using namespace Common::System::Environment;
     using namespace Common::Graphics;
     using namespace Common::FileTypes::PE;
-    using namespace EFI;
+    using namespace Efi;
 
     typedef Common::System::Environment::KernelError(CDECL*KrnlMain)(Common::System::MemoryManagement::Allocator* efiAlloc, Common::Debugging::Debugger* debugger,RenderContext* rendererCtx, MonitorContext* monitorCtx, Common::FileSystem::ESP::ESP_FS_Context* efiSysPart, Common::FileSystem::ESP::ESP_FS_Context* sysPart, Common::FileSystem::ESP::ESP_FS_Context* libPart);
     
 
-    extern "C" EFI_STATUS EFIAPI EfiMain(EFI_HANDLE imgHndl, EFI_SYSTEM_TABLE* sysTbl)
+    extern "C" Status EFIAPI EfiMain(Handle imgHndl, SystemTable* sysTbl)
     {
         // Attempt to write an early diagnostic to any Serial IO protocol (COM) so -serial stdio can capture it
+        Efi::SerialIOProtocol* serial = nullptr;
+        Status serStat = sysTbl->BootServices->LocateProtocol((Efi::Guid*)&Efi::SerialIOProtocolGuid, nullptr, (void**)&serial);
+        if (serStat == Efi::Status::Success && serial != nullptr)
         {
-            EFI::EFI_SERIAL_IO_PROTOCOL* serial = nullptr;
-            EFI_STATUS serStat = sysTbl->BootServices->LocateProtocol((EFI::EFI_GUID*)&EFI::EFI_SERIAL_IO_PROTOCOL_GUID, nullptr, (void**)&serial);
-            if (serStat == EFI::EFI_STATUS::SUCCESS && serial != nullptr)
-            {
-            const CHAR8 testMsg[] = u8"*** EfiMain reached (serial test) ***\r\n";
-            // Use sizeof to get the byte length (exclude terminating NUL)
-            UINTN writeSize = sizeof(testMsg) - 1;
-            // Serial Write expects a buffer size in bytes and returns a status
-            EFI_STATUS writeStat = serial->Write(serial, &writeSize, (VOID*)testMsg);
-            if (writeStat != EFI::EFI_STATUS::SUCCESS)
-            {
-                PrintWarningLine(sysTbl, u"Serial Write returned error: ", writeStat);
-            }
-            }
+        const CHAR8 testMsg[] = u8"*** EfiMain reached (serial test) ***\r\n";
+        // Use sizeof to get the byte length (exclude terminating NUL)
+        UINTN writeSize = sizeof(testMsg) - 1;
+        // Serial Write expects a buffer size in bytes and returns a status
+        Status writeStat = serial->Write(serial, &writeSize, (VOID*)testMsg);
+        if (writeStat != Efi::Status::Success)
+        {
+            PrintWarningLine(sysTbl, u"Serial Write returned error: ", writeStat);
         }
-        PrintLine(sysTbl, u"*** EfiMain reached (serial test) ***");
+        }
+        PrintLine(sysTbl, u"*** EfiMain reached Print***");
         CRT_Initialize();
-
+        PrintLine(sysTbl, u"***CRT Initialized***");
         UTF<CHAR>();
         UTF<CHAR8>();
         UTF<CHAR16>();
@@ -58,6 +56,7 @@ namespace Bootloader
 		{
             ThrowException(sysTbl, imgHndl, u"Could Not Set EFI Allocator", Common::System::MemoryManagement::ToEfiStatus(alloc->LastStatus()));
 		}
+        PrintLine(sysTbl, u"***Allocator Initialized***");
 
         UINT32 mm = sysTbl->ConOut->Mode->MaxMode;
         UINTN Columns = 0;
@@ -70,9 +69,9 @@ namespace Bootloader
             UINTN CurrentC = 0;
             UINTN CurrentR = 0;
 
-            EFI_STATUS queryStat = sysTbl->ConOut->QueryMode(sysTbl->ConOut, m, &CurrentC, &CurrentR);
+            Status queryStat = sysTbl->ConOut->QueryMode(sysTbl->ConOut, m, &CurrentC, &CurrentR);
 
-            if (queryStat == EFI_STATUS::SUCCESS)
+            if (queryStat == Status::Success)
             {
                 // Protect against weird zero values
                 if (CurrentC == 0 || CurrentR == 0)
@@ -94,11 +93,11 @@ namespace Bootloader
             PrintWarningLine(sysTbl, u"Query Mode returned an error: ", queryStat);
         }
 
-        EFI_STATUS conStat = sysTbl->ConOut->SetMode(sysTbl->ConOut, bestMode);
+        Status conStat = sysTbl->ConOut->SetMode(sysTbl->ConOut, bestMode);
 
-        if (conStat != EFI_STATUS::SUCCESS)
+        if (conStat != Status::Success)
 		{
-            if (conStat != EFI_STATUS::UNSUPPORTED)
+            if (conStat != Status::Unsupported)
             {
                 ThrowException(sysTbl, imgHndl, u"Could Not Set Console Mode", conStat);
             }
@@ -118,7 +117,7 @@ namespace Bootloader
 
         if (render == nullptr)
         {
-            ThrowException(sysTbl, imgHndl, u"Unable to initialize render context", EFI::EFI_STATUS::DEVICE_ERROR);
+			ThrowException(sysTbl, imgHndl, u"Unable to initialize render context", Efi::Status::DeviceError);
         }
 
         /*
@@ -127,7 +126,7 @@ namespace Bootloader
 
         UINT32 modes = monitor->GetMaxMode();
 
-        UINTN modeInfoSize = sizeof(EFI_GRAPHICS_OUTPUT_MODE_INFORMATION);
+        UINTN modeInfoSize = sizeof(GraphicsOutputModeInformation);
 
         UINTN maxH = 1280;
         UINTN maxV = 720;
@@ -153,7 +152,7 @@ namespace Bootloader
         
         if (!monitor->SetMode(HighestResMode))
         {
-            ThrowException(sysTbl, imgHndl, u"Could Not Set Highest Resolution Mode", EFI::EFI_STATUS::DEVICE_ERROR);
+			ThrowException(sysTbl, imgHndl, u"Could Not Set Highest Resolution Mode", Efi::Status::DeviceError);
         }
 
 		PrintInfoLine(sysTbl, u"Highest Resolution Mode Set");
@@ -170,14 +169,14 @@ namespace Bootloader
 
         if (fsCount == 0)
         {
-            ThrowException(sysTbl, imgHndl, u"No File Systems Found", EFI_STATUS::NOT_FOUND);
+			ThrowException(sysTbl, imgHndl, u"No File Systems Found", Status::NotFound);
         }
 
         // Use EFIConsole helpers to print info
         Bootloader::Print(sysTbl, u"Found File Systems: ");
         Bootloader::PrintLine(sysTbl, UTF<CHAR16>::ToString(fsCount));
 
-        EFI_STATUS fsStatus = EFI_STATUS::SUCCESS;
+        Status fsStatus = Status::Success;
         ESP::ESP_FS_Context sysFs = ESP::ESP_FS_Context::GetFileSystem(sysTbl, imgHndl, u"SYS", &fsStatus);
 
         if (sysFs == ESP::ESP_FS_Context::EmptyFS)
@@ -191,21 +190,21 @@ namespace Bootloader
 
         PrintInfoLine(sysTbl,u"Finding Kernel...");
 
-        FileInfo kernel = sysFs.GetFileInfo(u"Kernel.bin");
+        Common::FileSystem::FileInfo kernel = sysFs.GetFileInfo(u"Kernel.bin");
 
-        if (sysFs.LastStatus != EFI::EFI_STATUS::SUCCESS)
+        if (sysFs.LastStatus != Efi::Status::Success)
         {
             ThrowException(sysTbl, imgHndl, u"Could Not Locate Kernel ", sysFs.LastStatus);
         }
 
         if (kernel == Empty_FileInfo)
         {
-            ThrowException(sysTbl, imgHndl, u"Kernel Not Found", EFI::EFI_STATUS::NOT_FOUND);
+			ThrowException(sysTbl, imgHndl, u"Kernel Not Found", Efi::Status::NotFound);
         }
 
-        FileHandle kernelHandle = sysFs.OpenFile(&kernel, FileMode::Read, kernel.Attribute);
+        Common::FileSystem::FileHandle kernelHandle = sysFs.OpenFile(&kernel, Common::FileSystem::FileMode::Read, kernel.Attribute);
 
-        if (sysFs.LastStatus != EFI::EFI_STATUS::SUCCESS)
+        if (sysFs.LastStatus != Efi::Status::Success)
         {
             ThrowException(sysTbl, imgHndl, u"Could Not Open Kernel", sysFs.LastStatus);
         }
@@ -216,26 +215,26 @@ namespace Bootloader
 
         if (!krnlPE.IsDosHdrValid())
         {
-            ThrowException(sysTbl, imgHndl, u"Invalid DOS Header", EFI::EFI_STATUS::INVALID_PARAMETER);
+            ThrowException(sysTbl, imgHndl, u"Invalid DOS Header", Efi::Status::InvalidParameter);
         }
 
         if (!krnlPE.IsPEHdrValid())
         {
-            ThrowException(sysTbl, imgHndl, u"Invalid PE Header", EFI::EFI_STATUS::INVALID_PARAMETER);
+            ThrowException(sysTbl, imgHndl, u"Invalid PE Header", Efi::Status::InvalidParameter);
         }
 
         if (!krnlPE.IsOptHdrValid())
         {
-            ThrowException(sysTbl, imgHndl, u"Invalid PE32 Optional Header", EFI::EFI_STATUS::INVALID_PARAMETER);
+            ThrowException(sysTbl, imgHndl, u"Invalid PE32 Optional Header", Efi::Status::InvalidParameter);
         }
 
         if (!krnlPE.IsSectionHdrValid())
         {
-            PrintErrorLine(sysTbl, u"Invalid PE32 Section Header", EFI::EFI_STATUS::INVALID_PARAMETER);
-            Print(sysTbl, UTF<CHAR16>::ToString(alloc->LastStatus()), EFI::EfiConsoleColor::_Error);
+            PrintErrorLine(sysTbl, u"Invalid PE32 Section Header", Efi::Status::InvalidParameter);
+            Print(sysTbl, UTF<CHAR16>::ToString(alloc->LastStatus()), Efi::ConsoleColor::_Error);
             WaitForAnyKey(sysTbl);
             Exit(sysTbl, imgHndl, Common::System::MemoryManagement::ToEfiStatus(alloc->LastStatus()),0,nullptr);
-            //ThrowException(sysTbl, imgHndl, u"Invalid PE32 Section Header", EFI::EFI_STATUS::INVALID_PARAMETER);
+            //ThrowException(sysTbl, imgHndl, u"Invalid PE32 Section Header", Efi::Status::InvalidParameter);
         }
 
         UINTN imgBase;
@@ -251,7 +250,7 @@ namespace Bootloader
             }
             else
             {
-                ThrowException(sysTbl, imgHndl, u"Invalid Magic Value", EFI::EFI_STATUS::INVALID_PARAMETER);
+                ThrowException(sysTbl, imgHndl, u"Invalid Magic Value", Efi::Status::InvalidParameter);
             }
         }
         else if (krnlPE.PE32hdr.Machine == MachineTypes::Amd64)
@@ -266,12 +265,12 @@ namespace Bootloader
             }
             else
             {
-                ThrowException(sysTbl, imgHndl, u"Invalid Magic Value", EFI::EFI_STATUS::INVALID_PARAMETER);
+                ThrowException(sysTbl, imgHndl, u"Invalid Magic Value", Efi::Status::InvalidParameter);
             }
         }
         else
         {
-            ThrowException(sysTbl, imgHndl, u"Invalid Machine Type", EFI::EFI_STATUS::INVALID_PARAMETER);
+            ThrowException(sysTbl, imgHndl, u"Invalid Machine Type", Efi::Status::InvalidParameter);
         }
 
 		if (!sysFs.IsRootDirectory())
@@ -340,10 +339,10 @@ namespace Bootloader
             if (zeroCount >= DUMP_BYTES)
             {
                 // All zeros in the first region - likely mapped incorrectly
-                PrintErrorLine(sysTbl, u"Kernel entry region appears to be all zeros; loader may have mapped data incorrectly.", EFI::EFI_STATUS::LOAD_ERROR);
-                PrintErrorLine(sysTbl, u"Aborting jump to kernel for safety.", EFI::EFI_STATUS::LOAD_ERROR);
+                PrintErrorLine(sysTbl, u"Kernel entry region appears to be all zeros; loader may have mapped data incorrectly.", Efi::Status::LoadError);
+                PrintErrorLine(sysTbl, u"Aborting jump to kernel for safety.", Efi::Status::LoadError);
                 WaitForAnyKey(sysTbl);
-                Exit(sysTbl, imgHndl, EFI::EFI_STATUS::LOAD_ERROR);
+                Exit(sysTbl, imgHndl, Efi::Status::LoadError);
             }
         }
 
@@ -355,21 +354,21 @@ namespace Bootloader
         case Common::System::Environment::KernelError::Success:
             break;
         default:
-			Print(sysTbl, u"Kernel Error: ",EfiConsoleColor::_Error);
-			Print(sysTbl, UTF<CHAR16>::ToHex((UINT64)status), EfiConsoleColor::_Error);
-            Print(sysTbl, UTF<CHAR16>::NewLine, EfiConsoleColor::_Error);
-			PrintLine(sysTbl, u"Press Enter to continue...",EfiConsoleColor::_Error);
+			Print(sysTbl, u"Kernel Error: ",ConsoleColor::_Error);
+			Print(sysTbl, UTF<CHAR16>::ToHex((UINT64)status), ConsoleColor::_Error);
+            Print(sysTbl, UTF<CHAR16>::NewLine, ConsoleColor::_Error);
+			PrintLine(sysTbl, u"Press Enter to continue...",ConsoleColor::_Error);
             break;
         }
 
         render->Terminate(imgHndl, sysTbl);
 
         WaitForAnyKey(sysTbl);
-        sysTbl->RuntimeServices->ResetSystem(EFI_RESET_TYPE::SHUTDOWN, EFI_STATUS::SUCCESS, 0, nullptr);
+        sysTbl->RuntimeServices->ResetSystem(ResetType::Shutdown, Status::Success, 0, nullptr);
 
         _CRT_TERM();
 
-        return EFI::EFI_STATUS::NOT_STARTED;
+		return Efi::Status::NotStarted;
     }
 }
 

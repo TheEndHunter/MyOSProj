@@ -12,7 +12,7 @@ namespace Common::Graphics
 		currentMode = nullptr;
 	};
 
-	MonitorContext::MonitorContext(EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL* ptr)
+	MonitorContext::MonitorContext(Efi::GraphicsOutputProtocol* ptr)
 	{
 		currentMode = nullptr;
 		currentModeNumber = 0;
@@ -60,9 +60,9 @@ namespace Common::Graphics
 
 	BOOLEAN MonitorContext::SetMode(UINT32 modeNumber)
 	{
-		EFI::EFI_STATUS s = protocol->SetMode(protocol, modeNumber);
+		Efi::Status s = protocol->SetMode(protocol, modeNumber);
 		
-		if(s != EFI::EFI_STATUS::SUCCESS)
+		if(s != Efi::Status::Success)
 		{
 			return FALSE;
 		}

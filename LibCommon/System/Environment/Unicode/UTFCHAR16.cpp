@@ -23,10 +23,10 @@ namespace Common::System::Environment
 	constexpr const CHAR16* _UTF16_ABORTED = u"ABORTED";
 	constexpr const CHAR16* _UTF16_ACCESS_DENIED = u"ACCESS_DENIED";
 	constexpr const CHAR16* _UTF16_ALREADY_STARTED = u"ALREADY_STARTED";
-	constexpr const CHAR16* _UTF16_BAD_BUFFER_SIZE = u"BAD_BUFFER_SIZE";
+	constexpr const CHAR16* _UTF16_BAD_BUFFER_SIZE = u"BadBufferSize";
 	constexpr const CHAR16* _UTF16_BOOLEAN_FALSE = u"False";
 	constexpr const CHAR16* _UTF16_BOOLEAN_TRUE = u"True";
-	constexpr const CHAR16* _UTF16_BUFFER_TOO_SMALL = u"BUFFER_TOO_SMALL";
+	constexpr const CHAR16* _UTF16_BUFFER_TOO_SMALL = u"BufferTooSmall";
 	constexpr const CHAR16* _UTF16_COMPROMISED_DATA = u"COMPROMISED_DATA";
 	constexpr const CHAR16* _UTF16_CRC_ERROR = u"CRC_ERROR";
 	constexpr const CHAR16* _UTF16_DEVICE_ERROR = u"DEVICE_ERROR";
@@ -36,23 +36,23 @@ namespace Common::System::Environment
 	constexpr const CHAR16* _UTF16_ICMP_ERROR = u"ICMP_ERROR";
 	constexpr const CHAR16* _UTF16_INCOMPATIBLE_VERSION = u"INCOMPATIBLE_VERSION";
 	constexpr const CHAR16* _UTF16_INVALID_LANGUAGE = u"INVALID_LANGUAGE";
-	constexpr const CHAR16* _UTF16_INVALID_PARAMETER = u"INVALID_PARAMETER";
+	constexpr const CHAR16* _UTF16_INVALID_PARAMETER = u"InvalidParameter";
 	constexpr const CHAR16* _UTF16_IP_ADDRESS_CONFLICT = u"IP_ADDRESS_CONFLICT";
-	constexpr const CHAR16* _UTF16_LOAD_ERROR = u"LOAD_ERROR";
+	constexpr const CHAR16* _UTF16_LOAD_ERROR = u"LoadError";
 	constexpr const CHAR16* _UTF16_MEDIA_CHANGED = u"MEDIA_CHANGED";
 	constexpr const CHAR16* _UTF16_NO_MAPPING = u"NO_MAPPING";
 	constexpr const CHAR16* _UTF16_NO_MEDIA = u"NO_MEDIA";
 	constexpr const CHAR16* _UTF16_NO_RESPONSE = u"NO_RESPONSE";
 	constexpr const CHAR16* _UTF16_NOT_FOUND = u"NOT_FOUND";
-	constexpr const CHAR16* _UTF16_NOT_READY = u"NOT_READY";
+	constexpr const CHAR16* _UTF16_NOT_READY = u"NotReady";
 	constexpr const CHAR16* _UTF16_NOT_STARTED = u"NOT_STARTED";
-	constexpr const CHAR16* _UTF16_OUT_OF_RESOURCES = u"OUT_OF_RESOURCES";
+	constexpr const CHAR16* _UTF16_OutOfResources = u"OutOfResources";
 	constexpr const CHAR16* _UTF16_PROTOCOL_ERROR = u"PROTOCOL_ERROR";
 	constexpr const CHAR16* _UTF16_SECURITY_VIOLATION = u"SECURITY_VIOLATION";
-	constexpr const CHAR16* _UTF16_SUCCESS = u"SUCCESS";
+	constexpr const CHAR16* _UTF16_SUCCESS = u"Success";
 	constexpr const CHAR16* _UTF16_TFTP_ERROR = u"TFTP_ERROR";
 	constexpr const CHAR16* _UTF16_TIMEOUT = u"TIMEOUT";
-	constexpr const CHAR16* _UTF16_UNSUPPORTED = u"UNSUPPORTED";
+	constexpr const CHAR16* _UTF16_UNSUPPORTED = u"Unsupported";
 	constexpr const CHAR16* _UTF16_VOLUME_CORRUPTED = u"VOLUME_CORRUPTED";
 	constexpr const CHAR16* _UTF16_VOLUME_FULL = u"VOLUME_FULL";
 	constexpr const CHAR16* _UTF16_WARN_BUFFER_TOO_SMALL = u"WARN_BUFFER_TOO_SMALL";
@@ -64,8 +64,8 @@ namespace Common::System::Environment
 	constexpr const CHAR16* _UTF16_WARN_WRITE_FAILURE = u"WARN_WRITE_FAILURE";
 	constexpr const CHAR16* _UTF16_WRITE_PROTECTED = u"WRITE_PROTECTED";
 
-	constexpr const CHAR16* _UTF16_ALLOC_STATUS_SUCCESS = u"SUCCESS";
-	constexpr const CHAR16* _UTF16_ALLOC_STATUS_INVALID_PARAMETER = u"INVALID_PARAMETER";
+	constexpr const CHAR16* _UTF16_ALLOC_STATUS_SUCCESS = u"Success";
+	constexpr const CHAR16* _UTF16_ALLOC_STATUS_INVALID_PARAMETER = u"InvalidParameter";
 	constexpr const CHAR16* _UTF16_ALLOC_STATUS_NOT_ENOUGH_MEMORY = u"NOT_ENOUGH_MEMORY";
 	constexpr const CHAR16* _UTF16_ALLOC_STATUS_NOT_ENOUGH_PAGES = u"NOT_ENOUGH_PAGES";
 	constexpr const CHAR16* _UTF16_ALLOC_STATUS_ACCESS_DENIED = u"ACCESS_DENIED";
@@ -497,7 +497,7 @@ void UTF<CHAR16>::Free(CHAR16* str)
 		return &_UTF16_HEXSTRING[0];
 	}
 
-	CHAR16* UTF<CHAR16>::ToString(const EFI::EFI_GUID guid)
+	CHAR16* UTF<CHAR16>::ToString(const Efi::Guid guid)
 	{
 		_UTF16_GUIDTOSTRING[1] = _UTF16_HEXCHARS[(guid.Data1 >> 28) & 0xF];
 		_UTF16_GUIDTOSTRING[2] = _UTF16_HEXCHARS[(guid.Data1 >> 24) & 0xF];
@@ -534,91 +534,91 @@ void UTF<CHAR16>::Free(CHAR16* str)
 		return &_UTF16_GUIDTOSTRING[0];
 	}
 
-	const CHAR16* UTF<CHAR16>::ToString(const EFI::EFI_STATUS status)
+	const CHAR16* UTF<CHAR16>::ToString(const Efi::Status status)
 	{
 		switch (status)
 		{
-		case EFI::EFI_STATUS::ABORTED:
+		case Efi::Status::Aborted:
 			return _UTF16_ABORTED;
-		case EFI::EFI_STATUS::ACCESS_DENIED:
+		case Efi::Status::AccessDenied:
 			return _UTF16_ACCESS_DENIED;
-		case EFI::EFI_STATUS::ALREADY_STARTED:
+		case Efi::Status::AlreadyStarted:
 			return _UTF16_ALREADY_STARTED;
-		case EFI::EFI_STATUS::BAD_BUFFER_SIZE:
+		case Efi::Status::BadBufferSize:
 			return _UTF16_BAD_BUFFER_SIZE;
-		case EFI::EFI_STATUS::BUFFER_TOO_SMALL:
+		case Efi::Status::BufferTooSmall:
 			return _UTF16_BUFFER_TOO_SMALL;
-		case EFI::EFI_STATUS::COMPROMISED_DATA:
+		case Efi::Status::CompromisedData:
 			return _UTF16_COMPROMISED_DATA;
-		case EFI::EFI_STATUS::CRC_ERROR:
+		case Efi::Status::CrcError:
 			return _UTF16_CRC_ERROR;
-		case EFI::EFI_STATUS::DEVICE_ERROR:
+		case Efi::Status::DeviceError:
 			return _UTF16_DEVICE_ERROR;
-		case EFI::EFI_STATUS::END_OF_FILE:
+		case Efi::Status::EndOfFile:
 			return _UTF16_END_OF_FILE;
-		case EFI::EFI_STATUS::END_OF_MEDIA:
+		case Efi::Status::EndOfMedia:
 			return _UTF16_END_OF_MEDIA;
-		case EFI::EFI_STATUS::HTTP_ERROR:
+		case Efi::Status::HttpError:
 			return _UTF16_HTTP_ERROR;
-		case EFI::EFI_STATUS::ICMP_ERROR:
+		case Efi::Status::IcmpError:
 			return _UTF16_ICMP_ERROR;
-		case EFI::EFI_STATUS::INCOMPATIBLE_VERSION:
+		case Efi::Status::IncompatibleVersion:
 			return _UTF16_INCOMPATIBLE_VERSION;
-		case EFI::EFI_STATUS::INVALID_LANGUAGE:
+		case Efi::Status::InvalidLanguage:
 			return _UTF16_INVALID_LANGUAGE;
-		case EFI::EFI_STATUS::INVALID_PARAMETER:
+		case Efi::Status::InvalidParameter:
 			return _UTF16_INVALID_PARAMETER;
-		case EFI::EFI_STATUS::IP_ADDRESS_CONFLICT:
+		case Efi::Status::IpAddressConflict:
 			return _UTF16_IP_ADDRESS_CONFLICT;
-		case EFI::EFI_STATUS::LOAD_ERROR:
+		case Efi::Status::LoadError:
 			return _UTF16_LOAD_ERROR;
-		case EFI::EFI_STATUS::MEDIA_CHANGED:
+		case Efi::Status::MediaChanged:
 			return _UTF16_MEDIA_CHANGED;
-		case EFI::EFI_STATUS::NO_MAPPING:
+		case Efi::Status::NoMapping:
 			return _UTF16_NO_MAPPING;
-		case EFI::EFI_STATUS::NO_MEDIA:
+		case Efi::Status::NoMedia:
 			return _UTF16_NO_MEDIA;
-		case EFI::EFI_STATUS::NO_RESPONSE:
+		case Efi::Status::NoResponse:
 			return _UTF16_NO_RESPONSE;
-		case EFI::EFI_STATUS::NOT_FOUND:
+		case Efi::Status::NotFound:
 			return _UTF16_NOT_FOUND;
-		case EFI::EFI_STATUS::NOT_READY:
+		case Efi::Status::NotReady:
 			return _UTF16_NOT_READY;
-		case EFI::EFI_STATUS::NOT_STARTED:
+		case Efi::Status::NotStarted:
 			return _UTF16_NOT_STARTED;
-		case EFI::EFI_STATUS::OUT_OF_RESOURCES:
-			return _UTF16_OUT_OF_RESOURCES;
-		case EFI::EFI_STATUS::PROTOCOL_ERROR:
+		case Efi::Status::OutOfResources:
+			return _UTF16_OutOfResources;
+		case Efi::Status::ProtocolError:
 			return _UTF16_PROTOCOL_ERROR;
-		case EFI::EFI_STATUS::SECURITY_VIOLATION:
+		case Efi::Status::SecurityViolation:
 			return _UTF16_SECURITY_VIOLATION;
-		case EFI::EFI_STATUS::SUCCESS:
+		case Efi::Status::Success:
 			return _UTF16_SUCCESS;
-		case EFI::EFI_STATUS::TFTP_ERROR:
+		case Efi::Status::TftpError:
 			return _UTF16_TFTP_ERROR;
-		case EFI::EFI_STATUS::TIMEOUT:
+		case Efi::Status::Timeout:
 			return _UTF16_TIMEOUT;
-		case EFI::EFI_STATUS::UNSUPPORTED:
+		case Efi::Status::Unsupported:
 			return _UTF16_UNSUPPORTED;
-		case EFI::EFI_STATUS::VOLUME_CORRUPTED:
+		case Efi::Status::VolumeCorrupted:
 			return _UTF16_VOLUME_CORRUPTED;
-		case EFI::EFI_STATUS::VOLUME_FULL:
+		case Efi::Status::VolumeFull:
 			return _UTF16_VOLUME_FULL;
-		case EFI::EFI_STATUS::WARN_BUFFER_TOO_SMALL:
+		case Efi::Status::WarnBufferTooSmall:
 			return _UTF16_WARN_BUFFER_TOO_SMALL;
-		case EFI::EFI_STATUS::WARN_DELETE_FAILURE:
+		case Efi::Status::WarnDeleteFailure:
 			return _UTF16_WARN_DELETE_FAILURE;
-		case EFI::EFI_STATUS::WARN_FILE_SYSTEM:
+		case Efi::Status::WarnFileSystem:
 			return _UTF16_WARN_FILE_SYSTEM;
-		case EFI::EFI_STATUS::WARN_RESET_REQUIRED:
+		case Efi::Status::WarnResetRequired:
 			return _UTF16_WARN_RESET_REQUIRED;
-		case EFI::EFI_STATUS::WARN_STALE_DATA:
+		case Efi::Status::WarnStaleData:
 			return _UTF16_WARN_STALE_DATA;
-		case EFI::EFI_STATUS::WARN_UNKNOWN_GLYPH:
+		case Efi::Status::WarnUnknownGlyph:
 			return _UTF16_WARN_UNKNOWN_GLYPH;
-		case EFI::EFI_STATUS::WARN_WRITE_FAILURE:
+		case Efi::Status::WarnWriteFailure:
 			return _UTF16_WARN_WRITE_FAILURE;
-		case EFI::EFI_STATUS::WRITE_PROTECTED:
+		case Efi::Status::WriteProtected:
 			return _UTF16_WRITE_PROTECTED;
 		default:
 			return nullptr;
@@ -631,13 +631,13 @@ void UTF<CHAR16>::Free(CHAR16* str)
 		{
 		case Common::System::MemoryManagement::AllocatorStatus::Success:
 			return _UTF16_ALLOC_STATUS_SUCCESS;
-		case Common::System::MemoryManagement::AllocatorStatus::Invalid_Parameters:
+		case Common::System::MemoryManagement::AllocatorStatus::InvalidParameters:
 			return _UTF16_ALLOC_STATUS_INVALID_PARAMETER;
-		case Common::System::MemoryManagement::AllocatorStatus::Not_Enough_Memory:
+		case Common::System::MemoryManagement::AllocatorStatus::NotEnoughMemory:
 			return _UTF16_ALLOC_STATUS_NOT_ENOUGH_MEMORY;
-		case Common::System::MemoryManagement::AllocatorStatus::Not_Enough_Pages:
+		case Common::System::MemoryManagement::AllocatorStatus::NotEnoughPages:
 			return _UTF16_ALLOC_STATUS_NOT_ENOUGH_PAGES;
-		case Common::System::MemoryManagement::AllocatorStatus::Access_Denied:
+		case Common::System::MemoryManagement::AllocatorStatus::AccessDenied:
 			return _UTF16_ALLOC_STATUS_ACCESS_DENIED;
 		}
 	}

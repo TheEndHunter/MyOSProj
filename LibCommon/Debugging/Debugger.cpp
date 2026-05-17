@@ -1,18 +1,18 @@
 #include <Debugging/Debugger.h>
-#include <Protocols/IO/Console/EFI_CONSOLE_COLOR.h>
+#include <Protocols/IO/Console/ConsoleColor.h>
 #include <System/Environment/Unicode.h>
 
 namespace Common::Debugging
 {
-    inline static void SetConsoleColor(EFI::EFI_SYSTEM_TABLE* systemTable, UINT8 v)
+    inline static void SetConsoleColor(Efi::SystemTable* systemTable, UINT8 v)
     {
         systemTable->ConOut->SetAttribute(systemTable->ConOut, v);
     }
-    inline static void SetConsoleColor(EFI::EFI_SYSTEM_TABLE* systemTable, EFI::EfiForegroundColor fg, EFI::EfiBackgroundColor bg)
+    inline static void SetConsoleColor(Efi::SystemTable* systemTable, Efi::ForegroundColor fg, Efi::BackgroundColor bg)
     {
         systemTable->ConOut->SetAttribute(systemTable->ConOut, fg | bg);
     }
-    inline static void PrintLine(EFI::EFI_SYSTEM_TABLE* systemTable, const CHAR16* str)
+    inline static void PrintLine(Efi::SystemTable* systemTable, const CHAR16* str)
     {
         if (Common::System::Environment::UTF<CHAR16>::IsNullOrEmpty(str) == TRUE)
         {
@@ -21,7 +21,7 @@ namespace Common::Debugging
         systemTable->ConOut->OutputString(systemTable->ConOut, str);
         systemTable->ConOut->OutputString(systemTable->ConOut, Common::System::Environment::UTF<CHAR16>::NewLine);
     }
-    inline static void Print(EFI::EFI_SYSTEM_TABLE* systemTable, const CHAR16* str)
+    inline static void Print(Efi::SystemTable* systemTable, const CHAR16* str)
     {
         if (Common::System::Environment::UTF<CHAR16>::IsNullOrEmpty(str) == TRUE)
         {
@@ -31,78 +31,78 @@ namespace Common::Debugging
     }
     void Debugger::PrintDebugLine(const CHAR16* msg) const
     {
-        SetConsoleColor(_sysTbl, EFI::EfiConsoleColor::_Debug);
+        SetConsoleColor(_sysTbl, Efi::ConsoleColor::_Debug);
         PrintLine(_sysTbl, msg);
-        SetConsoleColor(_sysTbl, EFI::EfiConsoleColor::_Default);
+        SetConsoleColor(_sysTbl, Efi::ConsoleColor::_Default);
     }
 
     void Debugger::PrintInfoLine(const CHAR16* msg) const
     {
-        SetConsoleColor(_sysTbl, EFI::EfiConsoleColor::_Info);
+        SetConsoleColor(_sysTbl, Efi::ConsoleColor::_Info);
         PrintLine(_sysTbl, msg);
-        SetConsoleColor(_sysTbl, EFI::EfiConsoleColor::_Default);
+        SetConsoleColor(_sysTbl, Efi::ConsoleColor::_Default);
     }
 
     void Debugger::PrintWarningLine(const CHAR16* msg) const
     {
-		SetConsoleColor(_sysTbl, EFI::EfiConsoleColor::_Warning);
+		SetConsoleColor(_sysTbl, Efi::ConsoleColor::_Warning);
 		PrintLine(_sysTbl, msg);
-        SetConsoleColor(_sysTbl, EFI::EfiConsoleColor::_Default);
+        SetConsoleColor(_sysTbl, Efi::ConsoleColor::_Default);
     }
 
     void Debugger::PrintErrorLine(const CHAR16* msg) const
     {
-		SetConsoleColor(_sysTbl, EFI::EfiConsoleColor::_Error);
+		SetConsoleColor(_sysTbl, Efi::ConsoleColor::_Error);
 		PrintLine(_sysTbl, msg);
-        SetConsoleColor(_sysTbl, EFI::EfiConsoleColor::_Default);
+        SetConsoleColor(_sysTbl, Efi::ConsoleColor::_Default);
     }
 
     void Debugger::PrintCriticalLine(const CHAR16* msg) const
     {
-		SetConsoleColor(_sysTbl, EFI::EfiConsoleColor::_Fatal);
+		SetConsoleColor(_sysTbl, Efi::ConsoleColor::_Fatal);
 		PrintLine(_sysTbl, msg);
-        SetConsoleColor(_sysTbl, EFI::EfiConsoleColor::_Default);
+        SetConsoleColor(_sysTbl, Efi::ConsoleColor::_Default);
     }
     void Debugger::PrintDebug(const CHAR16* msg) const
 	{
-		SetConsoleColor(_sysTbl, EFI::EfiConsoleColor::_Debug);
+		SetConsoleColor(_sysTbl, Efi::ConsoleColor::_Debug);
 		Print(_sysTbl, msg);
-		SetConsoleColor(_sysTbl, EFI::EfiConsoleColor::_Default);
+		SetConsoleColor(_sysTbl, Efi::ConsoleColor::_Default);
     }
     void Debugger::PrintInfo(const CHAR16* msg) const
     {
-		SetConsoleColor(_sysTbl, EFI::EfiConsoleColor::_Info);
+		SetConsoleColor(_sysTbl, Efi::ConsoleColor::_Info);
 		Print(_sysTbl, msg);
-		SetConsoleColor(_sysTbl, EFI::EfiConsoleColor::_Default);
+		SetConsoleColor(_sysTbl, Efi::ConsoleColor::_Default);
     }
     void Debugger::PrintWarning(const CHAR16* msg) const
     {
-		SetConsoleColor(_sysTbl, EFI::EfiConsoleColor::_Warning);
+		SetConsoleColor(_sysTbl, Efi::ConsoleColor::_Warning);
 		Print(_sysTbl, msg);
-		SetConsoleColor(_sysTbl, EFI::EfiConsoleColor::_Default);
+		SetConsoleColor(_sysTbl, Efi::ConsoleColor::_Default);
     }
     void Debugger::PrintError(const CHAR16* msg) const
     {
-        SetConsoleColor(_sysTbl, EFI::EfiConsoleColor::_Error);
+        SetConsoleColor(_sysTbl, Efi::ConsoleColor::_Error);
         Print(_sysTbl, msg);
-        SetConsoleColor(_sysTbl, EFI::EfiConsoleColor::_Default);
+        SetConsoleColor(_sysTbl, Efi::ConsoleColor::_Default);
     }
     void Debugger::PrintCritical(const CHAR16* msg) const
     {
-        SetConsoleColor(_sysTbl, EFI::EfiConsoleColor::_Fatal);
+        SetConsoleColor(_sysTbl, Efi::ConsoleColor::_Fatal);
         Print(_sysTbl, msg);
-        SetConsoleColor(_sysTbl, EFI::EfiConsoleColor::_Default);
+        SetConsoleColor(_sysTbl, Efi::ConsoleColor::_Default);
     }
     void Debugger::WaitForKey(const CHAR16 key) const
     {
-        EFI::EFI_STATUS status = EFI::EFI_STATUS::SUCCESS;
-        EFI::EFI_INPUT_KEY inputKey = EFI::KEYS::Null;
+        Efi::Status status = Efi::Status::Success;
+        Efi::InputKey inputKey = Efi::KEYS::Null;
         _sysTbl->ConIn->Reset(_sysTbl->ConIn, false);
         /*Await for a specific key to be entered, otherwise clear ConsoleIn*/
         do
         {
             status = _sysTbl->BootServices->WaitForEvent(1, &_sysTbl->ConIn->WaitForKey, nullptr);
-            if (status != EFI::EFI_STATUS::SUCCESS)
+            if (status != Efi::Status::Success)
             {
                 PrintErrorLine(u"Error in WaitForEvent");
                 return;
@@ -111,7 +111,7 @@ namespace Common::Debugging
             status = _sysTbl->ConIn->ReadKeyStroke(_sysTbl->ConIn, &inputKey);
 			_sysTbl->ConIn->Reset(_sysTbl->ConIn, false);
 
-            if (status != EFI::EFI_STATUS::SUCCESS)
+            if (status != Efi::Status::Success)
             {
                 PrintErrorLine(u"Error in ReadKeyStroke");
                 return;
@@ -123,8 +123,8 @@ namespace Common::Debugging
     void Debugger::WaitForKey() const
     {
 
-        EFI::EFI_STATUS status = EFI::EFI_STATUS::SUCCESS;
-        EFI::EFI_INPUT_KEY inputKey = EFI::KEYS::Null;
+        Efi::Status status = Efi::Status::Success;
+        Efi::InputKey inputKey = Efi::KEYS::Null;
         
         _sysTbl->ConIn->Reset(_sysTbl->ConIn, false);
 
@@ -132,7 +132,7 @@ namespace Common::Debugging
         do
         {
             status = _sysTbl->BootServices->WaitForEvent(1, &_sysTbl->ConIn->WaitForKey, nullptr);
-            if (status != EFI::EFI_STATUS::SUCCESS)
+            if (status != Efi::Status::Success)
             {
                 PrintErrorLine(u"Error in WaitForEvent");
                 return;
@@ -141,12 +141,12 @@ namespace Common::Debugging
             status = _sysTbl->ConIn->ReadKeyStroke(_sysTbl->ConIn, &inputKey);
             _sysTbl->ConIn->Reset(_sysTbl->ConIn, false);
 
-            if (status != EFI::EFI_STATUS::SUCCESS)
+            if (status != Efi::Status::Success)
             {
                 PrintErrorLine(u"Error in ReadKeyStroke");
                 return;
             }
-        } while (inputKey == EFI::KEYS::Null);
+        } while (inputKey == Efi::KEYS::Null);
 
         _sysTbl->ConIn->Reset(_sysTbl->ConIn,false);
     }

@@ -1,12 +1,13 @@
 #pragma once
 #include <TypeDefs.h>
-#include <EFI_HANDLE.h>
-#include <EFI_STATUS.h>
-#include <EFI_SYSTEM_TABLE.h>
-#include <Protocols/IO/Peripheral/EFI_INPUT_KEY.h>
+#include <Handle.h>
+#include <Status.h>
+#include <SystemTable.h>
+
+#include <Protocols/IO/Peripheral/InputKey.h>
 
 namespace Bootloader
 {
-	using namespace EFI;
-	extern "C" EFI_STATUS EFIAPI EfiMain(EFI_HANDLE imgHndl, EFI_SYSTEM_TABLE * sysTbl);
+	using namespace Efi;
+	extern "C" Status EFIAPI EfiMain(Handle imgHndl, SystemTable * sysTbl);
 }

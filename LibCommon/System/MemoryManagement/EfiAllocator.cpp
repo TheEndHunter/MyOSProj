@@ -1,15 +1,15 @@
 #include <System\MemoryManagement\EfiAllocator.h>
 #include <System\MemoryManagement\AllocatorStatus.h>
 
-#include <EFI_SYSTEM_TABLE.h>
+#include <SystemTable.h>
 
 
 namespace Common::System::MemoryManagement
 {
 #pragma region EfiAllocator
 
-	EFI::EFI_SYSTEM_TABLE* EfiAllocator::_efiSystemTable = nullptr; // Definition for the EFI_SYSTEM_TABLE pointer
-	AllocatorStatus EfiAllocator::_lastStatus = AllocatorStatus::Not_Initialized; // Definition for the AllocatorStatus
+	Efi::SystemTable* EfiAllocator::_efiSystemTable = nullptr; // Definition for the SystemTable pointer
+	AllocatorStatus EfiAllocator::_lastStatus = AllocatorStatus::NotInitialized; // Definition for the AllocatorStatus
 
 	VOID_PTR EfiAllocator::Allocate(UINTN length)
 	{
@@ -18,18 +18,18 @@ namespace Common::System::MemoryManagement
 			return nullptr;
 		}
 
-		EFI::EFI_STATUS status;
+		Efi::Status status;
 		VOID* buffer;
-		status = EfiAllocator::_efiSystemTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, length, &buffer);
-		if (status != EFI::EFI_STATUS::SUCCESS)
+		status = EfiAllocator::_efiSystemTable->BootServices->AllocatePool(Efi::MemoryType::LoaderData, length, &buffer);
+		if (status != Efi::Status::Success)
 		{
 			switch (status)
 			{
-			case EFI::EFI_STATUS::OUT_OF_RESOURCES:
-				_lastStatus = AllocatorStatus::Not_Enough_Memory;
+			case Efi::Status::OutOfResources:
+				_lastStatus = AllocatorStatus::NotEnoughMemory;
 				break;
-			case EFI::EFI_STATUS::INVALID_PARAMETER:
-				_lastStatus = AllocatorStatus::Invalid_Parameters;
+			case Efi::Status::InvalidParameter:
+				_lastStatus = AllocatorStatus::InvalidParameters;
 				break;
 			}
 			return nullptr;
@@ -45,18 +45,18 @@ namespace Common::System::MemoryManagement
 			return nullptr;
 		}
 
-		EFI::EFI_STATUS status;
+		Efi::Status status;
 		VOID* buffer;
-		status = EfiAllocator::_efiSystemTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, length, &buffer);
-		if (status != EFI::EFI_STATUS::SUCCESS)
+		status = EfiAllocator::_efiSystemTable->BootServices->AllocatePool(Efi::MemoryType::LoaderData, length, &buffer);
+		if (status != Efi::Status::Success)
 		{
 			switch (status)
 			{
-			case EFI::EFI_STATUS::OUT_OF_RESOURCES:
-				_lastStatus = AllocatorStatus::Not_Enough_Memory;
+			case Efi::Status::OutOfResources:
+				_lastStatus = AllocatorStatus::NotEnoughMemory;
 				break;
-			case EFI::EFI_STATUS::INVALID_PARAMETER:
-				_lastStatus = AllocatorStatus::Invalid_Parameters;
+			case Efi::Status::InvalidParameter:
+				_lastStatus = AllocatorStatus::InvalidParameters;
 				break;
 			}
 			return nullptr;
@@ -74,18 +74,18 @@ namespace Common::System::MemoryManagement
 			return nullptr;
 		}
 
-		EFI::EFI_STATUS status;
+		Efi::Status status;
 		VOID* buffer;
-		status = EfiAllocator::_efiSystemTable->BootServices->AllocatePages(EFI::EFI_ALLOCATE_TYPE::AllocateAnyPages, EFI::EFI_MEMORY_TYPE::LoaderData, pageCount, &buffer);
-		if (status != EFI::EFI_STATUS::SUCCESS)
+		status = EfiAllocator::_efiSystemTable->BootServices->AllocatePages(Efi::AllocateType::AllocateAnyPages, Efi::MemoryType::LoaderData, pageCount, &buffer);
+		if (status != Efi::Status::Success)
 		{
 			switch (status)
 			{
-			case EFI::EFI_STATUS::OUT_OF_RESOURCES:
-				_lastStatus = AllocatorStatus::Not_Enough_Memory;
+			case Efi::Status::OutOfResources:
+				_lastStatus = AllocatorStatus::NotEnoughMemory;
 				break;
-			case EFI::EFI_STATUS::INVALID_PARAMETER:
-				_lastStatus = AllocatorStatus::Invalid_Parameters;
+			case Efi::Status::InvalidParameter:
+				_lastStatus = AllocatorStatus::InvalidParameters;
 				break;
 			}
 			return nullptr;
@@ -101,18 +101,18 @@ namespace Common::System::MemoryManagement
 			return nullptr;
 		}
 
-		EFI::EFI_STATUS status;
+		Efi::Status status;
 		VOID* buffer;
-		status = EfiAllocator::_efiSystemTable->BootServices->AllocatePages(EFI::EFI_ALLOCATE_TYPE::AllocateAnyPages, EFI::EFI_MEMORY_TYPE::LoaderData, pageCount, &buffer);
-		if (status != EFI::EFI_STATUS::SUCCESS)
+		status = EfiAllocator::_efiSystemTable->BootServices->AllocatePages(Efi::AllocateType::AllocateAnyPages, Efi::MemoryType::LoaderData, pageCount, &buffer);
+		if (status != Efi::Status::Success)
 		{
 			switch (status)
 			{
-			case EFI::EFI_STATUS::OUT_OF_RESOURCES:
-				_lastStatus = AllocatorStatus::Not_Enough_Memory;
+			case Efi::Status::OutOfResources:
+				_lastStatus = AllocatorStatus::NotEnoughMemory;
 				break;
-			case EFI::EFI_STATUS::INVALID_PARAMETER:
-				_lastStatus = AllocatorStatus::Invalid_Parameters;
+			case Efi::Status::InvalidParameter:
+				_lastStatus = AllocatorStatus::InvalidParameters;
 				break;
 			}
 			return nullptr;

@@ -1,0 +1,16 @@
+A:\Dev\Projects\MyOSProj\UEFISharp\obj\Debug\net11.0\UEFISharp.csproj.AssemblyReference.cache
+A:\Dev\Projects\MyOSProj\UEFISharp\obj\Debug\net11.0\UEFISharp.GeneratedMSBuildEditorConfig.editorconfig
+A:\Dev\Projects\MyOSProj\UEFISharp\obj\Debug\net11.0\UEFISharp.AssemblyInfoInputs.cache
+A:\Dev\Projects\MyOSProj\UEFISharp\obj\Debug\net11.0\UEFISharp.AssemblyInfo.cs
+A:\Dev\Projects\MyOSProj\UEFISharp\obj\Debug\net11.0\UEFISharp.csproj.CoreCompileInputs.cache
+A:\Dev\Projects\MyOSProj\UEFISharp\obj\Debug\net11.0\UEFISharp.sourcelink.json
+A:\Dev\Projects\MyOSProj\UEFISharp\bin\Debug\net11.0\UEFISharp.deps.json
+A:\Dev\Projects\MyOSProj\UEFISharp\bin\Debug\net11.0\UEFISharp.dll
+A:\Dev\Projects\MyOSProj\UEFISharp\bin\Debug\net11.0\UEFISharp.pdb
+A:\Dev\Projects\MyOSProj\UEFISharp\bin\Debug\net11.0\System.Private.CoreLib.dll
+A:\Dev\Projects\MyOSProj\UEFISharp\bin\Debug\net11.0\System.Private.CoreLib.pdb
+A:\Dev\Projects\MyOSProj\UEFISharp\obj\Debug\net11.0\UEFISharp.csproj.Up2Date
+A:\Dev\Projects\MyOSProj\UEFISharp\obj\Debug\net11.0\UEFISharp.dll
+A:\Dev\Projects\MyOSProj\UEFISharp\obj\Debug\net11.0\refint\UEFISharp.dll
+A:\Dev\Projects\MyOSProj\UEFISharp\obj\Debug\net11.0\UEFISharp.pdb
+A:\Dev\Projects\MyOSProj\UEFISharp\obj\Debug\net11.0\ref\UEFISharp.dll

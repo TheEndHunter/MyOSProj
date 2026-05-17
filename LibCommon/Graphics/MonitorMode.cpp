@@ -15,7 +15,7 @@ namespace Common::Graphics
 		}
 	}
 
-	MonitorMode::MonitorMode(EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL_MODE* mode) : Version(mode->Info->Version), HorizontalResolution(mode->Info->HorizontalResolution), VerticalResolution(mode->Info->VerticalResolution), PixelsPerScanLine(mode->Info->PixelsPerScanLine), FrameBufferSize(mode->FrameBufferSize),
+	MonitorMode::MonitorMode(Efi::GraphicsOutputProtocolMode* mode) : Version(mode->Info->Version), HorizontalResolution(mode->Info->HorizontalResolution), VerticalResolution(mode->Info->VerticalResolution), PixelsPerScanLine(mode->Info->PixelsPerScanLine), FrameBufferSize(mode->FrameBufferSize),
 		Format((PixelFormat)mode->Info->PixelFormat), BitMask(PixelBitMask(mode->Info->PixelInformation)), FrameBufferBase(mode->FrameBufferBase)
 	{
 		if (PixelsPerScanLine < HorizontalResolution)

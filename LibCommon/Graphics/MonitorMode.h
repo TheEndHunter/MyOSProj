@@ -5,7 +5,7 @@
 #include <Graphics/Pixel.h>
 #include <Graphics/PixelBitMask.h>
 #include <Graphics/PixelFormat.h>
-#include <Protocols/Graphics/EFI_GRAPHICS_OUTPUT_PROTOCOL.h>
+#include <Protocols/Graphics/GraphicsOutputProtocol.h>
 
 
 namespace Common::Graphics
@@ -16,7 +16,7 @@ namespace Common::Graphics
 	private:
 		MonitorMode();
 		MonitorMode(UINT32 version, UINT32 horizonalRes, UINT32 verticalRes, PixelFormat format, PixelBitMask bitMask, UINT32 pixelsPerScanLine, UINTN fbSize, VOID_PTR* fbPtr);
-		MonitorMode(EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL_MODE* mode);
+		MonitorMode(Efi::GraphicsOutputProtocolMode* mode);
 		
 	public:
 		UINT32 Version;

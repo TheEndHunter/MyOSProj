@@ -1,8 +1,8 @@
 #include "ESP_FS_Context.h"
-#include <Protocols/EFI_LOADED_IMAGE_PROTOCOL.h>
+#include <Protocols/LoadedImageProtocol.h>
 #include <FileSystem/FileAttribute.h>
-#include <Protocols/IO/Media/EFI_FILE_INFO.h>
-#include <Protocols/IO/Media/EFI_FILE_SYSTEM_VOLUME_LABEL.h>
+#include <Protocols/IO/Media/FileInfo.h>
+#include <Protocols/IO/Media/FileSystemVolumeLabel.h>
 #include <System/Environment/Unicode.h>
 #include <System/MemoryManagement/Allocator.h>
 
@@ -19,33 +19,33 @@ namespace Common::FileSystem::ESP
 	const ESP_FS_Context ESP_FS_Context::EmptyFS = ESP_FS_Context();
 	const CHAR16* RootPath = u"\\";
 
-	const UINTN ESP_FS_Context::QueryFSCount(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd)
+	const UINTN ESP_FS_Context::QueryFSCount(Efi::SystemTable* sysTable, Efi::Handle hnd)
 	{
-		EFI::EFI_HANDLE* handles;
+		Efi::Handle* handles;
 		UINTN fsCount;
-		sysTable->BootServices->LocateHandleBuffer(EFI::EFI_LOCATE_SEARCH_TYPE::ByProtocol, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, nullptr, &fsCount, &handles);
+		sysTable->BootServices->LocateHandleBuffer(Efi::LocateSearchType::ByProtocol, &Efi::SimpleFileSystemProtocol_GUID, nullptr, &fsCount, &handles);
 		sysTable->BootServices->FreePool(handles);
 		return fsCount;
 	};
-	ESP_FS_Context ESP_FS_Context::GetBootFS(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd)
+	ESP_FS_Context ESP_FS_Context::GetBootFS(Efi::SystemTable* sysTable, Efi::Handle hnd)
 	{
-		EFI::EFI_LOADED_IMAGE_PROTOCOL* lImg = nullptr;
-		EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL* fsProtocol = nullptr;
+		Efi::LoadedImageProtocol* lImg = nullptr;
+		Efi::SimpleFileSystemProtocol* fsProtocol = nullptr;
 
-		sysTable->BootServices->OpenProtocol(hnd, &EFI::EFI_LOADED_IMAGE_PROTOCOL_GUID, (void**)&lImg, hnd, nullptr, EFI::EFI_OPEN_PROTOCOL_GET_PROTOCOL);
+		sysTable->BootServices->OpenProtocol(hnd, &Efi::EFI_LOADED_IMAGE_PROTOCOL_GUID, (void**)&lImg, hnd, nullptr, Efi::Services::OpenProtocolGetProtocol);
 
-		sysTable->BootServices->OpenProtocol(lImg->DeviceHandle, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, (void**)&fsProtocol, hnd, nullptr, EFI::EFI_OPEN_PROTOCOL_GET_PROTOCOL);
+		sysTable->BootServices->OpenProtocol(lImg->DeviceHandle, &Efi::SimpleFileSystemProtocol_GUID, (void**)&fsProtocol, hnd, nullptr, Efi::Services::OpenProtocolGetProtocol);
 
-		sysTable->BootServices->CloseProtocol(hnd, &EFI::EFI_LOADED_IMAGE_PROTOCOL_GUID, hnd, nullptr);
+		sysTable->BootServices->CloseProtocol(hnd, &Efi::EFI_LOADED_IMAGE_PROTOCOL_GUID, hnd, nullptr);
 
 		return ESP_FS_Context(sysTable, hnd,lImg->DeviceHandle, fsProtocol);
 	};
-	ESP_FS_Context ESP_FS_Context::GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, UINTN index, OUT EFI::EFI_STATUS* status)
+	ESP_FS_Context ESP_FS_Context::GetFileSystem(Efi::SystemTable* sysTable, Efi::Handle hnd, UINTN index, OUT Efi::Status* status)
 	{
-		EFI::EFI_HANDLE* handles;
+		Efi::Handle* handles;
 		UINTN fsCount;
-		*status = sysTable->BootServices->LocateHandleBuffer(EFI::EFI_LOCATE_SEARCH_TYPE::ByProtocol, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, nullptr, &fsCount, &handles);
-		if (*status != EFI::EFI_STATUS::SUCCESS)
+		*status = sysTable->BootServices->LocateHandleBuffer(Efi::LocateSearchType::ByProtocol, &Efi::SimpleFileSystemProtocol_GUID, nullptr, &fsCount, &handles);
+		if (*status != Efi::Status::Success)
 		{
 			return EmptyFS;
 		}
@@ -58,11 +58,11 @@ namespace Common::FileSystem::ESP
 			}
 			return EmptyFS;
 		};
-		EFI::EFI_HANDLE FsHndl = handles[index];
-		EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL* fsProtocol = nullptr;
-		*status = sysTable->BootServices->OpenProtocol(FsHndl, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, (void**)&fsProtocol, hnd, nullptr, EFI::EFI_OPEN_PROTOCOL_GET_PROTOCOL);
+		Efi::Handle FsHndl = handles[index];
+		Efi::SimpleFileSystemProtocol* fsProtocol = nullptr;
+		*status = sysTable->BootServices->OpenProtocol(FsHndl, &Efi::SimpleFileSystemProtocol_GUID, (void**)&fsProtocol, hnd, nullptr, Efi::Services::OpenProtocolGetProtocol);
 
-		if (*status != EFI::EFI_STATUS::SUCCESS)
+		if (*status != Efi::Status::Success)
 		{
 			delete[fsCount] handles;
 			return EmptyFS;
@@ -72,20 +72,20 @@ namespace Common::FileSystem::ESP
 		delete[fsCount] handles;
 		return ESP_FS_Context(sysTable, hnd, FsHndl, fsProtocol);
 	}
-	ESP_FS_Context ESP_FS_Context::GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, const CHAR16* label, OUT EFI::EFI_STATUS* status, Common::System::Environment::StringComparisonMode mode, Common::System::Environment::StringCulture culture)
+	ESP_FS_Context ESP_FS_Context::GetFileSystem(Efi::SystemTable* sysTable, Efi::Handle hnd, const CHAR16* label, OUT Efi::Status* status, Common::System::Environment::StringComparisonMode mode, Common::System::Environment::StringCulture culture)
 	{
 		if (Common::System::Environment::UTF<CHAR16>::IsNullOrEmpty(label))
 		{
-			*status = EFI::EFI_STATUS::INVALID_PARAMETER;
+			*status = Efi::Status::InvalidParameter;
 			return EmptyFS;
 		}
 
-		EFI::EFI_HANDLE* handles;
+		Efi::Handle* handles;
 		UINTN fsCount;
 
-		*status = sysTable->BootServices->LocateHandleBuffer(EFI::EFI_LOCATE_SEARCH_TYPE::ByProtocol, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, nullptr, &fsCount, &handles);
+		*status = sysTable->BootServices->LocateHandleBuffer(Efi::LocateSearchType::ByProtocol, &Efi::SimpleFileSystemProtocol_GUID, nullptr, &fsCount, &handles);
 
-		if (*status != EFI::EFI_STATUS::SUCCESS)
+		if (*status != Efi::Status::Success)
 		{
 			return EmptyFS;
 		}
@@ -98,54 +98,54 @@ namespace Common::FileSystem::ESP
 		ESP_FS_Context fsContext = EmptyFS;
 		for (UINTN fsIndex = 0; fsIndex < fsCount; fsIndex++)
 		{
-			EFI::EFI_HANDLE fsHndl = handles[fsIndex];
-			EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL* fsProtocol = nullptr;
-			*status = sysTable->BootServices->OpenProtocol(fsHndl, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, (void**)&fsProtocol, hnd, nullptr, EFI::EFI_OPEN_PROTOCOL_GET_PROTOCOL);
+			Efi::Handle fsHndl = handles[fsIndex];
+			Efi::SimpleFileSystemProtocol* fsProtocol = nullptr;
+			*status = sysTable->BootServices->OpenProtocol(fsHndl, &Efi::SimpleFileSystemProtocol_GUID, (void**)&fsProtocol, hnd, nullptr, Efi::Services::OpenProtocolGetProtocol);
 
 			_espDebugger->PrintInfo(u"Checking File System: ");
 			_espDebugger->PrintInfoLine(Common::System::Environment::UTF<CHAR16>::ToString(fsIndex));
 
-			if (*status != EFI::EFI_STATUS::SUCCESS)
+			if (*status != Efi::Status::Success)
 			{
 				continue;
 			}
 
-			EFI::EFI_FILE_PROTOCOL* root = nullptr;
+			Efi::FileProtocol* root = nullptr;
 			*status = fsProtocol->OpenVolume(fsProtocol, &root);
 
-			if (*status != EFI::EFI_STATUS::SUCCESS)
+			if (*status != Efi::Status::Success)
 			{
-				sysTable->BootServices->CloseProtocol(fsHndl, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, hnd, nullptr);
+				sysTable->BootServices->CloseProtocol(fsHndl, &Efi::SimpleFileSystemProtocol_GUID, hnd, nullptr);
 				continue;
 			}
 
 			UINTN volLblSize = 0;
-			EFI::EFI_FILE_SYSTEM_VOLUME_LABEL* volLbl = nullptr;
-			*status = root->GetInfo(root, &EFI::EFI_FILE_SYSTEM_VOLUME_LABEL_ID, &volLblSize, (void**)&volLbl);
+			Efi::FileSystemVolumeLabel* volLbl = nullptr;
+			*status = root->GetInfo(root, &Efi::FileSystemVolumeLabel_ID, &volLblSize, (void**)&volLbl);
 			
 			if (volLblSize < 1)
 			{
-				*status = EFI::EFI_STATUS::END_OF_FILE;
+				*status = Efi::Status::EndOfFile;
 				return EmptyFS;
 			}
-			volLbl = (EFI::EFI_FILE_SYSTEM_VOLUME_LABEL*)new UINT8[volLblSize];
+			volLbl = (Efi::FileSystemVolumeLabel*)new UINT8[volLblSize];
 
 			*status = Common::System::MemoryManagement::ToEfiStatus(Common::System::MemoryManagement::Allocator::GetInstance()->LastStatus());
 
-			if (*status != EFI::EFI_STATUS::SUCCESS)
+			if (*status != Efi::Status::Success)
 			{
 				root->Close(root);
-				sysTable->BootServices->CloseProtocol(fsHndl, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, hnd, nullptr);
+				sysTable->BootServices->CloseProtocol(fsHndl, &Efi::SimpleFileSystemProtocol_GUID, hnd, nullptr);
 				continue;
 			}
 
-			*status = root->GetInfo(root, &EFI::EFI_FILE_SYSTEM_VOLUME_LABEL_ID, &volLblSize, (void*)&volLbl->VolumeLabel);
+			*status = root->GetInfo(root, &Efi::FileSystemVolumeLabel_ID, &volLblSize, (void*)&volLbl->VolumeLabel);
 
-			if (*status != EFI::EFI_STATUS::SUCCESS)
+			if (*status != Efi::Status::Success)
 			{
 				delete[volLblSize] volLbl;
 				root->Close(root);
-				sysTable->BootServices->CloseProtocol(fsHndl, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, hnd, nullptr);
+				sysTable->BootServices->CloseProtocol(fsHndl, &Efi::SimpleFileSystemProtocol_GUID, hnd, nullptr);
 				continue;
 			}
 
@@ -153,7 +153,7 @@ namespace Common::FileSystem::ESP
 			{
 				delete[volLblSize] volLbl;
 				root->Close(root);
-				sysTable->BootServices->CloseProtocol(fsHndl, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, hnd, nullptr);
+				sysTable->BootServices->CloseProtocol(fsHndl, &Efi::SimpleFileSystemProtocol_GUID, hnd, nullptr);
 				continue;
 			}
 
@@ -187,14 +187,14 @@ namespace Common::FileSystem::ESP
 				break;
 			}
 
-			sysTable->BootServices->CloseProtocol(fsHndl, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, hnd, nullptr);
+			sysTable->BootServices->CloseProtocol(fsHndl, &Efi::SimpleFileSystemProtocol_GUID, hnd, nullptr);
 			continue;
 		}
 
 		delete[fsCount] handles;
 		if (fsContext == EmptyFS)
 		{
-			*status = EFI::EFI_STATUS::NOT_FOUND;
+			*status = Efi::Status::NotFound;
 		}
 
 		return fsContext;
@@ -215,7 +215,7 @@ namespace Common::FileSystem::ESP
 			{
 				_espDebugger->PrintWarningLine(u"filesystem null");
 			}
-			LastStatus = EFI::EFI_STATUS::WARN_FILE_SYSTEM;
+			LastStatus = Efi::Status::WarnFileSystem;
 			return false;
 		}
 
@@ -223,7 +223,7 @@ namespace Common::FileSystem::ESP
 		{
 			LastStatus = _fs->OpenVolume(_fs, &_root);
 
-			if (LastStatus != EFI::EFI_STATUS::SUCCESS)
+			if (LastStatus != Efi::Status::Success)
 			{
 				return false;
 			}
@@ -246,7 +246,7 @@ namespace Common::FileSystem::ESP
 	{
 		if (_fs == nullptr)
 		{
-			LastStatus = EFI::EFI_STATUS::WARN_FILE_SYSTEM;
+			LastStatus = Efi::Status::WarnFileSystem;
 			return false;
 		}
 
@@ -260,13 +260,13 @@ namespace Common::FileSystem::ESP
 
 		if (_cwd == nullptr)
 		{
-			LastStatus = EFI::EFI_STATUS::DEVICE_ERROR;
+			LastStatus = Efi::Status::DeviceError;
 			return FALSE;
 		}
 		
 		if (Common::System::Environment::UTF<CHAR16>::IsNullEmptyOrWhiteSpace(path))
 		{
-			LastStatus = EFI::EFI_STATUS::INVALID_PARAMETER;
+			LastStatus = Efi::Status::InvalidParameter;
 			return FALSE;
 		}
 
@@ -276,7 +276,7 @@ namespace Common::FileSystem::ESP
 			return true;
 		}
 
-		LastStatus = _cwd->Open(_cwd, &_cwd, (CHAR16*)path, EFI::EFI_FILE_MODES::ReadWrite, EFI::EFI_FILE_ATTRIBUTES::Directory);
+        LastStatus = _cwd->Open(_cwd, &_cwd, (CHAR16*)path, Efi::FileModes::ReadWrite, (UINT64)Efi::FileAttributes::Directory);
 
 		delete _dirInfo;
 		_dirInfo = nullptr;
@@ -287,7 +287,7 @@ namespace Common::FileSystem::ESP
 	{
 		if (_fs == nullptr)
 		{
-			LastStatus = EFI::EFI_STATUS::WARN_FILE_SYSTEM;
+			LastStatus = Efi::Status::WarnFileSystem;
 			return;
 		}
 
@@ -304,7 +304,7 @@ namespace Common::FileSystem::ESP
 			_isVolumeOpen = false;
 		}
 
-		_sysTable->BootServices->CloseProtocol(_deviceHandle, &EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL_GUID, nullptr, _imgHndl);
+		_sysTable->BootServices->CloseProtocol(_deviceHandle, &Efi::SimpleFileSystemProtocol_GUID, nullptr, _imgHndl);
 	};
 	Common::FileSystem::VolumeInfo ESP_FS_Context::GetVolumeInfo()
 	{
@@ -317,7 +317,7 @@ namespace Common::FileSystem::ESP
 
 		UINTN length = 0;
 
-		LastStatus = _root->GetInfo(_root, &EFI::EFI_FILE_SYSTEM_INFO_ID, &length, nullptr);
+		LastStatus = _root->GetInfo(_root, &Efi::EFI_FILE_SYSTEM_INFO_ID, &length, nullptr);
 
 		if (length < 1)
 		{
@@ -325,7 +325,7 @@ namespace Common::FileSystem::ESP
 			return Empty_VolInfo;
 		}
 		
-		EFI::EFI_FILE_SYSTEM_INFO* info = (EFI::EFI_FILE_SYSTEM_INFO*) new UINT8[length]();
+		Efi::EFI_FILE_SYSTEM_INFO* info = (Efi::EFI_FILE_SYSTEM_INFO*) new UINT8[length]();
 
 		if (info == nullptr)
 		{
@@ -333,9 +333,9 @@ namespace Common::FileSystem::ESP
 			return Empty_VolInfo;
 		}
 		
-		LastStatus = _root->GetInfo(_root, &EFI::EFI_FILE_SYSTEM_INFO_ID, &length, info);
+		LastStatus = _root->GetInfo(_root, &Efi::EFI_FILE_SYSTEM_INFO_ID, &length, info);
 
-		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
+		if (LastStatus != Efi::Status::Success)
 		{
 			LastStatus = _sysTable->BootServices->FreePool(info);
 			_espDebugger->PrintErrorLine(u"Unable To Get Intfo");
@@ -349,29 +349,29 @@ namespace Common::FileSystem::ESP
 	Common::FileSystem::VolumeLabel ESP_FS_Context::GetVolumeLabel()
 	{
 		UINTN length = 0;
-		EFI::EFI_FILE_SYSTEM_VOLUME_LABEL* info = nullptr;
-		LastStatus = _root->GetInfo(_root, &EFI::EFI_FILE_SYSTEM_VOLUME_LABEL_ID, &length, (void**)&info);
+		Efi::FileSystemVolumeLabel* info = nullptr;
+		LastStatus = _root->GetInfo(_root, &Efi::FileSystemVolumeLabel_ID, &length, (void**)&info);
 
-		if (LastStatus != EFI::EFI_STATUS::BUFFER_TOO_SMALL)
+		if (LastStatus != Efi::Status::BufferTooSmall)
 		{
 			return Empty_VolLabel;
 		}
 
 		if (length == 0)
 		{
-			LastStatus = EFI::EFI_STATUS::BAD_BUFFER_SIZE;
+			LastStatus = Efi::Status::BadBufferSize;
 			return Empty_VolLabel;
 		};
 
-		LastStatus = _sysTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, length, (void**)&info);
-		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
+		LastStatus = _sysTable->BootServices->AllocatePool(Efi::MemoryType::LoaderData, length, (void**)&info);
+		if (LastStatus != Efi::Status::Success)
 		{
 			return Empty_VolLabel;
 		}
 
-		LastStatus = _root->GetInfo(_root, &EFI::EFI_FILE_SYSTEM_VOLUME_LABEL_ID, &length, info);
+		LastStatus = _root->GetInfo(_root, &Efi::FileSystemVolumeLabel_ID, &length, info);
 
-		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
+		if (LastStatus != Efi::Status::Success)
 		{
 			LastStatus = _sysTable->BootServices->FreePool(info);
 			return Empty_VolLabel;
@@ -394,23 +394,23 @@ namespace Common::FileSystem::ESP
 
 		if (_fs == nullptr)
 		{
-			LastStatus = EFI::EFI_STATUS::WARN_FILE_SYSTEM;
+			LastStatus = Efi::Status::WarnFileSystem;
 			return Empty_DirectoryInfo;
 		}
 
 		if (_cwd == nullptr)
 		{
-			LastStatus = EFI::EFI_STATUS::DEVICE_ERROR;
+			LastStatus = Efi::Status::DeviceError;
 			return Empty_DirectoryInfo;
 		}
 
-		EFI::EFI_FILE_INFO* info = nullptr;
+        Efi::FileInfo* info = nullptr;
 		/*Get the size of the FileInfo struct for the file*/
 		UINTN length = 0;
-		LastStatus = _cwd->GetInfo(_cwd, &EFI::EFI_FILE_INFO_ID, &length, nullptr);
+        LastStatus = _cwd->GetInfo(_cwd, &Efi::FileInfoId, &length, nullptr);
 
 		/*if the LastStatus is not a Buffer to small error, return an Empty FileInfo*/
-		if (LastStatus != EFI::EFI_STATUS::BUFFER_TOO_SMALL)
+		if (LastStatus != Efi::Status::BufferTooSmall)
 		{
 			return Empty_DirectoryInfo;
 		}
@@ -418,25 +418,25 @@ namespace Common::FileSystem::ESP
 		/*if the size is less than 1, return an Empty FileInfo*/
 		if (length < 1)
 		{
-			LastStatus = EFI::EFI_STATUS::BAD_BUFFER_SIZE;
+			LastStatus = Efi::Status::BadBufferSize;
 			return Empty_DirectoryInfo;
 		}
 
-		length += sizeof(EFI::EFI_FILE_INFO);
+        length += sizeof(Efi::FileInfo);
 		/*Allocate a buffer for the FileInfo struct*/
-		LastStatus = _sysTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, length, (void**)&info);
+		LastStatus = _sysTable->BootServices->AllocatePool(Efi::MemoryType::LoaderData, length, (void**)&info);
 
 		/*if the LastStatus is Not a success, return an Empty FileInfo*/
-		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
+		if (LastStatus != Efi::Status::Success)
 		{
 			return Empty_DirectoryInfo;
 		}
 
 		/*Get the FileInfo struct for the file*/
-		LastStatus = _cwd->GetInfo(_cwd, &EFI::EFI_FILE_INFO_ID, &length, info);
+        LastStatus = _cwd->GetInfo(_cwd, &Efi::FileInfoId, &length, info);
 
 		/*if the LastStatus is Not a success, return an Empty FileInfo*/
-		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
+		if (LastStatus != Efi::Status::Success)
 		{
 			LastStatus = _sysTable->BootServices->FreePool(info);
 			return Empty_DirectoryInfo;
@@ -449,40 +449,40 @@ namespace Common::FileSystem::ESP
 
 	DirectoryInfo ESP_FS_Context::GetDirectoryInfo(const CHAR16* path)
 	{
-		/*Check path to see if it's null or empty, if it is return an empty FileSystem, putting INVALID_PARAMETER status into LastStatus Member*/
+		/*Check path to see if it's null or empty, if it is return an empty FileSystem, putting InvalidParameter status into LastStatus Member*/
 		if (Common::System::Environment::UTF<CHAR16>::IsNullEmptyOrWhiteSpace(path))
 		{
-			LastStatus = EFI::EFI_STATUS::INVALID_PARAMETER;
+			LastStatus = Efi::Status::InvalidParameter;
 			return Empty_DirectoryInfo;
 		}
 
 		/*Check to see if the FileSystem is null, if it is return an empty FileSystem, putting WARN_FILE_SYSTEM status into LastStatus Member*/
 		if (_fs == nullptr)
 		{
-			LastStatus = EFI::EFI_STATUS::WARN_FILE_SYSTEM;
+			LastStatus = Efi::Status::WarnFileSystem;	
 			return Empty_DirectoryInfo;
 		}
 
 		if (_cwd == nullptr)
 		{
-			LastStatus = EFI::EFI_STATUS::DEVICE_ERROR;
+			LastStatus = Efi::Status::DeviceError;
 			return Empty_DirectoryInfo;
 		};
 
 		/*open _cwd to the file denoted by the path as readOnly, placing the found files pointer into a _file pointer variable on the stack*/
-		EFI::EFI_FILE_PROTOCOL* file = nullptr;
-		LastStatus = _cwd->Open(_cwd, &file, (CHAR16*)path, EFI::EFI_FILE_MODES::Read, EFI::EFI_FILE_ATTRIBUTES::ReadOnly);
+		Efi::FileProtocol* file = nullptr;
+        LastStatus = _cwd->Open(_cwd, &file, (CHAR16*)path, Efi::FileModes::Read, (UINT64)Efi::FileAttributes::ReadOnly);
 
 		/*if the LastStatus is Not a success, return an Empty FileInfo*/
-		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
+		if (LastStatus != Efi::Status::Success)
 		{
 			return Empty_DirectoryInfo;
 		}
 		/*Get the size of the FileInfo struct for the file*/
 		UINTN length = 0;
-		LastStatus = file->GetInfo(file, &EFI::EFI_FILE_INFO_ID, &length, nullptr);
+        LastStatus = file->GetInfo(file, &Efi::FileInfoId, &length, nullptr);
 		/*if the LastStatus is Not a success, return an Empty FileInfo*/
-		if (LastStatus != EFI::EFI_STATUS::BUFFER_TOO_SMALL)
+		if (LastStatus != Efi::Status::BufferTooSmall)
 		{
 			return Empty_DirectoryInfo;
 		}
@@ -490,26 +490,26 @@ namespace Common::FileSystem::ESP
 		/*if the size is less than 1, return an Empty FileInfo*/
 		if (length < 1)
 		{
-			LastStatus = EFI::EFI_STATUS::BAD_BUFFER_SIZE;
+			LastStatus = Efi::Status::BadBufferSize;
 			return Empty_DirectoryInfo;
 		}
 
-		length += sizeof(EFI::EFI_FILE_INFO);
+        length += sizeof(Efi::FileInfo);
 		/*Allocate a buffer for the FileInfo struct*/
-		EFI::EFI_FILE_INFO* info = nullptr;
-		LastStatus = _sysTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, length, (void**)&info);
+        Efi::FileInfo* info = nullptr;
+		LastStatus = _sysTable->BootServices->AllocatePool(Efi::MemoryType::LoaderData, length, (void**)&info);
 
 		/*if the LastStatus is Not a success, return an Empty FileInfo*/
-		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
+		if (LastStatus != Efi::Status::Success)
 		{
 			return Empty_DirectoryInfo;
 		}
 
 		/*Get the FileInfo struct for the file*/
-		LastStatus = file->GetInfo(file, &EFI::EFI_FILE_INFO_ID, &length, info);
+        LastStatus = file->GetInfo(file, &Efi::FileInfoId, &length, info);
 
 		/*if the LastStatus is Not a success, return an Empty FileInfo*/
-		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
+		if (LastStatus != Efi::Status::Success)
 		{
 			LastStatus = _sysTable->BootServices->FreePool(info);
 			return Empty_DirectoryInfo;
@@ -526,7 +526,7 @@ namespace Common::FileSystem::ESP
 	{
 		if (_fs == nullptr)
 		{
-			LastStatus = EFI::EFI_STATUS::WARN_FILE_SYSTEM;
+			LastStatus = Efi::Status::WarnFileSystem;
 			return;
 		}
 
@@ -544,7 +544,7 @@ namespace Common::FileSystem::ESP
 	{
 		if (length == nullptr)
 		{
-			LastStatus = EFI::EFI_STATUS::INVALID_PARAMETER;
+			LastStatus = Efi::Status::InvalidParameter;
 			*length = 0;
 			return nullptr;
 		}
@@ -555,7 +555,7 @@ namespace Common::FileSystem::ESP
 
 		LastStatus = _cwd->Read(_cwd, &bufferSize, buffer);
 
-		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
+		if (LastStatus != Efi::Status::Success)
 		{
 			delete[bufferSize] buffer;
 			return nullptr;
@@ -565,32 +565,32 @@ namespace Common::FileSystem::ESP
 
 	Common::FileSystem::FileInfo ESP_FS_Context::GetFileInfo(const CHAR16* path)
 	{
-		/*Check path to see if it's null or empty, if it is return an empty FileSystem, putting INVALID_PARAMETER status into LastStatus Member*/
+		/*Check path to see if it's null or empty, if it is return an empty FileSystem, putting InvalidParameter status into LastStatus Member*/
 		if (Common::System::Environment::UTF<CHAR16>::IsNullEmptyOrWhiteSpace(path))
 		{
-			LastStatus = EFI::EFI_STATUS::INVALID_PARAMETER;
+			LastStatus = Efi::Status::InvalidParameter;
 			return Empty_FileInfo;
 		}
 
 		/*Check to see if the FileSystem is null, if it is return an empty FileSystem, putting WARN_FILE_SYSTEM status into LastStatus Member*/
 		if (_fs == nullptr)
 		{
-			LastStatus = EFI::EFI_STATUS::WARN_FILE_SYSTEM;
+			LastStatus = Efi::Status::WarnFileSystem;
 			return Empty_FileInfo;
 		}
 
 		if (_cwd == nullptr)
 		{
-			LastStatus = EFI::EFI_STATUS::DEVICE_ERROR;
+			LastStatus = Efi::Status::DeviceError;
 			return Empty_FileInfo;
 		}
 
 		/*open _cwd to the file denoted by the path as readOnly, placing the found files pointer into a _file pointer variable on the stack*/
-		EFI::EFI_FILE_PROTOCOL* file = nullptr;
-		LastStatus = _cwd->Open(_cwd, &file, path, EFI::EFI_FILE_MODES::Read, EFI::EFI_FILE_ATTRIBUTES::ReadOnly);
+		Efi::FileProtocol* file = nullptr;
+        LastStatus = _cwd->Open(_cwd, &file, path, Efi::FileModes::Read, (UINT64)Efi::FileAttributes::ReadOnly);
 
 		/*if the LastStatus is Not a success, return an Empty FileInfo*/
-		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
+		if (LastStatus != Efi::Status::Success)
 		{
 			if (_espDebugger != nullptr)
 			{
@@ -604,9 +604,9 @@ namespace Common::FileSystem::ESP
 		}
 		/*Get the size of the FileInfo struct for the file*/
 		UINTN length = 0;
-		LastStatus = file->GetInfo(file, &EFI::EFI_FILE_INFO_ID, &length, nullptr);
+        LastStatus = file->GetInfo(file, &Efi::FileInfoId, &length, nullptr);
 		/*if the LastStatus is Not a success, return an Empty FileInfo*/
-		if (LastStatus != EFI::EFI_STATUS::BUFFER_TOO_SMALL)
+		if (LastStatus != Efi::Status::BufferTooSmall)
 		{
 			if (_espDebugger != nullptr)
 			{
@@ -619,19 +619,19 @@ namespace Common::FileSystem::ESP
 		/*if the size is less than 1, return an Empty FileInfo*/
 		if (length < 1)
 		{
-			LastStatus = EFI::EFI_STATUS::BAD_BUFFER_SIZE;
+			LastStatus = Efi::Status::BadBufferSize;
 			return Empty_FileInfo;
 		}
 
-		length += sizeof(EFI::EFI_FILE_INFO);
+        length += sizeof(Efi::FileInfo);
 		/*Allocate a buffer for the FileInfo struct*/
-		EFI::EFI_FILE_INFO* info = (EFI::EFI_FILE_INFO*)new UINT8[length]();
+        Efi::FileInfo* info = (Efi::FileInfo*)new UINT8[length]();
 
 		/*Get the FileInfo struct for the file*/
-		LastStatus = file->GetInfo(file, &EFI::EFI_FILE_INFO_ID, &length, info);
+        LastStatus = file->GetInfo(file, &Efi::FileInfoId, &length, info);
 
 		/*if the LastStatus is Not a success, return an Empty FileInfo*/
-		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
+		if (LastStatus != Efi::Status::Success)
 		{
 			_espDebugger->PrintCritical(u"Failed to get file Info: ");
 			_espDebugger->PrintCriticalLine(Common::System::Environment::UTF<CHAR16>::ToString(LastStatus));
@@ -643,7 +643,7 @@ namespace Common::FileSystem::ESP
 		delete file;
 
 		/*Create a FileInfo struct from the EFI_FILE_INFO struct*/
-		FileInfo fileInfo = FileInfo::Create(info);
+        Common::FileSystem::FileInfo fileInfo = Common::FileSystem::FileInfo::Create(info);
 		return fileInfo;
 	}
 
@@ -651,66 +651,66 @@ namespace Common::FileSystem::ESP
 	{
 		if (_fs == nullptr)
 		{
-			LastStatus = EFI::EFI_STATUS::WARN_FILE_SYSTEM;
+			LastStatus = Efi::Status::WarnFileSystem;
 			return Empty_FileHandle;
 		}
 
 		if (fileInfo == nullptr)
 		{
-			LastStatus = EFI::EFI_STATUS::INVALID_PARAMETER;
+			LastStatus = Efi::Status::InvalidParameter;
 			return Empty_FileHandle;
 		}
 
 		if (Common::System::Environment::UTF<CHAR16>::IsNullOrEmpty(fileInfo->FileName))
 		{
-			LastStatus = EFI::EFI_STATUS::INVALID_PARAMETER;
+			LastStatus = Efi::Status::InvalidParameter;
 			return Empty_FileHandle;
 		}
 
-		/* Check to see if FileMode::Create Flag is set, if it is, set an INVALID_PARAMETER and return an Empty File Handle*/
+		/* Check to see if FileMode::Create Flag is set, if it is, set an InvalidParameter and return an Empty File Handle*/
 		if ((mode & FileMode::Create) == FileMode::Create)
 		{
-			LastStatus = EFI::EFI_STATUS::INVALID_PARAMETER;
+			LastStatus = Efi::Status::InvalidParameter;
 			return Empty_FileHandle;
 		}
 
-		EFI::EFI_FILE_PROTOCOL* file = nullptr;
-		LastStatus = _cwd->Open(_cwd, &file, fileInfo->FileName, (EFI::EFI_FILE_MODES)mode,attribs);
+		Efi::FileProtocol* file = nullptr;
+        LastStatus = _cwd->Open(_cwd, &file, fileInfo->FileName, (Efi::FileModes)mode, attribs);
 
-		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
+		if (LastStatus != Efi::Status::Success)
 		{
 			if (_espDebugger != nullptr)
 			{
 				switch (LastStatus)
 				{
-				case EFI::EFI_STATUS::SUCCESS:
+				case Efi::Status::Success:
 					_espDebugger->PrintCriticalLine(u"File opened successfully.");
 					break;
-				case EFI::EFI_STATUS::NOT_FOUND:
+					case Efi::Status::NotFound:
 					_espDebugger->PrintCriticalLine(u"File Not Found");
 					break;
-				case EFI::EFI_STATUS::NO_MEDIA:
+					case Efi::Status::NoMedia:
 					_espDebugger->PrintCriticalLine(u"Media Not Found");
 					break;
-				case EFI::EFI_STATUS::MEDIA_CHANGED:
+					case Efi::Status::MediaChanged:
 					_espDebugger->PrintCriticalLine(u"Media Changed");
 					break;
-				case EFI::EFI_STATUS::DEVICE_ERROR:
+					case Efi::Status::DeviceError:
 					_espDebugger->PrintCriticalLine(u"Device Error");
 					break;
-				case EFI::EFI_STATUS::VOLUME_CORRUPTED:
+					case Efi::Status::VolumeCorrupted:
 					_espDebugger->PrintCriticalLine(u"Volume Corrupted");
 					break;
-				case EFI::EFI_STATUS::WRITE_PROTECTED:
+					case Efi::Status::WriteProtected:
 					_espDebugger->PrintCriticalLine(u"Write Protected");
 					break;
-				case EFI::EFI_STATUS::ACCESS_DENIED:
+				case Efi::Status::AccessDenied:
 					_espDebugger->PrintCriticalLine(u"Access Denied");
 					break;
-				case EFI::EFI_STATUS::OUT_OF_RESOURCES:
+				case Efi::Status::OutOfResources:
 					_espDebugger->PrintCriticalLine(u"Out of Resources");
 					break;
-				case EFI::EFI_STATUS::VOLUME_FULL:
+					case Efi::Status::VolumeFull:
 					_espDebugger->PrintCriticalLine(u"Volume Full");
 					break;
 				}
@@ -745,21 +745,21 @@ namespace Common::FileSystem::ESP
 	{
 		if (_fs == nullptr)
 		{
-			LastStatus = EFI::EFI_STATUS::WARN_FILE_SYSTEM;
+			LastStatus = Efi::Status::WarnFileSystem;
 			return Empty_FileHandle;
 		}
 
-		EFI::EFI_FILE_PROTOCOL* file;
+		Efi::FileProtocol* file;
 
-		LastStatus = _cwd->Open(_cwd, &file, (CHAR16*)name, EFI::EFI_FILE_MODES::Create, attribs);
+        LastStatus = _cwd->Open(_cwd, &file, (CHAR16*)name, Efi::FileModes::Create, attribs);
 
 		/* Get EFI_FILE_INFO for FileHandle */
 		UINTN length = 0;
-		EFI::EFI_FILE_INFO* info = nullptr;
-		LastStatus = file->GetInfo(file, &EFI::EFI_FILE_INFO_ID, &length, (void**)&info);
-		LastStatus = _sysTable->BootServices->AllocatePool(EFI::EFI_MEMORY_TYPE::LoaderData, length, (void**)&info);
-		LastStatus = file->GetInfo(file, &EFI::EFI_FILE_INFO_ID, &length, info);
-		FileInfo i = FileInfo::Create(info);
+        Efi::FileInfo* info = nullptr;
+        LastStatus = file->GetInfo(file, &Efi::FileInfoId, &length, (void**)&info);
+		LastStatus = _sysTable->BootServices->AllocatePool(Efi::MemoryType::LoaderData, length, (void**)&info);
+        LastStatus = file->GetInfo(file, &Efi::FileInfoId, &length, info);
+        Common::FileSystem::FileInfo i = Common::FileSystem::FileInfo::Create(info);
 		return FileHandle::Create(file,&i, FileMode::Create, attribs);
 	}
 
@@ -767,24 +767,24 @@ namespace Common::FileSystem::ESP
 	{
 		if (_fs == nullptr)
 		{
-			LastStatus = EFI::EFI_STATUS::WARN_FILE_SYSTEM;
+			LastStatus = Efi::Status::WarnFileSystem;
 			return FALSE;
 		}
 
 		if (handle == nullptr)
 		{
-			LastStatus = EFI::EFI_STATUS::INVALID_PARAMETER;
+			LastStatus = Efi::Status::InvalidParameter;
 			return FALSE;
 		}
 
 		if (handle->_File == nullptr)
 		{
-			LastStatus = EFI::EFI_STATUS::INVALID_PARAMETER;
+			LastStatus = Efi::Status::InvalidParameter;
 			return FALSE;
 		}
 
 		LastStatus = handle->_File->Delete(handle->_File);
-		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
+		if (LastStatus != Efi::Status::Success)
 		{
 			return FALSE;
 		}
@@ -796,19 +796,19 @@ namespace Common::FileSystem::ESP
 	{
 		if (_fs == nullptr)
 		{
-			LastStatus = EFI::EFI_STATUS::WARN_FILE_SYSTEM;
+			LastStatus = Efi::Status::WarnFileSystem;
 			return;
 		}
 
 		if (handle == Empty_FileHandle)
 		{
-			LastStatus = EFI::EFI_STATUS::WARN_FILE_SYSTEM;
+			LastStatus = Efi::Status::WarnFileSystem;
 			return;
 		}
 
 		LastStatus = handle.Close();
 
-		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
+		if (LastStatus != Efi::Status::Success)
 		{
 			return;
 		}
@@ -829,14 +829,14 @@ namespace Common::FileSystem::ESP
 			return TRUE;
 		}
 
-		EFI::EFI_FILE_PROTOCOL* parent = nullptr;
+		Efi::FileProtocol* parent = nullptr;
 		LastStatus = _cwd->Close(_cwd);
 
 		while (_cwd != _root)
 		{
 			LastStatus = _cwd->Close(_cwd);
 
-			if (LastStatus != EFI::EFI_STATUS::SUCCESS)
+			if (LastStatus != Efi::Status::Success)
 			{
 				return FALSE;
 			}
@@ -879,7 +879,7 @@ namespace Common::FileSystem::ESP
 	{
 		if (_fs == nullptr)
 		{
-			LastStatus = EFI::EFI_STATUS::WARN_FILE_SYSTEM;
+			LastStatus = Efi::Status::WarnFileSystem;
 			return false;
 		}
 
@@ -893,19 +893,19 @@ namespace Common::FileSystem::ESP
 
 		if (_cwd == nullptr)
 		{
-			LastStatus = EFI::EFI_STATUS::DEVICE_ERROR;
+			LastStatus = Efi::Status::DeviceError;
 			return FALSE;
 		}
 
 		if (Common::System::Environment::UTF<CHAR16>::IsNullEmptyOrWhiteSpace(path))
 		{
-			LastStatus = EFI::EFI_STATUS::INVALID_PARAMETER;
+			LastStatus = Efi::Status::InvalidParameter;
 			return FALSE;
 		}
-		EFI::EFI_FILE_PROTOCOL* file = nullptr;
-		LastStatus = _cwd->Open(_cwd, &file, (CHAR16*)path, EFI::EFI_FILE_MODES::ReadWrite, EFI::EFI_FILE_ATTRIBUTES::Directory);
+		Efi::FileProtocol* file = nullptr;
+        LastStatus = _cwd->Open(_cwd, &file, (CHAR16*)path, Efi::FileModes::ReadWrite, (UINT64)Efi::FileAttributes::Directory);
 
-		if (LastStatus == EFI::EFI_STATUS::NOT_FOUND || LastStatus == EFI::EFI_STATUS::VOLUME_CORRUPTED)
+		if (LastStatus == Efi::Status::NotFound || LastStatus == Efi::Status::VolumeCorrupted)
 		{
 			return false;
 		}
@@ -922,7 +922,7 @@ namespace Common::FileSystem::ESP
 	{
 		if(path == nullptr)
 		{
-			LastStatus = EFI::EFI_STATUS::INVALID_PARAMETER;
+			LastStatus = Efi::Status::InvalidParameter;
 			if (_espDebugger != nullptr)
 			{
 				_espDebugger->PrintCriticalLine(u"Path is null, cannot check if file exists.");
@@ -932,7 +932,7 @@ namespace Common::FileSystem::ESP
 
 		if (_fs == nullptr)
 		{
-			LastStatus = EFI::EFI_STATUS::WARN_FILE_SYSTEM;
+			LastStatus = Efi::Status::WarnFileSystem;
 			return false;
 		}
 		if (!_isVolumeOpen || !OpenVolume())
@@ -941,18 +941,17 @@ namespace Common::FileSystem::ESP
 		}
 		if (_cwd == nullptr)
 		{
-			LastStatus = EFI::EFI_STATUS::DEVICE_ERROR;
+			LastStatus = Efi::Status::DeviceError;
 			return FALSE;
 		}
 		if (Common::System::Environment::UTF<CHAR16>::IsNullEmptyOrWhiteSpace(path))
 		{
-			LastStatus = EFI::EFI_STATUS::INVALID_PARAMETER;
+			LastStatus = Efi::Status::InvalidParameter;
 			return FALSE;
 		}
-		EFI::EFI_FILE_PROTOCOL* file = nullptr;
-		LastStatus = _cwd->Open(_cwd, &file, const_cast<CHAR16*>(path), EFI::EFI_FILE_MODES::Read, 0);
-
-		BOOLEAN ls = LastStatus == EFI::EFI_STATUS::SUCCESS;
+		Efi::FileProtocol* file = nullptr;
+        LastStatus = _cwd->Open(_cwd, &file, const_cast<CHAR16*>(path), Efi::FileModes::Read, 0);
+		BOOLEAN ls = LastStatus == Efi::Status::Success;
 
 		_espDebugger->PrintDebugLine(Common::System::Environment::UTF<CHAR16>::ToString(ls));
 

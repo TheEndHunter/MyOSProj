@@ -7,6 +7,18 @@
 
     public static class QEMU
     {
+        // Track active bridges/terminals to ensure disposal on exit
+        private static readonly object s_bridgeLock = new();
+        private static readonly List<IDisposable> s_activeBridges = new();
+
+        // PInvoke to manage a secondary console window (Windows only)
+        private static class NativeConsole
+        {
+            [System.Runtime.InteropServices.DllImport("kernel32.dll", SetLastError = true)]
+            public static extern bool AllocConsole();
+            [System.Runtime.InteropServices.DllImport("kernel32.dll", SetLastError = true)]
+            public static extern bool FreeConsole();
+        }
         public static string BuildDrives(string directory)
         {
             if (!Directory.Exists(directory)) return string.Empty;
@@ -20,6 +32,294 @@
                 sb.Append($"-drive file=fat:fat-type=fat32:rw:\"{i.FullName}\",label=\"{i.Name.ToUpperInvariant()}\",format=vvfat ");
             }
             return sb.ToString();
+        }
+
+        // Launches a simple terminal that connects to a Windows named pipe created by QEMU with '-serial pipe:<name>'.
+        // The terminal bridges Console stdin/stdout to the pipe. Windows only.
+        // Returns IDisposable to close the terminal bridge.
+        public static IDisposable? StartPipeTerminal(string pipeName, CancellationToken? externalToken = null)
+        {
+            var isWindows = Environment.OSVersion.Platform is PlatformID.Win32S or PlatformID.Win32Windows or PlatformID.Win32NT or PlatformID.WinCE;
+            if (!isWindows) return null;
+            if (string.IsNullOrWhiteSpace(pipeName)) throw new ArgumentException("Pipe name is required", nameof(pipeName));
+
+            var cts = externalToken.HasValue ? CancellationTokenSource.CreateLinkedTokenSource(externalToken.Value) : new CancellationTokenSource();
+            var ct = cts.Token;
+
+            // QEMU expects a duplex pipe at \\./pipe/<name>
+            var client = new System.IO.Pipes.NamedPipeClientStream($"{pipeName}_server", pipeName, System.IO.Pipes.PipeDirection.InOut, System.IO.Pipes.PipeOptions.Asynchronous);
+            client.Connect(5000);
+            var enc = Encoding.UTF8;
+
+            // Pipe -> Console
+            var reader = new Thread(() =>
+            {
+                try
+                {
+                    var buf = new byte[4096];
+                    while (!ct.IsCancellationRequested && client.IsConnected)
+                    {
+                        int n = 0;
+                        try { n = client.Read(buf, 0, buf.Length); }
+                        catch { n = 0; Thread.Sleep(10); }
+                        if (n > 0)
+                        {
+                            var text = enc.GetString(buf, 0, n);
+                            Console.Write(text);
+                        }
+                    }
+                }
+                catch { }
+            })
+            { IsBackground = true, Name = "QEMU-Pipe-Terminal-Reader" };
+
+            // Console -> Pipe
+            var writer = new Thread(() =>
+            {
+                try
+                {
+                    while (!ct.IsCancellationRequested && client.IsConnected)
+                    {
+                        string? line = null;
+                        try { line = Console.ReadLine(); }
+                        catch { line = null; }
+                        if (line != null)
+                        {
+                            var data = enc.GetBytes(line + "\n");
+                            try { client.Write(data, 0, data.Length); client.Flush(); }
+                            catch { /* pipe may close */ }
+                        }
+                        else
+                        {
+                            Thread.Sleep(10);
+                        }
+                    }
+                }
+                catch { }
+            })
+            { IsBackground = true, Name = "QEMU-Pipe-Terminal-Writer" };
+
+            reader.Start();
+            writer.Start();
+
+            return new BridgeDisposable(() =>
+            {
+                try { cts.Cancel(); } catch { }
+                try { client.Dispose(); } catch { }
+            });
+        }
+
+        // Starts a UDP bridge that proxies data to/from the QEMU process stdio when SerialTarget=Stdio (Windows only).
+        // Returns IDisposable to stop the bridge. Caller must start the process before calling this.
+        public static IDisposable? StartUdpStdioBridge(Process process, int port = 17000, CancellationToken? externalToken = null)
+        {
+            // Only supported on Windows and when stdio is redirected
+            var isWindows = Environment.OSVersion.Platform is PlatformID.Win32S or PlatformID.Win32Windows or PlatformID.Win32NT or PlatformID.WinCE;
+            if (!isWindows) return null;
+            if (process is null) throw new ArgumentNullException(nameof(process));
+            var si = process.StartInfo;
+            if (!(si.RedirectStandardInput && si.RedirectStandardOutput)) return null;
+
+            var cts = externalToken.HasValue ? CancellationTokenSource.CreateLinkedTokenSource(externalToken.Value) : new CancellationTokenSource();
+            var ct = cts.Token;
+
+            var udp = new System.Net.Sockets.UdpClient(new System.Net.IPEndPoint(System.Net.IPAddress.Loopback, port));
+            udp.Client.ReceiveTimeout = 1000;
+            udp.Client.SendTimeout = 1000;
+
+            var stdout = process.StandardOutput;
+            var stdin = process.StandardInput;
+
+            // Track the remote endpoint to echo back
+            System.Net.IPEndPoint? remote = null;
+
+            // Reader: QEMU stdout -> UDP
+            var readerThread = new Thread(() =>
+            {
+                try
+                {
+                    char[] buffer = new char[4096];
+                    var enc = Encoding.UTF8;
+                    while (!ct.IsCancellationRequested && !process.HasExited)
+                    {
+                        int read = 0;
+                        try { read = stdout.Read(buffer, 0, buffer.Length); }
+                        catch { read = 0; }
+                        if (read > 0 && remote != null)
+                        {
+                            var bytes = enc.GetBytes(buffer.AsSpan(0, read).ToArray());
+                            try { udp.Send(bytes, bytes.Length, remote); } catch { /* ignore transient UDP errors */ }
+                        }
+                        else
+                        {
+                            Thread.Sleep(10);
+                        }
+                    }
+                }
+                catch { }
+            })
+            { IsBackground = true, Name = "QEMU-UDP-STDIO-Reader" };
+
+            // Writer: UDP -> QEMU stdin
+            var writerThread = new Thread(() =>
+            {
+                try
+                {
+                    var enc = Encoding.UTF8;
+                    while (!ct.IsCancellationRequested && !process.HasExited)
+                    {
+                        try
+                        {
+                            var ep = new System.Net.IPEndPoint(System.Net.IPAddress.Any, 0);
+                            udp.Client.ReceiveTimeout = 500;
+                            byte[]? data = null;
+                            try { data = udp.Receive(ref ep); }
+                            catch (System.Net.Sockets.SocketException) { data = null; }
+                            if (data != null && data.Length > 0)
+                            {
+                                remote = ep;
+                                var text = enc.GetString(data);
+                                try { stdin.Write(text); stdin.Flush(); }
+                                catch { /* ignore write errors if process exits */ }
+                            }
+                        }
+                        catch { }
+                    }
+                }
+                catch { }
+            })
+            { IsBackground = true, Name = "QEMU-UDP-STDIO-Writer" };
+
+            readerThread.Start();
+            writerThread.Start();
+
+            // Dispose bridge when QEMU process exits or terminal/app exits
+            var disposable = new BridgeDisposable(() =>
+            {
+                try { cts.Cancel(); } catch { }
+                try { udp.Dispose(); } catch { }
+            });
+
+            void OnProcessExited(object? s, EventArgs e)
+            {
+                try { disposable.Dispose(); } catch { }
+                try { process.Exited -= OnProcessExited; } catch { }
+            }
+
+            void OnProcessExit(object? s, EventArgs e)
+            {
+                try { disposable.Dispose(); } catch { }
+                try { AppDomain.CurrentDomain.ProcessExit -= OnProcessExit; } catch { }
+            }
+
+            void OnCancel(object? s, ConsoleCancelEventArgs e)
+            {
+                try { disposable.Dispose(); } catch { }
+                try { Console.CancelKeyPress -= OnCancel; } catch { }
+            }
+
+            try
+            {
+                process.EnableRaisingEvents = true;
+                process.Exited += OnProcessExited;
+                AppDomain.CurrentDomain.ProcessExit += OnProcessExit;
+                Console.CancelKeyPress += OnCancel;
+            }
+            catch { }
+
+            return disposable;
+        }
+
+        // Opens a secondary console window and bridges it to the UDP stdio bridge (Windows only).
+        // Use together with StartUdpStdioBridge. Returns IDisposable to close the window/bridge.
+        public static IDisposable? StartUdpTerminal(int port = 17000, CancellationToken? externalToken = null)
+        {
+            var isWindows = Environment.OSVersion.Platform is PlatformID.Win32S or PlatformID.Win32Windows or PlatformID.Win32NT or PlatformID.WinCE;
+            if (!isWindows) return null;
+
+            var cts = externalToken.HasValue ? CancellationTokenSource.CreateLinkedTokenSource(externalToken.Value) : new CancellationTokenSource();
+            var ct = cts.Token;
+
+            // Create a dedicated console window for the terminal
+            try { NativeConsole.AllocConsole(); } catch { }
+
+            var udp = new System.Net.Sockets.UdpClient();
+            udp.Client.ReceiveTimeout = 500;
+            udp.Client.SendTimeout = 500;
+
+            var enc = Encoding.UTF8;
+            var remoteEp = new System.Net.IPEndPoint(System.Net.IPAddress.Loopback, port);
+
+            // Reader: UDP -> Console
+            var reader = new Thread(() =>
+            {
+                try
+                {
+                    using var recv = new System.Net.Sockets.UdpClient(new System.Net.IPEndPoint(System.Net.IPAddress.Loopback, port));
+                    recv.Client.ReceiveTimeout = 500;
+                    while (!ct.IsCancellationRequested)
+                    {
+                        try
+                        {
+                            var ep = new System.Net.IPEndPoint(System.Net.IPAddress.Any, 0);
+                            byte[] data = recv.Receive(ref ep);
+                            if (data != null && data.Length > 0)
+                            {
+                                var text = enc.GetString(data);
+                                Console.Write(text);
+                            }
+                        }
+                        catch (System.Net.Sockets.SocketException) { }
+                        catch { }
+                    }
+                }
+                catch { }
+            }) { IsBackground = true, Name = "QEMU-UDP-Terminal-Reader" };
+
+            // Writer: Console -> UDP
+            var writer = new Thread(() =>
+            {
+                try
+                {
+                    while (!ct.IsCancellationRequested)
+                    {
+                        string? line = null;
+                        try { line = Console.ReadLine(); }
+                        catch { line = null; }
+                        if (line != null)
+                        {
+                            var data = enc.GetBytes(line + "\n");
+                            try { udp.Send(data, data.Length, remoteEp); } catch { }
+                        }
+                        else
+                        {
+                            Thread.Sleep(10);
+                        }
+                    }
+                }
+                catch { }
+            }) { IsBackground = true, Name = "QEMU-UDP-Terminal-Writer" };
+
+            reader.Start();
+            writer.Start();
+
+            return new BridgeDisposable(() =>
+            {
+                try { cts.Cancel(); } catch { }
+                try { udp.Dispose(); } catch { }
+                try { NativeConsole.FreeConsole(); } catch { }
+            });
+        }
+
+        private sealed class BridgeDisposable : IDisposable
+        {
+            private readonly Action _dispose;
+            private bool _done;
+            public BridgeDisposable(Action dispose) => _dispose = dispose;
+            public void Dispose()
+            {
+                if (_done) return; _done = true; _dispose();
+            }
         }
 
         // Validate that required volume labels (folder names) exist under the image directory.
@@ -181,9 +481,15 @@
                 {
                     // do not add -serial (default behaviour)
                 }
+                else if (config.SerialTarget == QEMUConfig.SerialTargetType.Off)
+                {
+                    if (!structuredArgs.Contains("-serial")) structuredArgs += " -serial disabled";
+                }
                 else if (config.SerialTarget == QEMUConfig.SerialTargetType.Stdio)
                 {
-                    if (!structuredArgs.Contains("-serial")) structuredArgs += " -serial stdio";
+                    // forward QEMU serial to UDP so secondary console can bridge
+                    var port = config.SerialUdpPort;
+                    if (!structuredArgs.Contains("-serial")) structuredArgs += $" -serial udp:127.0.0.1:{port}";
                 }
                 else if (config.SerialTarget == QEMUConfig.SerialTargetType.File)
                 {
@@ -235,7 +541,14 @@
                         psi.RedirectStandardError = true;
                         psi.RedirectStandardInput = false;
                         break;
+                    case QEMUConfig.SerialTargetType.Pipes:
+                        // With named pipes, QEMU handles I/O at the pipe device; keep stdio redirected for logs.
+                        psi.RedirectStandardOutput = true;
+                        psi.RedirectStandardError = true;
+                        psi.RedirectStandardInput = true;
+                        break;
                     case QEMUConfig.SerialTargetType.Disabled:
+                    case QEMUConfig.SerialTargetType.Off:
                         // keep reading output but do not expect interactive input
                         psi.RedirectStandardOutput = true;
                         psi.RedirectStandardError = true;
@@ -249,11 +562,76 @@
                         break;
                 }
 
-                return new Process()
+                var proc = new Process()
                 {
                     StartInfo = psi,
                     EnableRaisingEvents = true,
                 };
+
+                // If using pipes, start a secondary terminal bridge to the named pipe
+                if (config.SerialTarget == QEMUConfig.SerialTargetType.Pipes && !string.IsNullOrWhiteSpace(config.SerialPipeName))
+                {
+                    try
+                    {
+                        var term = StartPipeTerminal(config.SerialPipeName);
+                        if (term != null)
+                        {
+                            lock (s_bridgeLock) s_activeBridges.Add(term);
+                            void DisposeTerm()
+                            {
+                                try
+                                {
+                                    lock (s_bridgeLock)
+                                    {
+                                        if (s_activeBridges.Remove(term)) term.Dispose();
+                                    }
+                                }
+                                catch { }
+                            }
+
+                            proc.Exited += (_, __) => DisposeTerm();
+                            AppDomain.CurrentDomain.ProcessExit += (_, __) => DisposeTerm();
+                            Console.CancelKeyPress += (_, __) => DisposeTerm();
+                        }
+                    }
+                    catch { /* optional terminal setup */ }
+                }
+
+                // If using stdio, start a UDP stdio bridge and launch a secondary terminal window attached to it
+                if (config.SerialTarget == QEMUConfig.SerialTargetType.Stdio)
+                {
+                    try
+                    {
+                        var bridge = StartUdpStdioBridge(proc);
+                        var term = StartUdpTerminal();
+                        lock (s_bridgeLock)
+                        {
+                            if (bridge != null) s_activeBridges.Add(bridge);
+                            if (term != null) s_activeBridges.Add(term);
+                        }
+                        void DisposeAll()
+                        {
+                            try
+                            {
+                                lock (s_bridgeLock)
+                                {
+                                    foreach (var d in s_activeBridges.ToList())
+                                    {
+                                        try { d.Dispose(); } catch { }
+                                        s_activeBridges.Remove(d);
+                                    }
+                                }
+                            }
+                            catch { }
+                        }
+                        proc.Exited += (_, __) => DisposeAll();
+                        AppDomain.CurrentDomain.ProcessExit += (_, __) => DisposeAll();
+                        Console.CancelKeyPress += (_, __) => DisposeAll();
+                    }
+                    catch { /* optional terminal setup */ }
+                }
+
+                return proc;
             }
             catch (Exception ex)
             {
@@ -272,9 +650,14 @@
             var ovmfVarPath = Path.Combine(ovmfPath, "OVMF_VARS.fd");
             string structuredArgs = config.BuildArgumentsString();
 
-            if (config.SerialTarget == QEMUConfig.SerialTargetType.Stdio)
+            if (config.SerialTarget == QEMUConfig.SerialTargetType.Off)
             {
-                if (!structuredArgs.Contains("-serial")) structuredArgs += " -serial stdio";
+                if (!structuredArgs.Contains("-serial")) structuredArgs += " -serial disabled";
+            }
+            else if (config.SerialTarget == QEMUConfig.SerialTargetType.Stdio)
+            {
+                var port = config.SerialUdpPort;
+                if (!structuredArgs.Contains("-serial")) structuredArgs += $" -serial udp:127.0.0.1:{port}";
             }
             else if (config.SerialTarget == QEMUConfig.SerialTargetType.File)
             {

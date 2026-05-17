@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+	<TargetFramework>net11.0</TargetFramework>
+	  <!-- Use a local minimal reference set instead of the implicit shared framework -->
+	  <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+	  <!-- Expose this reference assembly as the core library identity so the compiler recognizes predefined types -->
+	  <AssemblyName>System.Private.CoreLib</AssemblyName>
+	<!-- Produce a reference assembly used at compile-time by the UEFI app -->
+	<ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+	<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	<Nullable>disable</Nullable>
+		<LangVersion>preview</LangVersion>
+		<!-- Analyzers enabled (previously disabled as a temporary workaround). -->
+  </PropertyGroup>
+	<ItemGroup>
+		<FrameworkReference Remove="Microsoft.NETCore.App" />
+	</ItemGroup>
+</Project>

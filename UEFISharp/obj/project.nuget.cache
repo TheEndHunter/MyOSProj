@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "Jq+QD++F+4g=",
+  "success": true,
+  "projectFilePath": "A:\\Dev\\Projects\\MyOSProj\\UEFISharp\\UEFISharp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\spros\\.nuget\\packages\\microsoft.dotnet.ilcompiler\\11.0.0-preview.4.26230.115\\microsoft.dotnet.ilcompiler.11.0.0-preview.4.26230.115.nupkg.sha512",
+    "C:\\Users\\spros\\.nuget\\packages\\microsoft.net.illink.tasks\\11.0.0-preview.4.26230.115\\microsoft.net.illink.tasks.11.0.0-preview.4.26230.115.nupkg.sha512",
+    "C:\\Users\\spros\\.nuget\\packages\\runtime.win-x64.microsoft.dotnet.ilcompiler\\11.0.0-preview.4.26230.115\\runtime.win-x64.microsoft.dotnet.ilcompiler.11.0.0-preview.4.26230.115.nupkg.sha512"
+  ],
+  "logs": []
+}

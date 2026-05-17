@@ -1,10 +1,10 @@
 #pragma once
 #include <TypeDefs.h>
-#include <EFI_STATUS.h>
-#include <EFI_SYSTEM_TABLE.h>
-#include <Protocols/IO/Media/EFI_SIMPLE_FILE_SYSTEM_PROTOCOL.h>
-#include <Protocols/Time/EFI_TIME.h>
-#include <Protocols/IO/Media/EFI_FILE_INFO.h>
+#include <Status.h>
+#include <SystemTable.h>
+#include <Protocols/IO/Media/SimpleFileSystemProtocol.h>
+#include <Protocols/Time/Time.h>
+#include <Protocols/IO/Media/FileInfo.h>
 #include <FileSystem/FileInfo.h>
 #include <FileSystem/FileMode.h>
 #include <FileSystem/FileAttribute.h>
@@ -21,21 +21,21 @@ namespace Common::FileSystem::ESP
 	class ESP_FS_Context
 	{
 	protected:
-		ESP_FS_Context(EFI::EFI_SYSTEM_TABLE* sysTbl, EFI::EFI_HANDLE imgHndl, EFI::EFI_HANDLE devHNDL, EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL* fsp) : LastStatus(EFI::EFI_STATUS::NOT_READY), _isVolumeOpen(FALSE), _deviceHandle(devHNDL), _sysTable(sysTbl), _imgHndl(imgHndl), _fs(fsp), _root(nullptr), _cwd(nullptr), _rootInfo(nullptr), _dirInfo(nullptr)
+		ESP_FS_Context(Efi::SystemTable* sysTbl, Efi::Handle imgHndl, Efi::Handle devHNDL, Efi::SimpleFileSystemProtocol* fsp) : LastStatus(Efi::Status::NotReady), _isVolumeOpen(FALSE), _deviceHandle(devHNDL), _sysTable(sysTbl), _imgHndl(imgHndl), _fs(fsp), _root(nullptr), _cwd(nullptr), _rootInfo(nullptr), _dirInfo(nullptr)
 		{
 		}
 
-		ESP_FS_Context() : LastStatus(EFI::EFI_STATUS::NOT_READY), _isVolumeOpen(FALSE), _deviceHandle(nullptr), _sysTable(nullptr), _imgHndl(nullptr), _fs(nullptr), _root(nullptr), _cwd(nullptr), _rootInfo(nullptr), _dirInfo(nullptr)
+		ESP_FS_Context() : LastStatus(Efi::Status::NotReady), _isVolumeOpen(FALSE), _deviceHandle(nullptr), _sysTable(nullptr), _imgHndl(nullptr), _fs(nullptr), _root(nullptr), _cwd(nullptr), _rootInfo(nullptr), _dirInfo(nullptr)
         {  
         }
 		
 	public:
 		static const CHAR16 DirectorySeparatorChar = '\\';
 
-		static const UINTN QueryFSCount(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd);
-		static ESP_FS_Context GetBootFS(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd);
-		static ESP_FS_Context GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, UINTN index, OUT EFI::EFI_STATUS* status);
-		static ESP_FS_Context GetFileSystem(EFI::EFI_SYSTEM_TABLE* sysTable, EFI::EFI_HANDLE hnd, const CHAR16* label, OUT EFI::EFI_STATUS* status, Common::System::Environment::StringComparisonMode mode = Common::System::Environment::StringComparisonMode::Compare, Common::System::Environment::StringCulture culture = Common::System::Environment::StringCulture::InvariantCulture);
+		static const UINTN QueryFSCount(Efi::SystemTable* sysTable, Efi::Handle hnd);
+		static ESP_FS_Context GetBootFS(Efi::SystemTable* sysTable, Efi::Handle hnd);
+		static ESP_FS_Context GetFileSystem(Efi::SystemTable* sysTable, Efi::Handle hnd, UINTN index, OUT Efi::Status* status);
+		static ESP_FS_Context GetFileSystem(Efi::SystemTable* sysTable, Efi::Handle hnd, const CHAR16* label, OUT Efi::Status* status, Common::System::Environment::StringComparisonMode mode = Common::System::Environment::StringComparisonMode::Compare, Common::System::Environment::StringCulture culture = Common::System::Environment::StringCulture::InvariantCulture);
 		static const ESP_FS_Context EmptyFS;
 
 		static CHAR16* GetParentDirectory(CHAR16* path);
@@ -92,15 +92,15 @@ namespace Common::FileSystem::ESP
 			return !(*this == right);
 		}
 
-		EFI::EFI_STATUS LastStatus;
+		Efi::Status LastStatus;
 	private:
 		BOOLEAN _isVolumeOpen;
-		EFI::EFI_HANDLE _deviceHandle;
-		EFI::EFI_SYSTEM_TABLE* _sysTable;
-		EFI::EFI_HANDLE _imgHndl;
-		EFI::EFI_SIMPLE_FILE_SYSTEM_PROTOCOL* _fs;
-		EFI::EFI_FILE_PROTOCOL* _root;
-		EFI::EFI_FILE_PROTOCOL* _cwd;
+		Efi::Handle _deviceHandle;
+		Efi::SystemTable* _sysTable;
+		Efi::Handle _imgHndl;
+		Efi::SimpleFileSystemProtocol* _fs;
+		Efi::FileProtocol* _root;
+		Efi::FileProtocol* _cwd;
 		VolumeInfo* _rootInfo;
 		DirectoryInfo* _dirInfo;
 	};

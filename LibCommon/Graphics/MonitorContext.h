@@ -2,7 +2,7 @@
 
 #include <TypeDefs.h>
 #include <Graphics/MonitorMode.h>
-#include <Protocols/Graphics/EFI_GRAPHICS_OUTPUT_PROTOCOL.h>
+#include <Protocols/Graphics/GraphicsOutputProtocol.h>
 
 namespace Common::Graphics
 {
@@ -28,8 +28,8 @@ namespace Common::Graphics
 
 	private:
 		MonitorContext();
-		MonitorContext(EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL* ptr);
-		EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL* protocol;
+		MonitorContext(Efi::GraphicsOutputProtocol* ptr);
+		Efi::GraphicsOutputProtocol* protocol;
 		UINT32 maxMode;
 		UINT32 currentModeNumber;
 		MonitorMode* currentMode;

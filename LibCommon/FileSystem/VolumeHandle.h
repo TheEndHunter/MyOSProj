@@ -1,7 +1,7 @@
 #pragma once
 #include <TypeDefs.h>
-#include <EFI_SYSTEM_TABLE.h>
-#include <EFI_STATUS.h>
+#include <SystemTable.h>
+#include <Status.h>
 #include "VolumeInfo.h"
 
 namespace Common::FileSystem
@@ -10,12 +10,12 @@ namespace Common::FileSystem
 	{
 		friend class ESP_FS_Context;
 	protected:
-		VolumeHandle(EFI::EFI_FILE_PROTOCOL* file, VolumeInfo& i, FileMode mode, FileAttribute attribs) : Mode(mode), Attributes(attribs), Info(i), Size(i.Size), _File(file) {};
+		VolumeHandle(Efi::FileProtocol* file, VolumeInfo& i, FileMode mode, FileAttribute attribs) : Mode(mode), Attributes(attribs), Info(i), Size(i.Size), File(file) {};
 
 	public:
-		constexpr VolumeHandle() : _File(nullptr), Size(0), Mode(FileMode::Create), Attributes(FileAttribute::ValidAttrib) {};
+		constexpr VolumeHandle() : File(nullptr), Size(0), Mode(FileMode::Create), Attributes(FileAttribute::ValidAttrib) {};
 
-		static VolumeHandle Create(EFI::EFI_FILE_PROTOCOL* file, VolumeInfo i, FileMode mode, FileAttribute attribs);
+		static VolumeHandle Create(Efi::FileProtocol* file, VolumeInfo i, FileMode mode, FileAttribute attribs);
 
 		FileMode Mode;
 		FileAttribute Attributes;
@@ -26,25 +26,25 @@ namespace Common::FileSystem
 		*  Below are all the functions needed to read, write, seek, close and delete, etc.
 		*/
 
-		EFI::EFI_STATUS Read(UINTN* bufferSize, void* buffer);
-		EFI::EFI_STATUS Write(UINTN* bufferSize, void* buffer);
-		EFI::EFI_STATUS GetPosition(UINT64* position);
-		EFI::EFI_STATUS SetPosition(UINT64 position);
-		EFI::EFI_STATUS GetInfo(EFI::EFI_GUID* infoType, UINTN* bufferSize, void* buffer);
-		EFI::EFI_STATUS SetInfo(EFI::EFI_GUID* infoType, UINTN bufferSize, void* buffer);
-		EFI::EFI_STATUS Flush();
-		EFI::EFI_STATUS Close();
-		EFI::EFI_STATUS Delete();
-		EFI::EFI_STATUS ReadAsync(EFI::EFI_FILE_IO_TOKEN* token);
-		EFI::EFI_STATUS WriteAsync(EFI::EFI_FILE_IO_TOKEN* token);
-		EFI::EFI_STATUS FlushAsync(EFI::EFI_FILE_IO_TOKEN* token);
+		Efi::Status Read(UINTN* bufferSize, void* buffer);
+		Efi::Status Write(UINTN* bufferSize, void* buffer);
+		Efi::Status GetPosition(UINT64* position);
+		Efi::Status SetPosition(UINT64 position);
+		Efi::Status GetInfo(Efi::Guid* infoType, UINTN* bufferSize, void* buffer);
+		Efi::Status SetInfo(Efi::Guid* infoType, UINTN bufferSize, void* buffer);
+		Efi::Status Flush();
+		Efi::Status Close();
+		Efi::Status Delete();
+        Efi::Status ReadAsync(Efi::FileIOToken* token);
+        Efi::Status WriteAsync(Efi::FileIOToken* token);
+        Efi::Status FlushAsync(Efi::FileIOToken* token);
 
 
 		BOOLEAN operator ==(const VolumeHandle& right);
 		BOOLEAN operator !=(const VolumeHandle& right);
 
 	protected:
-		EFI::EFI_FILE_PROTOCOL* _File;
+		Efi::FileProtocol* File;
 	};
 
 	constinit const VolumeHandle Empty_VolumeHandle = VolumeHandle();

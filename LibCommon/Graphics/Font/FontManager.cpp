@@ -37,7 +37,7 @@ namespace Common::Graphics::Font
 
 		auto handle = fsCtx->OpenFile(&fileInfo, Common::FileSystem::FileMode::Read,Common::FileSystem::FileAttribute::ReadOnly);
 
-		if (fsCtx->LastStatus != EFI::EFI_STATUS::SUCCESS)
+		if (fsCtx->LastStatus != Efi::Status::Success)
 		{
 			_fontDebugger->PrintError(u"Failed To Open File, Error: ");
 			_fontDebugger->PrintErrorLine(Common::System::Environment::UTF<CHAR16>::ToString(fsCtx->LastStatus));
@@ -47,14 +47,14 @@ namespace Common::Graphics::Font
 		if (handle == Common::FileSystem::Empty_FileHandle)
 		{
 			_fontDebugger->PrintInfoLine(u"Failed To Open File, Invalid file Handle");
-			fsCtx->LastStatus = EFI::EFI_STATUS::END_OF_FILE;
+			fsCtx->LastStatus = Efi::Status::EndOfFile;
 			return nullptr;
 		}
 
 		if (!handle.IsValid())
 		{
 			_fontDebugger->PrintInfoLine(u"Failed To Open File, Invalid file Pointer");
-			fsCtx->LastStatus = EFI::EFI_STATUS::CRC_ERROR;
+			fsCtx->LastStatus = Efi::Status::CrcError;
 			return nullptr;
 		}
 
@@ -74,7 +74,7 @@ namespace Common::Graphics::Font
 		{
 			_fontDebugger->PrintInfoLine(u"Invalid File:");
 			_fontDebugger->PrintInfoLine(fileInfo.FileName);
-			fsCtx->LastStatus = EFI::EFI_STATUS::INVALID_PARAMETER;
+			fsCtx->LastStatus = Efi::Status::InvalidParameter;
 			return nullptr;
 		}
 
@@ -108,7 +108,7 @@ namespace Common::Graphics::Font
 
 		auto handle = fsCtx->OpenFile(&fileInfo, Common::FileSystem::FileMode::Read, Common::FileSystem::FileAttribute::ReadOnly);
 
-		if (fsCtx->LastStatus != EFI::EFI_STATUS::SUCCESS)
+		if (fsCtx->LastStatus != Efi::Status::Success)
 		{
 			_fontDebugger->PrintError(u"Failed To Open File, Error: ");
 			_fontDebugger->PrintErrorLine(Common::System::Environment::UTF<CHAR16>::ToString(fsCtx->LastStatus));
@@ -118,14 +118,14 @@ namespace Common::Graphics::Font
 		if (handle == Common::FileSystem::Empty_FileHandle)
 		{
 			_fontDebugger->PrintInfoLine(u"Failed To Open File, Invalid file Handle");
-			fsCtx->LastStatus = EFI::EFI_STATUS::END_OF_FILE;
+			fsCtx->LastStatus = Efi::Status::EndOfFile;
 			return nullptr;
 		}
 
 		if (!handle.IsValid())
 		{
 			_fontDebugger->PrintInfoLine(u"Failed To Open File, Invalid file Pointer");
-			fsCtx->LastStatus = EFI::EFI_STATUS::CRC_ERROR;
+			fsCtx->LastStatus = Efi::Status::CrcError;
 			return nullptr;
 		}
 
@@ -145,7 +145,7 @@ namespace Common::Graphics::Font
 		{
 			_fontDebugger->PrintInfoLine(u"Invalid File:");
 			_fontDebugger->PrintInfoLine(fileInfo.FileName);
-			fsCtx->LastStatus = EFI::EFI_STATUS::INVALID_PARAMETER;
+			fsCtx->LastStatus = Efi::Status::InvalidParameter;
 			return nullptr;
 		}
 

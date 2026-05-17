@@ -1,9 +1,9 @@
 #pragma once
 
 #include "UEFIDef.h"
-#include "EFI_STATUS.h"
-#include "Protocols/IO/Console/EFI_CONSOLE_COLOR.h"
-#include "EFI_SYSTEM_TABLE.h"
+#include <Status.h>
+#include "Protocols/IO/Console/ConsoleColor.h"
+#include <SystemTable.h>
 #include <System/Environment/Unicode.h>
 #include <CRT/CRT_Stubs.h>
 
@@ -11,28 +11,28 @@
 //
 namespace Bootloader
 {
-	using namespace EFI;
+	using namespace Efi;
 	using namespace Common::System::Environment;
 
-	static void ClearConIn(EFI_SYSTEM_TABLE* systemTable)
+	static void ClearConIn(SystemTable* systemTable)
 	{
 		systemTable->ConIn->Reset(systemTable->ConIn, false);
 	}
-	static void ClearConOut(EFI_SYSTEM_TABLE* systemTable)
+	static void ClearConOut(SystemTable* systemTable)
 	{
 		systemTable->ConOut->ClearScreen(systemTable->ConOut);
 	}
 
-	static void SetConsoleColor(EFI_SYSTEM_TABLE* systemTable, UINT8 v)
+	static void SetConsoleColor(SystemTable* systemTable, UINT8 v)
 	{
 		systemTable->ConOut->SetAttribute(systemTable->ConOut, v);
 	}
-	static void SetConsoleColor(EFI_SYSTEM_TABLE* systemTable, EfiForegroundColor fg, EfiBackgroundColor bg)
+	static void SetConsoleColor(SystemTable* systemTable, ForegroundColor fg, BackgroundColor bg)
 	{
 		systemTable->ConOut->SetAttribute(systemTable->ConOut, fg | bg);
 	}
 
-	static void Print(EFI_SYSTEM_TABLE* systemTable, const CHAR16* str)
+	static void Print(SystemTable* systemTable, const CHAR16* str)
 	{
 		if (UTF<CHAR16>::IsNullOrEmpty(str) == TRUE)
 		{
@@ -46,7 +46,7 @@ namespace Bootloader
 			UTF<CHAR16>::Free(sanitized);
 		}
 	}
-	static void Print(EFI_SYSTEM_TABLE* systemTable, const CHAR16* str, EfiForegroundColor fg, EfiBackgroundColor bg)
+	static void Print(SystemTable* systemTable, const CHAR16* str, ForegroundColor fg, BackgroundColor bg)
 	{
 		if (UTF<CHAR16>::IsNullOrEmpty(str) == TRUE)
 		{
@@ -60,16 +60,16 @@ namespace Bootloader
 			UTF<CHAR16>::Free(sanitized);
 		}
 	}
-	static void Print(EFI_SYSTEM_TABLE* systemTable, const EFI_STATUS status)
+	static void Print(SystemTable* systemTable, const Status status)
 	{
 		systemTable->ConOut->OutputString(systemTable->ConOut, UTF<CHAR16>::ToString(status));
 	}
-	static void Print(EFI_SYSTEM_TABLE* systemTable, const EFI_STATUS status, EfiForegroundColor fg, EfiBackgroundColor bg)
+	static void Print(SystemTable* systemTable, const Status status, ForegroundColor fg, BackgroundColor bg)
 	{
 		systemTable->ConOut->SetAttribute(systemTable->ConOut, fg | bg);
 		systemTable->ConOut->OutputString(systemTable->ConOut, UTF<CHAR16>::ToString(status));
 	}
-	static void Print(EFI_SYSTEM_TABLE* systemTable, const CHAR16* str, UINT8 color)
+	static void Print(SystemTable* systemTable, const CHAR16* str, UINT8 color)
 	{
 		if (UTF<CHAR16>::IsNullOrEmpty(str) == TRUE)
 		{
@@ -85,12 +85,12 @@ namespace Bootloader
 			UTF<CHAR16>::Free(sanitized);
 		}
 	}
-	static void Print(EFI_SYSTEM_TABLE* systemTable, const EFI_STATUS status, UINT8 color)
+	static void Print(SystemTable* systemTable, const Status status, UINT8 color)
 	{
 		systemTable->ConOut->SetAttribute(systemTable->ConOut, color);
 		systemTable->ConOut->OutputString(systemTable->ConOut, UTF<CHAR16>::ToString(status));
 	}
-	static void Print(EFI_SYSTEM_TABLE* systemTable, const CHAR16 c)
+	static void Print(SystemTable* systemTable, const CHAR16 c)
 	{
 		if (c == u'\0')
 		{
@@ -105,7 +105,7 @@ namespace Bootloader
 			UTF<CHAR16>::Free(sanitized);
 		}
 	}
-	static void Print(EFI_SYSTEM_TABLE* systemTable, const CHAR16 c, UINT8 color)
+	static void Print(SystemTable* systemTable, const CHAR16 c, UINT8 color)
 	{
 		if (c == u'\0')
 		{
@@ -116,7 +116,7 @@ namespace Bootloader
 		systemTable->ConOut->SetAttribute(systemTable->ConOut, color);
 		systemTable->ConOut->OutputString(systemTable->ConOut, &_u16_print[0]);
 	}
-	static void Print(EFI_SYSTEM_TABLE* systemTable, const CHAR16 c, EfiForegroundColor fg, EfiBackgroundColor bg)
+	static void Print(SystemTable* systemTable, const CHAR16 c, ForegroundColor fg, BackgroundColor bg)
 	{
 		if (c == u'\0')
 		{
@@ -127,7 +127,7 @@ namespace Bootloader
 		systemTable->ConOut->SetAttribute(systemTable->ConOut, fg | bg);
 		systemTable->ConOut->OutputString(systemTable->ConOut, &_u16_print[0]);
 	}
-	static void PrintLine(EFI_SYSTEM_TABLE* systemTable, const CHAR16* str)
+	static void PrintLine(SystemTable* systemTable, const CHAR16* str)
 	{
 		if (UTF<CHAR16>::IsNullOrEmpty(str) == TRUE)
 		{
@@ -141,7 +141,7 @@ namespace Bootloader
 			UTF<CHAR16>::Free(sanitized);
 		}
 	}
-	static void PrintLine(EFI_SYSTEM_TABLE* systemTable, const CHAR16* str, EfiForegroundColor fg, EfiBackgroundColor bg)
+	static void PrintLine(SystemTable* systemTable, const CHAR16* str, ForegroundColor fg, BackgroundColor bg)
 	{
 		if (UTF<CHAR16>::IsNullOrEmpty(str) == TRUE)
 		{
@@ -156,18 +156,18 @@ namespace Bootloader
 			UTF<CHAR16>::Free(sanitized);
 		}
 	}
-	static void PrintLine(EFI_SYSTEM_TABLE* systemTable, const EFI_STATUS status)
+	static void PrintLine(SystemTable* systemTable, const Status status)
 	{
 		systemTable->ConOut->OutputString(systemTable->ConOut, UTF<CHAR16>::ToString(status));
 		systemTable->ConOut->OutputString(systemTable->ConOut, UTF<CHAR16>::NewLine);
 	}
-	static void PrintLine(EFI_SYSTEM_TABLE* systemTable, const EFI_STATUS status, EfiForegroundColor fg, EfiBackgroundColor bg)
+	static void PrintLine(SystemTable* systemTable, const Status status, ForegroundColor fg, BackgroundColor bg)
 	{
 		systemTable->ConOut->SetAttribute(systemTable->ConOut, fg | bg);
 		systemTable->ConOut->OutputString(systemTable->ConOut, UTF<CHAR16>::ToString(status));
 		systemTable->ConOut->OutputString(systemTable->ConOut, UTF<CHAR16>::NewLine);
 	}
-	static void PrintLine(EFI_SYSTEM_TABLE* systemTable, const CHAR16* str, UINT8 color)
+	static void PrintLine(SystemTable* systemTable, const CHAR16* str, UINT8 color)
 	{
 		if (UTF<CHAR16>::IsNullOrEmpty(str) == TRUE)
 		{
@@ -183,13 +183,13 @@ namespace Bootloader
 			UTF<CHAR16>::Free(sanitized);
 		}
 	}
-	static void PrintLine(EFI_SYSTEM_TABLE* systemTable, const EFI_STATUS status, UINT8 color)
+	static void PrintLine(SystemTable* systemTable, const Status status, UINT8 color)
 	{
 		systemTable->ConOut->SetAttribute(systemTable->ConOut, color);
 		systemTable->ConOut->OutputString(systemTable->ConOut, UTF<CHAR16>::ToString(status));
 		systemTable->ConOut->OutputString(systemTable->ConOut, UTF<CHAR16>::NewLine);
 	}
-	static void PrintLine(EFI_SYSTEM_TABLE* systemTable, const CHAR16 c)
+	static void PrintLine(SystemTable* systemTable, const CHAR16 c)
 	{
 		if (c == u'\0')
 		{
@@ -208,7 +208,7 @@ namespace Bootloader
 
     // Basic ANSI/VT100 sequence interpreter for UEFI ConOut.
     // Supports: SGR (m) for colors, Cursor position (H/f), Clear screen (2J), and plain text output.
-    static void PrintAnsi(EFI_SYSTEM_TABLE* systemTable, const CHAR16* str)
+    static void PrintAnsi(SystemTable* systemTable, const CHAR16* str)
     {
         if (UTF<CHAR16>::IsNullOrEmpty(str) == TRUE)
         {
@@ -384,7 +384,7 @@ namespace Bootloader
 
         flushOut();
     }
-	static void PrintLine(EFI_SYSTEM_TABLE* systemTable, const CHAR16 c, UINT8 color)
+	static void PrintLine(SystemTable* systemTable, const CHAR16 c, UINT8 color)
 	{
 		if (c == u'\0')
 		{
@@ -396,7 +396,7 @@ namespace Bootloader
 		systemTable->ConOut->OutputString(systemTable->ConOut, &_u16_print[0]);
 		systemTable->ConOut->OutputString(systemTable->ConOut, UTF<CHAR16>::NewLine);
 	}
-	static void PrintLine(EFI_SYSTEM_TABLE* systemTable, const CHAR16 c, EfiForegroundColor fg, EfiBackgroundColor bg)
+	static void PrintLine(SystemTable* systemTable, const CHAR16 c, ForegroundColor fg, BackgroundColor bg)
 	{
 		if (c == u'\0')
 		{
@@ -409,47 +409,47 @@ namespace Bootloader
 		systemTable->ConOut->OutputString(systemTable->ConOut, UTF<CHAR16>::NewLine);
 	}
 
-	static void PrintInfoLine(EFI_SYSTEM_TABLE* sysTbl, const CHAR16* errorMessage, EFI_STATUS status = EFI::EFI_STATUS::SUCCESS)
+	static void PrintInfoLine(SystemTable* sysTbl, const CHAR16* errorMessage, Status status = Efi::Status::Success)
 	{
-		SetConsoleColor(sysTbl, EfiConsoleColor::_Default);
+		SetConsoleColor(sysTbl, ConsoleColor::_Default);
 		PrintLine(sysTbl, errorMessage);
-		if (status != EFI_STATUS::SUCCESS)
+		if (status != Status::Success)
 		{
 			PrintLine(sysTbl, UTF<CHAR16>::ToString(status));
 		};
 	}
-	static void PrintDebugLine(EFI_SYSTEM_TABLE* sysTbl, const CHAR16* errorMessage, EFI_STATUS status = EFI::EFI_STATUS::SUCCESS)
+	static void PrintDebugLine(SystemTable* sysTbl, const CHAR16* errorMessage, Status status = Efi::Status::Success)
 	{
-		SetConsoleColor(sysTbl, EfiConsoleColor::_Debug);
+		SetConsoleColor(sysTbl, ConsoleColor::_Debug);
 		PrintLine(sysTbl, errorMessage);
-		if (status != EFI_STATUS::SUCCESS)
+		if (status != Status::Success)
 		{
 			PrintLine(sysTbl, UTF<CHAR16>::ToString(status));
 		};
 	}
-	static void PrintErrorLine(EFI_SYSTEM_TABLE* sysTbl, const CHAR16* errorMessage, EFI_STATUS status = EFI::EFI_STATUS::SUCCESS)
+	static void PrintErrorLine(SystemTable* sysTbl, const CHAR16* errorMessage, Status status = Efi::Status::Success)
 	{
-		SetConsoleColor(sysTbl, EfiConsoleColor::_Error);
+		SetConsoleColor(sysTbl, ConsoleColor::_Error);
 		PrintLine(sysTbl, errorMessage);
-		if (status != EFI_STATUS::SUCCESS)
+		if (status != Status::Success)
 		{
 			PrintLine(sysTbl, UTF<CHAR16>::ToString(status));
 		};
 	}
-	static void PrintWarningLine(EFI_SYSTEM_TABLE* sysTbl, const CHAR16* errorMessage, EFI_STATUS status = EFI::EFI_STATUS::SUCCESS)
+	static void PrintWarningLine(SystemTable* sysTbl, const CHAR16* errorMessage, Status status = Efi::Status::Success)
 	{
-		SetConsoleColor(sysTbl, EfiConsoleColor::_Warning);
+		SetConsoleColor(sysTbl, ConsoleColor::_Warning);
 		PrintLine(sysTbl, errorMessage);
-		if (status != EFI_STATUS::SUCCESS)
+		if (status != Status::Success)
 		{
 			PrintLine(sysTbl, UTF<CHAR16>::ToString(status));
 		};
 	}
-	static void PrintCriticalLine(EFI_SYSTEM_TABLE* sysTbl, const CHAR16* errorMessage, EFI_STATUS status = EFI::EFI_STATUS::SUCCESS)
+	static void PrintCriticalLine(SystemTable* sysTbl, const CHAR16* errorMessage, Status status = Efi::Status::Success)
 	{
-		SetConsoleColor(sysTbl, EfiConsoleColor::_Fatal);
+		SetConsoleColor(sysTbl, ConsoleColor::_Fatal);
 		PrintLine(sysTbl, errorMessage);
-		if (status != EFI_STATUS::SUCCESS)
+		if (status != Status::Success)
 		{
 			PrintLine(sysTbl, UTF<CHAR16>::ToString(status));
 		};
@@ -457,20 +457,20 @@ namespace Bootloader
 
     // simple wrappers for printing with colors are available above (with optional status overloads)
 
-	static EFI_INPUT_KEY WaitForAnyKey(EFI_SYSTEM_TABLE* sysTable)
+	static InputKey WaitForAnyKey(SystemTable* sysTable)
 	{
-		EFI_STATUS status = EFI_STATUS::SUCCESS;
-		EFI_INPUT_KEY key;
+		Status status = Status::Success;
+		InputKey key;
 		UINTN index = 0;
 
 		status = sysTable->BootServices->WaitForEvent(1, &sysTable->ConIn->WaitForKey, &index);
-		if (status != EFI_STATUS::SUCCESS)
+		if (status != Status::Success)
 		{
 			PrintErrorLine(sysTable, u"Error in WaitForEvent", status);
 			PrintDebugLine(sysTable, UTF<CHAR16>::ToHex((UINT64)status));
 		}
 		status = sysTable->ConIn->ReadKeyStroke(sysTable->ConIn, &key);
-		if (status != EFI_STATUS::SUCCESS)
+		if (status != Status::Success)
 		{
 			PrintErrorLine(sysTable, u"Error in ReadKeyStroke", status);
 			PrintDebugLine(sysTable, UTF<CHAR16>::ToHex((UINT64)status));
@@ -479,16 +479,16 @@ namespace Bootloader
 		return key;
 	}
 
-	static void WaitForKey(EFI_SYSTEM_TABLE* sysTable, const EFI_INPUT_KEY key)
+	static void WaitForKey(SystemTable* sysTable, const InputKey key)
 	{
-		EFI_STATUS status = EFI_STATUS::SUCCESS;
-		EFI_INPUT_KEY inputKey = KEYS::Null;
+		Status status = Status::Success;
+		InputKey inputKey = KEYS::Null;
 		/*Await for a specific key to be entered, otherwise clear ConsoleIn*/
 		do
 		{
 			UINTN idx = 0;
 			status = sysTable->BootServices->WaitForEvent(1, &sysTable->ConIn->WaitForKey, &idx);
-			if (status != EFI_STATUS::SUCCESS)
+			if (status != Status::Success)
 			{
 				PrintErrorLine(sysTable, u"Error in WaitForEvent", status);
 				return;
@@ -497,7 +497,7 @@ namespace Bootloader
 			status = sysTable->ConIn->ReadKeyStroke(sysTable->ConIn, &inputKey);
 			ClearConIn(sysTable);
 
-			if (status != EFI_STATUS::SUCCESS)
+			if (status != Status::Success)
 			{
 				PrintErrorLine(sysTable, u"Error in ReadKeyStroke", status);
 				return;
@@ -506,17 +506,17 @@ namespace Bootloader
 
 		ClearConIn(sysTable);
 	}
-	static void WaitForKey(EFI_SYSTEM_TABLE* sysTable, const CHAR16 key)
+	static void WaitForKey(SystemTable* sysTable, const CHAR16 key)
 	{
-		EFI_STATUS status = EFI_STATUS::SUCCESS;
-		EFI_INPUT_KEY inputKey = KEYS::Null;
+		Status status = Status::Success;
+		InputKey inputKey = KEYS::Null;
 		sysTable->ConIn->Reset(sysTable->ConIn, false);
 		/*Await for a specific key to be entered, otherwise clear ConsoleIn*/
 		do
 		{
 			UINTN idx = 0;
 			status = sysTable->BootServices->WaitForEvent(1, &sysTable->ConIn->WaitForKey, &idx);
-			if (status != EFI_STATUS::SUCCESS)
+			if (status != Status::Success)
 			{
 				PrintErrorLine(sysTable, u"Error in WaitForEvent", status);
 				return;
@@ -525,7 +525,7 @@ namespace Bootloader
 			status = sysTable->ConIn->ReadKeyStroke(sysTable->ConIn, &inputKey);
 			ClearConIn(sysTable);
 
-			if (status != EFI_STATUS::SUCCESS)
+			if (status != Status::Success)
 			{
 				PrintErrorLine(sysTable, u"Error in ReadKeyStroke", status);
 				return;
@@ -534,17 +534,17 @@ namespace Bootloader
 
 		ClearConIn(sysTable);
 	}
-	static void WaitForKey(EFI_SYSTEM_TABLE* sysTable, const CHAR8 key)
+	static void WaitForKey(SystemTable* sysTable, const CHAR8 key)
 	{
-		EFI_STATUS status = EFI_STATUS::SUCCESS;
-		EFI_INPUT_KEY inputKey = KEYS::Null;
+		Status status = Status::Success;
+		InputKey inputKey = KEYS::Null;
 		CHAR16 k = (CHAR16)key;
 		/*Await for a specific key to be entered, otherwise clear ConsoleIn*/
 		do
 		{
 			UINTN idx = 0;
 			status = sysTable->BootServices->WaitForEvent(1, &sysTable->ConIn->WaitForKey, &idx);
-			if (status != EFI_STATUS::SUCCESS)
+			if (status != Status::Success)
 			{
 				PrintErrorLine(sysTable, u"Error in WaitForEvent", status);
 				return;
@@ -553,7 +553,7 @@ namespace Bootloader
 			status = sysTable->ConIn->ReadKeyStroke(sysTable->ConIn, &inputKey);
 			ClearConIn(sysTable);
 
-			if (status != EFI_STATUS::SUCCESS)
+			if (status != Status::Success)
 			{
 				PrintErrorLine(sysTable, u"Error in ReadKeyStroke", status);
 				return;
@@ -562,16 +562,16 @@ namespace Bootloader
 
 		ClearConIn(sysTable);
 	}
-	static void WaitForKey(EFI_SYSTEM_TABLE* sysTable, const UINT16 scancode)
+	static void WaitForKey(SystemTable* sysTable, const UINT16 scancode)
 	{
-		EFI_STATUS status = EFI_STATUS::SUCCESS;
-		EFI_INPUT_KEY inputKey = KEYS::Null;
+		Status status = Status::Success;
+		InputKey inputKey = KEYS::Null;
 		/*Await for a specific key to be entered, otherwise clear ConsoleIn*/
 		do
 		{
 			UINTN idx = 0;
 			status = sysTable->BootServices->WaitForEvent(1, &sysTable->ConIn->WaitForKey, &idx);
-			if (status != EFI_STATUS::SUCCESS)
+			if (status != Status::Success)
 			{
 				PrintErrorLine(sysTable, u"Error in WaitForEvent", status);
 				return;
@@ -580,7 +580,7 @@ namespace Bootloader
 			status = sysTable->ConIn->ReadKeyStroke(sysTable->ConIn, &inputKey);
 			ClearConIn(sysTable);
 
-			if (status != EFI_STATUS::SUCCESS)
+			if (status != Status::Success)
 			{
 				PrintErrorLine(sysTable, u"Error in ReadKeyStroke", status);
 				return;
@@ -589,16 +589,16 @@ namespace Bootloader
 
 		ClearConIn(sysTable);
 	}
-	static void WaitForKey(EFI_SYSTEM_TABLE* sysTable, const UINT8 scancode)
+	static void WaitForKey(SystemTable* sysTable, const UINT8 scancode)
 	{
-		EFI_STATUS status = EFI_STATUS::SUCCESS;
-		EFI_INPUT_KEY inputKey = KEYS::Null;
+		Status status = Status::Success;
+		InputKey inputKey = KEYS::Null;
 		UINT16 sc = (UINT16)scancode;
 		/*Await for a specific key to be entered, otherwise clear ConsoleIn*/
 		do
 		{
 			status = sysTable->BootServices->WaitForEvent(1, &sysTable->ConIn->WaitForKey, nullptr);
-			if (status != EFI_STATUS::SUCCESS)
+			if (status != Status::Success)
 			{
 				PrintErrorLine(sysTable, u"Error in WaitForEvent", status);
 				return;
@@ -607,7 +607,7 @@ namespace Bootloader
 			status = sysTable->ConIn->ReadKeyStroke(sysTable->ConIn, &inputKey);
 			ClearConIn(sysTable);
 
-			if (status != EFI_STATUS::SUCCESS)
+			if (status != Status::Success)
 			{
 				PrintErrorLine(sysTable, u"Error in ReadKeyStroke", status);
 				return;
@@ -617,19 +617,19 @@ namespace Bootloader
 		ClearConIn(sysTable);
 	}
 
-	static void Exit(EFI_SYSTEM_TABLE* sysTable, EFI_HANDLE imgHndl, EFI_STATUS Status = EFI::EFI_STATUS::SUCCESS, UINTN exitDataSize = 0, CHAR16* exitData = nullptr)
+	static void Exit(SystemTable* sysTable, Handle imgHndl, Status Status = Efi::Status::Success, UINTN exitDataSize = 0, CHAR16* exitData = nullptr)
 	{
 		_CRT_TERM();
 		sysTable->BootServices->Exit(imgHndl, Status, exitDataSize, exitData);
 	}
-	static void ThrowException(EFI_SYSTEM_TABLE* sysTbl, EFI_HANDLE imgHndl, const CHAR16* errorMessage, EFI_STATUS status = EFI::EFI_STATUS::SUCCESS)
+	static void ThrowException(SystemTable* sysTbl, Handle imgHndl, const CHAR16* errorMessage, Status status = Efi::Status::Success)
 	{
-		SetConsoleColor(sysTbl, EfiConsoleColor::_Fatal);
+		SetConsoleColor(sysTbl, ConsoleColor::_Fatal);
 		ClearConOut(sysTbl);
 		
 		PrintLine(sysTbl, errorMessage);
 
-		if (status != EFI_STATUS::SUCCESS)
+		if (status != Status::Success)
 		{
 			PrintLine(sysTbl, UTF<CHAR16>::ToString(status));
 		}

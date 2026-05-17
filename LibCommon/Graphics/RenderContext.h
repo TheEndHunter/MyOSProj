@@ -5,18 +5,18 @@
 #include <FileTypes/PCSF/PCSF1.h>
 #include <FileTypes/PCSF/PCSF2.h>
 
-#include <Protocols/Graphics/EFI_GRAPHICS_OUTPUT_PROTOCOL.h>
-#include <EFI_SYSTEM_TABLE.h>
-#include <EFI_HANDLE.h>
+#include <Protocols/Graphics/GraphicsOutputProtocol.h>
+#include <SystemTable.h>
+#include <Handle.h>
 
 namespace Common::Graphics
 {
 	struct RenderContext
 	{
     private:
-		RenderContext(EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL* ptr, Colour txt, Colour bg, Colour fg1, Colour fg2);
+		RenderContext(Efi::GraphicsOutputProtocol* ptr, Colour txt, Colour bg, Colour fg1, Colour fg2);
 	public:
-        static RenderContext* Initialize(EFI::EFI_SYSTEM_TABLE* sysTbl,EFI::EFI_HANDLE imgHndl, Colour txt = Colours::White, Colour bg = Colours::Black, Colour fg1 = Colours::WhiteSmoke, Colour fg2 = Colours::AliceBlue);
+        static RenderContext* Initialize(Efi::SystemTable* sysTbl,Efi::Handle imgHndl, Colour txt = Colours::White, Colour bg = Colours::Black, Colour fg1 = Colours::WhiteSmoke, Colour fg2 = Colours::AliceBlue);
 
 		Colour GetBackgroundColour();
 		Colour GetForeground1Colour();
@@ -161,7 +161,7 @@ namespace Common::Graphics
         void DrawPCSF2Char(const UINT64 xPos, const UINT64 yPos, const CHAR8 c, const UINT32 colour);
         void DrawPCSF2Char(const UINT64 xPos, const UINT64 yPos, const CHAR8 c, const UINT8 r, const UINT8 g, const UINT8 b, const UINT8 a = 0xFFFFFFFFu);
 
-        void Terminate(EFI::EFI_HANDLE hnd, EFI::EFI_SYSTEM_TABLE* sysTable);
+        void Terminate(Efi::Handle hnd, Efi::SystemTable* sysTable);
 
         MonitorContext* GetMonitorContext();
 

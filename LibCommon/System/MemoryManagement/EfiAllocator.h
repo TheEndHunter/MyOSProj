@@ -1,6 +1,6 @@
 #pragma once
 #include <TypeDefs.h>
-#include <EFI_SYSTEM_TABLE.h>
+#include <SystemTable.h>
 #include <System/MemoryManagement/AllocatorStatus.h>
 
 namespace Common::System::MemoryManagement
@@ -10,7 +10,7 @@ namespace Common::System::MemoryManagement
 	class EfiAllocator
 	{
 	public:
-		 static EFI::EFI_SYSTEM_TABLE* _efiSystemTable;
+		 static Efi::SystemTable* _efiSystemTable;
 		 static VOID_PTR Allocate(UINTN length);
 		 static VOID_PTR AllocateZeroed(UINTN length);
 		 static VOID_PTR AllocatePage(UINTN pageCount);

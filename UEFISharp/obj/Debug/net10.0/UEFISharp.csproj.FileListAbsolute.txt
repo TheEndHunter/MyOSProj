@@ -1,0 +1,5 @@
+A:\Dev\Projects\MyOSProj\UEFISharp\obj\Debug\net10.0\UEFISharp.GeneratedMSBuildEditorConfig.editorconfig
+A:\Dev\Projects\MyOSProj\UEFISharp\obj\Debug\net10.0\UEFISharp.AssemblyInfoInputs.cache
+A:\Dev\Projects\MyOSProj\UEFISharp\obj\Debug\net10.0\UEFISharp.AssemblyInfo.cs
+A:\Dev\Projects\MyOSProj\UEFISharp\obj\Debug\net10.0\UEFISharp.csproj.CoreCompileInputs.cache
+A:\Dev\Projects\MyOSProj\UEFISharp\obj\Debug\net10.0\UEFISharp.sourcelink.json

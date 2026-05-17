@@ -27,8 +27,8 @@ namespace Common::System::Environment
 		static CHAR* ToHex(const UINT8 value);
 		static CHAR* ToHex(const VOID_PTR ptrC);
 
-		static CHAR* ToString(const EFI::EFI_GUID guid);
-		static const CHAR* ToString(const EFI::EFI_STATUS status);
+		static CHAR* ToString(const Efi::Guid guid);
+		static const CHAR* ToString(const Efi::Status status);
 		static const CHAR* ToString(const Common::System::MemoryManagement::AllocatorStatus status);
 		static CHAR* ToString(const INT16 value);
 		static CHAR* ToString(const INT32 value);

@@ -9,8 +9,13 @@
     <File Path=".gitattributes" />
     <File Path=".gitignore" />
     <File Path="README.md" />
+    <File Path="UEFI_Spec_Final_2.11.pdf" />
   </Folder>
   <Project Path="Bootloader\Bootloader.vcxproj" Id="93114b72-b03a-45c4-9928-f71537dfcbf1" />
+  <Project Path="ConsoleApplication1/ConsoleApplication1.vcxproj" Id="f8035f28-d57f-49f4-a2a2-d4efcf58b04d">
+    <Platform Solution="*|ARM" Project="x64" />
+    <Platform Solution="*|ARM64" Project="x64" />
+  </Project>
   <Project Path="ImageBuilder\ImageBuilder.csproj">
     <BuildDependency Project="Bootloader\Bootloader.vcxproj" />
     <BuildDependency Project="QemuManager\QemuRunner.csproj" />
@@ -23,7 +28,7 @@
     <BuildDependency Project="Bootloader\Bootloader.vcxproj" />
   </Project>
   <Project Path="LibCommon\LibCommon.vcxproj" Id="c23c7061-59fe-4df9-a5d5-113d3dc74b32" />
-  <Project Path="LibCPP\LibCPP.vcxproj.vcxproj" Id="30033bc1-4c5f-45c5-932e-c667f58138da" />
+  <Project Path="LibCPP\LibCPP.vcxproj" Id="30033bc1-4c5f-45c5-932e-c667f58138da" />
   <Project Path="QemuManager\QemuRunner.csproj">
     <BuildDependency Project="Bootloader\Bootloader.vcxproj" />
     <BuildDependency Project="Kernel\Kernel.vcxproj" />
@@ -35,5 +40,7 @@
     <Platform Solution="*|x86" Project="x86" />
     <Build Solution="*|ARM" Project="false" />
   </Project>
+  <Project Path="UEFIRefs/UEFIRefs.csproj" />
+  <Project Path="UEFISharp/UEFISharp.csproj" />
   <Project Path="UEFI\UEFI.vcxproj" Id="c2e4250f-7a7a-4567-8d76-5f42f610b204" />
 </Solution>

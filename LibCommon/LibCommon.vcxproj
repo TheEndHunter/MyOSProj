@@ -155,7 +155,7 @@
     </None>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>17.0</VCProjectVersion>
+    <VCProjectVersion>18.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{C23C7061-59FE-4DF9-A5D5-113D3DC74B32}</ProjectGuid>
     <RootNamespace>UEFI</RootNamespace>
@@ -163,9 +163,9 @@
     <ProjectName>LibCommon</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
@@ -178,51 +178,55 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>Static</UseOfMfc>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <PlatformToolset>v145</PlatformToolset>
+    <VCToolsVersion>
+    </VCToolsVersion>
+    <MSVCPreviewEnabled>true</MSVCPreviewEnabled>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>Static</UseOfMfc>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <VCToolsVersion>
+    </VCToolsVersion>
+    <MSVCPreviewEnabled>true</MSVCPreviewEnabled>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <WindowsSDKDesktopARM64Support>true</WindowsSDKDesktopARM64Support>
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>Static</UseOfMfc>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <VCToolsVersion>
+    </VCToolsVersion>
+    <MSVCPreviewEnabled>true</MSVCPreviewEnabled>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>Static</UseOfMfc>
     <PreferredToolArchitecture>x86</PreferredToolArchitecture>
+    <VCToolsVersion>
+    </VCToolsVersion>
+    <MSVCPreviewEnabled>true</MSVCPreviewEnabled>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <WindowsSDKDesktopARM64Support>true</WindowsSDKDesktopARM64Support>
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>Static</UseOfMfc>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <PlatformToolset>v145</PlatformToolset>
+    <VCToolsVersion>
+    </VCToolsVersion>
+    <MSVCPreviewEnabled>true</MSVCPreviewEnabled>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseOfMfc>Static</UseOfMfc>
     <PreferredToolArchitecture>x86</PreferredToolArchitecture>
+    <PlatformToolset>v145</PlatformToolset>
+    <VCToolsVersion>
+    </VCToolsVersion>
+    <MSVCPreviewEnabled>true</MSVCPreviewEnabled>
   </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="ExtensionSettings">
-  </ImportGroup>
-  <ImportGroup Label="Shared">
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <TargetName>$(ProjectName)_$(Platform)</TargetName>
@@ -260,8 +264,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);DEBUG;WIN32;Win32;USE_TYPE_DEFS;USECOMMONTYPES</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
       <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories);$(SolutionDir)UEFI\;</AdditionalIncludeDirectories>
       <BasicRuntimeChecks />
       <BufferSecurityCheck>false</BufferSecurityCheck>
@@ -299,8 +303,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);RELEASE;NDEBUG;WIN32;Win32;USE_TYPE_DEFS;USECOMMONTYPES</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
       <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories);$(SolutionDir)UEFI\;</AdditionalIncludeDirectories>
       <BasicRuntimeChecks />
       <BufferSecurityCheck>false</BufferSecurityCheck>
@@ -335,8 +339,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);DEBUG;;USE_TYPE_DEFS;USECOMMONTYPES</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
       <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories);$(SolutionDir)UEFI\;</AdditionalIncludeDirectories>
       <BasicRuntimeChecks />
       <BufferSecurityCheck>false</BufferSecurityCheck>
@@ -374,8 +378,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);RELEASE;NDEBUG;;USE_TYPE_DEFS;USECOMMONTYPES</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
       <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories);$(SolutionDir)UEFI\;</AdditionalIncludeDirectories>
       <BasicRuntimeChecks />
       <BufferSecurityCheck>false</BufferSecurityCheck>
@@ -408,8 +412,8 @@
     <ClCompile>
       <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);DEBUG;;USE_TYPE_DEFS;USECOMMONTYPES</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories);$(SolutionDir)UEFI\;</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
       <ConformanceMode>true</ConformanceMode>
       <BasicRuntimeChecks />
       <BufferSecurityCheck>false</BufferSecurityCheck>
@@ -438,8 +442,8 @@
     <ClCompile>
       <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);RELEASE;NDEBUG;;USE_TYPE_DEFS;USECOMMONTYPES</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories);$(SolutionDir)UEFI\;</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
       <ConformanceMode>true</ConformanceMode>
       <BasicRuntimeChecks />
       <BufferSecurityCheck>false</BufferSecurityCheck>

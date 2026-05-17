@@ -1,0 +1,73 @@
+{
+  "format": 1,
+  "restore": {
+    "A:\\Dev\\Projects\\MyOSProj\\UEFIRefs\\UEFIRefs.csproj": {}
+  },
+  "projects": {
+    "A:\\Dev\\Projects\\MyOSProj\\UEFIRefs\\UEFIRefs.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "A:\\Dev\\Projects\\MyOSProj\\UEFIRefs\\UEFIRefs.csproj",
+        "projectName": "System.Private.CoreLib",
+        "projectPath": "A:\\Dev\\Projects\\MyOSProj\\UEFIRefs\\UEFIRefs.csproj",
+        "packagesPath": "C:\\Users\\spros\\.nuget\\packages\\",
+        "outputPath": "A:\\Dev\\Projects\\MyOSProj\\UEFIRefs\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "A:\\Programs\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\spros\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net11.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget-feed-nightly.avaloniaui.net/v3/index.json": {},
+          "https://www.myget.org/F/discutils/api/v3/index.json": {}
+        },
+        "frameworks": {
+          "net11.0": {
+            "framework": "net11.0",
+            "targetAlias": "net11.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "all"
+        },
+        "SdkAnalysisLevel": "11.0.100"
+      },
+      "frameworks": {
+        "net11.0": {
+          "framework": "net11.0",
+          "targetAlias": "net11.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\11.0.100-preview.4.26230.115/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

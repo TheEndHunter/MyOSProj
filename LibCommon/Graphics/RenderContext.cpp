@@ -1,9 +1,9 @@
 #include "RenderContext.h"
-#include <EFI_STATUS.h>
-#include <EFI_LOCATE_SEARCH_TYPE.h>
-#include <EFI_GUID.h>
+#include <Status.h>
+#include <LocateSearchType.h>
+#include <Guid.h>
 
-#include <Protocols/Graphics/EFI_GRAPHICS_OUTPUT_PROTOCOL.h>
+#include <Protocols/Graphics/GraphicsOutputProtocol.h>
 
 #include <System/MemoryManagement/Allocator.h>
 
@@ -99,7 +99,7 @@ namespace Common::Graphics
 	}
 
 
-	RenderContext::RenderContext(EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL* ptr, const Colour txt, const Colour bg, const Colour fg1, const Colour fg2)
+	RenderContext::RenderContext(Efi::GraphicsOutputProtocol* ptr, const Colour txt, const Colour bg, const Colour fg1, const Colour fg2)
 	{
 		monitor = MonitorContext(ptr);
 		defaultBackgroundColour = bg;
@@ -116,29 +116,29 @@ namespace Common::Graphics
 		pcsf2 = nullptr;
 	}
 
-	RenderContext* RenderContext::Initialize(EFI::EFI_SYSTEM_TABLE* sysTbl, EFI::EFI_HANDLE imgHndl, const Colour txt, const Colour bg, const Colour fg1, const Colour fg2)
+	RenderContext* RenderContext::Initialize(Efi::SystemTable* sysTbl, Efi::Handle imgHndl, const Colour txt, const Colour bg, const Colour fg1, const Colour fg2)
 	{
-		EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL* gop = nullptr;
+		Efi::GraphicsOutputProtocol* gop = nullptr;
 		// Locate the GOP protocol and store it in the gop variable, use locate protocol first then try to locate handle Buffer if that fails, if that fails then return the error
-		EFI::EFI_STATUS LastStatus = sysTbl->BootServices->LocateProtocol(&EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID, nullptr, (void**)&gop);
+		Efi::Status LastStatus = sysTbl->BootServices->LocateProtocol(&Efi::GraphicsOutputProtocol_GUID, nullptr, (void**)&gop);
 
-		if (LastStatus == EFI::EFI_STATUS::SUCCESS)
+		if (LastStatus == Efi::Status::Success)
 		{
 			return new RenderContext(gop, txt, bg, fg1, fg2);
 		}
 
 		UINT64 handleCount = 0;
-		EFI::EFI_HANDLE* handleBuffer;
-		LastStatus = sysTbl->BootServices->LocateHandleBuffer(EFI::EFI_LOCATE_SEARCH_TYPE::ByProtocol, &EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID, nullptr, &handleCount, &handleBuffer);
+		Efi::Handle* handleBuffer;
+		LastStatus = sysTbl->BootServices->LocateHandleBuffer(Efi::LocateSearchType::ByProtocol, &Efi::GraphicsOutputProtocol_GUID, nullptr, &handleCount, &handleBuffer);
 
 		sysTbl->ConOut->OutputString(sysTbl->ConOut, Common::System::Environment::UTF<CHAR16>::ToString(handleCount));
 
-		if (LastStatus != EFI::EFI_STATUS::SUCCESS)
+		if (LastStatus != Efi::Status::Success)
 		{
 			return nullptr;
 		}
 
-		LastStatus = sysTbl->BootServices->OpenProtocol(handleBuffer[0], &EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID, (void**)&gop, imgHndl, nullptr, EFI::EFI_OPEN_PROTOCOL_GET_PROTOCOL);
+		LastStatus = sysTbl->BootServices->OpenProtocol(handleBuffer[0], &Efi::GraphicsOutputProtocol_GUID, (void**)&gop, imgHndl, nullptr, Efi::Services::OpenProtocolGetProtocol);
 
 		sysTbl->BootServices->FreePool(handleBuffer);
 
@@ -985,10 +985,10 @@ namespace Common::Graphics
 		SetPixelForeground1Colour(xPos, yPos);
 	}
 
-	void RenderContext::Terminate(EFI::EFI_HANDLE hnd, EFI::EFI_SYSTEM_TABLE* sysTable)
+	void RenderContext::Terminate(Efi::Handle hnd, Efi::SystemTable* sysTable)
 	{
 		monitor.Terminate();
-		sysTable->BootServices->CloseProtocol(sysTable->ConsoleOutHandle, &EFI::EFI_GRAPHICS_OUTPUT_PROTOCOL_GUID, hnd, nullptr);
+		sysTable->BootServices->CloseProtocol(sysTable->ConsoleOutHandle, &Efi::GraphicsOutputProtocol_GUID, hnd, nullptr);
 	};
 
 	void RenderContext::SetPixelRowForeground1Colour(const UINT64 xPos, const UINT64 yPos, const UINT64 length, const Colour colour)

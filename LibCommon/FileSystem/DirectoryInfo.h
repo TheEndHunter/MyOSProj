@@ -1,8 +1,8 @@
 #pragma once
 #include <TypeDefs.h>
-#include <Protocols/Time/EFI_TIME.h>
-#include <Protocols/IO/Media/EFI_FILE_PROTOCOL.h>
-#include <Protocols/IO/Media/EFI_FILE_INFO.h>
+#include <Protocols/Time/Time.h>
+#include <Protocols/IO/Media/FileProtocol.h>
+#include <Protocols/IO/Media/FileInfo.h>
 
 namespace Common::FileSystem::ESP
 {
@@ -15,29 +15,29 @@ namespace Common::FileSystem
 	{
 		friend ESP::ESP_FS_Context;
 	protected:
-		DirectoryInfo(EFI::EFI_FILE_INFO* info);
+        DirectoryInfo(Efi::FileInfo* info);
 	public:
 		constexpr DirectoryInfo()
 		{
 			Size = 0;
 			FileSize = 0;
 			PhysicalSize = 0;
-			CreateTime = EFI::EFI_TIME();
-			LastAccessTime = EFI::EFI_TIME();
-			ModificationTime = EFI::EFI_TIME();
+			CreateTime = Efi::Time();
+			LastAccessTime = Efi::Time();
+			ModificationTime = Efi::Time();
 			Attribute = 0;
 			DirectoryName = nullptr;
 		}
 
-		static DirectoryInfo Create(EFI::EFI_FILE_INFO* info);
+        static DirectoryInfo Create(Efi::FileInfo* info);
 
 	public:
 		UINT64 Size;
 		UINT64 FileSize;
 		UINT64 PhysicalSize;
-		EFI::EFI_TIME CreateTime;
-		EFI::EFI_TIME LastAccessTime;
-		EFI::EFI_TIME ModificationTime;
+		Efi::Time CreateTime;
+		Efi::Time LastAccessTime;
+		Efi::Time ModificationTime;
 		UINT64 Attribute;
 		CONST CHAR16* DirectoryName;
 

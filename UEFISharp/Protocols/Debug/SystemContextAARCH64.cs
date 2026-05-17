@@ -1,0 +1,77 @@
+using System.Runtime.InteropServices;
+
+namespace EFI.Protocols.Debug;
+
+[StructLayout(LayoutKind.Sequential)]
+public unsafe struct SystemContextAARCH64
+{
+    public ulong X0;
+    public ulong X1;
+    public ulong X2;
+    public ulong X3;
+    public ulong X4;
+    public ulong X5;
+    public ulong X6;
+    public ulong X7;
+    public ulong X8;
+    public ulong X9;
+    public ulong X10;
+    public ulong X11;
+    public ulong X12;
+    public ulong X13;
+    public ulong X14;
+    public ulong X15;
+    public ulong X16;
+    public ulong X17;
+    public ulong X18;
+    public ulong X19;
+    public ulong X20;
+    public ulong X21;
+    public ulong X22;
+    public ulong X23;
+    public ulong X24;
+    public ulong X25;
+    public ulong X26;
+    public ulong X27;
+    public ulong X28;
+    public ulong FP;
+    public ulong LR;
+    public ulong SP;
+    public fixed ulong V0[2];
+    public fixed ulong V1[2];
+    public fixed ulong V2[2];
+    public fixed ulong V3[2];
+    public fixed ulong V4[2];
+    public fixed ulong V5[2];
+    public fixed ulong V6[2];
+    public fixed ulong V7[2];
+    public fixed ulong V8[2];
+    public fixed ulong V9[2];
+    public fixed ulong V10[2];
+    public fixed ulong V11[2];
+    public fixed ulong V12[2];
+    public fixed ulong V13[2];
+    public fixed ulong V14[2];
+    public fixed ulong V15[2];
+    public fixed ulong V16[2];
+    public fixed ulong V17[2];
+    public fixed ulong V18[2];
+    public fixed ulong V19[2];
+    public fixed ulong V20[2];
+    public fixed ulong V21[2];
+    public fixed ulong V22[2];
+    public fixed ulong V23[2];
+    public fixed ulong V24[2];
+    public fixed ulong V25[2];
+    public fixed ulong V26[2];
+    public fixed ulong V27[2];
+    public fixed ulong V28[2];
+    public fixed ulong V29[2];
+    public fixed ulong V30[2];
+    public fixed ulong V31[2];
+    public ulong ELR;
+    public ulong SPSR;
+    public ulong FPSR;
+    public ulong ESR;
+    public ulong FAR;
+}

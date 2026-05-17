@@ -1,8 +1,8 @@
 #pragma once
 #include <TypeDefs.h>
-#include <EFI_SYSTEM_TABLE.h>
-#include <Protocols/IO/Media/EFI_SIMPLE_FILE_SYSTEM_PROTOCOL.h>
-#include <EFI_STATUS.h>
+#include <SystemTable.h>
+#include <Protocols/IO/Media/SimpleFileSystemProtocol.h>
+#include <Status.h>
 #include <FileSystem/FileInfo.h>
 #include <FileSystem/FileMode.h>
 #include <FileSystem/FileAttribute.h>
@@ -21,20 +21,20 @@ namespace Common::FileSystem
 	{
 		friend class ESP::ESP_FS_Context;
 	protected:
-		FileHandle(EFI::EFI_FILE_PROTOCOL* file, FileInfo* i, FileMode mode, UINT64 attribs);
+		FileHandle(Efi::FileProtocol* file, FileInfo* i, FileMode mode, UINT64 attribs);
 	public:
 		constexpr FileHandle() : Mode(FileMode::Create), Attributes(0),Info(), Size(0),_File(nullptr){} // Default constructor
 
 		explicit FileHandle(FileHandle* handle) : Mode(handle->Mode), Attributes(handle->Attributes), Info(handle->Info), Size(handle->Info.Size), _File(handle->_File) {};
 		FileHandle(const FileHandle& handle) : Mode(handle.Mode), Attributes(handle.Attributes), Info(handle.Info), Size(handle.Info.Size), _File(handle._File) {};
 
-		static FileHandle Create(EFI::EFI_FILE_PROTOCOL* file, FileInfo* i, FileMode mode, UINT64 attribs);
+		static FileHandle Create(Efi::FileProtocol* file, FileInfo* i, FileMode mode, UINT64 attribs);
 		FileMode Mode;
 		UINT64 Attributes;
 		FileInfo Info;
 		UINT64 Size;
 		BOOLEAN IsValid() { return _File != nullptr; };
-		EFI::EFI_FILE_PROTOCOL* GetFileEFIHandle() {
+		Efi::FileProtocol* GetFileEFIHandle() {
 			return _File;
 		};
 		/*
@@ -45,104 +45,104 @@ namespace Common::FileSystem
 		/// </summary>
 		/// <param name="bufferSize">The size of the buffer</param>
 		/// <param name="buffer">The buffer to read to</param>
-		/// <returns>EFI_STATUS</returns>
-		EFI::EFI_STATUS Read(UINTN* bufferSize, void* buffer);
+		/// <returns>Status</returns>
+		Efi::Status Read(UINTN* bufferSize, void* buffer);
 		/// <summary>
 		/// Reads from file
 		/// </summary>
 		/// <param name="bufferSize">The size of the buffer</param>
 		/// <param name="buffer">The buffer to read to</param>
-		/// <returns>EFI_STATUS</returns>
-		EFI::EFI_STATUS Read(const UINTN bufferSize, void* buffer);
+		/// <returns>Status</returns>
+		Efi::Status Read(const UINTN bufferSize, void* buffer);
 		/// <summary>
 		/// writes to file
 		/// </summary>
 		/// <param name="bufferSize">The size of the buffer</param>
 		/// <param name="buffer">The buffer to write from</param>
-		/// <returns>EFI_STATUS</returns>
-		EFI::EFI_STATUS Write(UINTN* bufferSize, void* buffer);
+		/// <returns>Status</returns>
+		Efi::Status Write(UINTN* bufferSize, void* buffer);
 		/// <summary>
 		/// writes to file
 		/// </summary>
 		/// <param name="bufferSize">The size of the buffer</param>
 		/// <param name="buffer">The buffer to write from</param>
-		/// <returns>EFI_STATUS</returns>
-		EFI::EFI_STATUS Write(const UINTN bufferSize, void* buffer);
+		/// <returns>Status</returns>
+		Efi::Status Write(const UINTN bufferSize, void* buffer);
 		/// <summary>
 		/// Gets the position of the file
 		/// </summary>
 		/// <param name="position">The position of the file</param>
-		/// <returns>EFI_STATUS</returns>
-		EFI::EFI_STATUS GetPosition(UINT64* position);
+		/// <returns>Status</returns>
+		Efi::Status GetPosition(UINT64* position);
 		/// <summary>
 		/// Sets the position of the file
 		/// </summary>
 		/// <param name="position">The position of the file</param>
-		/// <returns>EFI_STATUS</returns>
-		EFI::EFI_STATUS GetPosition(UINT64 position);
+		/// <returns>Status</returns>
+		Efi::Status GetPosition(UINT64 position);
 		/// <summary>
 		/// Sets the position of the file
 		/// </summary>
 		/// <param name="position">The position of the file</param>
-		/// <returns>EFI_STATUS</returns>
-		EFI::EFI_STATUS SetPosition(const UINT64 position);
+		/// <returns>Status</returns>
+		Efi::Status SetPosition(const UINT64 position);
 		/// <summary>
 		/// Gets the File Info
 		/// </summary>
 		/// <param name="infoType">The type of info</param>
 		/// <param name="bufferSize">The size of the buffer</param>
 		/// <param name="buffer">The buffer to write to</param>
-		/// <returns>EFI_STATUS</returns>
-		EFI::EFI_STATUS GetInfo(EFI::EFI_GUID* infoType, UINTN* bufferSize, void* buffer);
+		/// <returns>Status</returns>
+		Efi::Status GetInfo(Efi::Guid* infoType, UINTN* bufferSize, void* buffer);
 		/// <summary>
 		/// Sets the File Info
 		/// </summary>
 		/// <param name="infoType">The type of info</param>
 		/// <param name="bufferSize">The size of the buffer</param>
 		/// <param name="buffer">The buffer to write to</param>
-		/// <returns>EFI_STATUS</returns>
-		EFI::EFI_STATUS SetInfo(EFI::EFI_GUID* infoType,const UINTN bufferSize, void* buffer);
+		/// <returns>Status</returns>
+		Efi::Status SetInfo(Efi::Guid* infoType,const UINTN bufferSize, void* buffer);
 		/// <summary>
 		/// Flushes the file to media
 		/// </summary>
-		/// <returns>EFI_STATUS</returns>
-		EFI::EFI_STATUS Flush();
+		/// <returns>Status</returns>
+		Efi::Status Flush();
 		/// <summary>
 		/// Closes the file
 		/// </summary>
-		/// <returns>EFI_STATUS</returns>
-		EFI::EFI_STATUS Close();
+		/// <returns>Status</returns>
+		Efi::Status Close();
 		/// <summary>
 		/// Deletes the file
 		/// </summary>
-		/// <returns>EFI_STATUS</returns>
-		EFI::EFI_STATUS Delete();
+		/// <returns>Status</returns>
+		Efi::Status Delete();
 		/// <summary>
 		/// Reads the file asynchronously
 		/// </summary>
 		/// <param name="token">The token to use</param>
-		/// <returns>EFI_STATUS</returns>
-		EFI::EFI_STATUS ReadAsync(EFI::EFI_FILE_IO_TOKEN* token);
+		/// <returns>Status</returns>
+        Efi::Status ReadAsync(Efi::FileIOToken* token);
 		/// <summary>
 		/// Writes the file asynchronously
 		/// </summary>
 		/// <param name="token">The token to use</param>
-		/// <returns>EFI_STATUS</returns>
-		EFI::EFI_STATUS WriteAsync(EFI::EFI_FILE_IO_TOKEN* token);
+		/// <returns>Status</returns>
+        Efi::Status WriteAsync(Efi::FileIOToken* token);
 		/// <summary>
 		/// Flushes the file asynchronously
 		/// </summary>
 		/// <param name="token">The token to use</param>
-		/// <returns>EFI_STATUS</returns>
-		EFI::EFI_STATUS FlushAsync(EFI::EFI_FILE_IO_TOKEN* token);
+		/// <returns>Status</returns>
+        Efi::Status FlushAsync(Efi::FileIOToken* token);
 
 		/// <summary>
 		/// Reads from the file
 		/// </summary>
 		/// <param name="buffer">The buffer to read to</param>
-		/// <returns>EFI_STATUS</returns>
+		/// <returns>Status</returns>
 		template<typename Type>
-		EFI::EFI_STATUS Read(Type* buffer)
+		Efi::Status Read(Type* buffer)
 		{
 			return Read(sizeof(Type), buffer);
 		};
@@ -150,9 +150,9 @@ namespace Common::FileSystem
 		/// Writes to the file
 		/// </summary>
 		/// <param name="buffer">The buffer to write from</param>
-		/// <returns>EFI_STATUS</returns>
+		/// <returns>Status</returns>
 		template<typename Type>
-		EFI::EFI_STATUS Write(Type* buffer)
+		Efi::Status Write(Type* buffer)
 		{
 			return Write(sizeof(Type), buffer);
 		};
@@ -162,9 +162,9 @@ namespace Common::FileSystem
 		/// </summary>
 		/// <param name="buffer">The buffer to read to</param>
 		/// <param name="count">The number of elements to read</param>
-		/// <returns>EFI_STATUS</returns>
+		/// <returns>Status</returns>
 		template<typename Type>
-		EFI::EFI_STATUS Read(Type* buffer, UINTN count)
+		Efi::Status Read(Type* buffer, UINTN count)
 		{
 			return Read(sizeof(Type) * count, buffer);
 		};
@@ -174,9 +174,9 @@ namespace Common::FileSystem
 		/// </summary>
 		/// <param name="buffer">The buffer to write from</param>
 		/// <param name="count">The number of elements to write</param>
-		/// <returns>EFI_STATUS</returns>
+		/// <returns>Status</returns>
 		template<typename Type>
-		EFI::EFI_STATUS Write(Type* buffer, UINTN count)
+		Efi::Status Write(Type* buffer, UINTN count)
 		{
 			return Write(sizeof(Type) * count, buffer);
 		};
@@ -187,7 +187,7 @@ namespace Common::FileSystem
 		BOOLEAN operator !=(const FileHandle& right);
 		
 	protected:
-		EFI::EFI_FILE_PROTOCOL* _File;
+		Efi::FileProtocol* _File;
 	};
 
 	constinit const FileHandle Empty_FileHandle = FileHandle();

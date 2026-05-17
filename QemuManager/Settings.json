@@ -3,7 +3,7 @@
     "OVMFConfig": {
         "Author": "TheEndHunter",
         "Repo": "OVMF_BIN",
-        "OVMFBinPath": "Latest",
+        "OVMFBinPath": "v147",
         "Branch": "main"
     },
     "EnableLogging": true,

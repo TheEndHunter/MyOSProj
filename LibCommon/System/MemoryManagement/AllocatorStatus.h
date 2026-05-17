@@ -1,65 +1,65 @@
 #pragma once
 #include <TypeDefs.h>
-#include <EFI_STATUS.h>
+#include <Status.h>
 
 namespace Common::System::MemoryManagement
 {
 	enum class AllocatorStatus : UINT64
 	{
 		Success = 0,
-		Invalid_Parameters = 1,
-		Not_Initialized = 2,
-		Not_Enough_Memory = 3,
-		Not_Enough_Pages = 4,
-		Access_Denied = 5,
+		InvalidParameters = 1,
+		NotInitialized = 2,
+		NotEnoughMemory = 3,
+		NotEnoughPages = 4,
+		AccessDenied = 5,
 		Unknown = 6
 	};
 
-	static const EFI::EFI_STATUS ToEfiStatus(const AllocatorStatus status)
+	static const Efi::Status ToEfiStatus(const AllocatorStatus status)
 	{
 		if(status == AllocatorStatus::Success)
-			return EFI::EFI_STATUS::SUCCESS;
+			return Efi::Status::Success;
 
-		if(status == AllocatorStatus::Invalid_Parameters)
-			return EFI::EFI_STATUS::INVALID_PARAMETER;
+		if(status == AllocatorStatus::InvalidParameters)
+			return Efi::Status::InvalidParameter;
 
-		if(status == AllocatorStatus::Not_Initialized)
-			return EFI::EFI_STATUS::NOT_READY;
+		if(status == AllocatorStatus::NotInitialized)
+			return Efi::Status::NotReady;
 
-		if(status == AllocatorStatus::Not_Enough_Memory)
-			return EFI::EFI_STATUS::OUT_OF_RESOURCES;
+		if(status == AllocatorStatus::NotEnoughMemory)
+			return Efi::Status::OutOfResources;
 
-		if(status == AllocatorStatus::Not_Enough_Pages)
-			return EFI::EFI_STATUS::OUT_OF_RESOURCES;
+		if(status == AllocatorStatus::NotEnoughPages)
+			return Efi::Status::OutOfResources;
 
-		if(status == AllocatorStatus::Access_Denied)
-			return EFI::EFI_STATUS::ACCESS_DENIED;
+		if(status == AllocatorStatus::AccessDenied)
+			return Efi::Status::AccessDenied;
 
 		if(status == AllocatorStatus::Unknown)
-			return EFI::EFI_STATUS::UNSUPPORTED;
+			return Efi::Status::Unsupported;
 		
-		return EFI::EFI_STATUS::UNSUPPORTED;
+		return Efi::Status::Unsupported;
 	}
 
-	static const AllocatorStatus FromEfiStatus(const EFI::EFI_STATUS status)
+	static const AllocatorStatus FromEfiStatus(const Efi::Status status)
 	{
-		if(status == EFI::EFI_STATUS::SUCCESS)
+		if(status == Efi::Status::Success)
 			return AllocatorStatus::Success;
 
-		if(status == EFI::EFI_STATUS::INVALID_PARAMETER)
-			return AllocatorStatus::Invalid_Parameters;
+		if(status == Efi::Status::InvalidParameter)
+			return AllocatorStatus::InvalidParameters;
 
-		if(status == EFI::EFI_STATUS::NOT_READY)
-			return AllocatorStatus::Not_Initialized;
+		if(status == Efi::Status::NotReady)
+			return AllocatorStatus::NotInitialized;
 
-		if(status == EFI::EFI_STATUS::OUT_OF_RESOURCES)
-			return AllocatorStatus::Not_Enough_Memory;
+		if(status == Efi::Status::OutOfResources)
+			return AllocatorStatus::NotEnoughMemory;
 
-		if(status == EFI::EFI_STATUS::OUT_OF_RESOURCES)
-			return AllocatorStatus::Not_Enough_Memory;
+		if(status == Efi::Status::OutOfResources)
+			return AllocatorStatus::NotEnoughMemory;
 
-		if(status == EFI::EFI_STATUS::ACCESS_DENIED)
-			return AllocatorStatus::Access_Denied;
+		if(status == Efi::Status::AccessDenied)
+			return AllocatorStatus::AccessDenied;
 
 		return AllocatorStatus::Unknown;
 	}

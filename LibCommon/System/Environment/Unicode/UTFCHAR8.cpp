@@ -23,10 +23,10 @@ namespace Common::System::Environment
 	constexpr const CHAR8* _UTF8_ABORTED = u8"ABORTED";
 	constexpr const CHAR8* _UTF8_ACCESS_DENIED = u8"ACCESS_DENIED";
 	constexpr const CHAR8* _UTF8_ALREADY_STARTED = u8"ALREADY_STARTED";
-	constexpr const CHAR8* _UTF8_BAD_BUFFER_SIZE = u8"BAD_BUFFER_SIZE";
+	constexpr const CHAR8* _UTF8_BAD_BUFFER_SIZE = u8"BadBufferSize";
 	constexpr const CHAR8* _UTF8_BOOLEAN_FALSE = u8"False";
 	constexpr const CHAR8* _UTF8_BOOLEAN_TRUE = u8"True";
-	constexpr const CHAR8* _UTF8_BUFFER_TOO_SMALL = u8"BUFFER_TOO_SMALL";
+	constexpr const CHAR8* _UTF8_BUFFER_TOO_SMALL = u8"BufferTooSmall";
 	constexpr const CHAR8* _UTF8_COMPROMISED_DATA = u8"COMPROMISED_DATA";
 	constexpr const CHAR8* _UTF8_CRC_ERROR = u8"CRC_ERROR";
 	constexpr const CHAR8* _UTF8_DEVICE_ERROR = u8"DEVICE_ERROR";
@@ -36,23 +36,23 @@ namespace Common::System::Environment
 	constexpr const CHAR8* _UTF8_ICMP_ERROR = u8"ICMP_ERROR";
 	constexpr const CHAR8* _UTF8_INCOMPATIBLE_VERSION = u8"INCOMPATIBLE_VERSION";
 	constexpr const CHAR8* _UTF8_INVALID_LANGUAGE = u8"INVALID_LANGUAGE";
-	constexpr const CHAR8* _UTF8_INVALID_PARAMETER = u8"INVALID_PARAMETER";
+	constexpr const CHAR8* _UTF8_INVALID_PARAMETER = u8"InvalidParameter";
 	constexpr const CHAR8* _UTF8_IP_ADDRESS_CONFLICT = u8"IP_ADDRESS_CONFLICT";
-	constexpr const CHAR8* _UTF8_LOAD_ERROR = u8"LOAD_ERROR";
+	constexpr const CHAR8* _UTF8_LOAD_ERROR = u8"LoadError";
 	constexpr const CHAR8* _UTF8_MEDIA_CHANGED = u8"MEDIA_CHANGED";
 	constexpr const CHAR8* _UTF8_NO_MAPPING = u8"NO_MAPPING";
 	constexpr const CHAR8* _UTF8_NO_MEDIA = u8"NO_MEDIA";
 	constexpr const CHAR8* _UTF8_NO_RESPONSE = u8"NO_RESPONSE";
 	constexpr const CHAR8* _UTF8_NOT_FOUND = u8"NOT_FOUND";
-	constexpr const CHAR8* _UTF8_NOT_READY = u8"NOT_READY";
+	constexpr const CHAR8* _UTF8_NOT_READY = u8"NotReady";
 	constexpr const CHAR8* _UTF8_NOT_STARTED = u8"NOT_STARTED";
-	constexpr const CHAR8* _UTF8_OUT_OF_RESOURCES = u8"OUT_OF_RESOURCES";
+	constexpr const CHAR8* _UTF8_OutOfResources = u8"OutOfResources";
 	constexpr const CHAR8* _UTF8_PROTOCOL_ERROR = u8"PROTOCOL_ERROR";
 	constexpr const CHAR8* _UTF8_SECURITY_VIOLATION = u8"SECURITY_VIOLATION";
-	constexpr const CHAR8* _UTF8_SUCCESS = u8"SUCCESS";
+	constexpr const CHAR8* _UTF8_SUCCESS = u8"Success";
 	constexpr const CHAR8* _UTF8_TFTP_ERROR = u8"TFTP_ERROR";
 	constexpr const CHAR8* _UTF8_TIMEOUT = u8"TIMEOUT";
-	constexpr const CHAR8* _UTF8_UNSUPPORTED = u8"UNSUPPORTED";
+	constexpr const CHAR8* _UTF8_UNSUPPORTED = u8"Unsupported";
 	constexpr const CHAR8* _UTF8_VOLUME_CORRUPTED = u8"VOLUME_CORRUPTED";
 	constexpr const CHAR8* _UTF8_VOLUME_FULL = u8"VOLUME_FULL";
 	constexpr const CHAR8* _UTF8_WARN_BUFFER_TOO_SMALL = u8"WARN_BUFFER_TOO_SMALL";
@@ -64,8 +64,8 @@ namespace Common::System::Environment
 	constexpr const CHAR8* _UTF8_WARN_WRITE_FAILURE = u8"WARN_WRITE_FAILURE";
 	constexpr const CHAR8* _UTF8_WRITE_PROTECTED = u8"WRITE_PROTECTED";
 
-	constexpr const CHAR8* _UTF8_ALLOC_STATUS_SUCCESS = u8"SUCCESS";
-	constexpr const CHAR8* _UTF8_ALLOC_STATUS_INVALID_PARAMETER = u8"INVALID_PARAMETER";
+	constexpr const CHAR8* _UTF8_ALLOC_STATUS_SUCCESS = u8"Success";
+	constexpr const CHAR8* _UTF8_ALLOC_STATUS_INVALID_PARAMETER = u8"InvalidParameter";
 	constexpr const CHAR8* _UTF8_ALLOC_STATUS_NOT_ENOUGH_MEMORY = u8"NOT_ENOUGH_MEMORY";
 	constexpr const CHAR8* _UTF8_ALLOC_STATUS_NOT_ENOUGH_PAGES = u8"NOT_ENOUGH_PAGES";
 	constexpr const CHAR8* _UTF8_ALLOC_STATUS_ACCESS_DENIED = u8"ACCESS_DENIED";
@@ -269,7 +269,7 @@ namespace Common::System::Environment
 		return &_UTF8_HEXSTRING[0];
 	}
 
-	CHAR8* UTF<CHAR8>::ToString(const EFI::EFI_GUID guid)
+	CHAR8* UTF<CHAR8>::ToString(const Efi::Guid guid)
 	{
 		_UTF8_GUIDTOSTRING[1] = _UTF8_HEXCHARS[(guid.Data1 >> 28) & 0xF];
 		_UTF8_GUIDTOSTRING[2] = _UTF8_HEXCHARS[(guid.Data1 >> 24) & 0xF];
@@ -306,91 +306,91 @@ namespace Common::System::Environment
 		return &_UTF8_GUIDTOSTRING[0];
 	}
 
-	const CHAR8* UTF<CHAR8>::ToString(const EFI::EFI_STATUS status)
+	const CHAR8* UTF<CHAR8>::ToString(const Efi::Status status)
 	{
 		switch (status)
 		{
-		case EFI::EFI_STATUS::ABORTED:
+		case Efi::Status::Aborted:
 			return _UTF8_ABORTED;
-		case EFI::EFI_STATUS::ACCESS_DENIED:
+		case Efi::Status::AccessDenied:
 			return _UTF8_ACCESS_DENIED;
-		case EFI::EFI_STATUS::ALREADY_STARTED:
+		case Efi::Status::AlreadyStarted:
 			return _UTF8_ALREADY_STARTED;
-		case EFI::EFI_STATUS::BAD_BUFFER_SIZE:
+		case Efi::Status::BadBufferSize:
 			return _UTF8_BAD_BUFFER_SIZE;
-		case EFI::EFI_STATUS::BUFFER_TOO_SMALL:
+		case Efi::Status::BufferTooSmall:
 			return _UTF8_BUFFER_TOO_SMALL;
-		case EFI::EFI_STATUS::COMPROMISED_DATA:
+		case Efi::Status::CompromisedData:
 			return _UTF8_COMPROMISED_DATA;
-		case EFI::EFI_STATUS::CRC_ERROR:
+		case Efi::Status::CrcError:
 			return _UTF8_CRC_ERROR;
-		case EFI::EFI_STATUS::DEVICE_ERROR:
+		case Efi::Status::DeviceError:
 			return _UTF8_DEVICE_ERROR;
-		case EFI::EFI_STATUS::END_OF_FILE:
+		case Efi::Status::EndOfFile:
 			return _UTF8_END_OF_FILE;
-		case EFI::EFI_STATUS::END_OF_MEDIA:
+		case Efi::Status::EndOfMedia:
 			return _UTF8_END_OF_MEDIA;
-		case EFI::EFI_STATUS::HTTP_ERROR:
+		case Efi::Status::HttpError:
 			return _UTF8_HTTP_ERROR;
-		case EFI::EFI_STATUS::ICMP_ERROR:
+		case Efi::Status::IcmpError:
 			return _UTF8_ICMP_ERROR;
-		case EFI::EFI_STATUS::INCOMPATIBLE_VERSION:
+		case Efi::Status::IncompatibleVersion:
 			return _UTF8_INCOMPATIBLE_VERSION;
-		case EFI::EFI_STATUS::INVALID_LANGUAGE:
+		case Efi::Status::InvalidLanguage:
 			return _UTF8_INVALID_LANGUAGE;
-		case EFI::EFI_STATUS::INVALID_PARAMETER:
+		case Efi::Status::InvalidParameter:
 			return _UTF8_INVALID_PARAMETER;
-		case EFI::EFI_STATUS::IP_ADDRESS_CONFLICT:
+		case Efi::Status::IpAddressConflict:
 			return _UTF8_IP_ADDRESS_CONFLICT;
-		case EFI::EFI_STATUS::LOAD_ERROR:
+		case Efi::Status::LoadError:
 			return _UTF8_LOAD_ERROR;
-		case EFI::EFI_STATUS::MEDIA_CHANGED:
+		case Efi::Status::MediaChanged:
 			return _UTF8_MEDIA_CHANGED;
-		case EFI::EFI_STATUS::NO_MAPPING:
+		case Efi::Status::NoMapping:
 			return _UTF8_NO_MAPPING;
-		case EFI::EFI_STATUS::NO_MEDIA:
+		case Efi::Status::NoMedia:
 			return _UTF8_NO_MEDIA;
-		case EFI::EFI_STATUS::NO_RESPONSE:
+		case Efi::Status::NoResponse:
 			return _UTF8_NO_RESPONSE;
-		case EFI::EFI_STATUS::NOT_FOUND:
+		case Efi::Status::NotFound:
 			return _UTF8_NOT_FOUND;
-		case EFI::EFI_STATUS::NOT_READY:
+		case Efi::Status::NotReady:
 			return _UTF8_NOT_READY;
-		case EFI::EFI_STATUS::NOT_STARTED:
+		case Efi::Status::NotStarted:
 			return _UTF8_NOT_STARTED;
-		case EFI::EFI_STATUS::OUT_OF_RESOURCES:
-			return _UTF8_OUT_OF_RESOURCES;
-		case EFI::EFI_STATUS::PROTOCOL_ERROR:
+		case Efi::Status::OutOfResources:
+			return _UTF8_OutOfResources;
+		case Efi::Status::ProtocolError:
 			return _UTF8_PROTOCOL_ERROR;
-		case EFI::EFI_STATUS::SECURITY_VIOLATION:
+		case Efi::Status::SecurityViolation:
 			return _UTF8_SECURITY_VIOLATION;
-		case EFI::EFI_STATUS::SUCCESS:
+		case Efi::Status::Success:
 			return _UTF8_SUCCESS;
-		case EFI::EFI_STATUS::TFTP_ERROR:
+		case Efi::Status::TftpError:
 			return _UTF8_TFTP_ERROR;
-		case EFI::EFI_STATUS::TIMEOUT:
+		case Efi::Status::Timeout:
 			return _UTF8_TIMEOUT;
-		case EFI::EFI_STATUS::UNSUPPORTED:
+		case Efi::Status::Unsupported:
 			return _UTF8_UNSUPPORTED;
-		case EFI::EFI_STATUS::VOLUME_CORRUPTED:
+		case Efi::Status::VolumeCorrupted:
 			return _UTF8_VOLUME_CORRUPTED;
-		case EFI::EFI_STATUS::VOLUME_FULL:
+		case Efi::Status::VolumeFull:
 			return _UTF8_VOLUME_FULL;
-		case EFI::EFI_STATUS::WARN_BUFFER_TOO_SMALL:
+		case Efi::Status::WarnBufferTooSmall:
 			return _UTF8_WARN_BUFFER_TOO_SMALL;
-		case EFI::EFI_STATUS::WARN_DELETE_FAILURE:
+		case Efi::Status::WarnDeleteFailure:
 			return _UTF8_WARN_DELETE_FAILURE;
-		case EFI::EFI_STATUS::WARN_FILE_SYSTEM:
+		case Efi::Status::WarnFileSystem:
 			return _UTF8_WARN_FILE_SYSTEM;
-		case EFI::EFI_STATUS::WARN_RESET_REQUIRED:
+		case Efi::Status::WarnResetRequired:
 			return _UTF8_WARN_RESET_REQUIRED;
-		case EFI::EFI_STATUS::WARN_STALE_DATA:
+		case Efi::Status::WarnStaleData:
 			return _UTF8_WARN_STALE_DATA;
-		case EFI::EFI_STATUS::WARN_UNKNOWN_GLYPH:
+		case Efi::Status::WarnUnknownGlyph:
 			return _UTF8_WARN_UNKNOWN_GLYPH;
-		case EFI::EFI_STATUS::WARN_WRITE_FAILURE:
+		case Efi::Status::WarnWriteFailure:
 			return _UTF8_WARN_WRITE_FAILURE;
-		case EFI::EFI_STATUS::WRITE_PROTECTED:
+		case Efi::Status::WriteProtected:
 			return _UTF8_WRITE_PROTECTED;
         default:
             return _UTF8_ABORTED; // fallback string for unknown status
@@ -403,13 +403,13 @@ namespace Common::System::Environment
 		{
 		case Common::System::MemoryManagement::AllocatorStatus::Success:
 			return _UTF8_ALLOC_STATUS_SUCCESS;
-		case Common::System::MemoryManagement::AllocatorStatus::Invalid_Parameters:
+		case Common::System::MemoryManagement::AllocatorStatus::InvalidParameters:
 			return _UTF8_ALLOC_STATUS_INVALID_PARAMETER;
-		case Common::System::MemoryManagement::AllocatorStatus::Not_Enough_Memory:
+		case Common::System::MemoryManagement::AllocatorStatus::NotEnoughMemory:
 			return _UTF8_ALLOC_STATUS_NOT_ENOUGH_MEMORY;
-		case Common::System::MemoryManagement::AllocatorStatus::Not_Enough_Pages:
+		case Common::System::MemoryManagement::AllocatorStatus::NotEnoughPages:
 			return _UTF8_ALLOC_STATUS_NOT_ENOUGH_PAGES;
-		case Common::System::MemoryManagement::AllocatorStatus::Access_Denied:
+		case Common::System::MemoryManagement::AllocatorStatus::AccessDenied:
 			return _UTF8_ALLOC_STATUS_ACCESS_DENIED;
 		default:
 			return _UTF8_ALLOC_STATUS_UNKNOWN;

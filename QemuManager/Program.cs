@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Text;
 
+using System.Linq;
 using Microsoft.Extensions.Configuration;
 
 namespace QemuRunner
@@ -12,6 +13,48 @@ namespace QemuRunner
         private static readonly System.Text.RegularExpressions.Regex AnsiRegex = new("\\x1B\\[[0-9;?]*[ -/]*[@-~]|\\x1B\\][^\\x07]*\\x07|\\x1B[@-_]", System.Text.RegularExpressions.RegexOptions.Compiled);
         static async Task<int> Main(string[] args)
         {
+            // Early bridge-only mode: if --bridge flag is present, skip updates/config and start the requested server.
+            var bridgeArg = args.FirstOrDefault(a => a.StartsWith("--bridge=", StringComparison.OrdinalIgnoreCase));
+            if (bridgeArg != null)
+            {
+                var mode = bridgeArg.Split('=', 2, StringSplitOptions.RemoveEmptyEntries).ElementAtOrDefault(1)?.ToLowerInvariant() ?? string.Empty;
+                if (mode == "stdio")
+                {
+                    int port = 17000;
+                    var portArg = args.FirstOrDefault(a => a.StartsWith("--port=", StringComparison.OrdinalIgnoreCase));
+                    if (portArg != null && int.TryParse(portArg.Split('=', 2)[1], out var p) && p > 0 && p <= 65535) port = p;
+                    var term = QEMU.StartUdpTerminal(port);
+                    if (term == null)
+                    {
+                        Console.WriteLine("Failed to start UDP terminal (Windows-only).");
+                        return -1;
+                    }
+                    Console.Title = $"QemuManager UDP Terminal ({port})";
+                    Console.WriteLine($"QemuManager terminal bridge running (UDP 127.0.0.1:{port}). Press Ctrl+C to exit.");
+                    Console.CancelKeyPress += (_, __) => term.Dispose();
+                    AppDomain.CurrentDomain.ProcessExit += (_, __) => term.Dispose();
+                    await Task.Delay(Timeout.InfiniteTimeSpan);
+                    return 0;
+                }
+                else if (mode == "pipes")
+                {
+                    string pipe = "QemuManagerServer";
+                    var pipeArg = args.FirstOrDefault(a => a.StartsWith("--pipe=", StringComparison.OrdinalIgnoreCase));
+                    if (pipeArg != null) pipe = pipeArg.Split('=', 2, StringSplitOptions.RemoveEmptyEntries).ElementAtOrDefault(1) ?? pipe;
+                    var term = QEMU.StartPipeTerminal(pipe);
+                    if (term == null)
+                    {
+                        Console.WriteLine("Failed to start pipe terminal (Windows-only).");
+                        return -1;
+                    }
+                    Console.Title = $"QemuManager Pipe Terminal ({pipe})";
+                    Console.WriteLine($"QemuManager pipe bridge running (\\\\.\\pipe\\{pipe}). Press Ctrl+C to exit.");
+                    Console.CancelKeyPress += (_, __) => term.Dispose();
+                    AppDomain.CurrentDomain.ProcessExit += (_, __) => term.Dispose();
+                    await Task.Delay(Timeout.InfiniteTimeSpan);
+                    return 0;
+                }
+            }
             Settings config;
             string Dir = Path.GetFullPath(Directory.GetCurrentDirectory());
             string SettingsPath = Path.Combine(Dir, "Settings.json");

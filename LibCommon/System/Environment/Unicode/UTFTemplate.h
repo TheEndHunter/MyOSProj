@@ -1,7 +1,7 @@
 #pragma once
 #include <TypeDefs.h>
-#include <EFI_GUID.h>
-#include <EFI_STATUS.h>
+#include <Guid.h>
+#include <Status.h>
 #include <System/Environment/IsChar.h>
 #include <System/Environment/StringCulture.h>
 #include <System/Optional.h>
@@ -31,8 +31,8 @@ namespace Common::System::Environment
 		static StrType* ToHex(const UINT8 value);
 		static StrType* ToHex(const VOID_PTR ptr);
 
-		static StrType* ToString(const EFI::EFI_GUID guid);
-		static const StrType* ToString(const EFI::EFI_STATUS status);
+		static StrType* ToString(const Efi::Guid guid);
+		static const StrType* ToString(const Efi::Status status);
 		static const StrType* ToString(const Common::System::MemoryManagement::AllocatorStatus status);
 		static StrType* ToString(const INT16 value);
 		static StrType* ToString(const INT32 value);

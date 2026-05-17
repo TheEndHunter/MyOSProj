@@ -1,0 +1,12 @@
+A:\Dev\Projects\MyOSProj\UEFIRefs\obj\Debug\net11.0\UEFIRefs.GeneratedMSBuildEditorConfig.editorconfig
+A:\Dev\Projects\MyOSProj\UEFIRefs\obj\Debug\net11.0\UEFIRefs.AssemblyInfoInputs.cache
+A:\Dev\Projects\MyOSProj\UEFIRefs\obj\Debug\net11.0\UEFIRefs.AssemblyInfo.cs
+A:\Dev\Projects\MyOSProj\UEFIRefs\obj\Debug\net11.0\UEFIRefs.csproj.CoreCompileInputs.cache
+A:\Dev\Projects\MyOSProj\UEFIRefs\obj\Debug\net11.0\UEFIRefs.sourcelink.json
+A:\Dev\Projects\MyOSProj\UEFIRefs\bin\Debug\net11.0\System.Private.CoreLib.deps.json
+A:\Dev\Projects\MyOSProj\UEFIRefs\bin\Debug\net11.0\System.Private.CoreLib.dll
+A:\Dev\Projects\MyOSProj\UEFIRefs\bin\Debug\net11.0\System.Private.CoreLib.pdb
+A:\Dev\Projects\MyOSProj\UEFIRefs\obj\Debug\net11.0\System.Private.CoreLib.dll
+A:\Dev\Projects\MyOSProj\UEFIRefs\obj\Debug\net11.0\refint\System.Private.CoreLib.dll
+A:\Dev\Projects\MyOSProj\UEFIRefs\obj\Debug\net11.0\System.Private.CoreLib.pdb
+A:\Dev\Projects\MyOSProj\UEFIRefs\obj\Debug\net11.0\ref\System.Private.CoreLib.dll

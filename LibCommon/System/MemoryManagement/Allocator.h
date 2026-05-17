@@ -3,7 +3,7 @@
 #include <System/MemoryManagement/EfiAllocator.h>
 #include <System/MemoryManagement/KernelAllocator.h>
 #include <System//MemoryManagement/AllocatorStatus.h>
-#include <EFI_SYSTEM_TABLE.h>
+#include <SystemTable.h>
 #include <Debugging/Debugger.h>
 
 namespace Common::System::MemoryManagement
@@ -36,8 +36,8 @@ namespace Common::System::MemoryManagement
 		Allocator();
 		static  Allocator* GetInstance();
 		static AllocatorStatus SetWithExistingAllocator(Allocator* allocator);
-		static AllocatorStatus SetEfiAllocator(EFI::EFI_SYSTEM_TABLE* systemTable);
-		static AllocatorStatus SetKernelAllocator(EFI::EFI_SYSTEM_TABLE* systemTable);
+		static AllocatorStatus SetEfiAllocator(Efi::SystemTable* systemTable);
+		static AllocatorStatus SetKernelAllocator(Efi::SystemTable* systemTable);
 
 		VOID_PTR	Allocate(UINTN length);
 		VOID_PTR	AllocateZeroed(UINTN length);

@@ -53,11 +53,11 @@ namespace Common::System::MemoryManagement
 		{
 			if (!_allocatorInstance->IsInitalized())
 			{
-				return AllocatorStatus::Invalid_Parameters;
+				return AllocatorStatus::InvalidParameters;
 			}
 			else
 			{
-				return AllocatorStatus::Not_Initialized;
+				return AllocatorStatus::NotInitialized;
 			}
 		}
 
@@ -90,7 +90,7 @@ namespace Common::System::MemoryManagement
 	{
 		if (!_initialized)
 		{
-			*_lastStatus = AllocatorStatus::Not_Initialized;
+			*_lastStatus = AllocatorStatus::NotInitialized;
 			return nullptr;
 		}
 		if (_debug != nullptr)
@@ -107,7 +107,7 @@ namespace Common::System::MemoryManagement
 	{
 		if (!_initialized)
 		{
-			*_lastStatus = AllocatorStatus::Not_Initialized;
+			*_lastStatus = AllocatorStatus::NotInitialized;
 			return;
 		}
 
@@ -124,7 +124,7 @@ namespace Common::System::MemoryManagement
 	{
 		if (!_initialized)
 		{
-			*_lastStatus = AllocatorStatus::Not_Initialized;
+			*_lastStatus = AllocatorStatus::NotInitialized;
 			return nullptr;
 		}
 
@@ -144,7 +144,7 @@ namespace Common::System::MemoryManagement
 	{
 		if (!_initialized)
 		{
-			*_lastStatus = AllocatorStatus::Not_Initialized;
+			*_lastStatus = AllocatorStatus::NotInitialized;
 			return nullptr;
 		}
 
@@ -164,7 +164,7 @@ namespace Common::System::MemoryManagement
 	{
 		if (!_initialized)
 		{
-			*_lastStatus = AllocatorStatus::Not_Initialized;
+			*_lastStatus = AllocatorStatus::NotInitialized;
 			return;
 		}
 
@@ -191,7 +191,7 @@ namespace Common::System::MemoryManagement
 		return *_lastStatus;
 	}
 
-	AllocatorStatus Allocator::SetEfiAllocator(EFI::EFI_SYSTEM_TABLE* systemTable)
+	AllocatorStatus Allocator::SetEfiAllocator(Efi::SystemTable* systemTable)
 	{
 		if (_init)
 		{
@@ -211,7 +211,7 @@ namespace Common::System::MemoryManagement
 	}
 
 
-	AllocatorStatus Allocator::SetKernelAllocator(EFI::EFI_SYSTEM_TABLE* systemTable)
+	AllocatorStatus Allocator::SetKernelAllocator(Efi::SystemTable* systemTable)
 	{
 		return AllocatorStatus::Unknown;
 	}

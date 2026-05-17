@@ -1,6 +1,6 @@
 #pragma once
 #include <UEFIDef.h>
-#include <Protocols/Graphics/EFI_GRAPHICS_OUTPUT_BLT_PIXEL.h>
+#include <Protocols/Graphics/GraphicsOutputBLTPixel.h>
 
 
 namespace Common::Graphics
@@ -41,9 +41,9 @@ namespace Common::Graphics
 			return (UINT32)((Alpha << 24) | (Green << 16) | (Blue << 8) | Red);
 		}
 
-		const EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL AsEFI()
+		const Efi::GraphicsOutputBLTPixel AsEFI()
 		{
-			return EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ Blue, Green, Red, Alpha };
+			return Efi::GraphicsOutputBLTPixel{ Blue, Green, Red, Alpha };
 		}
 
 		Colour operator+(const Colour& other)
@@ -127,8 +127,8 @@ namespace Common::Graphics
 		Colour(const Colour& color) : Blue(color.Blue), Green(color.Green), Red(color.Red), Alpha(color.Alpha) {}
 		Colour(const Colour* color) : Blue(color->Blue), Green(color->Green), Red(color->Red), Alpha(color->Alpha) {}
 
-		Colour(const EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL& color) : Blue(color.Blue), Green(color.Green), Red(color.Red), Alpha(color.Alpha) {}
-		Colour(const EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL* color) : Blue(color->Blue), Green(color->Green), Red(color->Red), Alpha(color->Alpha) {}
+		Colour(const Efi::GraphicsOutputBLTPixel& color) : Blue(color.Blue), Green(color.Green), Red(color.Red), Alpha(color.Alpha) {}
+		Colour(const Efi::GraphicsOutputBLTPixel* color) : Blue(color->Blue), Green(color->Green), Red(color->Red), Alpha(color->Alpha) {}
 
 		static Colour FromRGBA(const UINT32 rgba)
 		{
@@ -179,18 +179,18 @@ namespace Common::Graphics
 			return Colour(r, g, b);
 		}
 
-		static Colour FromEFI(const EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL color)
+		static Colour FromEFI(const Efi::GraphicsOutputBLTPixel color)
 		{
 			return Colour(color);
 		}
 
-		static EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL ToEFI(const Colour color)
+		static Efi::GraphicsOutputBLTPixel ToEFI(const Colour color)
 		{
-			return EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ color.Blue, color.Green, color.Red, color.Alpha };
+			return Efi::GraphicsOutputBLTPixel{ color.Blue, color.Green, color.Red, color.Alpha };
 		}
-		static EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL ToEFI(const Colour* color)
+		static Efi::GraphicsOutputBLTPixel ToEFI(const Colour* color)
 		{
-			return EFI::EFI_GRAPHICS_OUTPUT_BLT_PIXEL{ color->Blue, color->Green, color->Red, color->Alpha };
+			return Efi::GraphicsOutputBLTPixel{ color->Blue, color->Green, color->Red, color->Alpha };
 		}
 	};
 #pragma pack(pop)

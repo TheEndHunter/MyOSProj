@@ -1,8 +1,8 @@
 #pragma once
 #include <TypeDefs.h>
-#include <Protocols/Time/EFI_TIME.h>
-#include <Protocols/IO/Media/EFI_FILE_PROTOCOL.h>
-#include <Protocols/IO/Media/EFI_FILE_INFO.h>
+#include <Protocols/Time/Time.h>
+#include <Protocols/IO/Media/FileProtocol.h>
+#include <Protocols/IO/Media/FileInfo.h>
 #include <System/Environment/Unicode.h>
 
 namespace Common::FileSystem::ESP
@@ -16,21 +16,21 @@ namespace Common::FileSystem
 	{
 		friend Common::FileSystem::ESP::ESP_FS_Context;
 	protected:
-		FileInfo(EFI::EFI_FILE_INFO* info);
+        FileInfo(Efi::FileInfo* info);
 	public:
 		constexpr FileInfo()
 		{
 			Size = 0;
 			FileSize = 0;
 			PhysicalSize = 0;
-			CreateTime = EFI::EFI_TIME();
-			LastAccessTime = EFI::EFI_TIME();
-			ModificationTime = EFI::EFI_TIME();
+			CreateTime = Efi::Time();
+			LastAccessTime = Efi::Time();
+			ModificationTime = Efi::Time();
 			Attribute = 0;
 			FileName = nullptr;
 		}
 
-		static FileInfo Create(EFI::EFI_FILE_INFO* info);
+        static FileInfo Create(Efi::FileInfo* info);
 
 		BOOLEAN operator==(const FileInfo& file)
 		{
@@ -48,9 +48,9 @@ namespace Common::FileSystem
 		UINT64 Size;
 		UINT64 FileSize;
 		UINT64 PhysicalSize;
-		EFI::EFI_TIME CreateTime;
-		EFI::EFI_TIME LastAccessTime;
-		EFI::EFI_TIME ModificationTime;
+		Efi::Time CreateTime;
+		Efi::Time LastAccessTime;
+		Efi::Time ModificationTime;
 		UINT64 Attribute;
 		CONST CHAR16* FileName;
 	};

@@ -1,10 +1,10 @@
 #pragma once
 #include <TypeDefs.h>
-#include <Protocols/Time/EFI_TIME.h>
-#include <Protocols/IO/Media/EFI_FILE_PROTOCOL.h>
-#include <Protocols/IO/Media/EFI_FILE_SYSTEM_INFO.h>
+#include <Protocols/Time/Time.h>
+#include <Protocols/IO/Media/FileProtocol.h>
+#include <Protocols/IO/Media/FileSystemInfo.h>
 #include <System/Environment/Unicode.h>
-#include <Protocols/IO/Media/EFI_FILE_SYSTEM_VOLUME_LABEL.h>
+#include <Protocols/IO/Media/FileSystemVolumeLabel.h>
 #include <System/MemoryManagement/MemFuncs.h>
 #include <System/Environment/String.h>
 
@@ -45,7 +45,7 @@ namespace Common::FileSystem
 
 		}
 
-    VolumeLabel(const EFI::EFI_FILE_SYSTEM_VOLUME_LABEL label)
+    VolumeLabel(const Efi::FileSystemVolumeLabel label)
 		{
         Size = Common::System::Environment::UTF<CHAR16>::Length(label.VolumeLabel);
         Label = (CHAR16*)Common::System::MemoryManagement::EfiAllocator::Allocate(sizeof(CHAR16) * (Size + 1));
@@ -84,7 +84,7 @@ namespace Common::FileSystem
 	{
 		friend ESP::ESP_FS_Context;
 	protected:
-		VolumeInfo(EFI::EFI_FILE_SYSTEM_INFO* info)
+		VolumeInfo(Efi::EFI_FILE_SYSTEM_INFO* info)
 		{
 			if (info == nullptr)
 			{
@@ -117,7 +117,7 @@ namespace Common::FileSystem
 			return  Label == right.Label && Size == right.Size && ReadOnly == right.ReadOnly && VolumeSize == right.VolumeSize && FreeSpace == right.FreeSpace && BlockSize == right.BlockSize;
 		}
 
-		static VolumeInfo Create(EFI::EFI_FILE_SYSTEM_INFO* info);
+		static VolumeInfo Create(Efi::EFI_FILE_SYSTEM_INFO* info);
 
 	public:
 		UINT64 Size;

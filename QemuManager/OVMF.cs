@@ -13,7 +13,7 @@
             Console.WriteLine("Checking for Updates...");
 
             var Dir = Directory.GetCurrentDirectory();
-            var extractPath = Path.Combine(Dir, "OVMF_Latest");
+            var extractPath = Path.Combine(Dir, "OVMF_v147");
             var ovmfPath = Path.Combine(Dir, "OVMF");
             var zipPath = Path.Combine(Dir, "ovmf_repo.zip");
 
@@ -52,7 +52,7 @@
                 }
             }
 
-            Console.WriteLine($"Downloading Latest Version: {repo.UpdatedAt} From {repo.FullName}...");
+            Console.WriteLine($"Downloading v147 Version: {repo.UpdatedAt} From {repo.FullName}...");
 
             if (File.Exists(zipPath))
             {

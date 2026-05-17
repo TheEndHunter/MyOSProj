@@ -1,6 +1,6 @@
 #pragma once
 #include <TypeDefs.h>
-#include <Protocols/IO/Media/EFI_FILE_ATTRIBUTES.h>
+#include <Protocols/IO/Media/FileAttributes.h>
 
 namespace Common::FileSystem
 {

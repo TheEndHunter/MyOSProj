@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>18.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{C2E4250F-7A7A-4567-8D76-5F42F610B204}</ProjectGuid>
+    <RootNamespace>UEFI</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -26,170 +33,166 @@
       <Platform>ARM64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ItemGroup>
-    <ClCompile Include="Helper Funcs\StringHelpers.cpp" />
+    <ClCompile Include="HelperFuncs\StringHelpers.cpp" />
     <ClCompile Include="UEFIDef.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Helper Funcs\StringHelpers.h" />
-    <ClInclude Include="Protocols\Configuration\EFI_CAPSULE_HEADER.h" />
-    <ClInclude Include="Protocols\Configuration\EFI_CAPSULE_TABLE.h" />
-    <ClInclude Include="Protocols\Debug\EFI_DEBUGPORT_PROTOCOL.h" />
-    <ClInclude Include="Protocols\Debug\EFI_DEBUG_IMAGE_INFO_NORMAL.h" />
-    <ClInclude Include="Protocols\Debug\EFI_DEBUG_IMAGE_INFO_TABLE.h" />
-    <ClInclude Include="Protocols\Debug\EFI_DEBUG_SUPPORT_PROTOCOL.h" />
-    <ClInclude Include="Protocols\Debug\EFI_EXCEPTION_TYPE.h" />
-    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT.h" />
-    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_AARCH64.h" />
-    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_ARM.h" />
-    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_IFP.h" />
-    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_LOONGARCH64.h" />
-    <ClInclude Include="Protocols\Debug\EFI_FX_SAVE_STATE_X64.h" />
-    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_X64.h" />
-    <ClInclude Include="Protocols\Debug\EFI_FX_SAVE_STATE_IA32.h" />
-    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_IA32.h" />
-    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_RISCV128.h" />
-    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_RISCV64.h" />
-    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_RISCV32.h" />
-    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_CONTEXT_EBC.h" />
-    <ClInclude Include="Protocols\Debug\EFI_INSTRUCTION_SET_ARCHITECTURE.h" />
-    <ClInclude Include="Protocols\Debug\EFI_SYSTEM_TABLE_POINTER.h" />
-    <ClInclude Include="Protocols\Debug\EFI_DEBUG_IMAGE_INFO.h" />
-    <ClInclude Include="Protocols\EFI_LOADED_IMAGE_PROTOCOL.h" />
-    <ClInclude Include="Protocols\IO\Console\EFI_CONSOLE_COLOR.h" />
-    <ClInclude Include="Protocols\IO\Media\EFI_FILE_ATTRIBUTES.h" />
-    <ClInclude Include="Protocols\IO\Media\EFI_FILE_INFO.h" />
-    <ClInclude Include="Protocols\IO\Media\EFI_FILE_IO_TOKEN.h" />
-    <ClInclude Include="Protocols\IO\Media\EFI_FILE_MODES.h" />
-    <ClInclude Include="Protocols\IO\Media\EFI_FILE_PROTOCOL.h" />
-    <ClInclude Include="Protocols\IO\Media\EFI_FILE_SYSTEM_INFO.h" />
-    <ClInclude Include="Protocols\IO\Media\EFI_FILE_SYSTEM_VOLUME_LABEL.h" />
-    <ClInclude Include="Protocols\IO\Media\EFI_LOAD_FILE2_PROTOCOL.h" />
-    <ClInclude Include="Protocols\IO\Console\EFI_UNICODE_CTRL_CHAR.h" />
-    <ClInclude Include="Protocols\IO\Media\EFI_LOAD_FILE_PROTOCOL.h" />
-    <ClInclude Include="Protocols\IO\Media\EFI_SIMPLE_FILE_SYSTEM_PROTOCOL.h" />
-    <ClInclude Include="Protocols\IO\Peripheral\EFI_ABSOLUTE_POINTER_MODE.h" />
-    <ClInclude Include="Protocols\IO\Peripheral\EFI_ABSOLUTE_POINTER_PROTOCOL.h" />
-    <ClInclude Include="Protocols\IO\Peripheral\EFI_ABSOLUTE_POINTER_STATE.h" />
-    <ClInclude Include="Protocols\IO\EFI_DEVICE_PATH_PROTOCOL.h" />
-    <ClInclude Include="Protocols\Graphics\EFI_EDID_DISCOVERED_PROTOCOL.h" />
-    <ClInclude Include="EFI_EVENT.h" />
-    <ClInclude Include="EFI_EVENT_NOTIFY.h" />
-    <ClInclude Include="Protocols\Graphics\EFI_GRAPHICS_OUTPUT_BLT_PIXEL.h" />
-    <ClInclude Include="Protocols\Graphics\EFI_GRAPHICS_OUTPUT_MODE_INFORMATION.h" />
-    <ClInclude Include="Protocols\Graphics\EFI_GRAPHICS_OUTPUT_PROTOCOL.h" />
-    <ClInclude Include="Protocols\Graphics\EFI_GRAPHICS_OUTPUT_PROTOCOL_MODE.h" />
-    <ClInclude Include="Protocols\Graphics\EFI_GRAPHICS_PIXEL_FORMAT.h" />
-    <ClInclude Include="Protocols\IO\Serial\EFI_PARITY_TYPE.h" />
-    <ClInclude Include="Protocols\Graphics\EFI_PIXEL_BITMASK.h" />
-    <ClInclude Include="Protocols\IO\Serial\EFI_SERIAL_CONTORL_BITS.h" />
-    <ClInclude Include="Protocols\IO\Serial\EFI_SERIAL_IO_MODE.h" />
-    <ClInclude Include="Protocols\IO\Serial\EFI_SERIAL_IO_PROTOCOL.h" />
-    <ClInclude Include="Protocols\IO\Peripheral\EFI_SIMPLE_POINTER_MODE.h" />
-    <ClInclude Include="Protocols\IO\Peripheral\EFI_SIMPLE_POINTER_PROTOCOL.h" />
-    <ClInclude Include="EFI_HANDLE.h" />
-    <ClInclude Include="Protocols\IO\Peripheral\EFI_INPUT_KEY.h" />
-    <ClInclude Include="EFI_INTERFACE_TYPE.h" />
-    <ClInclude Include="Protocols\IO\Peripheral\EFI_KEY_DATA.h" />
-    <ClInclude Include="Protocols\IO\Peripheral\EFI_KEY_SHIFT_STATE.h" />
-    <ClInclude Include="Protocols\IO\Peripheral\EFI_KEY_STATE.h" />
-    <ClInclude Include="Protocols\IO\Peripheral\EFI_KEY_TOGGLE_STATE.h" />
-    <ClInclude Include="EFI_LBA.h" />
-    <ClInclude Include="EFI_LOCATE_SEARCH_TYPE.h" />
-    <ClInclude Include="EFI_MEMORY_ADDRESS.h" />
-    <ClInclude Include="EFI_ALLOCATE_TYPE.h" />
-    <ClInclude Include="EFI_BOOT_SERVICES.h" />
-    <ClInclude Include="Protocols\Configuration\EFI_CONFIGURATION_TABLE.h" />
-    <ClInclude Include="EFI_GUID.h" />
-    <ClInclude Include="Protocols\Configuration\EFI_MEMORY_ATTRIBUTES_TABLE.h" />
-    <ClInclude Include="EFI_MEMORY_DESCRIPTOR.h" />
-    <ClInclude Include="Protocols\Configuration\EFI_OPEN_PROTOCOL_INFORMATION_ENTRY.h" />
-    <ClInclude Include="EFI_RESET_TYPE.h" />
-    <ClInclude Include="Protocols\Configuration\EFI_RT_PROPERTIES.h" />
-    <ClInclude Include="Protocols\IO\Peripheral\EFI_SIMPLE_POINTER_STATE.h" />
-    <ClInclude Include="Protocols\IO\Console\EFI_SIMPLE_TEXT_INPUT_EX_PROTOCOL.h" />
-    <ClInclude Include="Protocols\IO\Serial\EFI_STOP_BITS_TYPE.h" />
-    <ClInclude Include="Protocols\Time\EFI_TIME.h" />
-    <ClInclude Include="Protocols\Time\EFI_TIMER_DELAY.h" />
-    <ClInclude Include="Protocols\Time\EFI_TIME_CAPABILITIES.h" />
-    <ClInclude Include="EFI_TPL.h" />
-    <ClInclude Include="EFI_IP_ADDRESS.h" />
-    <ClInclude Include="EFI_MAC_ADDRESS.h" />
-    <ClInclude Include="EFI_MEMORY_TYPE.h" />
-    <ClInclude Include="EFI_RUNTIME_SERVICES.h" />
-    <ClInclude Include="Protocols\IO\Console\EFI_SIMPLE_TEXT_INPUT_PROTOCOL.h" />
-    <ClInclude Include="Protocols\IO\Console\EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL.h" />
-    <ClInclude Include="EFI_STATUS.h" />
-    <ClInclude Include="EFI_SYSTEM_TABLE.h" />
-    <ClInclude Include="EFI_TABLE_HEADER.h" />
-    <ClInclude Include="Protocols\Configuration\EFI_CONFORMANCE_PROFILES_TABLE.h" />
-    <ClInclude Include="Protocols\Configuration\EFI_MEMORY_RANGE_CAPSULE.h" />
-    <ClInclude Include="Protocols\Configuration\EFI_CAPSULE_BLOCK_DESCRIPTOR.h" />
-    <ClInclude Include="Protocols\Graphics\EFI_GRAPHICS_OUTPUT_BLT_OPERATION.h" />
+    <ClInclude Include="AllocateType.h" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="EventNotify.h" />
+    <ClInclude Include="HelperFuncs\StringHelpers.h" />
+    <ClInclude Include="InterfaceType.h" />
+    <ClInclude Include="IPAddress.h" />
+    <ClInclude Include="LBA.h" />
+    <ClInclude Include="LocateSearchType.h" />
+    <ClInclude Include="MACAddress.h" />
+    <ClInclude Include="MemoryAddress.h" />
+    <ClInclude Include="MemoryDescriptor.h" />
+    <ClInclude Include="MemoryType.h" />
+    <ClInclude Include="Protocols\Configuration\CapsuleBlockDescriptor.h" />
+    <ClInclude Include="Protocols\Configuration\CapsuleHeader.h" />
+    <ClInclude Include="Protocols\Configuration\CapsuleTable.h" />
+    <ClInclude Include="Protocols\Configuration\ConfigurationTable.h" />
+    <ClInclude Include="Protocols\Configuration\ConformanceProfilesTable.h" />
+    <ClInclude Include="Protocols\Configuration\MemoryAttributesTable.h" />
+    <ClInclude Include="Protocols\Configuration\MemoryRangeCapsule.h" />
+    <ClInclude Include="Protocols\Configuration\OpenProtocolInformationEntry.h" />
+    <ClInclude Include="Protocols\Configuration\RTProperties.h" />
+    <ClInclude Include="Protocols\Debug\DebugImageInfo.h" />
+    <ClInclude Include="Protocols\Debug\DebugImageInfoNormal.h" />
+    <ClInclude Include="Protocols\Debug\DebugImageInfoTable.h" />
+    <ClInclude Include="Protocols\Debug\DebugportProtocol.h" />
+    <ClInclude Include="Protocols\Debug\DebugSupportProtocol.h" />
+    <ClInclude Include="Protocols\Debug\ExceptionType.h" />
+    <ClInclude Include="Protocols\Debug\FxSaveStateIA32.h" />
+    <ClInclude Include="Protocols\Debug\FxSaveStateX64.h" />
+    <ClInclude Include="Protocols\Debug\InstructionSetArchitecture.h" />
+    <ClInclude Include="Protocols\Debug\SystemContext.h" />
+    <ClInclude Include="Protocols\Debug\SystemContextAARCH64.h" />
+    <ClInclude Include="Protocols\Debug\SystemContextARM.h" />
+    <ClInclude Include="Protocols\Debug\SystemContextEBC.h" />
+    <ClInclude Include="Protocols\Debug\SystemContextIA32.h" />
+    <ClInclude Include="Protocols\Debug\SystemContextIFP.h" />
+    <ClInclude Include="Protocols\Debug\SystemContextLOONGARCH64.h" />
+    <ClInclude Include="Protocols\Debug\SystemContextRISCV128.h" />
+    <ClInclude Include="Protocols\Debug\SystemContextRISCV32.h" />
+    <ClInclude Include="Protocols\Debug\SystemContextRISCV64.h" />
+    <ClInclude Include="Protocols\Debug\SystemContextX64.h" />
+    <ClInclude Include="Protocols\Debug\SystemTablePointer.h" />
+    <ClInclude Include="Protocols\Graphics\EdidDiscoveredProtocol.h" />
+    <ClInclude Include="Protocols\Graphics\GraphicsOutputBLTOperation.h" />
+    <ClInclude Include="Protocols\Graphics\GraphicsOutputBLTPixel.h" />
+    <ClInclude Include="Protocols\Graphics\GraphicsOutputModeInformation.h" />
+    <ClInclude Include="Protocols\Graphics\GraphicsOutputProtocol.h" />
+    <ClInclude Include="Protocols\Graphics\GraphicsOutputProtocolMode.h" />
+    <ClInclude Include="Protocols\Graphics\GraphicsPixelFormat.h" />
+    <ClInclude Include="Protocols\Graphics\PixelBitmask.h" />
+    <ClInclude Include="Protocols\IO\Console\ConsoleColor.h" />
+    <ClInclude Include="Protocols\IO\Console\SimpleTextInputEXProtocol.h" />
+    <ClInclude Include="Protocols\IO\Console\SimpleTextInputProtocol.h" />
+    <ClInclude Include="Protocols\IO\Console\SimpleTextOutputProtocol.h" />
+    <ClInclude Include="Protocols\IO\Console\UnicodeCtrlChar.h" />
+    <ClInclude Include="Protocols\IO\DevicePathProtocol.h" />
+    <ClInclude Include="Protocols\IO\Media\FileAttributes.h" />
+    <ClInclude Include="Protocols\IO\Media\FileInfo.h" />
+    <ClInclude Include="Protocols\IO\Media\FileIOToken.h" />
+    <ClInclude Include="Protocols\IO\Media\FileModes.h" />
+    <ClInclude Include="Protocols\IO\Media\FileProtocol.h" />
+    <ClInclude Include="Protocols\IO\Media\FileSystemInfo.h" />
+    <ClInclude Include="Protocols\IO\Media\FileSystemVolumeLabel.h" />
+    <ClInclude Include="Protocols\IO\Media\LoadFile2Protocol.h" />
+    <ClInclude Include="Protocols\IO\Media\LoadFileProtocol.h" />
+    <ClInclude Include="Protocols\IO\Media\SimpleFileSystemProtocol.h" />
+    <ClInclude Include="Protocols\IO\Peripheral\AbsolutePointerMode.h" />
+    <ClInclude Include="Protocols\IO\Peripheral\AbsolutePointerProtocol.h" />
+    <ClInclude Include="Protocols\IO\Peripheral\AbsolutePointerState.h" />
+    <ClInclude Include="Protocols\IO\Peripheral\InputKey.h" />
+    <ClInclude Include="Protocols\IO\Peripheral\KeyData.h" />
+    <ClInclude Include="Protocols\IO\Peripheral\KeyShiftState.h" />
+    <ClInclude Include="Protocols\IO\Peripheral\KeyState.h" />
+    <ClInclude Include="Protocols\IO\Peripheral\KeyToggleState.h" />
+    <ClInclude Include="Protocols\IO\Peripheral\SimplePointerMode.h" />
+    <ClInclude Include="Protocols\IO\Peripheral\SimplePointerProtocol.h" />
+    <ClInclude Include="Protocols\IO\Peripheral\SimplePointerState.h" />
+    <ClInclude Include="Handle.h" />
+    <ClInclude Include="Protocols\IO\Serial\ParityType.h" />
+    <ClInclude Include="Protocols\IO\Serial\SerialControlBits.h" />
+    <ClInclude Include="Protocols\IO\Serial\SerialIOMode.h" />
+    <ClInclude Include="Protocols\IO\Serial\SerialIOProtocol.h" />
+    <ClInclude Include="Protocols\IO\Serial\StopBitsType.h" />
+    <ClInclude Include="Protocols\LoadedImageProtocol.h" />
+    <ClInclude Include="Protocols\Time\Time.h" />
+    <ClInclude Include="Protocols\Time\TimeCapabilities.h" />
+    <ClInclude Include="Protocols\Time\TimerDelay.h" />
+    <ClInclude Include="ResetType.h" />
+    <ClInclude Include="Services\BootServices.h" />
+    <ClInclude Include="Guid.h" />
+    <ClInclude Include="Services\RuntimeServices.h" />
+    <ClInclude Include="Status.h" />
+    <ClInclude Include="SystemTable.h" />
+    <ClInclude Include="TableHeader.h" />
+    <ClInclude Include="TPL.h" />
     <ClInclude Include="UEFIDef.h" />
   </ItemGroup>
-  <PropertyGroup Label="Globals">
-    <VCProjectVersion>17.0</VCProjectVersion>
-    <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{C2E4250F-7A7A-4567-8D76-5F42F610B204}</ProjectGuid>
-    <RootNamespace>UEFI</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-  </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <ItemGroup>
+    <None Include="cpp.hint" />
+  </ItemGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v145</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <MSVCPreviewEnabled>true</MSVCPreviewEnabled>
+    <PlatformToolset>v145</PlatformToolset>
+    <VCToolsVersion />
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <MSVCPreviewEnabled>true</MSVCPreviewEnabled>
+    <PlatformToolset>v145</PlatformToolset>
+    <VCToolsVersion />
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <WindowsSDKDesktopARM64Support>true</WindowsSDKDesktopARM64Support>
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <MSVCPreviewEnabled>true</MSVCPreviewEnabled>
+    <PlatformToolset>v145</PlatformToolset>
+    <VCToolsVersion />
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <PreferredToolArchitecture>x86</PreferredToolArchitecture>
+    <MSVCPreviewEnabled>true</MSVCPreviewEnabled>
+    <PlatformToolset>v145</PlatformToolset>
+    <VCToolsVersion />
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <WindowsSDKDesktopARM64Support>true</WindowsSDKDesktopARM64Support>
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <MSVCPreviewEnabled>true</MSVCPreviewEnabled>
+    <PlatformToolset>v145</PlatformToolset>
+    <VCToolsVersion />
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <PreferredToolArchitecture>x86</PreferredToolArchitecture>
+    <MSVCPreviewEnabled>true</MSVCPreviewEnabled>
+    <PlatformToolset>v145</PlatformToolset>
+    <VCToolsVersion />
   </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="ExtensionSettings">
-  </ImportGroup>
-  <ImportGroup Label="Shared">
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <TargetName>UEFI$(Platform)</TargetName>
@@ -227,8 +230,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);DEBUG;WIN32;Win32;USE_UEFI_DEF;USEUEFITYPES</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
       <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BasicRuntimeChecks />
       <BufferSecurityCheck>false</BufferSecurityCheck>
@@ -256,8 +259,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);RELEASE;NDEBUG;WIN32;Win32;USE_UEFI_DEF;USEUEFITYPES</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
       <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BasicRuntimeChecks />
       <BufferSecurityCheck>false</BufferSecurityCheck>
@@ -282,8 +285,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);DEBUG;;USE_UEFI_DEF;USEUEFITYPES</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
       <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BasicRuntimeChecks />
       <BufferSecurityCheck>false</BufferSecurityCheck>
@@ -311,8 +314,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);RELEASE;NDEBUG;;USE_UEFI_DEF;USEUEFITYPES</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
       <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <BasicRuntimeChecks />
       <BufferSecurityCheck>false</BufferSecurityCheck>
@@ -335,8 +338,8 @@
     <ClCompile>
       <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);DEBUG;;USE_UEFI_DEF;USEUEFITYPES</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
       <ConformanceMode>true</ConformanceMode>
       <BasicRuntimeChecks />
       <BufferSecurityCheck>false</BufferSecurityCheck>
@@ -355,8 +358,8 @@
     <ClCompile>
       <PreprocessorDefinitions>$(Configuration);$(Platform);$(ConfigurationType);RELEASE;NDEBUG;;USE_UEFI_DEF;USEUEFITYPES</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard_C>stdclatest</LanguageStandard_C>
       <ConformanceMode>true</ConformanceMode>
       <BasicRuntimeChecks />
       <BufferSecurityCheck>false</BufferSecurityCheck>

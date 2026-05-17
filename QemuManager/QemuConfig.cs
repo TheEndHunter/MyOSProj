@@ -610,7 +610,7 @@
         public bool EnableRawLogging { get; set; } = false;
 
         // Serial target configuration
-        // Options: File, Stdio, Disabled
+        // Options: File, Stdio, Pipes, Disabled (no -serial arg), Off (-serial disabled)
         public SerialTargetType SerialTarget { get; set; } = SerialTargetType.Stdio;
 
         public enum SerialTargetType
@@ -618,13 +618,22 @@
             Unknown = 0,
             File,
             Stdio,
-            Disabled
+            Pipes,
+            Disabled,
+            Off
         }
 
         // When SerialTarget is "file", this template is used to generate file names.
         // Supported tokens: {timestamp}, {arch}, {config}
         // Example: "qemu_serial_{arch}_{config}_{timestamp}.log"
         public string SerialFileTemplate { get; set; } = "qemu_serial_{arch}_{config}_{timestamp}.log";
+
+        // When SerialTarget is "pipes", this name is used to create a named pipe pair on Windows.
+        // QEMU on Windows will use \\./pipe/<name> for bidirectional communication.
+        public string SerialPipeName { get; set; } = "QemuManager";
+
+        // When SerialTarget is "Stdio" and bridged via UDP, this is the local port used
+        public int SerialUdpPort { get; set; } = 17000;
 
         // Build a command-line fragment from the strongly-typed properties and
         // the legacy AdditionalArgs string. Returns a single string suitable for
@@ -686,7 +695,11 @@
             switch (SerialTarget)
             {
                 case SerialTargetType.Disabled:
-                    AppendOption("-serial", "none");
+                    // Disabled: do not add -serial at all
+                    break;
+                case SerialTargetType.Off:
+                    // Explicitly disable serial device via QEMU argument
+                    AppendOption("-serial", "disabled");
                     break;
                 case SerialTargetType.File:
                     // generate filename from template
@@ -696,9 +709,17 @@
                     fname = fname.Replace("{timestamp}", System.DateTime.UtcNow.ToString("yyyyMMddHHmmss"));
                     AppendOption("-serial", "file:" + fname);
                     break;
+                case SerialTargetType.Pipes:
+                    if (!string.IsNullOrWhiteSpace(SerialPipeName))
+                    {
+                        AppendOption("-serial", "pipe:" + SerialPipeName);
+                    }
+                    break;
                 case SerialTargetType.Stdio:
+                    // Route stdio via UDP to local console bridge
+                    AppendOption("-serial", $"udp:127.0.0.1:{SerialUdpPort}");
+                    break;
                 default:
-                    // leave default (stdio) - no explicit argument
                     break;
             }
 

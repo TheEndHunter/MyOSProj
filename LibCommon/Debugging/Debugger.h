@@ -1,6 +1,6 @@
 #pragma once
 #include <TypeDefs.h>
-#include <EFI_SYSTEM_TABLE.h>
+#include <SystemTable.h>
 
 namespace Common::Debugging
 {
@@ -14,7 +14,7 @@ namespace Common::Debugging
 	struct Debugger
 	{
 	public:
-		Debugger(EFI::EFI_SYSTEM_TABLE* sysTable)
+		Debugger(Efi::SystemTable* sysTable)
 		{
 			_sysTbl = sysTable;
 		}
@@ -32,6 +32,6 @@ namespace Common::Debugging
 		void WaitForKey(const CHAR16 key) const;
 		void WaitForKey() const;
 	private:
-		EFI::EFI_SYSTEM_TABLE* _sysTbl;
+		Efi::SystemTable* _sysTbl;
 	};
 }

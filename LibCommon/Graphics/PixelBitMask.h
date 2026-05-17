@@ -1,6 +1,6 @@
 #pragma once
 #include <TypeDefs.h>
-#include <Protocols/Graphics/EFI_PIXEL_BITMASK.h>
+#include <Protocols/Graphics/PixelBitmask.h>
 
 namespace Common::Graphics
 {
@@ -9,7 +9,7 @@ namespace Common::Graphics
 	public:
 		PixelBitMask();
 		PixelBitMask(const UINT32 red, const  UINT32 green, const  UINT32 blue, const  UINT32 alpha);
-		PixelBitMask(EFI::EFI_PIXEL_BITMASK& mask);
+		PixelBitMask(Efi::PixelBitmask& mask);
 
 		UINT32 RedMask;
 		UINT32 GreenMask;
