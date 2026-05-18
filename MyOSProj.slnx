@@ -15,10 +15,12 @@
   <Project Path="ConsoleApplication1/ConsoleApplication1.vcxproj" Id="f8035f28-d57f-49f4-a2a2-d4efcf58b04d">
     <Platform Solution="*|ARM" Project="x64" />
     <Platform Solution="*|ARM64" Project="x64" />
+    <Build Solution="*|ARM" Project="false" />
+    <Build Solution="*|ARM64" Project="false" />
   </Project>
   <Project Path="ImageBuilder\ImageBuilder.csproj">
-    <BuildDependency Project="Bootloader\Bootloader.vcxproj" />
-    <BuildDependency Project="QemuManager\QemuRunner.csproj" />
+    <BuildDependency Project="UEFIRefs/UEFIRefs.csproj" />
+    <BuildDependency Project="UEFISharp/UEFISharp.csproj" />
     <Platform Solution="*|ARM" Project="ARM" />
     <Platform Solution="*|ARM64" Project="ARM64" />
     <Platform Solution="*|x64" Project="x64" />
@@ -27,20 +29,29 @@
   <Project Path="Kernel\Kernel.vcxproj" Id="dacf7e02-b3a0-449f-9cb3-47f52848ff6e">
     <BuildDependency Project="Bootloader\Bootloader.vcxproj" />
   </Project>
-  <Project Path="LibCommon\LibCommon.vcxproj" Id="c23c7061-59fe-4df9-a5d5-113d3dc74b32" />
+  <Project Path="LibCommon\LibCommon.vcxproj" Id="c23c7061-59fe-4df9-a5d5-113d3dc74b32">
+    <BuildDependency Project="LibCPP\LibCPP.vcxproj" />
+  </Project>
   <Project Path="LibCPP\LibCPP.vcxproj" Id="30033bc1-4c5f-45c5-932e-c667f58138da" />
   <Project Path="QemuManager\QemuRunner.csproj">
-    <BuildDependency Project="Bootloader\Bootloader.vcxproj" />
-    <BuildDependency Project="Kernel\Kernel.vcxproj" />
-    <BuildDependency Project="LibCommon\LibCommon.vcxproj" />
-    <BuildDependency Project="UEFI\UEFI.vcxproj" />
+    <BuildDependency Project="ImageBuilder\ImageBuilder.csproj" />
+    <BuildDependency Project="UEFIRefs/UEFIRefs.csproj" />
+    <BuildDependency Project="UEFISharp/UEFISharp.csproj" />
     <Platform Solution="*|ARM" Project="ARM" />
     <Platform Solution="*|ARM64" Project="ARM64" />
     <Platform Solution="*|x64" Project="x64" />
     <Platform Solution="*|x86" Project="x86" />
     <Build Solution="*|ARM" Project="false" />
   </Project>
-  <Project Path="UEFIRefs/UEFIRefs.csproj" />
-  <Project Path="UEFISharp/UEFISharp.csproj" />
+  <Project Path="UEFIRefs/UEFIRefs.csproj">
+    <Platform Solution="*|ARM64" Project="ARM64" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Build Solution="*|ARM" Project="false" />
+  </Project>
+  <Project Path="UEFISharp/UEFISharp.csproj">
+    <Platform Solution="*|ARM64" Project="ARM64" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Build Solution="*|ARM" Project="false" />
+  </Project>
   <Project Path="UEFI\UEFI.vcxproj" Id="c2e4250f-7a7a-4567-8d76-5f42f610b204" />
 </Solution>

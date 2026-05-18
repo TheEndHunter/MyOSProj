@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>19. Protocols — Compression Algorithm Specification &mdash; UEFI Specification 2.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=f2209469" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/style.css?v=faba8a36" />
+      <link rel="stylesheet" type="text/css" href="_static/theme-overrides.css?v=84235ce0" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2de06f63"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="20. Protocols — ACPI Protocols" href="20_Protocols_ACPI_Protocols.html" />
+    <link rel="prev" title="18. Protocols — Debugger Support" href="18_Protocols_Debugger_Support.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            UEFI Specification
+          </a>
+              <div class="version">
+                2.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Tables.html">List of Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Figures.html">List of Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/Revision_History.html">Revision History</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Overview.html">2. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Boot_Manager.html">3. Boot Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_EFI_System_Table.html">4. EFI System Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_GUID_Partition_Table_Format.html">5. GUID Partition Table (GPT) Disk Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_Block_Transition_Table_Layout.html">6. Block Translation Table (BTT) Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Services_Boot_Services.html">7. Services — Boot Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Services_Runtime_Services.html">8. Services — Runtime Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Protocols_EFI_Loaded_Image.html">9. Protocols - EFI Loaded Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Protocols_Device_Path_Protocol.html">10. Protocols – Device Path Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html">11. Protocols — UEFI Driver Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_Protocols_Console_Support.html">12. Protocols — Console Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Protocols_Media_Access.html">13. Protocols – Media Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Protocols_PCI_Bus_Support.html">14. Protocols — PCI Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_Protocols_SCSI_Driver_Models_and_Bus_Support.html">15. Protocols — SCSI Driver Models and Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_Protocols_iSCSI_Boot.html">16. Protocols — iSCSI Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_Protocols_USB_Support.html">17. Protocols — USB Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_Protocols_Debugger_Support.html">18. Protocols — Debugger Support</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">19. Protocols — Compression Algorithm Specification</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#algorithm-overview">19.1. Algorithm Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-format">19.2. Data Format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bit-order">19.2.1. Bit Order</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#overall-structure">19.2.2. Overall Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#block-structure">19.2.3. Block Structure</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#block-header">19.2.3.1. Block Header</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#block-body">19.2.3.2. Block Body</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#compressor-design">19.3. Compressor Design</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overall-process">19.3.1. Overall Process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#string-info-log">19.3.2. String Info Log</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#data-structures">19.3.2.1. Data Structures</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#searching-the-tree">19.3.2.2. Searching the Tree</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#adding-string-info">19.3.2.3. Adding String Info</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#deleting-string-info">19.3.2.4. Deleting String Info</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#huffman-code-generation">19.3.3. Huffman Code Generation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#huffman-tree-generation">19.3.3.1. Huffman Tree Generation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#code-length-adjustment">19.3.3.2. Code Length Adjustment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#code-generation">19.3.3.3. Code Generation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#decompressor-design">19.4. Decompressor Design</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#decompress-protocol">19.5. Decompress Protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-decompress-protocol">19.5.1. EFI_DECOMPRESS_PROTOCOL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-decompress-protocol-getinfo">19.5.2. EFI_DECOMPRESS_PROTOCOL.GetInfo()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-decompress-protocol-decompress">19.5.3. EFI_DECOMPRESS_PROTOCOL.Decompress()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="20_Protocols_ACPI_Protocols.html">20. Protocols — ACPI Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_Protocols_String_Services.html">21. Protocols — String Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html">22. EFI Byte Code Virtual Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_Firmware_Update_and_Reporting.html">23. Firmware Update and Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24_Network_Protocols_SNP_PXE_BIS.html">24. Network Protocols — SNP, PXE, BIS and HTTP Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25_Network_Protocols_Managed_Network.html">25. Network Protocols - Managed Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26_Network_Protocols_Bluetooth.html">26. Network Protocols — Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27_Network_Protocols_VLAN_and_EAP.html">27. Network Protocols — VLAN, EAP, Wi-Fi and Supplicant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28_Network_Protocols_TCP_IP_and_Configuration.html">28. Network Protocols — TCP, IP, IPsec, FTP, TLS and Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29_Network_Protocols_ARP_and_DHCP.html">29. Network Protocols — ARP, DHCP, DNS, HTTP and REST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_Network_Protocols_UDP_and_MTFTP.html">30. Network Protocols — UDP and MTFTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="31_EFI_Redfish_Service_Support.html">31. EFI Redfish Service Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="32_Secure_Boot_and_Driver_Signing.html">32. Secure Boot and Driver Signing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="33_Human_Interface_Infrastructure.html">33. Human Interface Infrastructure Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="34_HII_Protocols.html">34. HII Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="35_HII_Configuration_Processing_and_Browser_Protocol.html">35. HII Configuration Processing and Browser Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="36_User_Identification.html">36. User Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="37_Secure_Technologies.html">37. Secure Technologies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="38_Confidential_Computing.html">38. Confidential Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="39_Micellaneous_Protocols.html">39. Miscellaneous Protocols</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Apx_A_GUID_and_Time_Formats.html">A. GUID and Time Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_B_Console.html">B. Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_C_Device_Path_Examples.html">C. Device Path Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_D_Status_Codes.html">D. Status Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_E_Universal_Network_Driver_Interfaces.html">E. Universal Network Driver Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_F_Using_the_Simple_Pointer_Protocol.html">F. Using the Simple Pointer Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_G_Using_the_EFI_Extended_SCSI_Pass_Thru_Protocol.html">G. Using the EFI Extended SCSI Pass Thru Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_H_Compression_Source_Code.html">H. Compression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_I_Decompression_Source_Code.html">I. Decompression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_J_EFI_Byte_Code_Virtual_Machine_Opcode_List.html">J. EFI Byte Code Virtual Machine Opcode List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_K_Alphabetic_Function_Lists.html">K. Alphabetic Function Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_L_EFI_1.10_Protocol_Changes_and_Deprecation_List.html">L. EFI 1.10 Protocol Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html">M. Formats — Language Codes and Language Code Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_N_Common_Platform_Error_Record.html">N. Common Platform Error Record (CPER)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_O_UEFI_ACPI_Data_Table.html">O. UEFI ACPI Data Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_P_Hardware_Error_Record_Persistence_Usage.html">P. Hardware Error Record Persistence Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_Q_References.html">Q. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_R_Glossary.html">R. Glossary</a></li>
+</ul>
+
+    <a href= "genindex.html">Index</a>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UEFI Specification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">19. </span>Protocols — Compression Algorithm Specification</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="protocols-compression-algorithm-specification">
+<span id="id1"></span><h1><span class="section-number">19. </span>Protocols — Compression Algorithm Specification<a class="headerlink" href="#protocols-compression-algorithm-specification" title="Link to this heading"></a></h1>
+<p>In EFI firmware storage, binary codes/data are often compressed to save storage space. These compressed codes/data are extracted into memory for execution at boot time. This demands an efficient lossless compression/decompression algorithm. The compressor must produce small compressed images, and the decompressor must operate fast enough to avoid delays at boot time.</p>
+<p>This chapter describes in detail the UEFI compression/decompression algorithm, as well as the EFI Decompress Protocol. The EFI Decompress Protocol provides a standard decompression interface for use at boot time.</p>
+<section id="algorithm-overview">
+<span id="id2"></span><h2><span class="section-number">19.1. </span>Algorithm Overview<a class="headerlink" href="#algorithm-overview" title="Link to this heading"></a></h2>
+<p>In this chapter, the term “character” denotes a single byte and the term “string” denotes a series of concatenated characters.</p>
+<p>The compression/decompression algorithm used in EFI firmware storage is a combination of the LZ77 algorithm and Huffman Coding. The LZ77 algorithm replaces a repeated string with a pointer to the previous occurrence of the string. Huffman Coding encodes symbols in a way that the more frequently a symbol appears in a text, the shorter the code that is assigned to it.</p>
+<p>The compression process contains two steps:</p>
+<ul>
+<li><p>The first step is to find repeated strings (using LZ77 algorithm) and produce intermediate data.</p>
+<p>Beginning with the first character, the compressor scans the source data and determines if the characters starting at the current position can form a string previously appearing in the text. If a long enough matching string is found, the compressor will output a pointer to the string. If the pointer occupies more space than the string itself, the compressor will output the original character at the current position in the source data. Then the compressor advances to the next position and repeats the process. To speed up the compression process, the compressor dynamically maintains a <strong>String Info Log</strong> to record the positions and lengths of strings encountered, so that string comparisons are performed quickly by looking up the String Info Log.</p>
+<p>Because a compressor cannot have unlimited resources, as the compression continues the compressor removes “old” string information. This prevents the String Info Log from becoming too large. As a result, the algorithm can only look up repeated strings within the range of a fixed-sized “sliding window” behind the current position.</p>
+<p>In this way, a stream of intermediate data is produced which contains two types of symbols: the <strong>Original Characters</strong> (to be preserved in the decompressed data), and the <strong>Pointers</strong> (representing a previous string). A Pointer consists of two elements: the <strong>String Position</strong> and the <strong>String Length</strong>, representing the location and the length of the target string, respectively.</p>
+</li>
+<li><p>To improve the compression ratio further, Huffman Coding is utilized as the second step.</p>
+<p>The intermediate data (consisting of original characters and pointers) is divided into Blocks so that the compressor can perform Huffman Coding on a Block immediately after it is generated; eliminating the need for a second pass from the beginning after the intermediate data has been generated. Also, since symbol frequency distribution may differ in different parts of the intermediate data, Huffman Coding can be optimized for each specific Block. The compressor determines Block Size for each Block according to the specifications defined in  <a class="reference internal" href="#id3">Data Format</a> .</p>
+<p>In each Block, two symbol sets are defined for Huffman Coding. The Char&amp;Len Set consists of the Original Characters plus the String Lengths and the Position Set consists of String Positions (Note that the two elements of a Pointer belong to separate symbol sets). The Huffman Coding schemes applied on these two symbol sets are independent.</p>
+<p>The algorithm uses “canonical” Huffman Coding so a Huffman tree can be represented as an array of code lengths in the order of the symbols in the symbol set. This code length array represents the Huffman Coding scheme for the symbol set. Both the Char&amp;Len Set code length array and the Position Set code length array appear in the Block Header.</p>
+<p>Huffman coding is used on the code length array of the Char&amp;Len Set to define a third symbol set. The Extra Set is defined based on the code length values in the Char&amp;Len Set code length array. The code length array for the Huffman Coding of Extra Set also appears in the Block Header together with the other two code length arrays. For exact format of the Block Header,   <a class="reference internal" href="#id7">Block Header</a>.</p>
+</li>
+</ul>
+<p>The decompression process is straightforward given that the compression process is known. The decompressor scans the compressed data and decodes the symbols one by one, according to the Huffman code mapping tables generated from code length arrays. Along the process, if it encounters an original character, it outputs it; if it encounters a pointer, it looks it up in the already decompressed data and outputs the associated string.</p>
+</section>
+<section id="data-format">
+<span id="id3"></span><h2><span class="section-number">19.2. </span>Data Format<a class="headerlink" href="#data-format" title="Link to this heading"></a></h2>
+<p>This section describes in detail the format of the compressed data produced by the compressor. The compressed data serves as input to the decompressor and can be fully extracted to the original source data.</p>
+<section id="bit-order">
+<span id="id4"></span><h3><span class="section-number">19.2.1. </span>Bit Order<a class="headerlink" href="#bit-order" title="Link to this heading"></a></h3>
+<p>In computer data representation, a byte is the minimum unit and there is no differentiation in the order of bits within a byte. However, the compressed data is a sequence of bits rather than a sequence of bytes and as a result the order of bits in a byte needs to be defined. In a compressed data stream, the higher bits are defined to precede the lower bits in a byte. The Figure, below, <a class="reference internal" href="#bit-sequence-of-compressed-data-protocols"><span class="std std-ref">Bit Sequence of Compressed Data</span></a> illustrates a compressed data sequence written as bytes from left to right. For each byte, the bits are written in an order with bit 7 (the highest bit) at the left and bit 0 (the lowest bit) at the right. Concatenating the bytes from left to right forms a bit sequence.</p>
+<figure class="align-default" id="bit-sequence-of-compressed-data-protocols">
+<a class="reference internal image-reference" href="_images/Protocols_Compression_Algorithm_Specification-2.png"><img alt="_images/Protocols_Compression_Algorithm_Specification-2.png" src="_images/Protocols_Compression_Algorithm_Specification-2.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 19.1 </span><span class="caption-text">Bit Sequence of Compressed Data</span><a class="headerlink" href="#bit-sequence-of-compressed-data-protocols" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>The bits of the compressed data are actually formed by a sequence of data units. These data units have variable bit lengths. The bits of each data unit are arranged so that the higher bit of the data unit precedes the lower bit of the data unit.</p>
+</section>
+<section id="overall-structure">
+<span id="id5"></span><h3><span class="section-number">19.2.2. </span>Overall Structure<a class="headerlink" href="#overall-structure" title="Link to this heading"></a></h3>
+<p>The compressed data begins with two 32-bit numerical fields: the compressed size and the original size. The compressed data following these two fields is composed of one or more Blocks. Each Block is a unit for Huffman Coding with a coding scheme independent of the other Blocks. Each Block is composed of a Block Header containing the Huffman code trees for this Block and a Block Body with the data encoded using the coding scheme defined by the Huffman trees. The compressed data is terminated by an additional byte of zero.</p>
+<p>The overall structure of the compressed data is shown in   <a class="reference internal" href="#compressed-data-structure-protocols"><span class="std std-ref">Compressed Data Structure</span></a> .</p>
+<figure class="align-default" id="compressed-data-structure-protocols">
+<a class="reference internal image-reference" href="_images/Protocols_Compression_Algorithm_Specification-3.png"><img alt="_images/Protocols_Compression_Algorithm_Specification-3.png" src="_images/Protocols_Compression_Algorithm_Specification-3.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 19.2 </span><span class="caption-text"><strong>Compressed Data Structure</strong></span><a class="headerlink" href="#compressed-data-structure-protocols" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Note the following:</p>
+<ul>
+<li><p>Blocks are of variable lengths.</p></li>
+<li><p>Block lengths are counted by bits and not necessarily divisible by 8. Blocks are tightly packed (there are no padding bits between blocks). Neither the starting position nor ending position of a Block is necessarily at a byte boundary. However, if the last Block is not terminated at a byte boundary, there should be some bits of 0 to fill up the remaining bits of the last byte of the block, before the terminator byte of 0.</p></li>
+<li><p>Compressed Size =</p>
+<p>Size in bytes of (Block 0 + Block 1 +… + Block N + Filling Bits (if any) + Terminator).</p>
+</li>
+<li><p>Original Size is the size in bytes of original data.</p></li>
+<li><p>Both Compressed Size and Original Size are “little endian” (starting from the least significant byte).</p></li>
+</ul>
+</section>
+<section id="block-structure">
+<span id="id6"></span><h3><span class="section-number">19.2.3. </span>Block Structure<a class="headerlink" href="#block-structure" title="Link to this heading"></a></h3>
+<p>A Block is composed of a Block Header and a Block Body, as shown in the figure below. These two parts are packed tightly (there are no padding bits between them). The lengths in bits of Block Header and Block
+Body are not necessarily divisible by eight.</p>
+<figure class="align-default" id="block-structure-protocols">
+<a class="reference internal image-reference" href="_images/Protocols_Compression_Algorithm_Specification-4.png"><img alt="_images/Protocols_Compression_Algorithm_Specification-4.png" src="_images/Protocols_Compression_Algorithm_Specification-4.png" style="width: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 19.3 </span><span class="caption-text"><strong>Block Structure</strong></span><a class="headerlink" href="#block-structure-protocols" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="block-header">
+<span id="id7"></span><h4><span class="section-number">19.2.3.1. </span>Block Header<a class="headerlink" href="#block-header" title="Link to this heading"></a></h4>
+<p>The Block Header contains the Huffman encoding information for this block. Since “canonical” Huffman Coding is being used, a Huffman tree is represented as an array of code lengths in increasing order of the symbols in the symbol set. Code lengths are limited to be less than or equal to 16 bits. This requires some extra handling of Huffman codes in the compressor, which is described in  <a class="reference internal" href="#id6">Block Structure</a> .</p>
+<p>There are three code length arrays for three different symbol sets in the Block Header: one for the Extra Set, one for the Char&amp;Len Set, and one for the Position Set.</p>
+<p>The Block Header is composed of the tightly packed (no padding bits) fields described in the Table, below, <a class="reference internal" href="#block-header-fields-protocols"><span class="std std-ref">Block Header Fields</span></a> .</p>
+<table class="longtable docutils align-default" id="block-header-fields-protocols">
+<caption><span class="caption-number">Table 19.1 </span><span class="caption-text">Block Header Fields</span><a class="headerlink" href="#block-header-fields-protocols" title="Link to this table"></a></caption>
+<tbody>
+<tr class="row-odd"><td><p><strong>Field Name</strong></p></td>
+<td><p><strong>Length (bits)</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Block Size</p></td>
+<td><p>16</p></td>
+<td><div class="line-block">
+<div class="line">The size of this Block. Block Size is defined as the number of original characters plus the number of pointers that appear in the Block Body:</div>
+<div class="line"><br /></div>
+<div class="line">Block Size = Number of Original Characters in the Block Body</div>
+<div class="line">+ Number of Pointers in the Block Body.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Extra Set Code Length Array Size</p></td>
+<td><p>5</p></td>
+<td><div class="line-block">
+<div class="line">The number of code lengths in the Extra Set Code Length Array.</div>
+<div class="line"><br /></div>
+<div class="line">The Extra Set Code Length Array contains code lengths of the Extra Set in increasing order of the symbols, and if all symbols greater than a certain symbol have zero code length, the Extra Set Code Length Array terminates at the last nonzero code length symbol.</div>
+<div class="line"><br /></div>
+<div class="line">Since there are 19 symbols in the Extra Set (see the description of the Char&amp;Len Set Code Length Array), the maximum Extra Set Code Length Array Size is 19.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Extra Set Code Length Array</p></td>
+<td><p>Variable</p></td>
+<td><div class="line-block">
+<div class="line">If Extra Set Code Length Array Size is 0, then this field is a 5-bit value that represents the only Huffman code used.</div>
+<div class="line"><br /></div>
+<div class="line">If Extra Set Code Length Array Size is not 0, then this field is an encoded form of a concatenation of code lengths in increasing order of the symbols.</div>
+<div class="line"><br /></div>
+<div class="line">The concatenation of Code lengths are encoded as follows:</div>
+<div class="line">If a code length is less than 7, then it is encoded as a 3-bit value;</div>
+<div class="line"><br /></div>
+<div class="line">If a code length is equal to or greater than 7, then it is encoded as a series of “1”s followed by a terminating “0.” The number of “1”s = Code length - 4. For example, code length “ten” is encoded as “1111110”; code length “seven” is encoded as “1110.”</div>
+<div class="line"><br /></div>
+<div class="line">After the third length of the code length concatenation, a 2-bit value is used to indicate the number of consecutive zero lengths immediately after the third length. (Note this 2-bit value only appears once after the third length, and does NOT appear multiple times after every 3rd length.)</div>
+<div class="line"><br /></div>
+<div class="line">This 2-bit value ranges from 0 to 3. For example, if the 2-bit value is “00,” then it means there are no zero lengths at the point, and following encoding starts from the fourth code length;</div>
+<div class="line"><br /></div>
+<div class="line">if the 2-bit value is “10” then it means the fourth and fifth length are zero and following encoding starts from the sixth code length.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Position Set Code Length Array Size</p></td>
+<td><p>4</p></td>
+<td><div class="line-block">
+<div class="line">The number of code lengths in the Position Set Code Length Array.</div>
+<div class="line"><br /></div>
+<div class="line">The Position Set Code Length Array contains code lengths of Position Set in increasing order of the symbols in the Position Set, and if all symbols greater than a certain symbol have zero code length, the Position Set Code Length Array terminates at the last nonzero code length symbol.</div>
+<div class="line"><br /></div>
+<div class="line">Since there are 14 symbols in the Position Set (see 3.3.2),</div>
+<div class="line">the maximum Position Set Code Length Array Size is 14.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Char&amp;Len Set Code Length Array</p></td>
+<td><p>Variable</p></td>
+<td><div class="line-block">
+<div class="line">If Char&amp;Len Set Code Length Array Size is 0, then this field is a 9-bit value that represents the only Huffman code used.</div>
+<div class="line"><br /></div>
+<div class="line">If Char&amp;Len Set Code Length Array Size is not 0, then this field is an encoded form of a concatenation of code lengths in increasing order of the symbols.  The concatenation of Code lengths are two-step encoded:</div>
+<div class="line"><br /></div>
+<div class="line">Step 1:</div>
+<div class="line"><br /></div>
+<div class="line">If a code length is not zero, then it is encoded as “code length + 2”;</div>
+<div class="line">If a code length is zero, then the number of consecutive zero lengths starting from this code length is counted —</div>
+<div class="line"><br /></div>
+<div class="line">• If the count is equal to or less than 2, then the code “0” is used for each zero length;</div>
+<div class="line">• if the count is greater than 2 and less than 19, then the code “1” followed by a 4-bit value of “count - 3” is used for these consecutive zero lengths;</div>
+<div class="line">• if the count is equal to 19, then it is treated as “1 + 18,” and a code “0” and a code “1” followed by a 4-bit value of “15” are used for these consecutive zero lengths;</div>
+<div class="line">• if the count is greater than 19, then the code “2” followed by a 9-bit value of “count - 20” is used for these consecutive zero lengths.</div>
+<div class="line"><br /></div>
+<div class="line">Step 2:</div>
+<div class="line"><br /></div>
+<div class="line">The second step encoding is a Huffman encoding of the codes produced by first step.</div>
+<div class="line"><br /></div>
+<div class="line">(While encoding codes “1” and “2,” their appended values are not encoded and preserved in the resulting text).</div>
+<div class="line">The code lengths of generated Huffman tree are just the contents of the Extra Set Code Length Array.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Position Set Code Length Array Size</p></td>
+<td><p>4</p></td>
+<td><div class="line-block">
+<div class="line">The number of code lengths in the Position Set Code Length Array.</div>
+<div class="line"><br /></div>
+<div class="line">The Position Set Code Length Array contains code lengths of Position Set in increasing order of the symbols in the Position Set, and if all symbols greater than a certain symbol have zero code length, the Position Set Code Length Array terminates at the last nonzero code length symbol.</div>
+<div class="line"><br /></div>
+<div class="line">Since there are 14 symbols in the Position Set (see 3.3.2), the maximum Position Set Code Length Array Size is 14.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Position Set Code Length Array</p></td>
+<td><p>Variable</p></td>
+<td><div class="line-block">
+<div class="line">If Position Set Code Length Array Size is 0, then this field is a 5-bit value that represents the only Huffman code used.</div>
+<div class="line"><br /></div>
+<div class="line">If Position Set Code Length Array Size is not 0, then this field is an encoded form of a concatenation of code lengths in increasing order of the symbols.</div>
+<div class="line"><br /></div>
+<div class="line">The concatenation of Code lengths are encoded as follows:</div>
+<div class="line"><br /></div>
+<div class="line">If a code length is less than 7, then it is encoded as a normal 3-bit value;</div>
+<div class="line"><br /></div>
+<div class="line">If a code length is equal to or greater than 7, then it is encoded as a series of “1”s followed by a terminating “0.” The number of “1”s = Code length - 4. For example, code length “10” is encoded as “1111110”; code length “7” is encoded as “1110.”</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="block-body">
+<span id="id8"></span><h4><span class="section-number">19.2.3.2. </span>Block Body<a class="headerlink" href="#block-body" title="Link to this heading"></a></h4>
+<p>The Block Body is simply a mixture of Original Characters and Pointers, while each Pointer has two elements: String Length preceding String Position. All these data units are tightly packed together.</p>
+<figure class="align-default" id="block-body-protocols">
+<a class="reference internal image-reference" href="_images/Protocols_Compression_Algorithm_Specification-5.png"><img alt="_images/Protocols_Compression_Algorithm_Specification-5.png" src="_images/Protocols_Compression_Algorithm_Specification-5.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 19.4 </span><span class="caption-text"><strong>Block Body</strong></span><a class="headerlink" href="#block-body-protocols" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>The Original Characters, String Lengths and String Positions are all Huffman coded using the Huffman trees presented in the Block Header, with some additional variations. The exact format is described below:</p>
+<p>An Original Character is a byte in the source data. A String Length is a value that is greater than 3 and less than 257 (this range should be ensured by the compressor). By calculating “(String Length - 3) | 0x100,” a value set is obtained that ranges from 256 to 509. By combining this value set with the value set of Original Characters (0 ~ 255), the Char&amp;Len Set (ranging from 0 to 509) is generated for Huffman Coding.</p>
+<p>A String Position is a value that indicates the distance between the current position and the target string. The String Position value is defined as “Current Position - Starting Position of the target string - 1.” The String Position value ranges from 0 to 8190 (so 8192 is the “sliding window” size, and this range should be ensured by the compressor). The lengths of the String Position values (in binary form) form a value set ranging from 0 to 13 (it is assumed that value 0 has length of 0). This value set is the Position Set for Huffman Coding. The full representation of a String Position value is composed of two consecutive parts: one is the Huffman code for the value length; the other is the actual String Position value of “length - 1” bits (excluding the highest bit since the highest bit is always “1”). For example, String Position value 18 is represented as: Huffman code for “5” followed by “0010.” If the value length is 0 or 1, then no value is appended to the Huffman code. This kind of representation favors small String Position values, which is a hint for compressor design.</p>
+</section>
+</section>
+</section>
+<section id="compressor-design">
+<span id="id9"></span><h2><span class="section-number">19.3. </span>Compressor Design<a class="headerlink" href="#compressor-design" title="Link to this heading"></a></h2>
+<p>The compressor takes the source data as input and produces a compressed image. This section describes the design used in one possible implementation of a compressor that follows the UEFI Compression Algorithm. The source code that illustrates an implementation of this specific design is listed in Appendix H.</p>
+<section id="overall-process">
+<span id="id10"></span><h3><span class="section-number">19.3.1. </span>Overall Process<a class="headerlink" href="#overall-process" title="Link to this heading"></a></h3>
+<p>The compressor scans the source data from the beginning, character by character. As the scanning proceeds, the compressor generates Original Characters or Pointers and outputs the compressed data packed in a series of Blocks representing individual Huffman coding units.</p>
+<p>The compressor maintains a String Info Log containing data that facilitates string comparison. Old data items are deleted and new data items are inserted regularly.</p>
+<p>The compressor does not output a Pointer immediately after it sees a matching string for the current position. Instead, it delays its decision until it gets the matching string for the next position. The compressor has two criteria at hand: one is that the former match length should be no shorter than three characters; the other is that the former match length should be no shorter than the latter match length.</p>
+<p>Only when these two criteria are met does the compressor output a Pointer to the former matching string.</p>
+<p>The overall process of compression can be described by following pseudo code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Set</span> <span class="n">the</span> <span class="n">Current</span> <span class="n">Position</span> <span class="n">at</span> <span class="n">the</span> <span class="n">beginning</span> <span class="n">of</span> <span class="n">the</span> <span class="n">source</span> <span class="n">data</span><span class="p">;</span>
+<span class="n">Delete</span> <span class="n">the</span> <span class="n">outdated</span> <span class="n">string</span> <span class="n">info</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">String</span> <span class="n">Info</span> <span class="n">Log</span><span class="p">;</span>
+<span class="n">Search</span> <span class="n">the</span> <span class="n">String</span> <span class="n">Info</span> <span class="n">Log</span> <span class="k">for</span> <span class="n">matching</span> <span class="n">string</span><span class="p">;</span>
+<span class="n">Add</span> <span class="n">the</span> <span class="n">string</span> <span class="n">info</span> <span class="n">of</span> <span class="n">the</span> <span class="n">current</span> <span class="n">position</span> <span class="n">into</span> <span class="n">the</span> <span class="n">String</span> <span class="n">Info</span> <span class="n">Log</span><span class="p">;</span>
+<span class="n">WHILE</span> <span class="ow">not</span> <span class="n">end</span> <span class="n">of</span> <span class="n">source</span> <span class="n">data</span> <span class="n">DO</span>
+  <span class="n">Remember</span> <span class="n">the</span> <span class="n">last</span> <span class="n">match</span><span class="p">;</span>
+  <span class="n">Advance</span> <span class="n">the</span> <span class="n">Current</span> <span class="n">Position</span> <span class="n">by</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="n">Delete</span> <span class="n">the</span> <span class="n">outdated</span> <span class="n">String</span> <span class="n">Info</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">String</span> <span class="n">Info</span> <span class="n">Log</span><span class="p">;</span>
+  <span class="n">Search</span> <span class="n">the</span> <span class="n">String</span> <span class="n">Info</span> <span class="n">Log</span> <span class="k">for</span> <span class="n">matching</span> <span class="n">string</span><span class="p">;</span>
+  <span class="n">Add</span> <span class="n">the</span> <span class="n">string</span> <span class="n">info</span> <span class="n">of</span> <span class="n">the</span> <span class="n">Current</span> <span class="n">Position</span> <span class="n">into</span> <span class="n">the</span> <span class="n">String</span> <span class="n">Info</span> <span class="n">Log</span><span class="p">;</span>
+  <span class="n">IF</span> <span class="n">the</span> <span class="n">last</span> <span class="n">match</span> <span class="ow">is</span> <span class="n">shorter</span> <span class="n">than</span> <span class="mi">3</span> <span class="n">characters</span> <span class="ow">or</span> <span class="n">this</span> <span class="n">match</span> <span class="ow">is</span> <span class="n">longer</span> <span class="n">than</span>
+   <span class="n">the</span> <span class="n">last</span> <span class="n">match</span> <span class="n">THEN</span>
+    <span class="n">Call</span> <span class="n">Output</span><span class="p">()</span><span class="o">*</span> <span class="n">to</span> <span class="n">output</span> <span class="n">the</span> <span class="n">character</span> <span class="n">at</span> <span class="n">the</span> <span class="n">previous</span> <span class="n">position</span> <span class="k">as</span> <span class="n">an</span>
+    <span class="n">Original</span> <span class="n">Character</span><span class="p">;</span>
+<span class="n">ELSE</span>
+  <span class="n">Call</span> <span class="n">Output</span><span class="p">()</span><span class="o">*</span> <span class="n">to</span> <span class="n">output</span> <span class="n">a</span> <span class="n">Pointer</span> <span class="n">to</span> <span class="n">the</span> <span class="n">last</span> <span class="n">matching</span> <span class="n">string</span><span class="p">;</span>
+  <span class="n">WHILE</span> <span class="p">(</span><span class="o">--</span><span class="n">last</span> <span class="n">match</span> <span class="n">length</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="n">DO</span>
+    <span class="n">Advance</span> <span class="n">the</span> <span class="n">Current</span> <span class="n">Position</span> <span class="n">by</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">Delete</span> <span class="n">the</span> <span class="n">outdated</span> <span class="n">piece</span> <span class="n">of</span> <span class="n">string</span> <span class="n">info</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">String</span> <span class="n">Info</span> <span class="n">Log</span><span class="p">;</span>
+    <span class="n">Add</span> <span class="n">the</span> <span class="n">string</span> <span class="n">info</span> <span class="n">of</span> <span class="n">the</span> <span class="n">current</span> <span class="n">position</span> <span class="n">into</span> <span class="n">the</span> <span class="n">String</span> <span class="n">Info</span> <span class="n">Log</span><span class="p">;</span>
+   <span class="n">ENDWHILE</span>
+ <span class="n">ENDIF</span>
+<span class="n">ENDWHILE</span>
+</pre></div>
+</div>
+<p>The Output() is the function that is responsible for generating Huffman codes and Blocks. It accepts an Original Character or a Pointer as input and maintains a Block Buffer to temporarily store data units that are to be Huffman coded. The following pseudo code describes the function:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FUNCTION</span> <span class="n">NAME</span><span class="p">:</span> <span class="n">Output</span>
+<span class="n">INPUT</span><span class="p">:</span> <span class="n">an</span> <span class="n">Original</span> <span class="n">Character</span> <span class="ow">or</span> <span class="n">a</span> <span class="n">Pointer</span>
+
+<span class="n">Put</span> <span class="n">the</span> <span class="n">Original</span> <span class="n">Character</span> <span class="ow">or</span> <span class="n">the</span> <span class="n">Pointer</span> <span class="n">into</span> <span class="n">the</span> <span class="n">Block</span> <span class="n">Buffer</span><span class="p">;</span>
+<span class="n">Advance</span> <span class="n">the</span> <span class="n">Block</span> <span class="n">Buffer</span> <span class="n">position</span> <span class="n">pointer</span> <span class="n">by</span> <span class="mi">1</span><span class="p">;</span>
+<span class="n">IF</span> <span class="n">the</span> <span class="n">Block</span> <span class="n">Buffer</span> <span class="ow">is</span> <span class="n">full</span> <span class="n">THEN</span>
+  <span class="n">Encode</span> <span class="n">the</span> <span class="n">Char</span><span class="o">&amp;</span><span class="n">Len</span> <span class="n">Set</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">Block</span> <span class="n">buffer</span><span class="p">;</span>
+  <span class="n">Encode</span> <span class="n">the</span> <span class="n">Position</span> <span class="n">Set</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">Block</span> <span class="n">buffer</span><span class="p">;</span>
+  <span class="n">Encode</span> <span class="n">the</span> <span class="n">Extra</span> <span class="n">Set</span><span class="p">;</span>
+  <span class="n">Output</span> <span class="n">the</span> <span class="n">Block</span> <span class="n">Header</span> <span class="n">containing</span> <span class="n">the</span> <span class="n">code</span> <span class="n">length</span> <span class="n">arrays</span><span class="p">;</span>
+  <span class="n">Output</span> <span class="n">the</span> <span class="n">Block</span> <span class="n">Body</span> <span class="n">containing</span> <span class="n">the</span> <span class="n">Huffman</span> <span class="n">encoded</span> <span class="n">Original</span> <span class="n">Characters</span> <span class="ow">and</span>
+  <span class="n">Pointers</span><span class="p">;</span>
+  <span class="n">Reset</span> <span class="n">the</span> <span class="n">Block</span> <span class="n">Buffer</span> <span class="n">position</span> <span class="n">pointer</span> <span class="n">to</span> <span class="n">point</span> <span class="n">to</span> <span class="n">the</span> <span class="n">beginning</span> <span class="n">of</span> <span class="n">the</span> <span class="n">Block</span> <span class="n">buffer</span><span class="p">;</span>
+<span class="n">ENDIF</span>
+</pre></div>
+</div>
+</section>
+<section id="string-info-log">
+<span id="string-info-log-protocols"></span><h3><span class="section-number">19.3.2. </span>String Info Log<a class="headerlink" href="#string-info-log" title="Link to this heading"></a></h3>
+<p>The provision of the String Info Log is to speed up the process of finding matching strings. The design of this has significant impact on the overall performance of the compressor. This section describes in detail how String Info Log is implemented and the typical operations on it.</p>
+<section id="data-structures">
+<span id="id11"></span><h4><span class="section-number">19.3.2.1. </span>Data Structures<a class="headerlink" href="#data-structures" title="Link to this heading"></a></h4>
+<p>The String Info Log is implemented as a set of search trees. These search trees are dynamically updated as the compression proceeds through the source data. The structure of a typical search tree is depicted in  the Figure, below, <a class="reference internal" href="#string-info-log-search-tree-protocols"><span class="std std-ref">String Info Log Search Tree</span></a> .</p>
+<figure class="align-default" id="string-info-log-search-tree-protocols">
+<a class="reference internal image-reference" href="_images/Protocols_Compression_Algorithm_Specification-6.png"><img alt="_images/Protocols_Compression_Algorithm_Specification-6.png" src="_images/Protocols_Compression_Algorithm_Specification-6.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 19.5 </span><span class="caption-text">String Info Log Search Tree</span><a class="headerlink" href="#string-info-log-search-tree-protocols" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>There are three types of nodes in a search tree: the root node, internal nodes, and leaves. The root node has a “character” attribute, which represents the starting character of a string. Each edge also has a “character” attribute, which represents the next character in the string. Each internal node has a “level” attribute, which indicates the character on any edge that leads to its child nodes is the “level + 1”th character in the string. Each internal node or leaf has a “position” attribute that indicates the string’s starting position in the source data.</p>
+<p>To speed up the tree searching, a hash function is used. Given the parent node and the edge-character, the hash function will quickly find the expected child node.</p>
+</section>
+<section id="searching-the-tree">
+<span id="id12"></span><h4><span class="section-number">19.3.2.2. </span>Searching the Tree<a class="headerlink" href="#searching-the-tree" title="Link to this heading"></a></h4>
+<p>Traversing the search tree is performed as follows:</p>
+<p>The following example uses the search tree shown in the Figure, above,  <a class="reference internal" href="#string-info-log-search-tree-protocols"><span class="std std-ref">String Info Log Search Tree</span></a> . Assume that the current position in the source data contains the string “camxrsxpj….”</p>
+<ol class="arabic simple">
+<li><p>The starting character “c” is used to find the root of the tree. The next character “a” is used to follow the edge from node 1 to node 2. The “position” of node 2 is 500, so a string starting with “ca” can be found at position 500. The string at the current position is compared with the string starting at position 500.</p></li>
+<li><p>Node 2 is at Level 3; so at most three characters are compared. Assume that the three-character comparison passes.</p></li>
+<li><p>The fourth character “x” is used to follow the edge from Node 2 to Node 5. The position value of node 5 is 400, which means there is a string located in position 400 that starts with “cam” and the character at position 403 is an “x.”</p></li>
+<li><p>Node 5 is at Level 8, so the fifth to eighth characters of the source data are compared with the string starting at position 404. Assume the strings match.</p></li>
+<li><p>At this point, the ninth character “p” has been reached. It is used to follow the edge from Node 5 to Node 7.</p></li>
+<li><p>This process continues until a mismatch occurs, or the length of the matching strings exceeds the predefined MAX_MATCH_LENGTH. The most recent matching string (which is also the longest) is the desired matching string.</p></li>
+</ol>
+</section>
+<section id="adding-string-info">
+<span id="id13"></span><h4><span class="section-number">19.3.2.3. </span>Adding String Info<a class="headerlink" href="#adding-string-info" title="Link to this heading"></a></h4>
+<p>String info needs to be added to the String Info Log for each position in the source data. Each time a search for a matching string is performed, the new string info is inserted for the current position. There are several cases that can be discussed:</p>
+<ol class="arabic">
+<li><p>No root is found for the first character. A new tree is created with the root node labeled with the starting character and a child leaf node with its edge to the root node labeled with the second character in the string. The “position” value of the child node is set to the current position.</p></li>
+<li><p>One root node matches the first character, but the second character does not match any edge extending from the root node. A new child leaf node is created with its edge labeled with the second character. The “position” value of the new leaf child node is set to the current position.</p></li>
+<li><p>A string comparison succeeds with an internal node, but a matching edge for the next character does not exist. This is similar to (2) above. A new child leaf node is created with its edge labeled with the character that does not exist. The “position” value of the new leaf child node is set to the current position.</p></li>
+<li><p>A string comparison exceeds MAX_MATCH_LENGTH. Note: This only happens with leaf nodes. For this case, the “position” value in the leaf node is updated with the current position.</p></li>
+<li><p>If a string comparison with an internal node or leaf node fails (mismatch occurs before the “Level + 1”th character is reached or MAX_MATCH_LENGTH is exceeded), then a “split” operation is performed as follows:</p>
+<p>Suppose a comparison is being performed with a level 9 Node, at position 350, and the current position is 1005. If the sixth character at position 350 is an “x” and the sixth character at position 1005 is a “y,” then a mismatch will occur. In this case, a new internal node and a new child node are inserted into the tree, as depicted in  <a class="reference internal" href="#node-split-protocols"><span class="std std-ref">Node Split</span></a> .</p>
+</li>
+</ol>
+<figure class="align-default" id="node-split-protocols">
+<a class="reference internal image-reference" href="_images/Protocols_Compression_Algorithm_Specification-7.png"><img alt="_images/Protocols_Compression_Algorithm_Specification-7.png" src="_images/Protocols_Compression_Algorithm_Specification-7.png" style="width: 85%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 19.6 </span><span class="caption-text">Node Split</span><a class="headerlink" href="#node-split-protocols" title="Link to this image"></a></p>
+<div class="legend">
+<p>The b) portion of <a class="reference internal" href="#node-split-protocols"><span class="std std-ref">Node Split</span></a>   has two new inserted nodes, which reflects the new string information that was found at the current position. The process splits the old node into two child nodes, and that is why this operation is called a “split.”</p>
+</div>
+</figcaption>
+</figure>
+</section>
+<section id="deleting-string-info">
+<span id="id14"></span><h4><span class="section-number">19.3.2.4. </span>Deleting String Info<a class="headerlink" href="#deleting-string-info" title="Link to this heading"></a></h4>
+<p>The String Info Log will grow as more and more string information is logged. The size of the String Info Log must be limited, so outdated information must be removed on a regular basis. A sliding window is maintained behind the current position, and the searches are always limited within the range of the sliding window. Each time the current position is advanced, outdated string information that falls outside the sliding window should be removed from the tree. The search for outdated string information is simplified by always updating the nodes’ “position” attribute when searching for matching strings.</p>
+</section>
+</section>
+<section id="huffman-code-generation">
+<span id="id15"></span><h3><span class="section-number">19.3.3. </span>Huffman Code Generation<a class="headerlink" href="#huffman-code-generation" title="Link to this heading"></a></h3>
+<p>Another major component of the compressor design is generation of the Huffman Code.</p>
+<p>Huffman Coding is applied to the Char&amp;Len Set, the Position Set, and the Extra Set. The Huffman Coding used here has the following features:</p>
+<ul class="simple">
+<li><p>The Huffman tree is represented as an array of code lengths (“canonical” Huffman Coding);</p></li>
+<li><p>The maximum code length is limited to 16 bits.</p></li>
+</ul>
+<p>The Huffman code generation process can be divided into three steps. These are the generation of Huffman tree, the adjustment of code lengths, and the code generation.</p>
+<section id="huffman-tree-generation">
+<span id="id16"></span><h4><span class="section-number">19.3.3.1. </span>Huffman Tree Generation<a class="headerlink" href="#huffman-tree-generation" title="Link to this heading"></a></h4>
+<p>This process generates a typical Huffman tree. First, the frequency of each symbol is counted, and a list of nodes is generated with each node containing a symbol and the symbol’s frequency. The two nodes with the lowest frequency values are merged into a single node. This new node becomes the parent node of the two nodes that are merged. The frequency value of this new parent node is the sum of the two child nodes’ frequency values. The node list is updated to include the new parent node but exclude the two child nodes that are merged. This process is repeated until there is a single node remaining that is the root of the generated tree.</p>
+</section>
+<section id="code-length-adjustment">
+<span id="id17"></span><h4><span class="section-number">19.3.3.2. </span>Code Length Adjustment<a class="headerlink" href="#code-length-adjustment" title="Link to this heading"></a></h4>
+<p>The leaf nodes of the tree generated by the previous step represent all the symbols that were generated. Traditionally the code for each symbol is found by traversing the tree from the root node to the leaf node. Going down a left edge generates a “0,” and going down a right edge generates a “1.” However, a different approach is used here. The number of codes of each code length is counted. This generates a 16-element LengthCount array, with LengthCount[i] = Number Of Codes whose Code Length is i. Since a code length may be longer than 16 bits, the sixteenth entry of the LengthCount array is set to the Number Of Codes whose Code Length is greater than or equal to 16.</p>
+<p>The LengthCount array goes through further adjustment described by following code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">INT32</span> <span class="n">i</span><span class="p">,</span> <span class="n">k</span><span class="p">;</span>
+<span class="n">UINT32</span> <span class="n">cum</span><span class="p">;</span>
+
+<span class="n">cum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+   <span class="n">cum</span> <span class="o">+=</span> <span class="n">LengthCount</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="mi">16</span> <span class="o">-</span> <span class="n">i</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="k">while</span> <span class="p">(</span><span class="n">cum</span> <span class="o">!=</span> <span class="p">(</span><span class="mi">1</span><span class="n">U</span> <span class="o">&lt;&lt;</span> <span class="mi">16</span><span class="p">))</span> <span class="p">{</span>
+ <span class="n">LengthCount</span><span class="p">[</span><span class="mi">16</span><span class="p">]</span><span class="o">--</span><span class="p">;</span>
+ <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">15</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+   <span class="k">if</span> <span class="p">(</span><span class="n">LengthCount</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+     <span class="n">LengthCount</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">--</span><span class="p">;</span>
+     <span class="n">LengthCount</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">;</span>
+     <span class="k">break</span><span class="p">;</span>
+   <span class="p">}</span>
+ <span class="p">}</span>
+ <span class="n">cum</span><span class="o">--</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="code-generation">
+<span id="id18"></span><h4><span class="section-number">19.3.3.3. </span>Code Generation<a class="headerlink" href="#code-generation" title="Link to this heading"></a></h4>
+<p>In the previous step, the count of each length was obtained. Now, each symbol is going to be assigned a code. First, the length of the code for each symbol is determined. Naturally, the code lengths are assigned in such a way that shorter codes are assigned to more frequently appearing symbols. A CodeLength array is generated with CodeLength[i] = the code length of symbol i. Given this array, a code is assigned to each symbol using the algorithm described by the pseudo code below (the resulting codes are stored in array Code such that Code[i] = the code assigned to symbol i):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">INT32</span> <span class="n">i</span><span class="p">;</span>
+<span class="n">UINT16</span> <span class="n">Start</span><span class="p">[</span><span class="mi">18</span><span class="p">];</span>
+
+<span class="n">Start</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">16</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Start</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">UINT16</span><span class="p">)((</span><span class="n">Start</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">LengthCount</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">NumberOfSymbols</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">Code</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Start</span><span class="p">[</span><span class="n">CodeLength</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">++</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The code length adjustment process ensures that no code longer than the designated length will be generated. As long as the decompressor has the CodeLength array at hand, it can regenerate the codes.</p>
+</section>
+</section>
+</section>
+<section id="decompressor-design">
+<span id="id19"></span><h2><span class="section-number">19.4. </span>Decompressor Design<a class="headerlink" href="#decompressor-design" title="Link to this heading"></a></h2>
+<p>The decompressor takes the compressed data as input and produces the original source data. The main tasks for the decompressor are decoding Huffman codes and restoring Pointers to the strings to which they point.</p>
+<p>The following pseudo code describes the algorithm used in the design of a decompressor. The source code that illustrates an implementation of this design is listed in Appendix I.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WHILE</span> <span class="ow">not</span> <span class="n">end</span> <span class="n">of</span> <span class="n">data</span> <span class="n">DO</span>
+  <span class="n">IF</span> <span class="n">at</span> <span class="n">block</span> <span class="n">boundary</span> <span class="n">THEN</span>
+    <span class="n">Read</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">Extra</span> <span class="n">Set</span> <span class="n">Code</span> <span class="n">Length</span> <span class="n">Array</span><span class="p">;</span>
+    <span class="n">Generate</span> <span class="n">the</span> <span class="n">Huffman</span> <span class="n">code</span> <span class="n">mapping</span> <span class="n">table</span> <span class="k">for</span> <span class="n">the</span> <span class="n">Extra</span> <span class="n">Set</span><span class="p">;</span>
+    <span class="n">Read</span> <span class="ow">in</span> <span class="ow">and</span> <span class="n">decode</span> <span class="n">the</span> <span class="n">Char</span><span class="o">&amp;</span><span class="n">Len</span> <span class="n">Set</span> <span class="n">Code</span> <span class="n">Length</span> <span class="n">Array</span><span class="p">;</span>
+    <span class="n">Generate</span> <span class="n">the</span> <span class="n">Huffman</span> <span class="n">code</span> <span class="n">mapping</span> <span class="n">table</span> <span class="k">for</span> <span class="n">the</span> <span class="n">Char</span><span class="o">&amp;</span><span class="n">Len</span> <span class="n">Set</span><span class="p">;</span>
+    <span class="n">Read</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">Position</span> <span class="n">Set</span> <span class="n">Code</span> <span class="n">Length</span> <span class="n">Array</span><span class="p">;</span>
+    <span class="n">Generate</span> <span class="n">the</span> <span class="n">Huffman</span> <span class="n">code</span> <span class="n">mapping</span> <span class="n">table</span> <span class="k">for</span> <span class="n">the</span> <span class="n">Position</span> <span class="n">Set</span><span class="p">;</span>
+  <span class="n">ENDIF</span>
+  <span class="n">Get</span> <span class="nb">next</span> <span class="n">code</span><span class="p">;</span>
+  <span class="n">Look</span> <span class="n">the</span> <span class="n">code</span> <span class="n">up</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">Char</span><span class="o">&amp;</span><span class="n">Len</span> <span class="n">Set</span> <span class="n">code</span> <span class="n">mapping</span> <span class="n">table</span><span class="o">.</span>
+  <span class="n">Store</span> <span class="n">the</span> <span class="n">result</span> <span class="k">as</span> <span class="n">C</span><span class="p">;</span>
+  <span class="n">IF</span> <span class="n">C</span> <span class="o">&lt;</span> <span class="mi">256</span> <span class="p">(</span><span class="n">it</span> <span class="n">represents</span> <span class="n">an</span> <span class="n">Original</span> <span class="n">Character</span><span class="p">)</span> <span class="n">THEN</span>
+    <span class="n">Output</span> <span class="n">this</span> <span class="n">character</span><span class="p">;</span>
+  <span class="n">ELSE</span> <span class="p">(</span><span class="n">it</span> <span class="n">represents</span> <span class="n">a</span> <span class="n">String</span> <span class="n">Length</span><span class="p">)</span>
+    <span class="n">Transform</span> <span class="n">C</span> <span class="n">to</span> <span class="n">be</span> <span class="n">the</span> <span class="n">actual</span> <span class="n">String</span> <span class="n">Length</span> <span class="n">value</span><span class="p">;</span>
+    <span class="n">Get</span> <span class="nb">next</span> <span class="n">code</span> <span class="ow">and</span> <span class="n">look</span> <span class="n">it</span> <span class="n">up</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">Position</span> <span class="n">Set</span> <span class="n">code</span> <span class="n">mapping</span> <span class="n">table</span><span class="p">,</span> <span class="ow">and</span>
+    <span class="k">with</span> <span class="n">some</span> <span class="n">additional</span> <span class="n">transformation</span><span class="p">,</span> <span class="n">store</span> <span class="n">the</span> <span class="n">result</span> <span class="k">as</span> <span class="n">P</span><span class="p">;</span>
+    <span class="n">Output</span> <span class="n">C</span> <span class="n">characters</span> <span class="n">starting</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">position</span> <span class="s2">&quot;Current Position - P&quot;</span><span class="p">;</span>
+  <span class="n">ENDIF</span>
+<span class="n">ENDWHILE</span>
+</pre></div>
+</div>
+</section>
+<section id="decompress-protocol">
+<span id="id20"></span><h2><span class="section-number">19.5. </span>Decompress Protocol<a class="headerlink" href="#decompress-protocol" title="Link to this heading"></a></h2>
+<p>This section provides a detailed description of the <em>EFI_DECOMPRESS_PROTOCOL</em>.</p>
+<section id="efi-decompress-protocol">
+<span id="id21"></span><h3><span class="section-number">19.5.1. </span>EFI_DECOMPRESS_PROTOCOL<a class="headerlink" href="#efi-decompress-protocol" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Provides a decompression service.</p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_DECOMPRESS_PROTOCOL_GUID \</span>
+  <span class="p">{</span><span class="mh">0xd8117cfe</span><span class="p">,</span><span class="mh">0x94a6</span><span class="p">,</span><span class="mh">0x11d4</span><span class="p">,</span>\
+    <span class="p">{</span><span class="mh">0x9a</span><span class="p">,</span><span class="mh">0x3a</span><span class="p">,</span><span class="mh">0x00</span><span class="p">,</span><span class="mh">0x90</span><span class="p">,</span><span class="mh">0x27</span><span class="p">,</span><span class="mh">0x3f</span><span class="p">,</span><span class="mh">0xc1</span><span class="p">,</span><span class="mh">0x4d</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p><strong>Protocol Interface Structure</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="n">_EFI_DECOMPRESS_PROTOCOL</span> <span class="p">{</span>
+  <span class="n">EFI_DECOMPRESS_GET_INFO</span>              <span class="n">GetInfo</span><span class="p">;</span>
+  <span class="n">EFI_DECOMPRESS_DECOMPRESS</span>            <span class="n">Decompress</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_DECOMPRESS_PROTOCOL</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>GetInfo</dt><dd><p>Given the compressed source buffer, this function retrieves the size of the uncompressed destination buffer and the size of the scratch buffer required to perform the decompression. It is the caller’s responsibility to allocate the destination buffer and the scratch buffer prior to calling  <a class="reference internal" href="#id23">EFI_DECOMPRESS_PROTOCOL.Decompress()</a> . See the <a class="reference internal" href="#id22">EFI_DECOMPRESS_PROTOCOL.GetInfo()</a>  function description.</p>
+</dd>
+<dt>Decompress</dt><dd><p>Decompresses a compressed source buffer into an uncompressed destination buffer. It is the caller’s responsibility to allocate the destination buffer and a scratch buffer prior to making this call. See the <em>Decompress()</em> function description.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>EFI_DECOMPRESS_PROTOCOL</em> provides a decompression service that allows a compressed source buffer in memory to be decompressed into a destination buffer in memory. It also requires a temporary scratch buffer to perform the decompression. The <em>GetInfo()</em> function retrieves the size of the destination buffer and the size of the scratch buffer that the caller is required to allocate. The <em>Decompress()</em> function performs the decompression. The scratch buffer can be freed after the decompression is complete.</p>
+</section>
+<section id="efi-decompress-protocol-getinfo">
+<span id="id22"></span><h3><span class="section-number">19.5.2. </span>EFI_DECOMPRESS_PROTOCOL.GetInfo()<a class="headerlink" href="#efi-decompress-protocol-getinfo" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Given a compressed source buffer, this function retrieves the size of the uncompressed buffer and the size of the scratch buffer required to decompress the compressed source buffer.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_DECOMPRESS_GET_INFO</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span>  <span class="n">EFI_DECOMPRESS_PROTOCOL</span>        <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span>  <span class="n">VOID</span>                           <span class="o">*</span><span class="n">Source</span><span class="p">,</span>
+  <span class="n">IN</span>  <span class="n">UINT32</span>                         <span class="n">SourceSize</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">UINT32</span>                         <span class="o">*</span><span class="n">DestinationSize</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">UINT32</span>                         <span class="o">*</span><span class="n">ScratchSize</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the  <a class="reference internal" href="#id21">EFI_DECOMPRESS_PROTOCOL</a>  instance. Type EFI_DECOMPRESS_PROTOCOL is defined in <a class="reference internal" href="#id21">EFI_DECOMPRESS_PROTOCOL</a>.</p>
+</dd>
+<dt>Source</dt><dd><p>The source buffer containing the compressed data.</p>
+</dd>
+<dt>SourceSize</dt><dd><p>The size, in bytes, of the source buffer.</p>
+</dd>
+<dt>DestinationSize</dt><dd><p>A pointer to the size, in bytes, of the uncompressed buffer that will be generated when the compressed buffer specified by <em>Source</em> and <em>SourceSiz</em> e is decompressed.</p>
+</dd>
+<dt>ScratchSize</dt><dd><p>A pointer to the size, in bytes, of the scratch buffer that is required to decompress the compressed buffer specified by <em>Source</em> and <em>SourceSize</em>.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>GetInfo()</em> function retrieves the size of the uncompressed buffer and the temporary scratch buffer required to decompress the buffer specified by <em>Source</em> and <em>SourceSize</em>. If the size of the uncompressed buffer or the size of the scratch buffer cannot be determined from the compressed data specified by <em>Source</em> and <em>SourceData</em>, then <em>EFI_INVALID_PARAMETER</em> is returned. Otherwise, the size of the uncompressed buffer is returned in <em>DestinationSize</em>, the size of the scratch buffer is returned in <em>ScratchSize</em>, and <em>EFI_SUCCESS</em> is returned.</p>
+<p>The <em>GetInfo()</em> function does not have scratch buffer available to perform a thorough checking of the validity of the source data. It just retrieves the “Original Size” field from the beginning bytes of the source data and output it as <em>DestinationSize</em>. And <em>ScratchSize</em> is specific to the decompression implementation.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The size of the uncompressed data was returned in <em>DestinationSize</em> and the size of the scratch buffer was returned in <em>ScratchSize.</em></p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>The size of the uncompressed data or the size of the scratch buffer cannot be determined from the compressed data specified by <em>Source</em> and <em>SourceSize</em>.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-decompress-protocol-decompress">
+<span id="id23"></span><h3><span class="section-number">19.5.3. </span>EFI_DECOMPRESS_PROTOCOL.Decompress()<a class="headerlink" href="#efi-decompress-protocol-decompress" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Decompresses a compressed source buffer.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_DECOMPRESS_DECOMPRESS</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span>   <span class="n">EFI_DECOMPRESS_PROTOCOL</span>      <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span>    <span class="n">VOID</span>                        <span class="o">*</span><span class="n">Source</span><span class="p">,</span>
+  <span class="n">IN</span>    <span class="n">UINT32</span>                      <span class="n">SourceSize</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">VOID</span>                       <span class="o">*</span><span class="n">Destination</span><span class="p">,</span>
+  <span class="n">IN</span>    <span class="n">UINT32</span>                      <span class="n">DestinationSize</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">VOID</span>                       <span class="o">*</span><span class="n">Scratch</span><span class="p">,</span>
+  <span class="n">IN</span>    <span class="n">UINT32</span>                      <span class="n">ScratchSize</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the <a class="reference internal" href="#id21">EFI_DECOMPRESS_PROTOCOL</a>  instance. Type EFI_DECOMPRESS_PROTOCOL is defined in <a class="reference internal" href="#id21">EFI_DECOMPRESS_PROTOCOL</a>.</p>
+</dd>
+<dt>Source</dt><dd><p>The source buffer containing the compressed data.</p>
+</dd>
+<dt>SourceSize</dt><dd><p>The size of source data.</p>
+</dd>
+<dt>Destination</dt><dd><p>On output, the destination buffer that contains the uncompressed data.</p>
+</dd>
+<dt>DestinationSize</dt><dd><p>The size of the destination buffer. The size of the destination buffer needed is obtained from <a class="reference internal" href="#id22">EFI_DECOMPRESS_PROTOCOL.GetInfo()</a> .</p>
+</dd>
+<dt>Scratch</dt><dd><p>A temporary scratch buffer that is used to perform the decompression.</p>
+</dd>
+<dt>ScratchSize</dt><dd><p>The size of scratch buffer. The size of the scratch buffer needed is obtained from <em>GetInfo()</em>.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>Decompress()</em> function extracts decompressed data to its original form.</p>
+<p>This protocol is designed so that the decompression algorithm can be implemented without using any memory services. As a result, the Decompress() function is not allowed to call  <a class="reference internal" href="07_Services_Boot_Services.html#efi-boot-services-allocatepool"><span class="std std-ref">EFI_BOOT_SERVICES.AllocatePool()</span></a>  or <a class="reference internal" href="07_Services_Boot_Services.html#efi-boot-services-allocatepages"><span class="std std-ref">EFI_BOOT_SERVICES.AllocatePages()</span></a> in its implementation. It is the caller’s responsibility to allocate and free the Destination and Scratch buffers.</p>
+<p>If the compressed source data specified by <em>Source</em> and <em>SourceSize</em> is successfully decompressed into <em>Destination</em>, then <em>EFI_SUCCESS</em> is returned. If the compressed source data specified by <em>Source</em> and <em>SourceSize</em> is not in a valid compressed data format, then <em>EFI_INVALID_PARAMETER</em> is returned.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>Decompression completed successfully, and the uncompressed buffer is returned in <em>Destination</em>.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>The source buffer specified by <em>Source</em> and <em>SourceSize</em> is corrupted (not in a valid compressed format).</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="18_Protocols_Debugger_Support.html" class="btn btn-neutral float-left" title="18. Protocols — Debugger Support" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="20_Protocols_ACPI_Protocols.html" class="btn btn-neutral float-right" title="20. Protocols — ACPI Protocols" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, UEFI Forum, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -12,7 +12,7 @@ public static partial class EFIConsts
 
 public unsafe delegate Status SimpleFileSystemProtocolOpenVolume(SimpleFileSystemProtocol* self, FileProtocol** root);
 
-[StructLayout(LayoutKind.Sequential)]
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
 public unsafe struct SimpleFileSystemProtocol
 {
     public ulong Revision;

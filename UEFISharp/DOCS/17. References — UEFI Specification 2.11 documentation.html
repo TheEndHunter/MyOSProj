@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>17. References &mdash; UEFI Specification 2.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=f2209469" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/style.css?v=faba8a36" />
+      <link rel="stylesheet" type="text/css" href="_static/theme-overrides.css?v=84235ce0" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2de06f63"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="18. Glossary" href="Apx_R_Glossary.html" />
+    <link rel="prev" title="16. Hardware Error Record Persistence Usage" href="Apx_P_Hardware_Error_Record_Persistence_Usage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            UEFI Specification
+          </a>
+              <div class="version">
+                2.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Tables.html">List of Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Figures.html">List of Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/Revision_History.html">Revision History</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01_Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Overview.html">2. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Boot_Manager.html">3. Boot Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_EFI_System_Table.html">4. EFI System Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_GUID_Partition_Table_Format.html">5. GUID Partition Table (GPT) Disk Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_Block_Transition_Table_Layout.html">6. Block Translation Table (BTT) Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Services_Boot_Services.html">7. Services — Boot Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Services_Runtime_Services.html">8. Services — Runtime Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Protocols_EFI_Loaded_Image.html">9. Protocols - EFI Loaded Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Protocols_Device_Path_Protocol.html">10. Protocols – Device Path Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html">11. Protocols — UEFI Driver Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_Protocols_Console_Support.html">12. Protocols — Console Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Protocols_Media_Access.html">13. Protocols – Media Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Protocols_PCI_Bus_Support.html">14. Protocols — PCI Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_Protocols_SCSI_Driver_Models_and_Bus_Support.html">15. Protocols — SCSI Driver Models and Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_Protocols_iSCSI_Boot.html">16. Protocols — iSCSI Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_Protocols_USB_Support.html">17. Protocols — USB Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_Protocols_Debugger_Support.html">18. Protocols — Debugger Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_Protocols_Compression_Algorithm_Specification.html">19. Protocols — Compression Algorithm Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_Protocols_ACPI_Protocols.html">20. Protocols — ACPI Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_Protocols_String_Services.html">21. Protocols — String Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html">22. EFI Byte Code Virtual Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_Firmware_Update_and_Reporting.html">23. Firmware Update and Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24_Network_Protocols_SNP_PXE_BIS.html">24. Network Protocols — SNP, PXE, BIS and HTTP Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25_Network_Protocols_Managed_Network.html">25. Network Protocols - Managed Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26_Network_Protocols_Bluetooth.html">26. Network Protocols — Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27_Network_Protocols_VLAN_and_EAP.html">27. Network Protocols — VLAN, EAP, Wi-Fi and Supplicant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28_Network_Protocols_TCP_IP_and_Configuration.html">28. Network Protocols — TCP, IP, IPsec, FTP, TLS and Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29_Network_Protocols_ARP_and_DHCP.html">29. Network Protocols — ARP, DHCP, DNS, HTTP and REST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_Network_Protocols_UDP_and_MTFTP.html">30. Network Protocols — UDP and MTFTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="31_EFI_Redfish_Service_Support.html">31. EFI Redfish Service Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="32_Secure_Boot_and_Driver_Signing.html">32. Secure Boot and Driver Signing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="33_Human_Interface_Infrastructure.html">33. Human Interface Infrastructure Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="34_HII_Protocols.html">34. HII Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="35_HII_Configuration_Processing_and_Browser_Protocol.html">35. HII Configuration Processing and Browser Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="36_User_Identification.html">36. User Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="37_Secure_Technologies.html">37. Secure Technologies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="38_Confidential_Computing.html">38. Confidential Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="39_Micellaneous_Protocols.html">39. Miscellaneous Protocols</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Apx_A_GUID_and_Time_Formats.html">A. GUID and Time Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_B_Console.html">B. Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_C_Device_Path_Examples.html">C. Device Path Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_D_Status_Codes.html">D. Status Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_E_Universal_Network_Driver_Interfaces.html">E. Universal Network Driver Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_F_Using_the_Simple_Pointer_Protocol.html">F. Using the Simple Pointer Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_G_Using_the_EFI_Extended_SCSI_Pass_Thru_Protocol.html">G. Using the EFI Extended SCSI Pass Thru Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_H_Compression_Source_Code.html">H. Compression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_I_Decompression_Source_Code.html">I. Decompression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_J_EFI_Byte_Code_Virtual_Machine_Opcode_List.html">J. EFI Byte Code Virtual Machine Opcode List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_K_Alphabetic_Function_Lists.html">K. Alphabetic Function Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_L_EFI_1.10_Protocol_Changes_and_Deprecation_List.html">L. EFI 1.10 Protocol Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html">M. Formats — Language Codes and Language Code Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_N_Common_Platform_Error_Record.html">N. Common Platform Error Record (CPER)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_O_UEFI_ACPI_Data_Table.html">O. UEFI ACPI Data Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_P_Hardware_Error_Record_Persistence_Usage.html">P. Hardware Error Record Persistence Usage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Q. References</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#related-information">Q.1. Related Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#prerequisite-specifications">Q.2. Prerequisite Specifications</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#acpi-specification">Q.2.1. ACPI Specification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#additional-considerations-for-itanium-basedplatforms">Q.2.2. Additional Considerations for Itanium-BasedPlatforms</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_R_Glossary.html">R. Glossary</a></li>
+</ul>
+
+    <a href= "genindex.html">Index</a>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UEFI Specification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">17. </span>References</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="references">
+<span id="appendix-q-references"></span><h1><span class="section-number">Q. </span>References<a class="headerlink" href="#references" title="Link to this heading"></a></h1>
+<section id="related-information">
+<span id="related-information-references"></span><h2><span class="section-number">Q.1. </span>Related Information<a class="headerlink" href="#related-information" title="Link to this heading"></a></h2>
+<p>The following publications and sources of information may be useful to you or are referred to by this specification:</p>
+<ul class="simple">
+<li><p>“8802.1x Port-based access control” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“802.1X-2004, <em>IEEE Standard for Local and Metropolitan Area Networks Port-Based Network Access Control</em> “ at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“AMD64 Architecture Programmer’s Manual” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“Advanced Configuration and Power Interface Specification, 3.0”. at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> under the heading</p></li>
+<li><p>“Advanced Configuration and Power Interface Specification, 4.0” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“Address Resolution Protocol; Refer to Appendix E, “32/ 64-Bit UNDI Specification” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“BIOS Boot Specification Version 1.01” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“CAE Specification [UUID], DCE 1.1:Remote Procedure Call, Document Number C706, Universal Unique Identifier Appendix” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[BASE64] RFC 1521: MIME (Multipurpose Internet Mail Extensions) Part One: Mechanisms for Specifying and Describing the Format of Internet Message Bodies <em>“</em> at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“Bluetooth Network Encapsulation Protocol (BNEP) Specification, version 1.0” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“BLUETOOTH SPECIFICATION, version 4.1” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>Bootstrap Protocol <em>;</em> This reference is included for backward compatibility. BC protocol supports DHCP and BOOTP. Refer to Appendix E, “32/ 64-Bit UNDI Specification, RFC 0951” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p><cite>Compute Express Link (CXL) Specification: see download link at &lt;https://uefi.org/uefi&gt;__</cite> <em>https://uefi.org/uefi#cxl-specification</em> .</p></li>
+<li><p>[DBCS] <em>Japanese Language DBCS</em> (Double Byte Character Set): MS-DOS Version, Sizuoka Information Industry, AX Conference, 1991.</p></li>
+<li><p>“[EAP] Tunneled TLS Authentication Protocol Version 1 (EAP-TTLSv1)” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>[ECMA 262] ECMA Script Language Specification (ECMA-262) Edition 5.1”.at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> under the heading “</p></li>
+<li><p>“ <em>EFI Specification Version 1.02</em> “ heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“ <em>EFI Specification Version 1.10</em> “ heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“El Torito” Bootable CD-ROM Format Specification, Version 1.0” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p><em>Envisioning Information</em> , Edward R. Tufte, Graphics Press, 1990.</p></li>
+<li><p><em>File Verification Using CRC</em> , Mark R. Nelson, Dr. Dobbs, May 1994</p></li>
+<li><p><em>HTML: The Definitive Guide</em> , 2nd Edition, Chuck Musciano and Bill Kennedy, O’Reilly and Associates, Inc., 1997, ISBN: 1-56592-235-2.</p></li>
+<li><p>“ <em>IEEE Standard for Local and metropolitan area networks: Virtual Bridged Local Area Networks, IEEE Std 802.1Q</em> - 2005” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“ <em>Information Technology – BIOS Enhanced Disk Drive Services (EDD)</em> , working draft T13/ 1386D, Revision 5a” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“ <em>Intel 64 and IA=32 Architecture Software Developer’s Manual</em> “ heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“iSCSI Boot Firmware Table (iBFT) as defined in <em>ACPI 3.0b Specification</em> , Version 1.01,” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“ISO Standard 9995, Keyboard layouts for text and office systems” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“Itanium® Architecture Software Developer’s Manual, Volume 1: Application Architecture, Rev. 2.2,” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“Itanium® Architecture Software Developer’s Manual, Volume 2: System Architecture, Rev. 2.2” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“Itanium® Architecture Software Developer’s Manual, Volume 3: Instruction Set Reference, Rev. 2.2” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“Itanium® Software Conventions and Runtime Architecture Guide” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“Itanium® System Abstraction Layer Specification” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>IEEE 1394 Specification, <a class="reference external" href="http://www.1394ta.org/Technology/Specifications/specifications.htm">http://www.1394ta.org/Technology/Specifications/specifications.htm</a></p></li>
+<li><p>“Internet Engineering Task Force (IETF)” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> . Refer to Appendix E, “32/64-Bit UNDI Specification,” for more information.</p></li>
+<li><p>“ISO 639-2:1998. <em>Codes for the Representation of Names of Languages</em> - Part2: Alpha-3 code” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>ISO/IEC 3309:1991(E), <em>Information Technology - Telecommunications and information exchange between systems - High-level data link control (HDLC) procedures - Frame structure</em> , International Organization For Standardization, Fourth edition 1991-06-01</p></li>
+<li><p>ITU-T Rec. V.42, <em>Error-Correcting Procedures for DCEs using asynchronous-to-synchronous conversion</em> , October, 1996</p></li>
+<li><p><em>JavaScript: The Definitive Guide</em> , 3rd Edition, David Flanagan, O’Reilly and Associates, Inc., 1998, ISBN: 1-56592-392-8.</p></li>
+<li><p><em>JavaScript: The Complete Reference</em> , Thomas Powell &amp; Fritz Schneider (McGraw-Hill/ Osborne, Emeryville California, 2004)</p></li>
+<li><p>“Microsoft Extensible Firmware Initiative FAT32 File System Specification, Version 1.03” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“Microsoft Portable Executable and Common Object File Format Specification, Version 8.1” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“Microsoft Windows Authenticode Portable Executable Signature Format, Version 1.0” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“OSTA Universal Disk Format Specification, Revision 2.00” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“PCI BIOS Specification, Revision 3.0” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“Part11: Wireless LAN Medium Access Control (MAC) and Physical Layer (PHY) Specifications” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“PCI Express Base Specification, Revision 2.1” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“PCI Hot-Plug Specification, Revision 1.0,” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“PCI Local Bus Specification, Revision 3.0” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“Plug and Play BIOS Specification, Version 1.0A,” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“POST Memory Manager Specification, Version 1.01,” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p><em>Professional XML</em> , Didier Martin, Mark Birbeck, et. al., Wrox Press, April, 2000, ISBN: 1-861003-11-0.</p></li>
+<li><p>[PUI] <em>Programming the User Interface: Principles and Examples</em> , Judith R. Brown, Steve Cunningham, John Wiley &amp; Sons, 1989, ISBN: 0-471-63843-9.</p></li>
+<li><p>“Microsoft’s PEAP version 0” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>[PKCS] The Public-Key Cryptography Standards, RSA Laboratories, Redwood City, CA: RSA Data Security, Inc.</p></li>
+<li><p>“PC/SC Specification, Part 3: Requirements for PC-Connected Interface Devices” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“Processor Architecture Type <em>“</em> at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“Protected EAP Protocol (PEAP)” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“Protected EAP Protocol (PEAP) Version 2” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“Request For Comments” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> . Refer to Appendix E, “32/64-Bit UNDI Specification,” for more information.</p></li>
+<li><p>“[RFC0768] User Datagram Protocol - UDP over IPv4” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 791] Internet Protocol DARPA Internet Program Protocol (IPv4) Specification” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC0792] ICMP for Ipv4” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> . Refer to Appendix E, “32/64-Bit UNDI Specification,” for more information</p></li>
+<li><p>“[RFC0793] Transmission Control Protocol - TCPv4” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> . Refer to Appendix E,”32/64-Bit UNDI Specification,” for more information.</p></li>
+<li><p>“[RFC 1034] Domain Names - Concepts and Facilities” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 1035] Domain Names - Implementation and Specification” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC1350] Trivial File Transfer Protocol - TFTP” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> . Refer to Appendix E, “32/64-Bit UNDI Specification,” for more information.</p></li>
+<li><p>“[RFC 1700] ASSIGNED NUMBERS” ate “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 1994] PPP Challenge Handshake Authentication Protocol (CHAP)” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC2131] Dynamic Host Configuration Protocol” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC2132] DHCP Options and BOOTP Vendor Extensions,” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC2147] Transmission Control Protocol v6 - TCPv6” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> . Refer to Appendix E,”32/64-Bit UNDI Specification,” for more information. Refer to Appendix E, “32/64-Bit UNDI Specification,” for more information.</p></li>
+<li><p>“[RFC2236] Internet Group Management Protocol” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 2246] The TLS Protocol Version 1.0” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC2315] Cryptographic Message Syntax Version 1.5” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC2347] TFTP Option Extension” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> . Refer to Appendix E, “32/64-Bit UNDI Specification,” for more information.</p></li>
+<li><p>“[RFC2348] TFTP Blocksize Option” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> . Refer to Appendix E, “32/64-Bit UNDI Specification,” for more information.</p></li>
+<li><p>“[RFC2349] TFTP Timeout Interval and Transfer Size Options” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> . Refer to Appendix E, “32/64-Bit UNDI Specification,” for more information.</p></li>
+<li><p>“[RFC 2407]The Internet IP Security Domain of Interpretation for ISAKMP” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 2408]Internet Security Association and Key Management Protocol(ISAKMP)” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 2409]The Internet Key Exchange (IKE)” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC2454] User Datagram Protocol - UDP over IPv6” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 2459] Internet X.509 Public Key Infrastructure Certificate and CRL Profile” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 2460] Internet Protocol, Version 6 (IPv6) Specification” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC2463] ICMP for Ipv6” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> . Refer to Appendix E, “32/64-Bit UNDI Specification,” for more information</p></li>
+<li><p>“[RFC 2759] Microsoft PPP CHAP Extensions, Version 2” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 2818] HTTP Over TLS” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 3004] The User Class option for DHCP” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>[RFC 3232] J. Reynolds, “Assigned Numbers: RFC 1700 is Replaced by an On-line Database”, January 2002</p></li>
+<li><p>“[RFC 3315] Dynamic Host Configuration Protocol for IPv6 (DHCPv6)” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 3396] Encoding Long Options in the Dynamic Host Configuration Protocol” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 3513] Internet Protocol Version 6 (IPv6) Addressing Architecture” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> under the heading.</p></li>
+<li><p>“[RFC 3596] DNS Extensions to Support IP Version 6” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 3617] Uniform Resource Identifier (URI) Scheme and Applicability Statement for the Trivial File Transfer Protocol (TFTP)” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 3646] DNS Configuration options for Dynamic Host Configuration Protocol for IPv6 (DHCPv6)” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 3720] Internet Small Computer Systems Interface (iSCSI)” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 3748] Extensible Authentication Protocol (EAP)” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 3986 ]Uniform Resource Identifiers (URI): Generic Syntax” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 4173] Bootstrapping Clients using the Internet Small Computer System Interface (iSCSI) Protocol” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 4301]Security Architecture for the Internet Protocol” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 4303]IP Encapsulation Security Payload (ESP)” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 4346] The Transport Layer Security (TLS) Protocol Version 1.1” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> under the heading.</p></li>
+<li><p>“[RFC 4347] Datagram Transport Layer Security” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> under the heading</p></li>
+<li><p>“[RFC4578] Dynamic Host Configuration Protocol (DHCP) Options for the Intel Preboot eXecution Environment (PXE)” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 5216] The EAP-TLS Authentication Protocol” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> under the heading.</p></li>
+<li><p>“[RFC 5246] The Transport Layer Security (TLS) Protocol Version 1.2” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 5247] Extensible Authentication Protocol (EAP) Key Management Framework” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 5281] Extensible Authentication Protocol Tunneled Transport Layer Security Authenticated Protocol Version 0” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 5970] DHCPv6 Options for Network Boot,” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 6101] The Secure Sockets Layer (SSL) Protocol Version 3.0” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[RFC 6347] Datagram Transport Layer Security Version 1.2 (DTLS)” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“[SM spec] Common Security: CDSA and CSSM, Version 2 (with corrigenda), was Signed Manifest Specification” at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p><em>Super VGA Graphics Programming Secrets</em> , Steve Rimmer, Windcrest / McGraw-Hill, 1993, ISBN: 0-8306-4428-8.</p></li>
+<li><p>“System Management BIOS Reference Specification, Version 2.6.1” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p><em>The Visual Display of Quantitative Information</em> , Edward R. Tufte, Graphics Press, 1983.</p></li>
+<li><p>“The Unicode Standard, Version 5.2” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“Universal Serial Bus PC Legacy Compatibility Specification, Version 0.9,” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“Universal Serial Bus Specification, Revision 2.0” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“USB Battery Charging Specification” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>XML: A Primer, Simon St. Laurent, MIS:Press, 1998, ISBN:1-5582-8592-X.</p></li>
+</ul>
+</section>
+<section id="prerequisite-specifications">
+<span id="prerequisite-specifications-references"></span><h2><span class="section-number">Q.2. </span>Prerequisite Specifications<a class="headerlink" href="#prerequisite-specifications" title="Link to this heading"></a></h2>
+<p>In general, this specification requires that functionality defined in a number of other existing specifications be present on a system that implements this specification. This specification requires that those specifications be implemented at least to the extent that all the required elements are present.</p>
+<p>This specification prescribes the use and extension of previously established industry specification tables whenever possible. The trend to remove runtime call-based interfaces is well documented. The ACPI (Advanced Configuration and Power Interface) specification is an example of new and innovative firmware technologies that were designed on the premise that OS developers prefer to minimize runtime calls into firmware. ACPI focuses on no runtime calls to the BIOS.</p>
+<section id="acpi-specification">
+<span id="acpi-specification-references"></span><h3><span class="section-number">Q.2.1. </span>ACPI Specification<a class="headerlink" href="#acpi-specification" title="Link to this heading"></a></h3>
+<p>The interface defined by the Advanced Configuration and Power Interface (ACPI) Specification is the primary OS runtime interface for IA-32, x64 and Itanium platforms. ACPI fully defines the methodology that allows the OS to discover and configure all platform resources. ACPI allows the description of non-Plug and Play motherboard devices in a plug and play manner. ACPI also is capable of describing power management and hot plug events to the OS. (For more information on ACPI, see “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi</em> ) under the heading “ACPI”; see also <em>http://uefi.org/acpi</em> ).</p>
+</section>
+<section id="additional-considerations-for-itanium-basedplatforms">
+<span id="additional-considerations-for-itanium-based-platforms-references"></span><h3><span class="section-number">Q.2.2. </span>Additional Considerations for Itanium-BasedPlatforms<a class="headerlink" href="#additional-considerations-for-itanium-basedplatforms" title="Link to this heading"></a></h3>
+<p>Any information or service that is available in Itanium architecture firmware specifications supercedes any requirement in the common supported 32-bit and Itanium architecture specifications listed above. The Itanium architecture firmware specifications (currently the Itanium® System Abstraction Layer Specification and portions of the Intel® Itanium® Architecture Software Developer’s Manual, volumes 1-3) define the baseline functionality required for all Itanium architecture platforms. The major addition that UEFI makes to these Itanium architecture firmware specifications is that it defines a boot infrastructure and a set of services that constitute a common platform definition for high-volume Itanium architecture-based systems to implement based on the more generalized Itanium architecture firmware specifications.</p>
+<p>The following specifications are the required Intel Itanium architecture specifications for all Itanium architecture-based platforms:</p>
+<ul class="simple">
+<li><p>“Itanium® System Abstraction Layer Specification” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“Itanium® Architecture Software Developer’s Manual, Volume 1: Application Architecture, Rev. 2.2,” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“Itanium® Architecture Software Developer’s Manual, Volume 2: System Architecture, Rev. 2.2” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+<li><p>“Itanium® Architecture Software Developer’s Manual, Volume 3: Instruction Set Reference, Rev. 2.2” heading at “Links to UEFI-Related Documents” (<em>http://uefi.org/uefi)</em> .</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Apx_P_Hardware_Error_Record_Persistence_Usage.html" class="btn btn-neutral float-left" title="16. Hardware Error Record Persistence Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Apx_R_Glossary.html" class="btn btn-neutral float-right" title="18. Glossary" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, UEFI Forum, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

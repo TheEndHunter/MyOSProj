@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>16. Protocols — iSCSI Boot &mdash; UEFI Specification 2.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=f2209469" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/style.css?v=faba8a36" />
+      <link rel="stylesheet" type="text/css" href="_static/theme-overrides.css?v=84235ce0" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2de06f63"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="17. Protocols — USB Support" href="17_Protocols_USB_Support.html" />
+    <link rel="prev" title="15. Protocols — SCSI Driver Models and Bus Support" href="15_Protocols_SCSI_Driver_Models_and_Bus_Support.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            UEFI Specification
+          </a>
+              <div class="version">
+                2.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Tables.html">List of Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Figures.html">List of Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/Revision_History.html">Revision History</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Overview.html">2. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Boot_Manager.html">3. Boot Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_EFI_System_Table.html">4. EFI System Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_GUID_Partition_Table_Format.html">5. GUID Partition Table (GPT) Disk Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_Block_Transition_Table_Layout.html">6. Block Translation Table (BTT) Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Services_Boot_Services.html">7. Services — Boot Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Services_Runtime_Services.html">8. Services — Runtime Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Protocols_EFI_Loaded_Image.html">9. Protocols - EFI Loaded Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Protocols_Device_Path_Protocol.html">10. Protocols – Device Path Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html">11. Protocols — UEFI Driver Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_Protocols_Console_Support.html">12. Protocols — Console Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Protocols_Media_Access.html">13. Protocols – Media Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Protocols_PCI_Bus_Support.html">14. Protocols — PCI Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_Protocols_SCSI_Driver_Models_and_Bus_Support.html">15. Protocols — SCSI Driver Models and Bus Support</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">16. Protocols — iSCSI Boot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">16.1. Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#iscsi-uefi-driver-layering">16.1.1. iSCSI UEFI Driver Layering</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-iscsi-initiator-name-protocol">16.2. EFI iSCSI Initiator Name Protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">16.2.1. EFI_ISCSI_INITIATOR_NAME_PROTOCOL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-iscsi-initiator-name-protocol-get">16.2.2. EFI_ISCSI_INITIATOR_NAME_PROTOCOL. Get()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-iscsi-initiator-name-protocol-set">16.2.3. EFI_ISCSI_INITIATOR_NAME_PROTOCOL.Set()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="17_Protocols_USB_Support.html">17. Protocols — USB Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_Protocols_Debugger_Support.html">18. Protocols — Debugger Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_Protocols_Compression_Algorithm_Specification.html">19. Protocols — Compression Algorithm Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_Protocols_ACPI_Protocols.html">20. Protocols — ACPI Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_Protocols_String_Services.html">21. Protocols — String Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html">22. EFI Byte Code Virtual Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_Firmware_Update_and_Reporting.html">23. Firmware Update and Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24_Network_Protocols_SNP_PXE_BIS.html">24. Network Protocols — SNP, PXE, BIS and HTTP Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25_Network_Protocols_Managed_Network.html">25. Network Protocols - Managed Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26_Network_Protocols_Bluetooth.html">26. Network Protocols — Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27_Network_Protocols_VLAN_and_EAP.html">27. Network Protocols — VLAN, EAP, Wi-Fi and Supplicant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28_Network_Protocols_TCP_IP_and_Configuration.html">28. Network Protocols — TCP, IP, IPsec, FTP, TLS and Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29_Network_Protocols_ARP_and_DHCP.html">29. Network Protocols — ARP, DHCP, DNS, HTTP and REST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_Network_Protocols_UDP_and_MTFTP.html">30. Network Protocols — UDP and MTFTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="31_EFI_Redfish_Service_Support.html">31. EFI Redfish Service Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="32_Secure_Boot_and_Driver_Signing.html">32. Secure Boot and Driver Signing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="33_Human_Interface_Infrastructure.html">33. Human Interface Infrastructure Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="34_HII_Protocols.html">34. HII Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="35_HII_Configuration_Processing_and_Browser_Protocol.html">35. HII Configuration Processing and Browser Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="36_User_Identification.html">36. User Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="37_Secure_Technologies.html">37. Secure Technologies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="38_Confidential_Computing.html">38. Confidential Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="39_Micellaneous_Protocols.html">39. Miscellaneous Protocols</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Apx_A_GUID_and_Time_Formats.html">A. GUID and Time Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_B_Console.html">B. Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_C_Device_Path_Examples.html">C. Device Path Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_D_Status_Codes.html">D. Status Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_E_Universal_Network_Driver_Interfaces.html">E. Universal Network Driver Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_F_Using_the_Simple_Pointer_Protocol.html">F. Using the Simple Pointer Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_G_Using_the_EFI_Extended_SCSI_Pass_Thru_Protocol.html">G. Using the EFI Extended SCSI Pass Thru Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_H_Compression_Source_Code.html">H. Compression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_I_Decompression_Source_Code.html">I. Decompression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_J_EFI_Byte_Code_Virtual_Machine_Opcode_List.html">J. EFI Byte Code Virtual Machine Opcode List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_K_Alphabetic_Function_Lists.html">K. Alphabetic Function Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_L_EFI_1.10_Protocol_Changes_and_Deprecation_List.html">L. EFI 1.10 Protocol Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html">M. Formats — Language Codes and Language Code Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_N_Common_Platform_Error_Record.html">N. Common Platform Error Record (CPER)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_O_UEFI_ACPI_Data_Table.html">O. UEFI ACPI Data Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_P_Hardware_Error_Record_Persistence_Usage.html">P. Hardware Error Record Persistence Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_Q_References.html">Q. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_R_Glossary.html">R. Glossary</a></li>
+</ul>
+
+    <a href= "genindex.html">Index</a>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UEFI Specification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">16. </span>Protocols — iSCSI Boot</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="protocols-iscsi-boot">
+<span id="id1"></span><h1><span class="section-number">16. </span>Protocols — iSCSI Boot<a class="headerlink" href="#protocols-iscsi-boot" title="Link to this heading"></a></h1>
+<section id="overview">
+<span id="protocols-iscsi-boot-overview"></span><h2><span class="section-number">16.1. </span>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The iSCSI protocol defines a transport for SCSI data over TCP/IP. It also provides an interoperable solution that takes advantage of existing internet infrastructure, management facilities, and addresses distance limitations. The iSCSI protocol specification was developed by the Internet Engineering Task Force (IETF) and is SCSI Architecture Model-2 (SAM-2) compliant. iSCSI encapsulates block-oriented SCSI commands into iSCSI Protocol Data Units (PDU) that traverse the network over TCP/IP. iSCSI defines a Session, the initiator and target nexus (I-T nexus), which could be a bundle of one or more TCP connections.</p>
+<p>Similar to other existing mass storage protocols like Fibre Channel and parallel SCSI, boot over iSCSI is an important functionality. This document will attempt to capture the various cases for iSCSI boot and common up with generic EFI protocol changes to address them.</p>
+<section id="iscsi-uefi-driver-layering">
+<span id="id2"></span><h3><span class="section-number">16.1.1. </span>iSCSI UEFI Driver Layering<a class="headerlink" href="#iscsi-uefi-driver-layering" title="Link to this heading"></a></h3>
+<p>iSCSI UEFI Drivers may exist in two different forms:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>iSCSI UEFI Driver on a NIC</strong>:</dt><dd><p>The driver will be layered on top of the networking layers. It will use the DHCP, IP, and TCP and packet level interface protocols of the UEFI networking stack. The driver will use an iSCSI software initiator.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>iSCSI UEFI Driver on a Host Bus Adapter (HBA)that may use an offloading engine such as TOE (or anyother TCP offload card):</strong></dt><dd><p>The driver will be layered on top of the TOE TCP interfaces. It will use the DHCP, IP, TCP protocols of the TOE. The driver will present itself as a SCSI device driver using interfaces such as <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL</em> .</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>To help in detecting iSCSI UEFI Drivers and their capabilities, the iSCSI UEFI driver handle must include an instance of the <em>EFI_ADAPTER_INFORMATION_PROTOCOL</em> with a <em>EFI_ADAPTER_INFO_NETWORK_BOOT</em> structure.</p>
+</section>
+</section>
+<section id="efi-iscsi-initiator-name-protocol">
+<span id="id3"></span><h2><span class="section-number">16.2. </span>EFI iSCSI Initiator Name Protocol<a class="headerlink" href="#efi-iscsi-initiator-name-protocol" title="Link to this heading"></a></h2>
+<p>This protocol sets and obtains the iSCSI Initiator Name. The iSCSI Initiator Name protocol builds a default iSCSI name. The iSCSI name configures using the programming interfaces defined below. Successive configuration of the iSCSI initiator name overwrites the previously existing name. Once overwritten, the previous name will not be retrievable. Setting an iSCSI name string that is zero length is illegal. The maximum size of the iSCSI Initiator Name is 224 bytes (including the <strong>NULL</strong> terminator).</p>
+<section id="id4">
+<span id="id5"></span><h3><span class="section-number">16.2.1. </span>EFI_ISCSI_INITIATOR_NAME_PROTOCOL<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>iSCSI Initiator Name Protocol for setting and obtaining the iSCSI Initiator Name.</p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_ISCSI_INITIATOR_NAME_PROTOCOL_GUID \</span>
+  <span class="p">{</span><span class="mh">0x59324945</span><span class="p">,</span> <span class="mh">0xec44</span><span class="p">,</span> <span class="mh">0x4c0d</span><span class="p">,</span> \
+    <span class="p">{</span><span class="mh">0xb1</span><span class="p">,</span> <span class="mh">0xcd</span><span class="p">,</span> <span class="mh">0x9d</span><span class="p">,</span> <span class="mh">0xb1</span><span class="p">,</span> <span class="mh">0x39</span><span class="p">,</span> <span class="mh">0xdf</span><span class="p">,</span> <span class="mh">0x07</span><span class="p">,</span> <span class="mh">0x0c</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p><strong>Protocol Interface Structure</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="n">_EFI_ISCSI_INITIATOR_NAME_PROTOCOL</span> <span class="p">{</span>
+  <span class="n">EFI_ISCSI_INITIATOR_NAME_GET</span>                    <span class="n">Get</span><span class="p">;</span>
+  <span class="n">EFI_ISCSI_INITIATOR_NAME_SET</span>                    <span class="n">Set</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">EFI_ISCSI_INITIATOR_NAME_PROTOCOL</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>Get</dt><dd><p>Used to retrieve the iSCSI Initiator Name.</p>
+</dd>
+<dt>Set</dt><dd><p>Used to set the iSCSI Initiator Name.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>EFI_ISCSI_INIT_NAME_PROTOCOL</em> provides the ability to get and set the iSCSI Initiator Name.</p>
+</section>
+<section id="efi-iscsi-initiator-name-protocol-get">
+<span id="id6"></span><h3><span class="section-number">16.2.2. </span>EFI_ISCSI_INITIATOR_NAME_PROTOCOL. Get()<a class="headerlink" href="#efi-iscsi-initiator-name-protocol-get" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Retrieves the current set value of iSCSI Initiator Name.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_ISCSI_INITIATOR_NAME_GET</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_ISCSI_INITIATOR_NAME_PROTOCOL</span>    <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">UINTN</span>                            <span class="o">*</span><span class="n">BufferSize</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">VOID</span>                                <span class="o">*</span><span class="n">Buffer</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Pointer to the <em>EFI_ISCSI_INITIATOR_NAME_PROTOCOL</em> instance.</p>
+</dd>
+<dt>BufferSize</dt><dd><p>Size of the buffer in bytes pointed to by Buffer / Actual size of the variable data buffer.</p>
+</dd>
+<dt>Buffer</dt><dd><p>Pointer to the buffer for data to be read. The data is a null-terminated UTF-8 encoded string. The maximum length is 223 characters, including the null-terminator.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function will retrieve the iSCSI Initiator Name from Non-volatile memory.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>Data was successfully retrieved into the provided buffer and the <em>BufferSize</em> was sufficient to handle the iSCSI initiator name</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_BUFFER_TOO_SMALL</p></td>
+<td><p><em>BufferSize</em> is too small for the result. <em>BufferSize</em> will be updated with the size required to complete the request. <em>Buffer</em> will not be affected.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>BufferSize</em> is <strong>NULL</strong>. <em>BufferSize</em> and <em>Buffer</em> will not be affected.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>Buffer</em> is <strong>NULL</strong>. <em>BufferSize</em> and <em>Buffer</em> will not be affected.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>The iSCSI initiator name could not be retrieved due to a hardware error.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-iscsi-initiator-name-protocol-set">
+<span id="id7"></span><h3><span class="section-number">16.2.3. </span>EFI_ISCSI_INITIATOR_NAME_PROTOCOL.Set()<a class="headerlink" href="#efi-iscsi-initiator-name-protocol-set" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Sets the iSCSI Initiator Name.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_ISCSI_INITIATOR_NAME_SET</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_ISCSI_INITIATOR_NAME_PROTOCOL</span>       <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">UINTN</span>                               <span class="o">*</span><span class="n">BufferSize</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">VOID</span>                                    <span class="o">*</span><span class="n">Buffer</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Pointer to the <em>EFI_ISCSI_INITIATOR_NAME_PROTOCOL</em> instance</p>
+</dd>
+<dt>BufferSize</dt><dd><p>Size of the buffer in bytes pointed to by Buffer.</p>
+</dd>
+<dt>Buffer</dt><dd><p>Pointer to the buffer for data to be written. The data is a null-terminated UTF-8 encoded string. The maximum length is 223 characters, including the null-terminator.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function will set the iSCSI Initiator Name into Non-volatile memory.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>Data was successfully stored by the protocol</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>Platform policies do not allow for data to be written</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>BufferSize</em> exceeds the maximum allowed limit. <em>BufferSize</em> will be updated with the maximum size required to complete the request.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>Buffersize</em> is <strong>NULL</strong>. <em>BufferSize</em> and <em>Buffer</em> will not be affected</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>Buffer</em> is <strong>NULL</strong>. <em>BufferSize</em> and <em>Buffer</em> will not be affected.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>The data could not be stored due to a hardware error.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_OUT_OF_RESOURCES</p></td>
+<td><p>Not enough storage is available to hold the data</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_PROTOCOL_ERROR</p></td>
+<td><p>Input iSCSI initiator name does not adhere to RFC 3720 (and other related protocols)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="15_Protocols_SCSI_Driver_Models_and_Bus_Support.html" class="btn btn-neutral float-left" title="15. Protocols — SCSI Driver Models and Bus Support" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="17_Protocols_USB_Support.html" class="btn btn-neutral float-right" title="17. Protocols — USB Support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, UEFI Forum, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

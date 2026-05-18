@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4. EFI System Table &mdash; UEFI Specification 2.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=f2209469" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/style.css?v=faba8a36" />
+      <link rel="stylesheet" type="text/css" href="_static/theme-overrides.css?v=84235ce0" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2de06f63"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="5. GUID Partition Table (GPT) Disk Layout" href="05_GUID_Partition_Table_Format.html" />
+    <link rel="prev" title="3. Boot Manager" href="03_Boot_Manager.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            UEFI Specification
+          </a>
+              <div class="version">
+                2.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Tables.html">List of Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Figures.html">List of Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/Revision_History.html">Revision History</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Overview.html">2. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Boot_Manager.html">3. Boot Manager</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">4. EFI System Table</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#uefi-image-entry-point">4.1. UEFI Image Entry Point</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-image-entry-point">4.1.1. EFI_IMAGE_ENTRY_POINT</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-table-header">4.2. EFI Table Header</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">4.2.1. EFI_TABLE_HEADER</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-system-table-1">4.3. EFI System Table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">4.3.1. EFI_SYSTEM_TABLE</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-boot-services-table">4.4. EFI Boot Services Table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-boot-services">4.4.1. EFI_BOOT_SERVICES</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-runtime-services-table">4.5. EFI Runtime Services Table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-runtime-services">4.5.1. EFI_RUNTIME_SERVICES</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-configuration-table-properties-table">4.6. EFI Configuration Table &amp; Properties Table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-configuration-table">4.6.1. EFI_CONFIGURATION_TABLE</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#industry-standard-configuration-tables">4.6.1.1. Industry Standard Configuration Tables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#json-configuration-tables">4.6.1.2. JSON Configuration Tables</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#devicetree-tables">4.6.1.3. Devicetree Tables</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-rt-properties-table">4.6.2. EFI_RT_PROPERTIES_TABLE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-memory-attributes-table">4.6.3. EFI_MEMORY_ATTRIBUTES_TABLE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-conformance-profile-table">4.6.4. EFI_CONFORMANCE_PROFILE_TABLE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#other-configuration-tables">4.6.5. Other Configuration Tables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#image-entry-point-examples">4.7. Image Entry Point Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id18">4.7.1. Image Entry Point Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#uefi-driver-model-example">4.7.2. UEFI Driver Model Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#uefi-driver-model-example-unloadable">4.7.3. UEFI Driver Model Example (Unloadable)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-driver-model-example-multiple-instances">4.7.4. EFI Driver Model Example (Multiple Instances)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="05_GUID_Partition_Table_Format.html">5. GUID Partition Table (GPT) Disk Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_Block_Transition_Table_Layout.html">6. Block Translation Table (BTT) Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Services_Boot_Services.html">7. Services — Boot Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Services_Runtime_Services.html">8. Services — Runtime Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Protocols_EFI_Loaded_Image.html">9. Protocols - EFI Loaded Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Protocols_Device_Path_Protocol.html">10. Protocols – Device Path Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html">11. Protocols — UEFI Driver Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_Protocols_Console_Support.html">12. Protocols — Console Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Protocols_Media_Access.html">13. Protocols – Media Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Protocols_PCI_Bus_Support.html">14. Protocols — PCI Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_Protocols_SCSI_Driver_Models_and_Bus_Support.html">15. Protocols — SCSI Driver Models and Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_Protocols_iSCSI_Boot.html">16. Protocols — iSCSI Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_Protocols_USB_Support.html">17. Protocols — USB Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_Protocols_Debugger_Support.html">18. Protocols — Debugger Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_Protocols_Compression_Algorithm_Specification.html">19. Protocols — Compression Algorithm Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_Protocols_ACPI_Protocols.html">20. Protocols — ACPI Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_Protocols_String_Services.html">21. Protocols — String Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html">22. EFI Byte Code Virtual Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_Firmware_Update_and_Reporting.html">23. Firmware Update and Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24_Network_Protocols_SNP_PXE_BIS.html">24. Network Protocols — SNP, PXE, BIS and HTTP Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25_Network_Protocols_Managed_Network.html">25. Network Protocols - Managed Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26_Network_Protocols_Bluetooth.html">26. Network Protocols — Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27_Network_Protocols_VLAN_and_EAP.html">27. Network Protocols — VLAN, EAP, Wi-Fi and Supplicant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28_Network_Protocols_TCP_IP_and_Configuration.html">28. Network Protocols — TCP, IP, IPsec, FTP, TLS and Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29_Network_Protocols_ARP_and_DHCP.html">29. Network Protocols — ARP, DHCP, DNS, HTTP and REST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_Network_Protocols_UDP_and_MTFTP.html">30. Network Protocols — UDP and MTFTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="31_EFI_Redfish_Service_Support.html">31. EFI Redfish Service Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="32_Secure_Boot_and_Driver_Signing.html">32. Secure Boot and Driver Signing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="33_Human_Interface_Infrastructure.html">33. Human Interface Infrastructure Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="34_HII_Protocols.html">34. HII Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="35_HII_Configuration_Processing_and_Browser_Protocol.html">35. HII Configuration Processing and Browser Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="36_User_Identification.html">36. User Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="37_Secure_Technologies.html">37. Secure Technologies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="38_Confidential_Computing.html">38. Confidential Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="39_Micellaneous_Protocols.html">39. Miscellaneous Protocols</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Apx_A_GUID_and_Time_Formats.html">A. GUID and Time Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_B_Console.html">B. Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_C_Device_Path_Examples.html">C. Device Path Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_D_Status_Codes.html">D. Status Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_E_Universal_Network_Driver_Interfaces.html">E. Universal Network Driver Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_F_Using_the_Simple_Pointer_Protocol.html">F. Using the Simple Pointer Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_G_Using_the_EFI_Extended_SCSI_Pass_Thru_Protocol.html">G. Using the EFI Extended SCSI Pass Thru Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_H_Compression_Source_Code.html">H. Compression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_I_Decompression_Source_Code.html">I. Decompression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_J_EFI_Byte_Code_Virtual_Machine_Opcode_List.html">J. EFI Byte Code Virtual Machine Opcode List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_K_Alphabetic_Function_Lists.html">K. Alphabetic Function Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_L_EFI_1.10_Protocol_Changes_and_Deprecation_List.html">L. EFI 1.10 Protocol Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html">M. Formats — Language Codes and Language Code Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_N_Common_Platform_Error_Record.html">N. Common Platform Error Record (CPER)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_O_UEFI_ACPI_Data_Table.html">O. UEFI ACPI Data Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_P_Hardware_Error_Record_Persistence_Usage.html">P. Hardware Error Record Persistence Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_Q_References.html">Q. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_R_Glossary.html">R. Glossary</a></li>
+</ul>
+
+    <a href= "genindex.html">Index</a>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UEFI Specification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">4. </span>EFI System Table</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="efi-system-table">
+<span id="id1"></span><h1><span class="section-number">4. </span>EFI System Table<a class="headerlink" href="#efi-system-table" title="Link to this heading"></a></h1>
+<p>This section describes the entry point to a UEFI image and the parameters that are passed to that entry point. There are three types of UEFI images that can be loaded and executed by firmware conforming to this specification. These are UEFI applications (<a class="reference internal" href="02_Overview.html#uefi-applications"><span class="std std-ref">UEFI Applications</span></a>), UEFI boot service drivers (<a class="reference internal" href="02_Overview.html#uefi-drivers"><span class="std std-ref">UEFI Drivers</span></a> ), and UEFI runtime drivers (<a class="reference internal" href="02_Overview.html#uefi-drivers"><span class="std std-ref">UEFI Drivers</span></a>). UEFI applications include UEFI OS loaders (<a class="reference internal" href="02_Overview.html#uefi-os-loaders"><span class="std std-ref">UEFI OS Loaders</span></a>). There are no differences in the entry point for these three image types.</p>
+<section id="uefi-image-entry-point">
+<span id="id2"></span><h2><span class="section-number">4.1. </span>UEFI Image Entry Point<a class="headerlink" href="#uefi-image-entry-point" title="Link to this heading"></a></h2>
+<p>The most significant parameter that is passed to an image is a pointer to the System Table (see definition immediately below), the main entry point for a UEFI Image. The System Table contains pointers to the active console devices, a pointer to the Boot Services Table, a pointer to the Runtime Services Table, and a pointer to the list of system configuration tables such as ACPI, SMBIOS, and the SAL System Table. This section describes the System Table in detail.</p>
+<section id="efi-image-entry-point">
+<span id="efi-system-table-efi-image-entry-point"></span><h3><span class="section-number">4.1.1. </span>EFI_IMAGE_ENTRY_POINT<a class="headerlink" href="#efi-image-entry-point" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>This is the main entry point for a UEFI Image. This entry point is the same for UEFI applications and UEFI drivers.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_IMAGE_ENTRY_POINT</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_HANDLE</span>                  <span class="n">ImageHandle</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">EFI_SYSTEM_TABLE</span>            <span class="o">*</span><span class="n">SystemTable</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>ImageHandle</dt><dd><p>The firmware allocated handle for the UEFI image.</p>
+</dd>
+<dt>SystemTable</dt><dd><p>A pointer to the EFI System Table.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function is the entry point to an EFI image. An EFI image is loaded and relocated in system memory by the EFI Boot Service <a class="reference internal" href="07_Services_Boot_Services.html#efi-boot-services-loadimage"><span class="std std-ref">EFI_BOOT_SERVICES.LoadImage()</span></a> . An EFI image is invoked through the EFI Boot Service  <a class="reference internal" href="07_Services_Boot_Services.html#efi-boot-services-startimage"><span class="std std-ref">EFI_BOOT_SERVICES.StartImage()</span></a>.</p>
+<p>The first argument is the image’s image handle. The second argument is a pointer to the image’s system table. The system table contains the standard output and input handles, plus pointers to the   <a class="reference internal" href="#efi-boot-services"><span class="std std-ref">EFI_BOOT_SERVICES</span></a>  and   <a class="reference internal" href="#efi-runtime-services"><span class="std std-ref">EFI_RUNTIME_SERVICES</span></a> tables. The service tables contain the entry points in the firmware for accessing the core EFI system functionality. The handles in the system table are used to obtain basic access to the console. In addition, the System Table contains pointers to other standard tables that a loaded image may use if the associated pointers are initialized to nonzero values. Examples of such tables are ACPI, SMBIOS, SAL System Table, etc.</p>
+<p>The <em>ImageHandle</em> is a firmware-allocated handle that is used to identify the image on various functions. The handle also supports one or more protocols that the image can use. All images support the <em>EFI_LOADED_IMAGE_PROTOCOL</em> and the <em>EFI_LOADED_IMAGE_DEVICE_PATH_PROTOCOL</em> that returns the source location of the image, the memory location of the image, the load options for the image, etc. The exact <em>EFI_LOADED_IMAGE_PROTOCOL</em> and <em>EFI_LOADED_IMAGE_DEVICE_PATH_PROTOCOL</em> structures are defined in   <a class="reference internal" href="09_Protocols_EFI_Loaded_Image.html#efi-loaded-image-protocol-unload"><span class="std std-ref">EFI_LOADED_IMAGE_PROTOCOL.Unload()</span></a> .</p>
+<p>If the UEFI image is a UEFI application that is not a UEFI OS loader, then the application executes and either returns or calls the EFI Boot Services  <a class="reference internal" href="07_Services_Boot_Services.html#efi-boot-services-exit"><span class="std std-ref">EFI_BOOT_SERVICES.Exit()</span></a>  . A UEFI application is always unloaded from memory when it exits, and its return status is returned to the component that started the UEFI application.</p>
+<p>If the UEFI image is a UEFI OS Loader, then the UEFI OS Loader executes and either returns, calls the EFI Boot Service <em>Exit()</em> , or calls the EFI Boot Service  <a class="reference internal" href="07_Services_Boot_Services.html#efi-boot-services-exitbootservices"><span class="std std-ref">EFI_BOOT_SERVICES.ExitBootServices()</span></a> . If the EFI OS Loader returns or calls <em>Exit()</em> , then the load of the OS has failed, and the EFI OS Loader is unloaded from memory and control is returned to the component that attempted to boot the UEFI OS Loader. If <em>ExitBootServices()</em> is called, then the UEFI OS Loader has taken control of the platform, and EFI will not regain control of the system until the platform is reset. One method of resetting the platform is through the EFI Runtime Service   <a class="reference internal" href="08_Services_Runtime_Services.html#resetsystem"><span class="std std-ref">ResetSystem()</span></a> .</p>
+<p>If the UEFI image is a UEFI Driver, then the UEFI driver executes and either returns or calls the Boot Service <em>Exit()</em> . If the UEFI driver returns an error, then the driver is unloaded from memory. If the UEFI driver returns <em>EFI_SUCCESS</em> , then it stays resident in memory. If the UEFI driver does not follow the UEFI Driver Model, then it performs any required initialization and installs its protocol services before returning. If the driver does follow the UEFI Driver Model, then the entry point is not allowed to touch any device hardware. Instead, the entry point is required to create and install the   <a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html#efi-driver-binding-protocol-protocols-uefi-driver-model"><span class="std std-ref">EFI Driver Binding Protocol</span></a>  (   <a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html#efi-driver-binding-protocol-protocols-uefi-driver-model"><span class="std std-ref">EFI Driver Binding Protocol</span></a> ) on the <em>ImageHandle</em> of the UEFI driver. If this process is completed, then <em>EFI_SUCCESS</em> is returned. If the resources are not available to complete the UEFI driver initialization, then <em>EFI_OUT_OF_RESOURCES</em> is returned.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The driver was initialized.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_OUT_OF_RESOURCES</p></td>
+<td><p>The request could not be completed due to a lack of resources.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="efi-table-header">
+<span id="id3"></span><h2><span class="section-number">4.2. </span>EFI Table Header<a class="headerlink" href="#efi-table-header" title="Link to this heading"></a></h2>
+<p>The data type <em>EFI_TABLE_HEADER</em> is the data structure that precedes all of the standard EFI table types. It includes a signature that is unique for each table type, a revision of the table that may be updated as extensions are added to the EFI table types, and a 32-bit CRC so a consumer of an EFI table type can validate the contents of the EFI table.</p>
+<section id="id4">
+<h3><span class="section-number">4.2.1. </span>EFI_TABLE_HEADER<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Data structure that precedes all of the standard EFI table types.</p>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINT64</span>      <span class="n">Signature</span><span class="p">;</span>
+  <span class="n">UINT32</span>      <span class="n">Revision</span><span class="p">;</span>
+  <span class="n">UINT32</span>      <span class="n">HeaderSize</span><span class="p">;</span>
+  <span class="n">UINT32</span>      <span class="n">CRC32</span><span class="p">;</span>
+  <span class="n">UINT32</span>      <span class="n">Reserved</span><span class="p">;</span>
+ <span class="p">}</span> <span class="n">EFI_TABLE_HEADER</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl>
+<dt>Signature</dt><dd><p>A 64-bit signature that identifies the type of table that follows. Unique signatures have been generated for the EFI System Table, the EFI Boot Services Table, and the EFI Runtime Services Table.</p>
+</dd>
+<dt>Revision</dt><dd><p>The revision of the EFI Specification to which this table conforms. The upper 16 bits of this field contain the major revision value, and the lower 16 bits contain the minor revision value. The minor revision value is a decimal value split into two parts, the “upper decimal” and the “lower decimal”. The upper decimal is calculated dividing the minor revision value by 10 using integer division. The lower decimal is calculated by taking the minor revision value modulo 10.</p>
+<p>When printed or displayed UEFI spec revision is referred as (Major revision).(Minor revision upper digits).(Minor revision lowest digit) or (Major revision).(Minor revision upper digits) in case Minor revision lowest digit is set to 0. For example:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Specification revision value ((2&lt;&lt;16) | (10)) would be referred to as 2.1;</p></li>
+<li><p>Specification revision value ((2&lt;&lt;16) | (30)) would be referred to as 2.3;</p></li>
+<li><p>Specification revision value ((2&lt;&lt;16) | (31)) would be referred to as 2.3.1;</p></li>
+<li><p>Specification revision value ((2&lt;&lt;16) | (100)) would be referred to as 2.10;</p></li>
+<li><p>Specification revision value ((2&lt;&lt;16) | (101)) would be referred to as 2.10.1;</p></li>
+</ul>
+</div></blockquote>
+<p>Note that EFI 1.10 did not follow this convention and was referred to as 1.10, not 1.1.</p>
+</dd>
+<dt>HeaderSize</dt><dd><p>The size, in bytes, of the entire table including the EFI_TABLE_HEADER.</p>
+</dd>
+<dt>CRC32</dt><dd><p>The 32-bit CRC for the entire table. This value is computed by setting this field to 0, and computing the 32-bit CRC for HeaderSize bytes.</p>
+</dd>
+<dt>Reserved</dt><dd><p>Reserved field that must be set to 0.</p>
+</dd>
+</dl>
+<p><strong>NOTE:</strong> The capabilities found in the EFI system table, runtime table and boot services table may change over time. The first field in each of these tables is an EFI_TABLE_HEADER. This header’s Revision field is incremented when new capabilities and functions are added to the functions in the table. When checking for capabilities, code should verify that Revision is greater than or equal to the revision level of the table at the point when the capabilities were added to the UEFI specification.</p>
+<p><strong>NOTE:</strong> Unless otherwise specified, UEFI uses a standard CCITT32 CRC algorithm with a seed polynomial value of 0x04c11db7 for its CRC calculations.</p>
+<p><strong>NOTE:</strong> The size of the system table, runtime services table, and boot services table may increase over time. It is very important to always use the HeaderSize field of the EFI_TABLE_HEADER to determine the size of these tables.</p>
+</section>
+</section>
+<section id="efi-system-table-1">
+<span id="id5"></span><h2><span class="section-number">4.3. </span>EFI System Table<a class="headerlink" href="#efi-system-table-1" title="Link to this heading"></a></h2>
+<p>UEFI uses the EFI System Table, which contains pointers to the runtime and boot services tables. The definition for this table is shown in the following code fragments. Except for the table header, all elements in the service tables are pointers to functions as defined in  <a class="reference internal" href="07_Services_Boot_Services.html#services-boot-services"><span class="std std-ref">Services — Boot Services</span></a> and <a class="reference internal" href="08_Services_Runtime_Services.html#services-runtime-services"><span class="std std-ref">Services — Runtime Services</span></a> . Prior to a call to <a class="reference internal" href="07_Services_Boot_Services.html#efi-boot-services-exitbootservices"><span class="std std-ref">EFI_BOOT_SERVICES.ExitBootServices()</span></a> , all of the fields of the EFI System Table are valid. After an operating system has taken control of the platform with a call to <em>ExitBootServices()</em> , only the <em>Hdr</em> , <em>FirmwareVendor</em> , <em>FirmwareRevision</em> , <em>RuntimeServices</em> , <em>NumberOfTableEntries</em> , and <em>ConfigurationTable</em> fields are valid.</p>
+<section id="id6">
+<h3><span class="section-number">4.3.1. </span>EFI_SYSTEM_TABLE<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Contains pointers to the runtime and boot services tables.</p>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_SYSTEM_TABLE_SIGNATURE 0x5453595320494249</span>
+<span class="c1">#define EFI_2_100_SYSTEM_TABLE_REVISION ((2&lt;&lt;16) | (100))</span>
+<span class="c1">#define EFI_2_90_SYSTEM_TABLE_REVISION  ((2&lt;&lt;16) | (90))</span>
+<span class="c1">#define EFI_2_80_SYSTEM_TABLE_REVISION  ((2&lt;&lt;16) | (80))</span>
+<span class="c1">#define EFI_2_70_SYSTEM_TABLE_REVISION  ((2&lt;&lt;16) | (70))</span>
+<span class="c1">#define EFI_2_60_SYSTEM_TABLE_REVISION  ((2&lt;&lt;16) | (60))</span>
+<span class="c1">#define EFI_2_50_SYSTEM_TABLE_REVISION  ((2&lt;&lt;16) | (50))</span>
+<span class="c1">#define EFI_2_40_SYSTEM_TABLE_REVISION  ((2&lt;&lt;16) | (40))</span>
+<span class="c1">#define EFI_2_31_SYSTEM_TABLE_REVISION  ((2&lt;&lt;16) | (31))</span>
+<span class="c1">#define EFI_2_30_SYSTEM_TABLE_REVISION  ((2&lt;&lt;16) | (30))</span>
+<span class="c1">#define EFI_2_20_SYSTEM_TABLE_REVISION  ((2&lt;&lt;16) | (20))</span>
+<span class="c1">#define EFI_2_10_SYSTEM_TABLE_REVISION  ((2&lt;&lt;16) | (10))</span>
+<span class="c1">#define EFI_2_00_SYSTEM_TABLE_REVISION  ((2&lt;&lt;16) | (00))</span>
+<span class="c1">#define EFI_1_10_SYSTEM_TABLE_REVISION  ((1&lt;&lt;16) | (10))</span>
+<span class="c1">#define EFI_1_02_SYSTEM_TABLE_REVISION  ((1&lt;&lt;16) | (02))</span>
+<span class="c1">#define EFI_SPECIFICATION_VERSION       EFI_SYSTEM_TABLE_REVISION</span>
+<span class="c1">#define EFI_SYSTEM_TABLE_REVISION       EFI_2_100_SYSTEM_TABLE_REVISION</span>
+
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">EFI_TABLE_HEADER</span>                 <span class="n">Hdr</span><span class="p">;</span>
+  <span class="n">CHAR16</span>                           <span class="o">*</span><span class="n">FirmwareVendor</span><span class="p">;</span>
+  <span class="n">UINT32</span>                           <span class="n">FirmwareRevision</span><span class="p">;</span>
+  <span class="n">EFI_HANDLE</span>                       <span class="n">ConsoleInHandle</span><span class="p">;</span>
+  <span class="n">EFI_SIMPLE_TEXT_INPUT_PROTOCOL</span>   <span class="o">*</span><span class="n">ConIn</span><span class="p">;</span>
+  <span class="n">EFI_HANDLE</span>                       <span class="n">ConsoleOutHandle</span><span class="p">;</span>
+  <span class="n">EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL</span>  <span class="o">*</span><span class="n">ConOut</span><span class="p">;</span>
+  <span class="n">EFI_HANDLE</span>                       <span class="n">StandardErrorHandle</span><span class="p">;</span>
+  <span class="n">EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL</span>  <span class="o">*</span><span class="n">StdErr</span><span class="p">;</span>
+  <span class="n">EFI_RUNTIME_SERVICES</span>             <span class="o">*</span><span class="n">RuntimeServices</span><span class="p">;</span>
+  <span class="n">EFI_BOOT_SERVICES</span>                <span class="o">*</span><span class="n">BootServices</span><span class="p">;</span>
+  <span class="n">UINTN</span>                            <span class="n">NumberOfTableEntries</span><span class="p">;</span>
+  <span class="n">EFI_CONFIGURATION_TABLE</span>          <span class="o">*</span><span class="n">ConfigurationTable</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_SYSTEM_TABLE</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl>
+<dt>Hdr</dt><dd><p>The table header for the EFI System Table. This header contains the EFI_SYSTEM_TABLE_SIGNATURE and EFI_SYSTEM_TABLE_REVISION values along with the size of the EFI_SYSTEM_TABLE structure and a 32-bit CRC to verify that the contents of the EFI System Table are valid.</p>
+</dd>
+<dt>FirmwareVendor</dt><dd><p>A pointer to a null terminated string that identifies the vendor that produces the system firmware for the platform.</p>
+</dd>
+<dt>FirmwareRevision</dt><dd><p>A firmware vendor specific value that identifies the revision of the system firmware for the platform.</p>
+</dd>
+<dt>ConsoleInHandle</dt><dd><p>The handle for the active console input device. This handle must support <a class="reference internal" href="12_Protocols_Console_Support.html#efi-simple-text-input-protocol"><span class="std std-ref">EFI_SIMPLE_TEXT_INPUT_PROTOCOL</span></a> and <a class="reference internal" href="12_Protocols_Console_Support.html#efi-simple-text-input-ex-protocol"><span class="std std-ref">EFI_SIMPLE_TEXT_INPUT_EX_PROTOCOL</span></a>. If there is no active console, these protocols must still be present.</p>
+</dd>
+<dt>ConIn</dt><dd><p>A pointer to the <a class="reference internal" href="12_Protocols_Console_Support.html#efi-simple-text-input-protocol"><span class="std std-ref">EFI_SIMPLE_TEXT_INPUT_PROTOCOL</span></a> interface that is associated with <em>ConsoleInHandle</em>.</p>
+</dd>
+<dt>ConsoleOutHandle</dt><dd><p>The handle for the active console output device. This  handle must support the  <a class="reference internal" href="12_Protocols_Console_Support.html#efi-simple-text-output-protocol"><span class="std std-ref">EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL</span></a>.</p>
+<p>If there is no active console, this protocol must still be present.</p>
+</dd>
+<dt>ConOut</dt><dd><p>A pointer to the EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL                   interface that is associated with <em>ConsoleOutHandle</em>.</p>
+</dd>
+<dt>StandardErrorHandle</dt><dd><p>The handle for the active standard error console                   device. This handle must support the                   EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL. If there is no                   active console, this protocol must still be present.</p>
+</dd>
+<dt>StdErr</dt><dd><p>A pointer to the EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL                   interface that is associated with <em>StandardErrorHandle</em>.</p>
+</dd>
+<dt>RuntimeServices</dt><dd><p>A pointer to the <a class="reference internal" href="#efi-runtime-services-table"><span class="std std-ref">EFI Runtime Services Table</span></a>.</p>
+</dd>
+<dt>BootServices</dt><dd><p>A pointer to the EFI Boot Services Table. See ref:<cite>efi-boot-services-table_efi_system_table</cite>.</p>
+</dd>
+<dt>NumberOfTableEntries</dt><dd><p>The number of system configuration tables in the                   buffer <em>ConfigurationTable</em>.</p>
+</dd>
+<dt>ConfigurationTable</dt><dd><p>A pointer to the system configuration tables. The                   number of entries in the table is <em>NumberOfTableEntries</em>.</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="efi-boot-services-table">
+<span id="id7"></span><h2><span class="section-number">4.4. </span>EFI Boot Services Table<a class="headerlink" href="#efi-boot-services-table" title="Link to this heading"></a></h2>
+<p>UEFI uses the EFI Boot Services Table, which contains a table header and pointers to all of the boot services. The definition for this table is shown in the following code fragments. Except for the table header, all elements in the EFI Boot Services Tables are prototypes of function pointers to functions as defined in  <a class="reference internal" href="07_Services_Boot_Services.html#services-boot-services"><span class="std std-ref">Services — Boot Services</span></a> . The function pointers in this table are not valid after the operating system has taken control of the platform with a call to  <a class="reference internal" href="07_Services_Boot_Services.html#efi-boot-services-exitbootservices"><span class="std std-ref">EFI_BOOT_SERVICES.ExitBootServices()</span></a> .</p>
+<section id="efi-boot-services">
+<span id="id8"></span><h3><span class="section-number">4.4.1. </span>EFI_BOOT_SERVICES<a class="headerlink" href="#efi-boot-services" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Contains a table header and pointers to all of the boot services.</p>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_BOOT_SERVICES_SIGNATURE 0x56524553544f4f42</span>
+<span class="c1">#define EFI_BOOT_SERVICES_REVISION EFI_SPECIFICATION_VERSION</span>
+
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">EFI_TABLE_HEADER</span>     <span class="n">Hdr</span><span class="p">;</span>
+
+  <span class="o">//</span>
+  <span class="o">//</span> <span class="n">Task</span> <span class="n">Priority</span> <span class="n">Services</span>
+  <span class="o">//</span>
+  <span class="n">EFI_RAISE_TPL</span>        <span class="n">RaiseTPL</span><span class="p">;</span>       <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+  <span class="n">EFI_RESTORE_TPL</span>      <span class="n">RestoreTPL</span><span class="p">;</span>     <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+
+    <span class="o">//</span>
+    <span class="o">//</span> <span class="n">Memory</span> <span class="n">Services</span>
+    <span class="o">//</span>
+    <span class="n">EFI_ALLOCATE_PAGES</span>   <span class="n">AllocatePages</span><span class="p">;</span>  <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+    <span class="n">EFI_FREE_PAGES</span>       <span class="n">FreePages</span><span class="p">;</span>      <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+    <span class="n">EFI_GET_MEMORY_MAP</span>   <span class="n">GetMemoryMap</span><span class="p">;</span>   <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+    <span class="n">EFI_ALLOCATE_POOL</span>    <span class="n">AllocatePool</span><span class="p">;</span>   <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+    <span class="n">EFI_FREE_POOL</span>        <span class="n">FreePool</span><span class="p">;</span>       <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+
+    <span class="o">//</span>
+    <span class="o">//</span> <span class="n">Event</span> <span class="o">&amp;</span> <span class="n">Timer</span> <span class="n">Services</span>
+    <span class="o">//</span>
+    <span class="n">EFI_CREATE_EVENT</span>     <span class="n">CreateEvent</span><span class="p">;</span>    <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+    <span class="n">EFI_SET_TIMER</span>        <span class="n">SetTimer</span><span class="p">;</span>       <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+    <span class="n">EFI_WAIT_FOR_EVENT</span>   <span class="n">WaitForEvent</span><span class="p">;</span>   <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+    <span class="n">EFI_SIGNAL_EVENT</span>     <span class="n">SignalEvent</span><span class="p">;</span>    <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+    <span class="n">EFI_CLOSE_EVENT</span>      <span class="n">CloseEvent</span><span class="p">;</span>     <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+    <span class="n">EFI_CHECK_EVENT</span>      <span class="n">CheckEvent</span><span class="p">;</span>     <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+
+    <span class="o">//</span>
+    <span class="o">//</span> <span class="n">Protocol</span> <span class="n">Handler</span> <span class="n">Services</span>
+    <span class="o">//</span>
+    <span class="n">EFI_INSTALL_PROTOCOL_INTERFACE</span>     <span class="n">InstallProtocolInterface</span><span class="p">;</span>            <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+    <span class="n">EFI_REINSTALL_PROTOCOL_INTERFACE</span>   <span class="n">ReinstallProtocolInterface</span><span class="p">;</span>          <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+    <span class="n">EFI_UNINSTALL_PROTOCOL_INTERFACE</span>   <span class="n">UninstallProtocolInterface</span><span class="p">;</span>          <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+    <span class="n">EFI_HANDLE_PROTOCOL</span>                <span class="n">HandleProtocol</span><span class="p">;</span>                      <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+ <span class="n">VOID</span><span class="o">*</span>   <span class="n">Reserved</span><span class="p">;</span>    <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+    <span class="n">EFI_REGISTER_PROTOCOL_NOTIFY</span>       <span class="n">RegisterProtocolNotify</span><span class="p">;</span>              <span class="o">//</span> <span class="n">EFI</span>  <span class="mf">1.0</span><span class="o">+</span>
+    <span class="n">EFI_LOCATE_HANDLE</span>                  <span class="n">LocateHandle</span><span class="p">;</span>                        <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+    <span class="n">EFI_LOCATE_DEVICE_PATH</span>             <span class="n">LocateDevicePath</span><span class="p">;</span>                    <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+ <span class="n">EFI_INSTALL_CONFIGURATION_TABLE</span>       <span class="n">InstallConfigurationTable</span><span class="p">;</span>           <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+
+    <span class="o">//</span>
+    <span class="o">//</span> <span class="n">Image</span> <span class="n">Services</span>
+    <span class="o">//</span>
+    <span class="n">EFI_IMAGE_UNLOAD</span>               <span class="n">LoadImage</span><span class="p">;</span>        <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+    <span class="n">EFI_IMAGE_START</span>                <span class="n">StartImage</span><span class="p">;</span>       <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+    <span class="n">EFI_EXIT</span>                       <span class="n">Exit</span><span class="p">;</span>             <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+    <span class="n">EFI_IMAGE_UNLOAD</span>               <span class="n">UnloadImage</span><span class="p">;</span>      <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+    <span class="n">EFI_EXIT_BOOT_SERVICES</span>         <span class="n">ExitBootServices</span><span class="p">;</span> <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+
+    <span class="o">//</span>
+    <span class="o">//</span> <span class="n">Miscellaneous</span> <span class="n">Services</span>
+    <span class="o">//</span>
+    <span class="n">EFI_GET_NEXT_MONOTONIC_COUNT</span>   <span class="n">GetNextMonotonicCount</span><span class="p">;</span> <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+    <span class="n">EFI_STALL</span>                      <span class="n">Stall</span><span class="p">;</span>                 <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+    <span class="n">EFI_SET_WATCHDOG_TIMER</span>         <span class="n">SetWatchdogTimer</span><span class="p">;</span>      <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.0</span><span class="o">+</span>
+
+    <span class="o">//</span>
+    <span class="o">//</span> <span class="n">DriverSupport</span> <span class="n">Services</span>
+    <span class="o">//</span>
+    <span class="n">EFI_CONNECT_CONTROLLER</span>         <span class="n">ConnectController</span><span class="p">;</span>     <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.1</span>
+    <span class="n">EFI_DISCONNECT_CONTROLLER</span>      <span class="n">DisconnectController</span><span class="p">;</span>  <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.1</span><span class="o">+</span>
+
+    <span class="o">//</span>
+    <span class="o">//</span> <span class="n">Open</span> <span class="ow">and</span> <span class="n">Close</span> <span class="n">Protocol</span> <span class="n">Services</span>
+    <span class="o">//</span>
+    <span class="n">EFI_OPEN_PROTOCOL</span>              <span class="n">OpenProtocol</span><span class="p">;</span>           <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.1</span><span class="o">+</span>
+    <span class="n">EFI_CLOSE_PROTOCOL</span>             <span class="n">CloseProtocol</span><span class="p">;</span>          <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.1</span><span class="o">+</span>
+ <span class="n">EFI_OPEN_PROTOCOL_INFORMATION</span>     <span class="n">OpenProtocolInformation</span><span class="p">;</span><span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.1</span><span class="o">+</span>
+
+    <span class="o">//</span>
+    <span class="o">//</span> <span class="n">Library</span> <span class="n">Services</span>
+    <span class="o">//</span>
+    <span class="n">EFI_PROTOCOLS_PER_HANDLE</span>       <span class="n">ProtocolsPerHandle</span><span class="p">;</span>     <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.1</span><span class="o">+</span>
+    <span class="n">EFI_LOCATE_HANDLE_BUFFER</span>       <span class="n">LocateHandleBuffer</span><span class="p">;</span>     <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.1</span><span class="o">+</span>
+    <span class="n">EFI_LOCATE_PROTOCOL</span>            <span class="n">LocateProtocol</span><span class="p">;</span>         <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.1</span><span class="o">+</span>
+  <span class="n">EFI_UNINSTALL_MULTIPLE_PROTOCOL_INTERFACES</span>  <span class="n">InstallMultipleProtocolInterfaces</span><span class="p">;</span>    <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.1</span><span class="o">+</span>
+  <span class="n">EFI_UNINSTALL_MULTIPLE_PROTOCOL_INTERFACES</span> <span class="n">UninstallMultipleProtocolInterfaces</span><span class="p">;</span>   <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.1</span><span class="o">+*</span>
+
+    <span class="o">//</span>
+    <span class="o">//</span> <span class="mi">32</span><span class="o">-</span><span class="n">bit</span> <span class="n">CRC</span> <span class="n">Services</span>
+    <span class="o">//</span>
+    <span class="n">EFI_CALCULATE_CRC32</span>    <span class="n">CalculateCrc32</span><span class="p">;</span>     <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.1</span><span class="o">+</span>
+
+    <span class="o">//</span>
+    <span class="o">//</span> <span class="n">Miscellaneous</span> <span class="n">Services</span>
+    <span class="o">//</span>
+    <span class="n">EFI_COPY_MEM</span>           <span class="n">CopyMem</span><span class="p">;</span>        <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.1</span><span class="o">+</span>
+    <span class="n">EFI_SET_MEM</span>            <span class="n">SetMem</span><span class="p">;</span>         <span class="o">//</span> <span class="n">EFI</span> <span class="mf">1.1</span><span class="o">+</span>
+    <span class="n">EFI_CREATE_EVENT_EX</span>    <span class="n">CreateEventEx</span><span class="p">;</span>  <span class="o">//</span> <span class="n">UEFI</span> <span class="mf">2.0</span><span class="o">+</span>
+  <span class="p">}</span> <span class="n">EFI_BOOT_SERVICES</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>Hdr</dt><dd><p>The table header for the EFI Boot Services Table. This header contains the EFI_BOOT_SERVICES_SIGNATURE and EFI_BOOT_SERVICES_REVISION values along with the size of the EFI_BOOT_SERVICES structure and a 32-bit  CRC to verify that the contents of the EFI Boot Services Table are valid.</p>
+</dd>
+<dt>RaiseTPL</dt><dd><p>Raises the task priority level.</p>
+</dd>
+<dt>RestoreTPL</dt><dd><p>Restores/lowers the task priority level.</p>
+</dd>
+<dt>AllocatePages</dt><dd><p>Allocates pages of a particular type.</p>
+</dd>
+<dt>FreePages</dt><dd><p>Frees allocated pages.</p>
+</dd>
+<dt>GetMemoryMap</dt><dd><p>Returns the current boot services memory map and memory map key.</p>
+</dd>
+<dt>AllocatePool</dt><dd><p>Allocates a pool of a particular type.</p>
+</dd>
+<dt>FreePool</dt><dd><p>Frees allocated pool.</p>
+</dd>
+<dt>CreateEvent</dt><dd><p>Creates a general-purpose event structure.</p>
+</dd>
+<dt>SetTimer</dt><dd><p>Sets an event to be signaled at a particular time.</p>
+</dd>
+<dt>WaitForEvent</dt><dd><p>Stops execution until an event is signaled.</p>
+</dd>
+<dt>SignalEvent</dt><dd><p>Signals an event.</p>
+</dd>
+<dt>CloseEvent</dt><dd><p>Closes and frees an event structure.</p>
+</dd>
+<dt>CheckEvent</dt><dd><p>Checks whether an event is in the signaled state.</p>
+</dd>
+<dt>InstallProtocolInterface</dt><dd><p>Installs a protocol interface on a device handle.</p>
+</dd>
+<dt>ReinstallProtocolInterface</dt><dd><p>Reinstalls a protocol interface on a device handle.</p>
+</dd>
+<dt>UninstallProtocolInterface</dt><dd><p>Removes a protocol interface from a device handle.</p>
+</dd>
+<dt>HandleProtocol</dt><dd><p>Queries a handle to determine if it supports a specified protocol.</p>
+</dd>
+<dt>Reserved</dt><dd><p>Reserved. Must be NULL.</p>
+</dd>
+<dt>RegisterProtocolNotify</dt><dd><p>Registers an event that is to be signaled whenever an interface is installed for a specified protocol.</p>
+</dd>
+<dt>LocateHandle</dt><dd><p>Returns an array of handles that support a specified protocol.</p>
+</dd>
+<dt>LocateDevicePath</dt><dd><p>Locates all devices on a device path that support a                   specified protocol and returns the handle to the device that is closest to the path.</p>
+</dd>
+<dt>InstallConfigurationTable</dt><dd><p>Adds, updates, or removes a configuration table from the EFI System Table.</p>
+</dd>
+<dt>LoadImag</dt><dd><p>Loads an EFI image into memory.</p>
+</dd>
+<dt>StartImage</dt><dd><p>Transfers control to a loaded image’s entry point.</p>
+</dd>
+<dt>Exit</dt><dd><p>Exits the image’s entry point.</p>
+</dd>
+<dt>UnloadImage</dt><dd><p>Unloads an image.</p>
+</dd>
+<dt>ExitBootServices</dt><dd><p>Terminates boot services.</p>
+</dd>
+<dt>GetNextMonotonicCount</dt><dd><p>Returns a monotonically increasing count for the platform.</p>
+</dd>
+<dt>Stall</dt><dd><p>Stalls the processor.</p>
+</dd>
+<dt>SetWatchdogTimer</dt><dd><p>Resets and sets a watchdog timer used during boot services time.</p>
+</dd>
+<dt>ConnectController</dt><dd><p>Uses a set of precedence rules to find the best set of drivers to manage a controller.</p>
+</dd>
+<dt>DisconnectController</dt><dd><p>Informs a set of drivers to stop managing a controller.</p>
+</dd>
+<dt>OpenProtocol</dt><dd><p>Adds elements to the list of agents consuming a protocol interface.</p>
+</dd>
+<dt>CloseProtocol</dt><dd><p>Removes elements from the list of agents consuming a protocol interface.</p>
+</dd>
+<dt>OpenProtocolInformtion</dt><dd><p>Retrieve the list of agents that are currently consuming a protocol interface.</p>
+</dd>
+<dt>ProtocolsPerHandle</dt><dd><p>Retrieves the list of protocols installed on a handle. The return buffer is automatically allocated.</p>
+</dd>
+<dt>LocateHandleBuffer</dt><dd><p>Retrieves the list of handles from the handle database that meet the search criteria. The return buffer is automatically allocated.</p>
+</dd>
+<dt>LocateProtocol</dt><dd><p>Finds the first handle in the handle database the supports the requested protocol.</p>
+</dd>
+<dt>InstallMultipleProtocolInterfaces</dt><dd><p>Installs one or more protocol interfaces onto a handle.</p>
+</dd>
+<dt>UninstallMultipleProtocolInterfaces</dt><dd><p>Uninstalls one or more protocol interfaces from a handle.</p>
+</dd>
+<dt>CalculateCrc32</dt><dd><p>Computes and returns a 32-bit CRC for a data buffer.</p>
+</dd>
+<dt>CopyMem</dt><dd><p>Copies the contents of one buffer to another buffer.</p>
+</dd>
+<dt>SetMem</dt><dd><p>Fills a buffer with a specified value.</p>
+</dd>
+<dt>CreateEventEx</dt><dd><p>Creates an event structure as part of an event group.</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="efi-runtime-services-table">
+<span id="id9"></span><h2><span class="section-number">4.5. </span>EFI Runtime Services Table<a class="headerlink" href="#efi-runtime-services-table" title="Link to this heading"></a></h2>
+<p>UEFI uses the EFI Runtime Services Table, which contains a table header and pointers to all of the runtime services. The definition for this table is shown in the following code fragments. Except for the table header, all elements in the EFI Runtime Services Tables are prototypes of function pointers to functions as defined in <a class="reference internal" href="08_Services_Runtime_Services.html#services-runtime-services"><span class="std std-ref">Services — Runtime Services</span></a> . Unlike the EFI Boot Services Table, this table, and the function pointers it contains are valid after the UEFI OS loader and OS have taken control of the platform with a call to <a class="reference internal" href="07_Services_Boot_Services.html#efi-boot-services-exitbootservices"><span class="std std-ref">EFI_BOOT_SERVICES.ExitBootServices()</span></a>. If a call to <a class="reference internal" href="08_Services_Runtime_Services.html#setvirtualaddressmap"><span class="std std-ref">SetVirtualAddressMap()</span></a>  is made by the OS, then the function pointers in this table are fixed up to point to the new virtually mapped entry points.</p>
+<section id="efi-runtime-services">
+<span id="id10"></span><h3><span class="section-number">4.5.1. </span>EFI_RUNTIME_SERVICES<a class="headerlink" href="#efi-runtime-services" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Contains a table header and pointers to all of the runtime services.</p>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_RUNTIME_SERVICES_SIGNATURE 0x56524553544e5552</span>
+<span class="c1">#define EFI_RUNTIME_SERVICES_REVISION EFI_SPECIFICATION_VERSION</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+    <span class="n">EFI_TABLE_HEADER</span>                 <span class="n">Hdr</span><span class="p">;</span>
+
+    <span class="o">//</span>
+    <span class="o">//</span> <span class="n">Time</span> <span class="n">Services</span>
+    <span class="o">//</span>
+    <span class="n">EFI_GET_TIME</span>                     <span class="n">GetTime</span><span class="p">;</span>
+    <span class="n">EFI_SET_TIME</span>                     <span class="n">SetTime</span><span class="p">;</span>
+    <span class="n">EFI_GET_WAKEUP_TIME</span>              <span class="n">GetWakeupTime</span><span class="p">;</span>
+    <span class="n">EFI_SET_WAKEUP_TIME</span>              <span class="n">SetWakeupTime</span><span class="p">;</span>
+
+    <span class="o">//</span>
+    <span class="o">//</span> <span class="n">Virtual</span> <span class="n">Memory</span> <span class="n">Services</span>
+    <span class="o">//</span>
+    <span class="n">EFI_SET_VIRTUAL_ADDRESS_MAP</span>      <span class="n">SetVirtualAddressMap</span><span class="p">;</span>
+  <span class="n">EFI_CONVERT_POINTER</span>                <span class="n">ConvertPointer</span><span class="p">;</span>
+
+    <span class="o">//</span>
+    <span class="o">//</span> <span class="n">Variable</span> <span class="n">Services</span>
+    <span class="o">//</span>
+    <span class="n">EFI_GET_VARIABLE</span>                 <span class="n">GetVariable</span><span class="p">;</span>
+    <span class="n">EFI_GET_NEXT_VARIABLE_NAME</span>       <span class="n">GetNextVariableName</span><span class="p">;</span>
+    <span class="n">EFI_SET_VARIABLE</span>                 <span class="n">SetVariable</span><span class="p">;</span>
+
+
+    <span class="o">//</span>
+    <span class="o">//</span> <span class="n">Miscellaneous</span> <span class="n">Services</span>
+    <span class="o">//</span>
+    <span class="n">EFI_GET_NEXT_HIGH_MONO_COUNT</span>     <span class="n">GetNextHighMonotonicCount</span><span class="p">;</span>
+    <span class="n">EFI_RESET_SYSTEM</span>                 <span class="n">ResetSystem</span><span class="p">;</span>
+
+   <span class="o">//</span>
+   <span class="o">//</span> <span class="n">UEFI</span> <span class="mf">2.0</span> <span class="n">Capsule</span> <span class="n">Services</span>
+   <span class="o">//</span>
+   <span class="n">EFI_UPDATE_CAPSULE</span>               <span class="n">UpdateCapsule</span><span class="p">;</span>
+   <span class="n">EFI_QUERY_CAPSULE_CAPABILITIES</span>   <span class="n">QueryCapsuleCapabilities</span><span class="p">;</span>
+
+
+ <span class="o">//</span>
+ <span class="o">//</span> <span class="n">Miscellaneous</span> <span class="n">UEFI</span> <span class="mf">2.0</span> <span class="n">Service</span>
+ <span class="o">//</span>
+  <span class="n">EFI_QUERY_VARIABLE_INFO</span>          <span class="n">QueryVariableInfo</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_RUNTIME_SERVICES</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>Hdr</dt><dd><p>The table header for the EFI Runtime Services Table.                 This header contains the EFI_RUNTIME_SERVICES_SIGNATURE                 and EFI_RUNTIME_SERVICES_REVISION values along with the size of the EFI_RUNTIME_SERVICES structure and a 32-bit CRC to verify that the contents of the EFI Runtime Services Table are valid.</p>
+</dd>
+<dt>GetTime</dt><dd><p>Returns the current time and date, and the time-keeping capabilities of the platform.</p>
+</dd>
+<dt>SetTime</dt><dd><p>Sets the current local time and date information.</p>
+</dd>
+<dt>GetWakeupTime</dt><dd><p>Returns the current wakeup alarm clock setting.</p>
+</dd>
+<dt>SetWakeupTime</dt><dd><p>Sets the system wakeup alarm clock time.</p>
+</dd>
+<dt>SetVirtualAddressMap</dt><dd><p>Used by a UEFI OS loader to convert from physical addressing to virtual addressing.</p>
+</dd>
+<dt>ConvertPointer</dt><dd><p>Used by EFI components to convert internal pointers when switching to virtual addressing.</p>
+</dd>
+<dt>GetVariable</dt><dd><p>Returns the value of a variable.</p>
+</dd>
+<dt>GetNextVariableName</dt><dd><p>Enumerates the current variable names.</p>
+</dd>
+<dt>SetVariable</dt><dd><p>Sets the value of a variable.</p>
+</dd>
+<dt>GetNextHighMonotonicCount</dt><dd><p>Returns the next high 32 bits of the platform’s monotonic counter.</p>
+</dd>
+<dt>ResetSyste</dt><dd><p>Resets the entire platform.</p>
+</dd>
+<dt>UpdateCapsule</dt><dd><p>Passes capsules to the firmware with both virtual and physical mapping.</p>
+</dd>
+<dt>QueryCapsuleCapabilities</dt><dd><p>nReturns if the capsule can be supported via UpdateCapsule() .</p>
+</dd>
+<dt>QueryVariableInfo</dt><dd><p>Returns information about the EFI variable store.</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="efi-configuration-table-properties-table">
+<span id="efi-configuration-table-and-properties-table"></span><h2><span class="section-number">4.6. </span>EFI Configuration Table &amp; Properties Table<a class="headerlink" href="#efi-configuration-table-properties-table" title="Link to this heading"></a></h2>
+<p>The EFI Configuration Table is the <em>ConfigurationTable</em> field in the EFI System Table. This table contains a set of GUID/pointer pairs. Each element of this table is described by the <em>EFI_CONFIGURATION_TABLE</em> structure below. The number of types of configuration tables is expected to grow over time. This is why a GUID is used to identify the configuration table type. The EFI Configuration Table may contain at most once instance of each table type.</p>
+<section id="efi-configuration-table">
+<span id="id11"></span><h3><span class="section-number">4.6.1. </span>EFI_CONFIGURATION_TABLE<a class="headerlink" href="#efi-configuration-table" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Contains a set of GUID/pointer pairs comprised of  <em>ConfigurationTable</em> field in the EFI System Table.</p>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span><span class="p">{</span>
+  <span class="n">EFI_GUID</span>           <span class="n">VendorGuid</span><span class="p">;</span>
+  <span class="n">VOID</span>               <span class="o">*</span><span class="n">VendorTable</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">EFI_CONFIGURATION_TABLE</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>VendorGuid</dt><dd><p>The 128-bit GUID value that uniquely identifies the system configuration table.</p>
+</dd>
+<dt>VendorTable</dt><dd><p>A pointer to the table associated with VendorGuid. Type of the memory that is used to store the table as well as whether this pointer is a physical address or a virtual address during runtime (whether or not a particular address reported in the table gets fixed up when a call to SetVirtualAddressMap() is made) is determined by the VendorGuid. Unless otherwise specified, memory type of the table buffer is defined by the guidelines set forth in the Calling Conventions section in Chapter 2. It is the responsibility of the specification defining the VendorTable to specify additional memory type requirements (if any) and whether to convert the addresses reported in the table. Any required address conversion is a responsibility of the driver that publishes corresponding configuration table.</p>
+</dd>
+</dl>
+<section id="industry-standard-configuration-tables">
+<span id="industry-standard-configuraton-tables"></span><h4><span class="section-number">4.6.1.1. </span>Industry Standard Configuration Tables<a class="headerlink" href="#industry-standard-configuration-tables" title="Link to this heading"></a></h4>
+<p>The following list shows the GUIDs for tables defined in some of the industry standards. These industry standards define tables accessed as UEFI Configuration Tables on UEFI-based systems. All the addresses reported in these table entries will be referenced as physical and will not be fixed up when transition from preboot to runtime phase. This list is not exhaustive and does not show GUIDs for all possible UEFI Configuration tables.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_ACPI_20_TABLE_GUID \</span>
+  <span class="p">{</span><span class="mh">0x8868e871</span><span class="p">,</span><span class="mh">0xe4f1</span><span class="p">,</span><span class="mh">0x11d3</span><span class="p">,</span>\
+    <span class="p">{</span><span class="mh">0xbc</span><span class="p">,</span><span class="mh">0x22</span><span class="p">,</span><span class="mh">0x00</span><span class="p">,</span><span class="mh">0x80</span><span class="p">,</span><span class="mh">0xc7</span><span class="p">,</span><span class="mh">0x3c</span><span class="p">,</span><span class="mh">0x88</span><span class="p">,</span><span class="mh">0x81</span><span class="p">}}</span>
+
+<span class="c1">#define ACPI_TABLE_GUID \</span>
+  <span class="p">{</span><span class="mh">0xeb9d2d30</span><span class="p">,</span><span class="mh">0x2d88</span><span class="p">,</span><span class="mh">0x11d3</span><span class="p">,</span>\
+    <span class="p">{</span><span class="mh">0x9a</span><span class="p">,</span><span class="mh">0x16</span><span class="p">,</span><span class="mh">0x00</span><span class="p">,</span><span class="mh">0x90</span><span class="p">,</span><span class="mh">0x27</span><span class="p">,</span><span class="mh">0x3f</span><span class="p">,</span><span class="mh">0xc1</span><span class="p">,</span><span class="mh">0x4d</span><span class="p">}}</span>
+
+<span class="c1">#define SAL_SYSTEM_TABLE_GUID \</span>
+  <span class="p">{</span><span class="mh">0xeb9d2d32</span><span class="p">,</span><span class="mh">0x2d88</span><span class="p">,</span><span class="mh">0x11d3</span><span class="p">,</span>\
+   <span class="p">{</span><span class="mh">0x9a</span><span class="p">,</span><span class="mh">0x16</span><span class="p">,</span><span class="mh">0x00</span><span class="p">,</span><span class="mh">0x90</span><span class="p">,</span><span class="mh">0x27</span><span class="p">,</span><span class="mh">0x3f</span><span class="p">,</span><span class="mh">0xc1</span><span class="p">,</span><span class="mh">0x4d</span><span class="p">}}</span>
+
+<span class="c1">#define SMBIOS_TABLE_GUID \</span>
+  <span class="p">{</span><span class="mh">0xeb9d2d31</span><span class="p">,</span><span class="mh">0x2d88</span><span class="p">,</span><span class="mh">0x11d3</span><span class="p">,</span>\
+   <span class="p">{</span><span class="mh">0x9a</span><span class="p">,</span><span class="mh">0x16</span><span class="p">,</span><span class="mh">0x00</span><span class="p">,</span><span class="mh">0x90</span><span class="p">,</span><span class="mh">0x27</span><span class="p">,</span><span class="mh">0x3f</span><span class="p">,</span><span class="mh">0xc1</span><span class="p">,</span><span class="mh">0x4d</span><span class="p">}}</span>
+
+<span class="c1">#define SMBIOS3_TABLE_GUID \</span>
+  <span class="p">{</span><span class="mh">0xf2fd1544</span><span class="p">,</span> <span class="mh">0x9794</span><span class="p">,</span> <span class="mh">0x4a2c</span><span class="p">,</span>\
+   <span class="p">{</span><span class="mh">0x99</span><span class="p">,</span><span class="mh">0x2e</span><span class="p">,</span><span class="mh">0xe5</span><span class="p">,</span><span class="mh">0xbb</span><span class="p">,</span><span class="mh">0xcf</span><span class="p">,</span><span class="mh">0x20</span><span class="p">,</span><span class="mh">0xe3</span><span class="p">,</span><span class="mh">0x94</span><span class="p">})</span>
+
+<span class="c1">#define MPS_TABLE_GUID \</span>
+  <span class="p">{</span><span class="mh">0xeb9d2d2f</span><span class="p">,</span><span class="mh">0x2d88</span><span class="p">,</span><span class="mh">0x11d3</span><span class="p">,</span>\
+   <span class="p">{</span><span class="mh">0x9a</span><span class="p">,</span><span class="mh">0x16</span><span class="p">,</span><span class="mh">0x00</span><span class="p">,</span><span class="mh">0x90</span><span class="p">,</span><span class="mh">0x27</span><span class="p">,</span><span class="mh">0x3f</span><span class="p">,</span><span class="mh">0xc1</span><span class="p">,</span><span class="mh">0x4d</span><span class="p">}}</span>
+<span class="o">//</span>
+<span class="o">//</span> <span class="n">ACPI</span> <span class="mf">2.0</span> <span class="ow">or</span> <span class="n">newer</span> <span class="n">tables</span> <span class="n">should</span> <span class="n">use</span> <span class="n">EFI_ACPI_TABLE_GUID</span>
+<span class="o">//</span>
+<span class="c1">#define EFI_ACPI_TABLE_GUID \</span>
+<span class="p">{</span><span class="mh">0x8868e871</span><span class="p">,</span><span class="mh">0xe4f1</span><span class="p">,</span><span class="mh">0x11d3</span><span class="p">,</span>\
+<span class="p">{</span><span class="mh">0xbc</span><span class="p">,</span><span class="mh">0x22</span><span class="p">,</span><span class="mh">0x00</span><span class="p">,</span><span class="mh">0x80</span><span class="p">,</span><span class="mh">0xc7</span><span class="p">,</span><span class="mh">0x3c</span><span class="p">,</span><span class="mh">0x88</span><span class="p">,</span><span class="mh">0x81</span><span class="p">}}</span>
+
+<span class="c1">#define EFI_ACPI_20_TABLE_GUID EFI_ACPI_TABLE_GUID</span>
+
+<span class="c1">#define ACPI_TABLE_GUID \</span>
+<span class="p">{</span><span class="mh">0xeb9d2d30</span><span class="p">,</span><span class="mh">0x2d88</span><span class="p">,</span><span class="mh">0x11d3</span><span class="p">,</span>\
+<span class="p">{</span><span class="mh">0x9a</span><span class="p">,</span><span class="mh">0x16</span><span class="p">,</span><span class="mh">0x00</span><span class="p">,</span><span class="mh">0x90</span><span class="p">,</span><span class="mh">0x27</span><span class="p">,</span><span class="mh">0x3f</span><span class="p">,</span><span class="mh">0xc1</span><span class="p">,</span><span class="mh">0x4d</span><span class="p">}}</span>
+
+<span class="c1">#define ACPI_10_TABLE_GUID ACPI_TABLE_GUID*</span>
+</pre></div>
+</div>
+</section>
+<section id="json-configuration-tables">
+<span id="id12"></span><h4><span class="section-number">4.6.1.2. </span>JSON Configuration Tables<a class="headerlink" href="#json-configuration-tables" title="Link to this heading"></a></h4>
+<p>The following list shows the GUIDs for tables defined for reporting firmware configuration data to EFI Configuration Tables and also for processing JSON payload capsule as defined in <a class="reference internal" href="23_Firmware_Update_and_Reporting.html#delivering-capsule-containing-json-payload"><span class="std std-numref">Section 23.5</span></a>. The address reported in the table entry identified by EFI_JSON_CAPSULE_DATA_TABLE_GUID will be referenced as physical and will not be fixed up when transition from preboot to runtime phase. The addresses reported in these table entries identified by EFI_JSON_CONFIG_DATA_TABLE_GUID and EFI_JSON_CAPSULE_RESULT_TABLE_GUID will be referenced as virtual and will be fixed up when transition from preboot to runtime phase.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_JSON_CONFIG_DATA_TABLE_GUID \</span>
+<span class="p">{</span><span class="mh">0x87367f87</span><span class="p">,</span> <span class="mh">0x1119</span><span class="p">,</span> <span class="mh">0x41ce</span><span class="p">,</span> \
+<span class="p">{</span><span class="mh">0xaa</span><span class="p">,</span> <span class="mh">0xec</span><span class="p">,</span> <span class="mh">0x8b</span><span class="p">,</span> <span class="mh">0xe0</span><span class="p">,</span> <span class="mh">0x11</span><span class="p">,</span> <span class="mh">0x1f</span><span class="p">,</span> <span class="mh">0x55</span><span class="p">,</span> <span class="mh">0x8a</span> <span class="p">}}</span>
+
+<span class="c1">#define EFI_JSON_CAPSULE_DATA_TABLE_GUID \</span>
+<span class="p">{</span><span class="mh">0x35e7a725</span><span class="p">,</span> <span class="mh">0x8dd2</span><span class="p">,</span> <span class="mh">0x4cac</span><span class="p">,</span> \
+<span class="p">{</span> <span class="mh">0x80</span><span class="p">,</span> <span class="mh">0x11</span><span class="p">,</span> <span class="mh">0x33</span><span class="p">,</span> <span class="mh">0xcd</span><span class="p">,</span> <span class="mh">0xa8</span><span class="p">,</span> <span class="mh">0x10</span><span class="p">,</span> <span class="mh">0x90</span><span class="p">,</span> <span class="mh">0x56</span> <span class="p">}}</span>
+
+<span class="c1">#define EFI_JSON_CAPSULE_RESULT_TABLE_GUID \</span>
+<span class="p">{</span><span class="mh">0xdbc461c3</span><span class="p">,</span> <span class="mh">0xb3de</span><span class="p">,</span> <span class="mh">0x422a</span><span class="p">,</span>\
+<span class="p">{</span><span class="mh">0xb9</span><span class="p">,</span> <span class="mh">0xb4</span><span class="p">,</span> <span class="mh">0x98</span><span class="p">,</span> <span class="mh">0x86</span><span class="p">,</span> <span class="mh">0xfd</span><span class="p">,</span> <span class="mh">0x49</span><span class="p">,</span> <span class="mh">0xa1</span><span class="p">,</span> <span class="mh">0xe5</span> <span class="p">}}</span>
+</pre></div>
+</div>
+</section>
+<section id="devicetree-tables">
+<span id="device-tables"></span><h4><span class="section-number">4.6.1.3. </span>Devicetree Tables<a class="headerlink" href="#devicetree-tables" title="Link to this heading"></a></h4>
+<p>The following list shows the GUIDs for the Devicetree table (DTB). For more information, see “Links to UEFI-Related Documents” ( <a class="reference external" href="https://uefi.org/uefi">http://uefi.org/uefi</a> ) under the headings “Devicetree Specification”. The DTB must be contained in memory of type EfiACPIReclaimMemory. The address reported in this table entry will be referenced as physical and will not be fixed up when transition from preboot to runtime phase. Firmware must have the DTB resident in memory and installed in the EFI system table before executing any UEFI applications or drivers that are not part of the system firmware image. Once the DTB is installed as a configuration table, the system firmware must not make any modification to it or reference any data contained within the DTB.</p>
+<p>UEFI applications are permitted to modify or replace the loaded DTB. System firmware must not depend on any data contained within the DTB. If system firmware makes use of a DTB for its own configuration, it should use a separate private copy that is not installed in the EFI System Table or otherwise be exposed to EFI applications.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span>
+<span class="o">//</span> <span class="n">Devicetree</span> <span class="n">table</span><span class="p">,</span> <span class="ow">in</span> <span class="n">Flattened</span> <span class="n">Devicetree</span> <span class="n">Blob</span> <span class="p">(</span><span class="n">DTB</span><span class="p">)</span> <span class="nb">format</span>
+<span class="o">//</span>
+<span class="c1">#define EFI_DTB_TABLE_GUID \</span>
+<span class="p">{</span><span class="mh">0xb1b621d5</span><span class="p">,</span> <span class="mh">0xf19c</span><span class="p">,</span> <span class="mh">0x41a5</span><span class="p">,</span> \
+<span class="p">{</span><span class="mh">0x83</span><span class="p">,</span> <span class="mh">0x0b</span><span class="p">,</span> <span class="mh">0xd9</span><span class="p">,</span> <span class="mh">0x15</span><span class="p">,</span> <span class="mh">0x2c</span><span class="p">,</span> <span class="mh">0x69</span><span class="p">,</span> <span class="mh">0xaa</span><span class="p">,</span> <span class="mh">0xe0</span><span class="p">}}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="efi-rt-properties-table">
+<span id="id13"></span><h3><span class="section-number">4.6.2. </span>EFI_RT_PROPERTIES_TABLE<a class="headerlink" href="#efi-rt-properties-table" title="Link to this heading"></a></h3>
+<p>This table should be published by a platform if it no longer supports all EFI runtime services once ExitBootServices() has been called by the OS. Note that this is merely a hint to the OS, which it is free to ignore, and so the platform is still required to provide callable implementations of unsupported runtime services that simply return EFI_UNSUPPORTED.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_RT_PROPERTIES_TABLE_GUID \\</span>
+  <span class="p">{</span> <span class="mh">0xeb66918a</span><span class="p">,</span> <span class="mh">0x7eef</span><span class="p">,</span> <span class="mh">0x402a</span><span class="p">,</span> \\
+    <span class="p">{</span> <span class="mh">0x84</span><span class="p">,</span> <span class="mh">0x2e</span><span class="p">,</span> <span class="mh">0x93</span><span class="p">,</span> <span class="mh">0x1d</span><span class="p">,</span> <span class="mh">0x21</span><span class="p">,</span> <span class="mh">0xc3</span><span class="p">,</span> <span class="mh">0x8a</span><span class="p">,</span> <span class="mh">0xe9</span> <span class="p">}}</span>
+
+      <span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+        <span class="n">UINT16</span> <span class="n">Version</span><span class="p">;</span>
+        <span class="n">UINT16</span> <span class="n">Length</span><span class="p">;</span>
+        <span class="n">UINT32</span> <span class="n">RuntimeServicesSupported</span><span class="p">;</span>
+    <span class="p">}</span> <span class="n">EFI_RT_PROPERTIES_TABLE</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Version</dt><dd><p>Version of the table, must be 0x1</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_RT_PROPERTIES_TABLE_VERSION 0x1</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Length</dt><dd><p>Size in bytes of the entire EFI_RT_PROPERTIES_TABLE, must be 8.</p>
+</dd>
+<dt>RuntimeServicesSupported</dt><dd><p>Bitmask of which calls are or are not supported, where a bit         set to 1 indicates that the call is supported, and 0 indicates that it is not.</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_RT_SUPPORTED_GET_TIME                        0x0001</span>
+<span class="c1">#define EFI_RT_SUPPORTED_SET_TIME                        0x0002</span>
+<span class="c1">#define EFI_RT_SUPPORTED_GET_WAKEUP_TIME                 0x0004</span>
+<span class="c1">#define EFI_RT_SUPPORTED_SET_WAKEUP_TIME                 0x0008</span>
+<span class="c1">#define EFI_RT_SUPPORTED_GET_VARIABLE                    0x0010</span>
+<span class="c1">#define EFI_RT_SUPPORTED_GET_NEXT_VARIABLE_NAME          0x0020</span>
+<span class="c1">#define EFI_RT_SUPPORTED_SET_VARIABLE                    0x0040</span>
+<span class="c1">#define EFI_RT_SUPPORTED_SET_VIRTUAL_ADDRESS_MAP         0x0080</span>
+<span class="c1">#define EFI_RT_SUPPORTED_CONVERT_POINTER                 0x0100</span>
+<span class="c1">#define EFI_RT_SUPPORTED_GET_NEXT_HIGH_MONOTONIC_COUNT   0x0200</span>
+<span class="c1">#define EFI_RT_SUPPORTED_RESET_SYSTEM                    0x0400</span>
+<span class="c1">#define EFI_RT_SUPPORTED_UPDATE_CAPSULE                  0x0800</span>
+<span class="c1">#define EFI_RT_SUPPORTED_QUERY_CAPSULE_CAPABILITIES      0x1000</span>
+<span class="c1">#define EFI_RT_SUPPORTED_QUERY_VARIABLE_INFO             0x2000</span>
+</pre></div>
+</div>
+<p>The address reported in the EFI configuration table entry of this type will be referenced as physical and will not be fixed up when   transitioning from preboot to runtime phase.</p>
+</section>
+<section id="efi-memory-attributes-table">
+<span id="id14"></span><h3><span class="section-number">4.6.3. </span>EFI_MEMORY_ATTRIBUTES_TABLE<a class="headerlink" href="#efi-memory-attributes-table" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>When published by the system firmware, the EFI_MEMORY_ATTRIBUTES_TABLE provides additional information about regions within the run-time memory blocks defined in the EFI_MEMORY_DESCRIPTOR entries returned from EFI_BOOT_SERVICES . GetMemoryMap() function. The Memory Attributes Table is currently used to describe memory protections that may be applied to the EFI Runtime code and data by an operating system or hypervisor. Consumers of this table must currently ignore entries containing any values for <em>Type</em> except for <em>EfiRuntimeServicesData</em> and <em>EfiRuntimeServicesCode</em> to ensure compatibility with future uses of this table. The Memory Attributes Table may define multiple entries to describe sub-regions that comprise a single entry returned by GetMemoryMap() however the sub-regions must total to completely describe the larger region and may not cross boundaries between entries reported by GetMemoryMap() . If a run-time region returned in GetMemoryMap() entry is not described within the Memory Attributes Table, this region is assumed to not be compatible with any memory protections.</p>
+<p>Only entire EFI_MEMORY_DESCRIPTOR entries as returned by GetMemoryMap() may be passed to SetVirtualAddressMap() .</p>
+<p>The address reported in the EFI configuration table entry of this type will be referenced as physical and will not be fixed up when transition from preboot to runtime phase.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_MEMORY_ATTRIBUTES_TABLE_GUID \</span>
+  <span class="p">{</span><span class="mh">0xdcfa911d</span><span class="p">,</span> <span class="mh">0x26eb</span><span class="p">,</span> <span class="mh">0x469f</span><span class="p">,</span> \
+    <span class="p">{</span><span class="mh">0xa2</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">,</span> <span class="mh">0x38</span><span class="p">,</span> <span class="mh">0xb7</span><span class="p">,</span> <span class="mh">0xdc</span><span class="p">,</span> <span class="mh">0x46</span><span class="p">,</span> <span class="mh">0x12</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p>With the following data structure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/**********************************************</span>
+<span class="o">/*</span> <span class="n">EFI_MEMORY_ATTRIBUTES_TABLE</span>
+<span class="o">/**********************************************</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINT32</span>                       <span class="n">Version</span> <span class="p">;</span>
+  <span class="n">UINT32</span>                       <span class="n">NumberOfEntries</span> <span class="p">;</span>
+  <span class="n">UINT32</span>                       <span class="n">DescriptorSize</span> <span class="p">;</span>
+  <span class="n">UINT32</span>                       <span class="n">Flags</span> <span class="p">;</span>
+  <span class="o">//</span> <span class="n">EFI_MEMORY_DESCRIPTOR</span>     <span class="n">Entry</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">;</span>
+  <span class="p">}</span>  <span class="n">EFI_MEMORY_ATTRIBUTES_TABLE</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Version</dt><dd><p>The version of this table. Present version is 0x00000002</p>
+</dd>
+<dt>NumberOfEntries</dt><dd><p>Count of EFI_MEMORY_DESCRIPTOR entries provided. This is typically the total number of PE/COFF sections within all UEFI modules that comprise the UEFI Runtime and all UEFI  Data regions (e.g. runtime heap).</p>
+</dd>
+<dt>Entry</dt><dd><p>Array of <em>Entries</em> of type EFI_MEMORY_DESCRIPTOR.</p>
+</dd>
+<dt>DescriptorSize</dt><dd><p>Size of the memory descriptor.</p>
+</dd>
+<dt>Flags</dt><dd><p>Flags to provide more information for the memory attributes</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_MEMORY_ATTRIBUTES_FLAGS_RT_FORWARD_CONTROL_FLOW_GUARD  0x1</span>
+<span class="o">//</span> <span class="n">BIT0</span> <span class="n">implies</span> <span class="n">that</span> <span class="n">Runtime</span> <span class="n">code</span> <span class="n">includes</span> <span class="n">the</span> <span class="n">forward</span> <span class="n">control</span> <span class="n">flow</span> <span class="n">guard</span>
+<span class="o">//</span>      <span class="n">instruction</span><span class="p">,</span> <span class="n">such</span> <span class="k">as</span> <span class="n">X86</span> <span class="n">CET</span><span class="o">-</span><span class="n">IBT</span> <span class="ow">or</span> <span class="n">ARM</span> <span class="n">BTI</span><span class="o">.</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>For each array entry, the EFI_MEMORY_DESCRIPTOR . <em>Attribute</em> field can inform a runtime agency, such as operating system or hypervisor, as to what class of protection settings can be made in the memory management unit for the memory defined by this entry. The only valid bits for <em>Attribute</em> field currently are EFI_MEMORY_RO , EFI_MEMORY_XP , plus EFI_MEMORY_RUNTIME . Irrespective of the memory protections implied by <em>Attribute</em> , the EFI_MEMORY_DESCRIPTOR . <em>Type</em> field should match the type of the memory in enclosing <em>SetMemoryMap()</em> entry. <em>PhysicalStart</em> must be aligned as specified in   <a class="reference internal" href="02_Overview.html#calling-conventions"><span class="std std-ref">Calling Conventions</span></a> . The list must be sorted by physical start address in ascending order. <em>VirtualStart</em> field must be zero and ignored by the OS since it has no purpose for this table. <em>NumPages</em> must cover the entire memory region for the protection mapping. Each Descriptor in the EFI_MEMORY_ATTRIBUTES_TABLE with attribute <em>EFI_MEMORY_RUNTIME</em> must not overlap any other Descriptor in the EFI_MEMORY_ATTRIBUTES_TABLE with attribute EFI_MEMORY_RUNTIME . Additionally, every memory region described by a Descriptor in <em>EFI_MEMORY_ATTRIBUTES_TABLE</em> must be a sub-region of, or equal to, a descriptor in the table produced by GetMemoryMap().</p>
+<table class="longtable docutils align-default" id="usage-of-memory-attribute-definitions">
+<caption><span class="caption-number">Table 4.1 </span><span class="caption-text">Usage of Memory Attribute Definitions</span><a class="headerlink" href="#usage-of-memory-attribute-definitions" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td></td>
+<td><p><strong>EFI_MEMORY_RO</strong></p></td>
+<td><p><strong>EFI_MEMORY_XP</strong></p></td>
+<td><p><strong>EFI _MEMORY_RUNTIME</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>No memory access protection is possible for Entry</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>Write-protected Code</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>Read/Write Data</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>Read-only Data</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-conformance-profile-table">
+<span id="id15"></span><h3><span class="section-number">4.6.4. </span>EFI_CONFORMANCE_PROFILE_TABLE<a class="headerlink" href="#efi-conformance-profile-table" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>This table allows the platform to advertise its UEFI specification conformance in the form of pre-defined profiles. Each profile is identified by a GUID, with known profiles listed in the Description section below.</p>
+<p>The absence of this table shall indicate that the platform implementation is conformant with the UEFI specification requirements, as defined in <a class="reference internal" href="02_Overview.html#requirements"><span class="std std-numref">Section 2.6</span></a>. This is equivalent to publishing this configuration table with the EFI_CONFORMANCE_PROFILES_UEFI_SPEC_GUID conformance profile.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_CONFORMANCE_PROFILES_TABLE_GUID \</span>
+<span class="p">{</span> <span class="mh">0x36122546</span><span class="p">,</span> <span class="mh">0xf7e7</span><span class="p">,</span> <span class="mh">0x4c8f</span><span class="p">,</span> \
+<span class="p">{</span> <span class="mh">0xbd</span><span class="p">,</span> <span class="mh">0x9b</span><span class="p">,</span> <span class="mh">0xeb</span><span class="p">,</span> <span class="mh">0x85</span><span class="p">,</span> <span class="mh">0x25</span><span class="p">,</span> <span class="mh">0xb5</span><span class="p">,</span> <span class="mh">0x0c</span><span class="p">,</span> <span class="mh">0x0b</span> <span class="p">}}</span>
+
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+<span class="n">UINT16</span>   <span class="n">Version</span><span class="p">;</span>
+<span class="n">UINT16</span>   <span class="n">NumberOfProfiles</span><span class="p">;</span>
+<span class="o">//</span><span class="n">EFI_GUID</span> <span class="n">ConformanceProfiles</span> <span class="p">[];</span>
+<span class="p">}</span> <span class="n">EFI_CONFORMANCE_PROFILES_TABLE</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><em>Version</em></p>
+<p>Version of the table, must be 0x1:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_CONFORMANCE_PROFILES_TABLE_VERSION 0x1</span>
+</pre></div>
+</div>
+<p><em>NumberOfProfiles</em></p>
+<p>The number of conformance profiles GUIDs present in ConformanceProfiles.</p>
+<p><em>ConformanceProfiles</em></p>
+<p>An array of conformance profile GUIDs that are supported by this system.</p>
+<p>The address reported in the EFI configuration table entry of this type will be referenced as physical and will not be fixed up when transition from preboot to runtime phase.</p>
+<p><strong>Description</strong></p>
+<p>The following list shows the GUIDs of known conformance profiles. This list is not exhaustive and does not show GUIDs for all possible profiles. Additional profiles can be defined and published in other specifications:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_CONFORMANCE_PROFILES_UEFI_SPEC_GUID \</span>
+<span class="p">{</span> <span class="mh">0x523c91af</span><span class="p">,</span> <span class="mh">0xa195</span><span class="p">,</span> <span class="mh">0x4382</span><span class="p">,</span> \
+<span class="p">{</span> <span class="mh">0x81</span><span class="p">,</span> <span class="mh">0x8d</span><span class="p">,</span> <span class="mh">0x29</span><span class="p">,</span> <span class="mh">0x5f</span><span class="p">,</span> <span class="mh">0xe4</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x64</span><span class="p">,</span> <span class="mh">0x65</span> <span class="p">}}</span>
+</pre></div>
+</div>
+<p>Conformance profile defined by this specification, as defined in <a class="reference internal" href="02_Overview.html#requirements"><span class="std std-numref">Section 2.6</span></a>.</p>
+</section>
+<section id="other-configuration-tables">
+<span id="id16"></span><h3><span class="section-number">4.6.5. </span>Other Configuration Tables<a class="headerlink" href="#other-configuration-tables" title="Link to this heading"></a></h3>
+<p>The following list shows additional configuration tables defined in this specification:</p>
+<ul class="simple">
+<li><p>EFI_MEMORY_RANGE_CAPSULE_GUID  (<a class="reference internal" href="08_Services_Runtime_Services.html#efi-memory-range-capsule-guid"><span class="std std-numref">Section 8.5.3.3</span></a>)</p></li>
+<li><p>EFI_DEBUG_IMAGE_INFO_TABLE  (<a class="reference internal" href="18_Protocols_Debugger_Support.html#efi-image-info"><span class="std std-numref">Section 18.4.3</span></a>)</p></li>
+<li><p>EFI_SYSTEM_RESOURCE_TABLE  (<a class="reference internal" href="23_Firmware_Update_and_Reporting.html#efi-system-resource-table"><span class="std std-numref">Section 23.4</span></a>)</p></li>
+<li><p>EFI_IMAGE_EXECUTION_INFO_TABLE  (<a class="reference internal" href="32_Secure_Boot_and_Driver_Signing.html#using-the-efi-system-configuration-table"><span class="std std-numref">Section 32.5.3.1</span></a>)</p></li>
+<li><p>User Information Table  (<a class="reference internal" href="36_User_Identification.html#user-information-table"><span class="std std-numref">Section 36.5</span></a>)</p></li>
+<li><p>HII Database export buffer  (<a class="reference internal" href="33_Human_Interface_Infrastructure.html#os-runtime-utilization"><span class="std std-numref">Section 33.2.11.1</span></a>)</p></li>
+</ul>
+</section>
+</section>
+<section id="image-entry-point-examples">
+<span id="id17"></span><h2><span class="section-number">4.7. </span>Image Entry Point Examples<a class="headerlink" href="#image-entry-point-examples" title="Link to this heading"></a></h2>
+<p>The examples in the following sections show how the various table examples are presented in the UEFI environment.</p>
+<section id="id18">
+<h3><span class="section-number">4.7.1. </span>Image Entry Point Examples<a class="headerlink" href="#id18" title="Link to this heading"></a></h3>
+<p>The following example shows the image entry point for a UEFI Application. This application makes use of the EFI System Table, the EFI Boot Services Table, and the EFI Runtime Services Table.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">EFI_SYSTEM_TABLE</span>                <span class="o">*</span><span class="n">gST</span><span class="p">;</span>
+ <span class="n">EFI_BOOT_SERVICES</span>               <span class="o">*</span><span class="n">gBS</span><span class="p">;</span>
+ <span class="n">EFI_RUNTIME_SERVICES</span>            <span class="o">*</span><span class="n">gRT</span><span class="p">;</span>
+
+ <span class="n">EfiApplicationEntryPoint</span><span class="p">(</span>
+   <span class="n">IN</span> <span class="n">EFI_HANDLE</span>                 <span class="n">ImageHandle</span><span class="p">,</span>
+   <span class="n">IN</span> <span class="n">EFI_SYSTEM_TABLE</span>           <span class="o">*</span><span class="n">SystemTable</span>
+   <span class="p">)</span>
+
+  <span class="p">{</span>
+   <span class="n">EFI_STATUS</span> <span class="n">Status</span><span class="p">;</span>
+   <span class="n">EFI_TIME</span>                       <span class="o">*</span><span class="n">Time</span><span class="p">;</span>
+
+   <span class="n">gST</span> <span class="o">=</span> <span class="n">SystemTable</span><span class="p">;</span>
+   <span class="n">gBS</span> <span class="o">=</span> <span class="n">gST</span><span class="o">-&gt;</span><span class="n">BootServices</span><span class="p">;</span>
+   <span class="n">gRT</span> <span class="o">=</span> <span class="n">gST</span><span class="o">-&gt;</span><span class="n">RuntimeServices</span><span class="p">;</span>
+
+   <span class="o">//</span>
+   <span class="o">//</span> <span class="n">Use</span> <span class="n">EFI</span> <span class="n">System</span> <span class="n">Table</span> <span class="n">to</span> <span class="nb">print</span> <span class="s2">&quot;Hello World&quot;</span> <span class="n">to</span> <span class="n">the</span> <span class="n">active</span> <span class="n">console</span> <span class="n">output</span>
+   <span class="o">//</span> <span class="n">device</span><span class="o">.</span>
+   <span class="o">//</span>
+   <span class="n">Status</span> <span class="o">=</span> <span class="n">gST</span><span class="o">-&gt;</span><span class="n">ConOut</span><span class="o">-&gt;</span><span class="n">OutputString</span> <span class="p">(</span><span class="n">gST</span><span class="o">-&gt;</span><span class="n">ConOut</span><span class="p">,</span> <span class="n">L</span><span class="s2">&quot;Hello world</span><span class="se">\n\r</span><span class="s2">&quot;</span><span class="p">);</span> <span class="k">if</span> <span class="p">(</span><span class="n">EFI_ERROR</span> <span class="p">(</span><span class="n">Status</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">Status</span><span class="p">;</span>
+   <span class="p">}</span>
+
+   <span class="o">//</span>
+   <span class="o">//</span> <span class="n">Use</span> <span class="n">EFI</span> <span class="n">Boot</span> <span class="n">Services</span> <span class="n">Table</span> <span class="n">to</span> <span class="n">allocate</span> <span class="n">a</span> <span class="n">buffer</span> <span class="n">to</span> <span class="n">store</span> <span class="n">the</span> <span class="n">current</span> <span class="n">time</span>
+   <span class="o">//</span> <span class="ow">and</span> <span class="n">date</span><span class="o">.</span>
+   <span class="o">//</span>
+   <span class="n">Status</span> <span class="o">=</span> <span class="n">gBS</span><span class="o">-&gt;</span><span class="n">AllocatePool</span> <span class="p">(</span>
+        <span class="n">EfiBootServicesData</span><span class="p">,</span>
+        <span class="n">sizeof</span> <span class="p">(</span><span class="n">EFI_TIME</span><span class="p">),</span>
+        <span class="p">(</span><span class="n">VOID</span> \<span class="o">**</span><span class="p">)</span><span class="o">&amp;</span><span class="n">Time</span>
+        <span class="p">);</span>
+   <span class="k">if</span> <span class="p">(</span><span class="n">EFI_ERROR</span> <span class="p">(</span><span class="n">Status</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">Status</span><span class="p">;</span>
+   <span class="p">}</span>
+
+   <span class="o">//</span>
+   <span class="o">//</span> <span class="n">Use</span> <span class="n">the</span> <span class="n">EFI</span> <span class="n">Runtime</span> <span class="n">Services</span> <span class="n">Table</span> <span class="n">to</span> <span class="n">get</span> <span class="n">the</span> <span class="n">current</span> <span class="n">time</span> <span class="ow">and</span> <span class="n">date</span><span class="o">.</span>
+   <span class="o">//</span>
+   <span class="n">Status</span> <span class="o">=</span> <span class="n">gRT</span><span class="o">-&gt;</span><span class="n">GetTime</span> <span class="p">(</span><span class="n">Time</span><span class="p">,</span> <span class="n">NULL</span><span class="p">)</span>
+   <span class="k">if</span> <span class="p">(</span><span class="n">EFI_ERROR</span> <span class="p">(</span><span class="n">Status</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">Status</span><span class="p">;</span>
+   <span class="p">}</span>
+
+   <span class="k">return</span> <span class="n">Status</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The following example shows the UEFI image entry point for a driver that does not follow the UEFI <em>Driver Model</em> . Since this driver returns  EFI_SUCCESS , it will stay resident in memory after it exits.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">EFI_SYSTEM_TABLE</span>         <span class="o">*</span><span class="n">gST</span><span class="p">;</span>
+<span class="n">EFI_BOOT_SERVICES</span>        <span class="o">*</span><span class="n">gBS</span><span class="p">;</span>
+<span class="n">EFI_RUNTIME_SERVICES</span>     <span class="o">*</span><span class="n">gRT</span><span class="p">;</span>
+
+<span class="n">EfiDriverEntryPoint</span><span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_HANDLE</span>           <span class="n">ImageHandle</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">EFI_SYSTEM_TABLE</span>     <span class="o">*</span><span class="n">SystemTable</span>
+  <span class="p">)</span>
+
+<span class="p">{</span>
+  <span class="n">gST</span> <span class="o">=</span> <span class="n">SystemTable</span><span class="p">;</span>
+  <span class="n">gBS</span> <span class="o">=</span> <span class="n">gST</span><span class="o">-&gt;</span><span class="n">BootServices</span><span class="p">;</span>
+  <span class="n">gRT</span> <span class="o">=</span> <span class="n">gST</span><span class="o">-&gt;</span><span class="n">RuntimeServices</span><span class="p">;</span>
+
+  <span class="o">//</span>
+  <span class="o">//</span> <span class="n">Implement</span> <span class="n">driver</span> <span class="n">initialization</span> <span class="n">here</span><span class="o">.</span>
+  <span class="o">//</span>
+
+   <span class="k">return</span> <span class="n">EFI_SUCCESS</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The following example shows the UEFI image entry point for a driver that also does not follow the UEFI <em>Driver Model</em> . Since this driver returns EFI_DEVICE_ERROR, it will not stay resident in memory after it exits.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">EFI_SYSTEM_TABLE</span>          <span class="o">*</span><span class="n">gST</span><span class="p">;</span>
+<span class="n">EFI_BOOT_SERVICES</span>         <span class="o">*</span><span class="n">gBS</span><span class="p">;</span>
+<span class="n">EFI_RUNTIME_SERVICES</span>      <span class="o">*</span><span class="n">gRT</span><span class="p">;</span>
+
+<span class="n">EfiDriverEntryPoint</span><span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_HANDLE</span>           <span class="n">ImageHandle</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">EFI_SYSTEM_TABLE</span>     <span class="o">*</span><span class="n">SystemTable</span>
+  <span class="p">)</span>
+
+<span class="p">{</span>
+  <span class="n">gST</span> <span class="o">=</span> <span class="n">SystemTable</span><span class="p">;</span>
+  <span class="n">gBS</span> <span class="o">=</span> <span class="n">gST</span><span class="o">-&gt;</span><span class="n">BootServices</span><span class="p">;</span>
+  <span class="n">gRT</span> <span class="o">=</span> <span class="n">gST</span><span class="o">-&gt;</span><span class="n">RuntimeServices</span><span class="p">;</span>
+
+  <span class="o">//</span>
+  <span class="o">//</span> <span class="n">Implement</span> <span class="n">driver</span> <span class="n">initialization</span> <span class="n">here</span><span class="o">.</span>
+  <span class="o">//</span>
+
+  <span class="k">return</span> <span class="n">EFI_DEVICE_ERROR</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="uefi-driver-model-example">
+<span id="id19"></span><h3><span class="section-number">4.7.2. </span>UEFI Driver Model Example<a class="headerlink" href="#uefi-driver-model-example" title="Link to this heading"></a></h3>
+<p>The following is an UEFI Driver Model example that shows the driver initialization routine for the ABC device controller that is on the XYZ bus. The EFI_DRIVER_BINDING_PROTOCOL and the function prototypes for AbcSupported(), AbcStart(), and AbcStop() are defined in <a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html#efi-driver-binding-protocol-protocols-uefi-driver-model"><span class="std std-ref">EFI Driver Binding Protocol</span></a>  This function saves the driver’s image handle and a pointer to the EFI boot services table in global variables, so the other functions in the same driver can have access to these values. It then creates an instance of the EFI_DRIVER_BINDING_PROTOCOL and installs it onto the driver’s image handle.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">extern</span> <span class="n">EFI_GUID</span>              <span class="n">gEfiLoadedImageProtocolGuid</span><span class="p">;</span>
+<span class="n">extern</span> <span class="n">EFI_GUID</span>              <span class="n">gEfiDriverBindingProtocolGuid</span><span class="p">;</span>
+<span class="n">EFI_BOOT_SERVICES</span>            <span class="o">*</span><span class="n">gBS</span><span class="p">;</span>
+<span class="n">static</span> <span class="n">EFI_DRIVER_BINDING_PROTOCOL</span>  <span class="n">mAbcDriverBinding</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">AbcSupported</span><span class="p">,</span>
+  <span class="n">AbcStart</span><span class="p">,</span>
+  <span class="n">AbcStop</span><span class="p">,</span>
+  <span class="mi">1</span><span class="p">,</span>
+  <span class="n">NULL</span><span class="p">,</span>
+  <span class="n">NULL</span>
+<span class="p">};</span>
+
+<span class="n">AbcEntryPoint</span><span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_HANDLE</span>                <span class="n">ImageHandle</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">EFI_SYSTEM_TABLE</span>          <span class="o">*</span><span class="n">SystemTable</span>
+  <span class="p">)</span>
+
+<span class="p">{</span>
+  <span class="n">EFI_STATUS</span> <span class="n">Status</span><span class="p">;</span>
+
+  <span class="n">gBS</span> <span class="o">=</span> <span class="n">SystemTable</span><span class="o">-&gt;</span><span class="n">BootServices</span><span class="p">;</span>
+
+  <span class="n">mAbcDriverBinding</span><span class="o">-&gt;</span><span class="n">ImageHandle</span>      <span class="o">=</span> <span class="n">ImageHandle</span><span class="p">;</span>
+  <span class="n">mAbcDriverBinding</span><span class="o">-&gt;</span><span class="n">DriverBindingHandle</span> <span class="o">=</span> <span class="n">ImageHandle</span><span class="p">;</span>
+
+  <span class="n">Status</span> <span class="o">=</span> <span class="n">gBS</span><span class="o">-&gt;</span><span class="n">InstallMultipleProtocolInterfaces</span><span class="p">(</span>
+           <span class="o">&amp;</span><span class="n">mAbcDriverBinding</span><span class="o">-&gt;</span><span class="n">DriverBindingHandle</span><span class="p">,</span>
+           <span class="o">&amp;</span><span class="n">gEfiDriverBindingProtocolGuid</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mAbcDriverBinding</span><span class="p">,</span>
+            <span class="n">NULL</span>
+            <span class="p">);</span>
+  <span class="k">return</span> <span class="n">Status</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="uefi-driver-model-example-unloadable">
+<span id="id20"></span><h3><span class="section-number">4.7.3. </span>UEFI Driver Model Example (Unloadable)<a class="headerlink" href="#uefi-driver-model-example-unloadable" title="Link to this heading"></a></h3>
+<p>The following is the same UEFI Driver Model example as above, except it also includes the code required to allow the driver to be unloaded through the boot service Unload() <a class="reference internal" href="09_Protocols_EFI_Loaded_Image.html#efi-loaded-image-protocol-unload"><span class="std std-ref">EFI_LOADED_IMAGE_PROTOCOL.Unload()</span></a> . Any protocols installed or memory allocated in AbcEntryPoint() must be uninstalled or freed in the AbcUnload().</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">extern</span> <span class="n">EFI_GUID</span>                        <span class="n">gEfiLoadedImageProtocolGuid</span><span class="p">;</span>
+ <span class="n">extern</span> <span class="n">EFI_GUID</span>                        <span class="n">gEfiDriverBindingProtocolGuid</span><span class="p">;</span>
+ <span class="n">EFI_BOOT_SERVICES</span>                      <span class="o">*</span><span class="n">gBS</span><span class="p">;</span>
+ <span class="n">static</span> <span class="n">EFI_DRIVER_BINDING_PROTOCOL</span>     <span class="n">mAbcDriverBinding</span> <span class="o">=</span> <span class="p">{</span>
+   <span class="n">AbcSupported</span><span class="p">,</span>
+   <span class="n">AbcStart</span><span class="p">,</span>
+   <span class="n">AbcStop</span><span class="p">,</span>
+   <span class="mi">1</span><span class="p">,</span>
+   <span class="n">NULL</span><span class="p">,</span>
+   <span class="n">NULL</span>
+ <span class="p">};</span>
+
+ <span class="n">EFI_STATUS</span>
+ <span class="n">AbcUnload</span> <span class="p">(</span>
+   <span class="n">IN</span> <span class="n">EFI_HANDLE</span>                        <span class="n">ImageHandle</span>
+   <span class="p">);</span>
+ <span class="n">AbcEntryPoint</span><span class="p">(</span>
+   <span class="n">IN</span> <span class="n">EFI_HANDLE</span>                        <span class="n">ImageHandle</span><span class="p">,</span>
+   <span class="n">IN</span> <span class="n">EFI_SYSTEM_TABLE</span>                  <span class="o">*</span><span class="n">SystemTable</span>
+   <span class="p">)</span>
+
+ <span class="p">{</span>
+   <span class="n">EFI_STATUS</span>                           <span class="n">Status</span><span class="p">;</span>
+   <span class="n">EFI_LOADED_IMAGE_PROTOCOL</span>            <span class="o">*</span><span class="n">LoadedImage</span><span class="p">;</span>
+
+   <span class="n">gBS</span> <span class="o">=</span> <span class="n">SystemTable</span><span class="o">-&gt;</span><span class="n">BootServices</span><span class="p">;</span>
+
+   <span class="n">Status</span> <span class="o">=</span> <span class="n">gBS</span><span class="o">-&gt;</span><span class="n">OpenProtocol</span> <span class="p">(</span>
+            <span class="n">ImageHandle</span><span class="p">,</span>
+            <span class="o">&amp;</span><span class="n">gEfiLoadedImageProtocolGuid</span><span class="p">,</span>
+            <span class="o">&amp;</span><span class="n">LoadedImage</span><span class="p">,</span>
+            <span class="n">ImageHandle</span><span class="p">,</span>
+            <span class="n">NULL</span><span class="p">,</span>
+            <span class="n">EFI_OPEN_PROTOCOL_GET_PROTOCOL</span>
+            <span class="p">);</span>
+   <span class="k">if</span> <span class="p">(</span><span class="n">EFI_ERROR</span> <span class="p">(</span><span class="n">Status</span><span class="p">))</span> <span class="p">{</span>
+     <span class="k">return</span> <span class="n">Status</span><span class="p">;</span>
+ <span class="p">}</span>
+ <span class="n">LoadedImage</span><span class="o">-&gt;</span><span class="n">Unload</span> <span class="o">=</span> <span class="n">AbcUnload</span><span class="p">;</span>
+
+ <span class="n">mAbcDriverBinding</span><span class="o">-&gt;</span><span class="n">ImageHandle</span>         <span class="o">=</span> <span class="n">ImageHandle</span><span class="p">;</span>
+ <span class="n">mAbcDriverBinding</span><span class="o">-&gt;</span><span class="n">DriverBindingHandle</span> <span class="o">=</span> <span class="n">ImageHandle</span><span class="p">;</span>
+
+ <span class="n">Status</span> <span class="o">=</span>  <span class="n">gBS</span><span class="o">-&gt;</span><span class="n">InstallMultipleProtocolInterfaces</span><span class="p">(</span>
+           <span class="o">&amp;</span><span class="n">mAbcDriverBinding</span><span class="o">-&gt;</span><span class="n">DriverBindingHandle</span><span class="p">,</span>
+           <span class="o">&amp;</span><span class="n">gEfiDriverBindingProtocolGuid</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mAbcDriverBinding</span><span class="p">,</span>
+           <span class="n">NULL</span>
+           <span class="p">);</span>
+
+   <span class="k">return</span> <span class="n">Status</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="n">EFI_STATUS</span> <span class="n">Status</span>
+ <span class="n">AbcUnload</span> <span class="p">(</span>
+   <span class="n">IN</span> <span class="n">EFI_HANDLE</span> <span class="n">ImageHandle</span>
+   <span class="p">)</span>
+
+<span class="p">{</span>
+ <span class="n">EFI_STATUS</span> <span class="n">Status</span><span class="p">;</span>
+
+ <span class="n">Status</span> <span class="o">=</span>  <span class="n">gBS</span><span class="o">-&gt;</span><span class="n">UninstallMultipleProtocolInterfaces</span> <span class="p">(</span>
+           <span class="n">ImageHandle</span><span class="p">,</span>
+           <span class="o">&amp;</span><span class="n">gEfiDriverBindingProtocolGuid</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mAbcDriverBinding</span><span class="p">,</span>
+           <span class="n">NULL</span>
+           <span class="p">);</span>
+      <span class="k">return</span> <span class="n">Status</span><span class="p">;</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="efi-driver-model-example-multiple-instances">
+<span id="id21"></span><h3><span class="section-number">4.7.4. </span>EFI Driver Model Example (Multiple Instances)<a class="headerlink" href="#efi-driver-model-example-multiple-instances" title="Link to this heading"></a></h3>
+<p>The following is the same as the first UEFI <em>Driver Model</em> example, except it produces three   <a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html#efi-driver-binding-protocol-protocols-uefi-driver-model"><span class="std std-ref">EFI Driver Binding Protocol</span></a> instances. The first one is installed onto the driver’s image handle. The other two are installed onto newly created handles.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">extern</span> <span class="n">EFI_GUID</span>             <span class="n">gEfiDriverBindingProtocolGuid</span><span class="p">;</span>
+<span class="n">EFI_BOOT_SERVICES</span>           <span class="o">*</span><span class="n">gBS</span><span class="p">;</span>
+
+<span class="n">static</span> <span class="n">EFI_DRIVER_BINDING_PROTOCOL</span>   <span class="n">mAbcDriverBindingA</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">AbcSupportedA</span><span class="p">,</span>
+  <span class="n">AbcStartA</span><span class="p">,</span>
+  <span class="n">AbcStopA</span><span class="p">,</span>
+  <span class="mi">1</span><span class="p">,</span>
+  <span class="n">NULL</span><span class="p">,</span>
+  <span class="n">NULL</span>
+<span class="p">};</span>
+
+<span class="n">static</span> <span class="n">EFI_DRIVER_BINDING_PROTOCOL</span>   <span class="n">mAbcDriverBindingB</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">AbcSupportedB</span><span class="p">,</span>
+  <span class="n">AbcStartB</span><span class="p">,</span>
+  <span class="n">AbcStopB</span><span class="p">,</span>
+  <span class="mi">1</span><span class="p">,</span>
+  <span class="n">NULL</span><span class="p">,</span>
+  <span class="n">NULL</span>
+<span class="p">};</span>
+
+<span class="n">static</span> <span class="n">EFI_DRIVER_BINDING_PROTOCOL</span>   <span class="n">mAbcDriverBindingC</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="n">AbcSupportedC</span><span class="p">,</span>
+  <span class="n">AbcStartC</span><span class="p">,</span>
+  <span class="n">AbcStopC</span><span class="p">,</span>
+  <span class="mi">1</span><span class="p">,</span>
+  <span class="n">NULL</span><span class="p">,</span>
+  <span class="n">NULL</span>
+<span class="p">};</span>
+
+<span class="n">AbcEntryPoint</span><span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_HANDLE</span> <span class="n">ImageHandle</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">EFI_SYSTEM_TABLE</span> <span class="o">*</span><span class="n">SystemTable</span>
+  <span class="p">)</span>
+
+<span class="p">{</span>
+  <span class="n">EFI_STATUS</span> <span class="n">Status</span><span class="p">;</span>
+
+  <span class="n">gBS</span> <span class="o">=</span> <span class="n">SystemTable</span><span class="o">-&gt;</span><span class="n">BootServices</span><span class="p">;</span>
+
+  <span class="o">//</span>
+  <span class="o">//</span> <span class="n">Install</span> <span class="n">mAbcDriverBindingA</span> <span class="n">onto</span> <span class="n">ImageHandle</span>
+  <span class="o">//</span>
+  <span class="n">mAbcDriverBindingA</span><span class="o">-&gt;</span><span class="n">ImageHandle</span>            <span class="o">=</span> <span class="n">ImageHandle</span><span class="p">;</span>
+  <span class="n">mAbcDriverBindingA</span><span class="o">-&gt;</span><span class="n">DriverBindingHandle</span>    <span class="o">=</span> <span class="n">ImageHandle</span><span class="p">;</span>
+
+  <span class="n">Status</span> <span class="o">=</span>  <span class="n">gBS</span><span class="o">-&gt;</span><span class="n">InstallMultipleProtocolInterfaces</span><span class="p">(</span>
+            <span class="o">&amp;</span><span class="n">mAbcDriverBindingA</span><span class="o">-&gt;</span><span class="n">DriverBindingHandle</span><span class="p">,</span>
+            <span class="o">&amp;</span><span class="n">gEfiDriverBindingProtocolGuid</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mAbcDriverBindingA</span><span class="p">,</span>
+            <span class="n">NULL</span>
+            <span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">EFI_ERROR</span> <span class="p">(</span><span class="n">Status</span><span class="p">))</span> <span class="p">{</span>
+     <span class="k">return</span> <span class="n">Status</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">//</span>
+  <span class="o">//</span> <span class="n">Install</span> <span class="n">mAbcDriverBindingB</span> <span class="n">onto</span> <span class="n">a</span> <span class="n">newly</span> <span class="n">created</span> <span class="n">handle</span>
+  <span class="o">//</span>
+  <span class="n">mAbcDriverBindingB</span><span class="o">-&gt;</span><span class="n">ImageHandle</span>      <span class="o">=</span> <span class="n">ImageHandle</span><span class="p">;</span>
+  <span class="n">mAbcDriverBindingB</span><span class="o">-&gt;</span><span class="n">DriverBindingHandle</span>      <span class="o">=</span> <span class="n">NULL</span><span class="p">;</span>
+
+  <span class="n">Status</span> <span class="o">=</span>  <span class="n">gBS</span><span class="o">-&gt;</span><span class="n">InstallMultipleProtocolInterfaces</span><span class="p">(</span>
+            <span class="o">&amp;</span><span class="n">mAbcDriverBindingB</span><span class="o">-&gt;</span><span class="n">DriverBindingHandle</span><span class="p">,</span>
+            <span class="o">&amp;</span><span class="n">gEfiDriverBindingProtocolGuid</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mAbcDriverBindingB</span><span class="p">,</span>
+            <span class="n">NULL</span>
+            <span class="p">);</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">EFI_ERROR</span> <span class="p">(</span><span class="n">Status</span><span class="p">))</span> <span class="p">{</span>
+     <span class="k">return</span> <span class="n">Status</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="o">//</span>
+  <span class="o">//</span> <span class="n">Install</span> <span class="n">mAbcDriverBindingC</span> <span class="n">onto</span> <span class="n">a</span> <span class="n">newly</span> <span class="n">created</span> <span class="n">handle</span>
+  <span class="o">//</span>
+  <span class="n">mAbcDriverBindingC</span><span class="o">-&gt;</span><span class="n">ImageHandle</span> <span class="o">=</span> <span class="n">ImageHandle</span><span class="p">;</span>
+  <span class="n">mAbcDriverBindingC</span><span class="o">-&gt;</span><span class="n">DriverBindingHandle</span> <span class="o">=</span> <span class="n">NULL</span><span class="p">;</span>
+
+  <span class="n">Status</span> <span class="o">=</span>  <span class="n">gBS</span><span class="o">-&gt;</span><span class="n">InstallMultipleProtocolInterfaces</span><span class="p">(</span>
+            <span class="o">&amp;</span><span class="n">mAbcDriverBindingC</span><span class="o">-&gt;</span><span class="n">DriverBindingHandle</span><span class="p">,</span>
+            <span class="o">&amp;</span><span class="n">gEfiDriverBindingProtocolGuid</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">mAbcDriverBindingC</span><span class="p">,</span>
+            <span class="n">NULL</span>
+            <span class="p">);</span>
+
+  <span class="k">return</span> <span class="n">Status</span><span class="p">;</span>
+  <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="03_Boot_Manager.html" class="btn btn-neutral float-left" title="3. Boot Manager" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="05_GUID_Partition_Table_Format.html" class="btn btn-neutral float-right" title="5. GUID Partition Table (GPT) Disk Layout" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, UEFI Forum, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

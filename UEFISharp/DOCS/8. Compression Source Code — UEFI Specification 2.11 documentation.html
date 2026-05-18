@@ -1,0 +1,1769 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>8. Compression Source Code &mdash; UEFI Specification 2.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=f2209469" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/style.css?v=faba8a36" />
+      <link rel="stylesheet" type="text/css" href="_static/theme-overrides.css?v=84235ce0" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2de06f63"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="9. Decompression Source Code" href="Apx_I_Decompression_Source_Code.html" />
+    <link rel="prev" title="7. Using the EFI Extended SCSI Pass Thru Protocol" href="Apx_G_Using_the_EFI_Extended_SCSI_Pass_Thru_Protocol.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            UEFI Specification
+          </a>
+              <div class="version">
+                2.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Tables.html">List of Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Figures.html">List of Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/Revision_History.html">Revision History</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01_Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Overview.html">2. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Boot_Manager.html">3. Boot Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_EFI_System_Table.html">4. EFI System Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_GUID_Partition_Table_Format.html">5. GUID Partition Table (GPT) Disk Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_Block_Transition_Table_Layout.html">6. Block Translation Table (BTT) Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Services_Boot_Services.html">7. Services — Boot Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Services_Runtime_Services.html">8. Services — Runtime Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Protocols_EFI_Loaded_Image.html">9. Protocols - EFI Loaded Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Protocols_Device_Path_Protocol.html">10. Protocols – Device Path Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html">11. Protocols — UEFI Driver Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_Protocols_Console_Support.html">12. Protocols — Console Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Protocols_Media_Access.html">13. Protocols – Media Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Protocols_PCI_Bus_Support.html">14. Protocols — PCI Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_Protocols_SCSI_Driver_Models_and_Bus_Support.html">15. Protocols — SCSI Driver Models and Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_Protocols_iSCSI_Boot.html">16. Protocols — iSCSI Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_Protocols_USB_Support.html">17. Protocols — USB Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_Protocols_Debugger_Support.html">18. Protocols — Debugger Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_Protocols_Compression_Algorithm_Specification.html">19. Protocols — Compression Algorithm Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_Protocols_ACPI_Protocols.html">20. Protocols — ACPI Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_Protocols_String_Services.html">21. Protocols — String Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html">22. EFI Byte Code Virtual Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_Firmware_Update_and_Reporting.html">23. Firmware Update and Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24_Network_Protocols_SNP_PXE_BIS.html">24. Network Protocols — SNP, PXE, BIS and HTTP Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25_Network_Protocols_Managed_Network.html">25. Network Protocols - Managed Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26_Network_Protocols_Bluetooth.html">26. Network Protocols — Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27_Network_Protocols_VLAN_and_EAP.html">27. Network Protocols — VLAN, EAP, Wi-Fi and Supplicant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28_Network_Protocols_TCP_IP_and_Configuration.html">28. Network Protocols — TCP, IP, IPsec, FTP, TLS and Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29_Network_Protocols_ARP_and_DHCP.html">29. Network Protocols — ARP, DHCP, DNS, HTTP and REST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_Network_Protocols_UDP_and_MTFTP.html">30. Network Protocols — UDP and MTFTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="31_EFI_Redfish_Service_Support.html">31. EFI Redfish Service Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="32_Secure_Boot_and_Driver_Signing.html">32. Secure Boot and Driver Signing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="33_Human_Interface_Infrastructure.html">33. Human Interface Infrastructure Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="34_HII_Protocols.html">34. HII Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="35_HII_Configuration_Processing_and_Browser_Protocol.html">35. HII Configuration Processing and Browser Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="36_User_Identification.html">36. User Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="37_Secure_Technologies.html">37. Secure Technologies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="38_Confidential_Computing.html">38. Confidential Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="39_Micellaneous_Protocols.html">39. Miscellaneous Protocols</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Apx_A_GUID_and_Time_Formats.html">A. GUID and Time Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_B_Console.html">B. Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_C_Device_Path_Examples.html">C. Device Path Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_D_Status_Codes.html">D. Status Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_E_Universal_Network_Driver_Interfaces.html">E. Universal Network Driver Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_F_Using_the_Simple_Pointer_Protocol.html">F. Using the Simple Pointer Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_G_Using_the_EFI_Extended_SCSI_Pass_Thru_Protocol.html">G. Using the EFI Extended SCSI Pass Thru Protocol</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">H. Compression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_I_Decompression_Source_Code.html">I. Decompression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_J_EFI_Byte_Code_Virtual_Machine_Opcode_List.html">J. EFI Byte Code Virtual Machine Opcode List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_K_Alphabetic_Function_Lists.html">K. Alphabetic Function Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_L_EFI_1.10_Protocol_Changes_and_Deprecation_List.html">L. EFI 1.10 Protocol Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html">M. Formats — Language Codes and Language Code Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_N_Common_Platform_Error_Record.html">N. Common Platform Error Record (CPER)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_O_UEFI_ACPI_Data_Table.html">O. UEFI ACPI Data Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_P_Hardware_Error_Record_Persistence_Usage.html">P. Hardware Error Record Persistence Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_Q_References.html">Q. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_R_Glossary.html">R. Glossary</a></li>
+</ul>
+
+    <a href= "genindex.html">Index</a>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UEFI Specification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">8. </span>Compression Source Code</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="compression-source-code">
+<span id="appendix-h-compression-source-code"></span><h1><span class="section-number">H. </span>Compression Source Code<a class="headerlink" href="#compression-source-code" title="Link to this heading"></a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="o">/*++</span>
+
+ <span class="n">Copyright</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="mi">2001</span><span class="o">-</span><span class="mi">2002</span> <span class="n">Intel</span> <span class="n">Corporation</span>
+
+ <span class="n">Module</span> <span class="n">Name</span><span class="p">:</span>
+
+  <span class="n">Compress</span><span class="o">.</span><span class="n">c</span>
+
+ <span class="n">Abstract</span><span class="p">:</span>
+
+  <span class="n">Compression</span> <span class="n">routine</span><span class="o">.</span> <span class="n">The</span> <span class="n">compression</span> <span class="n">algorithm</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">mixture</span> <span class="n">of</span> <span class="n">LZ77</span>
+  <span class="ow">and</span> <span class="n">Huffman</span> <span class="n">Coding</span><span class="o">.</span> <span class="n">LZ77</span> <span class="n">transforms</span> <span class="n">the</span> <span class="n">source</span> <span class="n">data</span> <span class="n">into</span> <span class="n">a</span> <span class="n">sequence</span>
+  <span class="n">of</span> <span class="n">Original</span> <span class="n">Characters</span> <span class="ow">and</span> <span class="n">Pointers</span> <span class="n">to</span> <span class="n">repeated</span> <span class="n">strings</span><span class="o">.</span> <span class="n">This</span> <span class="n">sequence</span>
+  <span class="ow">is</span> <span class="n">further</span> <span class="n">divided</span> <span class="n">into</span> <span class="n">Blocks</span> <span class="ow">and</span> <span class="n">Huffman</span> <span class="n">codings</span> <span class="n">are</span> <span class="n">applied</span> <span class="n">to</span> <span class="n">each</span> <span class="n">Block</span><span class="o">.</span>
+
+ <span class="n">Revision</span> <span class="n">History</span><span class="p">:</span>
+ <span class="o">--*/</span>
+
+ <span class="c1">#include &lt;string.h&gt;</span>
+ <span class="c1">#include &lt;stdlib.h&gt;</span>
+ <span class="c1">#include &quot;eficommon.h&quot;</span>
+
+ <span class="o">//</span>
+ <span class="o">//</span> <span class="n">Macro</span> <span class="n">Definitions</span>
+ <span class="o">//</span>
+
+ <span class="n">typedef</span> <span class="n">INT16</span>          <span class="n">NODE</span><span class="p">;</span>
+ <span class="c1">#define UINT8_MAX      0xff</span>
+ <span class="c1">#define UINT8_BIT      8</span>
+ <span class="c1">#define THRESHOLD      3</span>
+ <span class="c1">#define INIT_CRC       0</span>
+ <span class="c1">#define WNDBIT         13</span>
+ <span class="c1">#define WNDSIZ         (1U &lt;&lt; WNDBIT)</span>
+ <span class="c1">#define MAXMATCH       256</span>
+ <span class="c1">#define PERC_FLAG      0x8000U</span>
+ <span class="c1">#define CODE_BIT       16</span>
+ <span class="c1">#define NIL            0</span>
+ <span class="c1">#define MAX_HASH_VAL (3 * WNDSIZ + (WNDSIZ / 512 + 1) * UINT8_MAX)</span>
+ <span class="c1">#define HASH(p, c) ((p) + ((c) &lt;&lt; (WNDBIT - 9)) + WNDSIZ * 2)</span>
+ <span class="c1">#define CRCPOLY        0xA001</span>
+ <span class="c1">#define UPDATE_CRC(c) mCrc = mCrcTable[(mCrc ^ (c)) &amp; 0xFF] ^ (mCrc</span>
+ <span class="o">&gt;&gt;</span> <span class="n">UINT8_BIT</span><span class="p">)</span>
+
+ <span class="o">//</span>
+ <span class="o">//</span> <span class="n">C</span><span class="p">:</span> <span class="n">the</span> <span class="n">Char</span><span class="o">&amp;</span><span class="n">Len</span> <span class="n">Set</span><span class="p">;</span> <span class="n">P</span><span class="p">:</span> <span class="n">the</span> <span class="n">Position</span> <span class="n">Set</span><span class="p">;</span> <span class="n">T</span><span class="p">:</span> <span class="n">the</span> <span class="n">exTra</span> <span class="n">Set</span>
+ <span class="o">//</span>
+
+ <span class="c1">#define NC       (UINT8_MAX + MAXMATCH + 2 - THRESHOLD)</span>
+ <span class="c1">#define CBIT       9</span>
+ <span class="c1">#define NP       (WNDBIT + 1)</span>
+ <span class="c1">#define PBIT     4</span>
+ <span class="c1">#define NT       (CODE_BIT + 3)</span>
+ <span class="c1">#define TBIT     5</span>
+ <span class="c1">#if NT &gt; NP</span>
+    <span class="c1">#define NPT NT</span>
+ <span class="c1">#else</span>
+    <span class="c1">#define NPT NP</span>
+ <span class="c1">#endif</span>
+
+ <span class="o">//</span>
+ <span class="o">//</span> <span class="n">Function</span> <span class="n">Prototypes</span>
+ <span class="o">//</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">PutDword</span><span class="p">(</span>
+   <span class="n">IN</span> <span class="n">UINT32</span> <span class="n">Data</span>
+   <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">EFI_STATUS</span>
+ <span class="n">AllocateMemory</span> <span class="p">(</span>
+  <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">FreeMemory</span> <span class="p">(</span>
+  <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">InitSlide</span> <span class="p">(</span>
+  <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">NODE</span>
+ <span class="n">Child</span> <span class="p">(</span>
+   <span class="n">IN</span> <span class="n">NODE</span> <span class="n">q</span><span class="p">,</span>
+   <span class="n">IN</span> <span class="n">UINT8</span> <span class="n">c</span>
+   <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">MakeChild</span> <span class="p">(</span>
+   <span class="n">IN</span> <span class="n">NODE</span> <span class="n">q</span><span class="p">,</span>
+   <span class="n">IN</span> <span class="n">UINT8</span> <span class="n">c</span><span class="p">,</span>
+   <span class="n">IN</span> <span class="n">NODE</span> <span class="n">r</span>
+   <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">Split</span> <span class="p">(</span>
+   <span class="n">IN</span> <span class="n">NODE</span> <span class="n">Old</span>
+   <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">InsertNode</span> <span class="p">(</span>
+   <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">DeleteNode</span> <span class="p">(</span>
+   <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">GetNextMatch</span> <span class="p">(</span>
+   <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">EFI_STATUS</span>
+ <span class="n">Encode</span> <span class="p">(</span>
+   <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">CountTFreq</span> <span class="p">(</span>
+   <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">WritePTLen</span> <span class="p">(</span>
+   <span class="n">IN</span> <span class="n">INT32</span> <span class="n">n</span><span class="p">,</span>
+   <span class="n">IN</span> <span class="n">INT32</span> <span class="n">nbit</span><span class="p">,</span>
+   <span class="n">IN</span> <span class="n">INT32</span> <span class="n">Special</span>
+   <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">WriteCLen</span> <span class="p">(</span>
+  <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">EncodeC</span> <span class="p">(</span>
+ <span class="n">IN</span> <span class="n">INT32</span> <span class="n">c</span>
+   <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">EncodeP</span> <span class="p">(</span>
+   <span class="n">IN</span> <span class="n">UINT32</span> <span class="n">p</span>
+   <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">SendBlock</span> <span class="p">(</span>
+  <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">Output</span> <span class="p">(</span>
+   <span class="n">IN</span> <span class="n">UINT32</span> <span class="n">c</span><span class="p">,</span>
+   <span class="n">IN</span> <span class="n">UINT32</span> <span class="n">p</span>
+   <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">HufEncodeStart</span> <span class="p">(</span>
+  <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">HufEncodeEnd</span> <span class="p">(</span>
+  <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">MakeCrcTable</span> <span class="p">(</span>
+  <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">PutBits</span> <span class="p">(</span>
+   <span class="n">IN</span> <span class="n">INT32</span> <span class="n">n</span><span class="p">,</span>
+   <span class="n">IN</span> <span class="n">UINT32</span> <span class="n">x</span>
+   <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">INT32</span>
+ <span class="n">FreadCrc</span> <span class="p">(</span>
+   <span class="n">OUT</span> <span class="n">UINT8</span> <span class="o">*</span><span class="n">p</span><span class="p">,</span>
+   <span class="n">IN</span> <span class="n">INT32</span> <span class="n">n</span>
+   <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">InitPutBits</span> <span class="p">(</span>
+  <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">CountLen</span> <span class="p">(</span>
+   <span class="n">IN</span> <span class="n">INT32</span> <span class="n">i</span>
+   <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">MakeLen</span> <span class="p">(</span>
+   <span class="n">IN</span> <span class="n">INT32</span> <span class="n">Root</span>
+   <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">DownHeap</span> <span class="p">(</span>
+   <span class="n">IN</span> <span class="n">INT32</span> <span class="n">i</span>
+   <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">MakeCode</span> <span class="p">(</span>
+   <span class="n">IN</span> <span class="n">INT32</span> <span class="n">n</span><span class="p">,</span>
+   <span class="n">IN</span> <span class="n">UINT8</span> <span class="n">Len</span><span class="p">[],</span>
+   <span class="n">OUT</span> <span class="n">UINT16</span> <span class="n">Code</span><span class="p">[]</span>
+   <span class="p">);</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">INT32</span>
+ <span class="n">MakeTree</span> <span class="p">(</span>
+   <span class="n">IN</span> <span class="n">INT32</span> <span class="n">NParm</span><span class="p">,</span>
+   <span class="n">IN</span> <span class="n">UINT16</span> <span class="n">FreqParm</span><span class="p">[],</span>
+   <span class="n">OUT</span> <span class="n">UINT8</span> <span class="n">LenParm</span><span class="p">[],</span>
+   <span class="n">OUT</span> <span class="n">UINT16</span> <span class="n">CodeParm</span><span class="p">[]</span>
+   <span class="p">);</span>
+
+ <span class="o">//</span>
+ <span class="o">//</span> <span class="n">Global</span> <span class="n">Variables</span>
+ <span class="o">//</span>
+
+ <span class="n">STATIC</span> <span class="n">UINT8</span> <span class="o">*</span><span class="n">mSrc</span><span class="p">,</span> <span class="o">*</span><span class="n">mDst</span><span class="p">,</span> <span class="o">*</span><span class="n">mSrcUpperLimit</span><span class="p">,</span> <span class="o">*</span><span class="n">mDstUpperLimit</span><span class="p">;</span>
+
+ <span class="n">STATIC</span> <span class="n">UINT8</span> <span class="o">*</span><span class="n">mLevel</span><span class="p">,</span> <span class="o">*</span><span class="n">mText</span><span class="p">,</span> <span class="o">*</span><span class="n">mChildCount</span><span class="p">,</span> <span class="o">*</span><span class="n">mBuf</span><span class="p">,</span> <span class="n">mCLen</span><span class="p">[</span><span class="n">NC</span><span class="p">],</span> <span class="n">mPTLen</span><span class="p">[</span><span class="n">NPT</span><span class="p">],</span> <span class="o">*</span><span class="n">mLen</span><span class="p">;</span>
+ <span class="n">STATIC</span> <span class="n">INT16</span> <span class="n">mHeap</span><span class="p">[</span><span class="n">NC</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+ <span class="n">STATIC</span> <span class="n">INT32</span> <span class="n">mRemainder</span><span class="p">,</span> <span class="n">mMatchLen</span><span class="p">,</span> <span class="n">mBitCount</span><span class="p">,</span> <span class="n">mHeapSize</span><span class="p">,</span> <span class="n">mN</span><span class="p">;</span>
+ <span class="n">STATIC</span> <span class="n">UINT32</span> <span class="n">mBufSiz</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">mOutputPos</span><span class="p">,</span> <span class="n">mOutputMask</span><span class="p">,</span> <span class="n">mSubBitBuf</span><span class="p">,</span> <span class="n">mCrc</span><span class="p">;</span>
+ <span class="n">STATIC</span> <span class="n">UINT32</span> <span class="n">mCompSize</span><span class="p">,</span> <span class="n">mOrigSize</span><span class="p">;</span>
+
+ <span class="n">STATIC</span> <span class="n">UINT16</span> <span class="o">*</span><span class="n">mFreq</span><span class="p">,</span> <span class="o">*</span><span class="n">mSortPtr</span><span class="p">,</span> <span class="n">mLenCnt</span><span class="p">[</span><span class="mi">17</span><span class="p">],</span> <span class="n">mLeft</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">NC</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">mRight</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">NC</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="n">mCrcTable</span><span class="p">[</span><span class="n">UINT8_MAX</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">mCFreq</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">NC</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">mCTable</span><span class="p">[</span><span class="mi">4096</span><span class="p">],</span> <span class="n">mCCode</span><span class="p">[</span><span class="n">NC</span><span class="p">],</span>
+        <span class="n">mPFreq</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">NP</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">mPTCode</span><span class="p">[</span><span class="n">NPT</span><span class="p">],</span> <span class="n">mTFreq</span><span class="p">[</span><span class="mi">2</span> <span class="o">*</span> <span class="n">NT</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+
+ <span class="n">STATIC</span> <span class="n">NODE</span> <span class="n">mPos</span><span class="p">,</span> <span class="n">mMatchPos</span><span class="p">,</span> <span class="n">mAvail</span><span class="p">,</span> <span class="o">*</span><span class="n">mPosition</span><span class="p">,</span> <span class="o">*</span><span class="n">mParent</span><span class="p">,</span> <span class="o">*</span><span class="n">mPrev</span><span class="p">,</span> <span class="o">*</span><span class="n">mNext</span> <span class="o">=</span> <span class="n">NULL</span><span class="p">;</span>
+
+
+ <span class="o">//</span>
+ <span class="o">//</span> <span class="n">functions</span>
+ <span class="o">//</span>
+
+ <span class="n">EFI_STATUS</span>
+ <span class="n">Compress</span> <span class="p">(</span>
+   <span class="n">IN</span> <span class="n">UINT8</span> <span class="o">*</span><span class="n">SrcBuffer</span><span class="p">,</span>
+   <span class="n">IN</span> <span class="n">UINT32</span> <span class="n">SrcSize</span><span class="p">,</span>
+   <span class="n">IN</span> <span class="n">UINT8</span> <span class="o">*</span><span class="n">DstBuffer</span><span class="p">,</span>
+   <span class="n">IN</span> <span class="n">OUT</span> <span class="n">UINT32</span> <span class="o">*</span><span class="n">DstSize</span>
+   <span class="p">)</span>
+
+ <span class="o">/*++</span>
+
+ <span class="n">Routine</span> <span class="n">Description</span><span class="p">:</span>
+
+    <span class="n">The</span> <span class="n">main</span> <span class="n">compression</span> <span class="n">routine</span><span class="o">.</span>
+
+ <span class="n">Arguments</span><span class="p">:</span>
+
+   <span class="n">SrcBuffer</span> <span class="o">-</span> <span class="n">The</span> <span class="n">buffer</span> <span class="n">storing</span> <span class="n">the</span> <span class="n">source</span> <span class="n">data</span>
+   <span class="n">SrcSize</span> <span class="o">-</span> <span class="n">The</span> <span class="n">size</span> <span class="n">of</span> <span class="n">the</span> <span class="n">source</span> <span class="n">data</span>
+   <span class="n">DstBuffer</span> <span class="o">-</span> <span class="n">The</span> <span class="n">buffer</span> <span class="n">to</span> <span class="n">store</span> <span class="n">the</span> <span class="n">compressed</span> <span class="n">data</span>
+   <span class="n">DstSize</span> <span class="o">-</span> <span class="n">On</span> <span class="nb">input</span><span class="p">,</span> <span class="n">the</span> <span class="n">size</span> <span class="n">of</span> <span class="n">DstBuffer</span><span class="p">;</span> <span class="n">On</span> <span class="n">output</span><span class="p">,</span>
+             <span class="n">the</span> <span class="n">size</span> <span class="n">of</span> <span class="n">the</span> <span class="n">actual</span> <span class="n">compressed</span> <span class="n">data</span><span class="o">.</span>
+
+ <span class="n">Returns</span><span class="p">:</span>
+
+ <span class="n">EFI_BUFFER_TOO_SMALL</span> <span class="o">-</span> <span class="n">The</span> <span class="n">DstBuffer</span> <span class="ow">is</span> <span class="n">too</span> <span class="n">small</span><span class="o">.</span> <span class="n">In</span> <span class="n">this</span> <span class="n">case</span><span class="p">,</span>
+      <span class="n">DstSize</span> <span class="n">contains</span> <span class="n">the</span> <span class="n">size</span> <span class="n">needed</span><span class="o">.</span>
+ <span class="n">EFI_SUCCESS</span> <span class="o">-</span> <span class="n">Compression</span> <span class="ow">is</span> <span class="n">successful</span><span class="o">.</span>
+
+ <span class="o">--*/</span>
+ <span class="p">{</span>
+  <span class="n">EFI_STATUS</span> <span class="n">Status</span> <span class="o">=</span> <span class="n">EFI_SUCCESS</span><span class="p">;</span>
+
+ <span class="o">//</span>
+ <span class="o">//</span> <span class="n">Initializations</span>
+ <span class="o">//</span>
+
+ <span class="n">mBufSiz</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+ <span class="n">mBuf</span> <span class="o">=</span> <span class="n">NULL</span><span class="p">;</span>
+ <span class="n">mText</span> <span class="o">=</span> <span class="n">NULL</span><span class="p">;</span>
+ <span class="n">mLevel</span> <span class="o">=</span> <span class="n">NULL</span><span class="p">;</span>
+ <span class="n">mChildCount</span> <span class="o">=</span> <span class="n">NULL</span><span class="p">;</span>
+ <span class="n">mPosition</span> <span class="o">=</span> <span class="n">NULL</span><span class="p">;</span>
+ <span class="n">mParent</span> <span class="o">=</span> <span class="n">NULL</span><span class="p">;</span>
+ <span class="n">mPrev</span> <span class="o">=</span> <span class="n">NULL</span><span class="p">;</span>
+ <span class="n">mNext</span> <span class="o">=</span> <span class="n">NULL</span><span class="p">;</span>
+
+ <span class="n">mSrc</span> <span class="o">=</span> <span class="n">SrcBuffer</span><span class="p">;</span>
+ <span class="n">mSrcUpperLimit</span> <span class="o">=</span> <span class="n">mSrc</span> <span class="o">+</span> <span class="n">SrcSize</span><span class="p">;</span>
+ <span class="n">mDst</span> <span class="o">=</span> <span class="n">DstBuffer</span><span class="p">;</span>
+ <span class="n">mDstUpperLimit</span> <span class="o">=</span> <span class="n">mDst</span> <span class="o">+</span> <span class="o">*</span><span class="n">DstSize</span><span class="p">;</span>
+
+ <span class="n">PutDword</span><span class="p">(</span><span class="mi">0</span><span class="n">L</span><span class="p">);</span>
+ <span class="n">PutDword</span><span class="p">(</span><span class="mi">0</span><span class="n">L</span><span class="p">);</span>
+
+ <span class="n">MakeCrcTable</span> <span class="p">();</span>
+
+ <span class="n">mOrigSize</span> <span class="o">=</span> <span class="n">mCompSize</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+ <span class="n">mCrc</span> <span class="o">=</span> <span class="n">INIT_CRC</span><span class="p">;</span>
+
+ <span class="o">//</span>
+ <span class="o">//</span> <span class="n">Compress</span> <span class="n">it</span>
+ <span class="o">//</span>
+
+ <span class="n">Status</span> <span class="o">=</span> <span class="n">Encode</span><span class="p">();</span>
+ <span class="k">if</span> <span class="p">(</span><span class="n">EFI_ERROR</span> <span class="p">(</span><span class="n">Status</span><span class="p">))</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">EFI_OUT_OF_RESOURCES</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="o">//</span>
+ <span class="o">//</span> <span class="n">Null</span> <span class="n">terminate</span> <span class="n">the</span> <span class="n">compressed</span> <span class="n">data</span>
+ <span class="o">//</span>
+ <span class="k">if</span> <span class="p">(</span><span class="n">mDst</span> <span class="o">&lt;</span> <span class="n">mDstUpperLimit</span><span class="p">)</span> <span class="p">{</span>
+    <span class="o">*</span><span class="n">mDst</span><span class="o">++</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="o">//</span>
+ <span class="o">//</span> <span class="n">Fill</span> <span class="ow">in</span> <span class="n">compressed</span> <span class="n">size</span> <span class="ow">and</span> <span class="n">original</span> <span class="n">size</span>
+ <span class="o">//</span>
+ <span class="n">mDst</span> <span class="o">=</span> <span class="n">DstBuffer</span><span class="p">;</span>
+ <span class="n">PutDword</span><span class="p">(</span><span class="n">mCompSize</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span>
+ <span class="n">PutDword</span><span class="p">(</span><span class="n">mOrigSize</span><span class="p">);</span>
+
+ <span class="o">//</span>
+ <span class="o">//</span> <span class="n">Return</span>
+ <span class="o">//</span>
+
+ <span class="k">if</span> <span class="p">(</span><span class="n">mCompSize</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">8</span> <span class="o">&gt;</span> <span class="o">*</span><span class="n">DstSize</span><span class="p">)</span> <span class="p">{</span>   \
+  <span class="o">*</span><span class="n">DstSize</span> <span class="o">=</span> <span class="n">mCompSize</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">8</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">EFI_BUFFER_TOO_SMALL</span><span class="p">;</span>
+ <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+  <span class="o">*</span><span class="n">DstSize</span> <span class="o">=</span> <span class="n">mCompSize</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">8</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">EFI_SUCCESS</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="p">}</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">PutDword</span><span class="p">(</span>
+   <span class="n">IN</span> <span class="n">UINT32</span> <span class="n">Data</span>
+   <span class="p">)</span>
+ <span class="o">/*++</span>
+
+ <span class="n">Routine</span> <span class="n">Description</span><span class="p">:</span>
+
+  <span class="n">Put</span> <span class="n">a</span> <span class="n">dword</span> <span class="n">to</span> <span class="n">output</span> <span class="n">stream</span>
+
+ <span class="n">Arguments</span><span class="p">:</span>
+
+  <span class="n">Data</span> <span class="o">-</span> <span class="n">the</span> <span class="n">dword</span> <span class="n">to</span> <span class="n">put</span>
+
+ <span class="n">Returns</span><span class="p">:</span> <span class="p">(</span><span class="n">VOID</span><span class="p">)</span>
+
+ <span class="o">--*/</span>
+ <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">mDst</span> <span class="o">&lt;</span> <span class="n">mDstUpperLimit</span><span class="p">)</span> <span class="p">{</span>
+    <span class="o">*</span><span class="n">mDst</span><span class="o">++</span> <span class="o">=</span> <span class="p">(</span><span class="n">UINT8</span><span class="p">)(((</span><span class="n">UINT8</span><span class="p">)(</span><span class="n">Data</span> <span class="p">))</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">);</span>
+ <span class="p">}</span>
+
+ <span class="k">if</span> <span class="p">(</span><span class="n">mDst</span> <span class="o">&lt;</span> <span class="n">mDstUpperLimit</span><span class="p">)</span> <span class="p">{</span>
+  <span class="o">*</span><span class="n">mDst</span><span class="o">++</span> <span class="o">=</span> <span class="p">(</span><span class="n">UINT8</span><span class="p">)(((</span><span class="n">UINT8</span><span class="p">)(</span><span class="n">Data</span> <span class="o">&gt;&gt;</span> <span class="mh">0x08</span><span class="p">))</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">);</span>
+ <span class="p">}</span>
+
+ <span class="k">if</span> <span class="p">(</span><span class="n">mDst</span> <span class="o">&lt;</span> <span class="n">mDstUpperLimit</span><span class="p">)</span> <span class="p">{</span>
+  <span class="o">*</span><span class="n">mDst</span><span class="o">++</span> <span class="o">=</span> <span class="p">(</span><span class="n">UINT8</span><span class="p">)(((</span><span class="n">UINT8</span><span class="p">)(</span><span class="n">Data</span> <span class="o">&gt;&gt;</span> <span class="mh">0x10</span><span class="p">))</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">);</span>
+ <span class="p">}</span>
+
+ <span class="k">if</span> <span class="p">(</span><span class="n">mDst</span> <span class="o">&lt;</span> <span class="n">mDstUpperLimit</span><span class="p">)</span> <span class="p">{</span>
+  <span class="o">*</span><span class="n">mDst</span><span class="o">++</span> <span class="o">=</span> <span class="p">(</span><span class="n">UINT8</span><span class="p">)(((</span><span class="n">UINT8</span><span class="p">)(</span><span class="n">Data</span> <span class="o">&gt;&gt;</span> <span class="mh">0x18</span><span class="p">))</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="p">);</span>
+  <span class="p">}</span>
+ <span class="p">}</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">EFI_STATUS</span>
+ <span class="n">AllocateMemory</span> <span class="p">()</span>
+ <span class="o">/*++</span>
+
+ <span class="n">Routine</span> <span class="n">Description</span><span class="p">:</span>
+
+  <span class="n">Allocate</span> <span class="n">memory</span> <span class="n">spaces</span> <span class="k">for</span> <span class="n">data</span> <span class="n">structures</span> <span class="n">used</span> <span class="ow">in</span> <span class="n">compression</span> <span class="n">process</span>
+
+ <span class="n">Arguments</span><span class="p">:</span> <span class="p">(</span><span class="n">VOID</span><span class="p">)</span>
+
+ <span class="n">Returns</span><span class="p">:</span>
+
+   <span class="n">EFI_SUCCESS</span> <span class="o">-</span> <span class="n">Memory</span> <span class="ow">is</span> <span class="n">allocated</span> <span class="n">successfully</span>
+   <span class="n">EFI_OUT_OF_RESOURCES</span> <span class="o">-</span> <span class="n">Allocation</span> <span class="n">fails</span>
+
+ <span class="o">--*/</span>
+ <span class="p">{</span>
+ <span class="n">UINT32</span> <span class="n">i</span><span class="p">;</span>
+
+ <span class="n">mText</span> <span class="o">=</span> <span class="n">malloc</span> <span class="p">(</span><span class="n">WNDSIZ</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">MAXMATCH</span><span class="p">);</span>
+ <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">WNDSIZ</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">MAXMATCH</span><span class="p">;</span> <span class="n">i</span> <span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">mText</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+ <span class="p">}</span>
+ <span class="n">mLevel</span> <span class="o">=</span> <span class="n">malloc</span> <span class="p">((</span><span class="n">WNDSIZ</span> <span class="o">+</span> <span class="n">UINT8_MAX</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">mLevel</span><span class="p">));</span>
+ <span class="n">mChildCount</span> <span class="o">=</span> <span class="n">malloc</span> <span class="p">((</span><span class="n">WNDSIZ</span> <span class="o">+</span> <span class="n">UINT8_MAX</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span>
+ <span class="n">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">mChildCount</span><span class="p">));</span>
+ <span class="n">mPosition</span> <span class="o">=</span> <span class="n">malloc</span> <span class="p">((</span><span class="n">WNDSIZ</span> <span class="o">+</span> <span class="n">UINT8_MAX</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">mPosition</span><span class="p">));</span>
+ <span class="n">mParent</span> <span class="o">=</span> <span class="n">malloc</span> <span class="p">(</span><span class="n">WNDSIZ</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">mParent</span><span class="p">));</span>
+ <span class="n">mPrev</span> <span class="o">=</span> <span class="n">malloc</span> <span class="p">(</span><span class="n">WNDSIZ</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">mPrev</span><span class="p">));</span>
+ <span class="n">mNext</span> <span class="o">=</span> <span class="n">malloc</span> <span class="p">((</span><span class="n">MAX_HASH_VAL</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">sizeof</span><span class="p">(</span><span class="o">*</span><span class="n">mNext</span><span class="p">));</span>
+
+ <span class="n">mBufSiz</span> <span class="o">=</span> <span class="mi">16</span> <span class="o">*</span> <span class="mi">1024</span><span class="n">U</span><span class="p">;</span>
+ <span class="k">while</span> <span class="p">((</span><span class="n">mBuf</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="n">mBufSiz</span><span class="p">))</span> <span class="o">==</span> <span class="n">NULL</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">mBufSiz</span> <span class="o">=</span> <span class="p">(</span><span class="n">mBufSiz</span> <span class="o">/</span> <span class="mi">10</span><span class="n">U</span><span class="p">)</span> <span class="o">*</span> <span class="mi">9</span><span class="n">U</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">mBufSiz</span> <span class="o">&lt;</span> <span class="mi">4</span> <span class="o">*</span> <span class="mi">1024</span><span class="n">U</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">EFI_OUT_OF_RESOURCES</span><span class="p">;</span>
+  <span class="p">}</span>
+ <span class="p">}</span>
+ <span class="n">mBuf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">EFI_SUCCESS</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="n">VOID</span>
+ <span class="n">FreeMemory</span> <span class="p">()</span>
+ <span class="o">/*++</span>
+
+ <span class="n">Routine</span> <span class="n">Description</span><span class="p">:</span>
+
+  <span class="n">Called</span> <span class="n">when</span> <span class="n">compression</span> <span class="ow">is</span> <span class="n">completed</span> <span class="n">to</span> <span class="n">free</span> <span class="n">memory</span> <span class="n">previously</span> <span class="n">allocated</span><span class="o">.</span>
+
+ <span class="n">Arguments</span><span class="p">:</span> <span class="p">(</span><span class="n">VOID</span><span class="p">)</span>
+
+ <span class="n">Returns</span><span class="p">:</span> <span class="p">(</span><span class="n">VOID</span><span class="p">)</span>
+
+ <span class="o">--*/</span>
+ <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">mText</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">free</span> <span class="p">(</span><span class="n">mText</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">mLevel</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">free</span> <span class="p">(</span><span class="n">mLevel</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">mChildCount</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">free</span> <span class="p">(</span><span class="n">mChildCount</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">mPosition</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">free</span> <span class="p">(</span><span class="n">mPosition</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">mParent</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">free</span> <span class="p">(</span><span class="n">mParent</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">mPrev</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">free</span> <span class="p">(</span><span class="n">mPrev</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">mNext</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">free</span> <span class="p">(</span><span class="n">mNext</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">mBuf</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">free</span> <span class="p">(</span><span class="n">mBuf</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">return</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+
+ <span class="n">InitSlide</span> <span class="p">()</span>
+ <span class="o">/*++</span>
+
+ <span class="n">Routine</span> <span class="n">Description</span><span class="p">:</span>
+
+  <span class="n">Initialize</span> <span class="n">String</span> <span class="n">Info</span> <span class="n">Log</span> <span class="n">data</span> <span class="n">structures</span>
+
+ <span class="n">Arguments</span><span class="p">:</span> <span class="p">(</span><span class="n">VOID</span><span class="p">)</span>
+
+ <span class="n">Returns</span><span class="p">:</span> <span class="p">(</span><span class="n">VOID</span><span class="p">)</span>
+
+ <span class="o">--*/</span>
+ <span class="p">{</span>
+  <span class="n">NODE</span> <span class="n">i</span><span class="p">;</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">WNDSIZ</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">WNDSIZ</span> <span class="o">+</span> <span class="n">UINT8_MAX</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">mLevel</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">mPosition</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">NIL</span><span class="p">;</span> <span class="o">/*</span> <span class="n">sentinel</span> <span class="o">*/</span>
+  <span class="p">}</span>
+ <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">WNDSIZ</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">WNDSIZ</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">mParent</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">NIL</span><span class="p">;</span>
+ <span class="p">}</span>
+ <span class="n">mAvail</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">WNDSIZ</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">mNext</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">NODE</span><span class="p">)(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+  <span class="p">}</span>
+
+ <span class="n">mNext</span><span class="p">[</span><span class="n">WNDSIZ</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">NIL</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="n">WNDSIZ</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">MAX_HASH_VAL</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">mNext</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">NIL</span><span class="p">;</span>
+  <span class="p">}</span>
+ <span class="p">}</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">NODE</span>
+ <span class="n">Child</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">NODE</span> <span class="n">q</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">UINT8</span> <span class="n">c</span>
+  <span class="p">)</span>
+ <span class="o">/*++</span>
+
+ <span class="n">Routine</span> <span class="n">Description</span><span class="p">:</span>
+
+  <span class="n">Find</span> <span class="n">child</span> <span class="n">node</span> <span class="n">given</span> <span class="n">the</span> <span class="n">parent</span> <span class="n">node</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">edge</span> <span class="n">character</span>
+
+<span class="n">Arguments</span><span class="p">:</span>
+
+  <span class="n">q</span> <span class="o">-</span> <span class="n">the</span> <span class="n">parent</span> <span class="n">node</span>
+  <span class="n">c</span> <span class="o">-</span> <span class="n">the</span> <span class="n">edge</span> <span class="n">character</span>
+
+ <span class="n">Returns</span><span class="p">:</span>
+
+  <span class="n">The</span> <span class="n">child</span> <span class="n">node</span> <span class="p">(</span><span class="n">NIL</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">found</span><span class="p">)</span>
+
+ <span class="o">--*/</span>
+ <span class="p">{</span>
+  <span class="n">NODE</span> <span class="n">r</span><span class="p">;</span>
+
+   <span class="n">r</span> <span class="o">=</span> <span class="n">mNext</span><span class="p">[</span><span class="n">HASH</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">c</span><span class="p">)];</span>
+   <span class="n">mParent</span><span class="p">[</span><span class="n">NIL</span><span class="p">]</span> <span class="o">=</span> <span class="n">q</span><span class="p">;</span> <span class="o">/*</span> <span class="n">sentinel</span> <span class="o">*/</span>
+   <span class="k">while</span> <span class="p">(</span><span class="n">mParent</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">!=</span> <span class="n">q</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">mNext</span><span class="p">[</span><span class="n">r</span><span class="p">];</span>
+   <span class="p">}</span>
+
+  <span class="k">return</span> <span class="n">r</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">MakeChild</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">NODE</span> <span class="n">q</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">UINT8</span> <span class="n">c</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">NODE</span> <span class="n">r</span>
+  <span class="p">)</span>
+ <span class="o">/*++</span>
+
+ <span class="n">Routine</span> <span class="n">Description</span><span class="p">:</span>
+
+    <span class="n">Create</span> <span class="n">a</span> <span class="n">new</span> <span class="n">child</span> <span class="k">for</span> <span class="n">a</span> <span class="n">given</span> <span class="n">parent</span> <span class="n">node</span><span class="o">.</span>
+
+ <span class="n">Arguments</span><span class="p">:</span>
+
+  <span class="n">q</span> <span class="o">-</span> <span class="n">the</span> <span class="n">parent</span> <span class="n">node</span>
+  <span class="n">c</span> <span class="o">-</span> <span class="n">the</span> <span class="n">edge</span> <span class="n">character</span>
+  <span class="n">r</span> <span class="o">-</span> <span class="n">the</span> <span class="n">child</span> <span class="n">node</span>
+
+ <span class="n">Returns</span><span class="p">:</span> <span class="p">(</span><span class="n">VOID</span><span class="p">)</span>
+
+ <span class="o">--*/</span>
+ <span class="p">{</span>
+  <span class="n">NODE</span> <span class="n">h</span><span class="p">,</span> <span class="n">t</span><span class="p">;</span>
+
+   <span class="n">h</span> <span class="o">=</span> <span class="p">(</span><span class="n">NODE</span><span class="p">)</span><span class="n">HASH</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">c</span><span class="p">);</span>
+   <span class="n">t</span> <span class="o">=</span> <span class="n">mNext</span><span class="p">[</span><span class="n">h</span><span class="p">];</span>
+   <span class="n">mNext</span><span class="p">[</span><span class="n">h</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="p">;</span>
+   <span class="n">mNext</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">;</span>
+   <span class="n">mPrev</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span><span class="p">;</span>
+   <span class="n">mPrev</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">h</span><span class="p">;</span>
+   <span class="n">mParent</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">q</span><span class="p">;</span>
+   <span class="n">mChildCount</span><span class="p">[</span><span class="n">q</span><span class="p">]</span><span class="o">++</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">Split</span> <span class="p">(</span>
+  <span class="n">NODE</span> <span class="n">Old</span>
+  <span class="p">)</span>
+ <span class="o">/*++</span>
+
+ <span class="n">Routine</span> <span class="n">Description</span><span class="p">:</span>
+
+    <span class="n">Split</span> <span class="n">a</span> <span class="n">node</span><span class="o">.</span>
+
+ <span class="n">Arguments</span><span class="p">:</span>
+
+    <span class="n">Old</span> <span class="o">-</span> <span class="n">the</span> <span class="n">node</span> <span class="n">to</span> <span class="n">split</span>
+
+ <span class="n">Returns</span><span class="p">:</span> <span class="p">(</span><span class="n">VOID</span><span class="p">)</span>
+
+ <span class="o">--*/</span>
+ <span class="p">{</span>
+   <span class="n">NODE</span> <span class="n">New</span><span class="p">,</span> <span class="n">t</span><span class="p">;</span>
+
+   <span class="n">New</span> <span class="o">=</span> <span class="n">mAvail</span><span class="p">;</span>
+   <span class="n">mAvail</span> <span class="o">=</span> <span class="n">mNext</span><span class="p">[</span><span class="n">New</span><span class="p">];</span>
+   <span class="n">mChildCount</span><span class="p">[</span><span class="n">New</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+   <span class="n">t</span> <span class="o">=</span> <span class="n">mPrev</span><span class="p">[</span><span class="n">Old</span><span class="p">];</span>
+   <span class="n">mPrev</span><span class="p">[</span><span class="n">New</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">;</span>
+   <span class="n">mNext</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">New</span><span class="p">;</span>
+   <span class="n">t</span> <span class="o">=</span> <span class="n">mNext</span><span class="p">[</span><span class="n">Old</span><span class="p">];</span>
+   <span class="n">mNext</span><span class="p">[</span><span class="n">New</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">;</span>
+   <span class="n">mPrev</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">New</span><span class="p">;</span>
+   <span class="n">mParent</span><span class="p">[</span><span class="n">New</span><span class="p">]</span> <span class="o">=</span> <span class="n">mParent</span><span class="p">[</span><span class="n">Old</span><span class="p">];</span>
+   <span class="n">mLevel</span><span class="p">[</span><span class="n">New</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">UINT8</span><span class="p">)</span><span class="n">mMatchLen</span><span class="p">;</span>
+   <span class="n">mPosition</span><span class="p">[</span><span class="n">New</span><span class="p">]</span> <span class="o">=</span> <span class="n">mPos</span><span class="p">;</span>
+   <span class="n">MakeChild</span><span class="p">(</span><span class="n">New</span><span class="p">,</span> <span class="n">mText</span><span class="p">[</span><span class="n">mMatchPos</span> <span class="o">+</span> <span class="n">mMatchLen</span><span class="p">],</span> <span class="n">Old</span><span class="p">);</span>
+   <span class="n">MakeChild</span><span class="p">(</span><span class="n">New</span><span class="p">,</span> <span class="n">mText</span><span class="p">[</span><span class="n">mPos</span> <span class="o">+</span> <span class="n">mMatchLen</span><span class="p">],</span> <span class="n">mPos</span><span class="p">);</span>
+ <span class="p">}</span>
+
+ <span class="n">STATIC</span>
+ <span class="n">VOID</span>
+ <span class="n">InsertNode</span> <span class="p">()</span>
+ <span class="o">/*++</span>
+
+ <span class="n">Routine</span> <span class="n">Description</span><span class="p">:</span>
+
+  <span class="n">Insert</span> <span class="n">string</span> <span class="n">info</span> <span class="k">for</span> <span class="n">current</span> <span class="n">position</span> <span class="n">into</span> <span class="n">the</span> <span class="n">String</span> <span class="n">Info</span> <span class="n">Log</span>
+
+ <span class="n">Arguments</span><span class="p">:</span> <span class="p">(</span><span class="n">VOID</span><span class="p">)</span>
+
+ <span class="n">Returns</span><span class="p">:</span> <span class="p">(</span><span class="n">VOID</span><span class="p">)</span>
+
+ <span class="o">--*/</span>
+ <span class="p">{</span>
+   <span class="n">NODE</span> <span class="n">q</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">;</span>
+   <span class="n">UINT8</span> <span class="n">c</span><span class="p">,</span> <span class="o">*</span><span class="n">t1</span><span class="p">,</span> <span class="o">*</span><span class="n">t2</span><span class="p">;</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="n">mMatchLen</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span>
+
+   <span class="o">//</span>
+   <span class="o">//</span> <span class="n">We</span> <span class="n">have</span> <span class="n">just</span> <span class="n">got</span> <span class="n">a</span> <span class="n">long</span> <span class="n">match</span><span class="p">,</span> <span class="n">the</span> <span class="n">target</span> <span class="n">tree</span>
+   <span class="o">//</span> <span class="n">can</span> <span class="n">be</span> <span class="n">located</span> <span class="n">by</span> <span class="n">MatchPos</span> <span class="o">+</span> <span class="mf">1.</span> <span class="n">Traverse</span> <span class="n">the</span> <span class="n">tree</span>
+   <span class="o">//</span> <span class="kn">from</span> <span class="nn">bottom</span> <span class="n">up</span> <span class="n">to</span> <span class="n">get</span> <span class="n">to</span> <span class="n">a</span> <span class="n">proper</span> <span class="n">starting</span> <span class="n">point</span><span class="o">.</span>
+   <span class="o">//</span> <span class="n">The</span> <span class="n">usage</span> <span class="n">of</span> <span class="n">PERC_FLAG</span> <span class="n">ensures</span> <span class="n">proper</span> <span class="n">node</span> <span class="n">deletion</span>
+   <span class="o">//</span> <span class="ow">in</span> <span class="n">DeleteNode</span><span class="p">()</span> <span class="n">later</span><span class="o">.</span>
+   <span class="o">//</span>
+
+  <span class="n">mMatchLen</span><span class="o">--</span><span class="p">;</span>
+  <span class="n">r</span> <span class="o">=</span> <span class="p">(</span><span class="n">INT16</span><span class="p">)((</span><span class="n">mMatchPos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> \<span class="o">|</span> <span class="n">WNDSIZ</span><span class="p">);</span>
+  <span class="k">while</span> <span class="p">((</span><span class="n">q</span> <span class="o">=</span> <span class="n">mParent</span><span class="p">[</span><span class="n">r</span><span class="p">])</span> <span class="o">==</span> <span class="n">NIL</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">mNext</span><span class="p">[</span><span class="n">r</span><span class="p">];</span>
+  <span class="p">}</span>
+   <span class="k">while</span> <span class="p">(</span><span class="n">mLevel</span><span class="p">[</span><span class="n">q</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">mMatchLen</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">q</span><span class="p">;</span> <span class="n">q</span> <span class="o">=</span> <span class="n">mParent</span><span class="p">[</span><span class="n">q</span><span class="p">];</span>
+   <span class="p">}</span>
+   <span class="n">t</span> <span class="o">=</span> <span class="n">q</span><span class="p">;</span>
+   <span class="k">while</span> <span class="p">(</span><span class="n">mPosition</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+     <span class="n">mPosition</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">mPos</span><span class="p">;</span>
+     <span class="n">t</span> <span class="o">=</span> <span class="n">mParent</span><span class="p">[</span><span class="n">t</span><span class="p">];</span>
+   <span class="p">}</span>
+   <span class="k">if</span> <span class="p">(</span><span class="n">t</span> <span class="o">&lt;</span> <span class="n">WNDSIZ</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">mPosition</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">NODE</span><span class="p">)(</span><span class="n">mPos</span> \<span class="o">|</span> <span class="n">PERC_FLAG</span><span class="p">);</span>
+   <span class="p">}</span>
+ <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+
+   <span class="o">//</span>
+   <span class="o">//</span> <span class="n">Locate</span> <span class="n">the</span> <span class="n">target</span> <span class="n">tree</span>
+   <span class="o">//</span>
+
+   <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">INT16</span><span class="p">)(</span><span class="n">mText</span><span class="p">[</span><span class="n">mPos</span><span class="p">]</span> <span class="o">+</span> <span class="n">WNDSIZ</span><span class="p">);</span>
+   <span class="n">c</span> <span class="o">=</span> <span class="n">mText</span><span class="p">[</span><span class="n">mPos</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+   <span class="k">if</span> <span class="p">((</span><span class="n">r</span> <span class="o">=</span> <span class="n">Child</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">c</span><span class="p">))</span> <span class="o">==</span> <span class="n">NIL</span><span class="p">)</span> <span class="p">{</span>
+     <span class="n">MakeChild</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">mPos</span><span class="p">);</span>
+     <span class="n">mMatchLen</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+     <span class="k">return</span><span class="p">;</span>
+   <span class="p">}</span>
+   <span class="n">mMatchLen</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="o">//</span>
+ <span class="o">//</span> <span class="n">Traverse</span> <span class="n">down</span> <span class="n">the</span> <span class="n">tree</span> <span class="n">to</span> <span class="n">find</span> <span class="n">a</span> <span class="n">match</span><span class="o">.</span>
+ <span class="o">//</span> <span class="n">Update</span> <span class="n">Position</span> <span class="n">value</span> <span class="n">along</span> <span class="n">the</span> <span class="n">route</span><span class="o">.</span>
+ <span class="o">//</span> <span class="n">Node</span> <span class="n">split</span> <span class="ow">or</span> <span class="n">creation</span> <span class="ow">is</span> <span class="n">involved</span><span class="o">.</span>
+ <span class="o">//</span>
+
+ <span class="k">for</span> <span class="p">(</span> <span class="p">;</span> <span class="p">;</span> <span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">r</span> <span class="o">&gt;=</span> <span class="n">WNDSIZ</span><span class="p">)</span> <span class="p">{</span>
+     <span class="n">j</span> <span class="o">=</span> <span class="n">MAXMATCH</span><span class="p">;</span>
+     <span class="n">mMatchPos</span> <span class="o">=</span> <span class="n">r</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="n">mLevel</span><span class="p">[</span><span class="n">r</span><span class="p">];</span>
+  <span class="n">mMatchPos</span> <span class="o">=</span> <span class="p">(</span><span class="n">NODE</span><span class="p">)(</span><span class="n">mPosition</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">PERC_FLAG</span><span class="p">);</span>
+ <span class="p">}</span>
+ <span class="k">if</span> <span class="p">(</span><span class="n">mMatchPos</span> <span class="o">&gt;=</span> <span class="n">mPos</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">mMatchPos</span> <span class="o">-=</span> <span class="n">WNDSIZ</span><span class="p">;</span>
+ <span class="p">}</span>
+ <span class="n">t1</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">mText</span><span class="p">[</span><span class="n">mPos</span> <span class="o">+</span> <span class="n">mMatchLen</span><span class="p">];</span>
+ <span class="n">t2</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">mText</span><span class="p">[</span><span class="n">mMatchPos</span> <span class="o">+</span> <span class="n">mMatchLen</span><span class="p">];</span>
+ <span class="k">while</span> <span class="p">(</span><span class="n">mMatchLen</span> <span class="o">&lt;</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+ <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="n">t1</span> <span class="o">!=</span> <span class="o">*</span><span class="n">t2</span><span class="p">)</span> <span class="p">{</span>
+   <span class="n">Split</span><span class="p">(</span><span class="n">r</span><span class="p">);</span>
+   <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">mMatchLen</span><span class="o">++</span><span class="p">;</span>
+  <span class="n">t1</span><span class="o">++</span><span class="p">;</span>
+  <span class="n">t2</span><span class="o">++</span><span class="p">;</span>
+ <span class="p">}</span>
+ <span class="k">if</span> <span class="p">(</span><span class="n">mMatchLen</span> <span class="o">&gt;=</span> <span class="n">MAXMATCH</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">break</span><span class="p">;</span>
+ <span class="p">}</span>
+ <span class="n">mPosition</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">mPos</span><span class="p">;</span>
+ <span class="n">q</span> <span class="o">=</span> <span class="n">r</span><span class="p">;</span>
+ <span class="k">if</span> <span class="p">((</span><span class="n">r</span> <span class="o">=</span> <span class="n">Child</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="o">*</span><span class="n">t1</span><span class="p">))</span> <span class="o">==</span> <span class="n">NIL</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">MakeChild</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="o">*</span><span class="n">t1</span><span class="p">,</span> <span class="n">mPos</span><span class="p">);</span>
+    <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+   <span class="n">mMatchLen</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">t</span> <span class="o">=</span> <span class="n">mPrev</span><span class="p">[</span><span class="n">r</span><span class="p">];</span>
+  <span class="n">mPrev</span><span class="p">[</span><span class="n">mPos</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">;</span>
+  <span class="n">mNext</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">mPos</span><span class="p">;</span>
+  <span class="n">t</span> <span class="o">=</span> <span class="n">mNext</span><span class="p">[</span><span class="n">r</span><span class="p">];</span>
+  <span class="n">mNext</span><span class="p">[</span><span class="n">mPos</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">;</span>
+  <span class="n">mPrev</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">mPos</span><span class="p">;</span>
+  <span class="n">mParent</span><span class="p">[</span><span class="n">mPos</span><span class="p">]</span> <span class="o">=</span> <span class="n">q</span><span class="p">;</span>
+  <span class="n">mParent</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">NIL</span><span class="p">;</span>
+
+  <span class="o">//</span>
+  <span class="o">//</span> <span class="n">Special</span> <span class="n">usage</span> <span class="n">of</span> <span class="s1">&#39;next&#39;</span>
+  <span class="o">//</span>
+  <span class="n">mNext</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="n">mPos</span><span class="p">;</span>
+
+ <span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>STATIC
+VOID
+DeleteNode ()
+/*++
+
+Routine Description:
+
+  Delete outdated string info. (The Usage of PERC_FLAG
+  ensures a clean deletion)
+
+Arguments: (VOID)
+
+Returns: (VOID)
+
+--*/
+{
+ NODE q, r, s, t, u;
+
+ if (mParent[mPos] == NIL) {
+  return;
+}
+
+r = mPrev[mPos];
+s = mNext[mPos];
+mNext[r] = s;
+mPrev[s] = r;
+r = mParent[mPos];
+mParent[mPos] = NIL;
+if (r &gt;= WNDSIZ || --mChildCount[r] &gt; 1) {
+  return;
+}
+t = (NODE)(mPosition[r] &amp; ~PERC_FLAG);
+if (t &gt;= mPos) {
+  t -= WNDSIZ;
+}
+s = t;
+q = mParent[r];
+while ((u = mPosition[q]) &amp; PERC_FLAG) {
+ u &amp;= ~PERC_FLAG;
+ if (u &gt;= mPos) {
+  u -= WNDSIZ;
+ }
+ if (u &gt; s) {
+  s = u;
+ }
+ mPosition[q] = (INT16)(s \| WNDSIZ);
+ q = mParent[q];
+}
+if (q &lt; WNDSIZ) {
+ if (u &gt;= mPos) {
+  u -= WNDSIZ;
+ }
+ if (u &gt; s) {
+  s = u;
+  }
+  mPosition[q] = (INT16)(s \| WNDSIZ \| PERC_FLAG);
+ }
+ s = Child(r, mText[t + mLevel[r]]);
+ t = mPrev[s];
+ u = mNext[s];
+ mNext[t] = u;
+ mPrev[u] = t;
+ t = mPrev[r];
+ mNext[t] = s;
+ mPrev[s] = t;
+ t = mNext[r];
+ mPrev[t] = s;
+ mNext[s] = t;
+ mParent[s] = mParent[r];
+ mParent[r] = NIL;
+ mNext[r] = mAvail;
+ mAvail = r;
+}
+
+STATIC
+VOID
+GetNextMatch ()
+/*++
+
+Routine Description:
+
+  Advance the current position (read in new data if needed).
+  Delete outdated string info. Find a match string for current position.
+
+Arguments: (VOID)
+
+Returns: (VOID)
+
+--*/
+{
+  INT32 n;
+
+  mRemainder--;
+  if (++mPos == WNDSIZ * 2) {
+    memmove(&amp;mText[0], &amp;mText[WNDSIZ], WNDSIZ + MAXMATCH);
+    n = FreadCrc(&amp;mText[WNDSIZ + MAXMATCH], WNDSIZ);
+    mRemainder += n;
+    mPos = WNDSIZ;
+  }
+  DeleteNode();
+  InsertNode();
+}
+
+STATIC
+EFI_STATUS
+Encode ()
+/*++
+
+Routine Description:
+
+  The main controlling routine for compression process.
+
+Arguments: (VOID)
+
+Returns:
+
+  EFI_SUCCESS - The compression is successful
+  EFI_OUT_0F_RESOURCES - Not enough memory for compression process
+
+--*/
+{
+ EFI_STATUS Status;
+ INT32 LastMatchLen;
+ NODE LastMatchPos;
+
+ Status = AllocateMemory();
+ if (EFI_ERROR(Status)) {
+  FreeMemory();
+  return Status;
+ }
+
+InitSlide();
+
+HufEncodeStart();
+
+mRemainder = FreadCrc(&amp;mText[WNDSIZ], WNDSIZ + MAXMATCH);
+
+mMatchLen = 0;
+mPos = WNDSIZ;
+InsertNode();
+if (mMatchLen &gt; mRemainder) {
+ mMatchLen = mRemainder;
+}
+while (mRemainder &gt; 0) {
+ LastMatchLen = mMatchLen;
+ LastMatchPos = mMatchPos;
+ GetNextMatch();
+ if (mMatchLen &gt; mRemainder) {
+   mMatchLen = mRemainder;
+ }
+
+if (mMatchLen &gt; LastMatchLen \|\| LastMatchLen &lt; THRESHOLD) {
+
+  //
+  // Not enough benefits are gained by outputting a pointer,
+  // so just output the original character
+  //
+
+  Output(mText[mPos - 1], 0);
+}  else {
+
+  //
+  // Outputting a pointer is beneficial enough, do it.
+  //
+
+  Output(LastMatchLen + (UINT8_MAX + 1 - THRESHOLD),
+     (mPos - LastMatchPos - 2) &amp; (WNDSIZ - 1));
+  while (--LastMatchLen &gt; 0) {
+    GetNextMatch();
+  }
+  if (mMatchLen &gt; mRemainder) {
+   mMatchLen = mRemainder;
+  }
+ }
+}
+
+ HufEncodeEnd();
+ FreeMemory();
+ return EFI_SUCCESS;
+}
+
+STATIC
+VOID
+CountTFreq ()
+/*++
+
+Routine Description:
+
+  Count the frequencies for the Extra Set
+
+Arguments: (VOID)
+
+Returns: (VOID)
+
+--*/
+{
+  INT32 i, k, n, Count;
+
+  for (i = 0; i &lt; NT; i++) {
+   mTFreq[i] = 0;
+  }
+  n = NC;
+  while (n &gt; 0 &amp;&amp; mCLen[n - 1] == 0) {
+   n--;
+  }
+  i = 0;
+  while (i &lt; n) {
+   k = mCLen[i++];
+   if (k == 0) {
+    Count = 1;
+    while (i &lt; n &amp;&amp; mCLen[i] == 0) {
+     i++;
+     Count++;
+    }
+    if (Count &lt;= 2) {
+     mTFreq[0] = (UINT16)(mTFreq[0] + Count);
+    } else if (Count &lt;= 18) {
+     mTFreq[1]++;
+    } else if (Count == 19) {
+     mTFreq[0]++;
+     mTFreq[1]++;
+    } else {
+     mTFreq[2]++;
+    }
+   } else {
+    mTFreq[k + 2]++;
+   }
+  }
+}
+
+STATIC
+VOID
+WritePTLen (
+  IN INT32 n,
+  IN INT32 nbit,
+  IN INT32 Special
+  )
+/*++
+
+Routine Description:
+
+  Outputs the code length array for the Extra Set or the Position Set.
+
+Arguments:
+
+  n - the number of symbols
+  nbit - the number of bits needed to represent &#39;n&#39;
+  Special - the special symbol that needs to be take care of
+
+Returns: (VOID)
+
+--*/
+{
+  INT32 i, k;
+
+  while (n &gt; 0 &amp;&amp; mPTLen[n - 1] == 0) {
+   n--;
+  }
+  PutBits(nbit, n);
+  i = 0;
+  while (i &lt; n) {
+   k = mPTLen[i++];
+   if (k &lt;= 6) {
+    PutBits(3, k);
+   } else {
+    PutBits(k - 3, (1U &lt;&lt; (k - 3)) - 2);
+   }
+   if (i == Special) {
+    while (i &lt; 6 &amp;&amp; mPTLen[i] == 0) {
+     i++;
+    }
+    PutBits(2, (i - 3) &amp; 3);
+   }
+  }
+}
+
+STATIC
+VOID
+WriteCLen ()
+/*++
+
+Routine Description:
+
+  Outputs the code length array for Char&amp;Length Set
+
+Arguments: (VOID)
+
+Returns: (VOID)
+
+--*/
+{
+ INT32 i, k, n, Count;
+
+ n = NC;
+ while (n &gt; 0 &amp;&amp; mCLen[n - 1] == 0) {
+ n--;
+}
+PutBits(CBIT, n);
+i = 0;
+while (i &lt; n) {
+ k = mCLen[i++];
+ if (k == 0) {
+  Count = 1;
+  while (i &lt; n &amp;&amp; mCLen[i] == 0) {
+   i++;
+   Count++;
+  }
+  if (Count &lt;= 2) {
+   for (k = 0; k &lt; Count; k++) {
+    PutBits(mPTLen[0], mPTCode[0]);
+   }
+  } else if (Count &lt;= 18) {
+    PutBits(mPTLen[1], mPTCode[1]);
+    PutBits(4, Count - 3);
+  } else if (Count == 19) {
+    PutBits(mPTLen[0], mPTCode[0]);
+    PutBits(mPTLen[1], mPTCode[1]);
+    PutBits(4, 15);
+  } else {
+    PutBits(mPTLen[2], mPTCode[2]);
+    PutBits(CBIT, Count - 20);
+   }
+  } else {
+    PutBits(mPTLen[k + 2], mPTCode[k + 2]);
+   }
+  }
+}
+
+STATIC
+VOID
+EncodeC (
+  IN INT32 c
+  )
+{
+  PutBits(mCLen[c], mCCode[c]);
+}
+
+STATIC
+VOID
+EncodeP (
+  IN UINT32 p
+  )
+{
+  UINT32 c, q;
+
+  c = 0;
+  q = p;
+  while (q) {
+    q &gt;&gt;= 1;
+    c++;
+    }
+    PutBits(mPTLen[c], mPTCode[c]);
+    if (c &gt; 1) {
+     PutBits(c - 1, p &amp; (0xFFFFU &gt;&gt; (17 - c)));
+   }
+}
+
+STATIC
+VOID
+SendBlock ()
+/*++
+
+
+Routine Description:
+
+  Huffman code the block and output it.
+
+Argument: (VOID)
+
+Returns: (VOID)
+
+--*/
+{
+ UINT32 i, k, Flags, Root, Pos, Size;
+ Flags = 0;
+
+ Root = MakeTree(NC, mCFreq, mCLen, mCCode);
+ Size = mCFreq[Root];
+ PutBits(16, Size);
+ if (Root &gt;= NC) {
+   CountTFreq();
+   Root = MakeTree(NT, mTFreq, mPTLen, mPTCode);
+   if (Root &gt;= NT) {
+    WritePTLen(NT, TBIT, 3);
+   } else {
+    PutBits(TBIT, 0);
+    PutBits(TBIT, Root);
+   }
+   WriteCLen();
+  } else {
+   PutBits(TBIT, 0);
+   PutBits(TBIT, 0);
+   PutBits(CBIT, 0);
+   PutBits(CBIT, Root);
+  }
+  Root = MakeTree(NP, mPFreq, mPTLen, mPTCode);
+  if (Root &gt;= NP) {
+   WritePTLen(NP, PBIT, -1);
+  } else {
+    PutBits(PBIT, 0);
+    PutBits(PBIT, Root);
+  }
+  Pos = 0;
+  for (i = 0; i &lt; Size; i++) {
+   if (i % UINT8_BIT == 0) {
+    Flags = mBuf[Pos++];
+   } else {
+    Flags &lt;&lt;= 1;
+   }
+   if (Flags &amp; (1U &lt;&lt; (UINT8_BIT - 1))) {
+    EncodeC(mBuf[Pos++] + (1U &lt;&lt; UINT8_BIT));
+    k = mBuf[Pos++] &lt;&lt; UINT8_BIT;
+    k += mBuf[Pos++];
+    EncodeP(k);
+   } else {
+    EncodeC(mBuf[Pos++]);
+   }
+  }
+  for (i = 0; i &lt; NC; i++) {
+   mCFreq[i] = 0;
+  }
+   for (i = 0; i &lt; NP; i++) {
+    mPFreq[i] = 0;
+  }
+}
+
+STATIC
+VOID
+Output (
+  IN UINT32 c,
+  IN UINT32 p
+)
+/*++
+
+Routine Description:
+
+  Outputs an Original Character or a Pointer
+
+Arguments:
+
+  c - The original character or the &#39;String Length&#39; element of a Pointer
+  p - The &#39;Position&#39; field of a Pointer
+
+Returns: (VOID)
+
+--*/
+{
+  STATIC UINT32 CPos;
+
+  if ((mOutputMask &gt;&gt;= 1) == 0) {
+   mOutputMask = 1U &lt;&lt; (UINT8_BIT - 1);
+   if (mOutputPos &gt;= mBufSiz - 3 * UINT8_BIT) {
+    SendBlock();
+    mOutputPos = 0;
+   }
+   CPos = mOutputPos++;
+   mBuf[CPos] = 0;
+  }
+  mBuf[mOutputPos++] = (UINT8) c;
+  mCFreq[c]++;
+  if (c &gt;= (1U &lt;&lt; UINT8_BIT)) {
+   mBuf[CPos] \|= mOutputMask;
+   mBuf[mOutputPos++] = (UINT8)(p &gt;&gt; UINT8_BIT);
+   mBuf[mOutputPos++] = (UINT8) p;
+   c = 0;
+   while (p) {
+    p &gt;&gt;= 1;
+    c++;
+   }
+  mPFreq[c]++;
+ }
+}
+
+STATIC
+VOID
+HufEncodeStart ()
+{
+ INT32 i;
+
+ for (i = 0; i &lt; NC; i++) {
+  mCFreq[i] = 0;
+ }
+ for (i = 0; i &lt; NP; i++) {
+  mPFreq[i] = 0;
+ }
+ mOutputPos = mOutputMask = 0;
+ InitPutBits();
+ return;
+}
+
+STATIC
+VOID
+HufEncodeEnd ()
+{
+  SendBlock();
+
+  //
+  // Flush remaining bits
+  //
+  PutBits(UINT8_BIT - 1, 0);
+
+  return;
+ }
+
+STATIC
+VOID
+MakeCrcTable ()
+{
+  UINT32 i, j, r;
+
+  for (i = 0; i &lt;= UINT8_MAX; i++) {
+   r = i;
+    for (j = 0; j &lt; UINT8_BIT; j++) {
+     if (r &amp; 1) {
+     r = (r &gt;&gt; 1) ^ CRCPOLY;
+    } else {
+     r &gt;&gt;= 1;
+    }
+   }
+   mCrcTable[i] = (UINT16)r;
+  }
+}
+
+STATIC
+VOID
+PutBits (
+  IN INT32 n,
+  IN UINT32 x
+)
+/*++
+
+Routine Description:
+
+  Outputs rightmost n bits of x
+
+Arguments:
+
+  n - the rightmost n bits of the data is used
+  x - the data
+
+Returns: (VOID)
+
+--*/
+{
+UINT8 Temp;
+
+if (n &lt; mBitCount) {
+ mSubBitBuf \|= x &lt;&lt; (mBitCount -= n);
+} else {
+
+ Temp = (UINT8)(mSubBitBuf \| (x &gt;&gt; (n -= mBitCount)));
+ if (mDst &lt; mDstUpperLimit) {
+  *mDst++ = Temp;
+ }
+ mCompSize++;
+
+ if (n &lt; UINT8_BIT) {
+  mSubBitBuf = x &lt;&lt; (mBitCount = UINT8_BIT - n);
+ } else {
+
+   Temp = (UINT8)(x &gt;&gt; (n - UINT8_BIT));
+   if (mDst &lt; mDstUpperLimit) {
+    *mDst++ = Temp;
+   }
+   mCompSize++;
+
+   mSubBitBuf = x &lt;&lt; (mBitCount = 2 * UINT8_BIT - n);
+  }
+ }
+}
+
+STATIC
+INT32
+FreadCrc (
+ OUT UINT8 *p,
+ IN INT32 n
+ )
+/*++
+
+Routine Description:
+
+  Read in source data
+
+Arguments:
+
+  p - the buffer to hold the data
+  n - number of bytes to read
+
+Returns:
+
+ number of bytes actually read
+
+--*/
+{
+ INT32 i;
+
+ for (i = 0; mSrc &lt; mSrcUpperLimit &amp;&amp; i &lt; n; i++) {
+  *p++ = *mSrc++;
+ }
+ n = i;
+
+ p -= n;
+ mOrigSize += n;
+ while (--i &gt;= 0) {
+  UPDATE_CRC(*p++);
+ }
+ return n;
+}
+
+STATIC
+VOID
+InitPutBits ()
+{
+ mBitCount = UINT8_BIT;
+ mSubBitBuf = 0;
+}
+
+STATIC
+VOID
+CountLen (
+ IN INT32 i
+ )
+/*++
+
+Routine Description:
+
+ Count the number of each code length for a Huffman tree.
+
+Arguments:
+
+ i - the top node
+
+Returns: (VOID)
+
+--*/
+{
+ STATIC INT32 Depth = 0;
+
+ if (i &lt; mN) {
+  mLenCnt[(Depth &lt; 16) ? Depth : 16]++;
+ } else {
+  Depth++;
+  CountLen(mLeft [i]);
+  CountLen(mRight[i]);
+  Depth--;
+ }
+}
+
+STATIC
+VOID
+MakeLen (
+ IN INT32 Root
+ )
+/*++
+
+Routine Description:
+
+  Create code length array for a Huffman tree
+
+Arguments:
+
+  Root - the root of the tree
+
+--*/
+{
+ INT32 i, k;
+ UINT32 Cum;
+
+ for (i = 0; i &lt;= 16; i++) {
+  mLenCnt[i] = 0;
+ }
+ CountLen(Root);
+
+ //
+ // Adjust the length count array so that
+ // no code will be generated longer than the designated length
+ //
+ Cum = 0;
+ for (i = 16; i &gt; 0; i--) {
+  Cum += mLenCnt[i] &lt;&lt; (16 - i);
+ }
+ while (Cum != (1U &lt;&lt; 16)) {
+  mLenCnt[16]--;
+  for (i = 15; i &gt; 0; i--) {
+   if (mLenCnt[i] != 0) {
+    mLenCnt[i]--;
+    mLenCnt[i+1] += 2;
+    break;
+   }
+  }
+  Cum--;
+ }
+ for (i = 16; i &gt; 0; i--) {
+  k = mLenCnt[i];
+  while (--k &gt;= 0) {
+   mLen[*mSortPtr++] = (UINT8)i;
+  }
+ }
+}
+
+STATIC
+VOID
+DownHeap (
+ IN INT32 i
+ )
+{
+ INT32 j, k;
+
+ //
+ // priority queue: send i-th entry down heap
+ //
+
+ k = mHeap[i];
+ while ((j = 2 * i) &lt;= mHeapSize) {
+  if (j &lt; mHeapSize &amp;&amp; mFreq[mHeap[j]] &gt; mFreq[mHeap[j + 1]]) {
+   j++;
+  }
+  if (mFreq[k] &lt;= mFreq[mHeap[j]]) {
+   break;
+  }
+  mHeap[i] = mHeap[j];
+  i = j;
+ }
+ mHeap[i] = (INT16)k;
+}
+
+STATIC
+VOID
+MakeCode (
+ IN INT32 n,
+ IN UINT8 Len[],
+ OUT UINT16 Code[]
+ )
+/*++
+
+Routine Description:
+
+ Assign code to each symbol based on the code length array
+
+Arguments:
+
+ n - number of symbols
+ Len - the code length array
+ Code - stores codes for each symbol
+
+Returns: (VOID)
+
+--*/
+{
+ INT32 i;
+ UINT16 Start[18];
+
+ Start[1] = 0;
+ for (i = 1; i &lt;= 16; i++) {
+  Start[i + 1] = (UINT16)((Start[i] + mLenCnt[i]) &lt;&lt; 1);
+ }
+ for (i = 0; i &lt; n; i++) {
+  Code[i] = Start[Len[i]]++;
+ }
+}
+
+STATIC
+INT32
+MakeTree (
+ IN INT32 NParm,
+ IN UINT16 FreqParm[],
+ OUT UINT8 LenParm[],
+ OUT UINT16 CodeParm[]
+ )
+/*++
+
+Routine Description:
+
+ Generates Huffman codes given a frequency distribution of symbols
+
+Arguments:
+
+ NParm - number of symbols
+ FreqParm - frequency of each symbol
+ LenParm - code length for each symbol
+ CodeParm - code for each symbol
+
+Returns:
+
+ Root of the Huffman tree.
+
+--*/
+{
+ INT32 i, j, k, Avail;
+
+ //
+ // make tree, calculate len[], return root
+ //
+
+ mN = NParm;
+ mFreq = FreqParm;
+ mLen = LenParm;
+ Avail = mN;
+ mHeapSize = 0;
+ mHeap[1] = 0;
+ for (i = 0; i &lt; mN; i++) {
+  mLen[i] = 0;
+  if (mFreq[i]) {
+   mHeap[++mHeapSize] = (INT16)i;
+  }
+ }
+ if (mHeapSize &lt; 2) {
+  CodeParm[mHeap[1]] = 0;
+  return mHeap[1];
+ }
+ for (i = mHeapSize / 2; i &gt;= 1; i--) {
+
+  //
+  // make priority queue
+  //
+  DownHeap(i);
+ }
+ mSortPtr = CodeParm;
+ do {
+  i = mHeap[1];
+  if (i &lt; mN) {
+   *mSortPtr++ = (UINT16)i;
+  }
+ mHeap[1] = mHeap[mHeapSize--];
+ DownHeap(1);
+ j = mHeap[1];
+ if (j &lt; mN) {
+  *mSortPtr++ = (UINT16)j;
+ }
+ k = Avail++;
+ mFreq[k] = (UINT16)(mFreq[i] + mFreq[j]);
+ mHeap[1] = (INT16)k;
+ DownHeap(1);
+ mLeft[k] = (UINT16)i;
+ mRight[k] = (UINT16)j;
+}  while (mHeapSize &gt; 1);
+
+mSortPtr = CodeParm;
+MakeLen(k);
+MakeCode(NParm, LenParm, CodeParm);
+
+ //
+ // return root
+ //
+ return k;
+}
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Apx_G_Using_the_EFI_Extended_SCSI_Pass_Thru_Protocol.html" class="btn btn-neutral float-left" title="7. Using the EFI Extended SCSI Pass Thru Protocol" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Apx_I_Decompression_Source_Code.html" class="btn btn-neutral float-right" title="9. Decompression Source Code" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, UEFI Forum, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

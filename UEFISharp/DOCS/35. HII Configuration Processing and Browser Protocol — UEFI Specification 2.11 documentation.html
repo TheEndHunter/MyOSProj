@@ -1,0 +1,1754 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>35. HII Configuration Processing and Browser Protocol &mdash; UEFI Specification 2.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=f2209469" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/style.css?v=faba8a36" />
+      <link rel="stylesheet" type="text/css" href="_static/theme-overrides.css?v=84235ce0" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2de06f63"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="36. User Identification" href="36_User_Identification.html" />
+    <link rel="prev" title="34. HII Protocols" href="34_HII_Protocols.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            UEFI Specification
+          </a>
+              <div class="version">
+                2.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Tables.html">List of Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Figures.html">List of Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/Revision_History.html">Revision History</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Overview.html">2. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Boot_Manager.html">3. Boot Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_EFI_System_Table.html">4. EFI System Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_GUID_Partition_Table_Format.html">5. GUID Partition Table (GPT) Disk Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_Block_Transition_Table_Layout.html">6. Block Translation Table (BTT) Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Services_Boot_Services.html">7. Services — Boot Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Services_Runtime_Services.html">8. Services — Runtime Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Protocols_EFI_Loaded_Image.html">9. Protocols - EFI Loaded Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Protocols_Device_Path_Protocol.html">10. Protocols – Device Path Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html">11. Protocols — UEFI Driver Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_Protocols_Console_Support.html">12. Protocols — Console Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Protocols_Media_Access.html">13. Protocols – Media Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Protocols_PCI_Bus_Support.html">14. Protocols — PCI Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_Protocols_SCSI_Driver_Models_and_Bus_Support.html">15. Protocols — SCSI Driver Models and Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_Protocols_iSCSI_Boot.html">16. Protocols — iSCSI Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_Protocols_USB_Support.html">17. Protocols — USB Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_Protocols_Debugger_Support.html">18. Protocols — Debugger Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_Protocols_Compression_Algorithm_Specification.html">19. Protocols — Compression Algorithm Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_Protocols_ACPI_Protocols.html">20. Protocols — ACPI Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_Protocols_String_Services.html">21. Protocols — String Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html">22. EFI Byte Code Virtual Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_Firmware_Update_and_Reporting.html">23. Firmware Update and Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24_Network_Protocols_SNP_PXE_BIS.html">24. Network Protocols — SNP, PXE, BIS and HTTP Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25_Network_Protocols_Managed_Network.html">25. Network Protocols - Managed Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26_Network_Protocols_Bluetooth.html">26. Network Protocols — Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27_Network_Protocols_VLAN_and_EAP.html">27. Network Protocols — VLAN, EAP, Wi-Fi and Supplicant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28_Network_Protocols_TCP_IP_and_Configuration.html">28. Network Protocols — TCP, IP, IPsec, FTP, TLS and Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29_Network_Protocols_ARP_and_DHCP.html">29. Network Protocols — ARP, DHCP, DNS, HTTP and REST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_Network_Protocols_UDP_and_MTFTP.html">30. Network Protocols — UDP and MTFTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="31_EFI_Redfish_Service_Support.html">31. EFI Redfish Service Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="32_Secure_Boot_and_Driver_Signing.html">32. Secure Boot and Driver Signing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="33_Human_Interface_Infrastructure.html">33. Human Interface Infrastructure Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="34_HII_Protocols.html">34. HII Protocols</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">35. HII Configuration Processing and Browser Protocol</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">35.1. Introduction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#common-configuration-data-format">35.1.1. Common Configuration Data Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-flow">35.1.2. Data Flow</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration-strings">35.2. Configuration Strings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#string-syntax">35.2.1. String Syntax</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#basic-forms">35.2.1.1. Basic forms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#types">35.2.1.2. Types</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#routing-elements">35.2.1.3. Routing elements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#body-elements">35.2.1.4. Body elements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#configuration-strings-1">35.2.1.5. Configuration strings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#keyword-strings">35.2.1.6. Keyword strings</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#string-types">35.2.2. String Types</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-configuration-keyword-handler-protocol">35.3. EFI Configuration Keyword Handler Protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-config-keyword-handler-protocol">35.3.1. EFI_CONFIG_KEYWORD_HANDLER_PROTOCOL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-keyword-handler-protocol-setdata">35.3.2. EFI_KEYWORD_HANDLER _PROTOCOL.SetData()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-keyword-handler-protocol-getdata">35.3.3. EFI_KEYWORD_HANDLER _PROTOCOL.GetData()</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-hii-configuration-routing-protocol">35.4. EFI HII Configuration Routing Protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-hii-config-routing-protocol">35.4.1. EFI_HII_CONFIG_ROUTING_PROTOCOL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-hii-config-routing-protocol-extractconfig">35.4.2. EFI_HII_CONFIG_ROUTING_PROTOCOL.ExtractConfig()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-hii-config-routing-protocol-exportconfig">35.4.3. EFI_HII_CONFIG_ROUTING_PROTOCOL.ExportConfig()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-hii-config-routing-protocol-routeconfig">35.4.4. EFI_HII_CONFIG_ROUTING_PROTOCOL.RouteConfig()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-hii-config-routing-protocol-blocktoconfig">35.4.5. EFI_HII_CONFIG_ROUTING_PROTOCOL.BlockToConfig()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-hii-config-routing-protocol-configtoblock">35.4.6. EFI_HII_CONFIG_ROUTING_PROTOCOL.ConfigToBlock()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-hii-config-routing-protocol-getaltcfg">35.4.7. EFI_HII_CONFIG_ROUTING_PROTOCOL.GetAltCfg()</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-hii-configuration-access-protocol">35.5. EFI HII Configuration Access Protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-hii-config-access-protocol">35.5.1. EFI_HII_CONFIG_ACCESS_PROTOCOL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-hii-config-access-protocol-extractconfig">35.5.2. EFI_HII_CONFIG_ACCESS_PROTOCOL.ExtractConfig()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-hii-config-access-protocol-routeconfig">35.5.3. EFI_HII_CONFIG_ACCESS_PROTOCOL.RouteConfig()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-hii-config-access-protocol-callback">35.5.4. EFI_HII_CONFIG_ACCESS_PROTOCOL.CallBack()</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#form-browser-protocol">35.6. Form Browser Protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-form-browser2-protocol">35.6.1. EFI_FORM_BROWSER2_PROTOCOL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-form-browser2-protocol-sendform">35.6.2. EFI_FORM_BROWSER2_PROTOCOL.SendForm()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-form-browser2-protocol-browsercallback">35.6.3. EFI_FORM_BROWSER2_PROTOCOL.BrowserCallback()</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#hii-popup-protocol">35.7. HII Popup Protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-hii-popup-protocol">35.7.1. EFI_HII_POPUP_PROTOCOL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-hii-popup-protocol-createpopup">35.7.2. EFI_HII_POPUP_PROTOCOL.CreatePopup()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="36_User_Identification.html">36. User Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="37_Secure_Technologies.html">37. Secure Technologies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="38_Confidential_Computing.html">38. Confidential Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="39_Micellaneous_Protocols.html">39. Miscellaneous Protocols</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Apx_A_GUID_and_Time_Formats.html">A. GUID and Time Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_B_Console.html">B. Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_C_Device_Path_Examples.html">C. Device Path Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_D_Status_Codes.html">D. Status Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_E_Universal_Network_Driver_Interfaces.html">E. Universal Network Driver Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_F_Using_the_Simple_Pointer_Protocol.html">F. Using the Simple Pointer Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_G_Using_the_EFI_Extended_SCSI_Pass_Thru_Protocol.html">G. Using the EFI Extended SCSI Pass Thru Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_H_Compression_Source_Code.html">H. Compression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_I_Decompression_Source_Code.html">I. Decompression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_J_EFI_Byte_Code_Virtual_Machine_Opcode_List.html">J. EFI Byte Code Virtual Machine Opcode List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_K_Alphabetic_Function_Lists.html">K. Alphabetic Function Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_L_EFI_1.10_Protocol_Changes_and_Deprecation_List.html">L. EFI 1.10 Protocol Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html">M. Formats — Language Codes and Language Code Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_N_Common_Platform_Error_Record.html">N. Common Platform Error Record (CPER)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_O_UEFI_ACPI_Data_Table.html">O. UEFI ACPI Data Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_P_Hardware_Error_Record_Persistence_Usage.html">P. Hardware Error Record Persistence Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_Q_References.html">Q. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_R_Glossary.html">R. Glossary</a></li>
+</ul>
+
+    <a href= "genindex.html">Index</a>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UEFI Specification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">35. </span>HII Configuration Processing and Browser Protocol</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="hii-configuration-processing-and-browser-protocol">
+<span id="hii-configuration-processing-and-browser-protocol-hii-configuration-processing-and-browser-protocol"></span><h1><span class="section-number">35. </span>HII Configuration Processing and Browser Protocol<a class="headerlink" href="#hii-configuration-processing-and-browser-protocol" title="Link to this heading"></a></h1>
+<section id="introduction">
+<span id="introduction-hii-configuration-processing-and-browser-protocol"></span><h2><span class="section-number">35.1. </span>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
+<p>This section describes the data and APIs used to manage the system’s configuration: the actual data that describes the knobs and settings.</p>
+<section id="common-configuration-data-format">
+<span id="common-configuration-data-format-hii-configuration-processing-and-browser-protocol"></span><h3><span class="section-number">35.1.1. </span>Common Configuration Data Format<a class="headerlink" href="#common-configuration-data-format" title="Link to this heading"></a></h3>
+<p>The configuration data is stored as name / value string pairs. As in e.g. HTML, the name and value are separated by ‘=’ and the pairs are separated one from the next by ‘&amp;’. The configuration data structures are thus variable length UNICODE (UCS-2) strings.</p>
+<p>Certain names and values have limitations on their syntax to manage routing and to enable extended support for common storage mechanisms.</p>
+</section>
+<section id="data-flow">
+<span id="data-flow-hii-configuration-processing-and-browser-protocol"></span><h3><span class="section-number">35.1.2. </span>Data Flow<a class="headerlink" href="#data-flow" title="Link to this heading"></a></h3>
+<p>There is a two-way flow through the hierarchy of drivers and protocols that parallels the flow in other parts of HII. Initially, the flow is from the drivers up to the HII database and on to configuration applications. When changes to configuration are accepted, the flow reverses itself, going from the configuration applications through the HII database protocols back to the drivers through separate protocols.</p>
+<p>The flow from driver up consists of the current and alternative (default) configurations. The flow down from the configuration applications consists of changed configurations.</p>
+<p>The protocol managed by the HII Database is known as the EFI HII Configuration Routing Protocol, while the one presented by the drivers themselves is known as the EFI HII Configuration Access Protocol. The HII Configuration Routing Protocol is the only one that outside callers should invoke.</p>
+</section>
+</section>
+<section id="configuration-strings">
+<span id="configuration-strings-hii-configuration-processing-and-browser-protocol"></span><h2><span class="section-number">35.2. </span>Configuration Strings<a class="headerlink" href="#configuration-strings" title="Link to this heading"></a></h2>
+<p>The configuration strings follow the same general format as HTTP
+argument strings, which is to say ‘&amp;’ separated name / value
+pairs. The name and value are separated by ‘=’. The strings are a
+subset of full HTML argument strings and do not require quoting,
+the ‘%’ character sequences used to insert spaces, ampersands,
+equal signs, and the like into HTTP argument strings.</p>
+<section id="string-syntax">
+<span id="string-syntax-hii-configuration-processing-and-browser-protocol"></span><h3><span class="section-number">35.2.1. </span>String Syntax<a class="headerlink" href="#string-syntax" title="Link to this heading"></a></h3>
+<p>Assumptions are typical for BNF with the following extensions</p>
+<p>Characters in single quotes, e.g. ‘a’, indicate terminals.</p>
+<p>Square brackets immediately followed by a number n indicate that the contents are to be repeated n times, so [‘a’]4 would be “aaaa”.</p>
+<p>An italicized non-terminal, e. g. &lt;All Printable ASCII Characters&gt; is used to indicate a set of terminals whose definition is outside the scope of this document.</p>
+<p>The syntax for configuration strings is as follows.</p>
+<section id="basic-forms">
+<span id="basic-forms-hii-configuration-processing-and-browser-protocol"></span><h4><span class="section-number">35.2.1.1. </span>Basic forms<a class="headerlink" href="#basic-forms" title="Link to this heading"></a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;Dec19&gt; ::= ‘1’ | ‘2’ |... | ‘9’
+&lt;DecCh&gt; ::= ‘0’ | &lt;Dec19&gt;
+&lt;HexAf&gt; ::= ‘a’ | ‘b’ | ‘c’ | ‘d’ | ‘e’ | ‘f’
+&lt;Hex1f&gt; ::= &lt;Dec19&gt; | &lt;HexAf&gt;
+&lt;HexCh&gt; ::= &lt;DecCh&gt; | &lt;HexAf&gt;
+&lt;Number&gt; ::= &lt;HexCh&gt;+
+&lt;Alpha&gt; ::= ‘a’ |... | ‘z’ | ‘A’ |... | ‘Z’
+</pre></div>
+</div>
+</section>
+<section id="types">
+<span id="id1"></span><h4><span class="section-number">35.2.1.2. </span>Types<a class="headerlink" href="#types" title="Link to this heading"></a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Guid</span><span class="o">&gt;</span> <span class="p">:</span><span class="o">:=</span> <span class="o">&lt;</span><span class="n">HexCh</span><span class="o">&gt;</span><span class="mi">32</span>
+<span class="o">&lt;</span><span class="n">LabelStart</span><span class="o">&gt;</span> <span class="p">:</span><span class="o">:=</span> <span class="o">&lt;</span><span class="n">Alpha</span><span class="o">&gt;</span> <span class="o">|</span> <span class="s2">&quot;_&quot;</span>
+<span class="o">&lt;</span><span class="n">LabelBody</span><span class="o">&gt;</span> <span class="p">:</span><span class="o">:=</span> <span class="o">&lt;</span><span class="n">LabelStart</span><span class="o">&gt;</span> <span class="o">|</span> <span class="o">&lt;</span><span class="n">DecCh</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">Label</span><span class="o">&gt;</span> <span class="p">:</span><span class="o">:=</span> <span class="o">&lt;</span><span class="n">LabelStart</span><span class="o">&gt;</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">LabelBody</span><span class="o">&gt;</span><span class="p">]</span><span class="o">*</span>
+<span class="o">&lt;</span><span class="n">Char</span><span class="o">&gt;</span> <span class="p">:</span><span class="o">:=</span> <span class="o">&lt;</span><span class="n">HexCh</span><span class="o">&gt;</span><span class="mi">4</span>
+<span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="p">:</span><span class="o">:=</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Char</span><span class="o">&gt;</span><span class="p">]</span><span class="o">+</span>
+<span class="o">&lt;</span><span class="n">AltCfgId</span><span class="o">&gt;</span> <span class="p">:</span><span class="o">:=</span> <span class="o">&lt;</span><span class="n">HexCh</span><span class="o">&gt;</span><span class="mi">4</span>
+</pre></div>
+</div>
+</section>
+<section id="routing-elements">
+<span id="id2"></span><h4><span class="section-number">35.2.1.3. </span>Routing elements<a class="headerlink" href="#routing-elements" title="Link to this heading"></a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;GuidHdr&gt; ::= ‘GUID=’&lt;Guid&gt;
+&lt;NameHdr&gt; ::= ‘NAME=’&lt;String&gt;
+&lt;PathHdr&gt; ::= ‘PATH=’&lt;UEFI binary Device Path represented as
+hex number&gt;
+&lt;DescHdr&gt; ::= ‘ALTCFG=’&lt;AltCfgId&gt;
+&lt;ConfigHdr&gt; ::= &lt;GuidHdr&gt;’&amp;’&lt;NameHdr&gt;’&amp;’&lt;PathHdr&gt;
+&lt;AltConfigHdr&gt; ::= &lt;ConfigHdr&gt; ‘&amp;’&lt;DescHdr&gt;
+</pre></div>
+</div>
+</section>
+<section id="body-elements">
+<span id="id3"></span><h4><span class="section-number">35.2.1.4. </span>Body elements<a class="headerlink" href="#body-elements" title="Link to this heading"></a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;ConfigBody&gt; ::= &lt;ConfigElement&gt;*
+&lt;ConfigElement&gt; ::= ‘&amp;’&lt;BlockConfig&gt; | ‘&amp;’&lt;NvConfig&gt;
+&lt;BlockName&gt; ::= ‘OFFSET=’&lt;Number&gt;’&amp;WIDTH=’&lt;Number&gt;
+&lt;BlockConfig&gt; ::= &lt;BlockName&gt;’&amp;VALUE=’&lt;Number&gt;
+&lt;RequestElement&gt; ::= ‘&amp;’&lt;BlockName&gt; | ‘&amp;’&lt;Label&gt;
+&lt;NvConfig&gt; ::= &lt;Label&gt;’=’&lt;String&gt; | &lt;Label&gt;’=’&lt;Number&gt;
+</pre></div>
+</div>
+</section>
+<section id="configuration-strings-1">
+<span id="id4"></span><h4><span class="section-number">35.2.1.5. </span>Configuration strings<a class="headerlink" href="#configuration-strings-1" title="Link to this heading"></a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;ConfigRequest&gt; ::= &lt;ConfigHdr&gt;&lt;RequestElement&gt;*
+&lt;MultiConfigRequest&gt; ::= &lt;ConfigRequest&gt;[‘&amp;’ &lt;ConfigRequest&gt;]*
+&lt;ConfigResp&gt; ::= &lt;ConfigHdr&gt;&lt;ConfigBody&gt;
+&lt;AltResp&gt; ::= &lt;AltConfigHdr&gt;&lt;ConfigBody&gt;
+&lt;ConfigAltResp&gt; ::= &lt;ConfigResp&gt; [‘&amp;’ &lt;AltResp&gt;]*
+&lt;MultiConfigAltResp&gt; ::= &lt;ConfigAltResp&gt; [‘&amp;’ &lt;ConfigAltResp&gt;]*
+&lt;MultiConfigResp&gt; ::= &lt;ConfigResp&gt; [‘&amp;’&lt;ConfigResp&gt;]*
+</pre></div>
+</div>
+<p><strong>Notes:</strong></p>
+<p>The <em>&lt;Number&gt;</em> represents a data buffer and is encoded as a sequence of bytes in the format %02x in the same order as the buffer bytes reside in memory.</p>
+<p>The <em>&lt;Guid&gt;</em> represents a hex encoding of GUID and is encoded as a sequence of bytes in the format %02x in the same order as the GUID bytes reside in memory.</p>
+<p>The syntax for a <em>&lt;Label&gt;</em> is the C label (e.g. Variable) syntax.</p>
+<p>The <em>&lt;ConfigHdr&gt;</em> provides routing information. The name field is required even if non-block storage is targeted. In these cases, it may be used as a way to distinguish like storages from one another when a driver is being used</p>
+<p>The <em>&lt;BlockName&gt;</em> provides addressing information for managing block (e.g. UEFI Variable) storage. The first number provides the byte offset into the block while the second provides the length of bytes.</p>
+<p>The <em>&lt;PathHdr&gt;</em> presents a hex encoding of a UEFI device path. This is not the printable path since the printable path is optional in UEFI and to enable simpler comparisons. The data is encoded as strings with the format %02x bytes in the same order as the device path resides in RAM memory.</p>
+<p>The <em>&lt;ConfigRequest&gt;</em> provides a mechanism to request the current configuration for one or more elements.</p>
+<p>The <em>&lt;AltCfgId&gt;</em> is the identifier of a configuration declared in the corresponding IFR.</p>
+<p>The name ‘GUID’ is also used to separate <em>&lt;String&gt;</em> or <em>&lt;ConfigRequest&gt;</em> elements in the equivalent <em>Multi</em> version. That is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span><span class="n">GUID</span><span class="o">=...&amp;</span><span class="n">NAME</span><span class="o">=...&amp;...&amp;</span><span class="n">fred</span><span class="o">=</span><span class="mi">12</span><span class="o">&amp;</span><span class="n">GUID</span><span class="o">=...&amp;</span><span class="n">NAME</span><span class="o">=...&amp;...&amp;</span><span class="n">goyle</span><span class="o">=</span><span class="mi">11</span><span class="o">*</span>
+</pre></div>
+</div>
+<p>Indicates two <em>&lt;String&gt;,</em> with one ending with <em>fred=12</em>.</p>
+<p>The following are reserved <em>&lt;name&gt;</em> s and cannot be used as names in a <em>&lt;ConfigElement&gt;</em> :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GUID</span>
+<span class="n">NAME</span>
+<span class="n">PATH</span>
+<span class="n">ALTCFG</span>
+<span class="n">OFFSET</span>
+<span class="n">WIDTH</span>
+<span class="n">VALUE</span>
+</pre></div>
+</div>
+</section>
+<section id="keyword-strings">
+<span id="id5"></span><h4><span class="section-number">35.2.1.6. </span>Keyword strings<a class="headerlink" href="#keyword-strings" title="Link to this heading"></a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;NameSpaceId&gt;        ::=‘NAMESPACE=’&lt;String&gt;’&amp;’
+&lt;Keyword&gt;            ::=‘KEYWORD=’&lt;String&gt;[‘:’&lt;DecCh&gt;(1/4)]
+&lt;DataFilter&gt;         ::=‘Buffer’|‘Numeric’[‘:1’|‘:2’|‘:4’|‘:8’]
+                         |‘String’|‘Boolean’|‘Date’|’Time’
+&lt;UsageFilter&gt;        ::=‘ReadOnly’|‘ReadWrite’
+&lt;Filter&gt;             ::=&lt;UsageFilter&gt;|&lt;DataFilter&gt;|&lt;UsageFilter&gt;
+                        ’&amp;’&lt;DataFilter&gt;
+&lt;ValueRange&gt;         ::=‘&amp;MAX=’&lt;Number&gt;‘&amp;MIN=’&lt;Number&gt;[’&amp;STEP=’&lt;Number&gt;]
+&lt;ValueOption&gt;        ::=‘&amp;OPTIONVALUE=’&lt;Number&gt;’&amp;OPTIONSTRING=’&lt;String&gt;
+                         [‘&amp;VALUETYPE=‘Numeric’[&#39;:1’|‘:2’|‘:4’|‘:8’]]
+&lt;ValueAttribute&gt;      ::=[&lt;ValueRange&gt;][&lt;ValueOption&gt;*]
+&lt;Default&gt;             ::=[‘&amp;STANDARDDEFAULT=’&lt;Number&gt;]
+                         [‘&amp;MFGDEFAULT=’&lt;Number&gt;]
+                         [‘&amp;SAFEDEFAULT=’&lt;Number&gt;]
+&lt;Display&gt;             ::=’&amp;DISPLAYNAME=’&lt;String&gt;
+&lt;DataType&gt;            ::=‘&amp;DATATYPE=’&lt;DataFilter&gt;
+&lt;KeywordInfoFilter&gt;   ::=‘All’|[‘DataType’][‘ValueAttribute’][‘Default’]
+                         [’DisplayName’]
+&lt;Boolean&gt;             ::=’True’|’False’
+&lt;KeywordInfoRequest&gt;  ::=’KEYWORDINFO=’&lt;KeywordInfoFilter&gt;
+&lt;KeywordInfoResp&gt;     ::=[&lt;DataType&gt;][&lt;ValueAttribute&gt;][&lt;Default&gt;][&lt;Display&gt;]
+&lt;KeywordRequest&gt;      ::=[&lt;PathHdr&gt;’&amp;’]&lt;Keyword&gt;
+                         [’&amp;’&lt;KeywordInfoRequest&gt;][’&amp;’&lt;Filter&gt;]
+&lt;KeywordResp&gt;         ::=&lt;NameSpaceId&gt;&lt;PathHdr&gt;’&amp;’&lt;Keyword&gt;’&amp;VALUE=’&lt;Number&gt;
+                         [‘&amp;READONLY’][&lt;KeywordInfoResp&gt;]
+&lt;MultiKeywordRequest&gt; ::=&lt;KeywordRequest&gt;[‘&amp;’&lt;KeywordRequest&gt;] *
+&lt;MultiKeywordResp&gt;    ::=&lt;KeywordResp&gt;[‘&amp;’&lt;KeywordResp&gt;] *
+</pre></div>
+</div>
+<p><strong>NOTE</strong>: <em>For Keyword definitions, see the UEFI Configuration Namespace Registry document on</em> <a class="reference external" href="https://uefi.org/uefi">http://uefi.org/uefi</a>.</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 33.3%" />
+<col style="width: 33.3%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>HII Question Type</strong></p></td>
+<td><p><strong>HII Keyword Data Type</strong></p></td>
+<td><p><strong>Data information in &lt;ValueAttribute&gt;</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Numeric</p></td>
+<td><p>Numeric</p></td>
+<td><p>ValueRanges</p></td>
+</tr>
+<tr class="row-odd"><td><p>One-Of</p></td>
+<td><p>Numeric</p></td>
+<td><p>ValueOptions</p></td>
+</tr>
+<tr class="row-even"><td><p>Checkbox</p></td>
+<td><p>Boolean</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>String</p></td>
+<td><p>String</p></td>
+<td><p>ValueRanges</p></td>
+</tr>
+<tr class="row-even"><td><p>Ordered-List</p></td>
+<td><p>Buffer</p></td>
+<td><p>ValueOptions</p></td>
+</tr>
+<tr class="row-odd"><td><p>Date</p></td>
+<td><p>Date</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>Time</p></td>
+<td><p>Time</p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>The  <em>&lt;NameSpaceId&gt;</em> element is equivalent to the platform configuration language being used for the keyword definition*.</p>
+<p>The <em>&lt;Keyword&gt;</em> element uses the ‘KEYWORD=’ name to designate that immediately following the reserved name is a string value associated with a configuration namespace keyword as defined in the Configuration NameSpace Registry document ( <em>http://uefi.org/uefi</em> ).</p>
+<p>Typically, when a Keyword is defined, the value is a solitary string such as “BIOSVendor”. However, when certain Keywords are intended to represent a setting that may have multiple instances (e.g. ChipsetSATAPortEnable), that is when a “:&lt;DecCh&gt;(1/4)” suffix will be appended to the keyword definition. In that case, we might see something like: “ChipsetSATAPortEnable:5” if a particular platform had at least five SATA ports and one of the questions was represented by the aforementioned string. It would also be reasonable to expect that there might also be a “ChipsetSATAPortEnable:1” and a “:2”, “:3” etc.</p>
+<p>If the <em>&lt;PathHdr&gt;</em> element within <em>&lt;KeywordRequest&gt;</em> is omitted, then all instances are returned.</p>
+<p>If the Keyboard Handler protocol knows or detects that a particular Keyword is read-only, then the <em>&lt;KeywordResp&gt;</em> must include the “&amp;READONLY” tag.</p>
+<p>The <em>&lt;DataFilter&gt;</em> element specifies the optional filter based on data type to use when a request is made. If no filtering is desired, then this element must be omitted from the <em>&lt;KeywordRequest&gt;</em>. Filtering is not guaranteed to work on any platform configuration language that isn’t defined in the UEFI Configuration Namespace Document.</p>
+<p><strong>DataFilter.Buffer</strong></p>
+<p>HII questions with <em>EFI_IFR_TYPE_BUFFER</em> type are treated as this type. This is most commonly represented in ‘C’ as a VOID type, or as a more complex type. Other than the <em>EFI_IFR_TYPE_BOOLEAN</em> and <em>EFI_IFR_TYPE_NUM_x</em> data types, all of the HII configuration data types are treated as a sequence of data.</p>
+<p><strong>DataFilter.Numeric</strong></p>
+<p>A sequence of data that must be interpreted as a one, two, four, or eight-byte wide numeric value. For instance, a definition of “Numeric:2” would indicate that the keyword is a two-byte numeric value. If no byte-size designation is specified, then the value may vary in size.</p>
+<p><strong>DataFilter.String</strong></p>
+<p>HII questions with EFI_IFR_TYPE_STRING type are treated as this type.</p>
+<p><strong>DataFilter.Boolean</strong></p>
+<p>HII questions with EFI_IFR_TYPE_BOOLEAN type are treated as this type.</p>
+<p><strong>DataFilter.Date</strong></p>
+<p>HII questions with EFI_IFR_TYPE_DATE type are treated as this type.</p>
+<p><strong>DataFilter.Time</strong></p>
+<p>HII questions with EFI_IFR_TYPE_TIME type are treated as this type.</p>
+<p>The <em>&lt;UsageFilter&gt;</em> element defines the optional filter to use based on usage type when a request is made. If no filtering is desired, then this element must be omitted from the <em>&lt;KeywordRequest&gt;</em>.</p>
+<p><strong>UsageType.ReadOnly</strong></p>
+<p>The data for the keyword cannot be changed. It is intended solely for informational purposes, and can be used to read a setting that may be static or dynamic (e.g. CPU temperature).</p>
+<p><strong>UsageType.ReadWrite</strong></p>
+<p>The data for the keyword can be changed.</p>
+<p>The <em>&lt;KeywordInfoRequest&gt;</em> element allows the callers to request some additional information of the keyword to be returned. <em>&lt;KeywordInfoRequest&gt;</em> element is used when user doesn’t know the information about the keyword and wants to get more information about this keyword. When &lt;KeywordInfoRequest&gt; element is specified with <em>&lt;KeywordRequest&gt;,</em> the <em>&lt;KeywordInfoResp&gt;</em> element will be specified with <em>&lt;KeywordResp&gt;</em> to return the info requested by <em>&lt;KeywordInfoRequest&gt;</em>.</p>
+<p>The <em>&lt;KeywordInfoFilter&gt;</em> element is used to specify the additional information that caller wants to know about the keyword. Caller can specify any type of additional information he/she wants to know. When ‘All’ is specified, means all the supported information need to be returned.</p>
+<p>The <em>&lt;DataType&gt;</em> element specifies the data type of a keyword, can refer to &lt;DataFilter&gt; for the detailed info the data types.</p>
+<p>The <em>&lt;ValueAttribute&gt;</em> element specifies the value attribute of a keyword. Such as the value range of a keyword or the selectable values for a keyword.</p>
+<p><em>&lt;ValueRange&gt;</em> element specifies the variation range of a keyword value. Such as it can be specified for a keyword used in <em>EFI_IFR_NUMERIC_OP,</em> <em>EFI_IFR_STRING_OP</em> opcode. For <em>EFI_IFR_NUMERIC_OP</em> opcode, it specifies the maximum value, minimum value and increment or decrement step. For <em>EFI_IFR_STRING_OP</em> opcode, it specifies the maximum length and minimum length of the string can be input.</p>
+<p><em>&lt;ValueOption&gt;</em> element specifies all the (selectable) values and related string representation of these values for a keyword. Such as it can be specified for keyword used in <em>EFI_IFR_ONE_OF_OP,</em> <em>EFI_IFR_ORDERED_LIST_OP</em> opcode. For <em>EFI_IFR_ONE_OF_OP,</em> it specifies the all selectable values and the string representation of the values. The keyword value can be one of them.</p>
+<p>For <em>EFI_IFR_ORDERED_LIST_OP,</em> it specifies all values and the string representation of the values. The keyword value can be the permutation and combination of these values. And for <em>EFI_IFR_ORDERED_LIST_OP,</em> its data type is Buffer, so can return the value type in a &lt;ValueOption&gt; to indicate the data stored in the Buffer is numeric as a one, two, four, or eight-byte wide.</p>
+<p>The <em>&lt;Default&gt;</em> element specifies the default value of a keyword. Only the three standard defaults stores are supported including the standard defaults, the manufacturing defaults and the Safe defaults. If the keyword doesn’t have any type of defaults, then there is no default info returned. And if the keyword only has the standard default, then only the standard default information will be returned.</p>
+<p>The <em>&lt;Display&gt;</em> element specifies the displayed prompt string of this keyword in the UI page.</p>
+<section id="an-example-of-some-basic-keyword-related-strings">
+<span id="an-example-of-some-basic-keyword-related-strings-hii-configuration-processing-and-browser-protocol"></span><h5><span class="section-number">35.2.1.6.1. </span>An example of some basic keyword-related strings:<a class="headerlink" href="#an-example-of-some-basic-keyword-related-strings" title="Link to this heading"></a></h5>
+<p><em>&lt;KeywordRequest&gt;</em> to retrieve the current BIOS Vendor name:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">KEYWORD</span><span class="o">=</span><span class="n">BIOSVendor</span>
+</pre></div>
+</div>
+</section>
+<section id="a-possible-response-might-look-like">
+<span id="a-possible-response-might-look-like-hii-configuration-processing-and-browser-protocol"></span><h5><span class="section-number">35.2.1.6.2. </span>A possible response might look like:<a class="headerlink" href="#a-possible-response-might-look-like" title="Link to this heading"></a></h5>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">-</span><span class="n">UEFI</span><span class="o">-</span><span class="n">ns</span><span class="o">&amp;</span><span class="n">KEYWORD</span><span class="o">=</span><span class="n">BIOSVendor</span><span class="o">&amp;</span><span class="n">VALUE</span><span class="o">=</span><span class="n">AcmeBIOSCompany</span>
+</pre></div>
+</div>
+<p>If a request was made to retrieve all of the settings for a platform, a user would initiate a call to KeywordHandleràGetData() with the KeywordString and NamespaceId being <strong>NULL</strong>.</p>
+</section>
+<section id="a-possible-response-might-look-like-1-hii-configuration-processing-and-browser-protocol">
+<span id="id6"></span><h5><span class="section-number">35.2.1.6.3. </span>A possible response might look like:<a class="headerlink" href="#a-possible-response-might-look-like-1-hii-configuration-processing-and-browser-protocol" title="Link to this heading"></a></h5>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">-</span><span class="n">UEFI</span><span class="o">-</span><span class="n">ns</span><span class="o">&amp;</span><span class="n">KEYWORD</span><span class="o">=</span><span class="n">BIOSVendor</span><span class="o">&amp;</span><span class="n">VALUE</span><span class="o">=</span><span class="n">AcmeBIOSCompany</span><span class="o">&amp;</span><span class="n">x</span><span class="o">-</span><span class="n">UEFI</span><span class="o">-</span><span class="n">extension</span>
+<span class="o">-</span><span class="n">ACME</span><span class="o">&amp;</span><span class="n">KEYWORD</span><span class="o">=</span><span class="n">SpecialSettingX</span><span class="o">&amp;</span><span class="n">VALUE</span><span class="o">=</span><span class="mi">3</span>
+</pre></div>
+</div>
+<p>In this case, the string returned tells us that there was one discovered keyword called “BIOSVendor” under the standard UEFI namespace and its value was “AcmeBIOS”. There was also an ACME branded namespace element which was discovered that had a keyword called “SpecialSettingX” whose value was 3.</p>
+</section>
+<section id="an-example-to-get-more-information-of-a-keyword">
+<span id="an-example-to-get-more-information-of-a-keyword-hii-configuration-processing-and-browser-protocol"></span><h5><span class="section-number">35.2.1.6.4. </span>An example to get more information of a keyword:<a class="headerlink" href="#an-example-to-get-more-information-of-a-keyword" title="Link to this heading"></a></h5>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">KEYWORD</span><span class="o">=</span><span class="n">BIOSVendor</span><span class="o">&amp;</span><span class="n">KEYWORDINFO</span><span class="o">=</span><span class="n">All</span>
+</pre></div>
+</div>
+<p>A possible response might look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">-</span><span class="n">UEFI</span><span class="o">-</span><span class="n">ns</span><span class="o">&amp;</span><span class="n">KEYWORD</span><span class="o">=</span><span class="n">BIOSVendor</span><span class="o">&amp;</span><span class="n">VALUE</span><span class="o">=</span><span class="n">AcmeBIOSCompany</span><span class="o">&amp;</span><span class="n">DataType</span><span class="o">=</span><span class="n">String</span><span class="o">&amp;</span><span class="n">MAX</span><span class="o">=</span><span class="mi">30</span><span class="o">&amp;</span><span class="n">MIN</span>
+<span class="o">=</span><span class="mi">6</span><span class="o">&amp;</span><span class="n">STANDARDDEFAULT</span><span class="o">=</span><span class="n">AcmeBIOSCompany</span><span class="o">&amp;</span><span class="n">MFGDEFAULT</span><span class="o">=</span><span class="n">AcmeBIOSCompany</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="string-types">
+<span id="string-types-hii-configuration-processing-and-browser-protocol"></span><h3><span class="section-number">35.2.2. </span>String Types<a class="headerlink" href="#string-types" title="Link to this heading"></a></h3>
+<p>There are six string types. As can be seen from the BNF, the syntax of all is quite similar. The first three are used in communications between drivers and HII. The last three are used for analogous communication between external applications and HII.</p>
+<p><em>&lt;ConfigRequest&gt;</em> : This string is used by HII to request the current and any alternative configurations from a driver. It consists of routing information and only ampersand separated names.</p>
+<p><em>&lt;ConfigAltResp&gt;</em> : A string in this format is returned by the driver in response to a request to fill in a <em>&lt;ConfigRequest&gt;</em> string. The string consists of the current configuration followed by possibly several alternative configurations. The alternative configurations have the <em>ALTCFG</em> name / value pair in addition to the usual <em>GUID,</em> <em>NAME,</em> and <em>PATH</em> entries in the routing prefix. The <em>ALTCFG</em> value is a Default ID which is used to describe the alternative default configuration.</p>
+<p><em>&lt;ConfigResp&gt;</em> : A sting in this format is handed by the HII to the driver to cause the driver to change its configuration. It consists of routing information and name / value pairs which correspond to the questions in the driver’s IFR. Only <em>&lt;ConfigResp&gt;</em> strings which refer to a driver in question may be handed to that driver. The driver shall reject all others.</p>
+<p><em>&lt;MultiConfigRequest&gt;</em> : A string in this format is handed to HII by an external application in order to request the current an alternate configurations of the system’s drivers. The format of this string is a series of <em>&lt;ConfigRequest&gt;</em> strings separated by ampersands. The HII’s job is to separate the requests and hand them off to the appropriate drivers (as indicated by the routing headers).</p>
+<p><em>&lt;MultiConfigAltResp&gt;</em> : A string in this format is handed back to an external application which has requested the current and alternate configurations of the system’s drivers. The format of this string is a series of <em>&lt;ConfigAltResp&gt;</em> strings separated by ampersands. The HII creates this string by concatenating the current and alternate configuration strings provided by each driver.</p>
+<p><em>&lt;MultiConfigResp&gt;</em> : A string in this format is handed to the HII in order to update the system’s configuration. Analogous to the other “Multi” string formats, its syntax is a series of ampersand separated <em>&lt;ConfigResp&gt;</em> strings. Upon receipt, the HII routes the <em>&lt;ConfigResp&gt;</em> strings to the corresponding drivers.</p>
+</section>
+</section>
+<section id="efi-configuration-keyword-handler-protocol">
+<span id="efi-configuration-keyword-handler-protocol-hii-configuration-processing-and-browser-protocol"></span><h2><span class="section-number">35.3. </span>EFI Configuration Keyword Handler Protocol<a class="headerlink" href="#efi-configuration-keyword-handler-protocol" title="Link to this heading"></a></h2>
+<p>This section provides a detailed description of the EFI Configuration Keyword Handler Protocol.</p>
+<section id="efi-config-keyword-handler-protocol">
+<span id="efi-config-keyword-handler-protocol-hii-configuration-processing-and-browser-protocol"></span><h3><span class="section-number">35.3.1. </span>EFI_CONFIG_KEYWORD_HANDLER_PROTOCOL<a class="headerlink" href="#efi-config-keyword-handler-protocol" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>The <em>EFI_CONFIG_KEYWORD_HANDLER_PROTOCOL</em> provides the mechanism to set and get the values associated with a keyword exposed through a x-UEFI- prefixed configuration language namespace.</p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_CONFIG_KEYWORD_HANDLER_PROTOCOL_GUID \</span>
+<span class="p">{</span> <span class="mh">0x0a8badd5</span><span class="p">,</span> <span class="mh">0x03b8</span><span class="p">,</span> <span class="mh">0x4d19</span><span class="p">,</span>\
+  <span class="p">{</span><span class="mh">0xb1</span><span class="p">,</span> <span class="mh">0x28</span><span class="p">,</span> <span class="mh">0x7b</span><span class="p">,</span> <span class="mh">0x8f</span><span class="p">,</span> <span class="mh">0x0e</span><span class="p">,</span> <span class="mh">0xda</span><span class="p">,</span> <span class="mh">0xa5</span><span class="p">,</span> <span class="mh">0x96</span> <span class="p">}}</span>
+</pre></div>
+</div>
+<p><strong>Protocol Interface Structure</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="n">_EFI_CONFIG_KEYWORD_HANDLER_PROTOCOL</span> <span class="p">{</span>
+  <span class="n">EFI_CONFIG_KEYWORD_HANDLER_SET_DATA</span>        <span class="n">SetData</span><span class="p">;</span>
+  <span class="n">EFI_CONFIG_KEYWORD_HANDLER_GET_DATA</span>        <span class="n">GetData</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">EFI_CONFIG_KEYWORD_HANDLER_PROTOCOL</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>SetData</dt><dd><p>Set the data associated with a particular configuration namespace keyword.</p>
+</dd>
+<dt>GetData</dt><dd><p>Get the data associated with a particular configuration namespace keyword.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>EFI_CONFIG_KEYWORD_HANDLER_PROTOCOL</em> allows other components in the platform (e.g. Browser, Manageability Software, etc.) to retrieve and set configuration settings within the system.</p>
+<p>Keywords are text elements which are associated with a particular configuration option within the platform. These keywords are intended to add semantic meaning to the configuration option they are attached to. The text associated for the keyword would be encoded in a UEFI configuration language. These languages are like French or German or Japanese, but are not designed for display purposes for an end-user. Instead each language serves as a namespace for the purposes of grouping and manipulating groups of platform configurations options. See <a class="reference internal" href="33_Human_Interface_Infrastructure.html#working-with-a-uefi-configuration-language"><span class="std std-ref">Working with a UEFI Configuration Language</span></a> for more information.</p>
+<p><strong>NOTE:</strong>  <em>Not all configuration options will be associated with a keyword. Associating a keyword with a configuration option is at the discretion of the platform and/or the hardware vendor. For more information about keyword definitions associated with a UEFI namespace, see the UEFI Keyword Namespace Registry link in the UEFI Link Document.</em></p>
+</section>
+<section id="efi-keyword-handler-protocol-setdata">
+<span id="efi-keyword-handler-protocol-setdata-hii-configuration-processing-and-browser-protocol"></span><h3><span class="section-number">35.3.2. </span>EFI_KEYWORD_HANDLER _PROTOCOL.SetData()<a class="headerlink" href="#efi-keyword-handler-protocol-setdata" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Set the data associated with a particular configuration namespace keyword.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_KEYWORD_HANDLER</span> <span class="n">_SET_DATA</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_KEYWORD_HANDLER_PROTOCOL</span>   <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_STRING</span>               <span class="n">KeywordString</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">EFI_STRING</span>                    <span class="o">*</span><span class="n">Progress</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">UINT32</span>                        <span class="o">*</span><span class="n">ProgressErr</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Pointer to the <em>EFI_KEYWORD_HANDLER _PROTOCOL</em> instance.</p>
+</dd>
+<dt>KeywordString</dt><dd><p>A null-terminated string in <em>&lt;MultiKeywordResp&gt;</em> format.</p>
+</dd>
+<dt>Progress</dt><dd><p>On return, points to a character in the <em>KeywordString</em>. Points to the string’s NULL terminator if the request was successful. Points to the most recent ‘&amp;’ before the first failing name / value pair (or the beginning of the string if the failure is in the first name / value pair) if the request was not successful.</p>
+</dd>
+<dt>ProgressErr</dt><dd><p>If during the processing of the <em>KeywordString</em> there was a failure, this parameter gives additional information about the possible source of the problem. The various errors are defined in “Related Definitions” below.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function accepts a <em>&lt;MultiKeywordResp&gt;</em> formatted string, finds the associated keyword owners, creates a <em>&lt;MultiConfigResp&gt;</em> string from it and forwards it to the <em>EFI_HII_ROUTING_PROTOCOL.RouteConfig</em> function.</p>
+<p>If there is an issue in resolving the contents of the <em>KeywordString,</em> then the function returns an error and also sets the <em>Progress</em> and <em>ProgressErr</em> with the appropriate information about where the issue occurred and additional data about the nature of the issue.</p>
+<p>In the case when <em>KeywordString</em> containing multiple keywords, when an <em>EFI_NOT_FOUND</em> error is generated during processing the second or later keyword element, the system storage associated with earlier keywords is not modified. All elements of the <em>KeywordString</em> must successfully pass all tests for format and access prior to making any modifications to storage.</p>
+<p>In the case when <em>EFI_DEVICE_ERROR</em> is returned from the processing of a <em>KeywordString</em> containing multiple keywords, the state of storage associated with earlier keywords is undefined.</p>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//**************************************************************</span>
+<span class="o">//</span> <span class="n">Progress</span> <span class="n">Errors</span>
+<span class="o">//**************************************************************</span>
+<span class="c1">#define KEYWORD_HANDLER_NO_ERROR                      0x00000000</span>
+<span class="c1">#define KEYWORD_HANDLER_NAMESPACE_ID_NOT_FOUND        0x00000001</span>
+<span class="c1">#define KEYWORD_HANDLER_MALFORMED_STRING              0x00000002</span>
+<span class="c1">#define KEYWORD_HANDLER_KEYWORD_NOT_FOUND             0x00000004</span>
+<span class="c1">#define KEYWORD_HANDLER_INCOMPATIBLE_VALUE_DETECTED   0x00000008</span>
+<span class="c1">#define KEYWORD_HANDLER_ACCESS_NOT_PERMITTED          0x00000010</span>
+<span class="c1">#define KEYWORD_HANDLER_UNDEFINED_PROCESSING_ERROR    0x80000000</span>
+</pre></div>
+</div>
+<p>The <em>KEYWORD_HANDLER_x</em> values describe the error values returned in the <em>ProgressErr</em> field.</p>
+<p>If no errors were encountered, then <em>KEYWORD_HANDLER_NO_ERROR</em> is returned with no bits are set.</p>
+<p>If the <em>&lt;NameSpaceId&gt;</em> specified by the KeywordString was not found in any of the registered configuration data, the <em>KEYWORD_HANDLER_NAMESPACE_ID_NOT_FOUND</em> bit is set.</p>
+<p>If there was an error in the parsing of the KeywordString, the <em>KEYWORD_HANDLER_MALFORMED_STRING</em> bit is set.</p>
+<p>If there was a keyword specified in the KeywordString which was not found in any of the registered configuration data, <em>KEYWORD_HANDLER_KEYWORD_NOT_FOUND</em> bit is set.</p>
+<p>If the value either passed into <em>KeywordString</em> (during a SetData operation) or the value discovered for the Keyword (during a GetData operation) did not match what was known to be valid for the defined keyword, the <em>KEYWORD_HANDLER_INCOMPATIBLE_VALUE_DETECTED</em> bit is set.</p>
+<p>If there was an error as a result of a violation of system policy. For example trying to write a read-only element, the <em>KEYWORD_HANDLER_ACCESS_NOT_PERMITTED</em> bit is set.</p>
+<p>If there was an undefined type of error in processing the passed in data, the <em>KEYWORD_HANDLER_UNDEFINED_PROCESSING_ERROR</em> bit is set.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The specified action was completed successfully.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>One or more of the following are <strong>TRUE</strong>:  <em>KeywordString</em> is <strong>NULL</strong>.  Parsing of the <em>KeywordString</em> resulted in an error. See <em>Progress</em> and <em>ProgressErr</em> for more data.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>An element of the <em>KeywordString</em> was not found. See <em>ProgressErr</em> for more data.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_OUT_OF_RESOURCES</p></td>
+<td><p>Required system resources could not be allocated. See <em>ProgressErr</em> for more data.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_ACCESS_DENIED</p></td>
+<td><p>The action violated system policy. See <em>ProgressErr</em> for more data.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>An unexpected system error occurred. See <em>ProgressErr</em> for more data.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-keyword-handler-protocol-getdata">
+<span id="efi-keyword-handler-protocol-getdata-hii-configuration-processing-and-browser-protocol"></span><h3><span class="section-number">35.3.3. </span>EFI_KEYWORD_HANDLER _PROTOCOL.GetData()<a class="headerlink" href="#efi-keyword-handler-protocol-getdata" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Get the data associated with a particular configuration namespace keyword.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_KEYWORD_HANDLER</span> <span class="n">_GET_DATA</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_KEYWORD_HANDLER_PROTOCOL</span>        <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_STRING</span>                    <span class="n">NameSpaceId</span><span class="p">,</span> <span class="n">OPTIONAL</span>
+  <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_STRING</span>                    <span class="n">KeywordString</span><span class="p">,</span> <span class="n">OPTIONAL</span>
+  <span class="n">OUT</span> <span class="n">EFI_STRING</span>                         <span class="o">*</span><span class="n">Progress</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">UINT32</span>                             <span class="o">*</span><span class="n">ProgressErr</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">EFI_STRING</span>                         <span class="o">*</span><span class="n">Results</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Pointer to the <em>EFI_KEYWORD_HANDLER _PROTOCOL</em> instance.</p>
+</dd>
+<dt>NamespaceId</dt><dd><p>A null-terminated string containing the platform configuration language to search through in the system. If a NULL is passed in, then it is assumed that any platform configuration language with the prefix of “x-UEFI-” are searched.</p>
+</dd>
+<dt>KeywordString</dt><dd><p>A null-terminated string in <em>&lt;MultiKeywordRequest&gt;</em> format. If a NULL is passed in the <em>KeywordString</em> field, all of the known keywords in the system for the <em>NameSpaceId</em> specified are returned in the Results field.</p>
+</dd>
+<dt>Progress</dt><dd><p>On return, points to a character in the <em>KeywordString</em>. Points to the string’s NULL terminator if the request was successful. Points to the most recent ‘&amp;’ before the first failing name / value pair (or the beginning of the string if the failure is in the first name / value pair) if the request was not successful.</p>
+</dd>
+<dt>ProgressErr</dt><dd><p>If during the processing of the <em>KeywordString</em> there was a failure, this parameter gives additional information about the possible source of the problem. See the definitions in <em>SetData()</em> for valid value definitions.</p>
+</dd>
+<dt>Results</dt><dd><p>A null-terminated string in <em>&lt;MultiKeywordResp&gt;</em> format is returned which has all the values filled in for the keywords in the <em>KeywordString</em>. This is a callee-allocated field, and must be freed by the caller after being used.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function accepts a <em>&lt;MultiKeywordRequest&gt;</em> formatted string, finds the underlying keyword owners, creates a <em>&lt;MultiConfigRequest&gt;</em> string from it and forwards it to the <em>EFI_HII_ROUTING_PROTOCOL.ExtractConfig</em> function.</p>
+<p>If there is an issue in resolving the contents of the <em>KeywordString,</em> then the function returns an <em>EFI_INVALID_PARAMETER</em> and also set the <em>Progress</em> and <em>ProgressErr</em> with the appropriate information about where the issue occurred and additional data about the nature of the issue.</p>
+<p>In the case when <em>KeywordString</em> is <strong>NULL</strong>, or contains multiple keywords, or when <em>EFI_NOT_FOUND</em> is generated while processing the keyword elements, the <em>Results</em> string contains values returned for all keywords processed prior to the keyword generating the error but no values for the keyword with error or any following keywords.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The specified action was completed successfully.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>One or more of the following are <strong>TRUE</strong>:  <em>Progress,</em> <em>ProgressErr,</em> or <em>Results</em> is <strong>NULL</strong>.  Parsing of the KeywordString resulted in an error. See <em>Progress</em> and <em>ProgressErr</em> for more data.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>An element of the <em>KeywordString</em> was not found. See <em>ProgressErr</em> for more data.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>The <em>NamespaceId</em> specified was not found. See <em>ProgressErr</em> for more data.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_OUT_OF_RESOURCES</p></td>
+<td><p>Required system resources could not be allocated. See <em>ProgressErr</em> for more data.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_ACCESS_DENIED</p></td>
+<td><p>The action violated system policy. See <em>ProgressErr</em> for more data.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>An unexpected system error occurred. See <em>ProgressErr</em> for more data.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="efi-hii-configuration-routing-protocol">
+<span id="efi-hii-configuration-routing-protocol-hii-configuration-processing-and-browser-protocol"></span><h2><span class="section-number">35.4. </span>EFI HII Configuration Routing Protocol<a class="headerlink" href="#efi-hii-configuration-routing-protocol" title="Link to this heading"></a></h2>
+<section id="efi-hii-config-routing-protocol">
+<span id="efi-hii-config-routing-protocol-hii-configuration-processing-and-browser-protocol"></span><h3><span class="section-number">35.4.1. </span>EFI_HII_CONFIG_ROUTING_PROTOCOL<a class="headerlink" href="#efi-hii-config-routing-protocol" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>The EFI HII Configuration Routing Protocol manages the movement of configuration data from drivers to configuration applications. It then serves as the single point to receive configuration information from configuration applications, routing the results to the appropriate drivers.</p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_HII_CONFIG_ROUTING_PROTOCOL_GUID \</span>
+  <span class="p">{</span> <span class="mh">0x587e72d7</span><span class="p">,</span> <span class="mh">0xcc50</span><span class="p">,</span> <span class="mh">0x4f79</span><span class="p">,</span>\
+  <span class="p">{</span> <span class="mh">0x82</span><span class="p">,</span> <span class="mh">0x09</span><span class="p">,</span> <span class="mh">0xca</span><span class="p">,</span> <span class="mh">0x29</span><span class="p">,</span> <span class="mh">0x1f</span><span class="p">,</span> <span class="mh">0xc1</span><span class="p">,</span> <span class="mh">0xa1</span><span class="p">,</span> <span class="mh">0x0f</span> <span class="p">}}</span>
+</pre></div>
+</div>
+<p><strong>Protocol Interface Structure</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">EFI_HII_EXTRACT_CONFIG</span>         <span class="n">ExtractConfig</span><span class="p">;</span>
+  <span class="n">EFI_HII_EXPORT_CONFIG</span>          <span class="n">ExportConfig</span>
+  <span class="n">EFI_HII_ROUTE_CONFIG</span>           <span class="n">RouteConfig</span><span class="p">;</span>
+  <span class="n">EFI_HII_BLOCK_TO_CONFIG</span>        <span class="n">BlockToConfig</span><span class="p">;</span>
+  <span class="n">EFI_HII_CONFIG_TO_BLOCK</span>        <span class="n">ConfigToBlock</span><span class="p">;</span>
+  <span class="n">EFI_HII_GET_ALT_CFG</span>            <span class="n">GetAltConfig</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">EFI_HII_CONFIG_ROUTING_PROTOCOL</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Related Definitions</strong></p>
+<p>None</p>
+<p><strong>Parameters</strong></p>
+<p><strong>Description</strong></p>
+<p>This protocol defines the configuration routing interfaces between external applications and the HII.</p>
+<p>There may only be one instance of this protocol in the system.</p>
+</section>
+<section id="efi-hii-config-routing-protocol-extractconfig">
+<span id="efi-hii-config-routing-protocol-extractconfig-hii-configuration-processing-and-browser-protocol"></span><h3><span class="section-number">35.4.2. </span>EFI_HII_CONFIG_ROUTING_PROTOCOL.ExtractConfig()<a class="headerlink" href="#efi-hii-config-routing-protocol-extractconfig" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>This function allows a caller to extract the current configuration for one or more named elements from one or more drivers.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+  <span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span> <span class="n">EFI_HII_EXTRACT_CONFIG</span> <span class="p">)</span> <span class="p">(</span>
+    <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_HII_CONFIG_ROUTING_PROTOCOL</span>    <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+    <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_STRING</span>                         <span class="n">Request</span><span class="p">,</span>
+    <span class="n">OUT</span> <span class="n">EFI_STRING</span>                              <span class="o">*</span><span class="n">Progress</span><span class="p">,</span>
+    <span class="n">OUT</span> <span class="n">EFI_STRING</span>                              <span class="o">*</span><span class="n">Results</span>
+    <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to the <em>EFI_HII_CONFIG_ROUTING_PROTOCOL</em> instance.</p>
+</dd>
+<dt>Request</dt><dd><p>A null-terminated string in <em>&lt;MultiConfigRequest&gt;</em> format.</p>
+</dd>
+<dt>Progress</dt><dd><p>On return, points to a character in the Request string. Points to the string’s null terminator if request was successful. Points to the most recent ‘&amp;’ before the first failing name / value pair (or the beginning of the string if the failure is in the first name / value pair) if the request was not successful</p>
+</dd>
+<dt>Results</dt><dd><p>A null-terminated string in <em>&lt;MultiConfigAltResp&gt;</em> format which has all values filled in for the names in the <em>Request</em> string.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function allows the caller to request the current configuration for one or more named elements from one or more drivers. The resulting string is in the standard HII configuration string format. If Successful <em>Results</em> contains an equivalent string with “=” and the values associated with all names added in.</p>
+<p>The expected implementation is for each <em>&lt;ConfigRequest&gt;</em> substring in the Request, call the HII Configuration Access Protocol <em>ExtractConfig</em> function for the driver corresponding to the <em>&lt;ConfigHdr&gt;</em> at the start of the <em>&lt;ConfigRequest&gt;</em> substring. The request fails if no driver matches the <em>&lt;ConfigRequest&gt;</em> substring.</p>
+<p><strong>NOTE</strong>: <em>Alternative configuration strings may also be appended to the end of the current configuration string. If they are, they must appear after the current configuration. They must contain the same routing (GUID, NAME, PATH) as the current configuration string. They must have an additional description indicating the type of alternative configuration the string represents</em>, “ALTCFG=&lt;AltCfgId&gt;”. <em>The</em>  &lt;AltCfgId&gt; <em>is a reference to a Default ID which stipulates the type of Default being referenced such as</em> EFI_HII_DEFAULT_CLASS_STANDARD.</p>
+<p>As an example, assume that the Request string is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GUID</span><span class="o">=...&amp;</span><span class="n">PATH</span><span class="o">=...&amp;</span><span class="n">Fred</span><span class="o">&amp;</span><span class="n">George</span><span class="o">&amp;</span><span class="n">Ron</span><span class="o">&amp;</span><span class="n">Neville</span>
+</pre></div>
+</div>
+<p>A result might be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GUID</span><span class="o">=...&amp;</span><span class="n">PATH</span><span class="o">=...&amp;</span><span class="n">Fred</span><span class="o">=</span><span class="mi">16</span><span class="o">&amp;</span><span class="n">George</span><span class="o">=</span><span class="mi">16</span><span class="o">&amp;</span><span class="n">Ron</span><span class="o">=</span><span class="mi">12</span><span class="o">&amp;</span><span class="n">Neville</span><span class="o">=</span><span class="mi">11</span><span class="o">&amp;</span>
+<span class="n">GUID</span><span class="o">=...&amp;</span><span class="n">PATH</span><span class="o">=...&amp;</span><span class="n">ALTCFG</span><span class="o">=</span><span class="mi">0037</span><span class="o">&amp;</span><span class="n">Fred</span><span class="o">=</span><span class="mi">12</span><span class="o">&amp;</span><span class="n">Neville</span><span class="o">=</span><span class="mi">7</span>
+</pre></div>
+</div>
+<p><strong>NOTE</strong>: <em>For the output Results, the value filled in the names in the Request string with</em> &lt;MultiConfigAltResp&gt; <em>format may change when called multiple times due to some data being of a dynamic nature</em>.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The <em>Results</em> string is filled with the values corresponding to all requested names.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_OUT_OF_RESOURCES</p></td>
+<td><p>Not enough memory to store the parts of the results that must be stored awaiting possible future protocols.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>Routing data doesn’t match any known driver. Progress set to the “G” in “GUID” of the routing header that doesn’t match. Note: There is no requirement that all routing data be validated before any configuration extraction.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>Illegal syntax. Progress set to most recent “&amp;” before the error or the beginning of the string.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>The ExtractConfig function of the underlying HII Configuration Access Protocol returned EFI_INVALID_PARAMETER.  Progress set to most recent “&amp;” before the error or the beginning of the string.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_ACCESS_DENIED</p></td>
+<td><p>The action violated a system policy.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-hii-config-routing-protocol-exportconfig">
+<span id="efi-hii-config-routing-protocol-exportconfig-hii-configuration-processing-and-browser-protocol"></span><h3><span class="section-number">35.4.3. </span>EFI_HII_CONFIG_ROUTING_PROTOCOL.ExportConfig()<a class="headerlink" href="#efi-hii-config-routing-protocol-exportconfig" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>This function allows the caller to request the current configuration for the entirety of the current HII database and returns the data in a null-terminated string.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+  <span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span> <span class="n">EFI_HII_EXPORT_CONFIG</span> <span class="p">)</span> <span class="p">(</span>
+    <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_HII_CONFIG_ROUTING_PROTOCOL</span>    <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+    <span class="n">OUT</span> <span class="n">EFI_STRING</span>                              <span class="o">*</span><span class="n">Results</span>
+    <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to the <em>EFI_HII_CONFIG_ROUTING_PROTOCOL</em> instance.</p>
+</dd>
+<dt>Results</dt><dd><p>A null-terminated string in <em>&lt;MultiConfigAltResp&gt;</em> format which has all values filled in for the entirety of the current HII database.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function allows the caller to request the current configuration for all of the current HII database. The results include both the current and alternate configurations as described in <em>ExtractConfig()</em> above.</p>
+<p><em>EFI_HII_CONFIG_ACCESS_PROTOCOL.ExtractConfig()</em> interfaces below.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The <em>Results</em> string is filled with the values corresponding to all requested names.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_OUT_OF_RESOURCES</p></td>
+<td><p>Not enough memory to store the parts of the results that must be stored awaiting possible future protocols.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>For example, passing in a NULL for the <em>Results</em> parameter would result in this type of error.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-hii-config-routing-protocol-routeconfig">
+<span id="efi-hii-config-routing-protocol-routeconfig-hii-configuration-processing-and-browser-protocol"></span><h3><span class="section-number">35.4.4. </span>EFI_HII_CONFIG_ROUTING_PROTOCOL.RouteConfig()<a class="headerlink" href="#efi-hii-config-routing-protocol-routeconfig" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>This function processes the results of processing forms and routes it to the appropriate handlers or storage.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+  <span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span> <span class="n">EFI_HII_ROUTE_CONFIG</span> <span class="p">)</span> <span class="p">(</span>
+    <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_HII_CONFIG_ROUTING_PROTOCOL</span>   <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+    <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_STRING</span>                        <span class="n">Configuration</span><span class="p">,</span>
+    <span class="n">OUT</span> <span class="n">EFI_STRING</span>                             <span class="o">*</span><span class="n">Progress</span>
+    <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to the <em>EFI_HII_CONFIG_ROUTING_PROTOCOL</em> instance.</p>
+</dd>
+<dt>Configuration</dt><dd><p>A null-terminated string in <em>&lt;MultiConfigResp&gt;</em> format.</p>
+</dd>
+<dt>Progress</dt><dd><p>A pointer to a string filled in with the offset of the most recent ‘&amp;’ before the first failing name / value pair (or the beginning of the string if the failure is in the first name / value pair) or the terminating NULL if all was successful.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function routes the results of processing forms to the appropriate targets. It scans for <em>&lt;ConfigHdr&gt;</em> within the string and passes the header and subsequent body to the driver whose location is described in the <em>&lt;ConfigHdr&gt;</em>. Many <em>&lt;ConfigHdr&gt;</em> s may appear as a single request.</p>
+<p>The expected implementation is to hand off the various <em>&lt;ConfigResp&gt;</em> substrings to the Configuration Access Protocol <em>RouteConfig</em> routine corresponding to the driver whose routing information is defined by the <em>&lt;ConfigHdr&gt;</em> in turn.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The results have been distributed or are awaiting distribution.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_OUT_OF_RESOURCES</p></td>
+<td><p>Not enough memory to store the parts of the results that must be stored awaiting possible future protocols.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETERS</p></td>
+<td><p>Passing in a <strong>NULL</strong> for the <em>Configuration</em> parameter would result in this type of error.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>Target for the specified routing data was not found</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_ACCESS_DENIED</p></td>
+<td><p>The action violated a system policy.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-hii-config-routing-protocol-blocktoconfig">
+<span id="efi-hii-config-routing-protocol-blocktoconfig-hii-configuration-processing-and-browser-protocol"></span><h3><span class="section-number">35.4.5. </span>EFI_HII_CONFIG_ROUTING_PROTOCOL.BlockToConfig()<a class="headerlink" href="#efi-hii-config-routing-protocol-blocktoconfig" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>This helper function is to be called by drivers to map configuration data stored in byte array (“block”) formats such as UEFI Variables into current configuration strings.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+  <span class="p">(</span><span class="n">EFIAPI</span>  <span class="o">*</span> <span class="n">EFI_HII_BLOCK_TO_CONFIG</span> <span class="p">)</span> <span class="p">(</span>
+    <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_HII_CONFIG_ROUTING_PROTOCOL</span>    <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+    <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_STRING</span>                         <span class="n">ConfigRequest</span><span class="p">,</span>
+    <span class="n">IN</span> <span class="n">CONST</span> <span class="n">UINT8</span>                              <span class="o">*</span><span class="n">Block</span><span class="p">,</span>
+    <span class="n">IN</span> <span class="n">CONST</span> <span class="n">UINTN</span>                              <span class="n">BlockSize</span><span class="p">,</span>
+    <span class="n">OUT</span> <span class="n">EFI_STRING</span>                              <span class="o">*</span><span class="n">Config</span><span class="p">,</span>
+    <span class="n">OUT</span> <span class="n">EFI_STRING</span>                              <span class="o">*</span><span class="n">Progress</span>
+    <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to the <em>EFI_HII_CONFIG_ROUTING_PROTOCOL</em> instance.</p>
+</dd>
+<dt>ConfigRequest</dt><dd><p>A null-terminated string in <em>&lt;ConfigRequest&gt;</em> format.</p>
+</dd>
+<dt>Block</dt><dd><p>Array of bytes defining the block’s configuration.</p>
+</dd>
+<dt>BlockSize</dt><dd><p>Length in bytes of <em>Block</em>.</p>
+</dd>
+<dt>Config</dt><dd><p>Filled-in configuration string. String allocated by the function. Returned only if call is successful. The null-terminated string will be in <em>&lt;ConfigResp&gt;</em> format</p>
+</dd>
+<dt>Progress</dt><dd><p>A pointer to a string filled in with the offset of the most recent ‘&amp;’ before the first failing name / value pair (or the beginning of the string if the failure is in the first name / value pair) or the terminating NULL if all was successful.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function extracts the current configuration from a block of bytes. To do so, it requires that the <em>ConfigRequest</em> string consists of a list of <em>&lt;BlockName&gt;</em> formatted names. It uses the offset in the name to determine the index into the Block to start the extraction and the width of each name to determine the number of bytes to extract. These are mapped to a string using the equivalent of the C “%x” format (with optional leading spaces).</p>
+<p>The call fails if, for any (offset, width) pair in <em>ConfigRequest,</em> offset+value &gt;= <em>BlockSize</em>.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The request succeeded. Progress points to the null terminator at the end of the <em>ConfigRequest</em> string.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_OUT_OF_RESOURCES</p></td>
+<td><p>Not enough memory to allocate <em>Config</em>. Progress points to the first character of <em>ConfigRequest</em>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETERS</p></td>
+<td><p>Passing in a NULL for the <em>ConfigRequest</em> or <em>Block</em> parameter would result in this type of error. Progress points to the first character of <em>ConfigRequest</em>.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>Target for the specified routing data was not found. <em>Progress</em> points to the “G” in “GUID” of the errant routing data.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>Block not large enough. <em>Progress</em> undefined.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>Encountered non &lt;BlockName&gt; formatted string. Block is left updated and Progress points at the ‘&amp;’ preceding the first non-&lt;BlockName&gt;.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-hii-config-routing-protocol-configtoblock">
+<span id="efi-hii-config-routing-protocol-configtoblock-hii-configuration-processing-and-browser-protocol"></span><h3><span class="section-number">35.4.6. </span>EFI_HII_CONFIG_ROUTING_PROTOCOL.ConfigToBlock()<a class="headerlink" href="#efi-hii-config-routing-protocol-configtoblock" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>This helper function is to be called by drivers to map configuration strings to configurations stored in byte array (“block”) formats such as UEFI Variables.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+  <span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span> <span class="n">EFI_HII_CONFIG_TO_BLOCK</span> <span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span>   <span class="n">CONST</span> <span class="n">EFI_HII_CONFIG_ROUTING_PROTOCOL</span>    <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span>   <span class="n">CONST</span> <span class="n">EFI_STRING</span>                         <span class="o">*</span><span class="n">ConfigResp</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">CONST</span> <span class="n">UINT8</span>                            <span class="o">*</span><span class="n">Block</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">UINTN</span>                                  <span class="o">*</span><span class="n">BlockSize</span><span class="p">,</span>
+  <span class="n">OUT</span>   <span class="n">EFI_STRING</span>                              <span class="o">*</span><span class="n">Progress</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to the <em>EFI_HII_CONFIG_ROUTING_PROTOCOL</em> instance.</p>
+</dd>
+<dt>ConfigResp</dt><dd><p>A null-terminated string in <em>&lt;ConfigResp&gt;</em> format.</p>
+</dd>
+<dt>Block</dt><dd><p>A possibly null array of bytes representing the current block. Only bytes referenced in the <em>ConfigResp</em> string in the block are modified. If this parameter is null or if the * <em>BlockSize</em> parameter is (on input) shorter than required by the <em>Configuration</em> string, only the <em>BlockSize</em> parameter is updated and an appropriate status (see below) is returned.</p>
+</dd>
+<dt>BlockSize</dt><dd><p>The length of the <em>Block</em> in units of UINT8. On input, this is the size of the <em>Block</em>. On output, if successful, contains the largest index of the modified byte in the <em>Block,</em> or the required buffer size if the <em>Block</em> is not large enough.</p>
+</dd>
+<dt>Progress</dt><dd><p>On return, points to an element of the <em>ConfigResp</em> string filled in with the offset of the most recent ‘&amp;’ before the first failing name / value pair (or the beginning of the string if the failure is in the first name / value pair) or the terminating NULL if all was successful.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function maps a configuration containing a series of <em>&lt;BlockConfig&gt;</em> formatted name value pairs in <em>ConfigResp</em> into a <em>Block</em> so it may be stored in a linear mapped storage such as a UEFI Variable. If present, the function skips <em>GUID,</em> <em>NAME,</em> and <em>PATH</em> in &lt; <em>ConfigResp&gt;</em>. It stops when it finds a non- <em>&lt;BlockConfig&gt;</em> name / value pair (after skipping the routing header) or when it reaches the end of the string.</p>
+<p>Example</p>
+<p>Assume an existing block containing:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">00</span> <span class="mi">01</span> <span class="mi">02</span> <span class="mi">03</span> <span class="mi">04</span> <span class="mi">05</span>
+</pre></div>
+</div>
+<p>And the <em>ConfigResp</em> string is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">OFFSET</span><span class="o">=</span><span class="mi">3</span><span class="n">WIDTH</span><span class="o">=</span><span class="mi">1</span><span class="o">&amp;</span><span class="n">VALUE</span><span class="o">=</span><span class="mi">7</span><span class="o">&amp;</span><span class="n">OFFSET</span><span class="o">=</span><span class="mi">0</span><span class="o">&amp;</span><span class="n">WIDTH</span><span class="o">=</span><span class="mi">2</span><span class="o">&amp;</span><span class="n">VALUE</span><span class="o">=</span><span class="n">AA55</span>
+</pre></div>
+</div>
+<p>The results are</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">55</span> <span class="n">AA</span> <span class="mi">02</span> <span class="mi">07</span> <span class="mi">04</span> <span class="mi">05</span>
+</pre></div>
+</div>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The request succeeded. Progress points to the null terminator at the end of the <em>ConfigResp</em> string.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_OUT_OF_RESOURCES</p></td>
+<td><p>Not enough memory to allocate <em>Config</em>. Progress points to the first character of <em>ConfigResp</em>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>Passing in a NULL for the <em>ConfigResp</em> or <em>Block</em> parameter would result in this type of error. Progress points to the first character of <em>ConfigResp</em>.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>Target for the specified routing data was not found. <em>Progress</em> points to the “G” in “GUID” of the errant routing data.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_BUFFER_TOO_SMALL</p></td>
+<td><p>Block not large enough. <em>Progress</em> undefined. <em>BlockSize</em> is updated with the required buffer size.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>Encountered non &lt;BlockName&gt; formatted name / value pair. <em>Block</em> is left updated and <em>Progress</em> points at the ‘&amp;’ preceding the first non-&lt;BlockName&gt;.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-hii-config-routing-protocol-getaltcfg">
+<span id="efi-hii-config-routing-protocol-getaltcfg-hii-configuration-processing-and-browser-protocol"></span><h3><span class="section-number">35.4.7. </span>EFI_HII_CONFIG_ROUTING_PROTOCOL.GetAltCfg()<a class="headerlink" href="#efi-hii-config-routing-protocol-getaltcfg" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>This helper function is to be called by drivers to extract portions of a larger configuration string.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+  <span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span> <span class="n">EFI_HII_GET_ALT_CFG</span> <span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span>   <span class="n">CONST</span> <span class="n">EFI_HII_CONFIG_ROUTING_PROTOCOL</span>      <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span>   <span class="n">CONST</span> <span class="n">EFI_STRING</span>                           <span class="n">ConfigResp</span><span class="p">,</span>
+  <span class="n">IN</span>   <span class="n">CONST</span> <span class="n">EFI_GUID</span>                             <span class="o">*</span><span class="n">Guid</span><span class="p">,</span>
+  <span class="n">IN</span>   <span class="n">CONST</span> <span class="n">EFI_STRING</span>                           <span class="n">Name</span><span class="p">,</span>
+  <span class="n">IN</span>   <span class="n">CONST</span> <span class="n">EFI_DEVICE_PATH_PROTOCOL</span>             <span class="o">*</span><span class="n">DevicePath</span><span class="p">,</span>
+  <span class="n">IN</span>   <span class="n">CONST</span> <span class="n">EFI_STRING</span>                           <span class="n">AltCfgId</span><span class="p">,</span>
+  <span class="n">OUT</span>  <span class="n">EFI_STRING</span>                                 <span class="o">*</span><span class="n">AltCfgResp</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to the <em>EFI_HII_CONFIG_ROUTING_PROTOCOL</em> instance.</p>
+</dd>
+<dt>ConfigResp</dt><dd><p>A null-terminated string in <em>&lt;ConfigAltResp&gt;</em> format.</p>
+</dd>
+<dt>Guid</dt><dd><p>A pointer to the GUID value to search for in the routing portion of the <em>ConfigResp</em> string when retrieving the requested data. If Guid is NULL, then all GUID values will be searched for.</p>
+</dd>
+<dt>Name</dt><dd><p>A pointer to the NAME value to search for in the routing portion of the <em>ConfigResp</em> string when retrieving the requested data. If <em>Name</em> is NULL, then all <em>Name</em> values will be searched for.</p>
+</dd>
+<dt>DevicePath</dt><dd><p>A pointer to the PATH value to search for in the routing portion of the <em>ConfigResp</em> string when retrieving the requested data. If <em>DevicePath</em> is <strong>NULL</strong>, then all <em>DevicePath</em> values will be searched for.</p>
+</dd>
+<dt>AltCfgId</dt><dd><p>A pointer to the ALTCFG value to search for in the routing portion of the <em>ConfigResp</em> string when retrieving the requested data. If this parameter is <strong>NULL</strong>, then the current setting will be retrieved.</p>
+</dd>
+<dt>AltCfgResp</dt><dd><p>A pointer to a buffer which will be allocated by the function which contains the retrieved string as requested. This buffer is only allocated if the call was successful. The null-terminated string will be in <em>&lt;ConfigResp&gt;</em> format.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function retrieves the requested portion of the configuration string from a larger configuration string. This function will use the <em>Guid,</em> <em>Name,</em> and <em>DevicePath</em> parameters to find the appropriate section of the <em>ConfigResp</em> string. Upon finding this portion of the string, it will use the <em>AltCfgId</em> parameter to find the appropriate instance of data in the <em>ConfigResp</em> string. Once found, the found data will be copied to a buffer which is allocated by the function so that it can be returned to the caller. The caller is responsible for freeing this allocated buffer.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The request succeeded. The requested data was extracted and placed in the newly allocated <em>AltCfgResp</em> buffer.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_OUT_OF_RESOURCES</p></td>
+<td><p>Not enough memory to allocate <em>AltCfgResp</em>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>Passing in a NULL for the <em>ConfigResp</em> or <em>AltCfgResp</em> would result in this type of error.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="efi-hii-configuration-access-protocol">
+<span id="efi-hii-configuration-access-protocol-hii-configuration-processing-and-browser-protocol"></span><h2><span class="section-number">35.5. </span>EFI HII Configuration Access Protocol<a class="headerlink" href="#efi-hii-configuration-access-protocol" title="Link to this heading"></a></h2>
+<section id="efi-hii-config-access-protocol">
+<span id="efi-hii-config-access-protocol-hii-configuration-processing-and-browser-protocol"></span><h3><span class="section-number">35.5.1. </span>EFI_HII_CONFIG_ACCESS_PROTOCOL<a class="headerlink" href="#efi-hii-config-access-protocol" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>The EFI HII configuration routing protocol invokes this type of protocol when it needs to forward requests to a driver’s configuration handler. This protocol is published by drivers providing and receiving configuration data from HII. The <em>ExtractConfig()</em> and <em>RouteConfig()</em> functions are typically invoked by the driver which implements the HII Configuration Routing Protocol. The <em>Callback()</em> function is typically invoked by the Forms Browser.</p>
+<p>If the protocol functions modify active form set, they must not change layout and size of the existing variable stores. The forms browser processes updated IFR package in accordance with the following rules:</p>
+<ol class="arabic simple">
+<li><p>If active form set no longer exists, the behavior is browser specific. The browser identifies form set using a combination of the form set GUID and device path associated with the package list containing the form set.</p></li>
+<li><p>If form set update has been initiated by the <em>Callback()</em> function, the browser executes action requested by the function. See <em>EFI_HII_CONFIG_ACCESS_PROTOCOL.CallBack()</em> section for additional details regarding browser action requests.</p></li>
+</ol>
+<p><strong>NOTE</strong>: <em>If browser action implies saving of the modified questions values, the browser will use uncommitted data associated with the old form set instance. The HII Configuration Access implementation is responsible for properly handling such requests.</em></p>
+<ol class="arabic simple" start="3">
+<li><p>The browser performs standard processing steps that are performed on a form set prior to displaying it (including reading question values and generating <em>EFI_BROWSER_ACTION_FORM_OPEN</em> and <em>EFI_BROWSER_ACTION_FORM_RETRIEVE</em> callbacks).</p></li>
+<li><p>If there is an uncommitted browser data associated with an active form set, the browser applies it, matching variable stores by their identifiers. If variable store no longer exists, the uncommitted data for this store is discarded.</p></li>
+</ol>
+<p><strong>NOTE</strong>: <em>Changing layout or size of the existing variable stores during form set update is not allowed and can lead to unpredictable results.</em></p>
+<ol class="arabic simple" start="5">
+<li><p>The browser applies prior browsing history, matching forms by their identifiers. If a form saved in the browsing history no longer exists, the behavior is browser-specific.</p></li>
+<li><p>If all forms in the browsing history have been matched, the browser sets selection on a question that was active prior to the form set update, matching question by its identifier. If question does not exist, the first question on the form is selected.</p></li>
+</ol>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_HII_CONFIG_ACCESS_PROTOCOL_GUID \</span>
+<span class="p">{</span> <span class="mh">0x330d4706</span><span class="p">,</span> <span class="mh">0xf2a0</span><span class="p">,</span> <span class="mh">0x4e4f</span><span class="p">,</span>\
+<span class="p">{</span><span class="mh">0xa3</span><span class="p">,</span><span class="mh">0x69</span><span class="p">,</span> <span class="mh">0xb6</span><span class="p">,</span> <span class="mh">0x6f</span><span class="p">,</span><span class="mh">0xa8</span><span class="p">,</span> <span class="mh">0xd5</span><span class="p">,</span> <span class="mh">0x43</span><span class="p">,</span> <span class="mh">0x85</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p><strong>Protocol Interface Structure</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">EFI_HII_ACCESS_EXTRACT_CONFIG</span>        <span class="n">ExtractConfig</span><span class="p">;</span>
+  <span class="n">EFI_HII_ACCESS_ROUTE_CONFIG</span>          <span class="n">RouteConfig</span><span class="p">;</span>
+  <span class="n">EFI_HII_ACCESS_FORM_CALLBACK</span>         <span class="n">Callback</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">EFI_HII_CONFIG_ACCESS_PROTOCOL</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Related Definitions</strong></p>
+<p>None</p>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>ExtractConfig</dt><dd><p>This function breaks apart the request strings routing them to the appropriate drivers. This function is analogous to the similarly named function in the HII Routing Protocol.</p>
+</dd>
+<dt>RouteConfig</dt><dd><p>This function breaks apart the results strings and returns configuration information as specified by the request.</p>
+</dd>
+<dt>Callback</dt><dd><p>This function is called from the configuration browser to communicate certain activities that were initiated by a user.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This protocol provides a callable interface between the HII and drivers. Only drivers which provide IFR data to HII are required to publish this protocol.</p>
+</section>
+<section id="efi-hii-config-access-protocol-extractconfig">
+<span id="efi-hii-config-access-protocol-extractconfig-hii-configuration-processing-and-browser-protocol"></span><h3><span class="section-number">35.5.2. </span>EFI_HII_CONFIG_ACCESS_PROTOCOL.ExtractConfig()<a class="headerlink" href="#efi-hii-config-access-protocol-extractconfig" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>This function allows a caller to extract the current configuration for one or more named elements from the target driver.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+  <span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span> <span class="n">EFI_HII_ACCESS_EXTRACT_CONFIG</span> <span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_HII_CONFIG_ACCESS_PROTOCOL</span>    <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_STRING</span>                        <span class="n">Request</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">EFI_STRING</span>                             <span class="o">*</span><span class="n">Progress</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">EFI_STRING</span>                             <span class="o">*</span><span class="n">Results</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl>
+<dt>This</dt><dd><p>Points to the <em>EFI_HII_CONFIG_ACCESS_PROTOCOL</em>.</p>
+</dd>
+<dt>Request</dt><dd><p>A null-terminated string in <em>&lt;ConfigRequest&gt;</em> format. Note that this includes the routing information as well as the configurable name / value pairs. It is invalid for this string to be in <em>&lt;MultiConfigRequest&gt;</em> format.</p>
+<p>If a <strong>NULL</strong> is passed in for the <em>Request</em> field, all of the settings being abstracted by this function will be returned in the <em>Results</em> field. In addition, if a <em>ConfigHdr</em> is passed in with no request elements, all of the settings being abstracted for that particular <em>ConfigHdr</em> reference will be returned in the <em>Results</em> Field.</p>
+</dd>
+<dt>Progress</dt><dd><p>On return, points to a character in the <em>Request</em> string. Points to the string’s null terminator if request was successful. Points to the most recent ‘&amp;’ before the first failing name / value pair (or the beginning of the string if the failure is in the first name / value pair) if the request was not successful</p>
+</dd>
+<dt>Results</dt><dd><p>A null-terminated string in <em>&lt;MultiConfigAltResp&gt;</em> format which has all values filled in for the names in the <em>Request</em> string. String to be allocated by the called function.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function allows the caller to request the current configuration for one or more named elements. The resulting string is in <em>&lt;ConfigAltResp&gt;</em> format.</p>
+<p>In order to support forms processors other than a Forms Browser, the configuration returned by this function must not depend on context in which the function is used. In particular, it must not depend on the current state of the Forms Browser (including any uncommitted state information) and actions performed by the driver callbacks invoked prior to the ExtractConfig call. See:numref:<cite>Connected-forms-browser-processor</cite> for more details.</p>
+<p>Any and all alternative configuration strings shall also be
+appended to the end of the current configuration string. If
+they are, they must appear after the current configuration.
+They must contain the same routing (GUID, NAME, PATH) as the
+current configuration string. They must have an additional
+description indicating the type of alternative configuration
+the string represents, “ <em>ALTCFG=&lt;AltCfgId&gt;</em> “. The
+<em>&lt;AltCfgId&gt;</em> is a reference to a Default ID which stipulates
+the type of Default being referenced such as
+<em>EFI_HII_DEFAULT_CLASS_STANDARD</em>.</p>
+<p>As an example, assume that the Request string is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GUID</span><span class="o">=...&amp;</span><span class="n">PATH</span><span class="o">=...&amp;</span><span class="n">Fred</span><span class="o">&amp;</span><span class="n">George</span><span class="o">&amp;</span><span class="n">Ron</span><span class="o">&amp;</span><span class="n">Neville</span>
+</pre></div>
+</div>
+<p>A result might be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GUID</span><span class="o">=...&amp;</span><span class="n">PATH</span><span class="o">=...&amp;</span><span class="n">Fred</span><span class="o">=</span><span class="mi">16</span><span class="o">&amp;</span><span class="n">George</span><span class="o">=</span><span class="mi">16</span><span class="o">&amp;</span><span class="n">Ron</span><span class="o">=</span><span class="mi">12</span><span class="o">&amp;</span><span class="n">Neville</span><span class="o">=</span><span class="mi">11</span><span class="o">&amp;</span><span class="n">GUID</span><span class="o">=...&amp;</span><span class="n">PATH</span><span class="o">=...&amp;</span><span class="n">ALTCFG</span><span class="o">=</span><span class="mi">0037</span><span class="o">&amp;</span>
+<span class="n">Fred</span><span class="o">=</span><span class="mi">12</span><span class="o">&amp;</span><span class="n">Neville</span><span class="o">=</span><span class="mi">7</span>
+</pre></div>
+</div>
+<p>This function allows the caller to request the current configuration for one or more named elements. The resulting string is in <em>&lt;ConfigAltResp&gt;</em> format.</p>
+<p>Any and all alternative configuration strings shall also be appended to the end of the current configuration string. If they are, they must appear after the current configuration. They must contain the same routing (GUID, NAME, PATH) as the current configuration string. They must have an additional description indicating the type of alternative configuration the string represents, “ <em>ALTCFG=&lt;AltCfgId&gt;</em> “. The <em>&lt;AltCfgId&gt;</em> is a reference to a Default ID which stipulates the type of Default being referenced such as <em>EFI_HII_DEFAULT_CLASS_STANDARD</em>.</p>
+<p>As an example, assume that the <em>Request</em> string is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GUID</span><span class="o">=...&amp;</span><span class="n">PATH</span><span class="o">=...&amp;</span><span class="n">Fred</span><span class="o">&amp;</span><span class="n">George</span><span class="o">&amp;</span><span class="n">Ron</span><span class="o">&amp;</span><span class="n">Neville</span>
+</pre></div>
+</div>
+<p>A result might be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GUID</span><span class="o">=...&amp;</span><span class="n">PATH</span><span class="o">=...&amp;</span><span class="n">Fred</span><span class="o">=</span><span class="mi">16</span><span class="o">&amp;</span><span class="n">George</span><span class="o">=</span><span class="mi">16</span><span class="o">&amp;</span><span class="n">Ron</span><span class="o">=</span><span class="mi">12</span><span class="o">&amp;</span><span class="n">Neville</span><span class="o">=</span><span class="mi">11</span><span class="o">&amp;</span>
+<span class="n">GUID</span><span class="o">=...&amp;</span><span class="n">PATH</span><span class="o">=...&amp;</span><span class="n">ALTCFG</span><span class="o">=</span><span class="mi">0037</span><span class="o">&amp;</span><span class="n">Fred</span><span class="o">=</span><span class="mi">12</span><span class="o">&amp;</span><span class="n">Neville</span><span class="o">=</span><span class="mi">7</span>
+</pre></div>
+</div>
+<p><strong>NOTE</strong>: <em>For the output Results, the value filled in the names in the Request string with</em> &lt;ConfigAltResp&gt; <em>format may change when called multiple times due to some data being of a dynamic nature.</em></p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The <em>Results</em> string is filled with the values corresponding to all requested names.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_OUT_OF_RESOURCES</p></td>
+<td><p>Not enough memory to store the parts of the results that must be stored awaiting possible future protocols.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>A configuration element matching the routing data is not found. Progress set to the first character in the routing header.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>Illegal syntax. Progress set to most recent “&amp;” before the error or the beginning of the string.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>Unknown name. <em>Progress</em> points to the “&amp;” before the name in question.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>If Results or Progress is <strong>NULL</strong>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_ACCESS_DENIED</p></td>
+<td><p>The action violated a system policy.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>Failed to extract the current configuration for one or more named elements.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-hii-config-access-protocol-routeconfig">
+<span id="efi-hii-config-access-protocol-routeconfig-hii-configuration-processing-and-browser-protocol"></span><h3><span class="section-number">35.5.3. </span>EFI_HII_CONFIG_ACCESS_PROTOCOL.RouteConfig()<a class="headerlink" href="#efi-hii-config-access-protocol-routeconfig" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>This function processes the results of changes in configuration
+for the driver that published this protocol.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span> <span class="n">EFI_HII_ACCESS_ROUTE_CONFIG</span> <span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_HII_CONFIG_ACCESS_PROTOCOL</span>       <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_STRING</span>                           <span class="n">Configuration</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">EFI_STRING</span>                                <span class="o">*</span><span class="n">Progress</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to the <em>EFI_HII_CONFIG_ACCESS_PROTOCOL</em>.</p>
+</dd>
+<dt>Configuration</dt><dd><p>A null-terminated string in <em>&lt;ConfigResp&gt;</em> format.</p>
+</dd>
+<dt>Progress</dt><dd><p>A pointer to a string filled in with the offset of the most recent ‘&amp;’ before the first failing name / value pair (or the beginning of the string if the failure is in the first name / value pair) or the terminating NULL if all was successful.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function applies changes in a driver’s configuration. Input is a <em>Configuration,</em> which has the routing data for this driver followed by name / value configuration pairs. The driver must apply those pairs to its configurable storage.</p>
+<p>In order to support forms processors other than a Forms Browser, the way in which configuration data is applied must not depend on context in which the function is used. In particular, it must not depend on the current state of the Forms Browser (including any uncommitted state information) and actions performed by the driver callbacks invoked prior to the <em>RouteConfig</em> call.  <a class="reference internal" href="33_Human_Interface_Infrastructure.html#id8"><span class="std std-ref">Connected Forms Browser/Processor</span></a> provides additional details regarding forms browser/processor.</p>
+<p>If the driver’s configuration is stored in a linear block of data and the driver’s name / value pairs are in <em>&lt;BlockConfig&gt;</em> format, it may use the <em>ConfigToBlock</em> helper function (above) to simplify the job.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The results have been distributed or are awaiting distribution.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_OUT_OF_RESOURCES</p></td>
+<td><p>Not enough memory to store the parts of the results that must be stored awaiting possible future protocols.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>If Configuration or Progress is NULL.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>Target for the specified routing data was not found</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_ACCESS_DENIED</p></td>
+<td><p>The action violated a system policy.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-hii-config-access-protocol-callback">
+<span id="efi-hii-config-access-protocol-callback-hii-configuration-processing-and-browser-protocol"></span><h3><span class="section-number">35.5.4. </span>EFI_HII_CONFIG_ACCESS_PROTOCOL.CallBack()<a class="headerlink" href="#efi-hii-config-access-protocol-callback" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>This function is called to provide results data to the driver.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_HII_ACCESS_FORM_CALLBACK</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span>   <span class="n">CONST</span> <span class="n">EFI_HII_CONFIG_ACCESS_PROTOCOL</span>     <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span>   <span class="n">EFI_BROWSER_ACTION</span>                       <span class="n">Action</span><span class="p">,</span>
+  <span class="n">IN</span>   <span class="n">EFI_QUESTION_ID</span>                          <span class="n">QuestionId</span><span class="p">,</span>
+  <span class="n">IN</span>   <span class="n">UINT8</span>                                    <span class="n">Type</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">EFI_IFR_TYPE_VALUE</span>                     <span class="o">*</span><span class="n">Value</span><span class="p">,</span>
+  <span class="n">OUT</span>  <span class="n">EFI_BROWSER_ACTION_REQUEST</span>               <span class="o">*</span><span class="n">ActionRequest</span><span class="p">,</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to the <em>EFI_HII_CONFIG_ACCESS_PROTOCOL</em>.</p>
+</dd>
+<dt>Action</dt><dd><p>Specifies the type of action taken by the browser. See <em>EFI_BROWSER_ACTION_x</em> in “Related Definitions” below.</p>
+</dd>
+<dt>QuestionId</dt><dd><p>A unique value which is sent to the original exporting driver so that it can identify the type of data to expect. The format of the data tends to vary based on the opcode that generated the callback.</p>
+</dd>
+<dt>Type</dt><dd><p>The type of value for the question. See <em>EFI_IFR_TYPE_x</em> in <em>EFI_IFR_ONE_OF_OPTION</em>.</p>
+</dd>
+<dt>Value</dt><dd><p>A pointer to the data being sent to the original exporting driver. The type is specified by <em>Type.</em> Type <em>EFI_IFR_TYPE_VALUE</em> is defined in <em>EFI_IFR_ONE_OF_OPTION.</em></p>
+</dd>
+<dt>ActionRequest</dt><dd><p>On return, points to the action requested by the callback function. Type <em>EFI_BROWSER_ACTION_REQUEST</em> is specified in <em>SendForm()</em> in the Form Browser Protocol.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function is called by the forms browser in response to a user action on a question which has the <em>EFI_IFR_FLAG_CALLBACK</em> bit set in the <em>EFI_IFR_QUESTION_HEADER</em>. The user action is specified by <em>Action</em>. Depending on the action, the browser may also pass the question value using <em>Type</em> and <em>Value</em>. Upon return, the callback function may specify the desired browser action.</p>
+<p>The browser maintains uncommitted browser data (modified and unsaved question values) across Callback function boundaries. Callback function may change unsaved question values using one of the following methods:</p>
+<ul class="simple">
+<li><p>Current question’s value may be changed by updating the <em>Value</em> parameter.</p></li>
+<li><p>Values of other questions from the active formset can be changed using <em>EFI_FORM_BROWSER2_PROTOCOL.BrowserCallback()</em> interface.</p></li>
+</ul>
+<p><strong>NOTE</strong>: <em>Modification of the question values by the Callback function without notifying the browser using one of the above mentioned methods can lead to unpredictable browser behavior.</em></p>
+<p>Callback function may request configuration update from the browser by returning an appropriate <em>ActionRequest</em>.</p>
+<p>In order to save uncommitted data, driver should return one of the <em>_SUBMIT</em> actions or <em>_APPLY</em> action. The browser will then write all modified question values (in case of the <em>_SUBMIT</em> actions) or modified question values from an active form (in case of the <em>_APPLY</em> action) to storage using <em>RouteConfig()</em> function. This will include questions modified prior to an invocation of the <em>Callback()</em> function as well as questions modified by the <em>Callback()</em> function.</p>
+<p>The behavior of the <em>ExtractConfig</em> and <em>RouteConfig</em> functions must not depend on the actions performed by this function.</p>
+<p>Callback functions should return <em>EFI_UNSUPPORTED</em> for all values of <em>Action</em> that they do not support.</p>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">UINTN</span> <span class="n">EFI_BROWSER_ACTION</span><span class="p">;</span>
+
+<span class="c1">#define EFI_BROWSER_ACTION_CHANGING                0</span>
+<span class="c1">#define EFI_BROWSER_ACTION_CHANGED                 1</span>
+<span class="c1">#define EFI_BROWSER_ACTION_RETRIEVE                2</span>
+<span class="c1">#define EFI_BROWSER_ACTION_FORM_OPEN               3</span>
+<span class="c1">#define EFI_BROWSER_ACTION_FORM_CLOSE              4</span>
+<span class="c1">#define EFI_BROWSER_ACTION_SUBMITTED               5</span>
+<span class="c1">#define EFI_BROWSER_ACTION_DEFAULT_STANDARD        0x1000</span>
+<span class="c1">#define EFI_BROWSER_ACTION_DEFAULT_MANUFACTURING   0x1001</span>
+<span class="c1">#define EFI_BROWSER_ACTION_DEFAULT_SAFE            0x1002</span>
+<span class="c1">#define EFI_BROWSER_ACTION_DEFAULT_PLATFORM        0x2000</span>
+<span class="c1">#define EFI_BROWSER_ACTION_DEFAULT_HARDWARE        0x3000</span>
+<span class="c1">#define EFI_BROWSER_ACTION_DEFAULT_FIRMWARE        0x4000</span>
+</pre></div>
+</div>
+<p>The following table describes the behavior of the callback for each question type.</p>
+<table class="longtable docutils align-default" id="callback-behavior-hii-configuration-processing-and-browser-protocol">
+<caption><span class="caption-number">Table 35.1 </span><span class="caption-text">Callback Behavior</span><a class="headerlink" href="#callback-behavior-hii-configuration-processing-and-browser-protocol" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 33.3%" />
+<col style="width: 50.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Question Type</strong></p></td>
+<td><p><strong>Type</strong></p></td>
+<td><p><strong>Action</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Action Button</p></td>
+<td><p><em>EFI_IFR_TYPE_ACTION</em></p></td>
+<td><p>No special behavior. If the short form of the opcode is used, then the value will be a string identifier of zero.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Checkbox</p></td>
+<td><p><em>EFI_IFR_TYPE_BOOLEAN</em></p></td>
+<td><p>No special behavior</p></td>
+</tr>
+<tr class="row-even"><td><p>Cross-Reference</p></td>
+<td><div class="line-block">
+<div class="line"><em>EFI_IFR_TYPE_REF</em></div>
+<div class="line"><em>EF I_IFR_TYPE_UNDEFINED</em></div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">CHANGING: If EFI_UNSUPPORTED or EFI_SUCCESS, the updated cross-reference is taken. Any other error the cross-reference will not be taken.</div>
+<div class="line">CHANGED: Never called.</div>
+<div class="line">RETRIEVE: Called before displaying the cross-reference. Error codes ignored. The Ref field of the Value parameter is initialized with the REF question’s value prior to CHANGING and RETRIEVE.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Date</p></td>
+<td><p><em>EFI_IFR_TYPE_DATE</em></p></td>
+<td><p>No special behavior</p></td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line">Numeric,</div>
+<div class="line">One-Of</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line"><em>EFI _IFR_TYPE_NUM_SIZE_8</em>,</div>
+<div class="line"><em>EFI_ IFR_TYPE_NUM_SIZE_16</em>,</div>
+<div class="line"><em>EFI_ IFR_TYPE_NUM_SIZE_32</em>,</div>
+<div class="line"><em>EFI_ IFR_TYPE_NUM_SIZE_64</em></div>
+</div>
+</td>
+<td><p>No special behavior.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Ordered-List</p></td>
+<td><p><em>EFI_IFR_TYPE_BUFFER</em></p></td>
+<td><p>No special behavior</p></td>
+</tr>
+<tr class="row-even"><td><p>String, Password</p></td>
+<td><p><em>EFI_IFR_TYPE_STRING</em></p></td>
+<td><p>No special behavior.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Time</p></td>
+<td><p><em>EFI_IFR_TYPE_DATE</em></p></td>
+<td><p>No special behavior.</p></td>
+</tr>
+</tbody>
+</table>
+<p>The value <em>EFI_BROWSER_ACTION_CHANGING</em> is called before the browser changes the value in the display (for questions which have a value) or takes an action (in the case of an action button or cross-reference). If the callback returns <em>EFI_UNSUPPORTED,</em> then the browser will use the value passed to <em>Callback()</em> and ignore the value returned by <em>Callback()</em>. If the callback returns <em>EFI_SUCCESS,</em> then the browser will use the value returned by <em>Callback()</em>. If any other error is returned, then the browser will not update the current question value. <em>ActionRequest</em> is used. The <em>Value</em> represents the updated value. The changes here should not be finalized until the user submits the results.</p>
+<p>The value <em>EFI_BROWSER_ACTION_CHANGED</em> is called after the browser has changed its internal copy of the question value and displayed it (if appropriate). For action buttons, this is called after the value has been processed. For cross-references, this is never called. Errors returned are ignored. <em>ActionRequest</em> is used. The changes here should not be finalized until the user submits the results.</p>
+<p>The value <em>EFI_BROWSER_ACTION_RETRIEVE</em> is called after the browser has read the current question value, but before it has been displayed. If the callback returns <em>EFI_UNSUPPORTED</em> or any other error then the original value is used. If <em>EFI_SUCCESS</em> is returned, then the updated value is used.</p>
+<p>The value <em>EFI_BROWSER_ACTION_FORM_OPEN</em> is called for each question on a form prior to its value being retrieved or displayed. If a question appears on more than one form, and the Forms Browser supports more than one form being active simultaneously, this may be called more than once, even prior to any <em>EFI_BROWSER_ACTION_FORM_CLOSE</em> callback.</p>
+<p><strong>NOTE</strong>: EFI_FORM_BROWSER2_PROTOCOL.BrowserCallback() <em>cannot be used with this browser action because question values have not been retrieved yet</em>.</p>
+<p>The value <em>EFI_BROWSER_ACTION_FORM_CLOSE</em> is called for each question on a form after the processing of any submit actions for that form. If a question appears on more than one form, and the Forms Processor supports more than one form being active simultaneously, this will be called more than once.</p>
+<p>The value <em>EFI_BROWSER_ACTION_SUBMITTED</em> is called after Browser submits the modified question value. <em>ActionRequest</em> is ignored.</p>
+<p>When <em>Action</em> specifies one of the “default” actions, such as <em>EFI_BROWSER_ACTION_DEFAULT_STANDARD,</em> etc. it indicates that the Forms Processor is attempting to retrieve the default value for the specified question. The proposed default value is passed in using <em>Type</em> and <em>Value</em> and reflects the value which the Forms Processor was able to select based on the lower-priority defaulting methods (see <a class="reference internal" href="33_Human_Interface_Infrastructure.html#defaults-1"><span class="std std-ref">Defaults</span></a> ). If the function returns <em>EFI_SUCCESS,</em> then the updated value will be used. If the function does not have an updated default value for the specified question or specified default store, or does not provide any support for the actions, it should return <em>EFI_UNSUPPORTED,</em> and the returned value will be ignored.</p>
+<p>The <em>DEFAULT_PLATFORM,</em> <em>DEFAULT_HARDWARE</em> and <em>DEFAULT_FIRMWARE</em> represent ranges of 4096 (0x1000) possible default store identifiers. The <em>DEFAULT_STANDARD</em> represents the range of 4096 possible action values reserved for UEFI-defined default store identifiers. See <a class="reference internal" href="33_Human_Interface_Infrastructure.html#defaults-1"><span class="std std-ref">Defaults</span></a> for more information on defaults.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">UINTN</span> <span class="n">EFI_BROWSER_ACTION_REQUEST</span><span class="p">;</span>
+
+<span class="c1">#define EFI_BROWSER_ACTION_REQUEST_NONE               0</span>
+<span class="c1">#define EFI_BROWSER_ACTION_REQUEST_RESET              1</span>
+<span class="c1">#define EFI_BROWSER_ACTION_REQUEST_SUBMIT             2</span>
+<span class="c1">#define EFI_BROWSER_ACTION_REQUEST_EXIT               3</span>
+<span class="c1">#define EFI_BROWSER_ACTION_REQUEST_FORM_SUBMIT_EXIT   4</span>
+<span class="c1">#define EFI_BROWSER_ACTION_REQUEST_FORM_DISCARD_EXIT  5</span>
+<span class="c1">#define EFI_BROWSER_ACTION_REQUEST_FORM_APPLY         6</span>
+<span class="c1">#define EFI_BROWSER_ACTION_REQUEST_FORM_DISCARD       7</span>
+<span class="c1">#define EFI_BROWSER_ACTION_REQUEST_RECONNECT          8</span>
+<span class="c1">#define EFI_BROWSER_ACTION_REQUEST_QUESTION_APPLY     9</span>
+</pre></div>
+</div>
+<p>If the callback function returns with the <em>ActionRequest</em> set to _NONE, then the Forms Browser will take no special behavior.</p>
+<p>If the callback function returns with the <em>ActionRequest</em> set to _RESET, then the Forms Browser will exit and request the platform to reset.</p>
+<p>If the callback function returns with the <em>ActionRequest</em> set to _SUBMIT, then the Forms Browser will save all modified question values to storage and exit.</p>
+<p>If the callback function returns with the <em>ActionRequest</em> et to _EXIT, then the Forms Browser will discard all modified question values and exit.</p>
+<p>If the callback function returns with the <em>ActionRequest</em> set to _FORM_SUBMIT_EXIT, then the Forms Browser will write all modified question values on the selected form to storage and then exit the selected form.</p>
+<p>If the callback function returns with the <em>ActionRequest</em> set to _FORM_DISCARD_EXIT, then the Forms Browser will discard the modified question values on the selected form and then exit the selected form.</p>
+<p>If the callback function returns with the <em>ActionRequest</em> set to _FORM_APPLY, then the Forms Browser will write all modified current question values on the selected form to storage.</p>
+<p>If the callback function returns with the <em>ActionRequest</em> set to _FORM_DISCARD, then the Forms Browser will discard the current question values on the selected form and replace them with the original question values.</p>
+<p>If the callback function returns with the <em>ActionRequest</em> set to _RECONNECT, a hardware and/or software configuration change was performed by the user, and the controller needs to be reconnected for the driver to recognize the change. Upon the user exiting the formset or the browser, the Forms Browser is required to call the EFI Boot Service <em>DisconnectController()</em> followed by the EFI Boot Service <em>ConnectController()</em> to reconnect the controller. The controller handle passed to <em>DisconnectController()</em> and <em>ConnectController()</em> is the handle on which this <em>EFI_HII_CONFIG_ACCESS_PROTOCOL</em> is installed.</p>
+<p>If the callback function returns with the <em>ActionRequest</em> set to _QUESTION_APPLY, then the Forms Browser will write the current modified question value on the selected form to storage.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The callback successfully handled the action.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_OUT_OF_RESOURCES</p></td>
+<td><p>Not enough storage is available to hold the variable and its data.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>The variable could not be saved.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>The specified Action is not supported by the callback.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="form-browser-protocol">
+<span id="form-browser-protocol-hii-configuration-processing-and-browser-protocol"></span><h2><span class="section-number">35.6. </span>Form Browser Protocol<a class="headerlink" href="#form-browser-protocol" title="Link to this heading"></a></h2>
+<p>The <em>EFI_FORM_BROWSER2_PROTOCOL</em> is the interface to call for drivers to leverage the EFI configuration driver interface.</p>
+<section id="efi-form-browser2-protocol">
+<span id="efi-form-browser2-protocol-hii-configuration-processing-and-browser-protocol"></span><h3><span class="section-number">35.6.1. </span>EFI_FORM_BROWSER2_PROTOCOL<a class="headerlink" href="#efi-form-browser2-protocol" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>The <em>EFI_FORM_BROWSER2_PROTOCOL</em> is the interface to the UEFI configuration driver. This interface will allow the caller to direct the configuration driver to use either the HII database or use the passed-in packet of data.</p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_FORM_BROWSER2_PROTOCOL_GUID \</span>
+  <span class="p">{</span> <span class="mh">0xb9d4c360</span><span class="p">,</span> <span class="mh">0xbcfb</span><span class="p">,</span> <span class="mh">0x4f9b</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0x92</span><span class="p">,</span> <span class="mh">0x98</span><span class="p">,</span> <span class="mh">0x53</span><span class="p">,</span> <span class="mh">0xc1</span><span class="p">,</span> <span class="mh">0x36</span><span class="p">,</span> <span class="mh">0x98</span><span class="p">,</span> <span class="mh">0x22</span><span class="p">,</span> <span class="mh">0x58</span> <span class="p">}</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Protocol Interface Structure</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="n">_EFI_FORM_BROWSER2_PROTOCOL</span> <span class="p">{</span>
+  <span class="n">EFI_SEND_FORM2</span>                       <span class="n">SendForm</span><span class="p">;</span>
+  <span class="n">EFI_BROWSER_CALLBACK2</span>                <span class="n">BrowserCallback</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">EFI_FORM_BROWSER2_PROTOCOL</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>SendForm</dt><dd><p>Browse the specified configuration forms. See the <em>SendForm()</em> function description.</p>
+</dd>
+<dt>BrowserCallback</dt><dd><p>Routine used to expose internal configuration state of the browser. This is primarily used by callback handler routines which were called by the browser and in-turn need to get additional information from the browser itself. See the <em>BrowserCallback()</em> function description.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This protocol is the interface to call for drivers to leverage the EFI configuration driver interface.</p>
+</section>
+<section id="efi-form-browser2-protocol-sendform">
+<span id="efi-form-browser2-protocol-sendform-hii-configuration-processing-and-browser-protocol"></span><h3><span class="section-number">35.6.2. </span>EFI_FORM_BROWSER2_PROTOCOL.SendForm()<a class="headerlink" href="#efi-form-browser2-protocol-sendform" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Initialize the browser to display the specified configuration forms.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_SEND_FORM2</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_FORM_BROWSER2_PROTOCOL</span>        <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">EFI_HII_HANDLE</span>                          <span class="o">*</span><span class="n">Handles</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">UINTN</span>                                   <span class="n">HandleCount</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_GUID</span>                          <span class="o">*</span><span class="n">FormsetGuid</span><span class="p">,</span> <span class="n">OPTIONAL</span>
+  <span class="n">IN</span> <span class="n">EFI_FORM_ID</span>                             <span class="n">FormId</span><span class="p">,</span> <span class="n">OPTIONAL</span>
+  <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_SCREEN_DESCRIPTOR</span>             <span class="o">*</span><span class="n">ScreenDimensions</span><span class="p">,</span> <span class="n">OPTIONAL</span>
+  <span class="n">OUT</span> <span class="n">EFI_BROWSER_ACTION_REQUEST</span>             <span class="o">*</span><span class="n">ActionRequest</span> <span class="n">OPTIONAL</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the <em>EFI_FORM_BROWSER2_PROTOCOL</em> instance.</p>
+</dd>
+<dt>Handles</dt><dd><p>A pointer to an array of HII handles to display. This value should correspond to the value of the HII form package that is required to be displayed. Type <em>EFI_HII_HANDLE</em> is defined in <em>EFI_HII_DATABASE_PROTOCOL.NewPackageList()</em> in <a class="reference internal" href="33_Human_Interface_Infrastructure.html#package-lists-and-package-headers"><span class="std std-ref">Package Lists and Package Headers</span></a>.</p>
+</dd>
+<dt>HandleCount</dt><dd><p>The number of handles in the array specified by <em>Handle</em>.</p>
+</dd>
+<dt>FormsetGuid</dt><dd><p>This field points to the <em>EFI_GUID</em> which must match the <em>Guid</em> field or one of the elements of the ClassId field in the <em>EFI_IFR_FORM_SET</em> op-code. If <em>FormsetGuid</em> is <em>NULL,</em> then this function will display the form set class <em>EFI_HII_PLATFORM_SETUP_FORMSET_GUID</em>.</p>
+</dd>
+<dt>FormId</dt><dd><p>This field specifies the identifier of the form within the form set to render as the first displayable page. If this field has a value of 0x0000, then the Forms Browser will render the first enabled form in the form set.</p>
+</dd>
+<dt>ScreenDimensions</dt><dd><p>Points to recommended form dimensions, including any non-content area, in characters. Type <em>EFI_SCREEN_DESCRIPTOR</em> is defined in “Related Definitions” below.</p>
+</dd>
+<dt>ActionRequested</dt><dd><p>Points to the action recommended by the form.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function is the primary interface to the Forms Browser. The Forms Browser displays the forms specified by <em>FormsetGuid</em> and <em>FormId</em> from all of HII handles specified by <em>Handles</em>. If more than one form can be displayed, the Forms Browser will provide some means for the user to navigate between the forms in addition to that provided by cross-references in the forms themselves.</p>
+<p>If ScreenDimensions is non-NULL, then it points to a recommended display size for the form. If browsing in text mode, then these are recommended character positions. If browsing in graphics mode, then these values are converted to pixel locations using the standard font size (8 pixels per horizontal character cell and 19 pixels per vertical character cell). If ScreenDimensions is NULL the browser may choose the size based on platform policy. The browser may choose to ignore the size based on platform policy.</p>
+<p>If ActionRequested is non-NULL, then upon return, it points to an enumerated value (see EFI_BROWSER_ACTION_x in “Related Definitions” below) which describes the action requested by the user. If set to EFI_BROWSER_ACTION_NONE, then no specific action was requested by the form. If set to EFI_BROWSER_ACTION_RESET, then the form requested that the platform be reset. The browser may, based on platform policy, ignore such action requests.</p>
+<p>If <em>FormsetGuid</em> is set to <em>EFI_HII_PLATFORM_SETUP_FORMSET_GUID,</em> it indicates that the form set contains forms designed to be used for platform configuration. If <em>FormsetGuid</em> is set to <em>EFI_HII_DRIVER_HEALTH_FORMSET_GUID,</em> it indicates that the form set contains forms designed to be used for support of the Driver Health Protocol ( <a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html#efi-driver-health-protocol-protocols-uefi-driver-model"><span class="std std-ref">EFI Driver Health Protocol</span></a> ). If FormsetGuid is set to <em>EFI_HII_USER_CREDENTIAL_FORMSET_GUID,</em> it indicates that the form set contains forms designed to be used for support of the User Credential Protocol ( <a class="reference internal" href="36_User_Identification.html#credential-provider-protocols"><span class="std std-ref">Credential Provider Protocols</span></a> ) If <em>FormsetGuid</em> is set to <em>EFI_HII_REST_STYLE_FORMSET_GUID,</em> it indicates that the form set contains forms designed to be used for support configuration of REST architectural style (see Section 29.7). Other values may be used for other applications.</p>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//******************************************</span>
+<span class="o">//</span> <span class="n">EFI_SCREEN_DESCRIPTOR</span>
+<span class="o">//******************************************</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINTN</span>           <span class="n">LeftColumn</span><span class="p">;</span>
+  <span class="n">UINTN</span>           <span class="n">RightColumn</span><span class="p">;</span>
+  <span class="n">UINTN</span>           <span class="n">TopRow</span><span class="p">;</span>
+  <span class="n">UINTN</span>           <span class="n">BottomRow</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">EFI_SCREEN_DESCRIPTOR</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>LeftColumn</dt><dd><p>Value that designates the text column where the browser window will begin from the left-hand side of the screen</p>
+</dd>
+<dt>RightColumn</dt><dd><p>Value that designates the text column where the browser window will end on the right-hand side of the screen.</p>
+</dd>
+<dt>TopRow</dt><dd><p>Value that designates the text row from the top of the screen where the browser window will start.</p>
+</dd>
+<dt>BottomRow</dt><dd><p>Value that designates the text row from the bottom of the screen where the browser window will end.</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">UINTN</span> <span class="n">EFI_BROWSER_ACTION_REQUEST</span><span class="p">;</span>
+
+<span class="c1">#define EFI_BROWSER_ACTION_REQUEST_NONE      0</span>
+<span class="c1">#define EFI_BROWSER_ACTION_REQUEST_RESET     1</span>
+<span class="c1">#define EFI_BROWSER_ACTION_REQUEST_SUBMIT    2</span>
+<span class="c1">#define EFI_BROWSER_ACTION_REQUEST_EXIT      3</span>
+</pre></div>
+</div>
+<p>The value <em>EFI_BROWSER_ACTION</em> _REQUEST <em>_NONE</em> indicates
+that no specific caller action is required. The value
+<em>EFI_BROWSER_ACTION</em> _REQUEST <em>_RESET</em> indicates that the
+caller requested a platform reset. The value
+<em>EFI_BROWSER_ACTION</em> _REQUEST <em>_SUBMIT</em> indicates that a
+callback requested that the browser submit all values and
+exit. The value <em>EFI_BROWSER_ACTION</em> _REQUEST <em>_EXIT</em>
+indicates that a callback requested that the browser exit
+without saving all values.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_HII_PLATFORM_SETUP_FORMSET_GUID \</span>
+  <span class="p">{</span> <span class="mh">0x93039971</span><span class="p">,</span> <span class="mh">0x8545</span><span class="p">,</span> <span class="mh">0x4b04</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0xb4</span><span class="p">,</span> <span class="mh">0x5e</span><span class="p">,</span> <span class="mh">0x32</span><span class="p">,</span> <span class="mh">0xeb</span><span class="p">,</span> <span class="mh">0x83</span><span class="p">,</span> <span class="mh">0x26</span><span class="p">,</span> <span class="mh">0x04</span><span class="p">,</span> <span class="mh">0x0e</span> <span class="p">}</span> <span class="p">}</span>
+
+<span class="c1">#define EFI_HII_DRIVER_HEALTH_FORMSET_GUID \</span>
+  <span class="p">{</span> <span class="mh">0xf22fc20c</span><span class="p">,</span> <span class="mh">0x8cf4</span><span class="p">,</span> <span class="mh">0x45eb</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0x8e</span><span class="p">,</span> <span class="mh">0x06</span><span class="p">,</span> <span class="mh">0xad</span><span class="p">,</span> <span class="mh">0x4e</span><span class="p">,</span> <span class="mh">0x50</span><span class="p">,</span> <span class="mh">0xb9</span><span class="p">,</span> <span class="mh">0x5d</span><span class="p">,</span> <span class="mh">0xd3</span> <span class="p">}</span> <span class="p">}</span>
+
+<span class="c1">#define EFI_HII_USER_CREDENTIAL_FORMSET_GUID \</span>
+  <span class="p">{</span> <span class="mh">0x337f4407</span><span class="p">,</span> <span class="mh">0x5aee</span><span class="p">,</span> <span class="mh">0x4b83</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0xb2</span><span class="p">,</span> <span class="mh">0xa7</span><span class="p">,</span> <span class="mh">0x4e</span><span class="p">,</span> <span class="mh">0xad</span><span class="p">,</span> <span class="mh">0xca</span><span class="p">,</span> <span class="mh">0x30</span><span class="p">,</span> <span class="mh">0x88</span><span class="p">,</span> <span class="mh">0xcd</span> <span class="p">}</span> <span class="p">}</span>
+
+<span class="c1">#define EFI_HII_REST_STYLE_FORMSET_GUID \</span>
+  <span class="p">{</span> <span class="mh">0x790217bd</span><span class="p">,</span> <span class="mh">0xbecf</span><span class="p">,</span> <span class="mh">0x485b</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0x91</span><span class="p">,</span> <span class="mh">0x70</span><span class="p">,</span> <span class="mh">0x5f</span><span class="p">,</span> <span class="mh">0xf7</span><span class="p">,</span> <span class="mh">0x11</span><span class="p">,</span> <span class="mh">0x31</span><span class="p">,</span> <span class="mh">0x8b</span><span class="p">,</span> <span class="mh">0x27</span> <span class="p">}</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The function completed successfully</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>No valid forms could be found to display.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>One of the parameters has an invalid value.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-form-browser2-protocol-browsercallback">
+<span id="efi-form-browser2-protocol-browsercallback-hii-configuration-processing-and-browser-protocol"></span><h3><span class="section-number">35.6.3. </span>EFI_FORM_BROWSER2_PROTOCOL.BrowserCallback()<a class="headerlink" href="#efi-form-browser2-protocol-browsercallback" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>This function is called by a callback handler to retrieve uncommitted state data from the browser.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">EFI_STATUS</span>
+  <span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_BROWSER_CALLBACK2</span> <span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span>    <span class="n">CONST</span> <span class="n">EFI_FORM_BROWSER2_PROTOCOL</span>     <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span>  <span class="n">OUT</span> <span class="n">UINTN</span>                              <span class="o">*</span><span class="n">ResultsDataSize</span><span class="p">,</span>
+  <span class="n">IN</span>  <span class="n">OUT</span> <span class="n">EFI_STRING</span>                         <span class="n">ResultsData</span><span class="p">,</span>
+  <span class="n">IN</span>    <span class="n">BOOLEAN</span>                              <span class="n">RetrieveData</span><span class="p">,</span>
+  <span class="n">IN</span>    <span class="n">CONST</span> <span class="n">EFI_GUID</span>                       <span class="o">*</span><span class="n">VariableGuid</span><span class="p">,</span> <span class="n">OPTIONAL</span>
+  <span class="n">IN</span>    <span class="n">CONST</span> <span class="n">CHAR16</span>                         <span class="o">*</span><span class="n">VariableName</span> <span class="n">OPTIONAL</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the <em>EFI_FORM_BROWSER2_PROTOCOL</em> instance.</p>
+</dd>
+<dt>ResultsDataSize</dt><dd><p>A pointer to the size of the buffer associated with ResultsData. On input, the size in bytes of <em>ResultsData</em>. On output, the size of data returned in <em>ResultsData</em>.</p>
+</dd>
+<dt>ResultsData</dt><dd><p>A string returned from an IFR browser or equivalent. The results string will have no routing information in them.</p>
+</dd>
+<dt>RetrieveData</dt><dd><p>A BOOLEAN field which allows an agent to retrieve (if RetrieveData = <strong>TRUE</strong>) data from the uncommitted browser state information or set (if RetrieveData = <strong>FALSE</strong>) data in the uncommitted browser state information.</p>
+</dd>
+<dt>VariableGuid</dt><dd><p>An optional field to indicate the target variable GUID name to use.</p>
+</dd>
+<dt>VariableName</dt><dd><p>An optional field to indicate the target human-readable variable name.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This service is typically called by a driver’s callback routine which was in turn called by the browser. The routine called this service in the browser to retrieve or set certain uncommitted state information that resides in the open formsets.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The results have been distributed or are awaiting distribution.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_BUFFER_TOO_SMALL</p></td>
+<td><p>The <em>ResultsDataSize</em> specified was too small to contain the results data.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>Uncommitted browser state is not available at the current stage of execution.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="hii-popup-protocol">
+<span id="hii-popup-protocol-hii-configuration-processing-and-browser-protocol"></span><h2><span class="section-number">35.7. </span>HII Popup Protocol<a class="headerlink" href="#hii-popup-protocol" title="Link to this heading"></a></h2>
+<section id="efi-hii-popup-protocol">
+<span id="efi-hii-popup-protocol-hii-configuration-processing-and-browser-protocol"></span><h3><span class="section-number">35.7.1. </span>EFI_HII_POPUP_PROTOCOL<a class="headerlink" href="#efi-hii-popup-protocol" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>This protocol provides services to display a popup window.</p>
+<p>The protocol is typically produced by the forms browser and consumed by a driver’s callback handler.</p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_HII_POPUP_PROTOCOL_GUID \\</span>
+<span class="p">{</span> <span class="mh">0x4311edc0</span><span class="p">,</span> <span class="mh">0x6054</span><span class="p">,</span> <span class="mh">0x46d4</span><span class="p">,</span> <span class="p">{</span> <span class="mh">0x9e</span><span class="p">,</span> <span class="mh">0x40</span><span class="p">,</span> <span class="mh">0x89</span><span class="p">,</span> <span class="mh">0x3e</span><span class="p">,</span> <span class="mh">0xa9</span><span class="p">,</span> <span class="mh">0x52</span><span class="p">,</span> <span class="mh">0xfc</span><span class="p">,</span> <span class="mh">0xcc</span>
+<span class="p">}</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Protocol Interface Structure</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+        <span class="n">UINT64</span>                <span class="n">Revision</span><span class="p">;</span>
+<span class="n">EFI_HII_CREATE_POPUP</span>          <span class="n">CreatePopup</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_HII_POPUP_PROTOCOL</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>Revision</dt><dd><p>Protocol revision</p>
+</dd>
+<dt>CreatePopup</dt><dd><p>Displays a popup window</p>
+</dd>
+</dl>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define *EFI_HII_POPUP_PROTOCOL_REVISION* 1</span>
+</pre></div>
+</div>
+</section>
+<section id="efi-hii-popup-protocol-createpopup">
+<span id="efi-hii-popup-protocol-createpopup-hii-configuration-processing-and-browser-protocol"></span><h3><span class="section-number">35.7.2. </span>EFI_HII_POPUP_PROTOCOL.CreatePopup()<a class="headerlink" href="#efi-hii-popup-protocol-createpopup" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Displays a popup window.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span> <span class="n">EFI_HII_CREATE_POPUP</span><span class="p">)</span> <span class="p">(</span>
+<span class="n">IN</span> <span class="n">EFI_HII_POPUP_PROTOCOL</span>              <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+<span class="n">IN</span> <span class="n">EFI_HII_POPUP_STYLE</span>                 <span class="n">PopupStyle</span><span class="p">,</span>
+<span class="n">IN</span> <span class="n">EFI_HII_POPUP_TYPE</span>                  <span class="n">PopupType</span><span class="p">,</span>
+<span class="n">EFI_HII_HANDLE</span>                         <span class="n">HiiHandle</span>
+<span class="n">IN</span> <span class="n">EFI_STRING_ID</span>                       <span class="n">Message</span><span class="p">,</span>
+<span class="n">OUT</span> <span class="n">EFI_HII_POPUP_SELECTION</span>            <span class="o">*</span><span class="n">UserSelection</span> <span class="n">OPTIONAL</span><span class="p">,</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the <em>EFI_HII_POPUP_PROTOCOL</em> instance.</p>
+</dd>
+<dt>PopupStyle</dt><dd><p>Popup style to use. <em>EFI_HII_POPUP_STYLE</em> is defined in the “Related Definitions” below.</p>
+</dd>
+<dt>PopupType</dt><dd><p>Type of the popup to display. <em>EFI_HII_POPUP_TYPE</em> is defined in the “Related Definitions” below.</p>
+</dd>
+<dt>HiiHandle</dt><dd><p>HII handle of the string pack containing <em>Message</em></p>
+</dd>
+<dt>Message</dt><dd><p>A message to display in the popup box.</p>
+</dd>
+<dt>UserSelection</dt><dd><p>User selection. <em>EFI_HII_POPUP_SELECTION</em> is defined in the “Related Definitions” below.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>CreatePopup()</em> function displays a modal message box that contains string specified by <em>Message</em>. Explicit line break characters can be used to specify a multi-line message (<a class="reference internal" href="33_Human_Interface_Infrastructure.html#common-control-codes"><span class="std std-ref">Common Control Codes</span></a> ). A popup window may contain user selectable options. The option selected by a user is returned via an optional <em>UserSelection</em> parameter.</p>
+<p>A list of options presented to a user is defined by the <em>PopupType</em>.</p>
+<p>The <em>PopupStyle</em> provides a hint to protocol implementation regarding nature of the message being displayed. The function may optionally use <em>PopupStyle</em> to customize visual appearance of the message box.</p>
+<p>EfiHiiPopupTypeOk is a simple popup window with a single user selectable option that can be used to acknowledge the message. If <em>UserSelection</em> is specified, it is set to EfiHiiPopupSelectionOk.</p>
+<p>EfiHiiPopupTypeOkCancel is a popup window with two user selectable options: OK and Cancel.</p>
+<p>EfiHiiPopupTypeYesNo is a popup window with two user selectable options: Yes and No.</p>
+<p>EfiHiiPopupTypeYesNoCancel is a popup window with three user selectable options: Yes, No, and Cancel.</p>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">enum</span> <span class="p">{</span>
+  <span class="n">EfiHiiPopupStyleInfo</span><span class="p">,</span>
+  <span class="n">EfiHiiPopupStyleWarning</span><span class="p">,</span>
+  <span class="n">EfiHiiPopupStyleError</span>
+<span class="p">}</span>   <span class="n">EFI_HII_POPUP_STYLE</span><span class="p">;</span>
+<span class="n">typedef</span> <span class="n">enum</span> <span class="p">{</span>
+  <span class="n">EfiHiiPopupTypeOk</span><span class="p">,</span>
+  <span class="n">EfiHiiPopupTypeOkCancel</span><span class="p">,</span>
+  <span class="n">EfiHiiPopupTypeYesNo</span><span class="p">,</span>
+<span class="n">EfiHiiPopupTypeYesNoCancel</span>
+<span class="p">}</span>   <span class="n">EFI_HII_POPUP_TYPE</span><span class="p">;</span>
+<span class="n">typedef</span> <span class="n">enum</span> <span class="p">{</span>
+  <span class="n">EfiHiiPopupSelectionOk</span><span class="p">,</span>
+  <span class="n">EfiHiiPopupSelectionCancel</span><span class="p">,</span>
+  <span class="n">EfiHiiPopupSelectionYes</span><span class="p">,</span>
+  <span class="n">EfiHiiPopupSelectionNo</span>
+<span class="p">}</span>   <span class="n">EFI_HII_POPUP_SELECTION</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><em>EFI_SUCCESS</em></p></td>
+<td><p>The popup box was successfully displayed</p></td>
+</tr>
+<tr class="row-even"><td><p><em>EFI_INVALID_PARAMETER</em></p></td>
+<td><p>HiiHandle and Message do not define is a valid HII string.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>EFI_INVALID_PARAMETER</em></p></td>
+<td><p>PopupType is not one of the values defined by this specification.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>EFI_OUT_OF_RESOURCES</em></p></td>
+<td><p>There are not enough resources available to display the popup box.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="34_HII_Protocols.html" class="btn btn-neutral float-left" title="34. HII Protocols" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="36_User_Identification.html" class="btn btn-neutral float-right" title="36. User Identification" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, UEFI Forum, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

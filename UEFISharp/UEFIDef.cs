@@ -22,6 +22,8 @@ using CHAR8 = System.Byte;  // raw 8-bit character / UTF-8 byte
 
 using BOOLEAN = System.Boolean;
 
+// (No extra compatibility aliases here — use the explicit IPV4Address/IPV6Address types defined in IPAddress.cs)
+
 namespace EFI;
 
 public static partial class EFIConsts

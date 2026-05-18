@@ -4,18 +4,53 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>preview</LangVersion>
 	<PublishAot>true</PublishAot>
-	<TrimMode>link</TrimMode>
+	  <TrimMode>None</TrimMode>
 	<PublishSingleFile>true</PublishSingleFile>
 	<!-- Keep implicit framework references disabled; compile against UEFIRefs minimal reference assemblies -->
 	<DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+	<NoStdLib>true</NoStdLib>
+	<NoConfig>true</NoConfig>
+	<RuntimeMetadataVersion>v4.0.30319</RuntimeMetadataVersion>
+	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+
+	<IlcSystemModule>UEFIRefs</IlcSystemModule>
+	<EntryPointSymbol>EfiMain</EntryPointSymbol>
+	<LinkerSubsystem>EFI_APPLICATION</LinkerSubsystem>
+	  <InvariantGlobalization>true</InvariantGlobalization>
+
+	  <Platforms>x86;x64;ARM64</Platforms>
+	  <Configurations>Debug;Release</Configurations>
+	  <OutDir>$(SolutionDir)bin\$(Platform)\UEFISharp\</OutDir>
+	  <DefineConstants>$(DefineConstants);$(Configuration)</DefineConstants>
+	  <DefineConstants>$(DefineConstants);$(Platform)</DefineConstants>
   </PropertyGroup>
-	<ItemGroup>
+	<ItemGroup>	
+	<!-- Keep a ProjectReference so UEFIRefs is built first, but don't let MSBuild auto-add its assembly
+		 as a framework reference. We'll add an explicit Reference to the built DLL instead. -->
+	<ProjectReference Include="$(SolutionDir)\UEFIRefs\UEFIRefs.csproj">
+	  <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+	</ProjectReference>
 
-	</ItemGroup>
-
-
-  <ItemGroup>
-	<!-- Reference the small reference-assembly project that provides minimal attributes/types -->
-	<ProjectReference Include="..\UEFIRefs\UEFIRefs.csproj" />
+	<!-- Explicitly reference the small reference-assembly output that provides minimal attributes/types -->
+	<Reference Include="System.Private.CoreLib">
+	  <Private>false</Private>
+	</Reference>
   </ItemGroup>
+
+	<!-- The project file pretends this is .NET, but it's not .NET. Remove framework-provided reference assemblies
+		that the SDK injected. We intentionally do NOT remove @(ReferencePath) here so that the explicit
+		Reference to UEFIRefs\System.Private.CoreLib.dll remains available to the compiler. -->
+	<Target Name="CustomizeReferences" AfterTargets="ResolveAssemblyReferences">
+		<ItemGroup>
+			<ReferencePathWithRefAssemblies Remove="@(ReferencePathWithRefAssemblies)" />
+		</ItemGroup>
+	</Target>
+
+	<!-- The AOT compiler would want to mirror these as AppContext switches. Prevent that. -->
+	<Target Name="RemoveHostConfigurationOptions" BeforeTargets="WriteIlcRspFileForCompilation" DependsOnTargets="PrepareForILLink">
+		<ItemGroup>
+			<RuntimeHostConfigurationOption Remove="@(RuntimeHostConfigurationOption)" />
+		</ItemGroup>
+	</Target>
 </Project>

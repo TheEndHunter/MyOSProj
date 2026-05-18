@@ -1,14 +1,11 @@
 using System.Runtime.InteropServices;
 
-using EFI;
-using EFI.Protocols.IO.Peripheral;
-
-namespace EF.Protocols.IO.PeripheralI;
+namespace EFI.Protocols.IO.Peripheral;
 
 public static partial class EFIConsts
 {
     public static readonly Guid SimplePointerProtocolGuid =
-        new(0x31878C87, 0x0B75, 0x11D5, 0x9A, 0x4F, 0x0, 0x90, 0x27, 0x3F, 0xC1, 0x4D);
+        new(0x387477C3, 0x69C7, 0x11D2, 0x8E, 0x39, 0x00, 0xA0, 0xC9, 0x69, 0x72, 0x3B);
 }
 
 public unsafe delegate Status SimplePointerResetFunc(SimplePointerProtocol* self, bool extendedVerification);

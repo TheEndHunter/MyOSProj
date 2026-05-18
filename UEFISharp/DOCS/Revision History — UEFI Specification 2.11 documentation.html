@@ -1,0 +1,4151 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Revision History &mdash; UEFI Specification 2.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=f2209469" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/style.css?v=faba8a36" />
+      <link rel="stylesheet" type="text/css" href="../_static/theme-overrides.css?v=84235ce0" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=2de06f63"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="1. Introduction" href="../01_Introduction.html" />
+    <link rel="prev" title="List of Figures" href="List_of_Figures.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            UEFI Specification
+          </a>
+              <div class="version">
+                2.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="List_of_Tables.html">List of Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="List_of_Figures.html">List of Figures</a></li>
+<li><a class="reference internal" href="#">Revision History</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../01_Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../02_Overview.html">2. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../03_Boot_Manager.html">3. Boot Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../04_EFI_System_Table.html">4. EFI System Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../05_GUID_Partition_Table_Format.html">5. GUID Partition Table (GPT) Disk Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../06_Block_Transition_Table_Layout.html">6. Block Translation Table (BTT) Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../07_Services_Boot_Services.html">7. Services — Boot Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../08_Services_Runtime_Services.html">8. Services — Runtime Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../09_Protocols_EFI_Loaded_Image.html">9. Protocols - EFI Loaded Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../10_Protocols_Device_Path_Protocol.html">10. Protocols – Device Path Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../11_Protocols_UEFI_Driver_Model.html">11. Protocols — UEFI Driver Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../12_Protocols_Console_Support.html">12. Protocols — Console Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../13_Protocols_Media_Access.html">13. Protocols – Media Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../14_Protocols_PCI_Bus_Support.html">14. Protocols — PCI Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../15_Protocols_SCSI_Driver_Models_and_Bus_Support.html">15. Protocols — SCSI Driver Models and Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../16_Protocols_iSCSI_Boot.html">16. Protocols — iSCSI Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../17_Protocols_USB_Support.html">17. Protocols — USB Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../18_Protocols_Debugger_Support.html">18. Protocols — Debugger Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../19_Protocols_Compression_Algorithm_Specification.html">19. Protocols — Compression Algorithm Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../20_Protocols_ACPI_Protocols.html">20. Protocols — ACPI Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../21_Protocols_String_Services.html">21. Protocols — String Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../22_EFI_Byte_Code_Virtual_Machine.html">22. EFI Byte Code Virtual Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../23_Firmware_Update_and_Reporting.html">23. Firmware Update and Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../24_Network_Protocols_SNP_PXE_BIS.html">24. Network Protocols — SNP, PXE, BIS and HTTP Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../25_Network_Protocols_Managed_Network.html">25. Network Protocols - Managed Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../26_Network_Protocols_Bluetooth.html">26. Network Protocols — Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../27_Network_Protocols_VLAN_and_EAP.html">27. Network Protocols — VLAN, EAP, Wi-Fi and Supplicant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../28_Network_Protocols_TCP_IP_and_Configuration.html">28. Network Protocols — TCP, IP, IPsec, FTP, TLS and Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../29_Network_Protocols_ARP_and_DHCP.html">29. Network Protocols — ARP, DHCP, DNS, HTTP and REST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../30_Network_Protocols_UDP_and_MTFTP.html">30. Network Protocols — UDP and MTFTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../31_EFI_Redfish_Service_Support.html">31. EFI Redfish Service Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../32_Secure_Boot_and_Driver_Signing.html">32. Secure Boot and Driver Signing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../33_Human_Interface_Infrastructure.html">33. Human Interface Infrastructure Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../34_HII_Protocols.html">34. HII Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../35_HII_Configuration_Processing_and_Browser_Protocol.html">35. HII Configuration Processing and Browser Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../36_User_Identification.html">36. User Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../37_Secure_Technologies.html">37. Secure Technologies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../38_Confidential_Computing.html">38. Confidential Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../39_Micellaneous_Protocols.html">39. Miscellaneous Protocols</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Apx_A_GUID_and_Time_Formats.html">A. GUID and Time Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Apx_B_Console.html">B. Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Apx_C_Device_Path_Examples.html">C. Device Path Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Apx_D_Status_Codes.html">D. Status Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Apx_E_Universal_Network_Driver_Interfaces.html">E. Universal Network Driver Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Apx_F_Using_the_Simple_Pointer_Protocol.html">F. Using the Simple Pointer Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Apx_G_Using_the_EFI_Extended_SCSI_Pass_Thru_Protocol.html">G. Using the EFI Extended SCSI Pass Thru Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Apx_H_Compression_Source_Code.html">H. Compression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Apx_I_Decompression_Source_Code.html">I. Decompression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Apx_J_EFI_Byte_Code_Virtual_Machine_Opcode_List.html">J. EFI Byte Code Virtual Machine Opcode List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Apx_K_Alphabetic_Function_Lists.html">K. Alphabetic Function Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Apx_L_EFI_1.10_Protocol_Changes_and_Deprecation_List.html">L. EFI 1.10 Protocol Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html">M. Formats — Language Codes and Language Code Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Apx_N_Common_Platform_Error_Record.html">N. Common Platform Error Record (CPER)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Apx_O_UEFI_ACPI_Data_Table.html">O. UEFI ACPI Data Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Apx_P_Hardware_Error_Record_Persistence_Usage.html">P. Hardware Error Record Persistence Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Apx_Q_References.html">Q. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Apx_R_Glossary.html">R. Glossary</a></li>
+</ul>
+
+    <a href= "../genindex.html">Index</a>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">UEFI Specification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Revision History</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="revision-history">
+<h1>Revision History<a class="headerlink" href="#revision-history" title="Link to this heading"></a></h1>
+</section>
+<p>Many people have contributed to the contents of this specification, including the following:</p>
+<blockquote>
+<div><p>* UEFI Specification Working Group (USWG)</p>
+<p>* Tianocore Community Members</p>
+<p>* Others noted in the Revision History below</p>
+</div></blockquote>
+<p><strong>Changes in this release</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10.0%" />
+<col style="width: 60.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Revision</strong></p></td>
+<td><p><strong>Issue # - Description</strong></p></td>
+<td><p><strong>Modified/Added Content</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>2.11</p></td>
+<td><p>2365 - New Memory Attribute for hot plug</p></td>
+<td><p><a class="reference internal" href="../07_Services_Boot_Services.html#efi-boot-services-getmemorymap"><span class="std std-numref">Section 7.2.3</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.11</p></td>
+<td><p>2371 - Correct the description of EFI_KMS_PROTOCOL.DeleteKey(), KeyDescriptors</p></td>
+<td><p><a class="reference internal" href="../37_Secure_Technologies.html#efi-key-management-service-protocol"><span class="std std-numref">Section 37.3.1</span></a>, <a class="reference internal" href="../37_Secure_Technologies.html#efi-kms-protocol-deletekey"><span class="std std-numref">Section 37.3.2.5</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.11</p></td>
+<td><p>2384 - Mandate the UEFI Arm implementation to allocate pages from the 48-bit address range first</p></td>
+<td><p><a class="reference internal" href="../02_Overview.html#aarch64-platforms"><span class="std std-numref">Section 2.3.6</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.11</p></td>
+<td><p>2386 - EFI_RNG_PROTOCOL Describe the DRBG algorithm used in the Arm RNDR instruction</p></td>
+<td><p><a class="reference internal" href="../37_Secure_Technologies.html#efi-rng-algorithm-definitions"><span class="std std-numref">Section 37.5.4</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.11</p></td>
+<td><p>2388 - Add support for Proxy Host URI in HTTP Boot</p></td>
+<td><p><a class="reference internal" href="../24_Network_Protocols_SNP_PXE_BIS.html#use-in-corporate-environment"><span class="std std-numref">Section 24.7.2.1</span></a>, <a class="reference internal" href="../24_Network_Protocols_SNP_PXE_BIS.html#device-path-network-protocols-snp-pxe-bis"><span class="std std-numref">Section 24.7.3.1</span></a>, <a class="reference internal" href="../24_Network_Protocols_SNP_PXE_BIS.html#concept-of-message-exchange-in-http-boot-scenario-with-proxy-host"><span class="std std-numref">Section 24.7.10</span></a>, <a class="reference internal" href="../29_Network_Protocols_ARP_and_DHCP.html#efi-http-protocol-request"><span class="std std-numref">Section 29.6.6</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.11</p></td>
+<td><p>2393 - Arm CPER processor error section, support FEAT_D128</p></td>
+<td><p><a class="reference internal" href="../Apx_N_Common_Platform_Error_Record.html#arm-128-bit-translation-table-base-registers-type9"><span class="std std-numref">Table N.31</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.11</p></td>
+<td><p>2431 - CodeFirst: Adjust LoongArch exception and interrupt types</p></td>
+<td><p><a class="reference internal" href="../18_Protocols_Debugger_Support.html#efi-debug-support-protocol-registerexceptioncallback"><span class="std std-numref">Section 18.2.5</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.11</p></td>
+<td><p>2437 - CodeFirst: Add new HTTP Boot Callback Type</p></td>
+<td><p><a class="reference internal" href="../24_Network_Protocols_SNP_PXE_BIS.html#efi-http-boot-callback-protocol-callback"><span class="std std-numref">Section 24.7.13</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.11</p></td>
+<td><p>2440 - CPER definition for FRU memory poison</p></td>
+<td><p><a class="reference internal" href="../Apx_N_Common_Platform_Error_Record.html#fru-memory-poison-section"><span class="std std-numref">Section N.2.15</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.11</p></td>
+<td><p>2443 - Add Storage Device Class for EFI_BOOT_MANAGER_POLICY_CONNECT_DEVICE_CLASS</p></td>
+<td><p><a class="reference internal" href="../03_Boot_Manager.html#efi-boot-manager-policy-protocol-connectdeviceclass"><span class="std std-numref">Section 3.2.3</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.11</p></td>
+<td><p>2448 - update UEFI spec version to 2.11</p></td>
+<td><p>Title page</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.11</p></td>
+<td><p>2449 - RISC-V AP-TEE Confidential Computing Extension for UEFI</p></td>
+<td><p><a class="reference internal" href="../38_Confidential_Computing.html#risc-v-ap-tee"><span class="std std-numref">Section 38.4.2</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.11</p></td>
+<td><p>2453 - Add SM2, SM3 crypto algorithm</p></td>
+<td><p><a class="reference internal" href="../32_Secure_Boot_and_Driver_Signing.html#pe-coff-certificates-types-and-uefi-signature-database-certificate-types"><span class="std std-numref">Table 32.4</span></a>, <a class="reference internal" href="../32_Secure_Boot_and_Driver_Signing.html#signature-database"><span class="std std-numref">Section 32.4.1</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.11</p></td>
+<td><p>2457- Code-First: Changes to CPER definition for PCIe</p></td>
+<td><p><a class="reference internal" href="../Apx_N_Common_Platform_Error_Record.html#pci-express-error-record"><span class="std std-numref">Table N.34</span></a>, <a class="reference internal" href="../Apx_N_Common_Platform_Error_Record.html#cxl-protocol-error-section"><span class="std std-numref">Table N.42</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.11</p></td>
+<td><p>2462 - Fix the Type mnemonic description in the ARM Processor Error Information Structure</p></td>
+<td><p><a class="reference internal" href="../Apx_N_Common_Platform_Error_Record.html#arm-processor-error-information"><span class="std std-numref">Section N.2.4.4.1</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.11</p></td>
+<td><p>2468 - Elaborate on EFI_LOADED_IMAGE_PROTOCOL.Unload() usage</p></td>
+<td><p><a class="reference internal" href="../09_Protocols_EFI_Loaded_Image.html#efi-loaded-image-protocol"><span class="std std-numref">Section 9.1</span></a>, <a class="reference internal" href="../09_Protocols_EFI_Loaded_Image.html#efi-loaded-image-protocol-unload"><span class="std std-numref">Section 9.1.2</span></a>, <a class="reference internal" href="../09_Protocols_EFI_Loaded_Image.html#efi-loaded-image-device-path-protocol"><span class="std std-numref">Section 9.2</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.11</p></td>
+<td><p>2475 - Typo in the EFI_TABLE_HEADER “HeaderSize” field description</p></td>
+<td><p><a class="reference internal" href="../04_EFI_System_Table.html#efi-table-header"><span class="std std-numref">Section 4.2</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.11</p></td>
+<td><p>2476 - Correct the section header for EFI_CC_MEASUREMENT_PROTOCOL.GetEventLog</p></td>
+<td><p><a class="reference internal" href="../38_Confidential_Computing.html#efi-cc-measurement-protocol-geteventlog"><span class="std std-numref">Section 38.2.3</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.11</p></td>
+<td><p>2480 - Deprecate CryptoIndications variables</p></td>
+<td><p>Modified <a class="reference internal" href="../03_Boot_Manager.html#globally-defined-variables"><span class="std std-numref">Section 3.3</span></a>, and removed Section 32.5 Firmware/OS Crypto Algorithm Exchange</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.11</p></td>
+<td><p>2483 - Collection of Non-Functional Fixes</p></td>
+<td><p>Various content and references in spec</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Changes in previous releases</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10.0%" />
+<col style="width: 60.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Revision</strong></p></td>
+<td><p><strong>Issue # - Description</strong></p></td>
+<td><p><strong>Modified/Added Content</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>2.10A</p></td>
+<td><p>2016 - Compression/decompression clean up</p></td>
+<td><p><a class="reference internal" href="../Apx_I_Decompression_Source_Code.html#appendix-i-decompression-source-code-apx-i-decompression-source-code"><span class="std std-numref">Section I</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.10A</p></td>
+<td><p>2359 - Update the PASS_THRU_PROTOCOL to Enhance the logic for AtaPassThruGetNextPort()/AtaPassThruGetNext</p></td>
+<td><p><a class="reference internal" href="../13_Protocols_Media_Access.html#efi-ata-pass-thru-protocol-getnextdevice"><span class="std std-numref">Section 13.13.4</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.10A</p></td>
+<td><p>2360 - Clarify that EFI_MEMORY_WB and _WT share ability attributes on AArch64</p></td>
+<td><p><a class="reference internal" href="../02_Overview.html#map-efi-cacheability-attributes-to-aarch64-memory-types"><span class="std std-numref">Table 2.5</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.10A</p></td>
+<td><p>2367 - EFI_FILE_PROTOCOL.Open() suggests that a file may be opened relative to a regular file</p></td>
+<td><p><a class="reference internal" href="../13_Protocols_Media_Access.html#efi-file-protocol"><span class="std std-numref">Section 13.5.1</span></a>, <a class="reference internal" href="../13_Protocols_Media_Access.html#efi-file-protocol-open"><span class="std std-numref">Section 13.5.2</span></a>, <a class="reference internal" href="../13_Protocols_Media_Access.html#efi-file-protocol-close"><span class="std std-numref">Section 13.5.3</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.10A</p></td>
+<td><p>2368 - mixed up error codes for EFI_FILE_PROTOCOL.OpenEx()</p></td>
+<td><p><a class="reference internal" href="../13_Protocols_Media_Access.html#efi-file-protocol-writeex"><span class="std std-numref">Section 13.5.9</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.10A</p></td>
+<td><p>2369 - EFI_TABLE_HEADER Revision field cannot represent version 2.10</p></td>
+<td><p><a class="reference internal" href="../01_Introduction.html#revision-numbers"><span class="std std-numref">Section 1.9.9</span></a>, <a class="reference internal" href="../04_EFI_System_Table.html#efi-table-header"><span class="std std-numref">Section 4.2</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.10A</p></td>
+<td><p>2373 - Typo in spec EFIBOOTBOOT and EFIBOOTBOOT{machine type short-name}.EFI type</p></td>
+<td><p><a class="reference internal" href="../03_Boot_Manager.html#removable-media-boot-behavior"><span class="std std-numref">Section 3.5.1.1</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.10A</p></td>
+<td><p>2376 - Update the RISC-V Platforms section for more concise language</p></td>
+<td><p><a class="reference internal" href="../02_Overview.html#risc-v-platforms"><span class="std std-numref">Section 2.3.7</span></a>, <a class="reference internal" href="../02_Overview.html#handoff-state-5"><span class="std std-numref">Section 2.3.7.1</span></a>, <a class="reference internal" href="../02_Overview.html#enabling-paging-or-alternate-translations-in-an-application-3"><span class="std std-numref">Section 2.3.7.2</span></a>, <a class="reference internal" href="../02_Overview.html#detailed-calling-convention-2"><span class="std std-numref">Section 2.3.7.3</span></a>, <a class="reference internal" href="../02_Overview.html#loongarch-platforms"><span class="std std-numref">Section 2.3.8</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.10A</p></td>
+<td><p>2408 - Recommended PCI Device Driver Layout missing RV and LoongArch</p></td>
+<td><p><a class="reference internal" href="../14_Protocols_PCI_Bus_Support.html#recommended-pci-device-driver-layout"><span class="std std-numref">Table 14.18</span></a>, <a class="reference internal" href="../14_Protocols_PCI_Bus_Support.html#pci-hot-plug-events"><span class="std std-numref">Section 14.4.25</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.10A</p></td>
+<td><p>2411 - Fix incorrect references in the Platform-Specific Elements section.</p></td>
+<td><p><a class="reference internal" href="../02_Overview.html#platform-specific-elements"><span class="std std-numref">Section 2.6.2</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.10A</p></td>
+<td><p>2412 - Update references and remove extraneous text.</p></td>
+<td><p><a class="reference internal" href="../14_Protocols_PCI_Bus_Support.html#pci-option-roms"><span class="std std-numref">Section 14.4.21</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.10A</p></td>
+<td><p>2415 - Update reference links in chapters 8 and 32.</p></td>
+<td><p><a class="reference internal" href="../08_Services_Runtime_Services.html#services-runtime-services"><span class="std std-numref">Section 8</span></a>, <a class="reference internal" href="../32_Secure_Boot_and_Driver_Signing.html#clearing-the-platform-key"><span class="std std-numref">Section 32.3.2</span></a>, <a class="reference internal" href="../32_Secure_Boot_and_Driver_Signing.html#signature-database-update"><span class="std std-numref">Section 32.5.3</span></a>, <a class="reference internal" href="../32_Secure_Boot_and_Driver_Signing.html#device-signature-database-update"><span class="std std-numref">Section 32.6.3</span></a>, <a class="reference internal" href="../32_Secure_Boot_and_Driver_Signing.html#uefi-image-variable-guid-variable-name"><span class="std std-numref">Section 32.7.1</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.10A</p></td>
+<td><p>2417 - Remove old text from the VendorTable definition for the EFI_CONFIGURATION_TABLE</p></td>
+<td><p><a class="reference internal" href="../04_EFI_System_Table.html#efi-configuration-table"><span class="std std-numref">Section 4.6.1</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.10A</p></td>
+<td><p>2421 - Update DEFAULT_TTL to IANA’s default value of 64.</p></td>
+<td><p><a class="reference internal" href="../24_Network_Protocols_SNP_PXE_BIS.html#filter-operations-for-udp-readwrite-functions"><span class="std std-numref">Section 24.3.5</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.10A</p></td>
+<td><p>2428 - Update Status Codes Returned for EFI_FIRMWARE_MANAGEMENT_PROTOCOL.GetImageInfo()</p></td>
+<td><p><a class="reference internal" href="../23_Firmware_Update_and_Reporting.html#efi-firmware-mamagement-protocol-getimageinfo"><span class="std std-numref">Section 23.1.2</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.10A</p></td>
+<td><p>2438 - Wrong Text Device Node for NVDIMM Namespace path</p></td>
+<td><p><a class="reference internal" href="../10_Protocols_Device_Path_Protocol.html#device-node-table"><span class="std std-numref">Table 10.67</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.10A</p></td>
+<td><p>2439 - Include ACPI Device Path Subtype 4 for NVDIMM Device</p></td>
+<td><p><a class="reference internal" href="../10_Protocols_Device_Path_Protocol.html#device-node-table"><span class="std std-numref">Table 10.67</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.10A</p></td>
+<td><p>2445 - Fix typos and other cleanup</p></td>
+<td><p><a class="reference internal" href="../03_Boot_Manager.html#removable-media-boot-behavior"><span class="std std-numref">Section 3.5.1.1</span></a>, <a class="reference internal" href="../08_Services_Runtime_Services.html#delivery-of-capsules-via-file-on-mass-storage-device"><span class="std std-numref">Section 8.5.5</span></a>, <a class="reference internal" href="../18_Protocols_Debugger_Support.html#id5"><span class="std std-numref">Section 18.2.2</span></a>, <a class="reference internal" href="../29_Network_Protocols_ARP_and_DHCP.html#efi-dhcp6-protocol-parse"><span class="std std-numref">Section 29.3.13</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.10A</p></td>
+<td><p>2447 - Undefined behavior of SetVariable(EFI_VARIABLE_APPEND_WRITE) for non-existent variable</p></td>
+<td><p><a class="reference internal" href="../08_Services_Runtime_Services.html#setvariable"><span class="std std-numref">Section 8.2.3</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.10A</p></td>
+<td><p>2455 - Precedence of return codes for QueryVariableInfo</p></td>
+<td><p><a class="reference internal" href="../08_Services_Runtime_Services.html#queryvariableinfo"><span class="std std-numref">Section 8.2.4</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.10A</p></td>
+<td><p>2456 - Remove deprecated content</p></td>
+<td><p>various content and references in spec</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.10A</p></td>
+<td><p>2462 - Arm CPER Processor Error Type values defined incorrectly</p></td>
+<td><p><a class="reference internal" href="../Apx_N_Common_Platform_Error_Record.html#arm-processor-error-information-structure"><span class="std std-numref">Table N.17</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.10</p></td>
+<td><p>2205 - Enabling SHA-384/SHA-512 signing scheme for Authenticated Variables</p></td>
+<td><p><a class="reference internal" href="../08_Services_Runtime_Services.html#using-the-efi-variable-authentication-2-descriptor"><span class="std std-numref">Section 8.2.6</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.10</p></td>
+<td><p>2207 - EFI_SECURITY_VIOLATION can’t be returned by EFI_FIRMWARE_MANAGEMENT_PROTOCOL.GetImage()</p></td>
+<td><p><a class="reference internal" href="../23_Firmware_Update_and_Reporting.html#efi-firmware-management-protocol-getimage"><span class="std std-numref">Section 23.1.3</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.10</p></td>
+<td><p>2217 - Device Authentication Signature Database</p></td>
+<td><p><a class="reference internal" href="../03_Boot_Manager.html#globally-defined-variables"><span class="std std-numref">Section 3.3</span></a>, <a class="reference internal" href="../32_Secure_Boot_and_Driver_Signing.html#signature-database"><span class="std std-numref">Section 32.4.1</span></a>, <a class="reference internal" href="../32_Secure_Boot_and_Driver_Signing.html#device-authentication"><span class="std std-numref">Section 32.6</span></a>, <a class="reference internal" href="../32_Secure_Boot_and_Driver_Signing.html#uefi-device-signature-variable-guid-and-variable-name"><span class="std std-numref">Section 32.7.2</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.10</p></td>
+<td><p>2229 - Support ISA-specific memory attributes in descriptors</p></td>
+<td><p><a class="reference internal" href="../02_Overview.html#memory-types"><span class="std std-numref">Section 2.3.6.1</span></a>, <a class="reference internal" href="../07_Services_Boot_Services.html#efi-boot-services-getmemorymap"><span class="std std-numref">Section 7.2.3</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.10</p></td>
+<td><p>2247 - Support crypto agile</p></td>
+<td><p><a class="reference internal" href="../02_Overview.html#cryptographic-algorithm-requirement"><span class="std std-numref">Section 2.6.5</span></a>, <a class="reference internal" href="../08_Services_Runtime_Services.html#using-the-efi-variable-authentication-3-descriptor"><span class="std std-numref">Section 8.2.5</span></a>, <a class="reference internal" href="../08_Services_Runtime_Services.html#using-the-efi-variable-authentication-2-descriptor"><span class="std std-numref">Section 8.2.6</span></a>, <a class="reference internal" href="../27_Network_Protocols_VLAN_and_EAP.html#eap-protocol"><span class="std std-numref">Section 27.2</span></a>, <a class="reference internal" href="../28_Network_Protocols_TCP_IP_and_Configuration.html#efi-tls-protocols"><span class="std std-numref">Section 28.9</span></a>, <a class="reference internal" href="../32_Secure_Boot_and_Driver_Signing.html#firmware-os-key-exchange-creating-trust-relationships"><span class="std std-numref">Section 32.3</span></a>, <a class="reference internal" href="../32_Secure_Boot_and_Driver_Signing.html#authorization-process"><span class="std std-numref">Section 32.5.3.3</span></a>, <a class="reference internal" href="../37_Secure_Technologies.html#pkcs7-verify-protocol"><span class="std std-numref">Section 37.4</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.10</p></td>
+<td><p>2262 - Add Memory Protection proposal - UEFI_MEMORY_ATTRIBUTE protocol</p></td>
+<td><p><a class="reference internal" href="../37_Secure_Technologies.html#efi-memory-attribute-protocol"><span class="std std-numref">Section 37.7.1</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.10</p></td>
+<td><p>2266 - Code First - Image Execution Table - revocations of hashes (Samer El-Haj-Mahmoud)</p></td>
+<td><p><a class="reference internal" href="../32_Secure_Boot_and_Driver_Signing.html#image-execution-information-table"><span class="std std-numref">Section 32.4.2</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.10</p></td>
+<td><p>2271 - Introduce UEFI Conformance Profiles</p></td>
+<td><p><a class="reference internal" href="../02_Overview.html#requirements"><span class="std std-numref">Section 2.6</span></a>, <a class="reference internal" href="../04_EFI_System_Table.html#efi-conformance-profile-table"><span class="std std-numref">Section 4.6.4</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.10</p></td>
+<td><p>2277 - Code first - Uart() UEFI DevicePath binary/text confusion issue (Samer El-Haj-Mahmoud)</p></td>
+<td><p><a class="reference internal" href="../10_Protocols_Device_Path_Protocol.html#text-device-node-reference"><span class="std std-numref">Section 10.6.1.6</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.10</p></td>
+<td><p>2278 - AARCH64 binding requirement for an OS calling RT services on platforms with SME</p></td>
+<td><p><a class="reference internal" href="../02_Overview.html#aarch64-platforms"><span class="std std-numref">Section 2.3.6</span></a>, <a class="reference internal" href="../02_Overview.html#detailed-calling-convention-1"><span class="std std-numref">Section 2.3.6.4</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.10</p></td>
+<td><p>2291 - Support crypto agile - Address crypto agile compatibility</p></td>
+<td><p>[deprecated in UEFI 2.11]</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.10</p></td>
+<td><p>2292 - Forward Control Flow Guard Instruction runtime indicator</p></td>
+<td><p><a class="reference internal" href="../04_EFI_System_Table.html#efi-memory-attributes-table"><span class="std std-numref">Section 4.6.3</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.10</p></td>
+<td><p>2313 - Add LoongArch architecture support to UEFI specification</p></td>
+<td><p><a class="reference internal" href="../02_Overview.html#loongarch-platforms"><span class="std std-numref">Section 2.3.8</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.10</p></td>
+<td><p>2315 - Add NVM Express over Fabrics messaging device path AND NVMe Trademark updates</p></td>
+<td><p><a class="reference internal" href="../06_Block_Transition_Table_Layout.html#block-translation-table-btt-background"><span class="std std-numref">Section 6.1</span></a>, <a class="reference internal" href="../10_Protocols_Device_Path_Protocol.html#nvme-over-fabric-namespace-device-path-format"><span class="std std-numref">Table 10.52</span></a>, <a class="reference internal" href="../10_Protocols_Device_Path_Protocol.html#nvme-over-fabric-namespace-device-path"><span class="std std-numref">Section 10.3.4.32</span></a>, <a class="reference internal" href="../10_Protocols_Device_Path_Protocol.html#nvme-over-fabric-namespace-device-path-example"><span class="std std-numref">Section 10.3.4.33</span></a>, <a class="reference internal" href="../10_Protocols_Device_Path_Protocol.html#device-node-table"><span class="std std-numref">Table 10.67</span></a>, <a class="reference internal" href="../13_Protocols_Media_Access.html#efi-nvm-express-pass-thru-protocol-passthru"><span class="std std-numref">Section 13.15.2</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.10</p></td>
+<td><p>2317 - Add confidential computing extension for UEFI</p></td>
+<td><p><a class="reference internal" href="../38_Confidential_Computing.html#confidential-computing"><span class="std std-numref">Section 38</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.10</p></td>
+<td><p>2318 - Update boot requirement for RISC-V platform</p></td>
+<td><p><a class="reference internal" href="../02_Overview.html#handoff-state-5"><span class="std std-numref">Section 2.3.7.1</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.10</p></td>
+<td><p>2320 - Remove EBBR Conformance profile</p></td>
+<td><p><a class="reference internal" href="../04_EFI_System_Table.html#efi-conformance-profile-table"><span class="std std-numref">Section 4.6.4</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.10</p></td>
+<td><p>2329 - Update the UEFI to Version 2.10</p></td>
+<td><p><a class="reference internal" href="../04_EFI_System_Table.html#efi-system-table-1"><span class="std std-numref">Section 4.3</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.10</p></td>
+<td><p>2336 - Feedback on UEFI 2.10 draft</p></td>
+<td><p><em>sections throughout</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.10</p></td>
+<td><p>2337 - Code First -Add LoongArch to section UEFI Images Boot Manager PCI Option ROMs and Debugger Support sections (Li Chao)</p></td>
+<td><p><em>sections throughout</em></p></td>
+</tr>
+<tr class="row-even"><td><p>2.10</p></td>
+<td><p>2339 - Re-add RSA 4k support for UEFI 2.10 crypto agility</p></td>
+<td><p>[deprecated in UEFI 2.11]</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.10</p></td>
+<td><p>2342 - GetHealthStatus: Make the statement and table consistent for EFI_UNSUPPORTED for Controller Handle Null case</p></td>
+<td><p><a class="reference internal" href="../11_Protocols_UEFI_Driver_Model.html#efi-driver-health-protocol-gethealthstatus-protocols-uefi-driver-model"><span class="std std-numref">Section 11.10.2</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.9A</p></td>
+<td><p>2225 - Clarify the specification requirements around processing Boot#### variable</p></td>
+<td><p><a class="reference internal" href="../03_Boot_Manager.html#required-system-preparation-applications"><span class="std std-numref">Section 3.1.7</span></a>, <a class="reference internal" href="../03_Boot_Manager.html#global-variables"><span class="std std-numref">Table 3.1</span></a>, <a class="reference internal" href="../07_Services_Boot_Services.html#efi-boot-services-createeventex"><span class="std std-numref">Section 7.1.2</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.9A</p></td>
+<td><p>2227 - Clarify NVMe device path EUI-64 byte order</p></td>
+<td><p><a class="reference internal" href="../10_Protocols_Device_Path_Protocol.html#nvm-express-namespace-messaging-device-path-node"><span class="std std-numref">Section 10.3.4.21</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.9A</p></td>
+<td><p>2235 - Clarify EFI_LOAD_OPTION.FilePathList[] device path definition</p></td>
+<td><p><a class="reference internal" href="../03_Boot_Manager.html#load-options"><span class="std std-numref">Section 3.1.3</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.9A</p></td>
+<td><p>2243 - Removing old references to Wired for Management (WfM)</p></td>
+<td><p><a class="reference internal" href="../03_Boot_Manager.html#network-booting"><span class="std std-numref">Section 3.5.2.1</span></a>, <a class="reference internal" href="../07_Services_Boot_Services.html#driver-model-boot-services"><span class="std std-numref">Section 7.3.1</span></a>, <a class="reference internal" href="../24_Network_Protocols_SNP_PXE_BIS.html#pxe-tag-definitions-for-efi"><span class="std std-numref">Table 24.1</span></a>, <a class="reference internal" href="../Apx_E_Universal_Network_Driver_Interfaces.html#referenced-specifications"><span class="std std-ref">Referenced Specifications</span></a>, <a class="reference internal" href="../Apx_R_Glossary.html#appendix-r-glossary"><span class="std std-ref">Glossary</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.9A</p></td>
+<td><p>2249 - Cleanup of the SI &amp; Binary Prefixes section</p></td>
+<td><p><a class="reference internal" href="../01_Introduction.html#si-binary-prefixes"><span class="std std-numref">Section 1.9.8</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.9A</p></td>
+<td><p>2251 - Clarification of DevicePath examples using 0xFF for End of HW DP</p></td>
+<td><p><a class="reference internal" href="../10_Protocols_Device_Path_Protocol.html#device-path"><span class="std std-numref">Section 10.3.4.4</span></a>, <a class="reference internal" href="../12_Protocols_Console_Support.html#ps2-mouse-device-path"><span class="std std-numref">Table 12.4</span></a>, <a class="reference internal" href="../14_Protocols_PCI_Bus_Support.html#pci-root-bridge-device-path-for-a-desktop-system"><span class="std std-numref">Table 14.4</span></a>, <a class="reference internal" href="../15_Protocols_SCSI_Driver_Models_and_Bus_Support.html#scsi-device-path-examples"><span class="std std-numref">Table 15.1</span></a>, <a class="reference internal" href="../Apx_C_Device_Path_Examples.html#legacy-floppy"><span class="std std-ref">Legacy Floppy</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.9A</p></td>
+<td><p>2252 - Clarify OS dependency on UEFI vs PI interfaces</p></td>
+<td><p><a class="reference internal" href="../01_Introduction.html#introduction-goals"><span class="std std-numref">Section 1.4</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.9A</p></td>
+<td><p>2263 - CXL CPER updates</p></td>
+<td><p><a class="reference internal" href="../Apx_N_Common_Platform_Error_Record.html#cxl-protocol-error-section"><span class="std std-numref">Table N.42</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.9A</p></td>
+<td><p>2270 - Add “CPER” acronym to Appendix N</p></td>
+<td><p><a class="reference internal" href="../Apx_N_Common_Platform_Error_Record.html#common-platform-error-record-cper"><span class="std std-ref">Common Platform Error Record (CPER)</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.9A</p></td>
+<td><p>2286 - Section header for <em>CHAP (using RADIUS) Authentication Node</em></p></td>
+<td><p><a class="reference internal" href="../32_Secure_Boot_and_Driver_Signing.html#chap-using-radius-authentication-node"><span class="std std-numref">Section 32.1.6</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.9A</p></td>
+<td><p>2306 - Define Arm CPER Processor Error Types</p></td>
+<td><p><a class="reference internal" href="../Apx_N_Common_Platform_Error_Record.html#arm-processor-error-information-structure"><span class="std std-ref">ARM Processor Error Information Structure</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.9A</p></td>
+<td><p>2311 - Define the DevicePath argument from LoadImage as optional</p></td>
+<td><p><a class="reference internal" href="../07_Services_Boot_Services.html#efi-boot-services-loadimage"><span class="std std-numref">Section 7.4.1</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>2.9A</p></td>
+<td><p>2327 - Correcting subtype value for <em>REST Service Device Path</em></p></td>
+<td><p><a class="reference internal" href="../10_Protocols_Device_Path_Protocol.html#rest-service-device-path"><span class="std std-numref">Section 10.3.4.31</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>2.9A</p></td>
+<td><p>2330 - Principle of Inclusive Terminology statement</p></td>
+<td><p><a class="reference internal" href="../01_Introduction.html#principle-of-inclusive-terminology"><span class="std std-numref">Section 1.1</span></a></p></td>
+</tr>
+</tbody>
+</table>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10.0%" />
+<col style="width: 58.0%" />
+<col style="width: 32.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Revision</p></td>
+<td><p>Issue # - Description</p></td>
+<td><p>Release Date</p></td>
+</tr>
+<tr class="row-even"><td><p>2.9</p></td>
+<td><p>1866 GetInfo() of Adapter  Information Protocol should have a  provision for IHV to return no data</p></td>
+<td><p>March 2021</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.9</p></td>
+<td><p>1982 Clarify the PKCS#7 SignedData  structure of  EFI_VARIABLE_AUTHENTICATION</p></td>
+<td><p>March 2021</p></td>
+</tr>
+<tr class="row-even"><td><p>2.9</p></td>
+<td><p>1986 Need a mechanism using which  browser to exit out of IHV formset  silently without any popup</p></td>
+<td><p>March 2021</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.9</p></td>
+<td><p>1989 NVDIMM SPA Location Cookie</p></td>
+<td><p>March 2021</p></td>
+</tr>
+<tr class="row-even"><td><p>2.9</p></td>
+<td><p>2024 CXL CPER Records</p></td>
+<td><p>March 2021</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.9</p></td>
+<td><p>2042 New Event Group  EFI_EVENT_GROUP_ AFTER_READY_TO_BOOT</p></td>
+<td><p>March 2021</p></td>
+</tr>
+<tr class="row-even"><td><p>2.9</p></td>
+<td><p>2043 New Event Group  EFI_EV  ENT_GROUP_BEFORE_EXIT_BOOT_SERVICES</p></td>
+<td><p>March 2021</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.9</p></td>
+<td><p>2046 Add support for Key 14 &amp; 56  for Japanese keyboard layout</p></td>
+<td><p>March 2021</p></td>
+</tr>
+<tr class="row-even"><td><p>2.9</p></td>
+<td><p>2053 Figure/Table Numbers are  Duplicated in Appendices</p></td>
+<td><p>March 2021</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.9</p></td>
+<td><p>2062 Table numbering to restart for  each chapter</p></td>
+<td><p>March 2021</p></td>
+</tr>
+<tr class="row-even"><td><p>2.9</p></td>
+<td><p>2065 CXL proposal for CDAT table  extraction from devices</p></td>
+<td><p>March 2021</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.9</p></td>
+<td><p>2093 UpdateCapsule  ScatterGatherList cache maintenance</p></td>
+<td><p>March 2021</p></td>
+</tr>
+<tr class="row-even"><td><p>2.9</p></td>
+<td><p>2129 Add DTB Configuration Table  standard GUID</p></td>
+<td><p>March 2021</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.9</p></td>
+<td><p>2131 Clarify Console requirements</p></td>
+<td><p>March 2021</p></td>
+</tr>
+<tr class="row-even"><td><p>2.9</p></td>
+<td><p>2134 Introduce unaccepted memory  type</p></td>
+<td><p>March 2021</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.9</p></td>
+<td><p>2155 Typo in Arm Processor CPER  Error Section</p></td>
+<td><p>March 2021</p></td>
+</tr>
+<tr class="row-even"><td><p>2.9</p></td>
+<td><p>2167 CPER for CXL Component Events</p></td>
+<td><p>March 2021</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.9</p></td>
+<td><p>2185 Declaration for UEFI 2.9  specification in the System Table</p></td>
+<td><p>March 2021</p></td>
+</tr>
+<tr class="row-even"><td><p>2.9</p></td>
+<td><p>2190 Misc. spec review feedback</p></td>
+<td><p>March 2021</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.9</p></td>
+<td><p>2199 EFI_IMAGE_EXECUTION_INFO_TABLE  references</p></td>
+<td><p>March 2021</p></td>
+</tr>
+<tr class="row-even"><td><p>2.9</p></td>
+<td><p>2200 Config tables references from  section 4.6</p></td>
+<td><p>March 2021</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.9</p></td>
+<td><p>2204 Typo in GUID definition for  EFI_MANAG  ED_NETWORK_SERVICE_BINDING_PROTOCOL</p></td>
+<td><p>March 2021</p></td>
+</tr>
+<tr class="row-even"><td><p>2.9</p></td>
+<td><p>2212 Incorrect cross reference to  User Information Table</p></td>
+<td><p>March 2021</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8 C</p></td>
+<td><p>2117 -  E  FI_BROWSER_ACTION_REQUEST_RECONNECT  - perform the action when user  exits out of formset</p></td>
+<td><p>Jan. 2021</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8 C</p></td>
+<td><p>2139 Update RISC-V UEFI  corresponding spec to align with  latest RISC-V spec</p></td>
+<td><p>Jan. 2021</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8 C</p></td>
+<td><p>2155 Typo in Arm Processor CPER  Error Section</p></td>
+<td><p>Jan. 2021</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8 C</p></td>
+<td><p>2158  EFI_DRIVE  R_HEALTH_PROTOCOL.GetHealthStatus()  - Driver not managing any  controller</p></td>
+<td><p>Jan. 2021</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8 C</p></td>
+<td><p>2172 Revise  EFI_REDFISH_DICOVER_PROTOCOL  definitions to match the  implementation.</p></td>
+<td><p>Jan. 2021</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8 C</p></td>
+<td><p>2173 Question on EFI_CAPSULE_HEADER  Flags definition</p></td>
+<td><p>Jan. 2021</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8 C</p></td>
+<td><p>2184  FI_BOOT_MANAGER_POLICY_PROTOCOL  typos</p></td>
+<td><p>Jan. 2021</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8 C</p></td>
+<td><p>2190 EFI_SUCCESS misspelled in five  places</p></td>
+<td><p>Jan. 2021</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>2.8 B</p></td>
+<td><p>1926 update: corrected  EFI_SYSTEM_TABLE entries from 2_8  to 2_80</p></td>
+<td><p>May 2020</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8 B</p></td>
+<td><p>1935 update: removed a space from  several references to the  EFI_JSON_CAPSULE_ID_GUID</p></td>
+<td><p>May 2020</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8 B</p></td>
+<td><p>2073 Modify definition of “DPA” for  use with CXL based devices</p></td>
+<td><p>May 2020</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8 B</p></td>
+<td><p>2074 Memory Range typo</p></td>
+<td><p>May 2020</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8 B</p></td>
+<td><p>2080 Typo in N.2.2 Section  Descriptor Table 56</p></td>
+<td><p>May 2020</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8 B</p></td>
+<td><p>2083 Typo in guid definition of  CCIX PER Log Error Section</p></td>
+<td><p>May 2020</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8 B</p></td>
+<td><p>2088 Clarifications on caller-freed  buffers</p></td>
+<td><p>May 2020</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8 B</p></td>
+<td><p>2091 Inconsistency in description  of  EFI_FIRMW  ARE_MANAGEMENT_CAPSULE_IMAGE_HEADER  structure</p></td>
+<td><p>May 2020</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8 B</p></td>
+<td><p>2092 Typo in definition of PEI  Notification type in Table 269.  Error record header</p></td>
+<td><p>May 2020</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8 B</p></td>
+<td><p>2095 PCI I/O attribute typos in  section 14.4 “EFI PCI I/O Protocol”</p></td>
+<td><p>May 2020</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8 B</p></td>
+<td><p>UEFI Runtime Service Table  correction</p></td>
+<td><p>May 2020</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8 B</p></td>
+<td><p>2096 Typo in definition of  EFI_JSON_CONFIG_DATA_ITEM</p></td>
+<td><p>May 2020</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8 A</p></td>
+<td><p>1970 Security Command Protocol  change for OPAL RAID devices</p></td>
+<td><p>February 2020</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8 A</p></td>
+<td><p>1998 Update RISC-V related spec</p></td>
+<td><p>February 2020</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8 A</p></td>
+<td><p>2000 JSON Capsule clarification</p></td>
+<td><p>February 2020</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8 A</p></td>
+<td><p>2002 Memory allocations between  ExitBootServices calls</p></td>
+<td><p>February 2020</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8 A</p></td>
+<td><p>2009 DMTF references in UEFI spec</p></td>
+<td><p>February 2020</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8 A</p></td>
+<td><p>2013 Correct  EFI  _BOOT_SERVICES.DisconnectController  contradicting info in Description</p></td>
+<td><p>February 2020</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8 A</p></td>
+<td><p>2018  EFI_EDID_OVERRIDE_PROTOCOL_GET_EDID  should take an EFI_HANDLE as  ChildHandle</p></td>
+<td><p>February 2020</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8 A</p></td>
+<td><p>2020  EF  I_LOADED_IMAGE_PROTOCOL.LoadOptions  does not mention it is related to  Load Options.</p></td>
+<td><p>February 2020</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8 A</p></td>
+<td><p>2025 Capsule Depex Length  Declaration</p></td>
+<td><p>February 2020</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8 A</p></td>
+<td><p>2026 FMP Capsule Image Header  extension</p></td>
+<td><p>February 2020</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8 A</p></td>
+<td><p>2029 Add missing GUIDs in Appendix  N</p></td>
+<td><p>February 2020</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8 A</p></td>
+<td><p>2030 Fix spec index to show the  Appendix chapters</p></td>
+<td><p>February 2020</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8 A</p></td>
+<td><p>2034 Depex added description</p></td>
+<td><p>February 2020</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8 A</p></td>
+<td><p>2035 Fix OUT parameters marked as  IN OUT</p></td>
+<td><p>February 2020</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8 A</p></td>
+<td><p>2036 SetVariable errata: clarify  that in-place variable update is  supported</p></td>
+<td><p>February 2020</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8 A</p></td>
+<td><p>2038 Configuration Tables Errata</p></td>
+<td><p>February 2020</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8 A</p></td>
+<td><p>2041  EFI_EVENT_GROUP_EXIT_BOOT_SERVICES  Errata</p></td>
+<td><p>February 2020</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8 A</p></td>
+<td><p>2050 Incomplete list of  EFI_SERVICE_BINDING_PROTOCOL  protocols</p></td>
+<td><p>February 2020</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8 A</p></td>
+<td><p>2049 RuntimeServicesSupported EFI  variable should be a config table</p></td>
+<td><p>February 2020</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8 A</p></td>
+<td><p>2051 Typo in Table - CPER IA32/X64  Bus Check Structure</p></td>
+<td><p>February 2020</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8 A</p></td>
+<td><p>2053 Figure/Table Numbers are  Duplicated in Appendices</p></td>
+<td><p>February 2020</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8</p></td>
+<td><p>1832 Extend SERIAL_IO with  DeviceTypeGuid</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8</p></td>
+<td><p>1834 UEFI REST EX Protocol</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8</p></td>
+<td><p>1853 Adding support for a REST  style formset</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8</p></td>
+<td><p>1858 New Device Path for bootable  NVDIMM namespaces</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8</p></td>
+<td><p>1861 New EFI_MEMORY_RANGE_CAPSULE  Descriptor</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8</p></td>
+<td><p>1866 GetInfo() of Adapter  Information Protocol should have a  provision for IHV to return no data</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8</p></td>
+<td><p>1872 Peripheral-attached Memory</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8</p></td>
+<td><p>1876 Remove the EBC support  requirement</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8</p></td>
+<td><p>1879 Clarification of REST (EX)  protocol</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8</p></td>
+<td><p>1908 Update of uncommitted data in  the FOROM_OPEN callback</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8</p></td>
+<td><p>1919 Memory Cryptography Attribute</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8</p></td>
+<td><p>1920 Redfish Discover Protocol</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8</p></td>
+<td><p>1921 HTTPS hostname validation</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8</p></td>
+<td><p>1924 Update to  EF  I_REST_EX_PROTOCOL.AsyncSendReceive</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8</p></td>
+<td><p>1925 Clarify requirement of REST  related protocols</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8</p></td>
+<td><p>1926 New UEFI Spec Revision –&gt; 2.8</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8</p></td>
+<td><p>1935 UEFI JSON Capsule Support</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8</p></td>
+<td><p>1936 ResetSystem - support  ResetData for all status scenarios.</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8</p></td>
+<td><p>1937 Behavior of default values</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8</p></td>
+<td><p>1941 New EFI REST JSON Structure  Protocol</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8</p></td>
+<td><p>1942 Adding dependency expression  capability into FMP type capsules</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8</p></td>
+<td><p>1947 Keyword strings of  Configuration Keyword Handler  Protocol Enhancements</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8</p></td>
+<td><p>1953 Add document version#  conventions</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8</p></td>
+<td><p>1954 set (*Attributes) when  GetVariable() returns  EFI_BUFFER_TOO_SMALL and Attributes  is non-NULL</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8</p></td>
+<td><p>1956 Platform to honor  ActionRequest for Action changing</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8</p></td>
+<td><p>1961 Add EFI_UNSUPPORTED to  EFI_RUNTIME_SERVICES calls</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8</p></td>
+<td><p>1966 Add new capsule processing  error codes</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.8</p></td>
+<td><p>1974 Add new CCIX PER Log Error  Section to appendix</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.8</p></td>
+<td><p>1996 Firmware Processing of the  Capsule Identified by  EFI_JSON_CAPSULE_ID_GUID</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7B</p></td>
+<td><p>1773 Clarify The EFI System Table  entry for capsule image</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7B</p></td>
+<td><p>1801 ExtractConfig() format may  change when called multiple times</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7B</p></td>
+<td><p>1835 Misleading / unclear statement  about EFI-bootability of UDF media</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7B</p></td>
+<td><p>1838 RGB/BGR Contradiction in 2.7  GOP</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7B</p></td>
+<td><p>1841 BluetoothLE ECR - support  autoreconnect</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7B</p></td>
+<td><p>1842 BluetoothLE ECR - Add missing  ConnectionCompleteCallback</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7B</p></td>
+<td><p>1843 HTTP Example Code Update</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7B</p></td>
+<td><p>1844 Replace obsoleted RFC number  with new number for TCP</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7B</p></td>
+<td><p>1845 Clarification on AIP types  “Network boot” and “SAN MAC  Address”</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7B</p></td>
+<td><p>1846 EFI_LOAD_FILE2 requirement</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7B</p></td>
+<td><p>1865 Adding clarification in  EFI_NOT_READY for ReadKeyStrokeEx()</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7B</p></td>
+<td><p>1869 Clarify FMP buffer too small  behavior</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7B</p></td>
+<td><p>1874 Add RFC3021 to reference in  uefi.org</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7B</p></td>
+<td><p>1875 Clarify platform specific  elements in chapter 2.6.2</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7B</p></td>
+<td><p>1878 Errata - Make DHCP server  optional for HTTP boot</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7B</p></td>
+<td><p>1880 Arm binding EL2 register state  clarification</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7B</p></td>
+<td><p>1890 EfiMemoryMappedIO Usage  Clarification</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7B</p></td>
+<td><p>1897 Clarification on mapping of  UEFI memory attributes to ARM  memory types and paging attributes</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7B</p></td>
+<td><p>1899 Errata: Clarify  EFI_INVALID_PARAMETER for  FMP-&gt;GetImageInfo()</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7B</p></td>
+<td><p>1901 GPT Protective MBR description</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7B</p></td>
+<td><p>1902 CapsuleImageSize Clarification</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7B</p></td>
+<td><p>1903 Root Directory File Name</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7B</p></td>
+<td><p>1906 ACPI Table Pointer  Installation</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7B</p></td>
+<td><p>1908 Update of uncommitted data in  the FOROM_OPEN callback</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7B</p></td>
+<td><p>1923 Syntax error in EFI iSCSI  Initiator Name Protocol</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7B</p></td>
+<td><p>1957 Request to add status code  EFI_DEVICE_ERROR for ExtractConfig</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7B</p></td>
+<td><p>1964 Print disclaimer for all  future UEFI specs</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7B</p></td>
+<td><p>1987 incorrect VLAN_CONFIG_SET  function definition</p></td>
+<td><p>March 2019</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7A</p></td>
+<td><p>1830 Label Protocol -  EFI_NVDIMM_LABEL_FLAGS_LOCAL  definition needs to be updated</p></td>
+<td><p>August 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7A</p></td>
+<td><p>1829 Label Protocol Section -  Missing define for  EFI_NVDIMM_LABEL_FLAGS_UPDATING</p></td>
+<td><p>August 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7A</p></td>
+<td><p>1823 Modifications to the examples  of the PCI Option ROM image  combinations</p></td>
+<td><p>August 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7A</p></td>
+<td><p>1822 UEFI 2.7 Organization chapter  duplicated</p></td>
+<td><p>August 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7A</p></td>
+<td><p>1821 Modify the requirement to  enable PCI Bus Mastering</p></td>
+<td><p>August 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7A</p></td>
+<td><p>1817 NVDIMM Label Protocol -  SetCookie SerialNumber needs to be  UINT32 NOT UINT64</p></td>
+<td><p>August 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7A</p></td>
+<td><p>1816 Clarification of Using  HttpConfigData in HTTP protocol</p></td>
+<td><p>August 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7A</p></td>
+<td><p>1815 OpenProtocol() /  EFI_ALREADY_STARTED should output  existent Interface</p></td>
+<td><p>August 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7A</p></td>
+<td><p>1808 Clarification of using option  43 in PXE v2.1</p></td>
+<td><p>August 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7</p></td>
+<td><p>1779 Adjusting UEFI version to UEFI  2.7</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7</p></td>
+<td><p>1771BluetoothLE minor fix</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7</p></td>
+<td><p>1762 UEFI UFS DEVICECONFIG Protocol</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7</p></td>
+<td><p>1751 Update DNS Device Path</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7</p></td>
+<td><p>1750 Add new data type to EFI  Supplicant Protocol</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7</p></td>
+<td><p>1745 NVDIMM Label Protocol</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7</p></td>
+<td><p>1744 NVDIMMBlock Translation Table  (BTT) Protocol {NewChapter}</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7</p></td>
+<td><p>1730 HII Popup Protocol</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7</p></td>
+<td><p>1726 Host and I/O defense</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7</p></td>
+<td><p>1720 Have Partition driver publish  addition information for MBR/GPT  partition types.</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7</p></td>
+<td><p>1719 Add EFI HTTP Boot Callback  Protocol</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7</p></td>
+<td><p>1718 Allow SetData to clear  configuration in  Ip4Config2/Ip6Config Protocol</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7</p></td>
+<td><p>1716 Add BluetoothLE ECR</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7</p></td>
+<td><p>1711 Firmware Error Record Update</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7</p></td>
+<td><p>1707 Clarification of Private  Authenticated Variables</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7</p></td>
+<td><p>1701 Add wildcard support to  RegisterKeyNotify</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7</p></td>
+<td><p>1690 Reset Notification Protocol  Update</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7</p></td>
+<td><p>1689 Secure Boot with Externally  Managed Configuration</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7</p></td>
+<td><p>1685 Key Management Services (KMS)  Protocol Enhancement</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7</p></td>
+<td><p>1672 UEFI Variable Enhancements</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7</p></td>
+<td><p>1654 New AIP Information block for  wireless NIC</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7</p></td>
+<td><p>1652 Add DNS device path node</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7</p></td>
+<td><p>1647 UEFI binding for RISC-V</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7</p></td>
+<td><p>1641 Simplify SecureBoot Revocation  and Usage of VerifySignature</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7</p></td>
+<td><p>1641 Simplify Secure Boot  Revocation and Usage of  VerifySignature</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7</p></td>
+<td><p>1627 Support ASCII RegEx Patterns  in EFI_REGULAR_EXPRESSION_PROTOCOL</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7</p></td>
+<td><p>1627 EFI regular expression syntax  type definitions</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.7</p></td>
+<td><p>1623 New EFI_HTTP_STATUS_CODE enum  for 308 Permanent Redirect</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.7</p></td>
+<td><p>1623 New EFI_HTTP_STATUS_CODE enum  for 308 Permanent Redirect</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6B</p></td>
+<td><p>1772 Clarify EFI_NOT_READY in Media  State of AIP</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6B</p></td>
+<td><p>1767 Incorrect structure definition  for EFI_IFR_RESET_BUTTON_OP</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6B</p></td>
+<td><p>1742 Clairfy PK enrolling in user  mode</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6B</p></td>
+<td><p>1741 The memory map  returnedByBS-&gt;GetMemoryMap()  mayContain impossible values.</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6B</p></td>
+<td><p>1739 typos -Broken references link.</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6B</p></td>
+<td><p>1729Cleanup of ACPI 2.0 references  in UEFI spec</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6B</p></td>
+<td><p>1708 Typos in Imge Decode and Image  Ex Protocols</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6B</p></td>
+<td><p>1700 Align ACPI descriptor  definitions in PCI I/O and PCI  RootBridge I/O</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6B</p></td>
+<td><p>1698 Update to Mantis 1613 -  GetNextVariable</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6B</p></td>
+<td><p>1691 Remove/Deprecate SMM  Communication ACPI Table</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6B</p></td>
+<td><p>1682 HII Protocol StatusCodes</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6B</p></td>
+<td><p>1678 Simplify the ACPI Table GUID  declarations</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6B</p></td>
+<td><p>1675 section 30.5.1 typo</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6B</p></td>
+<td><p>1668 Duplicate GUID issue -  mustChange the Image Decoder  Protocol GUID</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6B</p></td>
+<td><p>1655 HTTP errata inConfigure()</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6B</p></td>
+<td><p>1653 Incorrect errorCode value in  MTFTP6</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6B</p></td>
+<td><p>1634 Update to the  EFI_SIMPLE_TEXT_INPUT_PROTOCOL TPL  restriction</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6B</p></td>
+<td><p>1629 Errata in GetVariable  description</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6B</p></td>
+<td><p>1625 Clarification of HTTPBoot wire  protocol “HTTPClient” VendorClass  Option</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6B</p></td>
+<td><p>1624 Fix spelling typo in  EFI_HTTP_STATUS_CODE</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6B</p></td>
+<td><p>1613 GetNextVariableName Errata</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6B</p></td>
+<td><p>1612 ResetSystem Errata</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6B</p></td>
+<td><p>1609 UEFI Errata - Address Security  problems in the Pkcs7Verify  Protocol</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6B</p></td>
+<td><p>1608 Enhance EFI_IFR_NUMERIC (Step)</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6B</p></td>
+<td><p>1586 Errors in appendix N for ARM  ProcessorContext Information</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6B</p></td>
+<td><p>1584 WIFI errata</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6B</p></td>
+<td><p>1580 Correct some typos</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6B</p></td>
+<td><p>1559 Clarify return value for NULL  pointer in LocateProtocol() API</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6B</p></td>
+<td><p>1557 secureBoot and auth variable  errata</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6B</p></td>
+<td><p>1556 HTTPv6Boot DHCP Options Errata</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6B</p></td>
+<td><p>1555 USB Function port protocol  errata</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6B</p></td>
+<td><p>1554 fix to ecr 1539</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6B</p></td>
+<td><p>1553 os recoveryBoot option errata</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6B</p></td>
+<td><p>1551 EFIBluetoothConfiguration  Protocol Errata</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6B</p></td>
+<td><p>1550 Replace FTP4 dataCallback  pointer-to-function-pointer with  regular function pointer</p></td>
+<td><p>April 2017</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6A</p></td>
+<td><p>SameContent as version 2.6,But with  the Adobe “accessibility” feature  activated so text-to-speech will  work.</p></td>
+<td><p>December 2016</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6</p></td>
+<td><p>1548ClarifyBoot procedure when file  name is absent2.</p></td>
+<td><p>January, 2016</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6</p></td>
+<td><p>1547Clarify requirements for  setting the PK variable.</p></td>
+<td><p>January, 2016</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6</p></td>
+<td><p>1544 DNS lookup API spelling</p></td>
+<td><p>January, 2016</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6</p></td>
+<td><p>1543 ip4/6Config policy errata/2.6  update</p></td>
+<td><p>January, 2016</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6</p></td>
+<td><p>1542 UEFI 2.6 supplicant errata</p></td>
+<td><p>January, 2016</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6</p></td>
+<td><p>1539 New EFI_HTTP_ERROR StatusCode</p></td>
+<td><p>December, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6</p></td>
+<td><p>1538 UEFI TLS errata</p></td>
+<td><p>December, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6</p></td>
+<td><p>1536 UEFI 2.6 Errata : IMAGE EX  Protocol and EFI HII Image Decoder  protocol Errata</p></td>
+<td><p>December, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6</p></td>
+<td><p>1534 EditorialComments against 2.6  Final Draft</p></td>
+<td><p>December, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6</p></td>
+<td><p>1533Bugs in the HTTP usage example</p></td>
+<td><p>December, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6</p></td>
+<td><p>1523Comments against 2.6 Draft</p></td>
+<td><p>December, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6</p></td>
+<td><p>1522 AArch64Bindings AlignmentBit  errata</p></td>
+<td><p>December, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6</p></td>
+<td><p>1521Comment against UEFI.next draft  - M1479</p></td>
+<td><p>December, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6</p></td>
+<td><p>1519 Version for the next UEFI spec  is…</p></td>
+<td><p>December, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6</p></td>
+<td><p>1518Comments against 2.6 Draft</p></td>
+<td><p>December, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6</p></td>
+<td><p>1516 EditorialComments against 2.6  Draft</p></td>
+<td><p>December, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6</p></td>
+<td><p>1509  EFI_PLATFO  RM_TO_DRIVER_CONFIGURATION_ PROTOCOL  Response to unsupported  ParameterTypeGuid</p></td>
+<td><p>December, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6</p></td>
+<td><p>1508 Lack of flexibility and  realism in exception levelChoice  whenCalling runtime services</p></td>
+<td><p>December, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6</p></td>
+<td><p>1507 Insufficient qualification of  page attributes for AArch64</p></td>
+<td><p>December, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6</p></td>
+<td><p>1502 PCI IO Define how to use the  Address Translation Offset for  systems that are not mapped 1:1</p></td>
+<td><p>November, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6</p></td>
+<td><p>1501 Define the usage of the  “Address Space Granularity” field  is defined in the PCI Root IO</p></td>
+<td><p>November, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6</p></td>
+<td><p>1496Bad table reference in 13.2  EFI_PCI_ROOT  _BRIDGE_IO_PROTOCOL.Configuration()</p></td>
+<td><p>November, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6</p></td>
+<td><p>1494 Errata against UEFI 2.5  Properties Table</p></td>
+<td><p>November, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6</p></td>
+<td><p>1493 Updates to the  SD_MMC_PASS_THRU interface</p></td>
+<td><p>November, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6</p></td>
+<td><p>1492 wireless macConnection  protocol II errata</p></td>
+<td><p>November, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6</p></td>
+<td><p>1491 supplicant errata</p></td>
+<td><p>November, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6</p></td>
+<td><p>1480 Refine Progress description in  EFI_KEYWORD_HANDLER_PROTOCOL</p></td>
+<td><p>November, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6</p></td>
+<td><p>1479 UEFI Properties  TableClarification</p></td>
+<td><p>November, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6</p></td>
+<td><p>1471 SD/eMMC PassThru Protocol  update (follow up to mantis 1376)</p></td>
+<td><p>November, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6</p></td>
+<td><p>1467 New API -  EFI_  WIRELESS_MAC_CONNECTION_II_PROTOCOL</p></td>
+<td><p>November, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6</p></td>
+<td><p>1466 UEFI Ram disk protocol</p></td>
+<td><p>November, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6</p></td>
+<td><p>1452 Minor edits to 0001409</p></td>
+<td><p>November, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6</p></td>
+<td><p>1414 Generalisation ofCommunication  method in Appendix O</p></td>
+<td><p>November, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6</p></td>
+<td><p>1409 EFI HII ImageEX protocol and  EFI HII Image Decoder protocols</p></td>
+<td><p>November, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6</p></td>
+<td><p>1408 EFI HII Font EX protocol and  EFI HII Font Glyph Generator  protocols</p></td>
+<td><p>November, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6</p></td>
+<td><p>1402 Add  EFI_BROWSER_ACTION_SUBMITTED</p></td>
+<td><p>November, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6</p></td>
+<td><p>1383 Adding an EraseBlocks()  function to a new protocol</p></td>
+<td><p>November, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.6</p></td>
+<td><p>1376 SD/eMMC PassThru Protocol</p></td>
+<td><p>November, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.6</p></td>
+<td><p>1357 ARMCPER extensions</p></td>
+<td><p>November, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5A</p></td>
+<td><p>1481 new networkConfig2 protocol  data structure has a magic number</p></td>
+<td><p>October 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5A</p></td>
+<td><p>1477 AllowCloseEvent toBeCalled  within the Notification Function</p></td>
+<td><p>October 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5A</p></td>
+<td><p>1476 Update to Indicate  thatCloseEvent  UnregistersCorresponding Protocol  Notification Registrations</p></td>
+<td><p>October 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5A</p></td>
+<td><p>1472 ATA Pass Thru Errata</p></td>
+<td><p>October 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5A</p></td>
+<td><p>1469 UNDI Errata - add more  statistics</p></td>
+<td><p>October 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5A</p></td>
+<td><p>1468 Errata on UEFI Supplicant  protocol</p></td>
+<td><p>October 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5A</p></td>
+<td><p>1451 Memory MapConsistency</p></td>
+<td><p>October 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5A</p></td>
+<td><p>1441 UEFI2.5A – UNDI  ProtocolClarification</p></td>
+<td><p>October 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5A</p></td>
+<td><p>1426 UEFI 2.5 typo</p></td>
+<td><p>October 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5A</p></td>
+<td><p>1424 Incorrect link in Section 22.1  FMP GetImageInfo()</p></td>
+<td><p>October 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5A</p></td>
+<td><p>1421 Misc HTTP API typos</p></td>
+<td><p>October 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5A</p></td>
+<td><p>1420  Get  NextHighMonotonicCountClarification</p></td>
+<td><p>October 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5A</p></td>
+<td><p>1419 Supplicant protocol using same  GUID as TLS protocol</p></td>
+<td><p>October 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5A</p></td>
+<td><p>1418 Inconsistent issues in DNS</p></td>
+<td><p>October 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5A</p></td>
+<td><p>1417 Add HttpMethodMax to  EFI_HTTP_METHOD enum</p></td>
+<td><p>October 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5A</p></td>
+<td><p>1410Clarifications in appendix O</p></td>
+<td><p>October 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5A</p></td>
+<td><p>1407 Networking errata -  EFI_HTTP_STATUS typos</p></td>
+<td><p>October 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5A</p></td>
+<td><p>1405 Errata in table 271 in  Appendix O</p></td>
+<td><p>October 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5A</p></td>
+<td><p>1399 Clarification for  EFI_BROWSER_ACTION_ REQUEST_RECONNECT</p></td>
+<td><p>October 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5A</p></td>
+<td><p>1398 Errata update to the runtime  GetVariable operation documentation</p></td>
+<td><p>October 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5A</p></td>
+<td><p>1388 Missed memory type fixes</p></td>
+<td><p>October 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5A</p></td>
+<td><p>1381 Remove informativeContent in  12.6.1</p></td>
+<td><p>October 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5A</p></td>
+<td><p>1365 7.4 Virtual Memory Services  lists Section 2.3.2 through Section  2.3.4. incorrectly</p></td>
+<td><p>October 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5A</p></td>
+<td><p>1363 Short form URI device path</p></td>
+<td><p>October 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5A</p></td>
+<td><p>1209 UEFI networking APIChapter 2.6  requirements errors</p></td>
+<td><p>October 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5A</p></td>
+<td></td>
+<td><p>October 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1364 Extend supplicant data type  for EAP</p></td>
+<td><p>April, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1362 HTTPBoot typos/bugs</p></td>
+<td><p>April, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1360 Vendor Range for UEFI memory  Types</p></td>
+<td><p>April, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1358 v2.5 amendment and v2.4 errata  (missed implementation of Mantis  1089)</p></td>
+<td><p>April, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1353 SATA Device Path Node Errata</p></td>
+<td><p>April, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1352 Errata for 1263 and 1227</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1350 Keyword Strings Errata</p></td>
+<td><p>April, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1348 ERRATA - Section 10.12  EFI  _ADAPTER_INFORMATION_PROTOCOLCustom  Types</p></td>
+<td><p>April, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1347Boot Manager Policy Errata</p></td>
+<td><p>April, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1346 Mantis 1288 Errata</p></td>
+<td><p>April, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1345 EFI_USB2_HC_PROTOCOL Errata</p></td>
+<td><p>April, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1342 DNS6 - friendly amendment for  reviewBy USWG</p></td>
+<td><p>April, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1341 DNS4 - friendly amendment toBe  reviewedBy USWG</p></td>
+<td><p>April, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1339 Errata in section 7.2.3.2  Hardware Error Record Variables</p></td>
+<td><p>April, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1309 Disallow  EFI_VARIABLE_AUTHENTICATION from  SecureBoot Policy Variables</p></td>
+<td><p>April, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1308 Fix typo’s found in the  final/published UEFI 2.4 ErrataB  spec</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1304 Add  IMA  GE_UPDATABLE_VALID_WITH_VENDOR_ CODE  to FMPCheck image</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1303 Update the UEFI version to  reflect new revision</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1288 The Macro definitionConflict  in  EFI_SIMPLE_  TEXT_OUTPUT_PROTOCOL.SetAttribute()  in UEFI 2.4B</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1287 Errata: EFI Driver Supported  EFI Version not matching the spec  revision</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1269Configuration Routing Protocol  andConfiguration String Updates</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1268 RAM Disk UEFI Device Path Node</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1266 UEFI.Next Feature - IP_CONFIG2  Protocol</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1263Customized Deployment of  SecureBoot</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1257Correct the typedef definitions  for  EFI_BOOT_SERVI  CES/EFI_RUNTIME_SERVICES–Reiterate</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1255 UFS Device Path Node Length</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1254 SD Device Path</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1251  EFI_REGULAR_EXPRESSION_PROTOCOL and  EFI_IFR_MATCH2 HII op-code</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1244 sections of the spec  mis-arranged</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1234 UEFI.Next feature - SmartCard  edge protocol</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1227 UEFI.Next feature - Platform  recovery</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1224 UEFI.Next - Adding support for  No executable data areas</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1223 UEFI.Next networking features  -Chapter 2.6 requirements</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1222 UEFI.Next feature -BMC/Service  Processor Device Path</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1221 UEFI.Next feature - REST  Protocol</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1220 UEFI.Next feature -Bluetooth</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1219 UEFI.Next Feature - UEFI TLS  API</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1218 UEFI.Next feature - EAP2  Protocol</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1217 UEFI.Next feature - WIFI  support</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1216 UEFI.next feature - DNS  version 6</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1215 UEFI.Next feature - DNS  version 4</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1214 UEFI.Next feature - HTTPBoot</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1213 UEFI.Next feature - HTTP  helper API</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1212 UEFI.Next feature - HTTP API</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1204 new UEFI USB Function I/O  Protocol addition to the UEFI spec</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1201 Exposing Memory Redundancy to  OSPM</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1199 Add NVM Express Pass Thru  Protocol</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1191 Add new SMBIOS3_TABLE_GUID in  EFI_CONFIGURATION_TABLE</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1186 AArch64BindingClarifications  and errata</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1183 New Protocol with 2 Function  for PKCS7 Signature Verification  Services</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1174 errata - Error in  EFI_IFR_PASSWORD logic flowchart</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1167 Persistent Memory Type support</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1166 hash 2 protocol errata</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1163 InlineCryptographic Interface  Protocol proposal</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1159 Proposal for System Prep  Applications</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1158 errata -Boot  managerClarification</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1147–REDACT</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1121 IPV6 support from UNDI</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1109 SmartCard Reader</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1103 Longer term NewCPER Memory  Section</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1091Clarification of handle to host  FMP</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.5</p></td>
+<td><p>1090 ESRT: EFI System Resource  Table andComponent firmware updates</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.5</p></td>
+<td><p>1071 New EFI_HASH2_PROTOCOL</p></td>
+<td><p>February, 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4C</p></td>
+<td><p>1308 Fix typo’s found in the  final/published UEFI 2.4 ErrataB  spec</p></td>
+<td><p>January 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4C</p></td>
+<td><p>1287 Errata: EFI Driver Supported  EFI Version not matching the spec  revision</p></td>
+<td><p>January 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4C</p></td>
+<td><p>1257Correct the typedef definitions  for  EFI_  _BOOT_SERVICES/EFI_RUNTIME_SERVICES</p></td>
+<td><p>January 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4C</p></td>
+<td><p>1244 sections of the spec  misarranged</p></td>
+<td><p>January 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4C</p></td>
+<td><p>1211 EFI_LOAD_OPTION Definition</p></td>
+<td><p>January 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4C</p></td>
+<td><p>1209 Errata - UEFI networking  APIChapter 2.6 requirements</p></td>
+<td><p>January 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4C</p></td>
+<td><p>1205 Errata for Hii Set item</p></td>
+<td><p>January 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4C</p></td>
+<td><p>1200 Universal Flash Storage (UFS)  Device Path</p></td>
+<td><p>January 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4C</p></td>
+<td><p>1198  EFI_  ATA_PASS_THRU_PROTOCOLClarification</p></td>
+<td><p>January 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4C</p></td>
+<td><p>1194 Add  EFI_IFR_FLAG_RECONNECT_REQUIRED</p></td>
+<td><p>January 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4C</p></td>
+<td><p>1192Cleanup GUID formatting issues</p></td>
+<td><p>January 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4C</p></td>
+<td><p>1186 AArch64BindingClarifications  and errata</p></td>
+<td><p>January 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4C</p></td>
+<td><p>1185 errata - tcp api</p></td>
+<td><p>January 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4C</p></td>
+<td><p>1184 errata - snp modeClarification</p></td>
+<td><p>January 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4C</p></td>
+<td><p>1182 Errata - UEFI URI Device path  issue</p></td>
+<td><p>January 2015</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4C</p></td>
+<td><p>1174 errata - Error in  EFI_IFR_PASSWORD logic flowchart</p></td>
+<td><p>January 2015</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4C</p></td>
+<td><p>1173 EFI_IFR_NUMERIC Errata</p></td>
+<td><p>July 11, 2014</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4C</p></td>
+<td><p>1172 EfiACPIMemoryNVS definition  missing S4</p></td>
+<td><p>July 11, 2014</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4C</p></td>
+<td><p>1170 Errata pxeBc apiClarifiation</p></td>
+<td><p>July 11, 2014</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4C</p></td>
+<td><p>1169 Errata - volatile networking  variableCleanup</p></td>
+<td><p>July 11, 2014</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4C</p></td>
+<td><p>1168 MTFTP Errata</p></td>
+<td><p>July 11, 2014</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4C</p></td>
+<td><p>1165 Option rom layout errata</p></td>
+<td><p>July 11, 2014</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4C</p></td>
+<td><p>1162 Typo in  ReinstallProtocolInterface() EFI  1.10 Extension section</p></td>
+<td><p>July 11, 2014</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4C</p></td>
+<td><p>1150 Missing LineBreakCharacter  (HII Errata)</p></td>
+<td><p>July 11, 2014</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4C</p></td>
+<td><p>1147  EFI_USB2_H  C_PROTOCOL.AsyncInterruptTransfer()  Errata</p></td>
+<td><p>July 11, 2014</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4C</p></td>
+<td><p>1141 UEFI errata - ia32/x64 vector  register management</p></td>
+<td><p>July 11, 2014</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4C</p></td>
+<td><p>1140UEFI Errata - image execution  info table</p></td>
+<td><p>July 11, 2014</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4C</p></td>
+<td><p>1139 UEFI Errata on the storage  securityCommand protocol</p></td>
+<td><p>July 11, 2014</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4C</p></td>
+<td><p>1066 Errata–reference to missing  table (90) removed</p></td>
+<td><p>July 11, 2014</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4C</p></td>
+<td><p>1043 Ability to refresh the entire  form [newContent]</p></td>
+<td><p>July 11, 2014</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4C</p></td>
+<td><p>1042 AddBrowser Action Request  “reconnect”</p></td>
+<td><p>July 11, 2014</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4B</p></td>
+<td><p>1146 Typos andBroken links</p></td>
+<td><p>April 17, 2014</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4B</p></td>
+<td><p>1137 Typographic errors in the 2.4  ErrataB draft</p></td>
+<td><p>April 16, 2014</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4B</p></td>
+<td><p>1128 URI device path node  redux–supersedes (defunct) 1119</p></td>
+<td><p>April 4, 2014</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4B</p></td>
+<td><p>1127 USB Errata - unnecessary  restriction on UEFI interrupt  transfer types</p></td>
+<td><p>March 27, 2014</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4B</p></td>
+<td><p>1124 Adding text description for  NVMe device node</p></td>
+<td><p>March 27, 2014</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4B</p></td>
+<td><p>1122Correct misleading language in  the UEFI 2.4a specification about  the  EFI_ADAPTER_INFORMATION_PROTOCOL.E  FI_ADAPTER_INFO_GET_SUPPORTED_TYPES  function</p></td>
+<td><p>March 27, 2014</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4B</p></td>
+<td><p>1120 Make time stamp  handlingConsistent around all of  the networking API’s</p></td>
+<td><p>March 27, 2014</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4B</p></td>
+<td><p>1118 Network Performance  EnhancementsConcerning Volatile  Variables</p></td>
+<td><p>March 27, 2014</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4B</p></td>
+<td><p>1115Clarification on the usage of  XMM/FPU instructions from within a  UEFI Runtime Service on an x64  processor</p></td>
+<td><p>March 27, 2014</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4B</p></td>
+<td><p>1111 Errors in  DisconnectController() returnCode  descriptions</p></td>
+<td><p>March 27, 2014</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4B</p></td>
+<td><p>1101 Errata –  ReinstallProtocolInterface</p></td>
+<td><p>March 27, 2014</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4B</p></td>
+<td><p>1092Clarification to PCI Option ROM  Driver Loading Description</p></td>
+<td><p>March 27, 2014</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4B</p></td>
+<td><p>1085 Error–added in missing text  approved for 2.4A</p></td>
+<td><p>April 17, 2014</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4B</p></td>
+<td><p>1014 HIIConfig Access Protocol  Errata</p></td>
+<td><p>April 3, 2014</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4 A</p></td>
+<td><p>1089 Short-termCPER Memory Section  errata</p></td>
+<td><p>Nov. 14, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4 A</p></td>
+<td><p>1088 Add revision #define to  EFI_FILE_PROTOCOL</p></td>
+<td><p>Nov. 6, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4 A</p></td>
+<td><p>1085 Issues with Interactive  password</p></td>
+<td><p>Nov.14, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4 A</p></td>
+<td><p>1082 Mistake in 2.3.5.1 / 2.3.6.2  Handoff State</p></td>
+<td><p>Nov. 6, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4 A</p></td>
+<td><p>1081 Update Install Table protocol  to deal with duplicate tables</p></td>
+<td><p>Nov. 6, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4 A</p></td>
+<td><p>1079 UEFI 2.4: Remove repetitive  “the” (typo)</p></td>
+<td><p>Nov. 6, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4 A</p></td>
+<td><p>1078 Adjust some text for handling  EFI_BROWSER_ACTION_CHANGING</p></td>
+<td><p>Nov. 6, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4 A</p></td>
+<td><p>1077 Fix wording in  EVT_SIGNAL_EXIT_BOOT_SERVICES</p></td>
+<td><p>Nov. 6, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4 A</p></td>
+<td><p>1076 typo in UEFI v2.3.1d and v2.4</p></td>
+<td><p>Nov. 6, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4 A</p></td>
+<td><p>1075Clarifications to Table 88.  Device Node Table (Device Node to  TextConversion)</p></td>
+<td><p>Nov. 6, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4 A</p></td>
+<td><p>1074 AddClarifications on DMA  requirements for PCI_IO</p></td>
+<td><p>Nov. 6, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4 A</p></td>
+<td><p>1073 Add requirement for  EFI_USB_IO_PROTOCOL</p></td>
+<td><p>Nov. 6, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4 A</p></td>
+<td><p>1066 Errata - ISCSI IPV6 Root  PathClarification</p></td>
+<td><p>Nov. 6, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4 A</p></td>
+<td><p>1064 AIP Errata</p></td>
+<td><p>Nov. 6, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4 A</p></td>
+<td><p>1063Correction to GPT expression  for SizeofPartitionEntry</p></td>
+<td><p>Nov. 6, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4 A</p></td>
+<td><p>1062 EFI_CERT_X509_GUID does not  specify theCertificate encoding</p></td>
+<td><p>Nov. 6, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4 A</p></td>
+<td><p>1061 UEFI 2.4 section 2.6.2 and  2.6.3 don’t use protocol  hyperlinksConsistently</p></td>
+<td><p>Nov. 6, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4 A</p></td>
+<td><p>1060 SlightClarification to FMP  Authentication Requirments</p></td>
+<td><p>Nov. 6, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4 A</p></td>
+<td><p>1059Clarification of a return  statusCode of HASH protocol</p></td>
+<td><p>Nov. 6, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4 A</p></td>
+<td><p>1058Correct mistake in the system  table revision</p></td>
+<td><p>Nov. 6, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4 A</p></td>
+<td><p>1056 text modification to  definition of  EF  I_FIRMWARE_IMAGE_DESCRIPTOR_VERSION  2</p></td>
+<td><p>Nov. 6, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4 A</p></td>
+<td><p>1055 Disk IO 2 errata</p></td>
+<td><p>Nov. 6, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4 A</p></td>
+<td><p>1054 Deprecate 6 Hash Algorithms  with inconsistent usage</p></td>
+<td><p>Nov. 6, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4 A</p></td>
+<td><p>1053 Reduce Name space ofCapsule  Result variable to increase  performance</p></td>
+<td><p>Nov. 6, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4 A</p></td>
+<td><p>1035 PCI Option ROM Errata    (five figures)</p></td>
+<td><p>Nov. 6, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4</p></td>
+<td><p>997 Driver Health Protocol  errorCodes</p></td>
+<td><p>April 25, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4</p></td>
+<td><p>993 (original ticket–supersededBy  1026)</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>2.4</p></td>
+<td><p>992 Adapter Information Protocol  (AIP)</p></td>
+<td><p>April 25, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4</p></td>
+<td><p>991 Greater than 256 NICs support  on UNDI</p></td>
+<td><p>April 25, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4</p></td>
+<td><p>968 HII Forms op-code for  displaying a warning message</p></td>
+<td><p>April 25, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4</p></td>
+<td><p>966 Spec typos</p></td>
+<td><p>April 25, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4</p></td>
+<td><p>964 Disk IO 2 Protocol to support  Async IO</p></td>
+<td><p>April 25, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4</p></td>
+<td><p>963 Add new device path node NVM  Express devices</p></td>
+<td><p>April 25, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4</p></td>
+<td><p>956 Require network drivers to  return EFI_NO_MEDIA</p></td>
+<td><p>April 25, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4</p></td>
+<td><p>946 ForbidCreation of non-spec  variables in EFI_GLOBAL_VARIABLE  namespace</p></td>
+<td><p>April 25, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4</p></td>
+<td><p>920 Add a variable for indicating  out ofBand key modification</p></td>
+<td><p>April 25, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4</p></td>
+<td><p>905 Need more granularity in  EFI_RESET_TYPE to support platform  specific resets</p></td>
+<td><p>April 25, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4</p></td>
+<td><p>1052 UEFI 2.4 Draft April 25th  -Corrections to ARM sections</p></td>
+<td><p>May 16, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4</p></td>
+<td><p>1050 2.4 Draft April 25 has missing  text for ECR 1009</p></td>
+<td><p>May 16, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4</p></td>
+<td><p>1049 2.4 Draft April 25 has missing  text for ECR 1008</p></td>
+<td><p>May 16, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4</p></td>
+<td><p>1048Comment against UEFI 2.4 - NVMe  related</p></td>
+<td><p>May 16, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4</p></td>
+<td><p>1047Comment on Feb 25th draft - fix  alignment issue</p></td>
+<td><p>May 16, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4</p></td>
+<td><p>1045 PCI OpROM Device ListChanges  to section 14.2</p></td>
+<td><p>June 28, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4</p></td>
+<td><p>1044Corrections to Mantis 1015,  Interruptible driver diagnostics</p></td>
+<td><p>May 16, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4</p></td>
+<td><p>1037 Add 2.4 to the system table  version</p></td>
+<td><p>May 16, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4</p></td>
+<td><p>1036Comments on April 25 Draft</p></td>
+<td><p>May 16, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4</p></td>
+<td><p>1033 HiiConfigAccess-&gt;ExtractConfig  StatusCodes Errata</p></td>
+<td><p>May 16, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4</p></td>
+<td><p>1032  HiiConfigRouting-&gt;ExtractConfig  StatusCodes Errata</p></td>
+<td><p>May 16, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4</p></td>
+<td><p>1031 NVMe subtypeConflict errata</p></td>
+<td><p>April 25, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4</p></td>
+<td><p>1029 Method for delivery ofCapsule  on disk; Method for  reportingCapsule processing status</p></td>
+<td><p>April 25, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4</p></td>
+<td><p>1026 (supersedes 993) Update to the  AArch64 proposedBindingChange</p></td>
+<td><p>April 25, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4</p></td>
+<td><p>1024Clarification to the NVMe  Device Path text descriptions</p></td>
+<td><p>April 25, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4</p></td>
+<td><p>1023 Definition ofCapsule format to  deliver update image to firmware  management protocol</p></td>
+<td><p>April 25, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4</p></td>
+<td><p>1022 adapter information protocol  for NIC iSCSI and  FCoEBootCapabilities  andCurrentBooot Mode.</p></td>
+<td><p>April 25, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4</p></td>
+<td><p>1017 AIP Instance - FCOE SAN MAC  Address</p></td>
+<td><p>April 25, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4</p></td>
+<td><p>1016 AIP Instance - Image Update</p></td>
+<td><p>April 25, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4</p></td>
+<td><p>1015 Interruptible driver  diagnostics</p></td>
+<td><p>April 25, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4</p></td>
+<td><p>1009 Enable hashes ofCertificates  toBe used for revocation, and  timestamp support</p></td>
+<td><p>April 25, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4</p></td>
+<td><p>1008 New Random Number Generator /  Entropy Protocol</p></td>
+<td><p>April 25, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.4</p></td>
+<td><p>1007Create a new Security  Technologies section to  avoidBlurring with SecureBoot</p></td>
+<td><p>April 25, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.4</p></td>
+<td><p>1002 Timestamp Protocol</p></td>
+<td><p>April 25, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1D</p></td>
+<td><p>996 UEFI 2.0 version number still  in the 2.3.1C spec</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1D</p></td>
+<td><p>995CSA linkChange</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1D</p></td>
+<td><p>994 Spec typos</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1D</p></td>
+<td><p>990 EFI_ATA_PASS_THRU need  oneClarification if it supports  ATAPI device</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1D</p></td>
+<td><p>989Clarify hot-remove  responsibility of aBus Driver</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1D</p></td>
+<td><p>988  EFI_BLOCK_IO2_PROTOCOLBlocksChild  from stopping while doing  non-blocking I/O</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1D</p></td>
+<td><p>987 EFI_BLOCK_IO2_PROTOCOL has  aCopy pasteBug describing the Token  Parameter</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1D</p></td>
+<td><p>980 Errata on SNP Media detect</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1D</p></td>
+<td><p>978 Error Retun IndicatesCapsule  requiresBoot Services</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1D</p></td>
+<td><p>977 missing statement</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1D</p></td>
+<td><p>976BrowserCallback text update to  description</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1D</p></td>
+<td><p>975 UNDI errata to add missing  memory type definitions</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1D</p></td>
+<td><p>974 UNDI IncorrectCPB function  names ECR</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1D</p></td>
+<td><p>973 UNDI Mem_Map()Clarification</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1D</p></td>
+<td><p>972 ISCSI DHCP6Boot</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1D</p></td>
+<td><p>971 typo</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1D</p></td>
+<td><p>970 Typo section 28.3.8.3.41  EFI_IFR_MODAL_TAG</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1D</p></td>
+<td><p>965 File IO Async extenstion</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1D</p></td>
+<td><p>962 Remove 2.3 table revision  number</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1D</p></td>
+<td><p>960 Typo in netboot6 description</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1D</p></td>
+<td><p>959 InstallAcpiTable() does not say  what to do when an attempt is made  to install a duplicate table</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1D</p></td>
+<td><p>955Clearing The Platform Key Errata</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1D</p></td>
+<td><p>954 LoadImage Errata</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1D</p></td>
+<td><p>953 Need text definitions for  Device Path Media Type Subtype 6/7</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1D</p></td>
+<td><p>952Clarification of requirements to  update timestamp associated with  authenticated variable</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1D</p></td>
+<td><p>950 IndeterminateBehavior for  attribute modifications mayCause  security issues</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1D</p></td>
+<td><p>949 PCI IO.GetBarAttributes needs  adjustment - - Address Space  Granularity field</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1D</p></td>
+<td><p>944 Errata - Replace RFC reference</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1D</p></td>
+<td><p>943 Errata - Proposed updates to  required interfaces inChapter 2.6</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1D</p></td>
+<td><p>942 ExportConfig() description does  not make sense</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1D</p></td>
+<td><p>941 Add OEM StatusCode ranges to  EFI StatusCode Ranges Table</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1D</p></td>
+<td><p>938  InstallMultipleProtocolInterface()  is missing StatusCode Returned  values</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1D</p></td>
+<td><p>935ClarifyChaining requirements  with regards to the Platform Key</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1D</p></td>
+<td><p>934 Missing Figures and typos</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1D</p></td>
+<td><p>930Clarify usage of EFI Variable  Varstores in HII</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1D</p></td>
+<td><p>928Best Matching Language algorithm</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1D</p></td>
+<td><p>926 UEFI Image  VerificationClarification</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1D</p></td>
+<td><p>924 New ErrorCode to handle  reporting of IPV4 duplicate address  detection</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1D</p></td>
+<td><p>1021 ATA_PASS_THRU on ATAPI device  handle.</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1D</p></td>
+<td><p>1020Clarify HII variable store  definitions.</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1D</p></td>
+<td><p>1019 Alignment  RequirementsClarification</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1D</p></td>
+<td><p>1018 HII Font Errata</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1D</p></td>
+<td><p>1013 HII Errata</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1D</p></td>
+<td><p>1012 Touchup to text of GPT</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1D</p></td>
+<td><p>1011 Typo regarding Debug Port in  UEFI Spec</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1D</p></td>
+<td><p>1003 Missing “(” in section 11.7</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1D</p></td>
+<td><p>1000Clarification to the IFR_REF4  opcode</p></td>
+<td><p>April 3, 2013</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1C</p></td>
+<td><p>921 Length of IPv6 Device Path is  incorrect</p></td>
+<td><p>June 13, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1C</p></td>
+<td><p>917 UNDI drive does not need toBe  initialized as runtime driver</p></td>
+<td><p>June 13, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1C</p></td>
+<td><p>915 For x64,Change Floating Point  DefaultConfiguration to  Double-Extended Precision</p></td>
+<td><p>June 13, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1C</p></td>
+<td><p>914 Error Descriptor Reset  FlagClarification</p></td>
+<td><p>June 13, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1C</p></td>
+<td><p>913 Enum definition does not match  what ourCurrentCompilers implement.</p></td>
+<td><p>June 13, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1C</p></td>
+<td><p>912 UEFI 2.3.1 Type</p></td>
+<td><p>June 13, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1C</p></td>
+<td><p>909 Update to returnCodes for  AllocatePool / AllocatePages</p></td>
+<td><p>June 13, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1C</p></td>
+<td><p>907 iSCSI Device Path error</p></td>
+<td><p>June 13, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1C</p></td>
+<td><p>882 Indications Variable - OS/FW  feature &amp;CapabilityCommunication</p></td>
+<td><p>June 13, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1C</p></td>
+<td><p>882 Indications Variable - OS/FW  feature &amp;CapabilityCommunication</p></td>
+<td><p>June 13, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1C</p></td>
+<td><p>874 Provide a mechanism for  providing keys in setup mode</p></td>
+<td><p>June 13, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1C</p></td>
+<td><p>831 PXEBootCSA Type  definitionCleanup</p></td>
+<td><p>June 13, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1B</p></td>
+<td><p>896 StartImage andConnectController  returnCodes</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1B</p></td>
+<td><p>893 SMMCommunication ACPI Table  Update</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1B</p></td>
+<td><p>891Component Name Protocol  References</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1B</p></td>
+<td><p>890 DriveConfiguration Protocol  Phantom.</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1B</p></td>
+<td><p>888 typo in EFI_USB_HC Protocol</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1B</p></td>
+<td><p>887 union is declared twice in same  section</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1B</p></td>
+<td><p>885 Errata in the GPT Table  structureComment</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1B</p></td>
+<td><p>884 EFI_BOOT_KEY_DATA relies on  implementation-definedBehavior</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1B</p></td>
+<td><p>881 netboot6 - multicast versus  unicast</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1B</p></td>
+<td><p>880 netboot6Clarification/errata</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1B</p></td>
+<td><p>879 Reference to unsupported  specification in SCSIChapter (14.1)</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1B</p></td>
+<td><p>878 Updated HII “Selected  Form”Behaviors to Reflect  NewCallback Results</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1B</p></td>
+<td><p>877 TableChecksum updateBy the  A  CPI_TABLE_PROTOCOL.InstallAcpiTable</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1B</p></td>
+<td><p>876 ToClarify EDID_OVERRIDE  attribute definitions and expected  operations</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1B</p></td>
+<td><p>873 Section 9.3.7 incorrectly  assumes that all uses ofBBS device  paths are non-UEFI</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1B</p></td>
+<td><p>872Change to  SIMPLE_TEXT_INPUT_EX_PROTOCOL.Re  gisterKeyNotify/UnregisterKeyNotify</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1B</p></td>
+<td><p>871 Typo in  InstallMultipleProtocolInterfaces</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1B</p></td>
+<td><p>870Clarify FrameBufferSize  definition under  EFI_GRAPHICS_OUTPUT_PROTOCOL_MODE  struct</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1B</p></td>
+<td><p>869 Reference to FIPS 180 inChapter  27.3 is obsolete and incorrect</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1B</p></td>
+<td><p>867Clarify requirment for use of  EFI_HASH_SERVICE_BINDING_PROTOCOL</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1B</p></td>
+<td><p>866 PK, KEK, db, dbx  relationsClarification</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1B</p></td>
+<td><p>865 Modify Protective  MBRBootIndicator definition</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1B</p></td>
+<td><p>864 Typo in Question-Level  Validation section</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1B</p></td>
+<td><p>863 Attributes of the Globally  Defined Variables</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1B</p></td>
+<td><p>862 User identity typo</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1B</p></td>
+<td><p>861 Globally Defined Variables  Errata</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1B</p></td>
+<td><p>858 Superfluous and incorrect image  hash description</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1B</p></td>
+<td><p>857 Absolute pointer typo</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1B</p></td>
+<td><p>855Clarification of UEFI driver  signing/Code definitions</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1B</p></td>
+<td><p>853 The EFI_HASH_PROTOCOL.Hash()  description needsClarification on  padding responsibilities</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1B</p></td>
+<td><p>852 Various EFI_IFR_REFRESH_ID  errata.</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1B</p></td>
+<td><p>851 For EFI_IFR_REFRESH  opcode,Clarify RefreshInterval = 0  means no auto-refresh.</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1B</p></td>
+<td><p>850Clarification of responsibility  for array allocation in  EFI_HASH_PROTOCOL</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1B</p></td>
+<td><p>849 IFR EFI_IFR_MODAL_TAG_OP is  also valid under  EFI_IFR_FORM_MAP_OP</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1B</p></td>
+<td><p>848Clarification of semantics of  SecureBoot variable</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1B</p></td>
+<td><p>847 When enrolling a PK, the  platform shall not require a reboot  to leave SetupMode</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1B</p></td>
+<td><p>845 EFI_SCSI_PASS_THRU_PROTOCOL  replacement</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1B</p></td>
+<td><p>842 Text to explain how the UEFI  revision is referred</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1B</p></td>
+<td><p>836 StructureComment for  EFI_IFR_TYPE_VALUE references  unknown value type.</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1B</p></td>
+<td><p>828 Network Driver Options</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1B</p></td>
+<td><p>826Comments against Mantis 790</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1B</p></td>
+<td><p>825 DMTF SMCLP errata</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1B</p></td>
+<td><p>819 Mantis 715 was not fully  implemented</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1B</p></td>
+<td><p>812 Errata – DUID-UUID usage</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1B</p></td>
+<td><p>809 Errata – Messaging Device  PathClarification</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1B</p></td>
+<td><p>808 Errata –Boot File URL</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1B</p></td>
+<td><p>807 Give specific TPL rules to  Stall()Boot services</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1B</p></td>
+<td><p>771 SHA1 and MD5 references</p></td>
+<td><p>April 10, 2012</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1A</p></td>
+<td><p>MinorCorrections in toes to tickets  772, 785, 794, 804, also  formattingCorrection for  _WIN_CERTIFICATE_UEFI_GUID  typedef’s parameters</p></td>
+<td><p>September 7, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1A</p></td>
+<td><p>820 Driver Health Needs to have  Mantis 0000169 implemented</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1A</p></td>
+<td><p>819 ECR715 was not fully  implemented</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1A</p></td>
+<td><p>806 Text update to Driver Health  Description -Clarify role of user  interaction</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1A</p></td>
+<td><p>805Correct Wrong Palette  Information in 28.3.7.2.3 example</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1A</p></td>
+<td><p>804ClarifyContraints and  alternatives when enrolling PK,  KeK, db or dbx keys</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1A</p></td>
+<td><p>803 Fix AcpiExp device node text  description.</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1A</p></td>
+<td><p>801ClarifyIFR Opcode Summary and  Description #4</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1A</p></td>
+<td><p>800Clarify IFR Opcode Summary and  Description #3</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1A</p></td>
+<td><p>797Clarify IFR Opcode Summary and  Description #2</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1A</p></td>
+<td><p>796Clarify IFR Opcode Summary and  Description #1</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1A</p></td>
+<td><p>795 Typo in ReadKeyStrokeEx()</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1A</p></td>
+<td><p>794 Incomplete text  describingClearing of Platform Key</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1A</p></td>
+<td><p>793 Inconsistent wording about  RemainingDevicePath</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1A</p></td>
+<td><p>790 Add warning to ReadKeyStrokeEx  for partial key press</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1A</p></td>
+<td><p>789Clarify HII opcode definition</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1A</p></td>
+<td><p>788 SasEx entry in Table 86-Device  Node TableContains optional  Reserved entry that does not exist  in device path</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1A</p></td>
+<td><p>786 PCI I/O Dual AddressCycle  attributeClarification</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1A</p></td>
+<td><p>785 Allowing more general use of  UEFI 2.3.1 Variable time-based  authentication</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1A</p></td>
+<td><p>780 Errata in returnCode  descriptions</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1A</p></td>
+<td><p>778  EFI_HI  I_CONFIG_ACCESS_PROTOCOL.CallBack()  Errata</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1A</p></td>
+<td><p>777 Specified signature sizes  incorrect in Section 27.6.1</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1A</p></td>
+<td><p>776 Clarifycomputation of  EFI_VARIABLE_ AUTHENTICATION_2 hash value</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1A</p></td>
+<td><p>774 Define  EFI_BLOCK_IO_PROTOCOL_REVISION3</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1A</p></td>
+<td><p>773Clarify the value for opcode  EFI_IFR_REFRESH_ID_OP</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1A</p></td>
+<td><p>772 Definition of  EFI_IMAGE_SECURITY_DATABAE_GUID  incorrect</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1A</p></td>
+<td><p>770 Remove references to UEFI 2.1  spec</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1A</p></td>
+<td><p>767 The ReadBlocks function  forBlockIO andBlockIO2 need  synchronization</p></td>
+<td><p>August 17, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1A</p></td>
+<td><p>212 (revisit) final sentence  section 28.2.15 missing final  words.</p></td>
+<td><p>April 21, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>765 ECR to limit the hash and  encryption algorithms used with  PKCSCertificates</p></td>
+<td><p>April 5, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>762 DevicePath in the Image  Execution Information Table.</p></td>
+<td><p>April 5, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>761 Table 195. Information for  Types of Storage</p></td>
+<td><p>April 5, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>760 SuggestedChanges to 2.3.1 final  draft spec</p></td>
+<td><p>April 5, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>759 UEFI Errata - wincerts for rest  of hash algorithms</p></td>
+<td><p>April 5, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>755 Errata in Legacy MBR table and  Legacy MBR GUID</p></td>
+<td><p>April 5, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>754 USB timeout parameter mismatch.</p></td>
+<td><p>April 5, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>751 Fix USB HC2 erroneous  references to IsSlowDevice</p></td>
+<td><p>March 11, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>750 Fix section 27.2.5 “related  definitions” re: RSA public key  exponent</p></td>
+<td><p>March 11, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>749 Fix Table 10 (Global Variables)  WithCorrect Attributes</p></td>
+<td><p>March 11, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>748Clarify Standard GUID Text  Representation</p></td>
+<td><p>March 11, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>744 ProcessorContext information  structure definition notClear</p></td>
+<td><p>March 11, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>741 Errata:Corrected text for  section 7.2.1.4 step 7</p></td>
+<td><p>March 11, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>740 Errata: signatureheadersize  inconsistencyCorrections</p></td>
+<td><p>April 6, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>736 Insert SMMCommunication ACPI  Table and related data structures  to the UEFI Specification</p></td>
+<td><p>April 5, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>735Clarification on Tape Header  Format</p></td>
+<td><p>March 11, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>734 SecureBoot variable</p></td>
+<td><p>April 5, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>733 Errata: 27.6.1  signatureheadersize definition</p></td>
+<td><p>March 11, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>732 Amendment to Mantis 711:  section 7.2.1.6</p></td>
+<td><p>March 11, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>729 Errata:Clarification of  Microsoft references in appendix Q</p></td>
+<td><p>March 11, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>728 Netboot 6 errata - DUID-UUID</p></td>
+<td><p>March 11, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>727 Errata on returnCode for User  Info Identity policy record</p></td>
+<td><p>March 11, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>726 Errata/clean-up of  EFI_DHCP4_TRANSMIT_RECEIVE_ TOKEN  definition</p></td>
+<td><p>March 11, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>724 SetVariable Update 2</p></td>
+<td><p>March 11, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>723 User Identification (UID)  Errata – EFI User Manager Notify &amp;  EnrollClarification</p></td>
+<td><p>April 5, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>722 User Identification (UID)  Errata –Credential Provider  EnrollClarification</p></td>
+<td><p>April 5, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>721 User Identification (UID)  Errata – SetInfoClarification</p></td>
+<td><p>March 11, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>720 User Identification (UID)  Errata –Credential Provider  EnrollClarification</p></td>
+<td><p>March 11, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>716  EFI_EXT_SCSI_PASS_THRU_ PROTOCOL.GetNextTarget()  IN OUT parameter Target input value  shallBe 0xFFs</p></td>
+<td><p>March 11, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>715CPER Record and section  fieldClarification</p></td>
+<td><p>March 11, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>713 Remove the errata revision from  the EFI_IFR_VERSION format.</p></td>
+<td><p>March 11, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>711 SetVariable Update</p></td>
+<td><p>March 11, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>709 NewCallback() Action Requests  Related To Individual Forms.</p></td>
+<td><p>Feb. 3, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>708 Errata (non-blockingBLOCK IO)</p></td>
+<td><p>April 5, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>707 Errata revision in the  EFI_IFR_VERSION format</p></td>
+<td><p>Feb. 3, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>705 REPC signature definition  stillConfusing</p></td>
+<td><p>Feb. 3, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>704 Unload() definition is wrong</p></td>
+<td><p>Feb. 3, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>702Clarifications on Variable  Storage for Questions</p></td>
+<td><p>Feb. 3, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>696 Update System Table with this  new #define for  EFI_SYSTEM_TABLE_REVISION</p></td>
+<td><p>Feb. 3, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>695 Add Port Ownership probing</p></td>
+<td><p>Feb. 3, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>687 Update System Table with this  new #define for 2.3.1</p></td>
+<td><p>Jan. 17, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>686 HII -Clarify FormsBrowser  ‘standard’ user interfactions.</p></td>
+<td><p>Feb. 3, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>685 HII - New op-code to enable  event initiated refresh  ofBrowserContext data</p></td>
+<td><p>Feb. 3, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>682 [UCST] Modal Form</p></td>
+<td><p>Feb. 3, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>681 Typo: Pg. 56</p></td>
+<td><p>Jan. 17, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>680 Netboot6 handleClarification</p></td>
+<td><p>Jan. 17, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>679 UEFI Authenticated Variable &amp;  Signature Database Updates</p></td>
+<td><p>Jan. 17, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>678 Section 27.6.2: Imagehash  reference needs toBe removed</p></td>
+<td><p>Jan. 17, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>677 Section 27.2.5 &amp; 27.6.1: Typo  in X509 Signature Type</p></td>
+<td><p>Jan. 17, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>674 Section 3.2: Missing variable  type for SetupMode variable</p></td>
+<td><p>Jan. 17, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>671 Errata: USB device path example  is incorrect</p></td>
+<td><p>Jan. 17, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>668 LUN implementations are  notConsistent</p></td>
+<td><p>Feb. 3, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>661 USB 3.0 Updates</p></td>
+<td><p>Oct. 29, 2010</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>645 Non-blocking interface forBLOCK  oriented devices (BLOCK_IO_EX  transition toBLOCK_IO_2)</p></td>
+<td><p>Oct. 29, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>634 FormsBrowser DefaultBehavior</p></td>
+<td><p>Jan. 17, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>634 FormsBrowser DefaultBehavior</p></td>
+<td><p>Oct. 29, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>616 Security ProtocolCommand to  support encrypted HDD</p></td>
+<td><p>Jan. 17, 2011</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>616 Security ProtocolCommand to  support encrypted HDD</p></td>
+<td><p>Oct. 29, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>612 UEFI system Partition FAT32  data Region Alignment</p></td>
+<td><p>Oct. 29, 2010</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>484 Key Management Service Protocol</p></td>
+<td><p>Oct. 28, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3.1</p></td>
+<td><p>484 Key Management Service (KMS)  Protocol</p></td>
+<td><p>Oct. 29, 2010</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3.1</p></td>
+<td><p>478 (REVISIT) Update to ALTCFG  references</p></td>
+<td><p>March 11, 2011</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3 D</p></td>
+<td><p>667Clarification to the  UEFIConfiguration Table definition</p></td>
+<td><p>Oct. 28, 2010</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3 D</p></td>
+<td><p>664 Appendix update for IPV6  networkBoot</p></td>
+<td><p>Oct. 28, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3 D</p></td>
+<td><p>663 Update ARM PlatformBinding to  allow OS loader to assume unaligned  access support is enabled</p></td>
+<td><p>Nov. 10, 2010</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3 D</p></td>
+<td><p>662 ARM ABI errata</p></td>
+<td><p>Oct. 28, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3 D</p></td>
+<td><p>659Clarify section length  definition in the error record</p></td>
+<td><p>Oct. 28, 2010</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3 D</p></td>
+<td><p>653 Errata to the Appendix N  (Common Platform Error Record)</p></td>
+<td><p>Oct. 28, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3 D</p></td>
+<td><p>652Clarification to the TimeZone  value usage</p></td>
+<td><p>Oct. 28, 2010</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3 D</p></td>
+<td><p>651 update to IPSec for tunnel mode  support</p></td>
+<td><p>Oct. 28, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3 D</p></td>
+<td><p>650 networking support errata</p></td>
+<td><p>Oct. 28, 2010</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3 D</p></td>
+<td><p>638 Add facility for dynamic IFR  dynamicCross-references</p></td>
+<td><p>Oct. 28, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3 D</p></td>
+<td><p>538 IPV6 PXE</p></td>
+<td><p>Oct. 28, 2010</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3C</p></td>
+<td><p>640 String ReferenceCleanup</p></td>
+<td><p>July 14, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3C</p></td>
+<td><p>639Callback() does not describe  FORM_OPEN/FORM_CLOSEBehavior</p></td>
+<td><p>July 14, 2010</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3C</p></td>
+<td><p>637Clarification for Date/Time  Question usage in IFR expressions.</p></td>
+<td><p>July 14, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3C</p></td>
+<td><p>636 Mistaken Reference to “Date”  inside ofBoolean question  description</p></td>
+<td><p>July 14, 2010</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3C</p></td>
+<td><p>635 Missing GUID label forConfig  Access protocol</p></td>
+<td><p>July 14, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3C</p></td>
+<td><p>633 Explicitly Specify ACPI Table  Signature Format</p></td>
+<td><p>July 14, 2010</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3C</p></td>
+<td><p>632ClarifyBlock IO ReadBlocks and  WriteBlocks functions handling of  media stateChange events</p></td>
+<td><p>July 14, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3C</p></td>
+<td><p>625 Minor typo in  surrogateCharacter description  section</p></td>
+<td><p>July 14, 2010</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3C</p></td>
+<td><p>622 Identify() function errata</p></td>
+<td><p>July 14, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3C</p></td>
+<td><p>621 Typos in an  EFI_HII_CONFIG_ACCESS_ PROTOCOL.Callback()  member</p></td>
+<td><p>July 14, 2010</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3C</p></td>
+<td><p>620Carification of need for Path  MTU support for IPV4 and IPV6</p></td>
+<td><p>July 14, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3C</p></td>
+<td><p>613 PAUSE Key</p></td>
+<td><p>July 14, 2010</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3C</p></td>
+<td><p>611 LanguageCorrection requested  for InstallProtocolInterface() and  InstallConfigurationTable(), Ref#  583</p></td>
+<td><p>July 14, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3C</p></td>
+<td><p>610 RSA data structureClarification</p></td>
+<td><p>July 14, 2010</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3C</p></td>
+<td><p>609 StartImage returnCode update</p></td>
+<td><p>July 14, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3C</p></td>
+<td><p>583 How do we know an EFI_HANDLE is  Valid/Invalid</p></td>
+<td><p>July 14, 2010</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3C</p></td>
+<td><p>508 Update networking references,  incl ipv6</p></td>
+<td><p>July 14, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>608 more media detectClean-up</p></td>
+<td><p>Feb. 24, 2010</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>605Clarify user identity Find API</p></td>
+<td><p>Feb. 24, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>601 UNDI update as part of media  detectChanges</p></td>
+<td><p>Feb. 24, 2010</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>600 Update  toConfigAccess/ConfigRouting</p></td>
+<td><p>Feb. 24, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>598 ARP is only an IPV4Concept.</p></td>
+<td><p>Feb. 24, 2010</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>590 Media detectClean-up</p></td>
+<td><p>Feb. 24, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>589 Device path representation of  IPv4/v6 text</p></td>
+<td><p>Feb. 24, 2010</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>588 UEFI User Identity -  ReturnCodes</p></td>
+<td><p>Feb. 24, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>587 UEFI User Identity -  NamingConsistency</p></td>
+<td><p>Feb. 24, 2010</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>586Clarification of PXE2.1  specification for IPV4  interoperability issues</p></td>
+<td><p>Feb. 24, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>585 Errata to EFI_IFR_SET op-code</p></td>
+<td><p>Feb. 24, 2010</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>584 EFI_PXE_BASE_CODE_DHCPV6_PACKET  missing for pxeBc protocol</p></td>
+<td><p>Feb. 24, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>583 How do we know an EFI_HANDLE is  Valid/Invalid</p></td>
+<td><p>Feb. 24, 2010</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>580  ACPI_SUPPORT_PROTOCOLClarifications  related to FADT and the DSDT/FACS</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>578 ATA Passthrough updates /  questions</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>577Clarifications on the user  identity protocol</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>576Clarifications in the Routing  Protocol</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>575 Machine hand-off/MP state  modification</p></td>
+<td><p>Feb. 24, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>574 Add an “OPTIONAL” tag to a  parameter in NewPackageList</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>573 EFI_DESCRIPTION_STRING and  EFI_DESCRIPTION_BUNDLE adjustments</p></td>
+<td><p>Feb. 24, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>572 EFI_IFR_SECURITY shouldBe  EFI_IFR_SECURITY_OP in Table 194</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>568 ATA_STATUS_BLOCK name errata</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>567 Various miscellaneous  typos/updates</p></td>
+<td><p>Feb. 24, 2010</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>566 Minor update to HII-&gt;NewString  function description</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>560Correct erroneous example in  ExtractConfig()</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>559 Extraneous “default” tag in  EFI_IFR_SECUITY grammar</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>558Clarify VLANConfig publication  requirements</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>557Corrected Image Execution  Information omission &amp; ambiguity</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>556 additional IPSec errata/issues</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>549Binary prefixChange</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>547Clean-Up In HII Sections</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>546 typo in GOP definiton</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>545 Action parameter of the  EFI_HI  I_CONFIG_ACCESS_PROTOCOL.CallBack()</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>542 Device Path DescriptionChanges</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>540 Register name usage</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>539CHAP node fix for iSCSI</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>537 Add missing ACPI ADR Device  Path Representation</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>536 IPSec errata</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>534 Size of Partition Entry  restriction</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>533 GPT editorialCleanup</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>532 “LegacyBIOSBootable” GPT  attribute</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>531Clarify HII Variable Storage</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>519 AddConsole table (chapt 11) for  EFI_SIMPLE_TEXST_INPUT_EX_PROTOCOL</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>518 Typos in the UEFI2.3  specification</p></td>
+<td><p>Feb. 24, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>515 Authenticated  VariablesClarification</p></td>
+<td><p>Feb. 24, 2010</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>514 HIIConfiguration String  SyntaxClarification</p></td>
+<td><p>Feb. 24, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>507Clarify ACPI Protocol’s position  onChecksums</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>479 TPM guideline added to section  2.6.2</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>476 Text adjustment toConfigAccess  &amp;ConfigRouting</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>460 Section 2.6 languageChange</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>454 Dynamic support of media  dectection - network stack</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>431 UEFI 2.3 Feb Draft: Section  30.4</p></td>
+<td><p>Feb. 24, 2010</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3B</p></td>
+<td><p>301 Errata to the Authentication  Protocol</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3B</p></td>
+<td><p>215 previously added to Device  Driver (wrong), nowBusDriver  (correct)</p></td>
+<td><p>Dec. 15, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3A</p></td>
+<td><p>522Bugs in  EFI_CERT_BLOCK_RSA_2048_SHA256,  ISCSI device path,CHAP device path</p></td>
+<td><p>Sept 15, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3A</p></td>
+<td><p>518 typos</p></td>
+<td><p>Sept 15, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3A</p></td>
+<td><p>517 IP stack related protocol  update</p></td>
+<td><p>Sept 15, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3A</p></td>
+<td><p>516 User Identity ProtocolBugs</p></td>
+<td><p>Sept 15, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3A</p></td>
+<td><p>513 add support for gateways in  ipv4 &amp; ipv6 device path nodes</p></td>
+<td><p>Sept 15, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3A</p></td>
+<td><p>506 TCP6/MTFTP6 StatusCode  Definition</p></td>
+<td><p>Sept 15, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3A</p></td>
+<td><p>505 TCP4/MTFTP4 statusCodes</p></td>
+<td><p>Sept 15, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3A</p></td>
+<td><p>490Correction 28.2.5.6, Table 185.  Information for Types of Storage</p></td>
+<td><p>Sept 15, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3A</p></td>
+<td><p>478 Update to ALTCFG references</p></td>
+<td><p>Sept 15, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3A</p></td>
+<td><p>477 Text adjustment  toConfigAccess/ConfigRouting</p></td>
+<td><p>Sept 15, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3</p></td>
+<td><p>463 Update  EFI_IP6_PROTOCOL.Neighbors() API</p></td>
+<td><p>May 7, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3</p></td>
+<td><p>462 ExitBootServices timers  deavtivation</p></td>
+<td><p>May 7, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3</p></td>
+<td><p>461IP4 Mode Data definition update</p></td>
+<td><p>May 7, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3</p></td>
+<td><p>460Chapter 2.6 language update</p></td>
+<td><p>May 7, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3</p></td>
+<td><p>457Change KeyData.PackedValue to  0x40000200, page 63.</p></td>
+<td><p>May 7, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3</p></td>
+<td><p>456 How to handle PXEBoot w/o NII  Section 21.3</p></td>
+<td><p>May 7, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3</p></td>
+<td><p>454 Dynamic support of media  detection - network stack</p></td>
+<td><p>May 7, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3</p></td>
+<td><p>453 Errata to support dynamic media  detection - UNDI</p></td>
+<td><p>May 7, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3</p></td>
+<td><p>452 Support to dynamically detect  media errata - SNP</p></td>
+<td><p>May 7, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3</p></td>
+<td><p>450 Missing opcode headers and  formatting, section 28.3.8.3.x.</p></td>
+<td><p>May 7, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3</p></td>
+<td><p>449 Add missing EFI_IFR_GET,  EFI_IFR_SET and EFI_IFR_MAP to the  syntax.Section 28.2.5.7.</p></td>
+<td><p>May 7, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3</p></td>
+<td><p>448 Section 28.2.5.4 Questions,  Syntax, Update question-option-tag;  Add EFI_IFR_READ and EFI_IFR_WRITE  in the question syntax.</p></td>
+<td><p>May 7, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3</p></td>
+<td><p>447Section 28.2.5.11.2 Moving  Forms, Update line that starts with  EFI_IFR_FORM to: EFI_IFR_FORM or  EFI_IFR_FORM_MAP (and all  references in EFI_IFR_REF)</p></td>
+<td><p>May 7, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3</p></td>
+<td><p>446 Section 28.2.5.2 Forms,  Syntax,Change 3rd line to:    form := EFI_IFR_FORM form-tag-list  |    EFI_IFR_FORM_MAP form-tag-list</p></td>
+<td><p>May 7, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3</p></td>
+<td><p>445 Table 194: EFI_IFR_FORM_MAP_OP,  2ndColumn shouldBe 0x5d (not 05xd)</p></td>
+<td><p>May 7, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3</p></td>
+<td><p>444 Form Set Syntax: Section  28.2.5.1.1, section shouldBe  subheading, not heading level 5;  Section 28.2.5.1, Syntax, line 3,  text after := is not aligned with  other text on line 2, 4</p></td>
+<td><p>May 7, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3</p></td>
+<td><p>443 Section 28.3.8.3.38,  EFI_IFR_MAP, Prototype, line 4,  outdent 2 spaces.</p></td>
+<td><p>May 7, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3</p></td>
+<td><p>442 Section 28.3.8.3.64,  EFI_IFR_SET, Prototype, lines 3-8,  indentBy 2 spaces</p></td>
+<td><p>May 7, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3</p></td>
+<td><p>440Change the defined type of  EFI_STATUs from INTN to UINTN</p></td>
+<td><p>May 7, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3</p></td>
+<td><p>439 Incorrect definitions of  UEFI_CONFIG_LANG and  UEFI_CONFIG_LANG_2 in UEFI 2.3  Feb18 draft</p></td>
+<td><p>Feb 25, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3</p></td>
+<td><p>438 UEFI 2.3 Feb 13 Draft:Chapter  28 Formatting Issues</p></td>
+<td><p>Feb 18, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3</p></td>
+<td><p>437 Errata to 2.3 draft material  from UEFI Spec 2_3_Draft_Jan29</p></td>
+<td><p>Feb 18, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3</p></td>
+<td><p>436 UEFI 2.3 split Figure 88 into 3  figures</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3</p></td>
+<td><p>435 Partition  SignatureClarification</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3</p></td>
+<td><p>434 UEFI 2.3 Feb Draft: 28.3.8.3.58</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3</p></td>
+<td><p>432 UEFI 2.3 Feb Draft: Appendix M.</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3</p></td>
+<td><p>431 UEFI 2.3 Feb Draft: Section  30.4</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3</p></td>
+<td><p>418Change Appendix O from “UEFI  ACPI Table” to “UEFI ACPI Data</p></td>
+<td><p>Feb 18, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3</p></td>
+<td><p>413Correct the definition of  UEFI_CONFIG_LANG</p></td>
+<td><p>Feb 18, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3</p></td>
+<td><p>410 UNDIBuffer usage</p></td>
+<td><p>Feb 18, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3</p></td>
+<td><p>408 ARMBindingCorrections</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3</p></td>
+<td><p>406 Missing EFI System Table  Revision In UEFI 2.3 Draft</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3</p></td>
+<td><p>395 New “Non-removable  MediaBootBehavior” section</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3</p></td>
+<td><p>394 Omission in  EFI_USB2_HC_PROTOCOL</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3</p></td>
+<td><p>388 Add HIICallback types  (FORM_OPEN, FORM_CLOSE) when a form  is opened orClosed.</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.3</p></td>
+<td><p>376 Add ARM processorBinding to  UEFI</p></td>
+<td><p>Jan. 12, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.3</p></td>
+<td><p>326 Add Firmware Management  Protocol</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2A</p></td>
+<td><p>429  EFI_HASH_SERVICE_BINDING_PROTOCOL  GUID define misses _GUID</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2A</p></td>
+<td><p>404 RemoveConstraint form  EFI_TIME.YearComment</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2A</p></td>
+<td><p>400 FreePool() description error</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2A</p></td>
+<td><p>393 UEFI 2.1/2.2Boot  ManagerBehaviorClarification</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2A</p></td>
+<td><p>392 MBR errata in UEFI 2.2</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2A</p></td>
+<td><p>391 Polarity of INCONSISTENT_IF and  NO_SUBMIT_IF IFR opcodes wrong</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2A</p></td>
+<td><p>390 UEFI 2.2 Miscellaneous  HII-related errata</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2A</p></td>
+<td><p>389 UEFI 2.2 HII-Related Formatting  Issues</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2A</p></td>
+<td><p>387 UEFI 2.1/UEFI 2.2A (ch. 12)</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2A</p></td>
+<td><p>384 Fix HII package description  omission.</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2A</p></td>
+<td><p>379 UEFI 2.1/UEFI 2.2 HII-Related  Errata</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2A</p></td>
+<td><p>378 UEFI 2.1 &amp; UEFI 2.2  HIICallbackClarifications</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2A</p></td>
+<td><p>377 MissingBLTBuffer figure.</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2A</p></td>
+<td><p>375 Extra periods errata in UEFI  2.2</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2A</p></td>
+<td><p>374 UEFI 2.1 &amp; UEFI 2.2A  (10.7-10.10)</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2A</p></td>
+<td><p>373 UEFI 2.2,Chs. 9.5 &amp; 9.6.2 &amp;  9.6.3 (Device Path) Errata</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2A</p></td>
+<td><p>372 UEFI 2.2 remove “Draft for  Review”</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2A</p></td>
+<td><p>371 UEFI 2.1 &amp; UEFI 2.2 Typos (ch.  10)</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2A</p></td>
+<td><p>370 EFI_SYSTEM_TABLE Errata (UEFI  2.1/UEFI 2.2)</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2A</p></td>
+<td><p>368 EFI_FONT_DISPLAY_INFO.FontInfo  description incorrect</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2A</p></td>
+<td><p>366 UEFI 2.x: Erroneous references  to EFI_BOOT_SERVICES_TABLE,  EFI_RUNTIME_SERVICES_TABLE</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2A</p></td>
+<td><p>364 UEFI 2.2 Typos &amp; Formatting  Issues (ch. 9)</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2A</p></td>
+<td><p>362 UEFI 2.2 Typos (Next)</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2A</p></td>
+<td><p>361 UEFI 2.2 Typos &amp; Formatting  Issues</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2A</p></td>
+<td><p>359 TPL Table</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2A</p></td>
+<td><p>358 Missing signature for UEFI 2.2.</p></td>
+<td><p>Feb. 12, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>398 Update to M348 to fix small  typo</p></td>
+<td><p>Jan. 11, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>397 PCICopyMem() misspelling</p></td>
+<td><p>Jan. 11, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>394 Omission in  EFI_USB2_HC_PROTOCOL</p></td>
+<td><p>Jan. 11, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>357Clarify  EFI_IFR_DISABLE_IFBehavior with  regard to dynamic values</p></td>
+<td><p>Jan. 11, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>351 Fix an unaligned field in a  device path</p></td>
+<td><p>Jan. 11, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>350 EFI_HII_STRING_PROTOCOL Typos</p></td>
+<td><p>Jan. 11, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>348 EFI_IFR_RESET_BUTTON is  incorrectly listed as a question</p></td>
+<td><p>Jan. 11, 2009</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>347 Replace first paragraph of the  “Description” section for the  ExitBootServices()</p></td>
+<td><p>Sept. 25, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>346 Nest, Sections 10.11 &amp; 10.12  Under 10.10</p></td>
+<td><p>Sept. 25, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>344Correct missing statusCodes  returned section for Form() in  EFI_USER_CREDENTIAL_PROTOCOL.</p></td>
+<td><p>Sept. 25, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>343Correct missing parameter for  User() function in  EFI_USER_CREDENTIAL_PROTOCOL</p></td>
+<td><p>Sept. 25, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>340 UEFI 2.2 Editorial / Formatting  Issues</p></td>
+<td><p>Sept. 25, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>339 Update missing TPL restrictions</p></td>
+<td><p>Sept. 25, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>337 Replace the EFI_CRYPT_HANDLE  reference (in the IPSsec API)with a  self-contained, independent  definition.</p></td>
+<td><p>Sept. 25, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>335 User Authentication errata</p></td>
+<td><p>Sept. 25, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>334 Standardized “Unicode”  References</p></td>
+<td><p>Jan. 11, 2009</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>333Correct the incorrect ‘;’ at the  end of EFI_GUID #defines</p></td>
+<td><p>Sept. 25, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>332Correct SendForm description  Type, PackageGuid and FormsetGuid  parameters</p></td>
+<td><p>Sept. 25, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>331 Definition for  EFI_BROWSER_ACTION and the related  #defines were not present–Insert.</p></td>
+<td><p>Sept. 25, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>330 EFI_IFR_REF:ChangeCross  reference to a question</p></td>
+<td><p>Sept. 25, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>327Clarify the support in DHCP4  protocol for “Inform” (DHCPINFORM)  messages.</p></td>
+<td><p>Sept. 25, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>325 MinorCorrection 28.3.8.3.20</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>324 ATA Pass-Thru ECR Update</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>323 VLAN modificationBecause of  IPV6</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>322Chapter 2 updates for IP6 net  stack</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>321Enable PCIe 2.0 andBeyond  support in the UEFI error records</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>320Clarifcation for WIN_CERTIFICATE  types &amp; relationship with signature  database types</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>319 UEFI IPSec protocol</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>315 EFI TCP6 Protocol</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>314 EFI MTFTP6 Protocol</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>313 EFI IPv6Configuration Protocol</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>312 EFI IPv6 Protocol</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>311EFI DHCPv6 Protocol</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>310 EFI UDPv6 Protocol</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>309 IPv6 Address display  formatClarification</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>306 Some errata to the animation  support</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>304 Errata to UpdateCapsule()</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>303 Add ability to have aCapsule  that initiates a reset &amp; doesn’t  return to theCaller</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>301 Errata to the Authentication  Protocol</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>300 MTFTP errata</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>299 PIWG Firmware File/Firmware  Volume Typo Errata</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>294 LocateDevicePath with  multi-instance device path</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>291 HII Errata / Update</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>288 Additional wording fixes for  GPT Entry AttributeBit 1</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>282 Updated Requirements Section  For ATA Pass Through (M242)</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>279 Firmware/OS Trusted Key  Exchange and Image Validation</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>242 UEFI ATA Pass-Through Protocol</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>237 UEFI User Identification  Proposal (from USST)</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>215 new Start() RemainingDevicePath  Syntax</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>212 UEFI HII Standards Mapping</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>211UEFI Setup Question / Form  Access Update</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>210 UEFI HII Animation addition</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>202 EAP Management</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>201EAP</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>200 VLAN</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>199 FTP API</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>198 GUID Partition Entry  AttributesClarification and  Definition</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.2</p></td>
+<td><p>169 EFI Driver Health Protocol</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.2</p></td>
+<td><p>157 Floating-Point ABIChanges For  X86, X64 &amp; Itanium</p></td>
+<td><p>July 25, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1C</p></td>
+<td><p>Re-format Revision History  fromBulleted lists to one row per  Mantis ticket/ EngineeringChange  Request</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1C</p></td>
+<td><p>60 iSCSI Device Path Update</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1C</p></td>
+<td><p>59 Add returnCode to Diagnostics  Protocol</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1C</p></td>
+<td><p>58 Language update for  EfiReservedMemory type usage</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1C</p></td>
+<td><p>57Clarify text for Extended SCSI  Pass Thru  Protocol.GetNextTargetLun()</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1C</p></td>
+<td><p>56Clarification on ResetSystem</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1C</p></td>
+<td><p>55Clarification on UpdateCapsule</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1C</p></td>
+<td><p>54 ACPI Table Protocol GUID Update</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1C</p></td>
+<td><p>52 New GUID for Driver Diagnostics  and DriverConfiguration Protocols  with new GUID</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1C</p></td>
+<td><p>283 Minor update toClarify a  typedef/returnCode in HII</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1C</p></td>
+<td><p>281 Runtime memory allocation</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1C</p></td>
+<td><p>280 Some minor errata to keyboard  related topics</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1C</p></td>
+<td><p>278Change references to  EFI_SIMPLE_INPUT_PROTOCOL into  EFI_SIMPLE_TEXT_INPUT_PROTOCOL</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1C</p></td>
+<td><p>266 PKCS11.5 structure does  notCorrectly specify the portion of  theCited RFC that pertains to  theCertificate struct/algorithm</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1C</p></td>
+<td><p>249 Latest update to UCST Errata  list</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1C</p></td>
+<td><p>248Correction to text inChapter 8.2  of UEFI 2.1B</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1C</p></td>
+<td><p>246 New returnCode</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1C</p></td>
+<td><p>245 Remove extraneous text  inChapter 29</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1C</p></td>
+<td><p>244 Replace references to  EFI_FIRMWARE_VOLUME_INFO_ PPI with  EFI_PEI_FIRMWARE_VOLUME_INFO_PPI</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1C</p></td>
+<td><p>221ImageBlock Structure name typos  in 27.3.7.2</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1C</p></td>
+<td><p>220 Replace references to RFC 3066  to RFC 4646</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1C</p></td>
+<td><p>219 IA-32 and x64 stack need toBe  16-byte aligned</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1C</p></td>
+<td><p>218 SATA update to section 9.3.5.6</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1C</p></td>
+<td><p>217  EFI_PLATFORM_TO_DR  IVER_CONFIGURATION_PROTOCOL.Query()  Update</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1C</p></td>
+<td><p>216 UEFI 2.1 textCorrections</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1C</p></td>
+<td><p>214 Device_IO + typos</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1C</p></td>
+<td><p>213 UEFI HII Errata</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1C</p></td>
+<td><p>209 ESP  number/locationClarifications</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1C</p></td>
+<td><p>208 Driver Protocol Names and GUIDs</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1C</p></td>
+<td><p>207 Updated Wording for the File  Path</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1C</p></td>
+<td><p>206Clarify return values for  extended scsi passthru protocol</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1C</p></td>
+<td><p>203 Platform Error Record - x64  register state errata</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1C</p></td>
+<td><p>193 Loaded Image device paths for  EFI Drivers loaded from PCI Option  ROMs</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1C</p></td>
+<td><p>189 Graphics Output  ProtocolClarification</p></td>
+<td><p>June 5, 2008</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1B</p></td>
+<td><p>51 Long physicalBlocks updates</p></td>
+<td><p>December 11, 2007</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1B</p></td>
+<td><p>205Change LoadImage() parameter  name from FilePath to DevicePath;  endsConfusion with  EFI_LOADED_IMAGE_PROTOCOL</p></td>
+<td><p>December 11, 2007</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1B</p></td>
+<td><p>197 EFI Loaded Image Device Path  Protocol</p></td>
+<td><p>December 11, 2007</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1B</p></td>
+<td><p>190 Extensive errata form UCST  including OPCodesChanges ro  resolveConflicts.</p></td>
+<td><p>December 11, 2007</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1B</p></td>
+<td><p>187Clarify input protocols.</p></td>
+<td><p>December 11, 2007</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1B</p></td>
+<td><p>186Change PCIR struct to match PCI  FW Spec 3.0</p></td>
+<td><p>December 11, 2007</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1B</p></td>
+<td><p>185Change EFI term to UEFI  forConsistency</p></td>
+<td><p>December 11, 2007</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1B</p></td>
+<td><p>184 SNIA/DDF Wording Update</p></td>
+<td><p>December 11, 2007</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1B</p></td>
+<td><p>182Clarify EFI_MTFTP4_TOKEN</p></td>
+<td><p>December 11, 2007</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1B</p></td>
+<td><p>181Correct MNP GUIDCollision</p></td>
+<td><p>December 11, 2007</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1B</p></td>
+<td><p>177 remove ending paragraph  (editing text) in section 9.6</p></td>
+<td><p>December 11, 2007</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1B</p></td>
+<td><p>175 Update to SendForm API</p></td>
+<td><p>December 11, 2007</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1B</p></td>
+<td><p>174 Error record addition for dma  remapping units</p></td>
+<td><p>December 11, 2007</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1B</p></td>
+<td><p>173 MinorChanges to the description  of two of the fields in theCommon  Platform Error Record, in Appendix  N</p></td>
+<td><p>December 11, 2007</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1B</p></td>
+<td><p>172 Typo for ResetSystem()</p></td>
+<td><p>December 11, 2007</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1B</p></td>
+<td><p>170 (Addition of) Driver Family  Override Protocol</p></td>
+<td><p>December 11, 2007</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1B</p></td>
+<td><p>168 Remove LOAD_OPTION_GRAPHICS</p></td>
+<td><p>December 11, 2007</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1B</p></td>
+<td><p>165 Fix EFI_GRAPHICS_OUTPUT_PIXEL</p></td>
+<td><p>December 11, 2007</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1B</p></td>
+<td><p>164 Update to USB2_HC_PROTOCOL  Table</p></td>
+<td><p>December 11, 2007</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1B</p></td>
+<td><p>162 UEFI PIWG Device Path Errata</p></td>
+<td><p>December 11, 2007</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1B</p></td>
+<td><p>160Clean up references to PCIR</p></td>
+<td><p>December 11, 2007</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1B</p></td>
+<td><p>158 Errata to the UEFI  2.1Configuration sections</p></td>
+<td><p>December 11, 2007</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1B</p></td>
+<td><p>156 SendForm API Errata</p></td>
+<td><p>December 11, 2007</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1B</p></td>
+<td><p>159 Adjust some of the #define  names in the Simple Text Input Ex  protocol</p></td>
+<td><p>December 11, 2007</p></td>
+</tr>
+<tr class="row-even"><td><p>2.1A</p></td>
+<td><p>UEFI 2.1 incorporating Errata  through 4-27-07</p></td>
+<td><p>April 27, 2007</p></td>
+</tr>
+<tr class="row-odd"><td><p>2.1</p></td>
+<td><p>Second release</p></td>
+<td><p>January 23, 2007</p></td>
+</tr>
+<tr class="row-even"><td><p>2.0</p></td>
+<td><p>First release of specification.</p></td>
+<td><p>January 31, 2006</p></td>
+</tr>
+</tbody>
+</table>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="List_of_Figures.html" class="btn btn-neutral float-left" title="List of Figures" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../01_Introduction.html" class="btn btn-neutral float-right" title="1. Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, UEFI Forum, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

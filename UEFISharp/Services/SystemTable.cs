@@ -2,7 +2,7 @@ using System.Runtime.InteropServices;
 
 namespace EFI.Services;
 
-[StructLayout(layoutKind: LayoutKind.Sequential)]
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
 public unsafe struct SystemTable
 {
     public TableHeader Hdr;

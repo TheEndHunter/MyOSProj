@@ -5,7 +5,7 @@ namespace EFI.Protocols.Graphics;
 public static partial class EFIConsts
 {
     public static readonly Guid GraphicsOutputProtocol_GUID =
-        new(0x9042a9de, 0x23dc, 0x4a38, 0x96, 0xfb, 0x7a, 0xde, 0xd0, 0x80, 0x51, 0x6a);
+        new(0x9042A9DE, 0x23DC, 0x4A38, 0x96, 0xFB, 0x7A, 0xDE, 0xD0, 0x80, 0x51, 0x6A);
 }
 
 public unsafe delegate Status GraphicsOutputProtocolQueryMode(
@@ -33,8 +33,15 @@ public unsafe delegate Status GraphicsOutputProtocolBlt(
 [StructLayout(LayoutKind.Sequential)]
 public unsafe struct GraphicsOutputProtocol
 {
-    public GraphicsOutputProtocolQueryMode QueryMode;
-    public GraphicsOutputProtocolSetMode SetMode;
-    public GraphicsOutputProtocolBlt Blt;
+    public nint QueryMode; // TODO: precise delegate signatures
+    public nint SetMode; // TODO: precise delegate signatures
+    public nint Blt; // TODO: precise delegate signatures
     public GraphicsOutputProtocolMode* Mode;
+}
+
+[StructLayout(LayoutKind.Sequential, Pack = 1)]
+public unsafe struct FrameBuffer
+{
+    public nuint FrameBufferBase;
+    public nuint FrameBufferSize;
 }

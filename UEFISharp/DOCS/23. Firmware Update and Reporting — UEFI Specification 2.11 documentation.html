@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>23. Firmware Update and Reporting &mdash; UEFI Specification 2.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=f2209469" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/style.css?v=faba8a36" />
+      <link rel="stylesheet" type="text/css" href="_static/theme-overrides.css?v=84235ce0" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2de06f63"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="24. Network Protocols — SNP, PXE, BIS and HTTP Boot" href="24_Network_Protocols_SNP_PXE_BIS.html" />
+    <link rel="prev" title="22. EFI Byte Code Virtual Machine" href="22_EFI_Byte_Code_Virtual_Machine.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            UEFI Specification
+          </a>
+              <div class="version">
+                2.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Tables.html">List of Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Figures.html">List of Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/Revision_History.html">Revision History</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Overview.html">2. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Boot_Manager.html">3. Boot Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_EFI_System_Table.html">4. EFI System Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_GUID_Partition_Table_Format.html">5. GUID Partition Table (GPT) Disk Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_Block_Transition_Table_Layout.html">6. Block Translation Table (BTT) Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Services_Boot_Services.html">7. Services — Boot Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Services_Runtime_Services.html">8. Services — Runtime Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Protocols_EFI_Loaded_Image.html">9. Protocols - EFI Loaded Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Protocols_Device_Path_Protocol.html">10. Protocols – Device Path Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html">11. Protocols — UEFI Driver Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_Protocols_Console_Support.html">12. Protocols — Console Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Protocols_Media_Access.html">13. Protocols – Media Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Protocols_PCI_Bus_Support.html">14. Protocols — PCI Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_Protocols_SCSI_Driver_Models_and_Bus_Support.html">15. Protocols — SCSI Driver Models and Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_Protocols_iSCSI_Boot.html">16. Protocols — iSCSI Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_Protocols_USB_Support.html">17. Protocols — USB Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_Protocols_Debugger_Support.html">18. Protocols — Debugger Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_Protocols_Compression_Algorithm_Specification.html">19. Protocols — Compression Algorithm Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_Protocols_ACPI_Protocols.html">20. Protocols — ACPI Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_Protocols_String_Services.html">21. Protocols — String Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html">22. EFI Byte Code Virtual Machine</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">23. Firmware Update and Reporting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#firmware-management-protocol">23.1. Firmware Management Protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-firmware-management-protocol">23.1.1. EFI_FIRMWARE_MANAGEMENT_PROTOCOL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-firmware-management-protocol-getimageinfo">23.1.2. EFI_FIRMWARE_MANAGEMENT_PROTOCOL.GetImageInfo()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-firmware-management-protocol-getimage">23.1.3. EFI_FIRMWARE_MANAGEMENT_PROTOCOL.GetImage()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-firmware-management-protocol-setimage">23.1.4. EFI_FIRMWARE_MANAGEMENT_PROTOCOL.SetImage()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-firmware-management-protocol-checkimage">23.1.5. EFI_FIRMWARE_MANAGEMENT_PROTOCOL.CheckImage()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-firmware-management-protocol-getpackageinfo">23.1.6. EFI_FIRMWARE_MANAGEMENT_PROTOCOL.GetPackageInfo()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-firmware-management-protocol-setpackageinfo">23.1.7. EFI_FIRMWARE_MANAGEMENT_PROTOCOL.SetPackageInfo()</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#dependency-expression-instruction-set">23.2. Dependency Expression Instruction Set</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#push-guid">23.2.1. PUSH_GUID</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#push-version">23.2.2. PUSH_VERSION</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#declare-version-name">23.2.3. DECLARE_VERSION_NAME</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#and">23.2.4. AND</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#or">23.2.5. OR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#not">23.2.6. NOT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#true">23.2.7. TRUE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#false">23.2.8. FALSE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#eq">23.2.9. EQ</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gt">23.2.10. GT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gte">23.2.11. GTE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lt">23.2.12. LT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lte">23.2.13. LTE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#end">23.2.14. END</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#declare-length">23.2.15. DECLARE_LENGTH</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#delivering-capsules-containing-updates-to-firmware-management-protocol">23.3. Delivering Capsules Containing Updates to Firmware Management Protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-firmware-management-capsule-id-guid">23.3.1. EFI_FIRMWARE_MANAGEMENT_CAPSULE_ID_GUID</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#defined-firmware-management-protocol-data-capsule-structure">23.3.2. DEFINED FIRMWARE MANAGEMENT PROTOCOL DATA CAPSULE STRUCTURE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#firmware-processing-of-the-capsule-identified-by-efi-firmware-management-capsule-id-guid">23.3.3. Firmware Processing of the Capsule Identified by EFI_FIRMWARE_MANAGEMENT_CAPSULE_ID_GUID</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-system-resource-table">23.4. EFI System Resource Table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id30">23.4.1. EFI_SYSTEM_RESOURCE_TABLE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#adding-and-removing-devices-from-the-esrt">23.4.2. Adding and Removing Devices from the ESRT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#esrt-and-firmware-management-protocol">23.4.3. ESRT and Firmware Management Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mapping-firmware-management-protocol-descriptors-to-esrt-entries">23.4.4. Mapping Firmware Management Protocol Descriptors to ESRT Entries</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#delivering-capsule-containing-json-payload">23.5. Delivering Capsule Containing JSON payload</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-json-capsule-id-guid">23.5.1. EFI_JSON_CAPSULE_ID_GUID</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#defined-json-capsule-data-structure">23.5.2. Defined JSON Capsule Data Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#firmware-processing-of-the-capsule-identified-by-efi-json-capsule-id-guid">23.5.3. Firmware Processing of the Capsule Identified by EFI_JSON_CAPSULE_ID_GUID</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="24_Network_Protocols_SNP_PXE_BIS.html">24. Network Protocols — SNP, PXE, BIS and HTTP Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25_Network_Protocols_Managed_Network.html">25. Network Protocols - Managed Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26_Network_Protocols_Bluetooth.html">26. Network Protocols — Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27_Network_Protocols_VLAN_and_EAP.html">27. Network Protocols — VLAN, EAP, Wi-Fi and Supplicant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28_Network_Protocols_TCP_IP_and_Configuration.html">28. Network Protocols — TCP, IP, IPsec, FTP, TLS and Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29_Network_Protocols_ARP_and_DHCP.html">29. Network Protocols — ARP, DHCP, DNS, HTTP and REST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_Network_Protocols_UDP_and_MTFTP.html">30. Network Protocols — UDP and MTFTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="31_EFI_Redfish_Service_Support.html">31. EFI Redfish Service Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="32_Secure_Boot_and_Driver_Signing.html">32. Secure Boot and Driver Signing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="33_Human_Interface_Infrastructure.html">33. Human Interface Infrastructure Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="34_HII_Protocols.html">34. HII Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="35_HII_Configuration_Processing_and_Browser_Protocol.html">35. HII Configuration Processing and Browser Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="36_User_Identification.html">36. User Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="37_Secure_Technologies.html">37. Secure Technologies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="38_Confidential_Computing.html">38. Confidential Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="39_Micellaneous_Protocols.html">39. Miscellaneous Protocols</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Apx_A_GUID_and_Time_Formats.html">A. GUID and Time Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_B_Console.html">B. Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_C_Device_Path_Examples.html">C. Device Path Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_D_Status_Codes.html">D. Status Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_E_Universal_Network_Driver_Interfaces.html">E. Universal Network Driver Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_F_Using_the_Simple_Pointer_Protocol.html">F. Using the Simple Pointer Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_G_Using_the_EFI_Extended_SCSI_Pass_Thru_Protocol.html">G. Using the EFI Extended SCSI Pass Thru Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_H_Compression_Source_Code.html">H. Compression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_I_Decompression_Source_Code.html">I. Decompression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_J_EFI_Byte_Code_Virtual_Machine_Opcode_List.html">J. EFI Byte Code Virtual Machine Opcode List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_K_Alphabetic_Function_Lists.html">K. Alphabetic Function Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_L_EFI_1.10_Protocol_Changes_and_Deprecation_List.html">L. EFI 1.10 Protocol Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html">M. Formats — Language Codes and Language Code Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_N_Common_Platform_Error_Record.html">N. Common Platform Error Record (CPER)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_O_UEFI_ACPI_Data_Table.html">O. UEFI ACPI Data Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_P_Hardware_Error_Record_Persistence_Usage.html">P. Hardware Error Record Persistence Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_Q_References.html">Q. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_R_Glossary.html">R. Glossary</a></li>
+</ul>
+
+    <a href= "genindex.html">Index</a>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UEFI Specification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">23. </span>Firmware Update and Reporting</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="firmware-update-and-reporting">
+<span id="id1"></span><h1><span class="section-number">23. </span>Firmware Update and Reporting<a class="headerlink" href="#firmware-update-and-reporting" title="Link to this heading"></a></h1>
+<p>The UEFI Firmware Management Protocol provides an abstraction for device to provide firmware management support. The base requirements for managing device firmware images include identifying firmware image revision level and programming the image into the device. The protocol for managing firmware provides the following services.</p>
+<ul class="simple">
+<li><p>Get the attributes of the current firmware image. Attributes include revision level.</p></li>
+<li><p>Get a copy of the current firmware image. As an example, this service could be used by a management application to facilitate a firmware roll-back.</p></li>
+<li><p>Program the device with a firmware image supplied by the user.</p></li>
+<li><p>Label all the firmware images within a device with a single version.</p></li>
+</ul>
+<p>When UEFI Firmware Management Protocol (FMP) instance is intended to perform the update of an option ROM loaded from a PCI or PCI Express device, it is recommended that the FMP instance be attached to the handle with <em>EFI_LOADED_IMAGE_PROTOCOL</em> for said Option ROM.</p>
+<p>When the FMP instance is intended to update internal device firmware, or a combination of device firmware and Option ROM, the FMP instance may instead be attached to the Controller handle of the device. However, in the case where multiple devices represented by multiple controller handles are served by the same firmware store, only a single Controller handle should expose FMP. In all cases a specific updatable hardware firmware store must be represented by exactly one FMP instance.</p>
+<p>Care should be taken to ensure that the FMP instance reports current version data that accurately represents the actual contents of the firmware store of the device exposing FMP, because in some cases the device driver currently operating the device may have been loaded from another device or media.</p>
+<section id="firmware-management-protocol">
+<span id="id2"></span><h2><span class="section-number">23.1. </span>Firmware Management Protocol<a class="headerlink" href="#firmware-management-protocol" title="Link to this heading"></a></h2>
+<section id="efi-firmware-management-protocol">
+<span id="id3"></span><h3><span class="section-number">23.1.1. </span>EFI_FIRMWARE_MANAGEMENT_PROTOCOL<a class="headerlink" href="#efi-firmware-management-protocol" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Firmware Management application invokes this protocol to manage device firmware.</p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="p">{</span><span class="mi">86</span><span class="n">C77A67</span><span class="o">-</span><span class="mi">0</span><span class="n">B97</span><span class="o">-</span><span class="mi">4633</span><span class="o">-</span><span class="n">A187</span><span class="o">-</span><span class="mi">49104</span><span class="n">D0685C7</span><span class="p">}</span>
+<span class="c1">#define EFI_FIRMWARE_MANAGEMENT_PROTOCOL_GUID \</span>
+ <span class="p">{</span> <span class="mh">0x86c77a67</span><span class="p">,</span> <span class="mh">0xb97</span><span class="p">,</span> <span class="mh">0x4633</span><span class="p">,</span> \
+   <span class="p">{</span><span class="mh">0xa1</span><span class="p">,</span> <span class="mh">0x87</span><span class="p">,</span> <span class="mh">0x49</span><span class="p">,</span> <span class="mh">0x10</span><span class="p">,</span> <span class="mh">0x4d</span><span class="p">,</span> <span class="mh">0x06</span><span class="p">,</span> <span class="mh">0x85</span><span class="p">,</span> <span class="mh">0xc7</span> <span class="p">}}</span>
+</pre></div>
+</div>
+<p><strong>Protocol</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> \<span class="n">_EFI_FIRMWARE_MANAGEMENT_PROTOCOL</span> <span class="p">{</span>
+  <span class="n">EFI_FIRMWARE_MANAGEMENT_PROTOCOL_GET_IMAGE_INFO</span>     <span class="n">GetImageInfo</span><span class="p">;</span>
+  <span class="n">EFI_FIRMWARE_MANAGEMENT_PROTOCOL_GET_IMAGE</span>          <span class="n">GetImage</span><span class="p">;</span>
+  <span class="n">EFI_FIRMWARE_MANAGEMENT_PROTOCOL_SET_IMAGE</span>          <span class="n">SetImage</span><span class="p">;</span>
+  <span class="n">EFI_FIRMWARE_MANAGEMENT_PROTOCOL_CHECK_IMAGE</span>        <span class="n">CheckImage</span><span class="p">;</span>
+   <span class="n">EFI_FIRMWARE_MANAGEMENT_PROTOCOL_GET_PACKAGE_INFO</span>  <span class="n">GetPackageInfo</span><span class="p">;</span>
+  <span class="n">EFI_FIRMWARE_MANAGEMENT_PROTOCOL_SET_PACKAGE_INFO</span>   <span class="n">SetPackageInfo</span><span class="p">;</span>
+<span class="p">}</span>  <span class="n">EFI_FIRMWARE_MANAGEMENT_PROTOCOL</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Members</strong></p>
+<dl class="simple">
+<dt>GetImageInfo</dt><dd><p>Returns information about the current firmware image(s) of the device.</p>
+</dd>
+<dt>GetImage</dt><dd><p>Retrieves a copy of the current firmware image of the device.</p>
+</dd>
+<dt>SetImage</dt><dd><p>Updates the device firmware image of the device.</p>
+</dd>
+<dt>CheckImage</dt><dd><p>Checks if the firmware image is valid for the device.</p>
+</dd>
+<dt>GetPackageInfo</dt><dd><p>Returns information about the current firmware package.</p>
+</dd>
+<dt>SetPackageInfo</dt><dd><p>Updates information about the firmware package.</p>
+</dd>
+</dl>
+</section>
+<section id="efi-firmware-management-protocol-getimageinfo">
+<span id="efi-firmware-mamagement-protocol-getimageinfo"></span><h3><span class="section-number">23.1.2. </span>EFI_FIRMWARE_MANAGEMENT_PROTOCOL.GetImageInfo()<a class="headerlink" href="#efi-firmware-management-protocol-getimageinfo" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Returns information about the current firmware image(s) of the device.</p>
+<p><strong>Protocol</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_FIRMWARE_MANAGEMENT_PROTOCOL_GET_IMAGE_INFO</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_FIRMWARE_MANAGEMENT_PROTOCOL</span>    <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">UINTN</span>                           <span class="o">*</span><span class="n">ImageInfoSize</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">EFI_FIRMWARE_IMAGE_DESCRIPTOR</span>   <span class="o">*</span><span class="n">ImageInfo</span><span class="p">,</span>
+  <span class="n">OUT</span>    <span class="n">UINT32</span>                          <span class="o">*</span><span class="n">DescriptorVersion</span>
+  <span class="n">OUT</span>    <span class="n">UINT8</span>                           <span class="o">*</span><span class="n">DescriptorCount</span><span class="p">,</span>
+  <span class="n">OUT</span>    <span class="n">UINTN</span>                           <span class="o">*</span><span class="n">DescriptorSize</span><span class="p">,</span>
+  <span class="n">OUT</span>    <span class="n">UINT32</span>                          <span class="o">*</span><span class="n">PackageVersion</span><span class="p">,</span>
+  <span class="n">OUT</span>    <span class="n">CHAR16</span>                          <span class="o">**</span><span class="n">PackageVersionName</span>
+  <span class="p">)</span> <span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the <em>EFI_FIRMWARE_MANAGEMENT_PROTOCOL</em> instance.</p>
+</dd>
+<dt>ImageInfoSize</dt><dd><p>A pointer to the size, in bytes, of the <em>ImageInfo</em> buffer. On input, this is the size of the buffer allocated by the caller. On output, it is the size of the buffer returned by the firmware if the buffer was large enough, or the size of the buffer needed to contain the image(s) information if the buffer was too small.</p>
+</dd>
+<dt>ImageInfo</dt><dd><p>A pointer to the buffer in which firmware places the current image(s) information. The information is an array of <em>EFI_FIRMWARE_IMAGE_DESCRIPTOR</em> , see “Related Definitions”. May be NULL with a zero <em>ImageInfoSize</em> in order to determine the size of the buffer needed.</p>
+</dd>
+<dt>DescriptorVersion</dt><dd><p>A pointer to the location in which firmware returns the version number associated with the <em>EFI_FIRMWARE_IMAGE_DESCRIPTOR.</em> See “Related Definitions”.</p>
+</dd>
+<dt>DescriptorCount</dt><dd><p>A pointer to the location in which firmware returns the number of descriptors or firmware images within this device.</p>
+</dd>
+<dt>DescriptorSize</dt><dd><p>A pointer to the location in which firmware returns the size, in bytes, of an individual <em>EFI_FIRMWARE_IMAGE_DESCRIPTOR.</em></p>
+</dd>
+<dt>PackageVersion</dt><dd><p>A version number that represents all the firmware images in the device. The format is vendor specific and new version must have a greater value than the old version. If <em>PackageVersion</em> is not supported, the value is 0xFFFFFFFF. A value of 0xFFFFFFFE indicates that package version comparison is to be performed using <em>PackageVersionName</em>. A value of 0xFFFFFFFD indicates that package version update is in progress.</p>
+</dd>
+<dt>PackageVersionName</dt><dd><p>A pointer to a pointer to a null-terminated string representing the package version name. The buffer is allocated by this function with <em>AllocatePool(),</em> and it is the caller’s responsibility to free it with a call to <em>FreePool()</em>.</p>
+</dd>
+</dl>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//*************************************************************</span>
+<span class="o">//</span> <span class="n">EFI_FIRMWARE_IMAGE_DESCRIPTOR</span>
+<span class="o">//*************************************************************</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINT8</span>                    <span class="n">ImageIndex</span><span class="p">;</span>
+  <span class="n">EFI_GUID</span>                 <span class="n">ImageTypeId</span><span class="p">;</span>
+  <span class="n">UINT64</span>                   <span class="n">ImageId</span>
+  <span class="n">CHAR16</span>                   <span class="o">*</span><span class="n">ImageIdName</span><span class="p">;</span>
+  <span class="n">UINT32</span>                   <span class="n">Version</span><span class="p">;</span>
+  <span class="n">CHAR16</span>                   <span class="o">*</span><span class="n">VersionName</span><span class="p">;</span>
+  <span class="n">UINTN</span>                    <span class="n">Size</span><span class="p">;</span>
+  <span class="n">UINT64</span>                   <span class="n">AttributesSupported</span><span class="p">;</span>
+  <span class="n">UINT64</span>                   <span class="n">AttributesSetting</span><span class="p">;</span>
+  <span class="n">UINT64</span>                   <span class="n">Compatibilities</span><span class="p">;</span>
+<span class="o">//</span><span class="n">Introduced</span> <span class="k">with</span> <span class="n">DescriptorVersion</span> <span class="mi">2</span><span class="o">+</span>
+  <span class="n">UINT32</span>                   <span class="n">LowestSupportedImageVersion</span><span class="p">;</span> \
+<span class="o">//</span><span class="n">Introduced</span> <span class="k">with</span> <span class="n">DescriptorVersion</span> <span class="mi">3</span><span class="o">+</span>
+  <span class="n">UINT32</span>                   <span class="n">LastAttemptVersion</span><span class="p">;</span>
+  <span class="n">UINT32</span>                   <span class="n">LastAttemptStatus</span><span class="p">;</span>
+  <span class="n">UINT64</span>                   <span class="n">HardwareInstance</span><span class="p">;</span>
+<span class="o">//</span><span class="n">Introduced</span> <span class="k">with</span> <span class="n">DescriptorVersion</span> <span class="mi">4</span><span class="o">+</span>
+  <span class="n">EFI_FMP_DEP</span>              <span class="o">*</span><span class="n">Dependencies</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_FIRMWARE_IMAGE_DESCRIPTOR</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>ImageIndex</dt><dd><p>A unique number identifying the firmware image within the device. The number is between 1 and <em>DescriptorCount.</em></p>
+</dd>
+<dt>ImageTypeId</dt><dd><p>A unique GUID identifying the firmware image type.</p>
+</dd>
+<dt>ImageId</dt><dd><p>A unique number identifying the firmware image.</p>
+</dd>
+<dt>ImageIdName</dt><dd><p>A pointer to a null-terminated string representing the firmware image name.</p>
+</dd>
+<dt>Version</dt><dd><p>Identifies the version of the device firmware. The format is vendor specific and new version must have a greater value than an old version.</p>
+</dd>
+<dt>VersionName</dt><dd><p>A pointer to a null-terminated string representing the firmware image version name.</p>
+</dd>
+<dt>Size</dt><dd><p>Size of the image in bytes. If size=0, then only <em>ImageIndex</em> and <em>ImageTypeId</em> are valid.</p>
+</dd>
+<dt>AttributesSupported</dt><dd><p>Image attributes that are supported by this device. See “Image Attribute Definitions” for possible returned values of this parameter. A value of 1 indicates the attribute is supported and the current setting value is indicated in <em>AttributesSetting</em>. A value of 0 indicates the attribute is not supported and the current setting value in <em>AttributesSetting</em> is meaningless.</p>
+</dd>
+<dt>AttributesSetting</dt><dd><p>Image attributes. See “Image Attribute Definitions” for possible returned values of this parameter.</p>
+</dd>
+<dt>Compatibilities</dt><dd><p>Image compatibilities. See “Image Compatibility Definitions” for possible returned values of this parameter.</p>
+</dd>
+<dt>LowestSupportedImageVersion</dt><dd><p>Describes the lowest <em>ImageDescriptor</em> version that the device will accept. Only present in version 2 or higher.</p>
+</dd>
+<dt>LastAttemptVersion</dt><dd><p>Describes the version that was last attempted to update. If no update attempted the value will be 0. If the update attempted was improperly formatted and no version number was available then the value will be zero. Only present in version 3 or higher.</p>
+</dd>
+<dt>LastAttemptStatus</dt><dd><p>Describes the status that was last attempted to update. If no update has been attempted the value will be <em>LAST_ATTEMPT_STATUS_SUCCESS</em>. See “Related Definitions” in  <a class="reference internal" href="#id30">EFI_SYSTEM_RESOURCE_TABLE</a> for Last Attempt Status values. Only present in version 3 or higher.</p>
+</dd>
+<dt>HardwareInstance</dt><dd><p>An optional number to identify the unique hardware instance within the system for devices that may have multiple instances (Example: a plug in PCI network card). This number must be unique within the namespace of the <em>ImageTypeId</em> GUID and <em>ImageIndex</em>. For FMP instances that have multiple descriptors for a single hardware instance, all descriptors must have the same <em>HardwareInstance</em> value. This number must be consistent between boots and should be based on some sort of hardware identified unique id (serial number, etc) whenever possible. If a hardware based number is not available the FMP provider may use some other characteristic such as device path, bus/dev/function, slot num, etc for generating the <em>HardwareInstance</em>. For implementations that will never have more than one instance a zero can be used. A zero means the FMP provider is not able to determine a unique hardware instance number or a hardware instance number is not needed. Only present in version 3 or higher.</p>
+</dd>
+<dt>Dependencies</dt><dd><p>A pointer to an array of FMP depex expression op-codes that are terminated by an <em>EFI_FMP_DEP_END</em> op-code.</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//*************************************************************</span>
+<span class="o">//</span> <span class="n">Image</span> <span class="n">Attribute</span> <span class="n">Definitions</span>
+<span class="o">//*************************************************************</span>
+<span class="c1">#define IMAGE_ATTRIBUTE_IMAGE_UPDATABLE              0x0000000000000001</span>
+<span class="c1">#define IMAGE_ATTRIBUTE_RESET_REQUIRED               0x0000000000000002</span>
+<span class="c1">#define IMAGE_ATTRIBUTE_AUTHENTICATION_REQUIRED      0x0000000000000004</span>
+<span class="c1">#define IMAGE_ATTRIBUTE_IN_USE                       0x0000000000000008</span>
+<span class="c1">#define IMAGE_ATTRIBUTE_UEFI_IMAGE                   0x0000000000000010</span>
+<span class="c1">#define IMAGE_ATTRIBUTE_DEPENDENCY                   0x0000000000000020</span>
+</pre></div>
+</div>
+<p>The attribute <em>IMAGE_ATTRIBUTE_DEPENDENCY</em> indicates that there is an <em>EFI_FIRMWARE_IMAGE_DEP</em> section associated with the image. See “Image Attribute - Dependency”.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//*************************************************************</span>
+<span class="o">//</span> <span class="n">Image</span> <span class="n">Attribute</span> <span class="o">-</span> <span class="n">Dependency</span>
+<span class="o">//*************************************************************</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINT8</span> <span class="n">Dependencies</span><span class="p">[];</span>
+<span class="p">}</span>  <span class="n">EFI_FIRMWARE_IMAGE_DEP</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Dependencies</dt><dd><p>An array of FMP depex expression op-codes that are terminated by an END op-code (see related definitions below.)</p>
+</dd>
+</dl>
+<p>The attribute <em>IMAGE_ATTRIBUTE_IMAGE_UPDATABLE</em> indicates this device supports firmware image update.</p>
+<p>The attribute <em>IMAGE_ATTRIBUTE_RESET_REQUIRED</em> indicates a reset of the device is required for the new firmware image to take effect after a firmware update. The device is the device hosting the firmware image.</p>
+<p>The attribute <em>IMAGE_ATTRIBUTE_AUTHENTICATION_REQUIRED</em> indicates authentication is required to perform the following image operations: <em>GetImage(),</em> <em>SetImage(),</em> and <em>CheckImage()</em>. See “Image Attribute - Authentication”.</p>
+<p>The attribute I <em>MAGE_ATTRIBUTE_IN_USE</em> indicates the current state of the firmware image. This distinguishes firmware images in a device that supports redundant images.</p>
+<p>The attribute <em>IMAGE_ATTRIBUTE_UEFI_IMAGE</em> indicates that this image is an EFI compatible image.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//*************************************************************</span>
+<span class="o">//</span> <span class="n">Image</span> <span class="n">Compatibility</span> <span class="n">Definitions</span>
+<span class="o">//*************************************************************</span>
+<span class="c1">#define IMAGE_COMPATIBILITY_CHECK_SUPPORTED 0x0000000000000001</span>
+</pre></div>
+</div>
+<p>Values from 0x0000000000000002 thru 0x000000000000FFFF are reserved for future assignments.</p>
+<p>Values from 0x0000000000010000 thru 0xFFFFFFFFFFFFFFFF are used by firmware vendor for compatibility check.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//*************************************************************</span>
+<span class="o">//</span> <span class="n">Descriptor</span> <span class="n">Version</span> <span class="n">exposed</span> <span class="n">by</span> <span class="n">GetImageInfo</span><span class="p">()</span> <span class="n">function</span>
+<span class="o">//*************************************************************</span>
+<span class="c1">#define EFI_FIRMWARE_IMAGE_DESCRIPTOR_VERSION 3</span>
+
+<span class="o">//*************************************************************</span>
+<span class="o">//</span> <span class="n">Image</span> <span class="n">Attribute</span> <span class="o">-</span> <span class="n">Authentication</span> <span class="n">Required</span>
+<span class="o">//*************************************************************</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINT64</span>                           <span class="n">MonotonicCount</span><span class="p">;</span>
+  <span class="n">WIN_CERTIFICATE_UEFI_GUID</span>        <span class="n">AuthInfo</span><span class="p">;</span>
+<span class="p">}</span>  <span class="n">EFI_FIRMWARE_IMAGE_AUTHENTICATION</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl>
+<dt>MonotonicCount</dt><dd><p>It is included in the signature of <em>AuthInfo</em>. It is used to ensure freshness/no replay. It is incremented during each firmware image operation.</p>
+</dd>
+<dt>AuthInfo</dt><dd><p>Provides the authorization for the firmware image operations.</p>
+<p>If the image has dependencies associated with it, a signature across the image data will be created by including the Monotonic Count followed by the dependency values. If there are no dependencies, the signature will be across the image data and the Monotonic Count value.</p>
+<p>Caller uses the private key that is associated with a public key that has been provisioned via the key exchange. Because this is defined as a signature, <em>WIN_CERTIFICATE_UEFI_GUID.</em> <em>CertType</em> must be <em>EFI_CERT_TYPE_PKCS7_GUID</em>.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p><em>GetImageInfo()</em> is the only required function. <em>GetImage()</em> , <em>SetImage(),</em> <em>CheckImage(),</em> <em>GetPackageInfo(),</em> and <em>SetPackageInfo()</em> shall return <em>EFI_UNSUPPORTED</em> if not supported by the driver.</p>
+<p>A package can have one to many firmware images. The firmware images can have the same version naming or different version naming. <em>PackageVersion</em> may be used as the representative version for all the firmware images. <em>PackageVersion</em> can be obtained from <em>GetPackageInfo().</em> <em>PackageVersion</em> is also available in <em>GetImageInfo()</em> as <em>GetPackageInfo()</em> is optional. It also ensures the package version is in sync with the versions of the images within the package by returning the package version and image version(s) in a single function call.</p>
+<p>The value of <em>ImageTypeID</em> is implementation specific. This feature facilitates vendor to target a single firmware release to cover multiple products within a product family. As an example, a vendor has an initial product A and then later developed a product B that is of the same product family. Product A and product B will have the same <em>ImageTypeID</em> to indicate firmware compatibility between the two products.</p>
+<p>To determine image attributes, software must use both <em>AttributesSupported</em> and <em>AttributesSetting</em>. An attribute setting in <em>AttributesSetting</em> is meaningless if the corresponding attribute is not supported in <em>AttributesSupported</em>.</p>
+<p><em>Compatibilities</em> are used to ensure the targeted firmware image supports the current hardware configuration. <em>Compatibilities</em> are set based on the current hardware configuration and firmware update policy should match the current settings to those supported by the new firmware image, and only permits update to proceed if the new firmware image settings are equal or greater than the current hardware configuration settings. For example, if this function returns <em>Compatibilities</em> = 0x0000000000070001 and the new firmware image supports settings=0x0000000000030001, then the update policy should block the firmware update and notify the user that updating the hardware with the new firmware image may render the hardware inoperable. This situation usually occurs when updating the hardware with an older version of firmware.</p>
+<p>The authentication support leverages the authentication scheme employed in variable authentication. Please reference <em>EFI_VARIABLE_AUTHENTICATION</em> in the “Variable Services” section of “Services - Runtime Services” chapter.</p>
+<p>If <em>IMAGE_ATTRIBUTE_AUTHENTICATION_REQUIRED</em> is supported and clear, then authentication is not required to perform the firmware image operations. In firmware image operations, the image pointer points to the start of the firmware image and the image size is the firmware image.</p>
+<figure class="align-default" id="firmware-image-with-no-authentication-support">
+<a class="reference internal image-reference" href="_images/Firmware_Update_and_Reporting-2.png"><img alt="_images/Firmware_Update_and_Reporting-2.png" src="_images/Firmware_Update_and_Reporting-2.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 23.1 </span><span class="caption-text">Firmware Image with no Authentication Support</span><a class="headerlink" href="#firmware-image-with-no-authentication-support" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>If <em>IMAGE_ATTRIBUTE_AUTHENTICATION_REQUIRED</em> is supported and set, then authentication is required to perform the firmware image operations. In firmware image operations, the image pointer points to the start of the authentication data and the image size is the size of the authentication data and the size of the firmware image.</p>
+<figure class="align-default" id="firmware-image-with-authentication-support">
+<a class="reference internal image-reference" href="_images/Firmware_Update_and_Reporting-3.png"><img alt="_images/Firmware_Update_and_Reporting-3.png" src="_images/Firmware_Update_and_Reporting-3.png" style="width: 70%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 23.2 </span><span class="caption-text">Firmware Image with Authentication Support</span><a class="headerlink" href="#firmware-image-with-authentication-support" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>If <em>IMAGE_ATTRIBUTE_DEPENDENCY</em> is supported and set, then there are dependencies associated with the image. See the <a class="reference internal" href="#id9">Dependency Expression Instruction Set</a> for details on the format of the dependency op-codes and how they are to be used.</p>
+<figure class="align-default" id="firmware-image-with-dependency-authenticationsupport">
+<a class="reference internal image-reference" href="_images/Firmware_Update_and_Reporting-4.png"><img alt="_images/Firmware_Update_and_Reporting-4.png" src="_images/Firmware_Update_and_Reporting-4.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 23.3 </span><span class="caption-text">Firmware Image with Dependency/AuthenticationSupport</span><a class="headerlink" href="#firmware-image-with-dependency-authenticationsupport" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The image information was successfully returned.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_BUFFER_TOO_SMALL</p></td>
+<td><p>The <em>ImageInfo</em> buffer was too small. The current buffer size needed to hold the image(s) information is returned in <em>*ImageInfoSize.</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>*ImageInfoSize</em> is not too small and <em>ImageInfo</em> is NULL.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>*ImageInfoSize</em> is non-zero and <em>DescriptorVersion</em> is <em>NULL</em>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>*ImageInfoSize</em> is non-zero and <em>DescriptorCount</em> is <em>NULL</em>.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>*ImageInfoSize</em> is non-zero and <em>DescriptorSize</em> is <em>NULL</em>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>*ImageInfoSize</em> is non-zero and <em>PackageVersion</em> is <em>NULL</em>.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>*ImageInfoSize</em> is non-zero and <em>PackageVersionName</em> is <em>NULL</em>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>*ImageInfoSize</em> is NULL.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>Valid information could not be returned. Possible corrupted image.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-firmware-management-protocol-getimage">
+<span id="id4"></span><h3><span class="section-number">23.1.3. </span>EFI_FIRMWARE_MANAGEMENT_PROTOCOL.GetImage()<a class="headerlink" href="#efi-firmware-management-protocol-getimage" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Retrieves a copy of the current firmware image of the device.</p>
+<p><strong>Protocol</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_FIRMWARE_MANAGEMENT_PROTOCOL_GET_IMAGE</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_FIRMWARE_MANAGEMENT_PROTOCOL</span>    <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">UINT8</span>                               <span class="n">ImageIndex</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">VOID</span>                               <span class="o">*</span><span class="n">Image</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">UINTN</span>                           <span class="o">*</span><span class="n">ImageSize</span>
+<span class="p">)</span> <span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the <em>EFI_FIRMWARE_MANAGEMENT_PROTOCOL</em> instance.</p>
+</dd>
+<dt>ImageIndex</dt><dd><p>A unique number identifying the firmware image(s) within the device. The number is between 1 and <em>DescriptorCount</em>.</p>
+</dd>
+<dt>Image</dt><dd><p>Points to the buffer where the current image is copied to. May be NULL with a zero <em>ImageSize</em> in order to determine the size of the buffer needed.</p>
+</dd>
+<dt>ImageSize</dt><dd><p>On entry, points to the size of the buffer pointed to by <em>Image,</em> in bytes. On return, points to the length of the image, in bytes.</p>
+</dd>
+</dl>
+<p><strong>Related Definitions</strong></p>
+<p>None</p>
+<p><strong>Description</strong></p>
+<p>This function allows a copy of the current firmware image to be created and saved. The saved copy could later been used, for example, in firmware image recovery or rollback.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Not all implementations of GetImage() will return what can be sent to SetImage(). Image validity can be verified by using the CheckImage() API to verify if the returned Image can be used for SetImage().</p>
+</div>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The current image was successfully copied to the buffer.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_BUFFER_TOO_SMALL</p></td>
+<td><p>The buffer specified by <em>ImageSize</em> is too small to hold the image. The current buffer size needed to hold the image is returned in <em>ImageSize</em>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>The <em>ImageSize</em> is not too small and <em>Image</em> is NULL</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>The current image is not copied to the buffer.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>The operation is not supported.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_SECURITY_VIOLATION</p></td>
+<td><p>The operation could not be completed due to an image corruption. If the image is able to be read, the Image buffer will be updated with the retrieved image contents.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>The image could not be read.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-firmware-management-protocol-setimage">
+<span id="id5"></span><h3><span class="section-number">23.1.4. </span>EFI_FIRMWARE_MANAGEMENT_PROTOCOL.SetImage()<a class="headerlink" href="#efi-firmware-management-protocol-setimage" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Updates the firmware image of the device.</p>
+<p><strong>Protocol</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_FIRMWARE_MANAGEMENT_PROTOCOL_SET_IMAGE</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_FIRMWARE_MANAGEMENT_PROTOCOL</span>                <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">UINT8</span>                                           <span class="n">ImageIndex</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">CONST</span> <span class="n">VOID</span>                                      <span class="o">*</span><span class="n">Image</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">UINTN</span>                                           <span class="n">ImageSize</span><span class="p">,</span>
+  <span class="n">IN</span>   <span class="n">CONST</span> <span class="n">VOID</span>                                    <span class="o">*</span><span class="n">VendorCode</span><span class="p">,</span>
+  <span class="n">IN</span>   <span class="n">EFI_FIRMWARE_MANAGEMENT_UPDATE_IMAGE_PROGRESS</span> <span class="n">Progress</span><span class="p">,</span>
+  <span class="n">OUT</span>  <span class="n">CHAR16</span>                                        <span class="o">**</span><span class="n">AbortReason</span>
+  <span class="p">)</span> <span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the <em>EFI_FIRMWARE_MANAGEMENT_PROTOCOL</em> instance.</p>
+</dd>
+<dt>ImageIndex</dt><dd><p>A unique number identifying the firmware image(s) within the device. The number is between 1 and <em>DescriptorCount</em>.</p>
+</dd>
+<dt>Image</dt><dd><p>Points to the new image.</p>
+</dd>
+<dt>ImageSize</dt><dd><p>Size of the new image in bytes.</p>
+</dd>
+<dt>VendorCode</dt><dd><p>This enables vendor to implement vendor-specific firmware image update policy. Null indicates the caller did not specify the policy or use the default policy.</p>
+</dd>
+<dt>Progress</dt><dd><p>A function used by the driver to report the progress of the firmware update.</p>
+</dd>
+<dt>AbortReason</dt><dd><p>A pointer to a pointer to a null-terminated string providing more details for the aborted operation. The buffer is allocated by this function with <em>AllocatePool(),</em> and it is the caller’s responsibility to free it with a call to <em>FreePool()</em>.</p>
+</dd>
+</dl>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_FIRMWARE_MANAGEMENT_UPDATE_IMAGE_PROGRESS</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">UINTN</span>         <span class="n">Completion</span>
+<span class="p">)</span> <span class="p">;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Completion</dt><dd><p>A value between 1 and 100 indicating the current completion progress of the firmware update. Completion progress is reported as from 1 to 100 percent. A value of 0 is used by the driver to indicate that progress reporting is not supported.</p>
+</dd>
+</dl>
+<p>On <em>EFI_SUCCESS,</em> <em>SetImage()</em> continues to do the callback if supported. On NOT <em>EFI_SUCCESS,</em> <em>SetImage()</em> discontinues the callback and completes the update and returns.</p>
+<p><strong>Description</strong></p>
+<p>This function updates the hardware with the new firmware image.</p>
+<p>This function returns <em>EFI_UNSUPPORTED</em> if the firmware image is not updatable.</p>
+<p>If the firmware image is updatable, the function should perform the following minimal validations before proceeding to do the firmware image update.</p>
+<ul class="simple">
+<li><p>Validate the image authentication if image has attribute <em>IMAGE_ATTRIBUTE_AUTHENTICATION_REQUIRED</em>. The function returns <em>EFI_SECURITY_VIOLATION</em> if the validation fails.</p></li>
+<li><p>Validate the image is a supported image for this device. The function returns <em>EFI_ABORTED</em> if the image is unsupported. The function can optionally provide more detailed information on why the image is not a supported image.</p></li>
+<li><p>Validate the data from <em>VendorCode</em> if not null. Image validation must be performed before <em>VendorCode</em> data validation. <em>VendorCode</em> data is ignored or considered invalid if image validation failed. The function returns <em>EFI_ABORTED</em> if the data is invalid.</p></li>
+</ul>
+<p><em>VendorCode</em> enables vendor to implement vendor-specific firmware image update policy. Null if the caller did not specify the policy or use the default policy. As an example, vendor can implement a policy to allow an option to force a firmware image update when the abort reason is due to the new firmware image version is older than the current firmware image version or bad image checksum. Sensitive operations such as those wiping the entire firmware image and render the device to be non-functional should be encoded in the image itself rather than passed with the <em>VendorCode</em> .</p>
+<p><em>AbortReason</em> enables vendor to have the option to provide a more detailed description of the abort reason to the caller.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The device was successfully updated with the new image.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_ABORTED</p></td>
+<td><p>The operation is aborted.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>The <em>Image</em> was NULL.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>The operation is not supported.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_SECURITY_VIOLATION</p></td>
+<td><p>The operation could not be performed due to an authentication failure.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-firmware-management-protocol-checkimage">
+<span id="id6"></span><h3><span class="section-number">23.1.5. </span>EFI_FIRMWARE_MANAGEMENT_PROTOCOL.CheckImage()<a class="headerlink" href="#efi-firmware-management-protocol-checkimage" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Checks if the firmware image is valid for the device.</p>
+<p><strong>Protocol</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_FIRMWARE_MANAGEMENT_PROTOCOL_CHECK_IMAGE</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_FIRMWARE_MANAGEMENT_PROTOCOL</span>              <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">UINT8</span>                                         <span class="n">ImageIndex</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">CONST</span> <span class="n">VOID</span>                                    <span class="o">*</span><span class="n">Image</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">UINTN</span>                                         <span class="n">ImageSize</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">UINT32</span>                                       <span class="o">*</span><span class="n">ImageUpdatable</span>
+  <span class="p">)</span> <span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the <em>EFI_FIRMWARE_MANAGEMENT_PROTOCOL</em> instance.</p>
+</dd>
+<dt>ImageIndex</dt><dd><p>A unique number identifying the firmware image(s) within the device. The number is between 1 and <em>DescriptorCount</em>.</p>
+</dd>
+<dt>Image</dt><dd><p>Points to the new image.</p>
+</dd>
+<dt>ImageSize</dt><dd><p>Size of the new image in bytes.</p>
+</dd>
+<dt>ImageUpdatable</dt><dd><p>Indicates if the new image is valid for update. It also provides, if available, additional information if the image is invalid. See “Related Definitions”.</p>
+</dd>
+</dl>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//**************************************************************</span>
+<span class="o">//</span> <span class="n">ImageUpdatable</span> <span class="n">Definitions</span>
+<span class="o">//**************************************************************</span>
+<span class="c1">#define IMAGE_UPDATABLE_VALID 0x0000000000000001</span>
+<span class="c1">#define IMAGE_UPDATABLE_INVALID 0x0000000000000002</span>
+<span class="c1">#define IMAGE_UPDATABLE_INVALID_TYPE 0x0000000000000004</span>
+<span class="c1">#define IMAGE_UPDATABLE_INVALID_OLD 0x0000000000000008</span>
+<span class="c1">#define IMAGE_UPDATABLE_VALID_WITH_VENDOR_CODE \ 0x0000000000000010</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>IMAGE_UPDATABLE_VALID</dt><dd><p>indicates <em>SetImage()</em> will accept the new image and update the device with the new image.The version of the new image could be higher or lower than the current image. <em>SetImage</em> <em>VendorCode i</em> s optional but can be used for vendor specific action.</p>
+</dd>
+<dt>IMAGE_UPDATABLE_INVALID</dt><dd><p>indicates <em>SetImage()</em> will reject the new image. No additional information is provided for the rejection.</p>
+</dd>
+<dt>IMAGE_UPDATABLE_INVALID_TYPE</dt><dd><p>indicates <em>SetImage()</em> will reject the new image. The rejection is due to the new image is not a firmware image recognized for this device.</p>
+</dd>
+<dt>IMAGE_UPDATABLE_INVALID_OLD</dt><dd><p>indicates <em>SetImage()</em> will reject the new image. The rejection is due to the new image version is older than the current firmware image version in the device. The device firmware update policy does not support firmware version downgrade.</p>
+</dd>
+<dt>IMAGE_UPDATABLE_VALID_WITH_VENDOR_CODE</dt><dd><p>indicates <em>SetImage()</em> will accept and update the new image only if a correct <em>VendorCode</em> is provided or else image would be rejected and <em>SetImage</em> will return appropriate error.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function allows firmware update application to validate the firmware image without invoking the <em>SetImage()</em> first. Please see <em>SetImage()</em> for the type of image validations performed.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The image was successfully checked.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>The <em>Image</em> was NULL.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>The operation is not supported.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_SECURITY_VIOLATION</p></td>
+<td><p>The operation could not be performed due to an authentication failure.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-firmware-management-protocol-getpackageinfo">
+<span id="id7"></span><h3><span class="section-number">23.1.6. </span>EFI_FIRMWARE_MANAGEMENT_PROTOCOL.GetPackageInfo()<a class="headerlink" href="#efi-firmware-management-protocol-getpackageinfo" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Returns information about the firmware package.</p>
+<p><strong>Protocol</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_FIRMWARE_MANAGEMENT_PROTOCOL_GET_PACKAGE_INFO</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_FIRMWARE_MANAGEMENT_PROTOCOL</span><span class="o">*</span> <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">UINT32</span>                 <span class="o">*</span><span class="n">PackageVersion</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">CHAR16</span>                 <span class="o">**</span><span class="n">PackageVersionName</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">UINT32</span>                 <span class="o">*</span><span class="n">PackageVersionNameMaxLen</span>
+  <span class="n">OUT</span> <span class="n">UINT64</span>                 <span class="o">*</span><span class="n">AttributesSupported</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">UINT64</span>                 <span class="o">*</span><span class="n">AttributesSetting</span>
+  <span class="p">)</span> <span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the <em>EFI_FIRMWARE_MANAGEMENT_PROTOCOL</em> instance.</p>
+</dd>
+<dt>PackageVersion</dt><dd><p>A version number that represents all the firmware images in the device. The format is vendor specific and new version must have a greater value than the old version. If <em>PackageVersion</em> is not supported, the value is 0xFFFFFFFF. A value of 0xFFFFFFFE indicates that package version comparison is to be performed using <em>PackageVersionName</em>. A value of 0xFFFFFFFD indicates that package version update is in progress.</p>
+</dd>
+<dt>PackageVersionName</dt><dd><p>A pointer to a pointer to a null-terminated string representing the package version name. The buffer is allocated by this function with <em>AllocatePool(),</em> and it is the caller’s responsibility to free it with a call to <em>FreePool()</em>.</p>
+</dd>
+<dt>PackageVersionNameMaxLen</dt><dd><p>The maximum length of package version name if device supports update of package version name. A value of 0 indicates the device does not support update of package version name. Length is the number of Unicode characters, including the terminating null character.</p>
+</dd>
+<dt>AttributesSupported</dt><dd><p>Package attributes that are supported by this device. See “Package Attribute Definitions” for possible returned values of this parameter. A value of 1 indicates the attribute is supported and the current setting value is indicated in <em>AttributesSetting.</em> A value of 0 indicates the attribute is not supported and the current setting value in <em>AttributesSetting</em> is meaningless.</p>
+</dd>
+<dt>AttributesSetting</dt><dd><p>Package attributes. See “Package Attribute Definitions” for possible returned values of this parameter.</p>
+</dd>
+</dl>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//**************************************************************</span>
+<span class="o">//</span> <span class="n">Package</span> <span class="n">Attribute</span> <span class="n">Definitions</span>
+<span class="o">//**************************************************************</span>
+<span class="c1">#define PACKAGE_ATTRIBUTE_VERSION_UPDATABLE          0x0000000000000001</span>
+<span class="c1">#define PACKAGE_ATTRIBUTE_RESET_REQUIRED             0x0000000000000002</span>
+<span class="c1">#define PACKAGE_ATTRIBUTE_AUTHENTICATION_REQUIRED    0x0000000000000004</span>
+</pre></div>
+</div>
+<p>The attribute <em>PACKAGE_ATTRIBUTE_VERSION_UPDATABLE</em> indicates this device supports the update of the firmware package version.</p>
+<p>The attribute <em>PACKAGE_ATTRIBUTE_RESET_REQUIRED</em> indicates a reset of the device is required for the new package info to take effect after an update.</p>
+<p>The attribute <em>PACKAGE_ATTRIBUTE_AUTHENTICATION_REQUIRED</em> indicates authentication is required to update the package info.</p>
+<p><strong>Description</strong></p>
+<p>This function returns package information.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The package information was successfully returned.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>The operation is not supported.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-firmware-management-protocol-setpackageinfo">
+<span id="id8"></span><h3><span class="section-number">23.1.7. </span>EFI_FIRMWARE_MANAGEMENT_PROTOCOL.SetPackageInfo()<a class="headerlink" href="#efi-firmware-management-protocol-setpackageinfo" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Updates information about the firmware package.</p>
+<p><strong>Protocol</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_FIRMWARE_MANAGEMENT_PROTOCOL_SET_PACKAGE_INFO</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_FIRMWARE_MANAGEMENT_PROTOCOL</span><span class="o">*</span> <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">CONST</span> <span class="n">VOID</span>              <span class="o">*</span><span class="n">Image</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">UINTN</span>                   <span class="n">ImageSize</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">CONST</span> <span class="n">VOID</span>              <span class="o">*</span><span class="n">VendorCode</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">UINT32</span>                  <span class="n">PackageVersion</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">CONST</span> <span class="n">CHAR16</span>            <span class="o">*</span><span class="n">PackageVersionName</span>
+  <span class="p">)</span> <span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the <em>EFI_FIRMWARE_MANAGEMENT_PROTOCOL</em> instance.</p>
+</dd>
+<dt>Image</dt><dd><p>Points to the authentication image. Null if authentication is not required.</p>
+</dd>
+<dt>ImageSize</dt><dd><p>Size of the authentication image in bytes. 0 if authentication is not required.</p>
+</dd>
+<dt>VendorCode</dt><dd><p>This enables vendor to implement vendor-specific firmware image update policy. Null indicates the caller did not specify this policy or use the default policy.</p>
+</dd>
+<dt>PackageVersion</dt><dd><p>The new package version.</p>
+</dd>
+<dt>PackageVersionName</dt><dd><p>A pointer to the new null-terminated Unicode string representing the package version name. The string length is equal to or less than the value returned in <em>PackageVersionNameMaxLen</em>.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function updates package information.</p>
+<p>This function returns <em>EFI_UNSUPPORTED</em> if the package information is not updatable.</p>
+<p><em>VendorCode</em> enables vendor to implement vendor-specific package information update policy. Null if the caller did not specify this policy or use the default policy.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The device was successfully updated with the new package information</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>The <em>PackageVersionName</em> length is longer than the value returned in <em>PackageVersionNameMaxLen</em>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>The operation is not supported.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_SECURITY_VIOLATION</p></td>
+<td><p>The operation could not be performed due to an authentication failure.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="dependency-expression-instruction-set">
+<span id="id9"></span><h2><span class="section-number">23.2. </span>Dependency Expression Instruction Set<a class="headerlink" href="#dependency-expression-instruction-set" title="Link to this heading"></a></h2>
+<p>The following topics describe each of the firmware management protocol dependency expression (depex) opcodes in detail. Information includes a description of the instruction functionality, binary encoding, and any limitations or unique behaviors of the instruction.</p>
+<p>Several of the opcodes require a GUID operand. The GUID operand is a 16-byte value that matches the type <em>EFI_GUID</em> that is described in Chapter 2 of the UEFI 2.0 specification. These GUIDs represent the <em>EFI_FIRMWARE_IMAGE_DESCRIPTOR</em> <em>.ImageTypeId</em> that are exposed by an <em>EFI_FIRMWARE_MANAGE_PROTOCOL</em> instance. A dependency expression is a packed byte stream of opcodes and operands. As a result, some of the GUID operands will not be aligned on natural boundaries. Care must be taken on processor architectures that do allow unaligned accesses.</p>
+<p>The dependency expression is stored in a packed byte stream using postfix notation. As a dependency expression is evaluated, the operands are pushed onto a stack. Operands are popped off the stack to perform an operation. After the last operation is performed, the value on the top of the stack represents the evaluation of the entire dependency expression. If a push operation causes a stack overflow, then the entire dependency expression evaluates to <em>FALSE</em>. If a pop operation causes a stack underflow, then the entire dependency expression evaluates to <em>FALSE</em>. Reasonable implementations of a dependency expression evaluator should not make arbitrary assumptions about the maximum stack size it will support. Instead, it should be designed to grow the dependency expression stack as required. In addition, FMP images that contain dependency expressions should make an effort to keep their dependency expressions as small as possible to help reduce the size of the FMP image.</p>
+<p>All opcodes are 8-bit values, and if an invalid opcode is encountered, then the entire dependency expression evaluates to <em>FALSE</em>.</p>
+<p>When the dependency expression is being evaluated and a GUID specified cannot be found, then the result of the conditional operation evaluates to <em>FALSE</em>.</p>
+<p>If, when evaluating two popped values from the stack, it is determined that they are of different types (e.g. BOOLEAN value and 32-bit value), then the entire dependency expression evaluates to <em>FALSE</em>.</p>
+<p>If an END opcode is not present in a dependency expression, then the entire dependency expression evaluates to <em>FALSE</em>.</p>
+<p>The final evaluation of the dependency expression results in either a <em>TRUE</em> or <em>FALSE</em> result.</p>
+<table class="longtable docutils align-default" id="dependency-expression-opcode-summary">
+<caption><span class="caption-number">Table 23.1 </span><span class="caption-text">Dependency Expression Opcode Summary</span><a class="headerlink" href="#dependency-expression-opcode-summary" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 6.2%" />
+<col style="width: 93.8%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Opcode</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>0x00</p></td>
+<td><p>Push FMP GUID (1 op-code + 16 bytes)</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x01</p></td>
+<td><p>Push 32-bit version value</p></td>
+</tr>
+<tr class="row-even"><td><p>0x02</p></td>
+<td><p>Declare NULL-terminated string (Human-readable Version)</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x03</p></td>
+<td><p>AND – Pop 2 BOOLEAN values and Push <strong>TRUE</strong> if both are <strong>TRUE</strong>.</p></td>
+</tr>
+<tr class="row-even"><td><p>0x04</p></td>
+<td><p>OR – Pop 2 BOOLEAN values and Push <strong>TRUE</strong> if either are <strong>TRUE</strong>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x05</p></td>
+<td><p>NOT – Pop BOOLEAN value Push NOT of BOOLEAN value.</p></td>
+</tr>
+<tr class="row-even"><td><p>0x06</p></td>
+<td><p>Push <strong>TRUE</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>0x07</p></td>
+<td><p>Push <strong>FALSE</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>0x08</p></td>
+<td><p>EQ – Pop 2 32-bit version values and push <strong>TRUE</strong> if equal.</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x09</p></td>
+<td><p>GT - Pop 2 32-bit version values and push <strong>TRUE</strong> if first value is greater than the second.</p></td>
+</tr>
+<tr class="row-even"><td><p>0x0A</p></td>
+<td><p>GTE - Pop 2 32-bit version values and push <strong>TRUE</strong> if first value is greater than or equal to the second.</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x0B</p></td>
+<td><p>LT - Pop 2 32-bit version values and push <strong>TRUE</strong> if first value is less than the second.</p></td>
+</tr>
+<tr class="row-even"><td><p>0x0C</p></td>
+<td><p>LTE - Pop 2 32-bit version values and push <strong>TRUE</strong> if first value is less than or equal to the second.</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x0D</p></td>
+<td><p>END</p></td>
+</tr>
+<tr class="row-even"><td><p>0x0E</p></td>
+<td><p>DECLARE_LENGTH - declares a 32-bit byte length of the entire dependency expression</p></td>
+</tr>
+</tbody>
+</table>
+<section id="push-guid">
+<span id="id10"></span><h3><span class="section-number">23.2.1. </span>PUSH_GUID<a class="headerlink" href="#push-guid" title="Link to this heading"></a></h3>
+<p><strong>Syntax</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PUSH_GUID</span> <span class="o">&lt;</span><span class="n">FMP</span> <span class="n">GUID</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>Pushes the GUID value onto the stack. This GUID should be exposed by an <em>EFI_FIRMWARE_MANAGEMENT_PROTOCOL</em> instance. The GUID should match one of the <em>EFI_FIRMWARE_IMAGE_DESCRIPTOR</em>. ImageTypeId values exposed through the GetImageInfo() function.</p>
+<p><strong>Operation</strong></p>
+<ol class="arabic">
+<li><p>Search through all instances of the <em>EFI_FIRMWARE_MANAGEMENT_PROTOCOL</em>.</p>
+<p>a - In each instance, use the <em>GetImageInfo()</em> function to retrieve the ImageInfo-&gt;ImageTypeId value and ensure it matches the GUID specified in the op-code.</p>
+<p>b - If it doesn’t match the GUID and no other instances match either, POP all values from the stack and PUSH <strong>FALSE</strong> onto the stack when evaluating a conditional operation involving the missing GUID.</p>
+</li>
+<li><p>Having found the matching <em>EFI_FIRMWARE_MANAGEMENT_PROTOCOL</em> instance, use the GetImageInfo() function and push the ImageInfo-&gt;Version value onto the stack.</p></li>
+</ol>
+<table class="longtable docutils align-default" id="push-guid-instruction-encoding">
+<caption><span class="caption-number">Table 23.2 </span><span class="caption-text">PUSH_GUID Instruction Encoding</span><a class="headerlink" href="#push-guid-instruction-encoding" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 83.3%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Byte</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0x00</p></td>
+</tr>
+<tr class="row-odd"><td><p>1..16</p></td>
+<td><p>A 16-byte GUID that represents an ImageTypeId in an FMP instance. The format is the same as type <em>EFI_GUID</em>.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Behaviors and Restrictions</strong></p>
+<p>None.</p>
+</section>
+<section id="push-version">
+<span id="id11"></span><h3><span class="section-number">23.2.2. </span>PUSH_VERSION<a class="headerlink" href="#push-version" title="Link to this heading"></a></h3>
+<p><strong>Syntax</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PUSH_VERSION</span> <span class="o">&lt;</span><span class="mi">32</span><span class="o">-</span><span class="n">bit</span> <span class="n">Version</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>Pushes the 32-bit version value to compare against onto the stack. This value will be used to compare against Version values exposed through the <em>GetImageInfo()</em> function.</p>
+<table class="docutils align-default" id="push-version-instruction-encoding">
+<caption><span class="caption-number">Table 23.3 </span><span class="caption-text">PUSH_VERSION Instruction Encoding</span><a class="headerlink" href="#push-version-instruction-encoding" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 83.3%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Byte</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0x01</p></td>
+</tr>
+<tr class="row-odd"><td><p>1..4</p></td>
+<td><p>A 32-bit version to compare against.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Behaviors and Restrictions</strong></p>
+<p>None.</p>
+</section>
+<section id="declare-version-name">
+<span id="id12"></span><h3><span class="section-number">23.2.3. </span>DECLARE_VERSION_NAME<a class="headerlink" href="#declare-version-name" title="Link to this heading"></a></h3>
+<p><strong>Syntax</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DECLARE_VERSION_NAME</span> <span class="o">&lt;</span><span class="n">NULL</span><span class="o">-</span><span class="n">terminated</span> <span class="n">string</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>Declares an optional null-terminated version string that is the equivalent of the VersionName in the <em>EFI_FIRMWARE_MANAGEMENT_DESCRIPTOR</em>. Due to the OEM/IHV-specific format of version strings, this null-terminated string will not be used for purposes of comparison. Only the 32-bit integer values will be used for comparisons.</p>
+<table class="docutils align-default" id="declare-version-name-instruction-encoding">
+<caption><span class="caption-number">Table 23.4 </span><span class="caption-text">DECLARE_VERSION_NAME Instruction Encoding</span><a class="headerlink" href="#declare-version-name-instruction-encoding" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 83.3%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Byte</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0x02</p></td>
+</tr>
+<tr class="row-odd"><td><p>1..n</p></td>
+<td><p>A null-terminated UNICODE string.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Behaviors and Restrictions</strong></p>
+<p>None.</p>
+</section>
+<section id="and">
+<span id="id13"></span><h3><span class="section-number">23.2.4. </span>AND<a class="headerlink" href="#and" title="Link to this heading"></a></h3>
+<p><strong>Syntax</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AND</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>Pops two Boolean operands off the stack, performs a Boolean AND operation between the two operands, and pushes the result back onto the stack.</p>
+<p><strong>Operation</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Operand1</span> <span class="o">&lt;=</span> <span class="n">POP</span> <span class="n">Boolean</span> <span class="n">stack</span> <span class="n">element</span>
+<span class="n">Operand2</span> <span class="o">&lt;=</span> <span class="n">POP</span> <span class="n">Boolean</span> <span class="n">stack</span> <span class="n">element</span>
+<span class="n">Result</span> <span class="o">&lt;=</span> <span class="n">Operand1</span> <span class="n">AND</span> <span class="n">Operand2</span>
+<span class="n">PUSH</span> <span class="n">Result</span>
+</pre></div>
+</div>
+<table class="docutils align-default" id="and-instruction-encoding">
+<caption><span class="caption-number">Table 23.5 </span><span class="caption-text">AND Instruction Encoding</span><a class="headerlink" href="#and-instruction-encoding" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 14.3%" />
+<col style="width: 85.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Byte</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0x03</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Behaviors and Restrictions</strong></p>
+<p>None.</p>
+</section>
+<section id="or">
+<span id="id14"></span><h3><span class="section-number">23.2.5. </span>OR<a class="headerlink" href="#or" title="Link to this heading"></a></h3>
+<p><strong>Syntax</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">OR</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>Pops two Boolean operands off the stack, performs a Boolean OR operation between the two operands, and pushes the result back onto the stack.</p>
+<p><strong>Operation</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Operand1</span> <span class="o">&lt;=</span> <span class="n">POP</span> <span class="n">Boolean</span> <span class="n">stack</span> <span class="n">element</span>
+<span class="n">Operand2</span> <span class="o">&lt;=</span> <span class="n">POP</span> <span class="n">Boolean</span> <span class="n">stack</span> <span class="n">element</span>
+<span class="n">Result</span> <span class="o">&lt;=</span> <span class="n">Operand1</span> <span class="n">OR</span> <span class="n">Operand2</span>
+<span class="n">PUSH</span> <span class="n">Result</span>
+</pre></div>
+</div>
+<table class="docutils align-default" id="firmware-update-and-reporting-or-instruction-encoding">
+<caption><span class="caption-number">Table 23.6 </span><span class="caption-text">OR Instruction Encoding</span><a class="headerlink" href="#firmware-update-and-reporting-or-instruction-encoding" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 83.3%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Byte</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0x04</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Behaviors and Restrictions</strong></p>
+<p>None.</p>
+</section>
+<section id="not">
+<span id="id15"></span><h3><span class="section-number">23.2.6. </span>NOT<a class="headerlink" href="#not" title="Link to this heading"></a></h3>
+<p><strong>Syntax</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">NOT</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>Pops a Boolean operand off the stack, performs a Boolean NOT operation on the operand, and pushes the result back onto the stack.</p>
+<p><strong>Operation</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Operand</span> <span class="o">&lt;=</span> <span class="n">POP</span> <span class="n">Boolean</span> <span class="n">stack</span> <span class="n">element</span>
+<span class="n">Result</span> <span class="o">&lt;=</span> <span class="n">NOT</span> <span class="n">Operand</span> <span class="n">PUSH</span> <span class="n">Result</span>
+</pre></div>
+</div>
+<table class="docutils align-default" id="not-instruction-encoding">
+<caption><span class="caption-number">Table 23.7 </span><span class="caption-text">NOT Instruction Encoding</span><a class="headerlink" href="#not-instruction-encoding" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 83.3%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Byte</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0x05</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Behaviors and Restrictions</strong></p>
+<p>None.</p>
+</section>
+<section id="true">
+<span id="id16"></span><h3><span class="section-number">23.2.7. </span>TRUE<a class="headerlink" href="#true" title="Link to this heading"></a></h3>
+<p><strong>Syntax</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">**</span><span class="n">TRUE</span><span class="o">**</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>Pushes a Boolean <em>TRUE</em> onto the stack.</p>
+<p><strong>Operation</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PUSH</span> <span class="o">**</span><span class="n">TRUE</span><span class="o">**</span>
+</pre></div>
+</div>
+<table class="docutils align-default" id="true-instruction-encoding">
+<caption><span class="caption-number">Table 23.8 </span><span class="caption-text">TRUE Instruction Encoding</span><a class="headerlink" href="#true-instruction-encoding" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 83.3%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Byte</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0x06</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Behaviors and Restrictions</strong></p>
+<p>None.</p>
+</section>
+<section id="false">
+<span id="id17"></span><h3><span class="section-number">23.2.8. </span>FALSE<a class="headerlink" href="#false" title="Link to this heading"></a></h3>
+<p><strong>Syntax</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">**</span><span class="n">FALSE</span><span class="o">**</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>Pushes a Boolean <strong>FALSE</strong> onto the stack.</p>
+<p><strong>Operation</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PUSH</span> <span class="o">**</span><span class="n">FALSE</span><span class="o">**</span>
+</pre></div>
+</div>
+<table class="docutils align-default" id="false-instruction-encoding">
+<caption><span class="caption-number">Table 23.9 </span><span class="caption-text">FALSE Instruction Encoding</span><a class="headerlink" href="#false-instruction-encoding" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 83.3%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Byte</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0x07</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Behaviors and Restrictions</strong></p>
+<p>None.</p>
+</section>
+<section id="eq">
+<span id="id18"></span><h3><span class="section-number">23.2.9. </span>EQ<a class="headerlink" href="#eq" title="Link to this heading"></a></h3>
+<p><strong>Syntax</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">EQ</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>Pops two 32-bit operands off the stack, performs a Boolean equals comparison operation between the two operands, and pushes the result back onto the stack.</p>
+<p><strong>Operation</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Operand1 ? POP 32-bit stack element
+Operand2 ? POP 32-bit stack element
+Result ? Operand1 EQ Operand2
+PUSH Result
+</pre></div>
+</div>
+<table class="docutils align-default" id="eq-instruction-encoding">
+<caption><span class="caption-number">Table 23.10 </span><span class="caption-text">EQ Instruction Encoding</span><a class="headerlink" href="#eq-instruction-encoding" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 83.3%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Byte</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0x08</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Behaviors and Restrictions</strong></p>
+<p>None.</p>
+</section>
+<section id="gt">
+<span id="id19"></span><h3><span class="section-number">23.2.10. </span>GT<a class="headerlink" href="#gt" title="Link to this heading"></a></h3>
+<p><strong>Syntax</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GT</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>Pops two 32-bit operands off the stack, performs a Boolean greater-than comparison operation between the two operands, and pushes the result back onto the stack.</p>
+<p><strong>Operation</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Operand1</span> <span class="o">&lt;=</span> <span class="n">POP</span> <span class="mi">32</span><span class="o">-</span><span class="n">bit</span> <span class="n">stack</span> <span class="n">element</span>
+<span class="n">Operand2</span> <span class="o">&lt;=</span> <span class="n">POP</span> <span class="mi">32</span><span class="o">-</span><span class="n">bit</span> <span class="n">stack</span> <span class="n">element</span>
+<span class="n">Result</span> <span class="o">&lt;=</span> <span class="n">Operand1</span> <span class="n">GT</span> <span class="n">Operand2</span>
+<span class="n">PUSH</span> <span class="n">Result</span>
+</pre></div>
+</div>
+<table class="docutils align-default" id="gt-instruction-encoding">
+<caption><span class="caption-number">Table 23.11 </span><span class="caption-text">GT Instruction Encoding</span><a class="headerlink" href="#gt-instruction-encoding" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 83.3%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Byte</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0x09</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Behaviors and Restrictions</strong></p>
+<p>None.</p>
+</section>
+<section id="gte">
+<span id="id20"></span><h3><span class="section-number">23.2.11. </span>GTE<a class="headerlink" href="#gte" title="Link to this heading"></a></h3>
+<p><strong>Syntax</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GTE</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>Pops two 32-bit operands off the stack, performs a Boolean greater-than-or-equal comparison operation between the two operands, and pushes the result back onto the stack.</p>
+<p><strong>Operation</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Operand1 ? POP 32-bit stack element
+Operand2 ? POP 32-bit stack element
+Result ? Operand1 GTE Operand2
+PUSH Result
+</pre></div>
+</div>
+<table class="docutils align-default" id="gte-instruction-encoding">
+<caption><span class="caption-number">Table 23.12 </span><span class="caption-text">GTE Instruction Encoding</span><a class="headerlink" href="#gte-instruction-encoding" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 83.3%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Byte</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0x0A</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Behaviors and Restrictions</strong></p>
+<p>None.</p>
+</section>
+<section id="lt">
+<span id="id21"></span><h3><span class="section-number">23.2.12. </span>LT<a class="headerlink" href="#lt" title="Link to this heading"></a></h3>
+<p><strong>Syntax</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LT</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>Pops two 32-bit operands off the stack, performs a Boolean less-than comparison operation between the two operands, and pushes the result back onto the stack.</p>
+<p><strong>Operation</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Operand1 ? POP 32-bit stack element
+Operand2 ? POP 32-bit stack element
+Result ? Operand1 LT Operand2
+PUSH Result
+</pre></div>
+</div>
+<table class="docutils align-default" id="lt-instruction-encoding">
+<caption><span class="caption-number">Table 23.13 </span><span class="caption-text">LT Instruction Encoding</span><a class="headerlink" href="#lt-instruction-encoding" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 83.3%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Byte</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0x0B</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Behaviors and Restrictions</strong></p>
+<p>None.</p>
+</section>
+<section id="lte">
+<span id="id22"></span><h3><span class="section-number">23.2.13. </span>LTE<a class="headerlink" href="#lte" title="Link to this heading"></a></h3>
+<p><strong>Syntax</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LTE</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>Pops two 32-bit operands off the stack, performs a Boolean less-than-or-equal comparison operation between the two operands, and pushes the result back onto the stack.</p>
+<p><strong>Operation</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Operand1 ? POP 32-bit stack element
+Operand2 ? POP 32-bit stack element
+Result ? Operand1 LTE Operand2
+PUSH Result
+</pre></div>
+</div>
+<table class="docutils align-default" id="lte-instruction-encoding">
+<caption><span class="caption-number">Table 23.14 </span><span class="caption-text">LTE Instruction Encoding</span><a class="headerlink" href="#lte-instruction-encoding" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 83.3%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Byte</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0x0C</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Behaviors and Restrictions</strong></p>
+<p>None.</p>
+</section>
+<section id="end">
+<span id="id23"></span><h3><span class="section-number">23.2.14. </span>END<a class="headerlink" href="#end" title="Link to this heading"></a></h3>
+<p><strong>Syntax</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">END</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>Pops the final result of the dependency expression
+evaluation off the stack and exits the dependency expression
+evaluator.</p>
+<p><strong>Operation</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">POP</span> <span class="n">Result</span>
+<span class="n">RETURN</span> <span class="n">Result</span>
+</pre></div>
+</div>
+<table class="docutils align-default" id="end-instruction-encoding">
+<caption><span class="caption-number">Table 23.15 </span><span class="caption-text">END Instruction Encoding</span><a class="headerlink" href="#end-instruction-encoding" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 83.3%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Byte</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>0x0D</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Behaviors and Restrictions</strong></p>
+<p>This opcode must be the last one in a dependency expression.</p>
+</section>
+<section id="declare-length">
+<span id="id24"></span><h3><span class="section-number">23.2.15. </span>DECLARE_LENGTH<a class="headerlink" href="#declare-length" title="Link to this heading"></a></h3>
+<p><strong>Syntax</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DECLARE_LENGTH</span> <span class="o">&lt;</span><span class="mi">32</span><span class="o">-</span><span class="n">bit</span> <span class="n">Length</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>Declares an 32-bit byte length of the entire dependency expression.</p>
+<table class="docutils align-default" id="declare-length-instruction-encoding">
+<caption><span class="caption-number">Table 23.16 </span><span class="caption-text">DECLARE_LENGTH Instruction Encoding</span><a class="headerlink" href="#declare-length-instruction-encoding" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 83.3%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Byte</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><div class="line-block">
+<div class="line">0X0e  1..4</div>
+<div class="line">A 32-bit byte length for the entire dependency expression.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Behaviors and Restrictions</strong></p>
+<p>This opcode must be the first one in a dependency expression.</p>
+</section>
+</section>
+<section id="delivering-capsules-containing-updates-to-firmware-management-protocol">
+<span id="id25"></span><h2><span class="section-number">23.3. </span>Delivering Capsules Containing Updates to Firmware Management Protocol<a class="headerlink" href="#delivering-capsules-containing-updates-to-firmware-management-protocol" title="Link to this heading"></a></h2>
+<p><strong>Summary</strong></p>
+<p>This section defines a method for delivery of a Firmware Management Protocol defined update using the UpdateCapsule runtime API.</p>
+<section id="efi-firmware-management-capsule-id-guid">
+<span id="id26"></span><h3><span class="section-number">23.3.1. </span>EFI_FIRMWARE_MANAGEMENT_CAPSULE_ID_GUID<a class="headerlink" href="#efi-firmware-management-capsule-id-guid" title="Link to this heading"></a></h3>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="p">{</span><span class="mi">6</span><span class="n">DCBD5ED</span><span class="o">-</span><span class="n">E82D</span><span class="o">-</span><span class="mi">4</span><span class="n">C44</span><span class="o">-</span><span class="n">BDA1</span><span class="o">-</span><span class="mi">7194199</span><span class="n">AD92A</span><span class="p">}</span>
+<span class="c1">#define EFI_FIRMWARE_MANAGEMENT_CAPSULE_ID_GUID \</span>
+  <span class="p">{</span><span class="mh">0x6dcbd5ed</span><span class="p">,</span> <span class="mh">0xe82d</span><span class="p">,</span> <span class="mh">0x4c44</span><span class="p">,</span> \
+  <span class="p">{</span><span class="mh">0xbd</span><span class="p">,</span> <span class="mh">0xa1</span><span class="p">,</span> <span class="mh">0x71</span><span class="p">,</span> <span class="mh">0x94</span><span class="p">,</span> <span class="mh">0x19</span><span class="p">,</span> <span class="mh">0x9a</span><span class="p">,</span> <span class="mh">0xd9</span><span class="p">,</span> <span class="mh">0x2a</span> <span class="p">}}</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>This GUID is used in the <em>CapsuleGuid</em> field of <em>EFI_CAPSULE_HEADER</em> struct within a capsule constructed according to the definitions of section <a class="reference internal" href="08_Services_Runtime_Services.html#capsule-definition"><span class="std std-ref">Capsule Definition</span></a>. Use of this GUID indicates a capsule with body conforming to the additional structure defined in <a class="reference internal" href="#id27">DEFINED FIRMWARE MANAGEMENT PROTOCOL DATA CAPSULE STRUCTURE</a> .</p>
+<p>When delivered to platform firmware <em>QueryCapsuleCapabilities()</em> the capsule will be examined according to the structure defined in <a class="reference internal" href="#id27">DEFINED FIRMWARE MANAGEMENT PROTOCOL DATA CAPSULE STRUCTURE</a> .  and if it is possible for the platform to process <em>EFI_SUCCESS</em> will be returned.</p>
+<p>When delivered to platform firmware <em>UpdateCapsule()</em> the capsule will be examined according to the structure defined in <a class="reference internal" href="#id27">DEFINED FIRMWARE MANAGEMENT PROTOCOL DATA CAPSULE STRUCTURE</a> . and if it is possible for the platform to process the update will be processed.</p>
+<p>By definition Firmware Management protocol services are not available in EFI runtime and depending upon platform capabilities, EFI runtime delivery of this capsule may not be supported and may return an error when delivered in EFI runtime with <em>CAPSULE_FLAGS_PERSIST_ACROSS_RESET</em> bit defined. However, any platform supporting this capability is required to accept this form of capsule in Boot Services, including optional use of <em>CAPSULE_FLAGS_PERSIST_ACROSS_RESET</em> bit.</p>
+</section>
+<section id="defined-firmware-management-protocol-data-capsule-structure">
+<span id="id27"></span><h3><span class="section-number">23.3.2. </span>DEFINED FIRMWARE MANAGEMENT PROTOCOL DATA CAPSULE STRUCTURE<a class="headerlink" href="#defined-firmware-management-protocol-data-capsule-structure" title="Link to this heading"></a></h3>
+<p><strong>Structure of the Capsule Body</strong></p>
+<p>Generic EFI Capsule Body is defined in  <a class="reference internal" href="08_Services_Runtime_Services.html#capsule-definition"><span class="std std-ref">Capsule Definition</span></a>. When an EFI Capsule is identified by <em>EFI_FIRMWARE_MANAGEMENT_CAPSULE_ID_GUID,</em> the internal structure of the capsule _ <em>_FIRMWARE_MANAGEMENT_CAPSULE_HEADER</em> followed by optional EFI drivers to be loaded by the platform and optional binary payload items to be processed and passed to Firmware Management Protocol image update function. Each binary payload item is preceded by <em>EFI_FIRMWARE_MANAGEMENT_CAPSULE_IMAGE_HEADER</em>. Internal capsule structure diagram follows.</p>
+<figure class="align-default" id="optional-scatter-gather-construction-of-capsule-submitted-to-update-capsule">
+<a class="reference internal image-reference" href="_images/Firmware_Update_and_Reporting-5.png"><img alt="_images/Firmware_Update_and_Reporting-5.png" src="_images/Firmware_Update_and_Reporting-5.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 23.4 </span><span class="caption-text">Optional Scatter-Gather Construction of Capsule Submitted to Update Capsule()</span><a class="headerlink" href="#optional-scatter-gather-construction-of-capsule-submitted-to-update-capsule" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="capsule-header-and-firmware-management-capsule-header">
+<a class="reference internal image-reference" href="_images/Firmware_Update_and_Reporting-6.png"><img alt="_images/Firmware_Update_and_Reporting-6.png" src="_images/Firmware_Update_and_Reporting-6.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 23.5 </span><span class="caption-text">Capsule Header and Firmware Management Capsule Header</span><a class="headerlink" href="#capsule-header-and-firmware-management-capsule-header" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="firmware-management-and-firmware-image-management-headers">
+<a class="reference internal image-reference" href="_images/Firmware_Update_and_Reporting-7.png"><img alt="_images/Firmware_Update_and_Reporting-7.png" src="_images/Firmware_Update_and_Reporting-7.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 23.6 </span><span class="caption-text">Firmware Management and Firmware Image Management headers</span><a class="headerlink" href="#firmware-management-and-firmware-image-management-headers" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma pack(1)</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINT32</span>               <span class="n">Version</span><span class="p">;</span>
+  <span class="n">UINT16</span>               <span class="n">EmbeddedDriverCount</span><span class="p">;</span>
+  <span class="n">UINT16</span>               <span class="n">PayloadItemCount</span><span class="p">;</span>
+  <span class="o">//</span> <span class="n">UINT64</span>            <span class="n">ItemOffsetList</span><span class="p">[];</span>
+<span class="p">}</span>    <span class="n">EFI_FIRMWARE_MANAGEMENT_CAPSULE_HEADER</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Version</dt><dd><p>Version of the structure, initially 0x00000001.</p>
+</dd>
+<dt>EmbeddedDriverCount</dt><dd><p>The number of drivers included in the capsule and the number of corresponding offsets stored in <em>ItemOffsetList</em> array. This field may be zero in the case where no driver is required.</p>
+</dd>
+<dt>PayloadItemCount</dt><dd><p>The number of payload items included in the capsule and the number of corresponding offsets stored in the <em>ItemOffsetList</em> array. This field may be zero in the case where no binary payload object is required to accomplish the update.</p>
+</dd>
+<dt>ItemOffsetList</dt><dd><p>Variable length array of dimension [ <em>EmbeddedDriverCount</em> + <em>PayloadItemCount</em> ] containing offsets of each of the drivers and payload items contained within the capsule. The offsets of the items are calculated relative to the base address of the <em>EFI_FIRMWARE_MANAGEMENT_CAPSULE_HEADER</em> struct. Offset may indicate structure begins on any byte boundary. Offsets in the array must be sorted in ascending order with all drivers preceding all binary payload elements.</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma pack(1)</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINT32</span>                 <span class="n">Version</span><span class="p">;</span>
+  <span class="n">EFI_GUID</span>               <span class="n">UpdateImageTypeId</span><span class="p">;</span>
+  <span class="n">UINT8</span>                  <span class="n">UpdateImageIndex</span><span class="p">;</span>
+  <span class="n">UINT8</span>                  <span class="n">reserved_bytes</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+  <span class="n">UINT32</span>                 <span class="n">UpdateImageSize</span><span class="p">;</span>
+  <span class="n">UINT32</span>                 <span class="n">UpdateVendorCodeSize</span><span class="p">;</span>
+  <span class="n">UINT64</span>                 <span class="n">UpdateHardwareInstance</span><span class="p">;</span> <span class="o">//</span><span class="n">Introduced</span> <span class="ow">in</span> <span class="n">v2</span>
+  <span class="n">UINT64</span>                 <span class="n">ImageCapsuleSupport</span><span class="p">;</span> <span class="o">//</span><span class="n">Introduced</span> <span class="ow">in</span> <span class="n">v3</span>
+<span class="p">}</span>  <span class="n">EFI_FIRMWARE_MANAGEMENT_CAPSULE_IMAGE_HEADER</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Version</dt><dd><p>Version of the structure, initially <em>0x00000003</em>.</p>
+</dd>
+<dt>UpdateImageTypeId</dt><dd><p>Used to identify device firmware targeted by this update. This guid is matched by system firmware against <em>ImageTypeId</em> field within a <em>EFI_FIRMWARE_IMAGE_DESCRIPTOR</em> returned by an instance of <em>EFI_FIRMWARE_MANAGEMENT_PROTOCOL.GetImageInfo()</em> in the system.</p>
+</dd>
+<dt>UpdateImageIndex</dt><dd><p>Passed as <em>ImageIndex</em> in call to <em>EFI_FIRMWARE_MANAGEMENT_PROTOCOL.SetImage()</em></p>
+</dd>
+<dt>UpdateImageSize</dt><dd><p>Size of the binary update image which immediately follows this structure. Passed as <em>ImageSize</em> to <em>EFI_FIRMWARE_MANAGEMENT_PROTOCOL.SetImage()</em>. This size may or may not include Firmware Image Authentication information.</p>
+</dd>
+<dt>UpdateVendorCodeSize</dt><dd><p>Size of the <em>VendorCode</em> bytes which optionally immediately follow binary update image in the capsule. Pointer to these bytes passed in <em>VendorCode</em> to <em>EFI_FIRMWARE_MANAGEMENT_PROTOCOL.SetImage()</em>. If <em>UpdateVendorCodeSize</em> is zero, then <em>VendorCode</em> is null in <em>SetImage()</em> call.</p>
+</dd>
+<dt>UpdateHardwareInstance</dt><dd><p>The <em>HardwareInstance</em> to target with this update. If value is zero it means match all <em>HardwareInstances</em>. This field allows update software to target only a single device in cases where there are more than one device with the same <em>ImageTypeId</em> GUID. This header is outside the signed data of the Authentication Info structure and therefore can be modified without changing the Auth data.</p>
+</dd>
+<dt>ImageCapsuleSupport</dt><dd><p>A 64-bit bitmask that determines what sections are added to the payload.</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define CAPSULE_SUPPORT_AUTHENTICATION 0x0000000000000001</span>
+<span class="c1">#define CAPSULE_SUPPORT_DEPENDENCY 0x0000000000000002</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>The <em>EFI_FIRMWARE_MANAGEMENT_CAPSULE_HEADER</em> structure is located at the lowest offset within the body of the capsule identified by <em>EFI_FIRMWARE_MANAGEMENT_CAPSULE_ID_GUID</em>. The structure is variable length with the number of element offsets within of the <em>ItemOffsetList</em> array determined by the count of drivers within the capsule plus the count of binary payload elements. It is expected that drivers whose presence is indicated by non-zero <em>EmbeddedDriverCount</em> will be used to supply an implementation of <em>EFI_FIRMWARE_MANAGEMENT_PROTOCOL</em> for devices that lack said protocol within the image to be updated.</p>
+<p>Each payload item contained within the capsule body is preceded by a <em>EFI_FIRMWARE_MANAGEMENT_CAPSULE_IMAGE_HEADER</em> struct used to provide information required to prepare the payload item as an image for delivery to a instance of <em>EFI_FIRMWARE_MANAGEMENT_PROTOCOL.SetImage()</em> function.</p>
+<p><strong>NOTE</strong>: <em>[Caution] The capsule identified by</em> EFI_FIRMWARE_MANAGEMENT_CAPSULE_ID_GUID <em>uses packed structures and structure fields may not be naturally aligned within the capsule buffer as delivered. Drivers and binary payload elements may start on byte boundary with no padding. Processing firmware may need to copy content elements during capsule unpacking in order to achieve any required natural alignment.</em></p>
+</section>
+<section id="firmware-processing-of-the-capsule-identified-by-efi-firmware-management-capsule-id-guid">
+<span id="id28"></span><h3><span class="section-number">23.3.3. </span>Firmware Processing of the Capsule Identified by EFI_FIRMWARE_MANAGEMENT_CAPSULE_ID_GUID<a class="headerlink" href="#firmware-processing-of-the-capsule-identified-by-efi-firmware-management-capsule-id-guid" title="Link to this heading"></a></h3>
+<ol class="arabic">
+<li><p>Capsule is presented to system firmware via call to <em>UpdateCapsule()</em> or using mass storage delivery procedure of  <a class="reference internal" href="08_Services_Runtime_Services.html#delivery-of-capsules-via-file-on-mass-storage-device"><span class="std std-ref">Delivery of Capsules via file on Mass Storage Device</span></a>. The capsule must be constructed to consist of a single <em>EFI_FIRMWARE_MANAGEMENT_CAPSULE_HEADER</em> structure with the 0 or more drivers and 0 or more binary payload items. However, a capsule in which driver count and payload count are both zero is not processed.</p></li>
+<li><p>Capsule is recognized by <em>EFI_CAPSULE_HEADER</em> member <em>CapsuleGuid</em> equal to <em>EFI_FIRMWARE_MANAGEMENT_CAPSULE_ID_GUID</em>. <em>CAPSULE_FLAGS_POPULATE_SYSTEM_TABLE</em> flag must be 0.</p></li>
+<li><p>If system is not in boot services and platform does not support persistence of capsule across reset when initiated within EFI Runtime, <em>EFI_OUT_OF_RESOURCES</em> error is returned.</p></li>
+<li><p>If device requires hardware reset to unlock flash write protection, <em>CAPSULE_FLAGS_PERSIST_ACROSS_RESET</em> and optionally <em>CAPSULE_FLAGS_INITIATE_RESET</em> should be set to 1 in the <em>EFI_CAPSULE_HEADER</em>.</p></li>
+<li><p>When reset is requested using <em>CAPSULE_FLAGS_PERSIST_ACROSS_RESET,</em> the capsule is processed in Boot Services, before the <em>EFI_EVENT_GROUP_READY_TO_BOOT</em> event.</p></li>
+<li><p>All scatter-gather fragmentation is removed by the platform firmware and the capsule is processed as a contiguous buffer.</p></li>
+<li><p>Examining <em>EFI_FIRMWARE_MANAGEMENT_CAPSULE_HEADER,</em> if <em>EmbeddedDriverCount</em> is non-zero, for each of the included drivers up to indicated count, the portion of the capsule body starting at the offset indicated by <em>ItemOffsetList[n]</em> and continuing for a size encompassing all bytes up to the next element’s offset stored in <em>ItemOffsetList[n+1]</em> or the end of the capsule, will be copied to a buffer. The driver contained within the capsule body may not be naturally aligned and the exact driver size in bytes should be respected to ensure successful security validation. In the case where a driver is last element in the <em>ItemOffsetList</em> array, the driver size may be calculated by reference to body size as calculated from <em>CapsuleImageSize</em> in <em>EFI_CAPSULE_HEADER</em></p></li>
+<li><p>Each extracted driver is placed into a buffer and passed to <em>LoadImage()</em>. The driver image passed to <em>LoadImage()</em> must successfully pass all image format, platform type, and security checks including those related to UEFI secure boot, if enabled on the platform. After <em>LoadImage()</em> returns the processing of the capsule is continued with next driver if present until all drivers have been passed to <em>LoadImage()</em>. The driver being installed must check for matching hardware and instantiate any required protocols during call to <em>EFI_IMAGE_ENTRY_POINT</em>. In case where matching hardware is not found the driver should exit with error. In case where capsule creator has preference as to which of several included drivers to be made resident, later drivers in the capsule should confirm earlier driver successfully loaded and then exit with load error.</p></li>
+<li><p>After driver processing is complete the platform firmware examines <em>PayloadItemCount,</em> and if zero the capsule processing is complete. Otherwise platform firmware sequentially locates each <em>EFI_FIRMWARE_MANAGEMENT_CAPSULE_IMAGE_HEADER</em> found within the capsule and processes according to steps 10-14.</p></li>
+<li><p>For all instances of <em>EFI_FIRMWARE_MANAGEMENT_PROTOCOL</em> in the system, <em>GetImageInfo()</em> is called to return arrays of <em>EFI_FIRMWARE_IMAGE_DESCRIPTOR</em> structures.</p></li>
+<li><p>Find the matching FMP instance(s):</p>
+<p>a – If the <em>EFI_FIRMWARE_MANAGEMENT_CAPSULE_IMAGE_HEADER</em> is version 1 or it is version 2 with <em>UpdateHardwareInstance</em> set to 0, then system firmware will use only the <em>ImageTypeId</em> to determine a match. For each instance of <em>EFI_FIRMWARE_MANAGEMENT_PROTOCOL</em> that returns a <em>EFI_FIRMWARE_IMAGE_DESCRIPTOR</em> containing an <em>ImageTypeId</em> GUID that matches the <em>UpdateImageTypeId</em> GUID within <em>EFI_FIRMWARE_MANAGEMENT_CAPSULE_IMAGE_HEADER,</em> the system firmware will call <em>SetImage()</em> function within that instance. In some cases there may be more than one instance of matching <em>EFI_FIRMWARE_MANAGEMENT_PROTOCOL</em> when multiple matching devices are installed in the system and all instances will be checked for GUID match and <em>SetImage()</em> call if match is successful.</p>
+<p>b – If the <em>EFI_FIRMWARE_MANAGEMENT_CAPSULE_IMAGE_HEADER</em> is version 2 and contains a non-zero value in the <em>UpdateHardwareInstance</em> field, then system firmware will use both <em>ImageTypeId</em> and <em>HardwareInstance</em> to determine a match. For the instance of <em>EFI_FIRMWARE_MANAGEMENT_PROTOCOL</em> that returns a <em>EFI_FIRMWARE_IMAGE_DESCRIPTOR</em> containing an <em>ImageTypeId</em> GUID that matches the <em>UpdateImageTypeId</em> GUID and a <em>HardwareInstance</em> matching the <em>UpdateHardwareInstance</em> within <em>EFI_FIRMWARE_MANAGEMENT_CAPSULE_IMAGE_HEADER,</em> the system firmware will call the <em>SetImage()</em> function within that instance. There will never be more than one instance since the <em>ImageId</em> must be unique.</p>
+</li>
+<li><p>In the situation where platform configuration or policy prohibits the processing of a capsule or individual FMP payload, the error <em>EFI_NOT_READY</em> will be returned in capsule result variable <em>CapsuleStatus</em> field. Otherwise <em>SetImage()</em> parameters are constructed using the <em>UpdateImageIndex,</em> <em>UpdateImageSize</em> and <em>UpdateVendorCodeSize</em> fields within <em>EFI_FIRMWARE_MANAGEMENT_CAPSULE_IMAGE_HEADER</em>. In the case of capsule containing multiple payloads, or a payload matching multiple FMP instances, a separate Capsule Result Variable will be created with the results of each call to <em>SetImage()</em>. If any call to <em>SetImage()</em> selected per above matching algorithm returns an error, the processing of additional FMP instances or payload items in that capsule will be skipped and <em>EFI_ABORTED</em> returned in Capsule Result Variable for each potential call to <em>SetImage()</em> that was skipped.</p></li>
+<li><p><em>SetImage()</em> performs any required image authentication as described in that functions definition within this chapter.</p></li>
+<li><p>Note: if multiple separate component updates including multiple <em>ImageIndex</em> values are required then additional <em>EFI_FIRMWARE_MANAGEMENT_CAPSULE_IMAGE_HEADER</em> structures and image binaries are included within the capsule.</p></li>
+<li><p>After all items in the capsule are processed the system is restarted by the platform firmware.</p></li>
+</ol>
+</section>
+</section>
+<section id="efi-system-resource-table">
+<span id="id29"></span><h2><span class="section-number">23.4. </span>EFI System Resource Table<a class="headerlink" href="#efi-system-resource-table" title="Link to this heading"></a></h2>
+<section id="id30">
+<h3><span class="section-number">23.4.1. </span>EFI_SYSTEM_RESOURCE_TABLE<a class="headerlink" href="#id30" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>The EFI System Resource Table (ESRT) provides an optional mechanism for identifying device and system firmware resources for the purposes of targeting firmware updates to those resources. Each entry in the ESRT describes a device or system firmware resource that <em>can</em> be targeted by a firmware capsule update. Each entry in the ESRT will also be used to report status of the last attempted update. See <a class="reference internal" href="04_EFI_System_Table.html#efi-configuration-table-and-properties-table"><span class="std std-ref">EFI Configuration Table &amp; Properties Table</span></a> for description of how to publish ESRT using <em>EFI_CONFIGURATION_TABLE</em>. The ESRT shall be stored in memory of type <em>EfiBootServicesData</em>.  See <a class="reference internal" href="08_Services_Runtime_Services.html#update-capsule"><span class="std std-ref">Update Capsule</span></a> and <a class="reference internal" href="08_Services_Runtime_Services.html#delivery-of-capsules-via-file-on-mass-storage-device"><span class="std std-ref">Delivery of Capsules via file on Mass Storage Device</span></a> for details on delivery of updates to devices listed in ESRT.</p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_SYSTEM_RESOURCE_TABLE_GUID \</span>
+    <span class="p">{</span> <span class="mh">0xb122a263</span><span class="p">,</span> <span class="mh">0x3661</span><span class="p">,</span> <span class="mh">0x4f68</span><span class="p">,</span>\
+  <span class="p">{</span> <span class="mh">0x99</span><span class="p">,</span> <span class="mh">0x29</span><span class="p">,</span> <span class="mh">0x78</span><span class="p">,</span> <span class="mh">0xf8</span><span class="p">,</span> <span class="mh">0xb0</span><span class="p">,</span> <span class="mh">0xd6</span><span class="p">,</span> <span class="mh">0x21</span><span class="p">,</span> <span class="mh">0x80</span> <span class="p">}}</span>
+</pre></div>
+</div>
+<p><strong>Table Structure</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINT32</span>                         <span class="n">FwResourceCount</span><span class="p">;</span>
+  <span class="n">UINT32</span>                         <span class="n">FwResourceCountMax</span><span class="p">;</span>
+  <span class="n">UINT64</span>                         <span class="n">FwResourceVersion</span><span class="p">;</span>
+  <span class="o">//</span><span class="n">EFI_SYSTEM_RESOURCE_ENTRY</span>    <span class="n">Entries</span><span class="p">[];</span>
+<span class="p">}</span> <span class="n">EFI_SYSTEM_RESOURCE_TABLE</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Members</strong></p>
+<dl class="simple">
+<dt>FwResourceCount</dt><dd><p>The number of firmware resources in the table, must not be zero.</p>
+</dd>
+<dt>FwResourceCountMax</dt><dd><p>The maximum number of resource array entries that can be within the table without reallocating the table, must not be zero.</p>
+</dd>
+<dt>FwResourceVersion</dt><dd><p>The version of the <em>EFI_SYSTEM_RESOURCE_ENTRY</em> entities used in this table. This field should be set to 1. See <em>EFI_SYSTEM_RESOURCE_TABLE_FIRMWARE_RESOURCE_VERSION</em>.</p>
+</dd>
+<dt>Entries</dt><dd><p>Array of <em>EFI_SYSTEM_RESOURCE_ENTRY</em></p>
+</dd>
+</dl>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">Current</span> <span class="n">Entry</span> <span class="n">Version</span>
+<span class="c1">#define EFI_SYSTEM_RESOURCE_TABLE_FIRMWARE_RESOURCE_VERSION 1</span>
+
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">EFI_GUID</span>       <span class="n">FwClass</span><span class="p">;</span>
+  <span class="n">UINT32</span>         <span class="n">FwType</span><span class="p">;</span>
+  <span class="n">UINT32</span>         <span class="n">FwVersion</span><span class="p">;</span>
+  <span class="n">UINT32</span>         <span class="n">LowestSupportedFwVersion</span><span class="p">;</span>
+  <span class="n">UINT32</span>         <span class="n">CapsuleFlags</span><span class="p">;</span>
+  <span class="n">UINT32</span>         <span class="n">LastAttemptVersion</span><span class="p">;</span>
+  <span class="n">UINT32</span>         <span class="n">LastAttemptStatus</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">EFI_SYSTEM_RESOURCE_ENTRY</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl>
+<dt>FwClass</dt><dd><p>The firmware class field contains a GUID that identifies a firmware component that can be updated via <em>UpdateCapsule().</em> This GUID must be unique within all entries of the ESRT.</p>
+</dd>
+<dt>FwType</dt><dd><p>Identifies the type of firmware resource. See “Firmware Type Definitions” below for possible values.</p>
+</dd>
+<dt>FwVersion</dt><dd><p>The firmware version field represents the current version of the firmware resource, value must always increase as a larger number represents a newer version.</p>
+</dd>
+<dt>LowestSupportedFwVersion</dt><dd><p>The lowest firmware resource version to which a firmware resource can be rolled back for the given system/device. Generally this is used to protect against known and fixed security issues.</p>
+</dd>
+<dt>CapsuleFlags</dt><dd><p>The capsule flags field contains the <em>CapsuleGuid</em> flags (bits 0- 15) as defined in the <em>EFI_CAPSULE_HEADER</em> that will be set in the capsule header.</p>
+</dd>
+<dt>LastAttemptVersion</dt><dd><p>The last attempt version field describes the last firmware version for which an update was attempted (uses the same format as Firmware Version).</p>
+<p>Last Attempt Version is updated each time an <em>UpdateCapsule()</em> is attempted for an ESRT entry and is preserved across reboots (non-volatile). However, in cases where the attempt version is not recorded due to limitations in the update process, the field shall set to zero after a failed update. Similarly, in the case of a removable device, this value is set to 0 in cases where the device has not been updated since being added to the system.</p>
+</dd>
+<dt>LastAttemptStatus</dt><dd><p>The last attempt status field describes the result of the last firmware update attempt for the firmware resource entry.</p>
+<p><em>LastAttemptStatus</em> is updated each time an <em>UpdateCapsule()</em> is attempted for an ESRT entry and is preserved across reboots (non-volatile).</p>
+<p>If a firmware update has never been attempted or is unknown, for example after fresh insertion of a removable device, <em>LastAttemptStatus</em> must be set to Success.</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span>
+<span class="o">//</span> <span class="n">Firmware</span> <span class="n">Type</span> <span class="n">Definitions</span>
+<span class="o">//</span>
+<span class="c1">#define ESRT_FW_TYPE_UNKNOWN           0x00000000</span>
+<span class="c1">#define ESRT_FW_TYPE_SYSTEMFIRMWARE    0x00000001</span>
+<span class="c1">#define ESRT_FW_TYPE_DEVICEFIRMWARE    0x00000002</span>
+<span class="c1">#define ESRT_FW_TYPE_UEFIDRIVER        0x00000003</span>
+
+<span class="o">//</span>
+<span class="o">//</span> <span class="n">Last</span> <span class="n">Attempt</span> <span class="n">Status</span> <span class="n">Values</span>
+<span class="o">//</span>
+<span class="c1">#define LAST_ATTEMPT_STATUS_SUCCESS                         0x00000000</span>
+<span class="c1">#define LAST_ATTEMPT_STATUS_ERROR_UNSUCCESSFUL              0x00000001</span>
+<span class="c1">#define LAST_ATTEMPT_STATUS_ERROR_INSUFFICIENT_RESOURCES    0x00000002</span>
+<span class="c1">#define LAST_ATTEMPT_STATUS_ERROR_INCORRECT_VERSION         0x00000003</span>
+<span class="c1">#define LAST_ATTEMPT_STATUS_ERROR_INVALID_FORMAT            0x00000004</span>
+<span class="c1">#define LAST_ATTEMPT_STATUS_ERROR_AUTH_ERROR                0x00000005</span>
+<span class="c1">#define LAST_ATTEMPT_STATUS_ERROR_PWR_EVT_AC                0x00000006</span>
+<span class="c1">#define LAST_ATTEMPT_STATUS_ERROR_PWR_EVT_BATT              0x00000007</span>
+<span class="c1">#define LAST_ATTEMPT_STATUS_ERROR_UNSATISFIED_DEPENDENCIES  0x00000008</span>
+
+
+<span class="o">//</span> <span class="n">The</span> <span class="n">LastAttemptStatus</span> <span class="n">values</span> <span class="n">of</span> <span class="mh">0x1000</span> <span class="o">-</span> <span class="mh">0x4000</span> <span class="n">are</span> <span class="n">reserved</span> <span class="k">for</span> <span class="n">vendor</span> <span class="n">usage</span><span class="o">.</span>
+<span class="c1">#define LAST_ATTEMPT_STATUS_ERROR_UNSUCCESSFUL_VENDOR_RANGE_MIN 0x00001000</span>
+<span class="c1">#define LAST_ATTEMPT_STATUS_ERROR_UNSUCCESSFUL_VENDOR_RANGE_MAX 0x00004000</span>
+</pre></div>
+</div>
+</section>
+<section id="adding-and-removing-devices-from-the-esrt">
+<span id="id31"></span><h3><span class="section-number">23.4.2. </span>Adding and Removing Devices from the ESRT<a class="headerlink" href="#adding-and-removing-devices-from-the-esrt" title="Link to this heading"></a></h3>
+<p>ESRT entries must be updated by System Firmware before handoff to the Operating System under the following conditions. Devices and systems that support hot swapping (once the OS has been loaded) will not get their ESRT entries updated until the next reboot and execution of ESRT updating logic in the UEFI space.</p>
+<ul class="simple">
+<li><p><strong>Required</strong>:  System firmware is responsible for updating the FirmwareVersion, <em>LowestSupportedFirmwareVersion,</em> <em>LastAttemptVersion</em> and <em>LastAttemptStatus</em> values in the ESRT any time <em>UpdateCapsule</em> is called and a firmware update attempt is made for the corresponding ESRT entry.</p></li>
+<li><p><strong>Required</strong>: the ESRT must be updated each time a configuration change is detected by system firmware, such as when a device is added or removed from the system.</p></li>
+<li><p><strong>Optional</strong>: all devices in the ESRT should be polled for any configuration changes any time <em>UpdateCapsule</em> is called.</p></li>
+</ul>
+</section>
+<section id="esrt-and-firmware-management-protocol">
+<span id="id32"></span><h3><span class="section-number">23.4.3. </span>ESRT and Firmware Management Protocol<a class="headerlink" href="#esrt-and-firmware-management-protocol" title="Link to this heading"></a></h3>
+<p>Although the ESRT does not require firmware to use Firmware Management Protocol for updates it is designed to work with and extend the capabilities of FMP. The ESRT can be used to represent system and device firmware serviced by capsules that have an implementation specific format as well as devices that support Firmware Management Protocol and that are serviced by capsules formatted as described in <a class="reference internal" href="#id9">Dependency Expression Instruction Set</a> , Delivering Capsules Containing Updates to Firmware Management Protocol. For system expansion devices, the task of building ESRT table entries is to be performed by the system firmware based upon FMP data published by the device.</p>
+</section>
+<section id="mapping-firmware-management-protocol-descriptors-to-esrt-entries">
+<span id="id33"></span><h3><span class="section-number">23.4.4. </span>Mapping Firmware Management Protocol Descriptors to ESRT Entries<a class="headerlink" href="#mapping-firmware-management-protocol-descriptors-to-esrt-entries" title="Link to this heading"></a></h3>
+<p>Firmware management Protocol descriptors define most of the information needed for an ESRT entry. The table below helps identify which members map to which fields. Some members are dependent on certain versions of FMP and it is left to system firmware to resolve any mappings when information is not present in the FMP instance. FMP descriptors should only be mapped to ESRT entries if the following are true:</p>
+<ul class="simple">
+<li><p>An entry with the same <em>ImageTypeId</em> is not already in the ESRT.</p></li>
+<li><p><em>AttributesSupported</em> and <em>AttributesSetting</em> have the <em>IMAGE_ATTRIBUTE_IN_USE</em> bit set.</p></li>
+<li><p>In the case where <em>DescriptorCount</em> returned by <em>GetImageInfo()</em> is greater than one, firmware shall populate the ESRT according to system policy, noting however that multiple ESRT entries with identical FwClass values are not permitted.</p></li>
+</ul>
+<table class="longtable docutils align-default" id="esrt-and-fmp-fields">
+<caption><span class="caption-number">Table 23.17 </span><span class="caption-text">ESRT and FMP Fields</span><a class="headerlink" href="#esrt-and-fmp-fields" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>ESRT Field</strong></p></td>
+<td><p><strong>FMP Field</strong></p></td>
+<td><p><strong>Comment</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><em>FwClass</em></p></td>
+<td><p><em>ImageTypeId</em></p></td>
+<td><p>The ImageTypeId GUID from the Firmware Management Protocol instance for a device is used as the Firmware Class GUID in the ESRT.  Where there are multiple identical devices in the system, system firmware must create a mapping to ensure that the ESRT FwClass GUIDs are unique and consistent.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>FwVersion</em></p></td>
+<td><p><em>Version</em></p></td>
+<td><p>Represents the current version of device firmware for an FMP instance.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>LowestSupported FwVersion</em></p></td>
+<td><p><em>LowestSupported ImageVersion</em></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><em>LastAttemptVersion</em></p></td>
+<td><p><em>LastAttemptVersion</em></p></td>
+<td><p>To be set after the completion of a firmware update attempt. In descriptor v3+ only. Default value is 0.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>LastAttemptStatus</em></p></td>
+<td><p><em>LastAttemptStatus</em></p></td>
+<td><p>To be set after the completion of a firmware update attempt. In descriptor v3+ only. Default value is SUCCESS.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="delivering-capsule-containing-json-payload">
+<span id="id34"></span><h2><span class="section-number">23.5. </span>Delivering Capsule Containing JSON payload<a class="headerlink" href="#delivering-capsule-containing-json-payload" title="Link to this heading"></a></h2>
+<p><strong>Summary</strong></p>
+<p>This section defines a method for delivery of JSON payload to perform firmware configuration or firmware update using the UpdateCapsule runtime API or using mass storage delivery.</p>
+<section id="efi-json-capsule-id-guid">
+<span id="id35"></span><h3><span class="section-number">23.5.1. </span>EFI_JSON_CAPSULE_ID_GUID<a class="headerlink" href="#efi-json-capsule-id-guid" title="Link to this heading"></a></h3>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="p">{</span><span class="mi">67</span><span class="n">D6F4CD</span><span class="o">-</span><span class="n">D6B8</span><span class="o">-</span><span class="mi">4573</span><span class="o">-</span><span class="n">BF4A</span><span class="o">-</span><span class="n">DE5E252D61AE</span><span class="p">}</span>
+<span class="c1">#define EFI_JSON_CAPSULE_ID_GUID \</span>
+<span class="p">{</span><span class="mh">0x67d6f4cd</span><span class="p">,</span> <span class="mh">0xd6b8</span><span class="p">,</span> <span class="mh">0x4573</span><span class="p">,</span> \
+<span class="p">{</span><span class="mh">0xbf</span><span class="p">,</span> <span class="mh">0x4a</span><span class="p">,</span> <span class="mh">0xde</span><span class="p">,</span> <span class="mh">0x5e</span><span class="p">,</span> <span class="mh">0x25</span><span class="p">,</span> <span class="mh">0x2d</span><span class="p">,</span> <span class="mh">0x61</span><span class="p">,</span> <span class="mh">0xae</span> <span class="p">}}</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>This GUID is used in the <em>CapsuleGuid</em> field of <em>EFI_CAPSULE_HEADER</em> struct within a capsule constructed according to the definitions of <a class="reference internal" href="08_Services_Runtime_Services.html#update-capsule"><span class="std std-ref">Update Capsule</span></a>. Use of this GUID indicates a capsule with body conforming to the additional structure defined in <a class="reference internal" href="#id36">Defined JSON Capsule Data Structure</a> .</p>
+<p>When delivered to platform firmware <em>QueryCapsuleCapabilities()</em> the capsule will be examined according to the structure defined in <a class="reference internal" href="#id36">Defined JSON Capsule Data Structure</a>  , and if it is possible for the platform to process that then <em>EFI_SUCCESS</em> will be returned.</p>
+<p>When delivered to platform firmware <em>UpdateCapsule()</em> the capsule will be examined according to the structure defined in <a class="reference internal" href="#id36">Defined JSON Capsule Data Structure</a> , and if it is possible for the platform to process that the update will be processed.</p>
+<p>By definition, firmware configuration and firmware update are not available in EFI runtime. Depending on platform capabilities, EFI runtime delivery of the capsule may not be supported, and may return an error when delivered in EFI runtime with <em>CAPSULE_FLAGS_PERSIST_ACROSS_RESET</em> bit defined. However, any platform supporting this capability is required to accept this form of capsule in Boot Services, including optional use of the <em>CAPSULE_FLAGS_PERSIST_ACROSS_RESET</em> bit.</p>
+</section>
+<section id="defined-json-capsule-data-structure">
+<span id="id36"></span><h3><span class="section-number">23.5.2. </span>Defined JSON Capsule Data Structure<a class="headerlink" href="#defined-json-capsule-data-structure" title="Link to this heading"></a></h3>
+<p><strong>Structure of the Capsule Body</strong></p>
+<p>A generic EFI Capsule Body is defined in <a class="reference internal" href="08_Services_Runtime_Services.html#update-capsule"><span class="std std-ref">Update Capsule</span></a>.  When an EFI Capsule is identified by <em>EFI_JSON_CAPSULE_ID_GUID,</em> the internal structure of the capsule header is defined in this section, see EFI_JSON_CAPSULE_HEADER. Note that if multiple JSON capsules are delivered together, each JSON capsule should contain one <em>EFI_CAPSULE_HEADER</em> and one <em>EFI_JSON_CAPSULE_HEADER</em> separately.</p>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma pack(1)</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINT32</span>       <span class="n">Version</span><span class="p">;</span>
+  <span class="n">UINT32</span>       <span class="n">CapsuleId</span><span class="p">;</span>
+  <span class="n">UINT32</span>       <span class="n">PayloadLength</span><span class="p">;</span>
+  <span class="n">UINT8</span>        <span class="n">Payload</span><span class="p">[];</span>
+<span class="p">}</span> <span class="n">EFI_JSON_CAPSULE_HEADER</span><span class="p">;</span>
+<span class="c1">#pragma pack ()</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Version</dt><dd><p>Version of the structure, initially 0x00000001.</p>
+</dd>
+<dt>CapsuleId</dt><dd><p>The unique identifier of this capsule.</p>
+</dd>
+<dt>PayloadLength</dt><dd><p>The length of the JSON payload immediately following this header, in bytes.</p>
+</dd>
+<dt>Payload</dt><dd><p>Variable length buffer containing the JSON payload that should be parsed and applied to the system. The definition of the JSON schema used in the payload is beyond the scope of this specification.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>EFI_JSON_CAPSULE_HEADER</em> structure is located at the lowest offset within the body of the capsule identified by <em>EFI_JSON_CAPSULE_ID_GUID</em>. It is expected that drivers which process the JSON payload have the specific knowledge of the JSON schema used in the payload. The drivers should parse the JSON payload firstly to understand whether the capsule wants to perform firmware configure or firmware update then route the JSON payload to corresponding modules. For instance, the capsule may be delivered to <em>EFI_FIRMWARE_MANAGEMENT_PROTOCOL</em> instance to update the firmware image.</p>
+<p><strong>Structure of the Configuration Data</strong></p>
+<p>During the system boot, current configuration data or cached configuration data is reported to the EFI System Configuration Table with <em>EFI_JSON_CONFIG_DATA_TABLE_GUID</em> according to the value of <em>EFI_OS_INDICATIONS_JSON_CONFIG_DATA_REFRESH</em> bit in <em>OsIndications</em>. The structure to record the configuration data is defined in this section, see <em>EFI_JSON_CAPSULE_CONFIG_DATA</em>.</p>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma pack(1)</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINT32</span>                       <span class="n">Version</span><span class="p">;</span>
+  <span class="n">UINT32</span>                       <span class="n">TotalLength</span><span class="p">;</span>
+  <span class="n">EFI_JSON_CONFIG_DATA_ITEM</span>    <span class="n">ConfigDataList</span><span class="p">[];</span>
+<span class="p">}</span> <span class="n">EFI_JSON_CAPSULE_CONFIG_DATA</span><span class="p">;</span>
+<span class="c1">#pragma pack ()</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Version</dt><dd><p>Version of the structure, initially 0x00000001.</p>
+</dd>
+<dt>TotalLength</dt><dd><p>The total length of <em>EFI_JSON_CAPSULE_CONFIG_DATA</em>, in bytes.</p>
+</dd>
+<dt>ConfigDataList</dt><dd><p>Array of configuration data groups. Type <em>EFI_JSON_CONFIG_DATA_ITEM</em> is defined below.</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINT32</span>       <span class="n">ConfigDataLength</span><span class="p">;</span>
+  <span class="n">UINT8</span>        <span class="n">ConfigData</span><span class="p">[];</span>
+<span class="p">}</span> <span class="n">EFI_JSON_CONFIG_DATA_ITEM</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>ConfigDataLength</dt><dd><p>The length of the following <em>ConfigData,</em> in bytes.</p>
+</dd>
+<dt>ConfigData</dt><dd><p>Variable length buffer containing the JSON payload that describes one group of configuration data within current system. The definition of the JSON schema used in this payload is beyond the scope of this specification.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>For supporting multiple groups of configuration data, a list of <em>EFI_JSON_CONFIG_DATA_ITEM</em> are included in <em>EFI_JSON_CAPSULE_CONFIG_DATA</em> and each item indicates one group of configuration data. It is expected that particular drivers have the specific knowledge of the JSON schema used in the payload so that they can describe system configuration data in JSON then install to the EFI System Configuration Table. The drivers should check <em>EFI_OS_INDICATIONS_JSON_CONFIG_DATA_REFRESH</em> bit in <em>OsIndications</em> to understand whether they need collect current configuration firstly.</p>
+</section>
+<section id="firmware-processing-of-the-capsule-identified-by-efi-json-capsule-id-guid">
+<span id="id37"></span><h3><span class="section-number">23.5.3. </span>Firmware Processing of the Capsule Identified by EFI_JSON_CAPSULE_ID_GUID<a class="headerlink" href="#firmware-processing-of-the-capsule-identified-by-efi-json-capsule-id-guid" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>Capsule is presented to system firmware via call to <em>UpdateCapsule()</em> or using mass storage delivery procedure of <a class="reference internal" href="08_Services_Runtime_Services.html#delivery-of-capsules-via-file-on-mass-storage-device"><span class="std std-ref">Delivery of Capsules via file on Mass Storage Device</span></a>. The capsule must be constructed to consist of a single <em>EFI_JSON_CAPSULE_HEADER</em> structure with JSON payload follows. A capsule in which <em>PayloadLength</em> is zero will not be processed.</p></li>
+<li><p>Capsule is recognized by <em>EFI_CAPSULE_HEADER</em> member CapsuleGuid equal to <em>EFI_JSON_CAPSULE_ID_GUID</em>. <em>CAPSULE_FLAGS_POPULATE_SYSTEM_TABLE</em> flag must be 0.</p></li>
+<li><p>If system is not in boot services and platform does not support persistence of capsule across reset when initiated within EFI Runtime, <em>EFI_OUT_OF_RESOURCES</em> error is returned.</p></li>
+<li><p>If device requires hardware reset to unlock flash write protection, <em>CAPSULE_FLAGS_PERSIST_ACROSS_RESET</em> and optionally CAPSULE_FLAGS_INITIATE_RESET should be set to 1 in the EFI_CAPSULE_HEADER.</p></li>
+<li><p>When reset is requested using CAPSULE_FLAGS_PERSIST_ACROSS_RESET, the capsule is processed in Boot Services, before the EFI_EVENT_GROUP_READY_TO_BOOT event.</p></li>
+<li><p>All scatter-gather fragmentation is removed by the platform firmware and the capsule is processed as a contiguous buffer.</p></li>
+<li><p>When a capsule identified by EFI_JSON_CAPSULE_ID_GUID is received, the system firmware shall place a pointer to the coalesced capsule in the EFI System Configuration Table with EFI_JSON_CAPSULE_DATA_TABLE_GUID before loading any third party modules such as option ROM. If multiple capsules identified by EFI_JSON_CAPSULE_ID_GUID are received, the system firmware shall place a list of pointers to the capsules, preceded by a UINTN that represents the number of pointers, in the EFI System Configuration Table with EFI_JSON_CAPSULE_DATA_TABLE_GUID before loading any third party modules such as option ROM. The UINTN and each pointer must be naturally aligned.</p></li>
+<li><p>The system configuration driver should check EFI System Configuration Table and parse the JSON payload, to identify the configuration data type of JSON payload, and route the JSON payload to corresponding modules. The corresponding capsule pointer shall be removed from the EFI System Configuration Table and also be cleared after it is processed.</p></li>
+<li><p>The processing result shall be installed to EFI System Configuration Table using the format of EFI_CAPSULE_RESULT_VARIABLE_HEADER and EFI_CAPSULE_RESULT_VARIABLE_JSON defined in Section 8.5.6 with EFI_JSON_CAPSULE_RESULT_TABLE_GUID. If the capsule is delivered via mass storage device, the process result shall be recorded by using UEFI variables as described in <a class="reference internal" href="08_Services_Runtime_Services.html#uefi-variable-reporting-on-the-success-or-any-errors-encountered-in-processing-of-capsules-after-restart"><span class="std std-ref">UEFI variable reporting on the Success or any Errors encountered in processing of capsules after restart</span></a> .</p></li>
+</ol>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="22_EFI_Byte_Code_Virtual_Machine.html" class="btn btn-neutral float-left" title="22. EFI Byte Code Virtual Machine" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="24_Network_Protocols_SNP_PXE_BIS.html" class="btn btn-neutral float-right" title="24. Network Protocols — SNP, PXE, BIS and HTTP Boot" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, UEFI Forum, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,8 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
 	<TargetFramework>net11.0</TargetFramework>
-	  <!-- Use a local minimal reference set instead of the implicit shared framework -->
-	  <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
 	  <!-- Expose this reference assembly as the core library identity so the compiler recognizes predefined types -->
 	  <AssemblyName>System.Private.CoreLib</AssemblyName>
 	<!-- Produce a reference assembly used at compile-time by the UEFI app -->
@@ -11,8 +9,42 @@
 	<Nullable>disable</Nullable>
 		<LangVersion>preview</LangVersion>
 		<!-- Analyzers enabled (previously disabled as a temporary workaround). -->
+	  <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+	  <NoStdLib>true</NoStdLib>
+	  <NoConfig>true</NoConfig>
+	  <RuntimeMetadataVersion>v4.0.30319</RuntimeMetadataVersion>
+	  <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	  <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+
+	  <IlcSystemModule>UEFIRefs</IlcSystemModule>
+	  <EntryPointSymbol>EfiMain</EntryPointSymbol>
+	  <LinkerSubsystem>EFI_APPLICATION</LinkerSubsystem>
+	  <InvariantGlobalization>true</InvariantGlobalization>
+
+	  <Platforms>x86;x64;ARM64</Platforms>
+	  <Configurations>Debug;Release</Configurations>
+	  <OutDir>$(SolutionDir)bin\$(Platform)\UEFIRef\</OutDir>
+	  <DefineConstants>$(DefineConstants);$(Configuration)</DefineConstants>
+	  <DefineConstants>$(DefineConstants);$(Platform)</DefineConstants>
   </PropertyGroup>
+	
+	
 	<ItemGroup>
 		<FrameworkReference Remove="Microsoft.NETCore.App" />
 	</ItemGroup>
+
+	<!-- The project file pretends this is .NET, but it's not .NET. Remove all assembly references the .NET SDK added. -->
+	<Target Name="CustomizeReferences" BeforeTargets="BeforeCompile" AfterTargets="ResolveFrameworkReferences">
+		<ItemGroup>
+			<ReferencePathWithRefAssemblies Remove="@(ReferencePathWithRefAssemblies)" />
+			<ReferencePath Remove="@(ReferencePath)" />
+		</ItemGroup>
+	</Target>
+
+	<!-- The AOT compiler would want to mirror these as AppContext switches. Prevent that. -->
+	<Target Name="RemoveHostConfigurationOptions" BeforeTargets="WriteIlcRspFileForCompilation" DependsOnTargets="PrepareForILLink">
+		<ItemGroup>
+			<RuntimeHostConfigurationOption Remove="@(RuntimeHostConfigurationOption)" />
+		</ItemGroup>
+	</Target>
 </Project>

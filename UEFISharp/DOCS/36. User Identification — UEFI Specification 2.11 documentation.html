@@ -1,0 +1,2290 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>36. User Identification &mdash; UEFI Specification 2.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=f2209469" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/style.css?v=faba8a36" />
+      <link rel="stylesheet" type="text/css" href="_static/theme-overrides.css?v=84235ce0" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2de06f63"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="37. Secure Technologies" href="37_Secure_Technologies.html" />
+    <link rel="prev" title="35. HII Configuration Processing and Browser Protocol" href="35_HII_Configuration_Processing_and_Browser_Protocol.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            UEFI Specification
+          </a>
+              <div class="version">
+                2.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Tables.html">List of Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Figures.html">List of Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/Revision_History.html">Revision History</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Overview.html">2. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Boot_Manager.html">3. Boot Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_EFI_System_Table.html">4. EFI System Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_GUID_Partition_Table_Format.html">5. GUID Partition Table (GPT) Disk Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_Block_Transition_Table_Layout.html">6. Block Translation Table (BTT) Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Services_Boot_Services.html">7. Services — Boot Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Services_Runtime_Services.html">8. Services — Runtime Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Protocols_EFI_Loaded_Image.html">9. Protocols - EFI Loaded Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Protocols_Device_Path_Protocol.html">10. Protocols – Device Path Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html">11. Protocols — UEFI Driver Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_Protocols_Console_Support.html">12. Protocols — Console Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Protocols_Media_Access.html">13. Protocols – Media Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Protocols_PCI_Bus_Support.html">14. Protocols — PCI Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_Protocols_SCSI_Driver_Models_and_Bus_Support.html">15. Protocols — SCSI Driver Models and Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_Protocols_iSCSI_Boot.html">16. Protocols — iSCSI Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_Protocols_USB_Support.html">17. Protocols — USB Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_Protocols_Debugger_Support.html">18. Protocols — Debugger Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_Protocols_Compression_Algorithm_Specification.html">19. Protocols — Compression Algorithm Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_Protocols_ACPI_Protocols.html">20. Protocols — ACPI Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_Protocols_String_Services.html">21. Protocols — String Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html">22. EFI Byte Code Virtual Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_Firmware_Update_and_Reporting.html">23. Firmware Update and Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24_Network_Protocols_SNP_PXE_BIS.html">24. Network Protocols — SNP, PXE, BIS and HTTP Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25_Network_Protocols_Managed_Network.html">25. Network Protocols - Managed Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26_Network_Protocols_Bluetooth.html">26. Network Protocols — Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27_Network_Protocols_VLAN_and_EAP.html">27. Network Protocols — VLAN, EAP, Wi-Fi and Supplicant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28_Network_Protocols_TCP_IP_and_Configuration.html">28. Network Protocols — TCP, IP, IPsec, FTP, TLS and Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29_Network_Protocols_ARP_and_DHCP.html">29. Network Protocols — ARP, DHCP, DNS, HTTP and REST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_Network_Protocols_UDP_and_MTFTP.html">30. Network Protocols — UDP and MTFTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="31_EFI_Redfish_Service_Support.html">31. EFI Redfish Service Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="32_Secure_Boot_and_Driver_Signing.html">32. Secure Boot and Driver Signing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="33_Human_Interface_Infrastructure.html">33. Human Interface Infrastructure Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="34_HII_Protocols.html">34. HII Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="35_HII_Configuration_Processing_and_Browser_Protocol.html">35. HII Configuration Processing and Browser Protocol</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">36. User Identification</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#user-identification-overview">36.1. User Identification Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#user-identify">36.1.1. User Identify</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#user-profiles">36.1.2. User Profiles</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#user-profile-database">36.1.2.1. User Profile Database</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#user-identification-policy">36.1.2.2. User Identification Policy</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#credential-providers">36.1.3. Credential Providers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#security-considerations">36.1.4. Security Considerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deferred-execution">36.1.5. Deferred Execution</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#user-identification-process">36.2. User Identification Process</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#user-identification-process-1">36.2.1. User Identification Process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#changing-the-current-user-profile">36.2.2. Changing The Current User Profile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ready-to-boot">36.2.3. Ready To Boot</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#code-definitions">36.3. Code Definitions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#user-manager-protocol">36.3.1. User Manager Protocol</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-manager-protocol">36.3.1.1. EFI_USER_MANAGER_PROTOCOL</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-manager-protocol-create">36.3.1.2. EFI_USER_MANAGER_PROTOCOL.Create()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-manager-protocol-delete">36.3.1.3. EFI_USER_MANAGER_PROTOCOL.Delete()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-manager-protocol-getnext">36.3.1.4. EFI_USER_MANAGER_PROTOCOL.GetNext()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-manager-protocol-current">36.3.1.5. EFI_USER_MANAGER_PROTOCOL.Current()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-manager-protocol-identify">36.3.1.6. EFI_USER_MANAGER_PROTOCOL.Identify()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-manager-protocol-find">36.3.1.7. EFI_USER_MANAGER_PROTOCOL.Find()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-manager-protocol-notify">36.3.1.8. EFI_USER_MANAGER_PROTOCOL.Notify()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-manager-protocol-getinfo">36.3.1.9. EFI_USER_MANAGER_PROTOCOL.GetInfo()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-manager-protocol-setinfo">36.3.1.10. EFI_USER_MANAGER_PROTOCOL.SetInfo()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-manager-protocol-deleteinfo">36.3.1.11. EFI_USER_MANAGER_PROTOCOL.DeleteInfo()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-manager-protocol-getnextinfo">36.3.1.12. EFI_USER_MANAGER_PROTOCOL.GetNextInfo()</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#credential-provider-protocols">36.3.2. Credential Provider Protocols</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-credential2-protocol">36.3.2.1. EFI_USER_CREDENTIAL2_PROTOCOL</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-credential2-protocol-enroll">36.3.2.2. EFI_USER_CREDENTIAL2_PROTOCOL.Enroll()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-credential2-protocol-form">36.3.2.3. EFI_USER_CREDENTIAL2_PROTOCOL.Form()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-credential2-protocol-tile">36.3.2.4. EFI_USER_CREDENTIAL2_PROTOCOL.Tile()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-credential2-protocol-title">36.3.2.5. EFI_USER_CREDENTIAL2_PROTOCOL.Title()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-credential2-protocol-user">36.3.2.6. EFI_USER_CREDENTIAL2_PROTOCOL.User()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-credential2-protocol-select">36.3.2.7. EFI_USER_CREDENTIAL2_PROTOCOL.Select()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-credential2-protocol-deselect">36.3.2.8. EFI_USER_CREDENTIAL2_PROTOCOL.Deselect()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-credential2-protocol-default">36.3.2.9. EFI_USER_CREDENTIAL2_PROTOCOL.Default()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-credential2-protocol-getinfo">36.3.2.10. EFI_USER_CREDENTIAL2_PROTOCOL.GetInfo()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-credential2-protocol-getnextinfo">36.3.2.11. EFI_USER_CREDENTIAL2_PROTOCOL.GetNextInfo()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-credential2-protocol-delete">36.3.2.12. EFI_USER_CREDENTIAL2_PROTOCOL.Delete()</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#deferred-image-load-protocol">36.3.3. Deferred Image Load Protocol</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#efi-deferred-image-load-protocol">36.3.3.1. EFI_DEFERRED_IMAGE_LOAD_PROTOCOL</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-deferred-image-load-protocol-getimageinfo">36.3.3.2. EFI_DEFERRED_IMAGE_LOAD_PROTOCOL.GetImageInfo()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#user-information">36.4. User Information</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-user-info-access-policy-record">36.4.1. EFI_USER_INFO_ACCESS_POLICY_RECORD</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-info-access-forbid-load">36.4.1.1. EFI_USER_INFO_ACCESS_FORBID_LOAD</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-info-access-permit-load">36.4.1.2. EFI_USER_INFO_ACCESS_PERMIT_LOAD</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-info-access-enroll-self">36.4.1.3. EFI_USER_INFO_ACCESS_ENROLL_SELF</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-info-access-enroll-others">36.4.1.4. EFI_USER_INFO_ACCESS_ENROLL_OTHERS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-info-access-manage">36.4.1.5. EFI_USER_INFO_ACCESS_MANAGE</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-info-access-setup">36.4.1.6. EFI_USER_INFO_ACCESS_SETUP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-info-access-forbid-connect">36.4.1.7. EFI_USER_INFO_ACCESS_FORBID_CONNECT</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-info-access-permit-connect">36.4.1.8. EFI_USER_INFO_ACCESS_PERMIT_CONNECT</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-user-info-access-boot-order">36.4.1.9. EFI_USER_INFO_ACCESS_BOOT_ORDER</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-user-info-cbeff-record">36.4.2. EFI_USER_INFO_CBEFF_RECORD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-user-info-create-date-record">36.4.3. EFI_USER_INFO_CREATE_DATE_RECORD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-user-info-credential-provider-record">36.4.4. EFI_USER_INFO_CREDENTIAL_PROVIDER_RECORD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-user-info-credential-provider-name-record">36.4.5. EFI_USER_INFO_CREDENTIAL_PROVIDER_NAME_RECORD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-user-info-credential-type-record">36.4.6. EFI_USER_INFO_CREDENTIAL_TYPE_RECORD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-user-info-credential-type-name-record">36.4.7. EFI_USER_INFO_CREDENTIAL_TYPE_NAME_RECORD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-user-info-guid-record">36.4.8. EFI_USER_INFO_GUID_RECORD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-user-info-far-record">36.4.9. EFI_USER_INFO_FAR_RECORD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-user-info-identifier-record">36.4.10. EFI_USER_INFO_IDENTIFIER_RECORD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-user-info-identity-policy-record">36.4.11. EFI_USER_INFO_IDENTITY_POLICY_RECORD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-user-info-name-record">36.4.12. EFI_USER_INFO_NAME_RECORD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-user-info-pkcs11-record">36.4.13. EFI_USER_INFO_PKCS11_RECORD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-user-info-retry-record">36.4.14. EFI_USER_INFO_RETRY_RECORD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-user-info-usage-date-record">36.4.15. EFI_USER_INFO_USAGE_DATE_RECORD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-user-info-usage-count-record">36.4.16. EFI_USER_INFO_USAGE_COUNT_RECORD</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#user-information-table">36.5. User Information Table</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="37_Secure_Technologies.html">37. Secure Technologies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="38_Confidential_Computing.html">38. Confidential Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="39_Micellaneous_Protocols.html">39. Miscellaneous Protocols</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Apx_A_GUID_and_Time_Formats.html">A. GUID and Time Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_B_Console.html">B. Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_C_Device_Path_Examples.html">C. Device Path Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_D_Status_Codes.html">D. Status Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_E_Universal_Network_Driver_Interfaces.html">E. Universal Network Driver Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_F_Using_the_Simple_Pointer_Protocol.html">F. Using the Simple Pointer Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_G_Using_the_EFI_Extended_SCSI_Pass_Thru_Protocol.html">G. Using the EFI Extended SCSI Pass Thru Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_H_Compression_Source_Code.html">H. Compression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_I_Decompression_Source_Code.html">I. Decompression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_J_EFI_Byte_Code_Virtual_Machine_Opcode_List.html">J. EFI Byte Code Virtual Machine Opcode List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_K_Alphabetic_Function_Lists.html">K. Alphabetic Function Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_L_EFI_1.10_Protocol_Changes_and_Deprecation_List.html">L. EFI 1.10 Protocol Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html">M. Formats — Language Codes and Language Code Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_N_Common_Platform_Error_Record.html">N. Common Platform Error Record (CPER)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_O_UEFI_ACPI_Data_Table.html">O. UEFI ACPI Data Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_P_Hardware_Error_Record_Persistence_Usage.html">P. Hardware Error Record Persistence Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_Q_References.html">Q. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_R_Glossary.html">R. Glossary</a></li>
+</ul>
+
+    <a href= "genindex.html">Index</a>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UEFI Specification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">36. </span>User Identification</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="user-identification">
+<span id="id1"></span><h1><span class="section-number">36. </span>User Identification<a class="headerlink" href="#user-identification" title="Link to this heading"></a></h1>
+<section id="user-identification-overview">
+<span id="id2"></span><h2><span class="section-number">36.1. </span>User Identification Overview<a class="headerlink" href="#user-identification-overview" title="Link to this heading"></a></h2>
+<p>This section describes services which describe the current user of the platform. A user is the entity which is controlling the behavior of the machine. The user may be an individual, a class or group of individuals or another machine.</p>
+<p>Each user has a user profile. There is always at least one user profile for a machine. This profile governs the behavior of the user identification process until another user has been selected. The nature and definition of these privileges are beyond the scope of this section. One user profile is always active and describes the platform’s <em>current user</em>.</p>
+<p>New user profiles are introduced into the system through enrollment. During enrollment, information about a new user is gathered. Some of this information identifies the user for specific purposes, such as a user’s name or a user’s network domain. Other information is gathered in the form of credentials, which is information which can be used at a later time to verify the identity of a user. Credentials are generally divided into three categories: something you know (password), something you have (smart card, smart token, RFID), something you are (fingerprint). The means by which a platform determines the user’s identity based on credentials is user <em>identification</em>.</p>
+<p>In the simplest case, a single set of credentials are required to establish a user’s identity. This is called single-factor authentication. In more rigorous cases, multiple credentials might be required to establish a user’s identity or different privilege levels given if only a single factor is available. This is called <em>multi-factor</em> authentication.</p>
+<p>If the credentials are checked only once, this is called static authentication. For example, a sign-on box where the user enters a password and provides a fingerprint would be examples of static authentication. However, if credentials (and thus the user’s identity) can be changed during system execution, this is called <em>dynamic</em> authentication. For example, a smart token which can be hot-removed from the system or an RFID tag which is moved in and out of range would be examples of dynamic authentication.</p>
+<p>The user <em>identity manager</em> is the optional UEFI driver which manages the process of determining the user’s identity and storing information about the user.</p>
+<p>The user <em>enrollment manager</em> is the optional application which adds or enrolls new users, gathering the necessary information to ascertain their identity in the future.</p>
+<p>The <em>credential provider</em> driver manages a single class of credentials. Examples include a USB fingerprint sensor, a smart card or a password. The means by which these drivers are selected and invoked is beyond the scope of this specification.</p>
+<section id="user-identify">
+<span id="id3"></span><h3><span class="section-number">36.1.1. </span>User Identify<a class="headerlink" href="#user-identify" title="Link to this heading"></a></h3>
+<p>The process of identifying the user occurs after platform initialization has made the services described in the EFI System Table available. Before the Boot Manager behavior described in chapter 3, a user profile must be established. The user profile established might be:</p>
+<ul class="simple">
+<li><p>A default user profile, giving a standard set of privileges. This is similar to a “guest” login.</p></li>
+<li><p>A default user profile, based on a User Credential Provider where Default() returns AutoLogon = <strong>TRUE</strong>.</p></li>
+<li><p>A specific user profile, established using the Identify() function of the User Manager.</p></li>
+</ul>
+<p>Every time the user profile is modified, the User Identity Manager will signal the EFI_EVENT_GROUP_USER_PROFILE_CHANGED event. The current user profile can only be changed by calling the User Identity Manager’s Identify() function or as the result of a credential provider calling the Notify() function (when dynamic authentication is supported). The Identify() function changes the current user profile after examining the credentials provided by the various credential providers and comparing these against those found in the user profile database.</p>
+<figure class="align-default" id="user-identity">
+<a class="reference internal image-reference" href="_images/User_Identification-2.png"><img alt="_images/User_Identification-2.png" src="_images/User_Identification-2.png" style="width: 65%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 36.1 </span><span class="caption-text">User Identity</span><a class="headerlink" href="#user-identity" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>When the UEFI Boot Manager signals the EFI_EVENT_GROUP_READY_TO_BOOT event group, the User Identity Manager publishes the current user profile information in the EFI System Configuration Table.</p>
+<p>Depending on the security considerations in the implementation (see <a class="reference internal" href="#security-considerations"><span class="std std-ref">Security Considerations</span></a> ), user identification can continue into different phases of execution.</p>
+<ol class="arabic simple">
+<li><p>Boot Manager, Once. In this scenario, identification is permitted until the EFI_EVENT_GROUP_READY_TO_BOOT is signaled by the Boot Manager. After this time, user identification is not allowed again. This is the simplest, since the user profile database can be locked at this time using a simple one-time lock.</p></li>
+<li><p>Boot Manager, Multiple. In this scenario, identification is permitted until the EFI_EVENT_GROUP_READY_TO_BOOT is signaled by the Boot Manager. After this time, if the boot option returns back into the Boot Manager, identification is allowed again. This scenario requires that the user profile database only be updatable while in the Boot Manager.</p></li>
+<li><p>Until ExitBootServices. In this scenario, identification is permitted until the EFI_EVENT_GROUP_EXIT_BOOT_SERVICES is signaled by the Boot Manager. This scenario requires that the user profile database cannot be updated by unauthorized executables.</p></li>
+</ol>
+</section>
+<section id="user-profiles">
+<span id="id4"></span><h3><span class="section-number">36.1.2. </span>User Profiles<a class="headerlink" href="#user-profiles" title="Link to this heading"></a></h3>
+<p>The user profiles are collections of information about users. There is always a current user (and thus, a currently selected user profile). The user profiles are stored in a user profile database.</p>
+<p>Each user profile has the following attributes:</p>
+<p><strong>§ User Identifier</strong></p>
+<p>User identifiers are unique to a particular user profile. The    uniqueness of the user profile identifier must persist across    reboots. Credentials return this identifier during the    identification process.</p>
+<p><strong>§ User Identification Policy</strong></p>
+<p>The user identification policy determines which credentials must    be presented in order to establish the user’s identity and set the    user profile as the current user profile. The policy consists of a    boolean expression consisting of credential handles and the    operators AND, OR and NOT. This allows the user profile to be    selected, for example, depending on a password credential OR a    fingerprint credential. Or the profile might be selected depending    on a password credential AND a fingerprint credential.</p>
+<p><strong>§ User Privileges</strong></p>
+<p>The user privileges control what the user can and cannot do. For    example, can the user enroll other users, boot off of a selected    device, etc.</p>
+<p><strong>§ User Information</strong></p>
+<p>User information consists of typed data records attached to the    user profile handle. Some of this information is non-volatile.    Some of this information may be provided by a specific credential    driver. User information is classified as public, private or    protected:</p>
+<ul class="simple">
+<li><p>Public user information is available at any time.</p></li>
+<li><p>Private user information is only available while it is part of
+the current user profile.</p></li>
+<li><p>Protected user information is only available once user has been
+authenticated by a credential provider.</p></li>
+</ul>
+<p>Drivers and applications can be notified when the current user    profile is changed, by using the UEFI Boot Service CreateEventEx()    and the EFI_EVENT_GROUP_USER_PROFILE_CHANGED</p>
+<p>User profiles are available while the User Identity Manager is running, but only the current user profile is available after the UEFI Boot Manager has started execution.</p>
+<section id="user-profile-database">
+<span id="id5"></span><h4><span class="section-number">36.1.2.1. </span>User Profile Database<a class="headerlink" href="#user-profile-database" title="Link to this heading"></a></h4>
+<p>The user profile database is a repository of all users known to the user identity manager. The user profile database should be maintained in non-volatile memory and this memory must be protected against corruption and erasure.</p>
+<p>The user profile database is considered “open” if the user profile database can still be updated and the current profile can still be changed using the EFI User Manager Protocol. The user profile database is considered “closed” if the user profile database cannot be updated nor the current user profile changes using the EFI User Manager Protocol.</p>
+</section>
+<section id="user-identification-policy">
+<span id="user-identification-policy-1"></span><h4><span class="section-number">36.1.2.2. </span>User Identification Policy<a class="headerlink" href="#user-identification-policy" title="Link to this heading"></a></h4>
+<p>The user identification policy is a boolean expression which determines which class of credential or which credential providers must assert the user’s identity in order to a user profile to be eligible for selection as the current user profile.</p>
+<p>For example, assume that you want a password:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CredentialClass</span><span class="p">(</span><span class="n">Password</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This expression would assert <strong>TRUE</strong> if any credential provider asserts that a user has successfully entered a password.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CredentialClass</span><span class="p">(</span><span class="n">Password</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">CredentialClass</span><span class="p">(</span><span class="n">Fingerprint</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This expression would require the user to present both a fingerprint AND a password in order to select this user profile.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CredentialClass</span><span class="p">(</span><span class="n">Password</span><span class="p">)</span> <span class="o">||</span> <span class="n">CredentialClass</span><span class="p">(</span><span class="n">Fingerprint</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This expression, on the other hand, allows the user to present a fingerprint OR a password in order to select this user profile.</p>
+<p>Let’s say you only want the Phoenix password provider:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CredentialClass</span><span class="p">(</span><span class="n">Password</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">CredentialProvider</span><span class="p">(</span><span class="n">Phoenix</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In all of these cases, the class of credential and the provider of the credential are actually GUIDs. The standard credential class GUIDs are assigned by this specification. The credential provider identifiers are generated by the companies creating the credential providers.</p>
+</section>
+</section>
+<section id="credential-providers">
+<span id="id6"></span><h3><span class="section-number">36.1.3. </span>Credential Providers<a class="headerlink" href="#credential-providers" title="Link to this heading"></a></h3>
+<p>The User Credential Provider drivers follow the UEFI driver model. During initialization, they install an instance of the EFI Driver Binding Protocol. For hardware devices, the User Credential Provider may consume the bus I/O protocol and produce the User Credential Protocol. For software-based User Credential Providers, the User Credential Protocol could be installed on the image handler. The exact implementation depends on the number of separate credential types that the User Identity Manager will display.</p>
+<p>When <em>Start()</em> is called, they:</p>
+<ol class="arabic simple">
+<li><p>Install one instance of the <em>EFI_USER_CREDENTIAL2_PROTOCOL</em> for each simultaneous user which might be authenticated. For example, if more than one smart token were inserted, then one instance might be created for each token. However, for a fingerprint sensor, one instance might be created for all fingerprint sensors managed by the same driver.</p></li>
+<li><p>Install the user-interface forms used for interacting with the user using the HII Database Protocol. The form must be encoded using the GUID <em>EFI_USER_CREDENTIAL2_PROTOCOL_GUID</em>.</p></li>
+<li><p>Install the EFI HII Configuration Access Protocol to handle interaction with the UEFI forms browser. This protocol is called to retrieve the current information from the credential provider. It is also called when the user presses OK to save the current form values. It also provides the callback functionality which allows real-time processing of the form values.</p></li>
+</ol>
+<p>User Credential Providers are responsible to creating a one-to-one mapping between a device, fingerprint or password and a user identifier.</p>
+<p>This specification does not explicitly support passing of user credential information related to operating system logon to an OS-present environment. For example, User Credential Providers may encrypt the user credential information and pass it, either as a part of the User Information Table or the EFI System Configuration Table, to an OS-present driver or application.</p>
+<p>This specification does not explicitly support OS-present update of user credential information or user identification policy. Such support may be implemented in many ways, including the usage of write-authenticated EFI variables (see <a class="reference internal" href="08_Services_Runtime_Services.html#setvariable"><span class="std std-ref">SetVariable()</span></a> ) or capsules (see <a class="reference internal" href="08_Services_Runtime_Services.html#updatecapsule"><span class="std std-ref">UpdateCapsule()</span></a> ).</p>
+</section>
+<section id="security-considerations">
+<span id="id7"></span><h3><span class="section-number">36.1.4. </span>Security Considerations<a class="headerlink" href="#security-considerations" title="Link to this heading"></a></h3>
+<p>Since the current profile details a number of security-related privileges, it is important that the User Identity Manager and User Credential Providers and the environment in which they execute are trusted.</p>
+<p>This includes:</p>
+<ul class="simple">
+<li><p>Protecting the storage area where these drivers are stored</p></li>
+<li><p>Protecting the means by which these drivers are selected.</p></li>
+<li><p>Protecting the execution environment of these drivers from unverified drivers.</p></li>
+<li><p>The data structures used by these drivers should not be corrupted by unauthorized drivers while they are still being used.</p></li>
+</ul>
+<figure class="align-default" id="user-identity-manager">
+<a class="reference internal image-reference" href="_images/User_Identification-3.png"><img alt="_images/User_Identification-3.png" src="_images/User_Identification-3.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 36.2 </span><span class="caption-text">User Identity Manager</span><a class="headerlink" href="#user-identity-manager" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>In many cases, the User Identity Manager, the User Credential drivers and the on-board drivers are located in a protected location (e.g. a write-protected flash device) and the platform policy for these locations allows them to be trusted.</p>
+<p>However, other drivers may be loaded from unprotected location or may be loaded from devices (such as PCI cards) or a hard drive which are easily replaced. Therefore, all drivers loaded prior to the User Identity Manager should be verified. No unverified drivers or applications should be allowed to execute while decisions based on the current user policy are still being made.</p>
+<p>For example, either the default platform policy must successfully be able to verify drivers listed in the <em>Driver####</em> load options, or else the user must be identified prior to processing these drivers. Otherwise, the drivers’ execution should be deferred. If the user profile is changed through a subsequent call to <em>Identify()</em> or through dynamic authentication, the <em>Driver####</em> options may not be processed again.</p>
+<p>In systems where the user profile database and current user profile can be protected from corruption, the user profile database is closed when the system signals the event <em>EFI EXIT_BOOT_SERVICES_EVENT_GUID</em>. In systems where the user profile database and current user profile cannot be protected from corruption, the user profile database is closed when the system signals the event <em>EFI_READY_TO_BOOT_EVENT_GUID</em>.</p>
+</section>
+<section id="deferred-execution">
+<span id="id8"></span><h3><span class="section-number">36.1.5. </span>Deferred Execution<a class="headerlink" href="#deferred-execution" title="Link to this heading"></a></h3>
+<p>The platform may need to defer the execution of an image because of security considerations. For example, see LoadImage(). Information about the images which are not executed because of security considerations may be recorded and then reported by installing an instance of the EFI_DEFERRED_IMAGE_LOAD_PROTOCOL (see <a class="reference internal" href="#deferred-image-load-protocol"><span class="std std-ref">Deferred Image Load Protocol</span></a> ). There may be more than one producer of the protocol.</p>
+<p>The firmware’s boot manager may use the instances of this protocol in order to automatically load drivers whose execution was deferred because of inadequate privileges once the current user profile contains adequate security privileges.</p>
+<p>This boot manager can reevaluate the deferred images each time that the event EFI_EVENT_GROUP_USER_IDENTITY_CHANGED is signaled</p>
+<p>Images which have been loaded may not be unloaded when the current user profile is changed, even if the new user profile would have prevented that driver from being loaded.</p>
+</section>
+</section>
+<section id="user-identification-process">
+<span id="id9"></span><h2><span class="section-number">36.2. </span>User Identification Process<a class="headerlink" href="#user-identification-process" title="Link to this heading"></a></h2>
+<p>This section describes the typical initialization steps required for the user identification process.</p>
+<section id="user-identification-process-1">
+<span id="id10"></span><h3><span class="section-number">36.2.1. </span>User Identification Process<a class="headerlink" href="#user-identification-process-1" title="Link to this heading"></a></h3>
+<ol class="arabic">
+<li><p>The User Identity Manager is launched. This driver reads all of the user profiles from the user profile database, sets the default user profile as the current profile, and installs an instance of the EFI_USER_MANAGER_PROTOCOL.</p></li>
+<li><p>Each credential provider driver registers their user-interface related forms and installs an instance of the EFI_USER_CREDENTIAL2_PROTOCOL.</p></li>
+<li><p>The User Identity Manager’s Identify() function is called to select the current user.</p></li>
+<li><p>The User Identity Manager enumerates all of the User Credential Providers required by the User Identification Policy.</p>
+<div class="line-block">
+<div class="line">a. Select the User Credential Provider which returns Default = <strong>TRUE</strong> from the Default() function. If more than one return <strong>TRUE</strong> or none return <strong>TRUE</strong>, choose a default based on implementation-specific criteria (last-logged-on, etc.)</div>
+</div>
+<div class="line-block">
+<div class="line">b. If that credential provider also returns AutoLogon = <strong>TRUE</strong> from the Default() function, then call User(). If no error was returned and a user profile with the specified user identifier exists, select the specified user profile as the current user profile and jump to step 9.</div>
+</div>
+</li>
+</ol>
+<ol class="arabic" start="5">
+<li><p>The User Identity Manager enumerates all of the User Credential Providers required by the User Identification Policy:</p>
+<div class="line-block">
+<div class="line">a. Call the <em>Title()</em> and (optionally) the <em>Tile()</em> function to retrieve the text and image indicated for each User Credential Provider.</div>
+</div>
+<div class="line-block">
+<div class="line">b. Call the <em>Form()</em> function to retrieve the form indicated for each User Credential Provider.</div>
+</div>
+<div class="line-block">
+<div class="line">c. Create the user interface to allow the user to select between the different User Credential Providers.</div>
+</div>
+<div class="line-block">
+<div class="line">d. Highlight the default User Credential Provider, as specified in step 4.a.</div>
+</div>
+</li>
+<li><p>If the user selects one of the User Credential Providers, call Select(). If AutoLogon = <strong>TRUE</strong> on return, then call User(). If no error was returned and a user profile with the specified user identifier exists, select the specified user profile as the current user profile and jump to step 9.</p></li>
+<li><p>Interact with the user. Regular interaction can occur using the Callback() functions. If another User Credential Provider is selected then Deselect() is called for the current User Credential Provider and Select() is called for the newly selected User Credential Provider.</p></li>
+<li><p>If the user presses OK then the User Manager will saved settings using the EFI Configuration Access protocol. Then it will call the User() function of each credential provider. If it returns successfully and one of the user policies evaluates to <strong>TRUE</strong>, then select the specified user profile as the current user profile and go to step 9. Otherwise display an error and go back.</p></li>
+<li><p>Go through all of the credential providers using <em>GetNextInfo()</em> and <em>GetInfo()</em> and add the information to the current user profile.</p></li>
+<li><p>Exit</p></li>
+</ol>
+</section>
+<section id="changing-the-current-user-profile">
+<span id="id11"></span><h3><span class="section-number">36.2.2. </span>Changing The Current User Profile<a class="headerlink" href="#changing-the-current-user-profile" title="Link to this heading"></a></h3>
+<p>This section describes the typical actions taken when the current user profile is changed.</p>
+<ol class="arabic simple">
+<li><p>If there was already a valid current user profile, then all records marked as private in that profile are no longer available.</p></li>
+<li><p>All records marked as private in the new user profile will be available.</p></li>
+<li><p>The handle of the current user profile is changed.</p></li>
+<li><p>An event with the <em>GUID EFI_EVENT_GROUP_USER_IDENTITY_CHANGED</em> is signaled to indicate that the current user profile has been changed.</p></li>
+</ol>
+</section>
+<section id="ready-to-boot">
+<span id="id12"></span><h3><span class="section-number">36.2.3. </span>Ready To Boot<a class="headerlink" href="#ready-to-boot" title="Link to this heading"></a></h3>
+<p>Before the boot manager is read to pass control to the boot option and signals the <em>EFI_EVENT_GROUP_READY_TO_BOOT</em> event group, the User Identity Manager will publish the current user profile into the EFI System Configuration Table with the <em>EFI_USER_MANAGER_PROTOCOL_GUID</em>. The format is described in the <em>User Information Table</em> (<a class="reference internal" href="#id67">User Information Table</a>). It will also save all non-volatile profile information.</p>
+<p>User Credential drivers with non-volatile storage should also store non-volatile credential information which has changed.</p>
+</section>
+</section>
+<section id="code-definitions">
+<span id="user-identification-code-definitions"></span><h2><span class="section-number">36.3. </span>Code Definitions<a class="headerlink" href="#code-definitions" title="Link to this heading"></a></h2>
+<section id="user-manager-protocol">
+<span id="id13"></span><h3><span class="section-number">36.3.1. </span>User Manager Protocol<a class="headerlink" href="#user-manager-protocol" title="Link to this heading"></a></h3>
+<section id="efi-user-manager-protocol">
+<span id="id14"></span><h4><span class="section-number">36.3.1.1. </span>EFI_USER_MANAGER_PROTOCOL<a class="headerlink" href="#efi-user-manager-protocol" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Reports information about a user.</p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_MANAGER_PROTOCOL_GUID \</span>
+  <span class="p">{</span> <span class="mh">0x6fd5b00c</span><span class="p">,</span> <span class="mh">0xd426</span><span class="p">,</span> <span class="mh">0x4283</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0x98</span><span class="p">,</span> <span class="mh">0x87</span><span class="p">,</span> <span class="mh">0x6c</span><span class="p">,</span> <span class="mh">0xf5</span><span class="p">,</span> <span class="mh">0xcf</span><span class="p">,</span> <span class="mh">0x1c</span><span class="p">,</span> <span class="mh">0xb1</span><span class="p">,</span> <span class="mh">0xfe</span> <span class="p">}</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>Protocol Interface Structure</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="n">_EFI_USER_MANAGER_PROTOCOL</span> <span class="p">{</span>
+  <span class="n">EFI_USER_PROFILE_CREATE</span>           <span class="n">Create</span><span class="p">;</span>
+  <span class="n">EFI_USER_PROFILE_DELETE</span>           <span class="n">Delete</span><span class="p">;</span>
+  <span class="n">EFI_USER_PROFILE_GET_NEXT</span>         <span class="n">GetNext</span><span class="p">;</span>
+  <span class="n">EFI_USER_PROFILE_CURRENT</span>          <span class="n">Current</span><span class="p">;</span>
+  <span class="n">EFI_USER_PROFILE_IDENTIFY</span>         <span class="n">Identify</span><span class="p">;</span>
+  <span class="n">EFI_USER_PROFILE_FIND</span>             <span class="n">Find</span><span class="p">;</span>
+  <span class="n">EFI_USER_PROFILE_NOTIFY</span>           <span class="n">Notify</span><span class="p">;</span>
+  <span class="n">EFI_USER_PROFILE_GET_INFO</span>         <span class="n">GetInfo</span><span class="p">;</span>
+  <span class="n">EFI_USER_PROFILE_SET_INFO</span>         <span class="n">SetInfo</span><span class="p">;</span>
+  <span class="n">EFI_USER_PROFILE_DELETE_INFO</span>      <span class="n">DeleteInfo</span><span class="p">;</span>
+  <span class="n">EFI_USER_PROFILE_GET_NEXT_INFO</span>    <span class="n">GetNextInfo</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">EFI_USER_MANAGER_PROTOCOL</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>Create</dt><dd><p>Create a new user profile.</p>
+</dd>
+<dt>Delete</dt><dd><p>Delete an existing user profile.</p>
+</dd>
+<dt>GetNext</dt><dd><p>Cycle through all user profiles.</p>
+</dd>
+<dt>Current</dt><dd><p>Return the current user profile.</p>
+</dd>
+<dt>Identify</dt><dd><p>Identify a user and set the current user profile using credentials.</p>
+</dd>
+<dt>Find</dt><dd><p>Find a user by a piece of user information.</p>
+</dd>
+<dt>Notify</dt><dd><p>Notify the user manager driver that credential information has changed.</p>
+</dd>
+<dt>GetInfo</dt><dd><p>Return information from a user profile.</p>
+</dd>
+<dt>SetInfo</dt><dd><p>Change information in a user profile.</p>
+</dd>
+<dt>DeleteInfo</dt><dd><p>Delete information from a user profile.</p>
+</dd>
+<dt>GetNextInfo</dt><dd><p>Cycle through all information from a user profile.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This protocol manages user profiles.</p>
+</section>
+<section id="efi-user-manager-protocol-create">
+<span id="id15"></span><h4><span class="section-number">36.3.1.2. </span>EFI_USER_MANAGER_PROTOCOL.Create()<a class="headerlink" href="#efi-user-manager-protocol-create" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Create a new user profile.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_USER_PROFILE_CREATE</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_USER_MANAGER_PROTOCOL</span>        <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">EFI_USER_PROFILE_HANDLE</span>               <span class="o">*</span><span class="n">User</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to this instance of the <em>EFI_USER_MANAGER_PROTOCOL</em>.</p>
+</dd>
+<dt>User</dt><dd><p>On return, points to the new user profile handle. The user profile handle is unique only during this boot.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function creates a new user profile with only a new user identifier attached and returns its handle. The user profile is non-volatile, but the handle <em>User</em> can change across reboots.</p>
+<p>If the current user profile does not permit creation of new user profiles then <em>EFI_ACCESS_DENIED</em> will be returned. If creation of new user profiles is not supported, then <em>EFI_UNSUPPORTED</em> is returned.</p>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">VOID</span> <span class="o">*</span><span class="n">EFI_USER_PROFILE_HANDLE</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>User profile was successfully created.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_ACCESS_DENIED</p></td>
+<td><p>Current user does not have sufficient permissions to create a user profile.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>Creation of new user profiles is not supported.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>User</em> is <strong>NULL</strong>.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-user-manager-protocol-delete">
+<span id="id16"></span><h4><span class="section-number">36.3.1.3. </span>EFI_USER_MANAGER_PROTOCOL.Delete()<a class="headerlink" href="#efi-user-manager-protocol-delete" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Delete an existing user profile.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_USER_PROFILE_DELETE</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_USER_MANAGER_PROTOCOL</span>     <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">EFI_USER_PROFILE_HANDLE</span>             <span class="n">User</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to this instance of the <em>EFI_USER_MANAGER_PROTOCOL</em>.</p>
+</dd>
+<dt>User</dt><dd><p>User profile handle. Type <em>EFI_USER_PROFILE_HANDLE</em> is defined in <em>Create()</em>.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Delete an existing user profile. If the current user profile does not permit deletion of user profiles then <em>EFI_ACCESS_DENIED</em> will be returned. If there is only a single user profile then <em>EFI_ACCESS_DENIED</em> will be returned. If deletion of user profiles is not supported, then <em>EFI_UNSUPPORTED</em> will be returned.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>User profile was successfully deleted.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_ACCESS_DENIED</p></td>
+<td><p>Current user does not have sufficient permissions to delete a user profile or there is only one user profile.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>Deletion of new user profiles is not supported.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>User</em> does not refer to a valid user profile.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-user-manager-protocol-getnext">
+<span id="id17"></span><h4><span class="section-number">36.3.1.4. </span>EFI_USER_MANAGER_PROTOCOL.GetNext()<a class="headerlink" href="#efi-user-manager-protocol-getnext" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Enumerate all of the enrolled users on the platform.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_USER_PROFILE_GET_NEXT</span><span class="p">)(</span>
+  <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_USER_MANAGER_PROTOCOL</span>      <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">EFI_USER_PROFILE_HANDLE</span>          <span class="o">*</span><span class="n">User</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to the instance of this <em>EFI_USER_MANAGER_PROTOCOL</em>.</p>
+</dd>
+<dt>User</dt><dd><p>On entry, points to the previous user profile handle or NULL to start enumeration. On exit, points to the next user profile handle or NULL if there are no more user profiles.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function returns the next enrolled user profile. To retrieve the first user profile handle, point User at a NULL. Each subsequent call will retrieve another user profile handle until there are no more, at which point User will point to NULL.</p>
+<p><strong>NOTE</strong>: <em>There is always at least one user profile.</em></p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>Next enrolled user profile successfully returned.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>User</em> is <strong>NULL</strong>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_ACCESS_DENIED</p></td>
+<td><p>Next enrolled user profile was not successfully returned.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-user-manager-protocol-current">
+<span id="id18"></span><h4><span class="section-number">36.3.1.5. </span>EFI_USER_MANAGER_PROTOCOL.Current()<a class="headerlink" href="#efi-user-manager-protocol-current" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Return the current user profile handle.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_USER_PROFILE_CURRENT</span><span class="p">)(</span>
+  <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_USER_MANAGER_PROTOCOL</span>      <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">EFI_USER_PROFILE_HANDLE</span>             <span class="o">*</span><span class="n">CurrentUser</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to this instance of the <em>EFI_USER_MANAGER_PROTOCOL</em>.</p>
+</dd>
+<dt>CurrentUser</dt><dd><p>On return, points to the current user profile handle.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function returns the current user profile handle.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>Current user profile handle returned successfully.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>CurrentUser</em> is <strong>NULL</strong>.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-user-manager-protocol-identify">
+<span id="id19"></span><h4><span class="section-number">36.3.1.6. </span>EFI_USER_MANAGER_PROTOCOL.Identify()<a class="headerlink" href="#efi-user-manager-protocol-identify" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Identify a user.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_USER_IDENTIFY</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_USER_MANAGER_PROTOCOL</span>      <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">EFI_USER_PROFILE_HANDLE</span>             <span class="o">*</span><span class="n">User</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to the instance of the <em>EFI_USER_MANAGER_PROTOCOL</em>.</p>
+</dd>
+<dt>User</dt><dd><p>On return, points to the user profile handle for the current user profile.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Identify the user and, if authenticated, returns the user handle and changes the current user profile.</p>
+<p>All user information marked as private in a previously selected profile is no longer available for inspection.</p>
+<p>Whenever the current user profile is changed then the event with the GUID <em>EFI_EVENT_GROUP_USER_PROFILE_CHANGED</em> is signaled.</p>
+<p>The function can only be called at <em>TPL_APPLICATION</em>.</p>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_EVENT_GROUP_USER_PROFILE_CHANGED \</span>
+  <span class="p">{</span> <span class="mh">0xbaf1e6de</span><span class="p">,</span> <span class="mh">0x209e</span><span class="p">,</span> <span class="mh">0x4adb</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0x8d</span><span class="p">,</span> <span class="mh">0x96</span><span class="p">,</span> <span class="mh">0xfd</span><span class="p">,</span> <span class="mh">0x8b</span><span class="p">,</span> <span class="mh">0x71</span><span class="p">,</span> <span class="mh">0xf3</span><span class="p">,</span> <span class="mh">0xf6</span><span class="p">,</span> <span class="mh">0x83</span> <span class="p">}</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>User was successfully identified.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>User</em> is <strong>NULL</strong>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_ACCESS_DENIED</p></td>
+<td><p>User was not successfully identified.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-user-manager-protocol-find">
+<span id="id20"></span><h4><span class="section-number">36.3.1.7. </span>EFI_USER_MANAGER_PROTOCOL.Find()<a class="headerlink" href="#efi-user-manager-protocol-find" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Find a user using a user information record.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_USER_PROFILE_FIND</span><span class="p">)(</span>
+  <span class="n">IN</span>   <span class="n">CONST</span> <span class="n">EFI_USER_MANAGER_PROTOCOL</span>    <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">EFI_USER_PROFILE_HANDLE</span>          <span class="o">*</span><span class="n">User</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">EFI_USER_INFO_HANDLE</span>             <span class="o">*</span><span class="n">UserInfo</span> <span class="n">OPTIONAL</span><span class="p">,</span>
+  <span class="n">IN</span>   <span class="n">CONST</span> <span class="n">EFI_USER_INFO</span>                <span class="o">*</span><span class="n">Info</span><span class="p">,</span>
+  <span class="n">IN</span>   <span class="n">UINTN</span>                              <span class="n">InfoSize</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl>
+<dt>This</dt><dd><p>Points to this instance of the <em>EFI_USER_MANAGER_PROTOCOL</em>.</p>
+</dd>
+<dt>User</dt><dd><p>On entry, points to the previously returned user profile handle or <strong>NULL</strong> to start searching with the first user profile. On return, points to the user profile handle or <strong>NULL</strong> if not found.</p>
+</dd>
+<dt>UserInfo</dt><dd><p>On entry, points to the previously returned user information handle or <strong>NULL</strong> to start searching with the first. On return, points to the user information handle of the user information record or <strong>NULL</strong> if not found. Can be <strong>NULL,</strong> in which case only one user information record per user can be returned. Type <em>EFI_USER_INFO_HANDLE</em> is defined in “Related Definitions” below.</p>
+</dd>
+<dt>Info</dt><dd><p>Points to the buffer containing the user information to be compared to the user information record.If the user information record data is empty, then only the user information record type is compared.</p>
+<p>If <em>InfoSize</em> is 0, then the user information record data must be empty.</p>
+</dd>
+<dt>InfoSize</dt><dd><p>The size of <em>Info,</em> in bytes.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function searches all user profiles for the specified user information record. The search starts with the user information record handle following <em>UserInfo</em> and continues until either the information is found or there are no more user profiles.</p>
+<p>A match occurs when the <em>Info.InfoType</em> field matches the user information record type and the user information record data matches a portion of <em>Info</em>.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>User information was found. <em>User</em> points to the user profile handle and <em>UserInfo</em> points to the user information handle.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>User information was not found. <em>User</em> points to <strong>NULL</strong> and <em>UserInfo</em> points to <strong>NULL.</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>User</em> is <strong>NULL</strong>. Or <em>Info</em> is <strong>NULL</strong>.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">VOID</span> <span class="o">*</span><span class="n">EFI_USER_INFO_HANDLE</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="efi-user-manager-protocol-notify">
+<span id="id21"></span><h4><span class="section-number">36.3.1.8. </span>EFI_USER_MANAGER_PROTOCOL.Notify()<a class="headerlink" href="#efi-user-manager-protocol-notify" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Called by credential provider to notify of information change.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+  <span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_USER_PROFILE_NOTIFY</span><span class="p">)(</span>
+  <span class="n">IN</span>  <span class="n">CONST</span> <span class="n">EFI_USER_MANAGER_PROTOCOL</span>      <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span>  <span class="n">EFI_HANDLE</span>                           <span class="n">Changed</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to this instance of the <em>EFI_USER_MANAGER_PROTOCOL</em>.</p>
+</dd>
+<dt>Changed</dt><dd><p>Handle on which is installed an instance of the <em>EFI_USER_CREDENTIAL2_PROTOCOL</em> where the user has changed.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function allows the credential provider to notify the User Identity Manager when user status has changed.</p>
+<p>If the User Identity Manager doesn’t support asynchronous changes in credentials, then this function should return <em>EFI_UNSUPPORTED</em>.</p>
+<p>If current user does not exist, and the credential provider can identify a user, then make the user to be current user and signal the <em>EFI_EVENT_GROUP_USER_PROFILE_CHANGED</em> event.</p>
+<p>If current user already exists, and the credential provider can identify another user, then switch current user to the newly identified user, and signal the <em>EFI_EVENT_GROUP_USER_PROFILE_CHANGED</em> event.</p>
+<p>If current user was identified by this credential provider and now the credential provider cannot identify current user, then logout current user and signal the <em>EFI_EVENT_GROUP_USER_PROFILE_CHANGED</em> event.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The User Identity Manager has handled the notification.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_READY</p></td>
+<td><p>The function was called while the specified credential provider was not selected.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>The User Identity Manager doesn’t support asynchronous notifications.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-user-manager-protocol-getinfo">
+<span id="id22"></span><h4><span class="section-number">36.3.1.9. </span>EFI_USER_MANAGER_PROTOCOL.GetInfo()<a class="headerlink" href="#efi-user-manager-protocol-getinfo" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Return information attached to the user.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_USER_PROFILE_GET_INFO</span><span class="p">)(</span>
+  <span class="n">IN</span>   <span class="n">CONST</span> <span class="n">EFI_USER_MANAGER_PROTOCOL</span>       <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span>   <span class="n">EFI_USER_PROFILE_HANDLE</span>               <span class="n">User</span><span class="p">,</span>
+  <span class="n">IN</span>   <span class="n">EFI_USER_INFO_HANDLE</span>                  <span class="n">UserInfo</span><span class="p">,</span>
+  <span class="n">OUT</span>   <span class="n">EFI_USER_INFO</span>                        <span class="o">*</span><span class="n">Info</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">UINTN</span>                               <span class="o">*</span><span class="n">InfoSize</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to this instance of the <em>EFI_USER_MANAGER_PROTOCOL</em>.</p>
+</dd>
+<dt>User</dt><dd><p>Handle of the user whose profile will be retrieved.</p>
+</dd>
+<dt>UserInfo</dt><dd><p>Handle of the user information data record. Type <em>EFI_USER_INFO_HANDLE</em> is defined in <em>GetInfo()</em>.</p>
+</dd>
+<dt>Info</dt><dd><p>On entry, points to a buffer of at least * <em>InfoSize</em> bytes. On exit, holds the user information. If the buffer is too small to hold the information, then <em>EFI_BUFFER_TOO_SMALL</em> is returned and InfoSize is updated to contain the number of bytes actually required. Type <em>EFI_USER_INFO</em> is described in “Related Definitions” below.</p>
+</dd>
+<dt>InfoSize</dt><dd><p>On entry, points to the size of <em>Info</em>. On return, points to the size of the user information.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function returns user information. The format of the information is described in User Information. The function may return <em>EFI_ACCESS_DENIED</em> if the information is marked <em>private</em> and the handle specified by <em>User</em> is not the current user profile. The function may return <em>EFI_ACCESS_DENIED</em> if the information is marked <em>protected</em> and the information is associated with a credential provider for which the user has not been authenticated.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>Information returned successfully.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_ACCESS_DENIED</p></td>
+<td><p>The information about the specified user cannot be accessed by the current user.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_BUFFER_TOO_SMALL</p></td>
+<td><p>The number of bytes specified by * <em>InfoSize</em> is too small to hold the returned data. The actual size required is returned in * <em>InfoSize</em>.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_FOUND</p></td>
+<td><p><em>User</em> does not refer to a valid user profile or <em>UserInfo</em> does not refer to a valid user info handle.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>Info</em> is <strong>NULL</strong> or <em>InfoSize</em> is <strong>NULL</strong></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">EFI_GUID</span>                 <span class="n">Credential</span><span class="p">;</span>
+  <span class="n">UINT8</span>                    <span class="n">InfoType</span><span class="p">;</span>
+  <span class="n">UINT8</span>                    <span class="n">Reserved1</span><span class="p">;</span>
+  <span class="n">EFI_USER_INFO_ATTRIBS</span>    <span class="n">InfoAttribs</span><span class="p">;</span>
+  <span class="n">UINT32</span>                   <span class="n">InfoSize</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">EFI_USER_INFO</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Credential</dt><dd><p>The user credential identifier associated with this user information or else Nil if the information is not associated with any specific credential.</p>
+</dd>
+<dt>InfoType</dt><dd><p>The type of user information. See <em>EFI_USER_INFO_x_RECORD</em> in User Information for a description of the different types of user information.</p>
+</dd>
+<dt>Reserved1</dt><dd><p>Must be set to 0.</p>
+</dd>
+<dt>InfoAttribs</dt><dd><p>The attributes of the user profile information.</p>
+</dd>
+<dt>InfoSize</dt><dd><p>The size of the user information, in bytes, including this header.</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">UINT16</span> <span class="n">EFI_USER_INFO_ATTRIBS</span><span class="p">;</span>
+
+<span class="c1">#define EFI_USER_INFO_STORAGE                0x000F</span>
+<span class="c1">#define EFI_USER_INFO_STORAGE_VOLATILE       0x0000</span>
+<span class="c1">#define EFI_USER_INFO_STORAGE_CREDENTIAL_NV  0x0001</span>
+<span class="c1">#define EFI_USER_INFO_STORAGE_PLATFORM_NV    0x0002</span>
+
+<span class="c1">#define EFI_USER_INFO_ACCESS                 0x0070</span>
+<span class="c1">#define EFI_USER_INFO_PUBLIC                 0x0010</span>
+<span class="c1">#define EFI_USER_INFO_PRIVATE                0x0020</span>
+<span class="c1">#define EFI_USER_INFO_PROTECTED              0x0030</span>
+<span class="c1">#define EFI_USER_INFO_EXCLUSIVE              0x0080</span>
+</pre></div>
+</div>
+<p>The <em>EFI_USER_INFO_STORAGE_x</em> values describe how the user information should be stored. If <em>EFI_USER_INFO_STORAGE_VOLATILE</em> is specified, then the user profile information will be lost after a reboot. If <em>EFI_USER_INFO_STORAGE_CREDENTIAL_NV</em> is specified, then the information will be stored by the driver which created the handle Credential. If <em>USER_INFO_STORAGE_PLATFORM_NV</em> is specified, then the information will be stored by the User Identity Manager in platform non-volatile storage.</p>
+<p>There are three levels of access to information associated with the user profile: public, private or protected. If <em>EFI_USER_INFO_PUBLIC</em> is specified, then the user profile information is available always. If <em>EFI_USER_INFO_PRIVATE</em> is specified, then the user profile information is only available if the user has been authenticated (whether or not they are the current user). If <em>EFI_USER_INFO_PROTECTED</em> is specified, then the user profile information is only available if the user has been authenticated and is the current user.</p>
+<p>If <em>EFI_USER_INFO_EXCLUSIVE</em> is specified then there can only be one user information record of this type in the user profile. Attempts to use <em>SetInfo()</em> will fail.</p>
+</section>
+<section id="efi-user-manager-protocol-setinfo">
+<span id="id23"></span><h4><span class="section-number">36.3.1.10. </span>EFI_USER_MANAGER_PROTOCOL.SetInfo()<a class="headerlink" href="#efi-user-manager-protocol-setinfo" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Add or update user information.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_USER_PROFILE_SET_INFO</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span>   <span class="n">CONST</span> <span class="n">EFI_USER_MANAGER_PROTOCOL</span>       <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span>   <span class="n">EFI_USER_PROFILE_HANDLE</span>               <span class="n">User</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">EFI_USER_INFO_HANDLE</span>                <span class="o">*</span><span class="n">UserInfo</span><span class="p">,</span>
+  <span class="n">IN</span>   <span class="n">CONST</span> <span class="n">EFI_USER_INFO</span>                   <span class="o">*</span><span class="n">Info</span><span class="p">,</span>
+  <span class="n">IN</span>   <span class="n">UINTN</span>                                 <span class="n">InfoSize</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to this instance of the <em>EFI_USER_MANAGER_PROTOCOL</em>.</p>
+</dd>
+<dt>User</dt><dd><p>Handle of the user whose profile will be changed.</p>
+</dd>
+<dt>UserInfo</dt><dd><p>On entry, points to the handle of the user information record to change or NULL if the user information should be added to the user profile. On exit, points to the handle of the user credential information record.</p>
+</dd>
+<dt>Info</dt><dd><p>Points to the user information. See <em>EFI_USER_INFO</em> for more information.</p>
+</dd>
+<dt>InfoSize</dt><dd><p>The size of Info, in bytes.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function changes user information. If <strong>NULL</strong> is pointed to by <em>UserInfo,</em> then a new user information record is created and its handle is returned in <em>UserInfo</em>. Otherwise, the existing one is replaced.</p>
+<p>If <em>EFI_USER_INFO_IDENTITY_POLICY_RECORD</em> is changed, it is the caller’s responsibility to keep it to be synced with the information on credential providers.</p>
+<p>If <em>EFI_USER_INFO_EXCLUSIVE</em> is specified in <em>Info</em> and a user information record of the same type already exists in the user profile, then <em>EFI_ACCESS_DENIED</em> will be returned and <em>UserInfo</em> will point to the handle of the existing record.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>User profile information was successfully changed/added.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_ACCESS_DENIED</p></td>
+<td><p>The record is exclusive.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_SECURITY_VIOLATION</p></td>
+<td><p>The current user does not have permission to change the specified user profile or user information record.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_FOUND</p></td>
+<td><p><em>User</em> does not refer to a valid user profile or <em>UserInfo</em> does not refer to a valid user info handle.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>Info</em> is <strong>NULL</strong> or <em>InfoSize</em> is <strong>NULL</strong></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-user-manager-protocol-deleteinfo">
+<span id="id24"></span><h4><span class="section-number">36.3.1.11. </span>EFI_USER_MANAGER_PROTOCOL.DeleteInfo()<a class="headerlink" href="#efi-user-manager-protocol-deleteinfo" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Delete user information.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_USER_PROFILE_DELETE_INFO</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span>   <span class="n">CONST</span> <span class="n">EFI_USER_MANAGER_PROTOCOL</span>      <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span>   <span class="n">EFI_USER_PROFILE_HANDLE</span>              <span class="n">User</span><span class="p">,</span>
+  <span class="n">IN</span>   <span class="n">EFI_USER_INFO_HANDLE</span>                 <span class="n">UserInfo</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to this instance of the <em>EFI_USER_MANAGER_PROTOCOL</em>.</p>
+</dd>
+<dt>User</dt><dd><p>Handle of the user whose information will be deleted.</p>
+</dd>
+<dt>UserInfo</dt><dd><p>Handle of the user information to remove.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Delete the user information attached to the user profile specified by the UserInfo.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>User information deleted successfully.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>User information record <em>UserInfo</em> does not exist in the user profile.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_ACCESS_DENIED</p></td>
+<td><p>The current user does not have permission to delete this user information.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-user-manager-protocol-getnextinfo">
+<span id="id25"></span><h4><span class="section-number">36.3.1.12. </span>EFI_USER_MANAGER_PROTOCOL.GetNextInfo()<a class="headerlink" href="#efi-user-manager-protocol-getnextinfo" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Enumerate all of the enrolled users on the platform.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_USER_PROFILE_GET_NEXT_INFO</span><span class="p">)(</span>
+  <span class="n">IN</span>   <span class="n">CONST</span> <span class="n">EFI_USER_MANAGER_PROTOCOL</span>         <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span>   <span class="n">EFI_USER_PROFILE_HANDLE</span>                 <span class="n">User</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">EFI_USER_INFO_HANDLE</span>                  <span class="o">*</span><span class="n">UserInfo</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to the instance of this <em>EFI_USER_MANAGER_PROTOCOL</em>.</p>
+</dd>
+<dt>User</dt><dd><p>Handle of the user whose information will be enumerated</p>
+</dd>
+<dt>UserInfo</dt><dd><p>On entry, points to the previous user information handle or <strong>NULL</strong> to start enumeration. On exit, points to the next user information handle or <strong>NULL</strong> if there is no more user information.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function returns the next user information record. To retrieve the first user information record handle, point <em>UserInfo</em> at a <strong>NULL</strong>. Each subsequent call will retrieve another user information record handle until there are no more, at which point <em>UserInfo</em> will point to <strong>NULL</strong>.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>User information returned.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>No more user information found.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>UserInfo</em> is <strong>NULL</strong>.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="credential-provider-protocols">
+<span id="id26"></span><h3><span class="section-number">36.3.2. </span>Credential Provider Protocols<a class="headerlink" href="#credential-provider-protocols" title="Link to this heading"></a></h3>
+<section id="efi-user-credential2-protocol">
+<span id="id27"></span><h4><span class="section-number">36.3.2.1. </span>EFI_USER_CREDENTIAL2_PROTOCOL<a class="headerlink" href="#efi-user-credential2-protocol" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Provide support for a single class of credentials</p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_CREDENTIAL2_PROTOCOL_GUID \</span>
+  <span class="p">{</span> <span class="mh">0xe98adb03</span><span class="p">,</span> <span class="mh">0xb8b9</span><span class="p">,</span> <span class="mh">0x4af8</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0xba</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">,</span> <span class="mh">0x26</span><span class="p">,</span> <span class="mh">0xe9</span><span class="p">,</span> <span class="mh">0x11</span><span class="p">,</span> <span class="mh">0x4c</span><span class="p">,</span> <span class="mh">0xbc</span><span class="p">,</span> <span class="mh">0xe5</span> <span class="p">}</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="n">_EFI_USER_CREDENTIAL2_PROTOCOL</span> <span class="p">{</span>
+  <span class="n">EFI_GUID</span>                       <span class="n">Identifier</span><span class="p">;</span>
+  <span class="n">EFI_GUID</span>                       <span class="n">Type</span><span class="p">;</span>
+  <span class="n">EFI_CREDENTIAL_ENROLL</span>          <span class="n">Enroll</span><span class="p">;</span>
+  <span class="n">EFI_CREDENTIAL_FORM</span>            <span class="n">Form</span><span class="p">;</span>
+  <span class="n">EFI_CREDENTIAL_TILE</span>            <span class="n">Tile</span><span class="p">;</span>
+  <span class="n">EFI_CREDENTIAL_TITLE</span>           <span class="n">Title</span><span class="p">;</span>
+  <span class="n">EFI_CREDENTIAL_USER</span>            <span class="n">User</span><span class="p">;</span>
+  <span class="n">EFI_CREDENTIAL_SELECT</span>          <span class="n">Select</span><span class="p">;</span>
+  <span class="n">EFI_CREDENTIAL_DESELECT</span>        <span class="n">Deselect</span><span class="p">;</span>
+  <span class="n">EFI_CREDENTIAL_DEFAULT</span>         <span class="n">Default</span><span class="p">;</span>
+  <span class="n">EFI_CREDENTIAL_GET_INFO</span>        <span class="n">GetInfo</span><span class="p">;</span>
+  <span class="n">EFI_CREDENTIAL_GET_NEXT_INFO</span>   <span class="n">GetNextInfo</span><span class="p">;</span>
+  <span class="n">EFI_CREDENTIAL_CAPABILITIES</span>    <span class="n">Capabilities</span><span class="p">;</span>
+  <span class="n">EFI_CREDENTIAL_DELETE</span>          <span class="n">Delete</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">EFI_USER_CREDENTIAL2_PROTOCOL</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>Identifier</dt><dd><p>Uniquely identifies this credential provider.</p>
+</dd>
+<dt>Type</dt><dd><p>Identifies this class of User Credential Provider. See <em>EFI_CREDENTIAL_CLASS_x</em> in “Related Definitions” below.</p>
+</dd>
+<dt>Enroll</dt><dd><p>Enroll a user using this credential provider.</p>
+</dd>
+<dt>Form</dt><dd><p>Return the form set and form identifier for the form.</p>
+</dd>
+<dt>Tile</dt><dd><p>Returns an optional bitmap image used to identify this credential provider.</p>
+</dd>
+<dt>Title</dt><dd><p>Returns a string used to identify this credential provider.</p>
+</dd>
+<dt>User</dt><dd><p>Returns the user profile identifier ascertained by using this credential.</p>
+</dd>
+<dt>Select</dt><dd><p>Called when a credential provider is selected.</p>
+</dd>
+<dt>Deselect</dt><dd><p>Called when a credential provider is deselected.</p>
+</dd>
+<dt>Default</dt><dd><p>Returns whether the credential provider can provide the default credential.</p>
+</dd>
+<dt>GetInfo</dt><dd><p>Return user information provided by the credential provider.</p>
+</dd>
+<dt>GetNextInfo</dt><dd><p>Cycle through all user information available from the credential provider.</p>
+</dd>
+<dt>Capabilities</dt><dd><p>Bitmask which describes the capabilities supported by the credential provider. Type <em>EFI_CREDENTIAL_CAPABILITIES</em> is defined in “Related Definitions” below.</p>
+</dd>
+<dt>Delete</dt><dd><p>Delete a user on this credential provider.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Attached to a device handle, this protocol identifies a single means of identifying the user.</p>
+<p>If <em>EFI_CREDENTIAL_CAPABILITIES_ENROLL</em> is specified, then this credential provider supports the ability to enroll new user identification information using the <em>Enroll()</em> function.</p>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_CREDENTIAL_CLASS_UNKNOWN \</span>
+  <span class="p">{</span> <span class="mh">0x5cf32e68</span><span class="p">,</span> <span class="mh">0x7660</span><span class="p">,</span> <span class="mh">0x449b</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0x80</span><span class="p">,</span> <span class="mh">0xe6</span><span class="p">,</span> <span class="mh">0x7e</span><span class="p">,</span> <span class="mh">0xa3</span><span class="p">,</span> <span class="mh">0x6e</span><span class="p">,</span> <span class="mh">0x3</span><span class="p">,</span> <span class="mh">0xf6</span><span class="p">,</span> <span class="mh">0xa8</span> <span class="p">}</span> <span class="p">};</span>
+
+<span class="c1">#define EFI_USER_CREDENTIAL_CLASS_PASSWORD \</span>
+  <span class="p">{</span> <span class="mh">0xf8e5058c</span><span class="p">,</span> <span class="mh">0xccb6</span><span class="p">,</span> <span class="mh">0x4714</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0xb2</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">,</span> <span class="mh">0x3f</span><span class="p">,</span> <span class="mh">0x7e</span><span class="p">,</span> <span class="mh">0x3a</span><span class="p">,</span> <span class="mh">0x64</span><span class="p">,</span> <span class="mh">0xb</span><span class="p">,</span> <span class="mh">0xd1</span> <span class="p">}</span> <span class="p">};</span>
+
+<span class="c1">#define EFI_USER_CREDENTIAL_CLASS_SMART_CARD \</span>
+  <span class="p">{</span> <span class="mh">0x5f03ba33</span><span class="p">,</span> <span class="mh">0x8c6b</span><span class="p">,</span> <span class="mh">0x4c24</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0xaa</span><span class="p">,</span> <span class="mh">0x2e</span><span class="p">,</span> <span class="mh">0x14</span><span class="p">,</span> <span class="mh">0xa2</span><span class="p">,</span> <span class="mh">0x65</span><span class="p">,</span> <span class="mh">0x7b</span><span class="p">,</span> <span class="mh">0xd4</span><span class="p">,</span> <span class="mh">0x54</span> <span class="p">}</span> <span class="p">};</span>
+
+<span class="c1">#define EFI_USER_CREDENTIAL_CLASS_FINGERPRINT \</span>
+  <span class="p">{</span> <span class="mh">0x32cba21f</span><span class="p">,</span> <span class="mh">0xf308</span><span class="p">,</span> <span class="mh">0x4cbc</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0x9a</span><span class="p">,</span> <span class="mh">0xb5</span><span class="p">,</span> <span class="mh">0xf5</span><span class="p">,</span> <span class="mh">0xa3</span><span class="p">,</span> <span class="mh">0x69</span><span class="p">,</span> <span class="mh">0x9f</span><span class="p">,</span> <span class="mh">0x4</span><span class="p">,</span> <span class="mh">0x4a</span> <span class="p">}</span> <span class="p">};</span>
+
+<span class="c1">#define EFI_USER_CREDENTIAL_CLASS_HANDPRINT \</span>
+  <span class="p">{</span> <span class="mh">0x5917ef16</span><span class="p">,</span> <span class="mh">0xf723</span><span class="p">,</span> <span class="mh">0x4bb9</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0xa6</span><span class="p">,</span> <span class="mh">0x4b</span><span class="p">,</span> <span class="mh">0xd8</span><span class="p">,</span> <span class="mh">0xc5</span><span class="p">,</span> <span class="mh">0x32</span><span class="p">,</span> <span class="mh">0xf4</span><span class="p">,</span> <span class="mh">0xd8</span><span class="p">,</span> <span class="mh">0xb5</span> <span class="p">}</span> <span class="p">};</span>
+
+<span class="c1">#define EFI_USER_CREDENTIAL_CLASS_SECURE_CARD \</span>
+  <span class="p">{</span> <span class="mh">0x8a6b4a83</span><span class="p">,</span> <span class="mh">0x42fe</span><span class="p">,</span> <span class="mh">0x45d2</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0xa2</span><span class="p">,</span> <span class="mh">0xef</span><span class="p">,</span> <span class="mh">0x46</span><span class="p">,</span> <span class="mh">0xf0</span><span class="p">,</span> <span class="mh">0x6c</span><span class="p">,</span> <span class="mh">0x7d</span><span class="p">,</span> <span class="mh">0x98</span><span class="p">,</span> <span class="mh">0x52</span> <span class="p">}</span> <span class="p">};</span>
+
+<span class="n">typedef</span> <span class="n">UINT64</span> <span class="n">EFI_CREDENTIAL_CAPABILITIES</span><span class="p">;</span>
+
+<span class="c1">#define EFI_CREDENTIAL_CAPABILITIES_ENROLL 0x0000000000000001</span>
+</pre></div>
+</div>
+</section>
+<section id="efi-user-credential2-protocol-enroll">
+<span id="id28"></span><h4><span class="section-number">36.3.2.2. </span>EFI_USER_CREDENTIAL2_PROTOCOL.Enroll()<a class="headerlink" href="#efi-user-credential2-protocol-enroll" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Enroll a user on a credential provider.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_CREDENTIAL2_ENROLL</span><span class="p">)(</span>
+  <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_USER_CREDENTIAL2_PROTOCOL</span>     <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">EFI_USER_PROFILE_HANDLE</span>                 <span class="n">User</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to this instance of the <em>EFI_USER_CREDENTIAL2_PROTOCOL</em>.</p>
+</dd>
+<dt>User</dt><dd><p>The user profile to enroll.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function enrolls a user on this credential provider. If the user exists on this credential provider, update the user information on this credential provider; otherwise add the user information on credential provider.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>User profile was successfully enrolled</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_ACCESS_DENIED</p></td>
+<td><p>Current user profile does not permit enrollment on the user profile handle. Either the user profile cannot enroll on any user profile or cannot enroll on a user profile other than the current user profile.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>This credential provider does not support enrollment in the pre-OS.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>The new credential could not be created because of a device error.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>User</em> does not refer to a valid user profile handle.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-user-credential2-protocol-form">
+<span id="id29"></span><h4><span class="section-number">36.3.2.3. </span>EFI_USER_CREDENTIAL2_PROTOCOL.Form()<a class="headerlink" href="#efi-user-credential2-protocol-form" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Returns the user interface information used during user identification.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_CREDENTIAL_FORM</span><span class="p">)(</span>
+  <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_USER_CREDENTIAL2_PROTOCOL</span>     <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">EFI_HII_HANDLE</span>                         <span class="o">*</span><span class="n">Hii</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">EFI_GUID</span>                               <span class="o">*</span><span class="n">FormSetId</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">EFI_FORM_ID</span>                            <span class="o">*</span><span class="n">FormId</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to this instance of the <em>EFI_USER_CREDENTIAL2_PROTOCOL</em>.</p>
+</dd>
+<dt>Hii</dt><dd><p>On return, holds the HII database handle. Type <em>EFI_HII_HANDLE</em> is defined in <em>EFI_HII_DATABASE_PROTOCOL.NewPackageList()</em> in the Packages section.</p>
+</dd>
+<dt>FormSetId</dt><dd><p>On return, holds the identifier of the form set which contains the form used during user identification.</p>
+</dd>
+<dt>FormId</dt><dd><p>On return, holds the identifier of the form used during user identification.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function returns information about the form used when interacting with the user during user identification. The form is the first enabled form in the form-set class <em>EFI_HII_USER_CREDENTIAL_FORMSET_GUID</em> installed on the HII handle <em>HiiHandle</em>. If the user credential provider does not require a form to identify the user, then this function should return <em>EFI_NOT_FOUND</em>.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>Form returned successfully.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>Form not returned.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>Hii</em> is <strong>NULL</strong> or <em>FormSetId</em> is <strong>NULL</strong> or <em>FormId</em> is <strong>NULL</strong></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-user-credential2-protocol-tile">
+<span id="id30"></span><h4><span class="section-number">36.3.2.4. </span>EFI_USER_CREDENTIAL2_PROTOCOL.Tile()<a class="headerlink" href="#efi-user-credential2-protocol-tile" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Returns bitmap used to describe the credential provider type.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_CREDENTIAL_TILE</span><span class="p">)(</span>
+  <span class="n">IN</span>    <span class="n">CONST</span> <span class="n">EFI_USER_CREDENTIAL2_PROTOCOL</span>        <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">UINTN</span>                                     <span class="o">*</span><span class="n">Width</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">UINTN</span>                                     <span class="o">*</span><span class="n">Height</span><span class="p">,</span>
+  <span class="n">OUT</span>   <span class="n">EFI_HII_HANDLE</span>                             <span class="o">*</span><span class="n">Hii</span><span class="p">,</span>
+  <span class="n">OUT</span>   <span class="n">EFI_IMAGE_ID</span>                               <span class="o">*</span><span class="n">Image</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to this instance of the <em>EFI_USER_CREDENTIAL2_PROTOCOL</em>.</p>
+</dd>
+<dt>Width</dt><dd><p>On entry, points to the desired bitmap width. If <strong>NULL</strong> then no bitmap information will be returned. On exit, points to the width of the bitmap returned.</p>
+</dd>
+<dt>Height</dt><dd><p>On entry, points to the desired bitmap height. If <strong>NULL</strong> then no bitmap information will be returned. On exit, points to the height of the bitmap returned.</p>
+</dd>
+<dt>Hii</dt><dd><p>On return, holds the HII database handle. Type <em>EFI_HII_HANDLE</em> is defined in <em>EFI_HII_DATABASE_PROTOCOL.NewPackageList()</em> in the Packages section.</p>
+</dd>
+<dt>Image</dt><dd><p>On return, holds the HII image identifier. Type <em>EFI_IMAGE_ID</em> is defined in this specification, <a class="reference internal" href="34_HII_Protocols.html#image-protocol"><span class="std std-ref">Image Protocol</span></a> .</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This optional function returns a bitmap which is less than or equal to the number of pixels specified by <em>Width</em> and <em>Height</em>. If no such bitmap exists, then <em>EFI_NOT_FOUND</em> is returned.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>Image identifier returned successfully.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>Image identifier not returned.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>Hii</em> is <strong>NULL</strong> or <em>Image</em> is <strong>NULL</strong>.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-user-credential2-protocol-title">
+<span id="id31"></span><h4><span class="section-number">36.3.2.5. </span>EFI_USER_CREDENTIAL2_PROTOCOL.Title()<a class="headerlink" href="#efi-user-credential2-protocol-title" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Returns string used to describe the credential provider type.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_CREDENTIAL_TITLE</span><span class="p">)(</span>
+  <span class="n">IN</span>    <span class="n">CONST</span> <span class="n">EFI_USER_CREDENTIAL2_PROTOCOL</span>     <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">OUT</span>   <span class="n">EFI_HII_HANDLE</span>                          <span class="o">*</span><span class="n">Hii</span><span class="p">,</span>
+  <span class="n">OUT</span>   <span class="n">EFI_STRING_ID</span>                           <span class="o">*</span><span class="n">String</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to this instance of the <em>EFI_USER_CREDENTIAL2_PROTOCOL</em> .</p>
+</dd>
+<dt>Hii</dt><dd><p>On return, holds the HII database handle. TType <em>EFI_HII_HANDLE</em> is defined in <em>EFI_HII_DATABASE_PROTOCOL.NewPackageList()</em> in the Packages section.</p>
+</dd>
+<dt>String</dt><dd><p>On return, holds the HII string identifier. Type <em>EFI_STRING_ID</em> is defined in <a class="reference internal" href="33_Human_Interface_Infrastructure.html#efi-ifr-op-header"><span class="std std-ref">EFI_IFR_OP_HEADER</span></a>.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function returns a string which describes the credential provider. If no such string exists, then EFI_NOT_FOUND is returned.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>String identifier returned successfully.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>String identifier not returned.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>Hii</em> is <strong>NULL</strong> or <em>String</em> is <strong>NULL</strong></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-user-credential2-protocol-user">
+<span id="id32"></span><h4><span class="section-number">36.3.2.6. </span>EFI_USER_CREDENTIAL2_PROTOCOL.User()<a class="headerlink" href="#efi-user-credential2-protocol-user" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Return the user identifier associated with the currently authenticated user.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_CREDENTIAL_USER</span><span class="p">)(</span>
+  <span class="n">IN</span>   <span class="n">CONST</span> <span class="n">EFI_USER_CREDENTIAL2_PROTOCOL</span>      <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span>   <span class="n">EFI_USER_PROFILE_HANDLE</span>                  <span class="n">User</span><span class="p">,</span>
+  <span class="n">OUT</span>  <span class="n">EFI_USER_INFO_IDENTIFIER</span>                 <span class="o">*</span><span class="n">Identifier</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to this instance of the <em>EFI_USER_CREDENTIAL2_PROTOCOL</em> .</p>
+</dd>
+<dt>User</dt><dd><p>The user profile handle of the user profile currently being considered by the user identity manager. If <strong>NULL,</strong> then no user profile is currently under consideration.</p>
+</dd>
+<dt>Identifier</dt><dd><p>On return, points to the user identifier. Type <em>EFI_USER_INFO_IDENTIFIER</em> is defined in “Related Definitions” below.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function returns the user identifier of the user authenticated by this credential provider. This function is called after the credential-related information has been submitted on a form OR after a call to Default() has returned that this credential is ready to log on.</p>
+<p>This function can return one of five possible responses:</p>
+<ul class="simple">
+<li><p>If no user profile can yet be identified, then <em>EFI_NOT_READY</em> is returned.</p></li>
+<li><p>If the user has been locked out, then <em>EFI_ACCESS_DENIED</em> is returned.</p></li>
+<li><p>If the user specified by <em>User</em> is identified, then Identifier returns with the user identifier associated with that handle and <em>EFI_SUCCESS</em> is returned.</p></li>
+<li><p>If <em>Identifier</em> is <strong>NULL,</strong> then <em>EFI_INVALID_PARAMETER</em> is returned.</p></li>
+<li><p>If specified <em>User</em> does not refer to a valid user profile, then <em>EFI_NOT_FOUND</em> is returned.</p></li>
+</ul>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>User identifier returned successfully.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_READY</p></td>
+<td><p>No user identifier can be returned.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_ACCESS_DENIED</p></td>
+<td><p>The user has been locked out of this user credential.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_FOUND</p></td>
+<td><p><em>User</em> is not <strong>NULL,</strong> and the specified user handle can’t be found in user profile database</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>Identifier</em> is <strong>NULL</strong>.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-user-credential2-protocol-select">
+<span id="id33"></span><h4><span class="section-number">36.3.2.7. </span>EFI_USER_CREDENTIAL2_PROTOCOL.Select()<a class="headerlink" href="#efi-user-credential2-protocol-select" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Indicate that user interface interaction has begun for the specified credential.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_CREDENTIAL_SELECT</span><span class="p">)(</span>
+  <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_USER_CREDENTIAL2_PROTOCOL</span>     <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">EFI_CREDENTIAL_LOGON_FLAGS</span>             <span class="o">*</span><span class="n">AutoLogon</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to this instance of the <em>EFI_USER_CREDENTIAL2_PROTOCOL</em> .</p>
+</dd>
+<dt>AutoLogon</dt><dd><p>On return, points to the credential provider’s capabilities after the credential provider has been selected by the user. Type <em>EFI_CREDENTIAL_LOGON_FLAGS</em> is defined in “Related Definitions” below.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function is called when a credential provider is selected by the user. If <em>AutoLogon</em> returns <em>FALSE,</em> then the user interface will be constructed by the User Identity Manager.</p>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">UINT32</span> <span class="n">EFI_CREDENTIAL_LOGON_FLAGS</span><span class="p">;</span>
+
+<span class="c1">#define EFI_CREDENTIAL_LOGON_FLAG_AUTO       0x00000001</span>
+<span class="c1">#define EFI_CREDENTIAL_LOGON_FLAG_DEFAULT    0x00000002</span>
+</pre></div>
+</div>
+<p>If <em>EFI_CREDENTIAL_LOGON_FLAG_AUTO</em> is set, then the User Identity Manager may use this as a hint to try logging on immediately. If not set, then the User Identity Manager may use this as an indication to wait for the user to submit the information.</p>
+<p>If <em>EFI_CREDENTIAL_LOGON_FLAG_DEFAULT</em> is set, then the User Identity Manager may use this as a hint to use this credential provider as the default credential provider. If more than one credential provider returns with this set, then the selection is implementation specific. If <em>EFI_CREDENTIAL_LOGON_FLAG_DEFAULT</em> is set and <em>EFI_CREDENTIAL_LOGON_FLAG_AUTO</em> is set then the User Identity Manager may uses this as a hint to log the user on immediately.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>Credential provider successfully selected.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>AutoLogon</em> is <strong>NULL</strong></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-user-credential2-protocol-deselect">
+<span id="id34"></span><h4><span class="section-number">36.3.2.8. </span>EFI_USER_CREDENTIAL2_PROTOCOL.Deselect()<a class="headerlink" href="#efi-user-credential2-protocol-deselect" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Indicate that user interface interaction has ended for the specified credential.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_CREDENTIAL_DESELECT</span><span class="p">)(</span>
+  <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_USER_CREDENTIAL2_PROTOCOL</span>     <span class="o">*</span><span class="n">This</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to this instance of the <em>EFI_USER_CREDENTIAL2_PROTOCOL</em>.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function is called when a credential provider is deselected by the user.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>Credential provider successfully selected.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-user-credential2-protocol-default">
+<span id="id35"></span><h4><span class="section-number">36.3.2.9. </span>EFI_USER_CREDENTIAL2_PROTOCOL.Default()<a class="headerlink" href="#efi-user-credential2-protocol-default" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Return the default logon behavior for this user credential.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_CREDENTIAL_DEFAULT</span><span class="p">)(</span>
+  <span class="n">IN</span> <span class="n">CONST</span> <span class="n">EFI_USER_CREDENTIAL2_PROTOCOL</span>     <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">EFI_CREDENTIAL_LOGON_FLAGS</span>             <span class="o">*</span><span class="n">AutoLogon</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to this instance of the <em>EFI_USER_CREDENTIAL2_PROTOCOL</em> .</p>
+</dd>
+<dt>AutoLogon</dt><dd><p>On return, holds whether the credential provider should be used by default to automatically log on the user. Type <em>EFI_CREDENTIAL_LOGON_FLAGS</em> is defined in <em>EFI_USER_CREDENTIAL2_PROTOCOL.Select()</em>.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function reports the default login behavior regarding this credential provider.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>Default information successfully returned.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>AutoLogon</em> is <strong>NULL</strong></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-user-credential2-protocol-getinfo">
+<span id="id36"></span><h4><span class="section-number">36.3.2.10. </span>EFI_USER_CREDENTIAL2_PROTOCOL.GetInfo()<a class="headerlink" href="#efi-user-credential2-protocol-getinfo" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Return information attached to the credential provider.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_CREDENTIAL_GET_INFO</span><span class="p">)(</span>
+  <span class="n">IN</span>   <span class="n">CONST</span> <span class="n">EFI_USER_CREDENTIAL2_PROTOCOL</span>      <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span>   <span class="n">EFI_USER_INFO_HANDLE</span>                     <span class="n">UserInfo</span><span class="p">,</span>
+  <span class="n">OUT</span>   <span class="n">EFI_USER_INFO</span>                           <span class="o">*</span><span class="n">Info</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">UINTN</span>                                  <span class="o">*</span><span class="n">InfoSize</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to this instance of the <em>EFI_USER_CREDENTIAL2_PROTOCOL</em> .</p>
+</dd>
+<dt>UserInfo</dt><dd><p>Handle of the user information data record. Type <em>EFI_USER_INFO_HANDLE</em> is defined in <em>GetInfo()</em>.</p>
+</dd>
+<dt>Info</dt><dd><p>On entry, points to a buffer of at least **InfoSize* bytes. On exit, holds the user information. If the buffer is too small to hold the information, then <em>EFI_BUFFER_TOO_SMALL</em> is returned and <em>InfoSize</em> is updated to contain the number of bytes actually required. Type <em>EFI_USER_INFO</em> is described in “Related Definitions” below.</p>
+</dd>
+<dt>InfoSize</dt><dd><p>On entry, points to the size of <em>Info</em>. On return, points to the size of the user information.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function returns user information.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>Information returned successfully.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_BUFFER_TOO_SMALL</p></td>
+<td><p>The size specified by <em>InfoSize</em> is too small to hold all of the user information. The size required is returned in * <em>InfoSize</em>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>The specified UserInfo does not refer to a valid user info handle</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>Info</em> is <strong>NULL</strong> or <em>InfoSize</em> is <strong>NULL</strong></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-user-credential2-protocol-getnextinfo">
+<span id="id37"></span><h4><span class="section-number">36.3.2.11. </span>EFI_USER_CREDENTIAL2_PROTOCOL.GetNextInfo()<a class="headerlink" href="#efi-user-credential2-protocol-getnextinfo" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Enumerate all of the user information records on the credential provider.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_USER_CREDENTIAL_GET_NEXT_INFO</span><span class="p">)(</span>
+  <span class="n">IN</span>   <span class="n">CONST</span> <span class="n">EFI_USER_CREDENTIAL2_PROTOCOL</span>      <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">EFI_USER_INFO_HANDLE</span>                   <span class="o">*</span><span class="n">UserInfo</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to the instance of this <em>EFI_USER_CREDENTIAL2_PROTOCOL</em> .</p>
+</dd>
+<dt>UserInfo</dt><dd><p>On entry, points to the previous user information handle or NULL to start enumeration. On exit, points to the next user information handle or NULL if there is no more user information.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function returns the next user information record. To retrieve the first user information record handle, point <em>UserInfo</em> at a <strong>NULL</strong>. Each subsequent call will retrieve another user information record handle until there are no more, at which point <em>UserInfo</em> will point to <strong>NULL</strong>.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>User information returned.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>No more user information found.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>UserInfo</em> is <strong>NULL</strong>.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-user-credential2-protocol-delete">
+<span id="id38"></span><h4><span class="section-number">36.3.2.12. </span>EFI_USER_CREDENTIAL2_PROTOCOL.Delete()<a class="headerlink" href="#efi-user-credential2-protocol-delete" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Delete a user on a credential provider.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span> <span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_CREDENTIAL_DELETE</span><span class="p">)(</span>
+  <span class="n">IN</span>  <span class="n">CONST</span> <span class="n">EFI_USER_CREDENTIAL2_PROTOCOL</span>    <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span>  <span class="n">EFI_USER_PROFILE_HANDLE</span>                <span class="n">User</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to this instance of the <em>EFI_USER_CREDENTIAL2_PROTOCOL</em>.</p>
+</dd>
+<dt>User</dt><dd><p>The user profile handle to delete.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function deletes a user on this credential provider.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>User profile was successfully deleted .</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_ACCESS_DENIED</p></td>
+<td><p>Current user profile does not permit deletion on the user profile handle. Either the user profile cannot delete on any user profile or cannot delete on a user profile other than the current user profile.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>This credential provider does not support deletion in the pre-OS.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>The new credential could not be deleted because of a device error.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>User does not refer to a valid user profile handle.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="deferred-image-load-protocol">
+<span id="id39"></span><h3><span class="section-number">36.3.3. </span>Deferred Image Load Protocol<a class="headerlink" href="#deferred-image-load-protocol" title="Link to this heading"></a></h3>
+<section id="efi-deferred-image-load-protocol">
+<span id="id40"></span><h4><span class="section-number">36.3.3.1. </span>EFI_DEFERRED_IMAGE_LOAD_PROTOCOL<a class="headerlink" href="#efi-deferred-image-load-protocol" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Enumerates images whose load was deferred due to security considerations.</p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_DEFERRED_IMAGE_LOAD_PROTOCOL_GUID \</span>
+  <span class="p">{</span> <span class="mh">0x15853d7c</span><span class="p">,</span> <span class="mh">0x3ddf</span><span class="p">,</span> <span class="mh">0x43e0</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0xa1</span><span class="p">,</span> <span class="mh">0xcb</span><span class="p">,</span> <span class="mh">0xeb</span><span class="p">,</span> <span class="mh">0xf8</span><span class="p">,</span> <span class="mh">0x5b</span><span class="p">,</span> <span class="mh">0x8f</span><span class="p">,</span> <span class="mh">0x87</span><span class="p">,</span> <span class="mh">0x2c</span> <span class="p">}</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>Protocol Interface Structure</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="n">_EFI_DEFERRED_IMAGE_LOAD_PROTOCOL</span> <span class="p">{</span>
+  <span class="n">EFI_DEFERRED_IMAGE_INFO</span> <span class="n">GetImageInfo</span><span class="p">();</span>
+<span class="p">}</span>   <span class="n">EFI_DEFERRED_IMAGE_LOAD_PROTOCOL</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Members</strong></p>
+<dl class="simple">
+<dt>GetImageInfo</dt><dd><p>Return information about a single deferred image. See GetImageInfo() for more information.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This protocol returns information about images whose load was denied because of security considerations. This information can be used by the Boot Manager or another agent to reevaluate the images when the current security profile has been changed, such as when the current user profile changes. There can be more than one instance of this protocol installed.</p>
+</section>
+<section id="efi-deferred-image-load-protocol-getimageinfo">
+<span id="id41"></span><h4><span class="section-number">36.3.3.2. </span>EFI_DEFERRED_IMAGE_LOAD_PROTOCOL.GetImageInfo()<a class="headerlink" href="#efi-deferred-image-load-protocol-getimageinfo" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Returns information about a deferred image.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_DEFERRED_IMAGE_INFO</span><span class="p">)(</span>
+  <span class="n">IN</span> <span class="n">EFI_DEFERRED_IMAGE_LOAD_PROTOCOL</span>     <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">UINTN</span>                                <span class="n">ImageIndex</span><span class="p">,</span>
+  <span class="n">OUT</span>  <span class="n">EFI_DEVICE_PATH_PROTOCOL</span>           <span class="o">**</span><span class="n">ImageDevicePath</span><span class="p">,</span>
+  <span class="n">OUT</span>  <span class="n">VOID</span>                               <span class="o">**</span><span class="n">Image</span><span class="p">,</span>
+  <span class="n">OUT</span>  <span class="n">UINTN</span>                              <span class="o">*</span><span class="n">ImageSize</span><span class="p">,</span>
+  <span class="n">OUT</span>  <span class="n">BOOLEAN</span>                            <span class="o">*</span><span class="n">BootOption</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Points to this instance of the <em>EFI_DEFERRED_IMAGE_LOAD_PROTOCOL</em>.</p>
+</dd>
+<dt>ImageIndex</dt><dd><p>Zero-based index of the deferred index.</p>
+</dd>
+<dt>ImageDevicePath</dt><dd><p>On return, points to a pointer to the device path of the image. The device path should not be freed by the caller.</p>
+</dd>
+<dt>Image</dt><dd><p>On return, points to the first byte of the image or <strong>NULL</strong> if the image is not available. The image should not be freed by the caller unless <em>LoadImage()</em> has been called successfully.</p>
+</dd>
+<dt>ImageSize</dt><dd><p>On return, the size of the image, or 0 if the image is not available.</p>
+</dd>
+<dt>BootOption</dt><dd><p>On return, points to <strong>TRUE</strong> if the image was intended as a boot option or <strong>FALSE</strong> if it was not intended as a boot option.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function returns information about a single deferred image. The deferred images are numbered consecutively, starting with 0. If there is no image which corresponds to <em>ImageIndex,</em> then <em>EFI_NOT_FOUND</em> is returned. , All deferred images may be returned by iteratively calling this function until <em>EFI_NOT_FOUND</em> is returned.</p>
+<p><em>Image</em> may be <strong>NULL</strong> and <em>ImageSize</em> set to 0 if the decision to defer execution was made because of the location of the executable image rather than its actual contents.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>Image information returned successfully.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>ImageIndex does not refer to a valid image.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>ImageDevicePath</em> is <strong>NULL</strong> or <em>Image</em> is <strong>NULL</strong> or <em>ImageSize</em> is <strong>NULL</strong> or <em>BootOption</em> is <strong>NULL</strong></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="user-information">
+<span id="user-information-1"></span><h2><span class="section-number">36.4. </span>User Information<a class="headerlink" href="#user-information" title="Link to this heading"></a></h2>
+<p>This section describes the different user information and the format of the data. Each of the following records is prefixed with the <em>EFI_USER_INFO</em> structure. The format of the record is determined by the type specified by the <em>InfoType</em> field in the structure, as listed in the table below:</p>
+<p id="record-values-and-descriptions"><strong>Record values and descriptions</strong></p>
+<table class="longtable docutils align-default" id="record-values-and-descriptions-table">
+<caption><span class="caption-number">Table 36.1 </span><span class="caption-text">Record Values and Descriptions</span><a class="headerlink" href="#record-values-and-descriptions-table" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 50.0%" />
+<col style="width: 10.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Name</strong></p></td>
+<td><p><strong>Value</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><em>EFI_USER_INFO_EMPTY_RECORD</em></p></td>
+<td><p>0x00</p></td>
+<td><p>No information.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>EFI_USER_INFO_NAME_RECORD</em></p></td>
+<td><p>0x01</p></td>
+<td><p>User’s name</p></td>
+</tr>
+<tr class="row-even"><td><p><em>EFI_US ER_INFO_CREATE_DATE_RECORD</em></p></td>
+<td><p>0x02</p></td>
+<td><p>Date which the user profile was created.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>EFI_U SER_INFO_USAGE_DATE_RECORD</em></p></td>
+<td><p>0x03</p></td>
+<td><p>Date which the user profile was last modified.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>EFI_US ER_INFO_USAGE_COUNT_RECORD</em></p></td>
+<td><p>0x04</p></td>
+<td><p>Number of times the credential has been used.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>EFI_U SER_INFO_IDENTIFIER_RECORD</em></p></td>
+<td><p>0x05</p></td>
+<td><p>User’s unique identifier *</p></td>
+</tr>
+<tr class="row-even"><td><p><em>EFI_USER_I NFO_CREDENTIAL_TYPE_RECORD</em></p></td>
+<td><p>0x06</p></td>
+<td><p>Credential type.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>EFI_USER_INFO_C REDENTIAL_TYPE_NAME_RECORD</em></p></td>
+<td><p>0x07</p></td>
+<td><p>Credential type name.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>EFI_USER_INFO_ CREDENTIAL_PROVIDER_RECORD</em></p></td>
+<td><p>0x08</p></td>
+<td><p>Credential provider</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>EFI_USER_INFO_CREDE NTIAL_PROVIDER_NAME_RECORD</em></p></td>
+<td><p>0x09</p></td>
+<td><p>Credential provider name</p></td>
+</tr>
+<tr class="row-even"><td><p><em>EFI_USER_INFO_PKCS11_RECORD</em></p></td>
+<td><p>0x0A</p></td>
+<td><p>PKCS11 Data Object</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>EFI_USER_INFO_CBEFF_RECORD</em></p></td>
+<td><p>0x0B</p></td>
+<td><p>ISO 19785 (Common Biometric Exchange Formats Framework) Data Object</p></td>
+</tr>
+<tr class="row-even"><td><p><em>EFI_USER_INFO_FAR_RECORD</em></p></td>
+<td><p>0x0C</p></td>
+<td><p>How exact a match is required for biometric identification, measured in percentage.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>EFI_USER_INFO_RETRY_RECORD</em></p></td>
+<td><p>0x0D</p></td>
+<td><p>Number of retries allowed during verification.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>EFI_USER _INFO_ACCESS_POLICY_RECORD</em></p></td>
+<td><p>0x0E</p></td>
+<td><p>Access control information.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>EFI_USER_I NFO_IDENTITY_POLICY_RECORD</em></p></td>
+<td><p>0x0F</p></td>
+<td><p>User identity expression.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>EFI_USER_INFO_GUID_RECORD</em></p></td>
+<td><p>0xFF</p></td>
+<td><p>Extended profile information, qualified by a GUID in the header.</p></td>
+</tr>
+</tbody>
+</table>
+<section id="efi-user-info-access-policy-record">
+<span id="id42"></span><h3><span class="section-number">36.4.1. </span>EFI_USER_INFO_ACCESS_POLICY_RECORD<a class="headerlink" href="#efi-user-info-access-policy-record" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Provides the user’s pre-OS access rights.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_ACCESS_POLICY_RECORD 0x0E</span>
+
+<span class="n">typedef</span> <span class="n">EFI_USER_INFO_ACCESS_CONTROL</span> <span class="n">EFI_USER_INFO_ACCESS_POLICY</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>This structure described the access policy for the user. There can be, at most, one access policy record per credential (including <strong>NULL</strong> credential). Policy records with a credential specified means that the policy is associated specifically with the credential.</p>
+<p>The policy is detailed in a series of encapsulated records of type <em>EFI_USER_INFO_ACCESS_CONTROL</em>.</p>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINT32</span>          <span class="n">Type</span><span class="p">;</span>
+  <span class="n">UINT32</span>          <span class="n">Size</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_USER_INFO_ACCESS_CONTROL</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Type</dt><dd><p>Specifies the type of user access control. See <em>EFI_USER_INFO_ACCESS_x</em> for more information.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Size</dt><dd><p>Specifies the size of the user access control record, in bytes, including this header.</p>
+</dd>
+</dl>
+<section id="efi-user-info-access-forbid-load">
+<span id="id43"></span><h4><span class="section-number">36.4.1.1. </span>EFI_USER_INFO_ACCESS_FORBID_LOAD<a class="headerlink" href="#efi-user-info-access-forbid-load" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Forbids the user from booting or loading executables from the specified device path or any child device paths.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_ACCESS_FORBID_LOAD 0x00000001</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>This record prohibits the user from loading any executables from zero or device paths or any child device paths. The device paths may contain a specific executable name, in which case the prohibition applies to only that executable.</p>
+<p>The record is a series of normal UEFI device paths (not multi-instance device paths).</p>
+<p>This prohibition is overridden by the <em>EFI_USER_INFO_ACCESS_PERMIT_LOAD</em> record.</p>
+</section>
+<section id="efi-user-info-access-permit-load">
+<span id="id44"></span><h4><span class="section-number">36.4.1.2. </span>EFI_USER_INFO_ACCESS_PERMIT_LOAD<a class="headerlink" href="#efi-user-info-access-permit-load" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Permits the user from booting or loading executables from the specified device path or any child device paths.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_ACCESS_PERMIT_LOAD 0x00000002</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>This record allows the user to load executables from locations specified by zero or more device paths or child paths. The device paths may contain specific executable names, in which case, the permission applies only to that executable.</p>
+<p>The record is a series of normal UEFI device paths (not multi-instance device paths).</p>
+<p>This prohibition overrides any restrictions put in place by the <em>EFI_USER_INFO_ACCESS_FORBID_LOAD</em> record.</p>
+</section>
+<section id="efi-user-info-access-enroll-self">
+<span id="id45"></span><h4><span class="section-number">36.4.1.3. </span>EFI_USER_INFO_ACCESS_ENROLL_SELF<a class="headerlink" href="#efi-user-info-access-enroll-self" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Presence of this record indicates that a user can update enrollment information.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_ACCESS_ENROLL_SELF 0x00000003</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>If this record is present, then the pre-OS environment will allow the user to initiate an update of authentication information for his/her own profile, but not other user information or other user’s information. This would allow, for example, fingerprint update or password change.</p>
+<p>There is no data for this record.</p>
+</section>
+<section id="efi-user-info-access-enroll-others">
+<span id="id46"></span><h4><span class="section-number">36.4.1.4. </span>EFI_USER_INFO_ACCESS_ENROLL_OTHERS<a class="headerlink" href="#efi-user-info-access-enroll-others" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Presence of this record indicates that a user can enroll new users.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_ACCESS_ENROLL_OTHERS 0x00000004</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>If this record is present, then the pre-OS environment will allow the user to initiate enrollment of new user profiles. It does not give permission to update existing user profiles.</p>
+<p>There is no data for this record.</p>
+</section>
+<section id="efi-user-info-access-manage">
+<span id="id47"></span><h4><span class="section-number">36.4.1.5. </span>EFI_USER_INFO_ACCESS_MANAGE<a class="headerlink" href="#efi-user-info-access-manage" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Presence of this record indicates that a user can update the user information of any user.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_ACCESS_MANAGE 0x00000005</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>If this record is present, then the pre-OS environment will allow the user to update any information about his/her own profile or other profiles.</p>
+<p>There is no data for this record.</p>
+</section>
+<section id="efi-user-info-access-setup">
+<span id="id48"></span><h4><span class="section-number">36.4.1.6. </span>EFI_USER_INFO_ACCESS_SETUP<a class="headerlink" href="#efi-user-info-access-setup" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Describes permissions usable when configuring the platform.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_ACCESS_SETUP 0x00000006</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>This record describes access permission for use in configuring the platform using an UEFI Forms Processor using zero or more GUIDs. There are three standard values (see below) and any number of others may be added.</p>
+<p id="standard-values-for-access-to-configure-the-platform"><strong>Standard values for access to configure the platform</strong></p>
+<table class="docutils align-default" id="standard-values-for-access-to-configure-the-platform-table">
+<caption><span class="caption-number">Table 36.2 </span><span class="caption-text">Standard Values for Access to Configure the Platform</span><a class="headerlink" href="#standard-values-for-access-to-configure-the-platform-table" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 55.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><em>EFI_USER_INFO_ACCESS_SETUP_ADMIN_GUID</em></p></td>
+<td><p>System administrator only.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>EFI_USER_INFO_ACCESS_SETUP_NORMAL_GUID</em></p></td>
+<td><p>Normal user.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>EFI_USER_INFO_ACCESS_SETUP_RESTRICTED_GUID</em></p></td>
+<td><p>Restricted user.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_ACCESS_SETUP_ADMIN_GUID \</span>
+  <span class="p">{</span> <span class="mh">0x85b75607</span><span class="p">,</span> <span class="mh">0xf7ce</span><span class="p">,</span> <span class="mh">0x471e</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0xb7</span><span class="p">,</span> <span class="mh">0xe4</span><span class="p">,</span> <span class="mh">0x2a</span><span class="p">,</span> <span class="mh">0xea</span><span class="p">,</span> <span class="mh">0x5f</span><span class="p">,</span> <span class="mh">0x72</span><span class="p">,</span> <span class="mh">0x32</span><span class="p">,</span> <span class="mh">0xee</span> <span class="p">}</span>  <span class="p">};</span>
+
+<span class="c1">#define EFI_USER_INFO_ACCESS_SETUP_NORMAL_GUID \</span>
+  <span class="p">{</span> <span class="mh">0x1db29ae0</span><span class="p">,</span> <span class="mh">0x9dcb</span><span class="p">,</span> <span class="mh">0x43bc</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0x8d</span><span class="p">,</span> <span class="mh">0x87</span><span class="p">,</span> <span class="mh">0x5d</span><span class="p">,</span> <span class="mh">0xa1</span><span class="p">,</span> <span class="mh">0x49</span><span class="p">,</span> <span class="mh">0x64</span><span class="p">,</span> <span class="mh">0xdd</span><span class="p">,</span> <span class="mh">0xe2</span> <span class="p">}</span>  <span class="p">};</span>
+
+<span class="c1">#define EFI_USER_INFO_ACCESS_SETUP_RESTRICTED_GUID \</span>
+  <span class="p">{</span> <span class="mh">0xbdb38125</span><span class="p">,</span> <span class="mh">0x4d63</span><span class="p">,</span> <span class="mh">0x49f4</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0x82</span><span class="p">,</span> <span class="mh">0x12</span><span class="p">,</span> <span class="mh">0x61</span><span class="p">,</span> <span class="mh">0xcf</span><span class="p">,</span> <span class="mh">0x5a</span><span class="p">,</span> <span class="mh">0x19</span><span class="p">,</span> <span class="mh">0x0a</span><span class="p">,</span> <span class="mh">0xf8</span> <span class="p">}</span>  <span class="p">};</span>
+</pre></div>
+</div>
+</section>
+<section id="efi-user-info-access-forbid-connect">
+<span id="id49"></span><h4><span class="section-number">36.4.1.7. </span>EFI_USER_INFO_ACCESS_FORBID_CONNECT<a class="headerlink" href="#efi-user-info-access-forbid-connect" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Forbids UEFI drivers from being started from the specified device path(s) or any child device paths.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_ACCESS_FORBID_CONNECT 0x00000007</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>This record prohibits UEFI drivers from being started from the specified device path(s) or any of their child device path(s). This is enforced in the <em>ConnectController()</em> function.</p>
+<p>This record prohibits the user from loading a device driver associated with zero or more device paths or their child paths.</p>
+<p>The record is a series of normal UEFI device paths (not multi-instance device paths).</p>
+<p>This prohibition is overridden by the <em>EFI_USER_INFO_ACCESS_PERMIT_CONNECT</em> record.</p>
+</section>
+<section id="efi-user-info-access-permit-connect">
+<span id="id50"></span><h4><span class="section-number">36.4.1.8. </span>EFI_USER_INFO_ACCESS_PERMIT_CONNECT<a class="headerlink" href="#efi-user-info-access-permit-connect" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Permits UEFI drivers to be started on the specified device path(s) or any child device paths.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_ACCESS_PERMIT_CONNECT 0x00000008</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>This record allows loading of device drivers associated with zero or more device paths or their child paths.</p>
+<p>The record is a series of normal UEFI device paths (not multi-instance device paths).</p>
+<p>This prohibition overrides any restrictions put in place by the <em>EFI_USER_INFO_ACCESS_FORBID_CONNECT</em> record.</p>
+</section>
+<section id="efi-user-info-access-boot-order">
+<span id="id51"></span><h4><span class="section-number">36.4.1.9. </span>EFI_USER_INFO_ACCESS_BOOT_ORDER<a class="headerlink" href="#efi-user-info-access-boot-order" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Modifies the boot order.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_ACCESS_BOOT_ORDER            0x00000009</span>
+
+<span class="n">typedef</span> <span class="n">UINT32</span> <span class="n">EFI_USER_INFO_ACCESS_BOOT_ORDER_HDR</span><span class="p">;</span>
+
+<span class="c1">#define EFI_USER_INFO_ACCESS_BOOT_ORDER_MASK       0x000F</span>
+<span class="c1">#define EFI_USER_INFO_ACCESS_BOOT_ORDER_INSERT     0x0000</span>
+<span class="c1">#define EFI_USER_INFO_ACCESS_BOOT_ORDER_APPEND     0x0001</span>
+<span class="c1">#define EFI_USER_INFO_ACCESS_BOOT_ORDER_REPLACE    0x0002</span>
+
+<span class="c1">#define EFI_USER_INFO_ACCESS_BOOT_ORDER_NODEFAULT  0x0010</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>This exclusive record allows the user profile to insert new boot options at the beginning of the boot order ( <em>EFI_USER_INFO_ACCESS_BOOT_ORDER_INSERT</em> ), append new boot options to the end of the boot order ( <em>EFI_USER_INFO_ACCESS_BOOT_ORDER_APPEND</em> ) or replace the entire boot order ( <em>EFI_USER_INFO_ACCESS_BOOT_ORDER_REPLACE)</em>. If <em>EFI_USER_INFO_ACCESS_BOOT_ORDER_NODEFAULT</em> is specified then the Boot Manager will not attempt find a default boot device when the default boot order is does not lead to a bootable device.</p>
+<p>The boot options specified by this record are still subject to the permissions specified by <em>EFI_USER_INFO_ACCESS_FORBID_LOAD</em> and <em>EFI_USER_INFO_ACCESS_PERMIT_LOAD</em>.</p>
+<p>The record consists of a single <em>EFI_USER_INFO_ACCESS_BOOT_ORDER_HDR</em> followed by zero or more UEFI device paths.</p>
+</section>
+</section>
+<section id="efi-user-info-cbeff-record">
+<span id="id52"></span><h3><span class="section-number">36.4.2. </span>EFI_USER_INFO_CBEFF_RECORD<a class="headerlink" href="#efi-user-info-cbeff-record" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Provides standard biometric information in the format specified by the ISO 19785 (Common Biometric Exchange Formats Framework) specification.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_CBEFF_RECORD 0x0B</span>
+<span class="n">typedef</span> <span class="n">VOID</span> <span class="o">*</span><span class="n">EFI_USER_INFO_CBEFF</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="efi-user-info-create-date-record">
+<span id="id53"></span><h3><span class="section-number">36.4.3. </span>EFI_USER_INFO_CREATE_DATE_RECORD<a class="headerlink" href="#efi-user-info-create-date-record" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Provides the date and time when the user profile was created.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_CREATE_DATE_RECORD 0x02</span>
+<span class="n">typedef</span> <span class="n">EFI_TIME</span> <span class="n">EFI_USER_INFO_CREATE_DATE</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>The optional record describing the date and time when the user profile was created. Type <em>EFI_TIME</em> is defined in <a class="reference internal" href="08_Services_Runtime_Services.html#gettime"><span class="std std-ref">GetTime()</span></a> in this specification.</p>
+</section>
+<section id="efi-user-info-credential-provider-record">
+<span id="id54"></span><h3><span class="section-number">36.4.4. </span>EFI_USER_INFO_CREDENTIAL_PROVIDER_RECORD<a class="headerlink" href="#efi-user-info-credential-provider-record" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Specifies the credential provider.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_CREDENTIAL_PROVIDER_RECORD 0x08</span>
+<span class="n">typedef</span> <span class="n">EFI_GUID</span> <span class="n">EFI_USER_INFO_CREDENTIAL_PROVIDER</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>This record specifies the credential provider via a unique GUID. The credential’s handle is found in the <em>EFI_USER_INFO</em> structure associated with this user information record.</p>
+</section>
+<section id="efi-user-info-credential-provider-name-record">
+<span id="id55"></span><h3><span class="section-number">36.4.5. </span>EFI_USER_INFO_CREDENTIAL_PROVIDER_NAME_RECORD<a class="headerlink" href="#efi-user-info-credential-provider-name-record" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Specifies the user-readable name of a particular credential’s provider.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_CREDENTIAL_PROVIDER_NAME_RECORD 0x09</span>
+<span class="n">typedef</span> <span class="n">CHAR16</span> <span class="o">*</span><span class="n">EFI_USER_INFO_CREDENTIAL_PROVIDER_NAME</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>This record specifies the null-terminated name of a particular credential provider. The credential’s handle is found in the <em>EFI_USER_INFO</em> structure associated with this user information record.</p>
+</section>
+<section id="efi-user-info-credential-type-record">
+<span id="id56"></span><h3><span class="section-number">36.4.6. </span>EFI_USER_INFO_CREDENTIAL_TYPE_RECORD<a class="headerlink" href="#efi-user-info-credential-type-record" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Specifies the type of a particular credential associated with the user profile.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_CREDENTIAL_TYPE_RECORD 0x06</span>
+<span class="n">typedef</span> <span class="n">EFI_GUID</span> <span class="n">EFI_USER_INFO_CREDENTIAL_TYPE</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>This record specifies the type of a particular credential. The credential’s identifier is found in the <em>Credential</em> field of the <em>EFI_USER_INFO</em> structure. The credential types are listed with the <em>EFI_USER_CREDENTIAL2_PROTOCOL</em>.</p>
+</section>
+<section id="efi-user-info-credential-type-name-record">
+<span id="id57"></span><h3><span class="section-number">36.4.7. </span>EFI_USER_INFO_CREDENTIAL_TYPE_NAME_RECORD<a class="headerlink" href="#efi-user-info-credential-type-name-record" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Specifies the user-readable name of a particular credential type.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_CREDENTIAL_TYPE_NAME_RECORD 0x07</span>
+<span class="n">typedef</span> <span class="n">CHAR16</span> <span class="o">*</span><span class="n">EFI_USER_INFO_CREDENTIAL_TYPE_NAME</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>This record specifies the null-terminated name of a particular credential type. The credential’ handle is found in the <em>EFI_USER_INFO</em> structure associated with this user information record</p>
+</section>
+<section id="efi-user-info-guid-record">
+<span id="id58"></span><h3><span class="section-number">36.4.8. </span>EFI_USER_INFO_GUID_RECORD<a class="headerlink" href="#efi-user-info-guid-record" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Provides placeholder for additional user profile information identified by a GUID.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_GUID_RECORD 0xFF</span>
+<span class="n">typedef</span> <span class="n">EFI_GUID</span> <span class="n">EFI_USER_INFO_GUID</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>This record type provides extensibility by prefixing further data fields in the record with a GUID which identifies the format.</p>
+</section>
+<section id="efi-user-info-far-record">
+<span id="id59"></span><h3><span class="section-number">36.4.9. </span>EFI_USER_INFO_FAR_RECORD<a class="headerlink" href="#efi-user-info-far-record" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Indicates how close of a match the fingerprint must be in order to be considered a match.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_FAR_RECORD 0x0C</span>
+<span class="n">typedef</span> <span class="n">UINT8</span> <span class="n">EFI_USER_INFO_FAR</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>This record specifies how accurate the fingerprint template match must be in order to be considered a match, as a percentage from 0 (no match) to 100 (perfect match). The accuracy may be for all fingerprint sensors ( <em>EFI_USER_INFO</em>. <em>Credential</em> is zero) or for a particular fingerprint sensor ( <em>EFI_USER_INFO</em> <em>.Credential</em> is non-zero).</p>
+<p><strong>Access:</strong></p>
+<p>Exclusive: No</p>
+<p>Modify: Only with user-enrollment permissions.</p>
+<p>Visibility: Public</p>
+</section>
+<section id="efi-user-info-identifier-record">
+<span id="id60"></span><h3><span class="section-number">36.4.10. </span>EFI_USER_INFO_IDENTIFIER_RECORD<a class="headerlink" href="#efi-user-info-identifier-record" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Provides a unique non-volatile user identifier for each enrolled user.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_IDENTIFIER_RECORD 0x05</span>
+<span class="n">typedef</span> <span class="n">UINT8</span> <span class="n">EFI_USER_INFO_IDENTIFIER</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>The user identifier is unique to each enrolled user and non-volatile. Each user profile must have exactly one of these user information records installed. The format of the value is not specified.</p>
+<p><strong>Access</strong></p>
+<p>Exclusive: Yes</p>
+<p>Modify: Only with user-enrollment permissions.</p>
+<p>Visibility: Public.</p>
+</section>
+<section id="efi-user-info-identity-policy-record">
+<span id="id61"></span><h3><span class="section-number">36.4.11. </span>EFI_USER_INFO_IDENTITY_POLICY_RECORD<a class="headerlink" href="#efi-user-info-identity-policy-record" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Provides the expression which determines which credentials are required to assert user identity.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_IDENTITY_POLICY_RECORD 0x0F</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINT32</span>          <span class="n">Type</span><span class="p">;</span>
+  <span class="n">UINT32</span>          <span class="n">Length</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">EFI_USER_INFO_IDENTITY_POLICY</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>Type</dt><dd><p>Specifies either an operator or a data item. See <em>EFI_USER_INFO_IDENTITY_x</em> in “Related Definitions” below.</p>
+</dd>
+<dt>Length</dt><dd><p>The length of this block, in bytes, including this header.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The user identity policy is an expression mad3e up of operators and data items. If the expression evaluates to <strong>TRUE,</strong> then this user profile can be selected as the current profile. If the expression evaluates to <strong>FALSE,</strong> then this user profile cannot be selected as the current profile.</p>
+<p>Data items are pushed onto an expression stack. Operators pop items off of the expression stack, perform an operator and push the results back.</p>
+<p><strong>NOTE</strong>: <em>If there is no user profile, then</em> <strong>FALSE</strong> <em>is assumed</em>.</p>
+<p><strong>Access</strong></p>
+<p>Exclusive: Yes</p>
+<p>Modify: Only with user-enrollment permissions.</p>
+<p>Visibility: Public.</p>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_IDENTITY_FALSE               0x00</span>
+<span class="c1">#define EFI_USER_INFO_IDENTITY_TRUE                0x01</span>
+<span class="c1">#define EFI_USER_INFO_IDENTITY_CREDENTIAL_TYPE     0x02</span>
+<span class="c1">#define EFI_USER_INFO_IDENTITY_CREDENTIAL_PROVIDER 0x03</span>
+<span class="c1">#define EFI_USER_INFO_IDENTITY_NOT                 0x10</span>
+<span class="c1">#define EFI_USER_INFO_IDENTITY_AND                 0x11</span>
+<span class="c1">#define EFI_USER_INFO_IDENTITY_OR                  0x12</span>
+</pre></div>
+</div>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 60.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Type Name</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><em>EFI_USER_INFO_IDENTITY_FALSE</em></p></td>
+<td><p>Push <strong>FALSE</strong> on to the expression stack.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>EFI_USER_INFO_IDENTITY_TRUE</em></p></td>
+<td><p>Push <strong>TRUE</strong> on to the expression stack.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>EFI_USER_INFO_IDENTITY_CREDENTIAL_TYPE</em></p></td>
+<td><p>If a credential provider with the specified class asserts the user’s identity, push <strong>TRUE</strong>. Otherwise push <strong>FALSE</strong>. The <em>EFI_USER_INFO_IDENTITY_POLICY</em> structure is followed immediately by a GUID.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>EFI_USER_INFO_IDENTITY_CREDENTIAL_PROVIDER</em></p></td>
+<td><p>If a credential provider with the specified provider identifier asserts the user’s identity, push <strong>TRUE</strong>. Otherwise, push <strong>FALSE</strong>. The <em>EFI_USER_INFO_IDENTITY_POLICY</em> structure is followed immediately by a GUID.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>EFI_USER_INFO_IDENTITY_NOT</em></p></td>
+<td><p>Pop a boolean off the stack. If <strong>TRUE,</strong> then push <strong>FALSE</strong>. If <strong>FALSE,</strong> then push <strong>TRUE</strong>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>EFI_USER_INFO_IDENTITY_AND</em></p></td>
+<td><p>Pop two Booleans off the stack. If both are <strong>TRUE,</strong> then push <strong>TRUE</strong>. Otherwise push <strong>FALSE</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><em>EFI_USER_INFO_IDENTITY_OR</em></p></td>
+<td><p>Pop two Booleans off the stack. If either is <strong>TRUE,</strong> then push <strong>TRUE</strong>. Otherwise push <strong>FALSE</strong>.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-user-info-name-record">
+<span id="id62"></span><h3><span class="section-number">36.4.12. </span>EFI_USER_INFO_NAME_RECORD<a class="headerlink" href="#efi-user-info-name-record" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Provide the user’s name for the enrolled user.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_NAME_RECORD 0x01</span>
+<span class="n">typedef</span> <span class="n">CHAR16</span> <span class="o">*</span><span class="n">EFI_USER_INFO_NAME</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>The user’s name is a <strong>NULL</strong>-terminated string.</p>
+<p><strong>Access</strong></p>
+<p>Exclusive: Yes</p>
+<p>Visibility: Public.</p>
+</section>
+<section id="efi-user-info-pkcs11-record">
+<span id="id63"></span><h3><span class="section-number">36.4.13. </span>EFI_USER_INFO_PKCS11_RECORD<a class="headerlink" href="#efi-user-info-pkcs11-record" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Provides PKCS#11 credential information from a smart card.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_PKCS11_RECORD 0x0A</span>
+</pre></div>
+</div>
+</section>
+<section id="efi-user-info-retry-record">
+<span id="id64"></span><h3><span class="section-number">36.4.14. </span>EFI_USER_INFO_RETRY_RECORD<a class="headerlink" href="#efi-user-info-retry-record" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Indicates how many attempts the user has to with a particular credential before the system prevents further attempts.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_RETRY_RECORD 0x0D</span>
+<span class="n">typedef</span> <span class="n">UINT8</span> <span class="n">EFI_USER_INFO_RETRY</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>This record indicates the number of times the user may fail identification with all credential providers ( <em>EFI_USER_INFO</em> <em>.Credential</em> is zero) or a particular credential provider ( <em>EFI_USER_INFO</em> <em>.Credential</em> is non-zero).</p>
+<p><strong>Access:</strong></p>
+<p>Exclusive: No</p>
+<p>Modify: Only with user-enrollment permissions.</p>
+<p>Visibility: Public</p>
+</section>
+<section id="efi-user-info-usage-date-record">
+<span id="id65"></span><h3><span class="section-number">36.4.15. </span>EFI_USER_INFO_USAGE_DATE_RECORD<a class="headerlink" href="#efi-user-info-usage-date-record" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Provides the date and time when the user profile was selected.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_USAGE_DATE_RECORD 0x03</span>
+<span class="n">typedef</span> <span class="n">EFI_TIME</span> <span class="n">EFI_USER_INFO_USAGE_DATE</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>The optional record describing the date and time when the user profile was last selected. Type <em>EFI_TIME</em> is defined in <a class="reference internal" href="08_Services_Runtime_Services.html#gettime"><span class="std std-ref">GetTime()</span></a>  in this specification.</p>
+</section>
+<section id="efi-user-info-usage-count-record">
+<span id="id66"></span><h3><span class="section-number">36.4.16. </span>EFI_USER_INFO_USAGE_COUNT_RECORD<a class="headerlink" href="#efi-user-info-usage-count-record" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Provides the number of times that the user profile has been selected.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_USER_INFO_USAGE_COUNT 0x04</span>
+<span class="n">typedef</span> <span class="n">UINT64</span> <span class="n">EFI_USER_INFO_USAGE_COUNT</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>The optional record describing the number of times that the user profile was selected.</p>
+</section>
+</section>
+<section id="user-information-table">
+<span id="id67"></span><h2><span class="section-number">36.5. </span>User Information Table<a class="headerlink" href="#user-information-table" title="Link to this heading"></a></h2>
+<p><strong>Summary</strong></p>
+<p>A collection of <em>EFI_USER_INFO</em> records, prefixed with this header.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINT64</span>                <span class="n">Size</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">EFI_USER_INFO_TABLE</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Members</strong></p>
+<dl class="simple">
+<dt>Size</dt><dd><p>Total size of the user information table, in bytes.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This header is followed by a series of records. Each record is prefixed by the <em>EFI_USER_INFO</em> structure. The total size of this header and all records is equal to Size.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="35_HII_Configuration_Processing_and_Browser_Protocol.html" class="btn btn-neutral float-left" title="35. HII Configuration Processing and Browser Protocol" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="37_Secure_Technologies.html" class="btn btn-neutral float-right" title="37. Secure Technologies" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, UEFI Forum, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

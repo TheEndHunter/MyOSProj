@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>25. Network Protocols - Managed Network &mdash; UEFI Specification 2.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=f2209469" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/style.css?v=faba8a36" />
+      <link rel="stylesheet" type="text/css" href="_static/theme-overrides.css?v=84235ce0" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2de06f63"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="26. Network Protocols — Bluetooth" href="26_Network_Protocols_Bluetooth.html" />
+    <link rel="prev" title="24. Network Protocols — SNP, PXE, BIS and HTTP Boot" href="24_Network_Protocols_SNP_PXE_BIS.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            UEFI Specification
+          </a>
+              <div class="version">
+                2.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Tables.html">List of Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Figures.html">List of Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/Revision_History.html">Revision History</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Overview.html">2. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Boot_Manager.html">3. Boot Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_EFI_System_Table.html">4. EFI System Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_GUID_Partition_Table_Format.html">5. GUID Partition Table (GPT) Disk Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_Block_Transition_Table_Layout.html">6. Block Translation Table (BTT) Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Services_Boot_Services.html">7. Services — Boot Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Services_Runtime_Services.html">8. Services — Runtime Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Protocols_EFI_Loaded_Image.html">9. Protocols - EFI Loaded Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Protocols_Device_Path_Protocol.html">10. Protocols – Device Path Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html">11. Protocols — UEFI Driver Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_Protocols_Console_Support.html">12. Protocols — Console Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Protocols_Media_Access.html">13. Protocols – Media Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Protocols_PCI_Bus_Support.html">14. Protocols — PCI Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_Protocols_SCSI_Driver_Models_and_Bus_Support.html">15. Protocols — SCSI Driver Models and Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_Protocols_iSCSI_Boot.html">16. Protocols — iSCSI Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_Protocols_USB_Support.html">17. Protocols — USB Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_Protocols_Debugger_Support.html">18. Protocols — Debugger Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_Protocols_Compression_Algorithm_Specification.html">19. Protocols — Compression Algorithm Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_Protocols_ACPI_Protocols.html">20. Protocols — ACPI Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_Protocols_String_Services.html">21. Protocols — String Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html">22. EFI Byte Code Virtual Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_Firmware_Update_and_Reporting.html">23. Firmware Update and Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24_Network_Protocols_SNP_PXE_BIS.html">24. Network Protocols — SNP, PXE, BIS and HTTP Boot</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">25. Network Protocols - Managed Network</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#efi-managed-network-protocol">25.1. EFI Managed Network Protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-managed-network-service-binding-protocol">25.1.1. EFI_MANAGED_NETWORK_SERVICE_BINDING_PROTOCOL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">25.1.2. EFI_MANAGED_NETWORK_PROTOCOL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-managed-network-protocol-getmodedata">25.1.3. EFI_MANAGED_NETWORK_PROTOCOL.GetModeData()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-managed-network-protocol-configure">25.1.4. EFI_MANAGED_NETWORK_PROTOCOL.Configure()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-managed-network-protocol-mcastiptomac">25.1.5. EFI_MANAGED_NETWORK_PROTOCOL.McastIpToMac()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-managed-network-protocol-groups">25.1.6. EFI_MANAGED_NETWORK_PROTOCOL.Groups()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-managed-network-protocol-transmit">25.1.7. EFI_MANAGED_NETWORK_PROTOCOL.Transmit()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-managed-network-protocol-receive">25.1.8. EFI_MANAGED_NETWORK_PROTOCOL.Receive()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-managed-network-protocol-cancel">25.1.9. EFI_MANAGED_NETWORK_PROTOCOL.Cancel()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-managed-network-protocol-poll">25.1.10. EFI_MANAGED_NETWORK_PROTOCOL.Poll()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="26_Network_Protocols_Bluetooth.html">26. Network Protocols — Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27_Network_Protocols_VLAN_and_EAP.html">27. Network Protocols — VLAN, EAP, Wi-Fi and Supplicant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28_Network_Protocols_TCP_IP_and_Configuration.html">28. Network Protocols — TCP, IP, IPsec, FTP, TLS and Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29_Network_Protocols_ARP_and_DHCP.html">29. Network Protocols — ARP, DHCP, DNS, HTTP and REST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_Network_Protocols_UDP_and_MTFTP.html">30. Network Protocols — UDP and MTFTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="31_EFI_Redfish_Service_Support.html">31. EFI Redfish Service Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="32_Secure_Boot_and_Driver_Signing.html">32. Secure Boot and Driver Signing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="33_Human_Interface_Infrastructure.html">33. Human Interface Infrastructure Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="34_HII_Protocols.html">34. HII Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="35_HII_Configuration_Processing_and_Browser_Protocol.html">35. HII Configuration Processing and Browser Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="36_User_Identification.html">36. User Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="37_Secure_Technologies.html">37. Secure Technologies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="38_Confidential_Computing.html">38. Confidential Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="39_Micellaneous_Protocols.html">39. Miscellaneous Protocols</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Apx_A_GUID_and_Time_Formats.html">A. GUID and Time Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_B_Console.html">B. Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_C_Device_Path_Examples.html">C. Device Path Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_D_Status_Codes.html">D. Status Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_E_Universal_Network_Driver_Interfaces.html">E. Universal Network Driver Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_F_Using_the_Simple_Pointer_Protocol.html">F. Using the Simple Pointer Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_G_Using_the_EFI_Extended_SCSI_Pass_Thru_Protocol.html">G. Using the EFI Extended SCSI Pass Thru Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_H_Compression_Source_Code.html">H. Compression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_I_Decompression_Source_Code.html">I. Decompression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_J_EFI_Byte_Code_Virtual_Machine_Opcode_List.html">J. EFI Byte Code Virtual Machine Opcode List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_K_Alphabetic_Function_Lists.html">K. Alphabetic Function Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_L_EFI_1.10_Protocol_Changes_and_Deprecation_List.html">L. EFI 1.10 Protocol Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html">M. Formats — Language Codes and Language Code Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_N_Common_Platform_Error_Record.html">N. Common Platform Error Record (CPER)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_O_UEFI_ACPI_Data_Table.html">O. UEFI ACPI Data Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_P_Hardware_Error_Record_Persistence_Usage.html">P. Hardware Error Record Persistence Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_Q_References.html">Q. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_R_Glossary.html">R. Glossary</a></li>
+</ul>
+
+    <a href= "genindex.html">Index</a>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UEFI Specification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">25. </span>Network Protocols - Managed Network</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="network-protocols-managed-network">
+<span id="id1"></span><h1><span class="section-number">25. </span>Network Protocols - Managed Network<a class="headerlink" href="#network-protocols-managed-network" title="Link to this heading"></a></h1>
+<section id="efi-managed-network-protocol">
+<span id="id2"></span><h2><span class="section-number">25.1. </span>EFI Managed Network Protocol<a class="headerlink" href="#efi-managed-network-protocol" title="Link to this heading"></a></h2>
+<p>This chapter defines the EFI Managed Network Protocol. It is split into the following two main sections:</p>
+<ul class="simple">
+<li><p>Managed Network Service Binding Protocol (MNSBP)</p></li>
+<li><p>Managed Network Protocol (MNP)</p></li>
+</ul>
+<p>The MNP provides raw (unformatted) asynchronous network packet I/O services. These services make it possible for multiple-event-driven drivers and applications to access and use the system network interfaces at the same time.</p>
+<section id="efi-managed-network-service-binding-protocol">
+<span id="id3"></span><h3><span class="section-number">25.1.1. </span>EFI_MANAGED_NETWORK_SERVICE_BINDING_PROTOCOL<a class="headerlink" href="#efi-managed-network-service-binding-protocol" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>The MNSBP is used to locate communication devices that are supported by an MNP driver and to create and destroy instances of the MNP child protocol driver that can use the underlying communications device.</p>
+<p>The EFI Service Binding Protocol in <a class="reference internal" href="02_Overview.html#efi-services-binding"><span class="std std-ref">EFI Services Binding</span></a> defines the generic Service Binding Protocol functions. This section discusses the details that are specific to the MNP.</p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_MANAGED_NETWORK_SERVICE_BINDING_PROTOCOL_GUID \</span>
+  <span class="p">{</span><span class="mh">0xf36ff770</span><span class="p">,</span><span class="mh">0xa7e1</span><span class="p">,</span><span class="mh">0x42cf</span><span class="p">,</span>\
+    <span class="p">{</span><span class="mh">0x9e</span><span class="p">,</span><span class="mh">0xd2</span><span class="p">,</span><span class="mh">0x56</span><span class="p">,</span><span class="mh">0xf0</span><span class="p">,</span><span class="mh">0xf2</span><span class="p">,</span><span class="mh">0x71</span><span class="p">,</span><span class="mh">0xf4</span><span class="p">,</span><span class="mh">0x4c</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>A network application (or driver) that requires shared network access can use one of the protocol handler services, such as <em>BS-&gt;LocateHandleBuffer()</em>, to search for devices that publish an MNSBP GUID. Each device with a published MNSBP GUID supports MNP and may be available for use.</p>
+<p>After a successful call to the <em>EFI_MANAGED_NETWORK_SERVICE_BINDING_PROTOCOL.CreateChild()</em> function, the child MNP driver instance is in an unconfigured state; it is not ready to send and receive data packets.</p>
+<p>Before a network application terminates execution, every successful call to the EFI_MANAGED_NETWORK_SERVICE_BINDING_PROTOCOL.CreateChild() function must be matched with a call to the EFI_MANAGED_NETWORK_SERVICE_BINDING_PROTOCOL.DestroyChild() function.</p>
+</section>
+<section id="id4">
+<span id="id5"></span><h3><span class="section-number">25.1.2. </span>EFI_MANAGED_NETWORK_PROTOCOL<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>The MNP is used by network applications (and drivers) to perform raw (unformatted) asynchronous network packet I/O.</p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_MANAGED_NETWORK_PROTOCOL_GUID\</span>
+  <span class="p">{</span><span class="mh">0x7ab33a91</span><span class="p">,</span> <span class="mh">0xace5</span><span class="p">,</span> <span class="mh">0x4326</span><span class="p">,</span>\
+    <span class="p">{</span><span class="mh">0xb5</span><span class="p">,</span> <span class="mh">0x72</span><span class="p">,</span> <span class="mh">0xe7</span><span class="p">,</span> <span class="mh">0xee</span><span class="p">,</span> <span class="mh">0x33</span><span class="p">,</span> <span class="mh">0xd3</span><span class="p">,</span> <span class="mh">0x9f</span><span class="p">,</span> <span class="mh">0x16</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p><strong>Protocol Interface Structure</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> \<span class="n">_EFI_MANAGED_NETWORK_PROTOCOL</span> <span class="p">{</span>
+  <span class="n">EFI_MANAGED_NETWORK_GET_MODE_DATA</span>        <span class="n">GetModeData</span><span class="p">;</span>
+  <span class="n">EFI_MANAGED_NETWORK_CONFIGURE</span>            <span class="n">Configure</span><span class="p">;</span>
+  <span class="n">EFI_MANAGED_NETWORK_MCAST_IP_TO_MAC</span>      <span class="n">McastIpToMac</span><span class="p">;</span>
+  <span class="n">EFI_MANAGED_NETWORK_GROUPS</span>               <span class="n">Groups</span><span class="p">;</span>
+  <span class="n">EFI_MANAGED_NETWORK_TRANSMIT</span>             <span class="n">Transmit</span><span class="p">;</span>
+  <span class="n">EFI_MANAGED_NETWORK_RECEIVE</span>              <span class="n">Receive</span><span class="p">;</span>
+  <span class="n">EFI_MANAGED_NETWORK_CANCEL</span>               <span class="n">Cancel</span><span class="p">;</span>
+  <span class="n">EFI_MANAGED_NETWORK_POLL</span>                 <span class="n">Poll</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">EFI_MANAGED_NETWORK_PROTOCOL</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>GetModeData</dt><dd><p>Returns the current MNP child driver operational parameters. May also support returning underlying Simple Network Protocol (SNP) driver mode data. See the GetModeData() function description.</p>
+</dd>
+<dt>Configure</dt><dd><p>Sets the <em>Configure()</em> function description.</p>
+</dd>
+<dt>McastIpToMac</dt><dd><p>Translates a software (IP) multicast address to a hardware (MAC) multicast address. This function may be unsupported in some MNP implementations. See the <em>McastIpToMac()</em> function description.</p>
+</dd>
+<dt>Groups</dt><dd><p>Enables and disables receive filters for multicast addresses. This function may be unsupported in some MNP implementations. See the <em>Groups()</em> function description.</p>
+</dd>
+<dt>Transmit</dt><dd><p>Places asynchronous outgoing data packets into the transmit queue. See the <em>Transmit()</em> function description.</p>
+</dd>
+<dt>Receive</dt><dd><p>Places an asynchronous receiving request into the receiving queue. See the <em>Receive()</em> function description.</p>
+</dd>
+<dt>Cancel</dt><dd><p>Aborts a pending transmit or receive request. See the <em>Cancel()</em> function description.</p>
+</dd>
+<dt>Poll</dt><dd><p>Polls for incoming data packets and processes outgoing data packets. See the <em>Poll()</em> function description.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The services that are provided by MNP child drivers make it possible for multiple drivers and applications to send and receive network traffic using the same network device.</p>
+<p>Before any network traffic can be sent or received, the <em>EFI_MANAGED_NETWORK_PROTOCOL.Configure()</em> function must initialize the operational parameters for the MNP child driver instance. Once configured, data packets can be received and sent using the following functions:</p>
+<ul class="simple">
+<li><p>EFI_MANAGED_NETWORK_PROTOCOL.Transmit()</p></li>
+<li><p>EFI_MANAGED_NETWORK_PROTOCOL.Receive()</p></li>
+<li><p>EFI_MANAGED_NETWORK_PROTOCOL.Poll()</p></li>
+</ul>
+</section>
+<section id="efi-managed-network-protocol-getmodedata">
+<span id="id6"></span><h3><span class="section-number">25.1.3. </span>EFI_MANAGED_NETWORK_PROTOCOL.GetModeData()<a class="headerlink" href="#efi-managed-network-protocol-getmodedata" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Returns the operational parameters for the current MNP child driver. May also support returning the underlying SNP driver mode data.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_MANAGED_NETWORK_GET_MODE_DATA</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_MANAGED_NETWORK_PROTOCOL</span>               <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">EFI_MANAGED_NETWORK_CONFIG_DATA</span>           <span class="o">*</span><span class="n">MnpConfigData</span> <span class="n">OPTIONAL</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">EFI_SIMPLE_NETWORK_MODE</span>                   <span class="o">*</span><span class="n">SnpModeData</span> <span class="n">OPTIONAL</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Pointer to the <em>EFI_MANAGED_NETWORK_PROTOCOL</em> instance.</p>
+</dd>
+<dt>MnpConfigData</dt><dd><p>Pointer to storage for MNP operational parameters. Type <em>EFI_MANAGED_NETWORK_CONFIG_DATA</em> is defined in “Related Definitions” below.</p>
+</dd>
+<dt>SnpModeData</dt><dd><p>Pointer to storage for SNP operational parameters. This feature may be unsupported. Type <em>EFI_SIMPLE_NETWORK_MODE</em> is defined in the <em>EFI_SIMPLE_NETWORK_PROTOCOL</em>.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>GetModeData()</em> function is used to read the current mode data (operational parameters) from the MNP or the underlying SNP.</p>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//***************************************************</span>
+<span class="o">//</span> <span class="n">EFI_MANAGED_NETWORK_CONFIG_DATA</span>
+<span class="o">//***************************************************</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINT32</span>         <span class="n">ReceivedQueueTimeoutValue</span><span class="p">;</span>
+  <span class="n">UINT32</span>         <span class="n">TransmitQueueTimeoutValue</span><span class="p">;</span>
+  <span class="n">UINT16</span>         <span class="n">ProtocolTypeFilter</span><span class="p">;</span>
+  <span class="n">BOOLEAN</span>        <span class="n">EnableUnicastReceive</span><span class="p">;</span>
+  <span class="n">BOOLEAN</span>        <span class="n">EnableMulticastReceive</span><span class="p">;</span>
+  <span class="n">BOOLEAN</span>        <span class="n">EnableBroadcastReceive</span><span class="p">;</span>
+  <span class="n">BOOLEAN</span>        <span class="n">EnablePromiscuousReceive</span><span class="p">;</span>
+  <span class="n">BOOLEAN</span>        <span class="n">FlushQueuesOnReset</span><span class="p">;</span>
+  <span class="n">BOOLEAN</span>        <span class="n">EnableReceiveTimestamps</span><span class="p">;</span>
+  <span class="n">BOOLEAN</span>        <span class="n">DisableBackgroundPolling</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">EFI_MANAGED_NETWORK_CONFIG_DATA</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>ReceivedQueueTimeoutValue</dt><dd><p>Timeout value for a UEFI one-shot timer event. A packet that has not been removed from the MNP receive queue by a call to <em>EFI_MANAGED_NETWORK_PROTOCOL.Poll()</em> will be dropped if its receive timeout expires. If this value is zero, then there is no receive queue timeout. If the receive queue fills up, then the device receive filters are disabled until there is room in the receive queue for more packets. The startup default value is 10,000,000 (10 seconds).</p>
+</dd>
+<dt>TransmitQueueTimeoutValue</dt><dd><p>Timeout value for a UEFI one-shot timer event. A packet that has not been removed from the MNP transmit queue by a call to <em>EFI_MANAGED_NETWORK_PROTOCOL.Poll()</em> will be dropped if its transmit timeout expires. If this value is zero, then there is no transmit queue timeout. If the transmit queue fills up, then the <em>EFI_MANAGED_NETWORK_PROTOCOL.Transmit()</em> function will return <em>EFI_NOT_READY</em> until there is room in the transmit queue for more packets. The startup default value is 10,000,000 (10 seconds).</p>
+</dd>
+<dt>ProtocolTypeFilter</dt><dd><p>Ethernet type II 16-bit protocol type in host byte order. Valid values are zero and 1,500 to 65,535. Set to zero to receive packets with any protocol type. The startup default value is zero.</p>
+</dd>
+<dt>EnableUnicastReceive</dt><dd><p>Set to <em>TRUE</em> to receive packets that are sent to the network device MAC address. The startup default value is <em>FALSE</em>.</p>
+</dd>
+<dt>EnableMulticastReceive</dt><dd><p>Set to <em>TRUE</em> to receive packets that are sent to any of the active multicast groups. The startup default value is <em>FALSE</em>.</p>
+</dd>
+<dt>EnableBroadcastReceive</dt><dd><p>Set to <em>TRUE</em> to receive packets that are sent to the network device broadcast address. The startup default value is <em>FALSE</em> .</p>
+</dd>
+<dt>EnablePromiscuousReceive</dt><dd><p>Set to <em>TRUE</em> to receive packets that are sent to any MAC address. Note that setting this field to <em>TRUE</em> may cause packet loss and degrade system performance on busy networks. The startup default value is <em>FALSE</em>.</p>
+</dd>
+<dt>FlushQueuesOnReset</dt><dd><p>Set to <em>TRUE</em> to drop queued packets when the configuration is changed. The startup default value is <em>FALSE</em>.</p>
+</dd>
+<dt>EnableReceiveTimestamps</dt><dd><p>Set to <em>TRUE</em> to timestamp all packets when they are received by the MNP. Note that timestamps may be unsupported in some MNP implementations. The startup default value is <em>FALSE</em>.</p>
+</dd>
+<dt>DisableBackgroundPolling</dt><dd><p>Set to <em>TRUE</em> to disable background polling in this MNP instance. Note that background polling may not be supported in all MNP implementations. The startup default value is <em>FALSE</em>, unless background polling is not supported.</p>
+</dd>
+</dl>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The operation completed successfully.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>This</em> is <em>NULL</em>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>The requested feature is unsupported in this MNP implementation.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_STARTED</p></td>
+<td><p>This MNP child driver instance has not been configured. The default values are returned in <em>MnpConfigData</em> if it is not <em>NULL</em>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Other</p></td>
+<td><p>The mode data could not be read.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-managed-network-protocol-configure">
+<span id="id7"></span><h3><span class="section-number">25.1.4. </span>EFI_MANAGED_NETWORK_PROTOCOL.Configure()<a class="headerlink" href="#efi-managed-network-protocol-configure" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Sets or clears the operational parameters for the MNP child driver.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_MANAGED_NETWORK_CONFIGURE</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_MANAGED_NETWORK_PROTOCOL</span>        <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">EFI_MANAGED_NETWORK_CONFIG_DATA</span>     <span class="o">*</span><span class="n">MnpConfigData</span> <span class="n">OPTIONAL</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Pointer to the <em>EFI_MANAGED_NETWORK_PROTOCOL</em> instance.</p>
+</dd>
+<dt>MnpConfigData</dt><dd><p>Pointer to configuration data that will be assigned to the MNP child driver instance. If <em>NULL</em>, the MNP child driver instance is reset to startup defaults and all pending transmit and receive requests are flushed. Type <em>EFI_MANAGED_NETWORK_CONFIG_DATA</em> is defined in <em>EFI_MANAGED_NETWORK_PROTOCOL.GetModeData()</em>.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>Configure()</em> function is used to set, change, or reset the operational parameters for the MNP child driver instance. Until the operational parameters have been set, no network traffic can be sent or received by this MNP child driver instance. Once the operational parameters have been reset, no more traffic can be sent or received until the operational parameters have been set again.</p>
+<p>Each MNP child driver instance can be started and stopped independently of each other by setting or resetting their receive filter settings with the <em>Configure()</em> function.</p>
+<p>After any successful call to <em>Configure()</em>, the MNP child driver instance is started. The internal periodic timer (if supported) is enabled. Data can be transmitted and may be received if the receive filters have also been enabled.</p>
+<p><strong>NOTE:</strong>  <em>If multiple MNP child driver instances will receive the same packet because of overlapping receive filter settings, then the first MNP child driver instance will receive the original packet and additional instances will receive copies of the original packet</em>.</p>
+<p><strong>NOTE: WARNING</strong>: <em>Receive filter settings that overlap will consume extra processor and/or DMA resources and degrade system and network performance</em>.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The operation completed successfully.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><div class="line-block">
+<div class="line">One or more of the following conditions is <em>TRUE</em> :</div>
+<div class="line">• <em>This</em> is <em>NULL</em>.</div>
+<div class="line">• <em>MnpConfigData.ProtocolTypeFilter</em> is not valid.</div>
+<div class="line">• The operational data for the MNP child driver instance is unchanged.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>EFI_OUT_OF_RESOURCES</p></td>
+<td><div class="line-block">
+<div class="line">Required system resources (usually memory) could not be allocated.</div>
+<div class="line">The MNP child driver instance has been reset to startup defaults.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>EFI_UNSUPPORTED</p></td>
+<td><div class="line-block">
+<div class="line">The requested feature is unsupported in this [MNP] implementation.</div>
+<div class="line">The operational data for the MNP child driver instance is unchanged.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><div class="line-block">
+<div class="line">An unexpected network or system error occurred.</div>
+<div class="line">The MNP child driver instance has been reset to startup defaults.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Other</p></td>
+<td><p>The MNP child driver instance has been reset to startup defaults.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-managed-network-protocol-mcastiptomac">
+<span id="id8"></span><h3><span class="section-number">25.1.5. </span>EFI_MANAGED_NETWORK_PROTOCOL.McastIpToMac()<a class="headerlink" href="#efi-managed-network-protocol-mcastiptomac" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Translates an IP multicast address to a hardware (MAC) multicast address. This function may be unsupported in some MNP implementations.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_MANAGED_NETWORK_MCAST_IP_TO_MAC</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_MANAGED_NETWORK_PROTOCOL</span>         <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">BOOLEAN</span>                              <span class="n">Ipv6Flag</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">EFI_IP_ADDRESS</span>                       <span class="o">*</span><span class="n">IpAddress</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">EFI_MAC_ADDRESS</span>                     <span class="o">*</span><span class="n">MacAddress</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl>
+<dt>This</dt><dd><p>Pointer to the <em>EFI_MANAGED_NETWORK_PROTOCOL</em> instance.</p>
+</dd>
+<dt>Ipv6Flag</dt><dd><p>Set to <em>TRUE</em> to if <em>IpAddress</em> is an IPv6 multicast address.</p>
+<p>Set to <em>FALSE</em> if <em>IpAddress</em> is an IPv4 multicast address.</p>
+</dd>
+<dt>IpAddress</dt><dd><p>Pointer to the multicast IP address (in network byte order) to convert.</p>
+</dd>
+<dt>MacAddress</dt><dd><p>Pointer to the resulting multicast MAC address.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>McastIpToMac()</em> function translates an IP multicast address to a hardware (MAC) multicast address.</p>
+<p>This function may be implemented by calling the underlying <em>EFI_SIMPLE_NETWORK.MCastIpToMac()</em> function, which may also be unsupported in some MNP implementations.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The operation completed successfully.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><div class="line-block">
+<div class="line">One of the following conditions is <em>TRUE</em> :</div>
+<div class="line">• <em>This</em> is <em>NULL</em>.</div>
+<div class="line">• <em>IpAddress</em> is <em>NULL</em>.</div>
+<div class="line">• * <em>IpAddress</em> is not a valid multicast IP address.</div>
+<div class="line">• <em>MacAddress</em> is <em>NULL</em>.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>EFI_NOT_STARTED</p></td>
+<td><p>This MNP child driver instance has not been configured.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>The requested feature is unsupported in this MNP implementation.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>An unexpected network or system error occurred.</p></td>
+</tr>
+<tr class="row-even"><td><p>Other</p></td>
+<td><p>The address could not be converted.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-managed-network-protocol-groups">
+<span id="id9"></span><h3><span class="section-number">25.1.6. </span>EFI_MANAGED_NETWORK_PROTOCOL.Groups()<a class="headerlink" href="#efi-managed-network-protocol-groups" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Enables and disables receive filters for multicast address.
+This function may be unsupported in some MNP implementations.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_MANAGED_NETWORK_GROUPS</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_MANAGED_NETWORK_PROTOCOL</span>      <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">BOOLEAN</span>                           <span class="n">JoinFlag</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">EFI_MAC_ADDRESS</span>                   <span class="o">*</span><span class="n">MacAddress</span> <span class="n">OPTIONAL</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl>
+<dt>This</dt><dd><p>Pointer to the <em>EFI_MANAGED_NETWORK_PROTOCOL</em> instance.</p>
+</dd>
+<dt>JoinFlag</dt><dd><div class="line-block">
+<div class="line">Set to <em>TRUE</em> to join this multicast group.</div>
+<div class="line">Set to <em>FALSE</em> to leave this multicast group.</div>
+</div>
+</dd>
+<dt>MacAddress</dt><dd><p>Pointer to the multicast MAC group (address) to join or leave.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>Groups()</em> function only adds and removes multicast MAC addresses from the filter list. The MNP driver does not transmit or process Internet Group Management Protocol (IGMP) packets.</p>
+<p>If <em>JoinFlag</em> is <em>FALSE</em> and <em>MacAddress</em> is <em>NULL</em>, then all joined groups are left.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The requested operation completed successfully.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><div class="line-block">
+<div class="line">One or more of the following conditions is <em>TRUE</em> :</div>
+<div class="line">• <em>This</em> is <em>NULL</em>.</div>
+<div class="line">• <em>JoinFlag</em> is <em>TRUE</em> and <em>MacAddress</em> is <em>NULL</em>.</div>
+<div class="line">• * <em>MacAddress</em> is not a valid multicast MAC address.</div>
+<div class="line">The MNP multicast group settings are unchanged.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>EFI_NOT_STARTED</p></td>
+<td><p>This MNP child driver instance has not been configured.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_ALREADY_STARTED</p></td>
+<td><p>The supplied multicast group is already joined.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>The supplied multicast group is not joined.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><div class="line-block">
+<div class="line">An unexpected network or system error occurred.</div>
+<div class="line">The MNP child driver instance has been reset to startup defaults.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>The requested feature is unsupported in this MNP implementation.</p></td>
+</tr>
+<tr class="row-even"><td><p>Other</p></td>
+<td><p>The requested operation could not be completed.  The MNP multicast group settings are unchanged.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-managed-network-protocol-transmit">
+<span id="id10"></span><h3><span class="section-number">25.1.7. </span>EFI_MANAGED_NETWORK_PROTOCOL.Transmit()<a class="headerlink" href="#efi-managed-network-protocol-transmit" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Places asynchronous outgoing data packets into the transmit queue.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_MANAGED_NETWORK_TRANSMIT</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_MANAGED_NETWORK_PROTOCOL</span>            <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">EFI_MANAGED_NETWORK_COMPLETION_TOKEN</span>    <span class="o">*</span><span class="n">Token</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Pointer to the <em>EFI_MANAGED_NETWORK_PROTOCOL</em> instance.</p>
+</dd>
+<dt>Token</dt><dd><p>Pointer to a token associated with the transmit data descriptor. Type <em>EFI_MANAGED_NETWORK_COMPLETION_TOKEN</em> is defined in “Related Definitions” below.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>Transmit()</em> function places a completion token into the transmit packet queue. This function is always asynchronous.</p>
+<p>The caller must fill in the <em>Token.Event</em> and <em>Token.TxData</em> fields in the completion token, and these fields cannot be <em>NULL</em>. When the transmit operation completes, the MNP updates the <em>Token.Status</em> field and the <em>Token.Event</em> is signaled.</p>
+<p><strong>NOTE</strong> <em>There may be a performance penalty if the packet needs to be defragmented before it can be transmitted by the network device. Systems in which performance is critical should review the requirements and features of the underlying communications device and drivers</em>.</p>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//****************************************************</span>
+<span class="o">//</span> <span class="n">EFI_MANAGED_NETWORK_COMPLETION_TOKEN</span>
+<span class="o">//****************************************************</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">EFI_EVENT</span>                            <span class="n">Event</span><span class="p">;</span>
+  <span class="n">EFI_STATUS</span>                           <span class="n">Status</span><span class="p">;</span>
+  <span class="n">union</span> <span class="p">{</span>
+    <span class="n">EFI_MANAGED_NETWORK_RECEIVE_DATA</span>   <span class="o">*</span><span class="n">RxData</span><span class="p">;</span>
+    <span class="n">EFI_MANAGED_NETWORK_TRANSMIT_DATA</span>  <span class="o">*</span><span class="n">TxData</span><span class="p">;</span>
+  <span class="p">}</span>                                    <span class="n">Packet</span><span class="p">;</span>
+<span class="p">}</span>  <span class="n">EFI_MANAGED_NETWORK_COMPLETION_TOKEN</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl>
+<dt>Event</dt><dd><p>This <em>Event</em> will be signaled after the <em>Status</em> field is updated by the MNP. The type of <em>Event</em> must be <em>EVT_NOTIFY_SIGNAL</em>. The Task Priority Level (TPL) of <em>Event</em> must be lower than or equal to TPL_CALLBACK.</p>
+</dd>
+<dt>Status</dt><dd><div class="line-block">
+<div class="line">This field will be set to one of the following values:</div>
+<div class="line"><em>EFI_SUCCESS:</em> The receive or transmit completed successfully.</div>
+<div class="line"><em>EFI_ABORTED:</em> The receive or transmit was aborted.</div>
+<div class="line"><em>EFI_TIMEOUT:</em> The transmit timeout expired.</div>
+<div class="line"><em>EFI_DEVICE_ERROR:</em> There was an unexpected system or network error.</div>
+<div class="line"><em>EFI_NO_MEDIA:</em> There was a media error</div>
+</div>
+</dd>
+<dt>RxData</dt><dd><p>When this token is used for receiving, <em>RxData</em> is a pointer to the <em>EFI_MANAGED_NETWORK_RECEIVE_DATA</em>.</p>
+</dd>
+<dt>TxData</dt><dd><p>When this token is used for transmitting, <em>TxData</em> is a pointer to the <em>EFI_MANAGED_NETWORK_TRANSMIT_DATA</em>.</p>
+</dd>
+</dl>
+<p>The <em>EFI_MANAGED_NETWORK_COMPLETION_TOKEN</em> structure is used for both transmit and receive operations.</p>
+<p>When it is used for transmitting, the <em>Event</em> and <em>TxData</em> fields must be filled in by the MNP client. After the transmit operation completes, the MNP updates the <em>Status</em> field and the <em>Event</em> is signaled.</p>
+<p>When it is used for receiving, only the <em>Event</em> field must be filled in by the MNP client. After a packet is received, the MNP fills in the <em>RxData</em> and <em>Status</em> fields and the <em>Event</em> is signaled.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//****************************************************</span>
+<span class="o">//</span> <span class="n">EFI_MANAGED_NETWORK_RECEIVE_DATA</span>
+<span class="o">//****************************************************</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">EFI_TIME</span>     <span class="n">Timestamp</span><span class="p">;</span>
+  <span class="n">EFI_EVENT</span>    <span class="n">RecycleEvent</span><span class="p">;</span>
+  <span class="n">UINT32</span>       <span class="n">PacketLength</span><span class="p">;</span>
+  <span class="n">UINT32</span>       <span class="n">HeaderLength</span><span class="p">;</span>
+  <span class="n">UINT32</span>       <span class="n">AddressLength</span><span class="p">;</span>
+  <span class="n">UINT32</span>       <span class="n">DataLength</span><span class="p">;</span>
+  <span class="n">BOOLEAN</span>      <span class="n">roadcastFlag</span><span class="p">;</span>
+  <span class="n">BOOLEAN</span>      <span class="n">MulticastFlag</span><span class="p">;</span>
+  <span class="n">BOOLEAN</span>      <span class="n">PromiscuousFlag</span><span class="p">;</span>
+  <span class="n">UINT16</span>       <span class="n">ProtocolType</span><span class="p">;</span>
+  <span class="n">VOID</span>         <span class="o">*</span><span class="n">DestinationAddress</span><span class="p">;</span>
+  <span class="n">VOID</span>         <span class="o">*</span><span class="n">SourceAddress</span><span class="p">;</span>
+  <span class="n">VOID</span>         <span class="o">*</span><span class="n">MediaHeader</span><span class="p">;</span>
+  <span class="n">VOID</span>         <span class="o">*</span><span class="n">PacketData</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">EFI_MANAGED_NETWORK_RECEIVE_DATA</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Timestamp</dt><dd><p>System time when the MNP received the packet. <em>Timestamp</em> is zero filled if receive timestamps are disabled or unsupported.</p>
+</dd>
+<dt>RecycleEvent</dt><dd><p>MNP clients must signal this event after the received data has been processed so that the receive queue storage can be reclaimed. Once <em>RecycleEvent</em> is signaled, this structure and the received data that is pointed to by this structure must not be accessed by the client.</p>
+</dd>
+<dt>PacketLength</dt><dd><p>Length of the entire received packet (media header plus the data).</p>
+</dd>
+<dt>HeaderLength</dt><dd><p>Length of the media header in this packet.</p>
+</dd>
+<dt>AddressLength</dt><dd><p>Length of a MAC address in this packet.</p>
+</dd>
+<dt>DataLength</dt><dd><p>Length of the data in this packet.</p>
+</dd>
+<dt>BroadcastFlag</dt><dd><p>Set to <em>TRUE</em> if this packet was received through the broadcast filter. (The destination MAC address is the broadcast MAC address.)</p>
+</dd>
+<dt>MulticastFlag</dt><dd><p>Set to <em>TRUE</em> if this packet was received through the multicast filter. (The destination MAC address is in the multicast filter list.)</p>
+</dd>
+<dt>PromiscuousFlag</dt><dd><p>Set to <em>TRUE</em> if this packet was received through the promiscuous filter. (The destination address does not match any of the other hardware or software filter lists.)</p>
+</dd>
+<dt>ProtocolType</dt><dd><p>16-bit protocol type in host byte order. Zero if there is no protocol type field in the packet header.</p>
+</dd>
+<dt>DestinationAddress</dt><dd><p>Pointer to the destination address in the media header.</p>
+</dd>
+<dt>SourceAddress</dt><dd><p>Pointer to the source address in the media header.</p>
+</dd>
+<dt>MediaHeader</dt><dd><p>Pointer to the first byte of the media header.</p>
+</dd>
+<dt>PacketData</dt><dd><p>Pointer to the first byte of the packet data (immediately following media header).</p>
+</dd>
+</dl>
+<p>An <em>EFI_MANAGED_NETWORK_RECEIVE_DATA</em> structure is filled in for each packet that is received by the MNP.</p>
+<p>If multiple instances of this MNP driver can receive a packet, then the receive data structure and the received packet are duplicated for each instance of the MNP driver that can receive the packet.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//****************************************************</span>
+<span class="o">//</span> <span class="n">EFI_MANAGED_NETWORK_TRANSMIT_DATA</span>
+<span class="o">//****************************************************</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">EFI_MAC_ADDRESS</span>                    <span class="o">*</span><span class="n">DestinationAddress</span> <span class="n">OPTIONAL</span><span class="p">;</span>
+  <span class="n">EFI_MAC_ADDRESS</span>                    <span class="o">*</span><span class="n">SourceAddress</span> <span class="n">OPTIONAL</span><span class="p">;</span>
+  <span class="n">UINT16</span>                             <span class="n">ProtocolType</span> <span class="n">OPTIONAL</span><span class="p">;</span>
+  <span class="n">UINT32</span>                             <span class="n">DataLength</span><span class="p">;</span>
+  <span class="n">UINT16</span>                             <span class="n">HeaderLength</span> <span class="n">OPTIONAL</span><span class="p">;</span>
+  <span class="n">UINT16</span>                             <span class="n">FragmentCount</span><span class="p">;</span>
+  <span class="n">EFI_MANAGED_NETWORK_FRAGMENT_DATA</span>  <span class="n">FragmentTable</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="p">}</span>   <span class="n">EFI_MANAGED_NETWORK_TRANSMIT_DATA</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>DestinationAddress</dt><dd><p>Pointer to the destination MAC address if the media header is not included in <em>FragmentTable[]</em>. If <em>NULL</em>, then the media header is already filled in <em>FragmentTable[]</em>.</p>
+</dd>
+<dt>SourceAddress</dt><dd><p>Pointer to the source MAC address if the media header is not included in <em>FragmentTable[]</em>. Ignored if <em>DestinationAddress</em> is <em>NULL</em>.</p>
+</dd>
+<dt>ProtocolType</dt><dd><p>The protocol type of the media header in host byte order. Ignored if <em>DestinationAddress</em> is <em>NULL</em>.</p>
+</dd>
+<dt>DataLength</dt><dd><p>Sum of all <em>FragmentLength</em> fields in <em>FragmentTable[]</em> minus the media header length.</p>
+</dd>
+<dt>HeaderLength</dt><dd><p>Length of the media header if it is included in the <em>FragmentTable</em>. Must be zero if <em>DestinationAddress</em> is not <em>NULL</em>.</p>
+</dd>
+<dt>FragmentCount</dt><dd><p>Number of data fragments in <em>FragmentTable[]</em>. This field cannot be zero.</p>
+</dd>
+<dt>FragmentTable</dt><dd><p>Table of data fragments to be transmitted. The first byte of the first entry in <em>FragmentTable[]</em> is also the first byte of the media header or, if there is no media header, the first byte of payload. Type <em>EFI_MANAGED_NETWORK_FRAGMENT_DATA</em> is defined below.</p>
+</dd>
+</dl>
+<p>The <em>EFI_MANAGED_NETWORK_TRANSMIT_DATA</em> structure describes a (possibly fragmented) packet to be transmitted.</p>
+<p>The <em>DataLength</em> field plus the <em>HeaderLength</em> field must be equal to the sum of all of the <em>FragmentLength</em> fields in the <em>FragmentTable</em>.</p>
+<p>If the media header is included in <em>FragmentTable[]</em>, then it cannot be split between fragments.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//****************************************************</span>
+<span class="o">//</span> <span class="n">EFI_MANAGED_NETWORK_FRAGMENT_DATA</span>
+<span class="o">//****************************************************</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINT32</span>       <span class="n">FragmentLength</span><span class="p">;</span>
+  <span class="n">VOID</span>         <span class="o">*</span><span class="n">FragmentBuffer</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">EFI_MANAGED_NETWORK_FRAGMENT_DATA</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>FragmentLength</dt><dd><p>Number of bytes in the <em>FragmentBuffer</em>. This field may not be set to zero.</p>
+</dd>
+<dt>FragmentBuffer</dt><dd><p>Pointer to the fragment data. This field may not be set to <em>NULL</em>.</p>
+</dd>
+</dl>
+<p>The <em>EFI_MANAGED_NETWORK_FRAGMENT_DATA</em> structure describes the location and length of a packet fragment to be transmitted.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The transmit completion token was cached.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_STARTED</p></td>
+<td><p>This MNP child driver instance has not been configured.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><div class="line-block">
+<div class="line">One or more of the following conditions is <em>TRUE</em> :</div>
+<div class="line">• <em>This</em> is <em>NULL</em>.</div>
+<div class="line">• <em>Token</em> is <em>NULL</em>.</div>
+<div class="line">• <em>Token.Event</em> is <em>NULL</em>.</div>
+<div class="line">• <em>Token.TxData is</em> <em>NULL</em>.</div>
+<div class="line">• <em>Token.TxData.DestinationAddress is not</em> <em>NULL</em></div>
+<div class="line"><em>and Token.TxData.HeaderLength is zero.</em></div>
+<div class="line">• <em>Token.TxData.FragmentCount</em> is zero.</div>
+<div class="line">• <em>(Token.TxData.HeaderLength + Token.TxData.DataLength)</em> is not equal to the sum of the <em>Token.TxDat a.FragmentTable[].FragmentLength</em> fields.</div>
+<div class="line">• One or more of the</div>
+<div class="line-block">
+<div class="line"><em>Token.TxDat a.FragmentTable[].FragmentLength</em> fields is zero.</div>
+</div>
+<div class="line">• One or more of the</div>
+<div class="line-block">
+<div class="line"><em>Token.TxData.Frag mentTable[].FragmentBufferfields</em> is <em>NULL</em>.</div>
+</div>
+<div class="line">• <em>Token.TxData.DataLength is greater than MTU</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>EFI_ACCESS_DENIED</p></td>
+<td><p>The transmit completion token is already in the transmit queue.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_OUT_OF_RESOURCES</p></td>
+<td><p>The transmit data could not be queued due to a lack of system resources (usually memory).</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><div class="line-block">
+<div class="line">An unexpected system or network error occurred.</div>
+<div class="line">The MNP child driver instance has been reset to startup defaults.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>EFI_NOT_READY</p></td>
+<td><p>The transmit request could not be queued because the transmit queue is full.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NO_MEDIA</p></td>
+<td><p>There was a media error.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-managed-network-protocol-receive">
+<span id="id11"></span><h3><span class="section-number">25.1.8. </span>EFI_MANAGED_NETWORK_PROTOCOL.Receive()<a class="headerlink" href="#efi-managed-network-protocol-receive" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Places an asynchronous receiving request into the receiving queue.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_MANAGED_NETWORK_RECEIVE</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_MANAGED_NETWORK_PROTOCOL</span>            <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">EFI_MANAGED_NETWORK_COMPLETION_TOKEN</span>    <span class="o">*</span><span class="n">Token</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl>
+<dt>This</dt><dd><p>Pointer to the <em>EFI_MANAGED_NETWORK_PROTOCOL</em> instance.</p>
+</dd>
+<dt>Token</dt><dd><div class="line-block">
+<div class="line">Pointer to a token associated with the receive data descriptor. Type</div>
+<div class="line"><em>EFI_MANAGED_NETWORK_COMPLETION_TOKEN</em> is defined in</div>
+<div class="line"><em>EFI_MANAGED_NETWORK_PROTOCOL.Transmit()</em> .</div>
+</div>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>Receive()</em> function places a completion token into the receive packet queue. This function is always asynchronous.</p>
+<p>The caller must fill in the <em>Token.Event</em> field in the completion token, and this field cannot be <em>NULL</em>. When the receive operation completes, the MNP updates the <em>Token.Status</em> and <em>Token.RxData</em> fields and the <em>Token.Event</em> is signaled.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The receive completion token was cached.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_STARTED</p></td>
+<td><p>This MNP child driver instance has not been configured.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><div class="line-block">
+<div class="line">One or more of the following conditions is <em>TRUE</em> :</div>
+<div class="line">• <em>This</em> is <em>NULL</em>.</div>
+<div class="line">• <em>Token</em> is <em>NULL</em>.</div>
+<div class="line">• <em>Token.Event</em> is <em>NULL</em></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>EFI_OUT_OF_RESOURCES</p></td>
+<td><p>The transmit data could not be queued due to a lack of system resources (usually memory).</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>An unexpected system or network error occurred.  The MNP child driver instance has been reset to startup defaults.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_ACCESS_DENIED</p></td>
+<td><p>The receive completion token was already in the receive queue.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_NOT_READY</p></td>
+<td><p>The receive request could not be queued because the receive queue is full.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NO_MEDIA</p></td>
+<td><p>There was a media error.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-managed-network-protocol-cancel">
+<span id="id12"></span><h3><span class="section-number">25.1.9. </span>EFI_MANAGED_NETWORK_PROTOCOL.Cancel()<a class="headerlink" href="#efi-managed-network-protocol-cancel" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Aborts an asynchronous transmit or receive request.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_MANAGED_NETWORK_CANCEL</span><span class="p">)(</span>
+  <span class="n">IN</span> <span class="n">EFI_MANAGED_NETWORK_PROTOCOL</span>            <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">EFI_MANAGED_NETWORK_COMPLETION_TOKEN</span>    <span class="o">*</span><span class="n">Token</span> <span class="n">OPTIONAL</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl>
+<dt>This</dt><dd><p>Pointer to the <em>EFI_MANAGED_NETWORK_PROTOCOL</em> instance.</p>
+</dd>
+<dt>Token</dt><dd><div class="line-block">
+<div class="line">Pointer to a token that has been issued by</div>
+<div class="line"><em>EFI_MANAGED_NETWORK_PROTOCOL.Transmit()</em> or</div>
+<div class="line"><em>EFI_MANAGED_NETWORK_PROTOCOL.Receive()</em>. If <em>NULL</em>, all pending tokens are aborted. Type</div>
+<div class="line"><em>EFI_MANAGED_NETWORK_COMPLETION_TOKEN</em> is defined in</div>
+<div class="line"><em>EFI_MANAGED_NETWORK_PROTOCOL.Transmit()</em>.</div>
+</div>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>Cancel()</em> function is used to abort a pending transmit or receive request. If the token is in the transmit or receive request queues, after calling this function, <em>Token.Status</em> will be set to <em>EFI_ABORTED</em> and then <em>Token.Event</em> will be signaled. If the token is not in one of the queues, which usually means that the asynchronous operation has completed, this function will not signal the token and <em>EFI_NOT_FOUND</em> is returned.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The asynchronous I/O request was aborted and <em>Token.Event</em> was signaled. When <em>Token</em> is <em>NULL</em>, all pending requests were aborted and their events were signaled.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_STARTED</p></td>
+<td><p>This MNP child driver instance has not been configured.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>This</em> is <em>NULL</em>.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>When <em>Token</em> is not <em>NULL</em>, the asynchronous I/O request was not found in the transmit or receive queue. It has either completed or was not issued by <em>Transmit()</em> and <em>Receive()</em>.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-managed-network-protocol-poll">
+<span id="id13"></span><h3><span class="section-number">25.1.10. </span>EFI_MANAGED_NETWORK_PROTOCOL.Poll()<a class="headerlink" href="#efi-managed-network-protocol-poll" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Polls for incoming data packets and processes outgoing data
+packets.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_MANAGED_NETWORK_POLL</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_MANAGED_NETWORK_PROTOCOL</span>      <span class="o">*</span><span class="n">This</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Pointer to the <em>EFI_MANAGED_NETWORK_PROTOCOL</em> instance.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>Poll()</em> function can be used by network drivers and applications to increase the rate that data packets are moved between the communications device and the transmit and receive queues.</p>
+<p>Normally, a periodic timer event internally calls the <em>Poll()</em> function. But, in some systems, the periodic timer event may not call <em>Poll()</em> fast enough to transmit and/or receive all data packets without missing packets. Drivers and applications that are experiencing packet loss should try calling the <em>Poll()</em> function more often.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>Incoming or outgoing data was processed.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_STARTED</p></td>
+<td><p>This MNP child driver instance has not been configured.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>An unexpected system or network error occurred.  The MNP child driver instance has been reset to startup defaults.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_READY</p></td>
+<td><p>No incoming or outgoing data was processed. Consider increasing the polling rate.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_TIMEOUT</p></td>
+<td><p>Data was dropped out of the transmit and/or receive queue. Consider increasing the polling rate.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="24_Network_Protocols_SNP_PXE_BIS.html" class="btn btn-neutral float-left" title="24. Network Protocols — SNP, PXE, BIS and HTTP Boot" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="26_Network_Protocols_Bluetooth.html" class="btn btn-neutral float-right" title="26. Network Protocols — Bluetooth" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, UEFI Forum, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

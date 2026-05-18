@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>32. Secure Boot and Driver Signing &mdash; UEFI Specification 2.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=f2209469" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/style.css?v=faba8a36" />
+      <link rel="stylesheet" type="text/css" href="_static/theme-overrides.css?v=84235ce0" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2de06f63"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="33. Human Interface Infrastructure Overview" href="33_Human_Interface_Infrastructure.html" />
+    <link rel="prev" title="31. EFI Redfish Service Support" href="31_EFI_Redfish_Service_Support.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            UEFI Specification
+          </a>
+              <div class="version">
+                2.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Tables.html">List of Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Figures.html">List of Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/Revision_History.html">Revision History</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Overview.html">2. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Boot_Manager.html">3. Boot Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_EFI_System_Table.html">4. EFI System Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_GUID_Partition_Table_Format.html">5. GUID Partition Table (GPT) Disk Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_Block_Transition_Table_Layout.html">6. Block Translation Table (BTT) Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Services_Boot_Services.html">7. Services — Boot Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Services_Runtime_Services.html">8. Services — Runtime Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Protocols_EFI_Loaded_Image.html">9. Protocols - EFI Loaded Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Protocols_Device_Path_Protocol.html">10. Protocols – Device Path Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html">11. Protocols — UEFI Driver Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_Protocols_Console_Support.html">12. Protocols — Console Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Protocols_Media_Access.html">13. Protocols – Media Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Protocols_PCI_Bus_Support.html">14. Protocols — PCI Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_Protocols_SCSI_Driver_Models_and_Bus_Support.html">15. Protocols — SCSI Driver Models and Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_Protocols_iSCSI_Boot.html">16. Protocols — iSCSI Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_Protocols_USB_Support.html">17. Protocols — USB Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_Protocols_Debugger_Support.html">18. Protocols — Debugger Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_Protocols_Compression_Algorithm_Specification.html">19. Protocols — Compression Algorithm Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_Protocols_ACPI_Protocols.html">20. Protocols — ACPI Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_Protocols_String_Services.html">21. Protocols — String Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html">22. EFI Byte Code Virtual Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_Firmware_Update_and_Reporting.html">23. Firmware Update and Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24_Network_Protocols_SNP_PXE_BIS.html">24. Network Protocols — SNP, PXE, BIS and HTTP Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25_Network_Protocols_Managed_Network.html">25. Network Protocols - Managed Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26_Network_Protocols_Bluetooth.html">26. Network Protocols — Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27_Network_Protocols_VLAN_and_EAP.html">27. Network Protocols — VLAN, EAP, Wi-Fi and Supplicant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28_Network_Protocols_TCP_IP_and_Configuration.html">28. Network Protocols — TCP, IP, IPsec, FTP, TLS and Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29_Network_Protocols_ARP_and_DHCP.html">29. Network Protocols — ARP, DHCP, DNS, HTTP and REST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_Network_Protocols_UDP_and_MTFTP.html">30. Network Protocols — UDP and MTFTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="31_EFI_Redfish_Service_Support.html">31. EFI Redfish Service Support</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">32. Secure Boot and Driver Signing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#secure-boot">32.1. Secure Boot</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-authentication-info-protocol">32.1.1. EFI_AUTHENTICATION_INFO_PROTOCOL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-authentication-info-protocol-get">32.1.2. EFI_AUTHENTICATION_INFO_PROTOCOL.Get()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-authentication-info-protocol-set">32.1.3. EFI_AUTHENTICATION_INFO_PROTOCOL.Set()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#authentication-nodes">32.1.4. Authentication Nodes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#generic-authentication-node-structures">32.1.5. Generic Authentication Node Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#chap-using-radius-authentication-node">32.1.6. CHAP (using RADIUS) Authentication Node</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#uefi-driver-signing-overview">32.2. UEFI Driver Signing Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#digital-signatures">32.2.1. Digital Signatures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#embedded-signatures">32.2.2. Embedded Signatures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creating-image-digests-from-images">32.2.3. Creating Image Digests from Images</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#code-definitions">32.2.4. Code Definitions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#win-certificate">32.2.4.1. WIN_CERTIFICATE</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#win-certificate-efi-pkcs1-15">32.2.4.2. WIN_CERTIFICATE_EFI_PKCS1_15</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#win-certificate-uefi-guid">32.2.4.3. WIN_CERTIFICATE_UEFI_GUID</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#firmware-os-key-exchange-creating-trust-relationships">32.3. Firmware/OS Key Exchange: Creating Trust Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#enrolling-the-platform-key">32.3.1. Enrolling The Platform Key</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#clearing-the-platform-key">32.3.2. Clearing The Platform Key</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transitioning-to-audit-mode">32.3.3. Transitioning to Audit Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transitioning-to-deployed-mode">32.3.4. Transitioning to Deployed Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#enrolling-key-exchange-keys">32.3.5. Enrolling Key Exchange Keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#platform-firmware-key-storage-requirements">32.3.6. Platform Firmware Key Storage Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#firmware-os-key-exchange-passing-public-keys">32.4. Firmware/OS Key Exchange: Passing Public Keys</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#signature-database">32.4.1. Signature Database</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#efi-signature-data">32.4.1.1. EFI_SIGNATURE_DATA</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#image-execution-information-table">32.4.2. Image Execution Information Table</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#uefi-image-validation">32.5. UEFI Image Validation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">32.5.1. Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#authorized-user">32.5.2. Authorized User</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#signature-database-update">32.5.3. Signature Database Update</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#using-the-image-execution-information-table">32.5.3.1. Using The Image Execution Information Table</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#firmware-policy">32.5.3.2. Firmware Policy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#authorization-process">32.5.3.3. Authorization Process</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#device-authentication">32.6. Device Authentication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#device-authentication-overview">32.6.1. Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#device-authentication-authorized-user">32.6.2. Authorized User</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#device-signature-database-update">32.6.3. Device Signature Database Update</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#secure-boot-and-driver-signing-code-definitions">32.7. Code Definitions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#uefi-image-variable-guid-variable-name">32.7.1. UEFI Image Variable GUID &amp; Variable Name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#uefi-device-signature-variable-guid-and-variable-name">32.7.2. UEFI Device Signature Variable GUID and Variable Name</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="33_Human_Interface_Infrastructure.html">33. Human Interface Infrastructure Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="34_HII_Protocols.html">34. HII Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="35_HII_Configuration_Processing_and_Browser_Protocol.html">35. HII Configuration Processing and Browser Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="36_User_Identification.html">36. User Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="37_Secure_Technologies.html">37. Secure Technologies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="38_Confidential_Computing.html">38. Confidential Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="39_Micellaneous_Protocols.html">39. Miscellaneous Protocols</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Apx_A_GUID_and_Time_Formats.html">A. GUID and Time Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_B_Console.html">B. Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_C_Device_Path_Examples.html">C. Device Path Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_D_Status_Codes.html">D. Status Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_E_Universal_Network_Driver_Interfaces.html">E. Universal Network Driver Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_F_Using_the_Simple_Pointer_Protocol.html">F. Using the Simple Pointer Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_G_Using_the_EFI_Extended_SCSI_Pass_Thru_Protocol.html">G. Using the EFI Extended SCSI Pass Thru Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_H_Compression_Source_Code.html">H. Compression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_I_Decompression_Source_Code.html">I. Decompression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_J_EFI_Byte_Code_Virtual_Machine_Opcode_List.html">J. EFI Byte Code Virtual Machine Opcode List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_K_Alphabetic_Function_Lists.html">K. Alphabetic Function Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_L_EFI_1.10_Protocol_Changes_and_Deprecation_List.html">L. EFI 1.10 Protocol Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html">M. Formats — Language Codes and Language Code Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_N_Common_Platform_Error_Record.html">N. Common Platform Error Record (CPER)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_O_UEFI_ACPI_Data_Table.html">O. UEFI ACPI Data Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_P_Hardware_Error_Record_Persistence_Usage.html">P. Hardware Error Record Persistence Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_Q_References.html">Q. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_R_Glossary.html">R. Glossary</a></li>
+</ul>
+
+    <a href= "genindex.html">Index</a>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UEFI Specification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">32. </span>Secure Boot and Driver Signing</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="secure-boot-and-driver-signing">
+<span id="id1"></span><h1><span class="section-number">32. </span>Secure Boot and Driver Signing<a class="headerlink" href="#secure-boot-and-driver-signing" title="Link to this heading"></a></h1>
+<section id="secure-boot">
+<span id="secure-bootsecure-boot-and-driver-signing"></span><h2><span class="section-number">32.1. </span>Secure Boot<a class="headerlink" href="#secure-boot" title="Link to this heading"></a></h2>
+<p>This protocol is intended to provide access for generic authentication information associated with specific device paths. The authentication information is configurable using the defined interfaces. Successive configuration of the authentication information will overwrite the previously configured information. Once overwritten, the previous authentication information will not be retrievable.</p>
+<section id="efi-authentication-info-protocol">
+<span id="id2"></span><h3><span class="section-number">32.1.1. </span>EFI_AUTHENTICATION_INFO_PROTOCOL<a class="headerlink" href="#efi-authentication-info-protocol" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>This protocol is used on any device handle to obtain authentication information associated with the physical or logical device.</p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_AUTHENTICATION_INFO_PROTOCOL_GUID \</span>
+<span class="p">{</span><span class="mh">0x7671d9d0</span><span class="p">,</span><span class="mh">0x53db</span><span class="p">,</span><span class="mh">0x4173</span><span class="p">,</span>\
+<span class="p">{</span><span class="mh">0xaa</span><span class="p">,</span><span class="mh">0x69</span><span class="p">,</span><span class="mh">0x23</span><span class="p">,</span><span class="mh">0x27</span><span class="p">,</span><span class="mh">0xf2</span><span class="p">,</span><span class="mh">0x1f</span><span class="p">,</span><span class="mh">0x0b</span><span class="p">,</span><span class="mh">0xc7</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p><strong>Protocol Interface Structure</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="n">_EFI_AUTHENTICATION_INFO_PROTOCOL</span> <span class="p">{</span>
+  <span class="n">EFI_AUTHENTICATION_INFO_PROTOCOL_GET</span>            <span class="n">Get</span><span class="p">;</span>
+  <span class="n">EFI_AUTHENTICATION_INFO_PROTOCOL_SET</span>            <span class="n">Set</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">EFI_AUTHENTICATION_INFO_PROTOCOL</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>Get()</dt><dd><p>Used to retrieve the Authentication Information associated with the controller handle</p>
+</dd>
+<dt>Set()</dt><dd><p>Used to set the Authentication information associated with the controller handle</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>EFI_AUTHENTICATION_INFO_PROTOCOL</em> provides the ability to get and set the authentication information associated with the controller handle.</p>
+</section>
+<section id="efi-authentication-info-protocol-get">
+<span id="id3"></span><h3><span class="section-number">32.1.2. </span>EFI_AUTHENTICATION_INFO_PROTOCOL.Get()<a class="headerlink" href="#efi-authentication-info-protocol-get" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Retrieves the Authentication information associated with a particular controller handle.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_AUTHENTICATION_INFO_PROTOCOL_GET</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_AUTHENTICATION_INFO_PROTOCOL</span>        <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">EFI_HANDLE</span>                              <span class="n">ControllerHandle</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">VOID</span>                                   <span class="o">**</span><span class="n">Buffer</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Pointer to the <em>EFI_AUTHENTICATION_INFO_PROTOCOL</em></p>
+</dd>
+<dt>ControllerHandle</dt><dd><p>Handle to the Controller</p>
+</dd>
+<dt>Buffer</dt><dd><p>Pointer to the authentication information. This function is responsible for allocating the buffer and it is the caller’s responsibility to free buffer when the caller is finished with buffer.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function retrieves the Authentication Node for a given controller handle.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>Successfully retrieved Authentication information for the given <em>ControllerHandle</em></p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>No matching Authentication information found for the given <em>ControllerHandle</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>The authentication information could not be retrieved due to a hardware error.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-authentication-info-protocol-set">
+<span id="id4"></span><h3><span class="section-number">32.1.3. </span>EFI_AUTHENTICATION_INFO_PROTOCOL.Set()<a class="headerlink" href="#efi-authentication-info-protocol-set" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Set the Authentication information for a given controller handle.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_AUTHENTICATION_INFO_PROTOCOL_SET</span><span class="p">)</span> <span class="p">(</span>
+<span class="n">IN</span> <span class="n">EFI_AUTHENTICATION_INFO_PROTOCOL</span> <span class="o">**</span><span class="n">This</span><span class="p">,</span>
+<span class="n">IN</span> <span class="n">EFI_HANDLE</span> <span class="o">*</span><span class="n">ControllerHandle</span>
+<span class="n">IN</span> <span class="n">VOID</span> <span class="o">**</span><span class="n">Buffer</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>Pointer to the <em>EFI_AUTHENTICATION_INFO_PROTOCOL</em></p>
+</dd>
+<dt>ControllerHandle</dt><dd><p>Handle to the controller.</p>
+</dd>
+<dt>Buffer</dt><dd><p>Pointer to the authentication information.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function sets the authentication information for a given controller handle. If the authentication node exists corresponding to the given controller handle this function overwrites the previously present authentication information.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>Successfully set the Authentication node information for the given <em>ControllerHandle</em>.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>If the platform policies do not allow setting of the Authentication information.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>The authentication node information could not be configured due to a hardware error.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_OUT_OF_RESOURCES</p></td>
+<td><p>Not enough storage is available to hold the data.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="authentication-nodes">
+<span id="id5"></span><h3><span class="section-number">32.1.4. </span>Authentication Nodes<a class="headerlink" href="#authentication-nodes" title="Link to this heading"></a></h3>
+<p>The authentication node is associated with specific controller paths. There can be various types of authentication nodes, each describing a particular authentication method and associated properties.</p>
+</section>
+<section id="generic-authentication-node-structures">
+<span id="id6"></span><h3><span class="section-number">32.1.5. </span>Generic Authentication Node Structures<a class="headerlink" href="#generic-authentication-node-structures" title="Link to this heading"></a></h3>
+<p>An authentication node is a variable length binary structure that is made up of variable length authentication information. The Table below defines the generic structure. The Authentication type GUID defines the corresponding authentication node.</p>
+<table class="longtable docutils align-default" id="generic-authentication-node-structure">
+<caption><span class="caption-number">Table 32.1 </span><span class="caption-text">Generic Authentication Node Structure</span><a class="headerlink" href="#generic-authentication-node-structure" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+<col style="width: 50.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Mnemonic</p></td>
+<td><p>Byte Offset</p></td>
+<td><p>Byte Length</p></td>
+<td><p>Description</p></td>
+</tr>
+<tr class="row-even"><td><p>Type GUID</p></td>
+<td><p>0</p></td>
+<td><p>16</p></td>
+<td><p>Authentication Type GUID</p></td>
+</tr>
+<tr class="row-odd"><td><p>Length</p></td>
+<td><p>16</p></td>
+<td><p>2</p></td>
+<td><p>Length of this structure in bytes.</p></td>
+</tr>
+<tr class="row-even"><td><p>Specific Authentication Data</p></td>
+<td><p>18</p></td>
+<td><p>n</p></td>
+<td><p>Specific Authentication Data. Type defines the authentication method and associated type of data. Size of the data is included in the length.</p></td>
+</tr>
+</tbody>
+</table>
+<p>All Authentication Nodes are byte-packed data structures that may appear on any byte boundary. All code references to Authentication Nodes must assume all fields are UNALIGNED. Since every Authentication Node contains a length field in a known place, it is possible to traverse Authentication Node of unknown type.</p>
+</section>
+<section id="chap-using-radius-authentication-node">
+<span id="id7"></span><h3><span class="section-number">32.1.6. </span>CHAP (using RADIUS) Authentication Node<a class="headerlink" href="#chap-using-radius-authentication-node" title="Link to this heading"></a></h3>
+<p>This Authentication Node type defines the CHAP authentication using RADIUS information.</p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_AUTHENTICATION_CHAP_RADIUS_GUID \</span>
+<span class="p">{</span><span class="mh">0xd6062b50</span><span class="p">,</span><span class="mh">0x15ca</span><span class="p">,</span><span class="mh">0x11da</span><span class="p">,</span>\
+<span class="p">{</span><span class="mh">0x92</span><span class="p">,</span><span class="mh">0x19</span><span class="p">,</span><span class="mh">0x00</span><span class="p">,</span><span class="mh">0x10</span><span class="p">,</span><span class="mh">0x83</span><span class="p">,</span><span class="mh">0xff</span><span class="p">,</span><span class="mh">0xca</span><span class="p">,</span><span class="mh">0x4d</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p><strong>Node Definition</strong></p>
+<table class="longtable docutils align-default" id="chap-authentication-node-structure-using-radius">
+<caption><span class="caption-number">Table 32.2 </span><span class="caption-text">CHAP Authentication Node Structure using RADIUS</span><a class="headerlink" href="#chap-authentication-node-structure-using-radius" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 15.0%" />
+<col style="width: 15.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Mnemonic</strong></p></td>
+<td><p><strong>Byte Offset</strong></p></td>
+<td><p><strong>Byte Length</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Type</p></td>
+<td><p>0</p></td>
+<td><p>16</p></td>
+<td><p>EFI_A UTHENTICATION_C HAP_RADIUS_GUID</p></td>
+</tr>
+<tr class="row-odd"><td><p>Length</p></td>
+<td><p>16</p></td>
+<td><p>2</p></td>
+<td><p>Length of this structure in bytes. Total length is 58+P+Q+R+S+T</p></td>
+</tr>
+<tr class="row-even"><td><p>RADIUS IP Address</p></td>
+<td><p>18</p></td>
+<td><p>16</p></td>
+<td><p>Radius IPv4 or IPv6 Address</p></td>
+</tr>
+<tr class="row-odd"><td><p>Reserved</p></td>
+<td><p>34</p></td>
+<td><p>2</p></td>
+<td><p>Reserved</p></td>
+</tr>
+<tr class="row-even"><td><p>NAS IP Address</p></td>
+<td><p>36</p></td>
+<td><p>16</p></td>
+<td><p>NAS IPv4 or IPv6 Address</p></td>
+</tr>
+<tr class="row-odd"><td><p>NAS Secret Length</p></td>
+<td><p>52</p></td>
+<td><p>2</p></td>
+<td><p>NAS Secret LengthP</p></td>
+</tr>
+<tr class="row-even"><td><p>NAS Secret</p></td>
+<td><p>54</p></td>
+<td><p>p</p></td>
+<td><p>NAS Secret</p></td>
+</tr>
+<tr class="row-odd"><td><p>CHAP Secret Length</p></td>
+<td><p>54+P</p></td>
+<td><p>2</p></td>
+<td><p>CHAP Secret Length Q</p></td>
+</tr>
+<tr class="row-even"><td><p>CHAP Secret</p></td>
+<td><p>56+P</p></td>
+<td><p>q</p></td>
+<td><p>CHAP Secret</p></td>
+</tr>
+<tr class="row-odd"><td><p>CHAP Name Length</p></td>
+<td><p>56 +Q</p></td>
+<td><p>2</p></td>
+<td><p>CHAP Name Length R</p></td>
+</tr>
+<tr class="row-even"><td><p>CHAP Name</p></td>
+<td><p>58+P+Q</p></td>
+<td><p>r</p></td>
+<td><p>CHAP Name String</p></td>
+</tr>
+<tr class="row-odd"><td><p>Reverse CHAP Name Length</p></td>
+<td><p>58+P+Q+R</p></td>
+<td><p>2</p></td>
+<td><p>Reverse CHAP Name length</p></td>
+</tr>
+<tr class="row-even"><td><p>Reverse CHAP Name</p></td>
+<td><p>60+P+Q+R</p></td>
+<td><p>S</p></td>
+<td><p>Reverse CHAP Name</p></td>
+</tr>
+<tr class="row-odd"><td><p>Reverse CHAP Secret Length</p></td>
+<td><p>60+P+Q+R+S</p></td>
+<td><p>2</p></td>
+<td><p>Reverse CHAP Length</p></td>
+</tr>
+<tr class="row-even"><td><p>Reverse CHAP Secret</p></td>
+<td><p>62+P+Q+R+S</p></td>
+<td><p>T</p></td>
+<td><p>Reverse CHAP Secret</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Summary</strong></p>
+<div class="line-block">
+<div class="line">RADIUS IP Address…RADIUS Server IPv4 or IPv6 Address</div>
+<div class="line">NAS IP Address…Network Access Server IPv4 or IPv6 Address (OPTIONAL)</div>
+<div class="line">NAS Secret Length…Network Access Server Secret Length in bytes (OPTIONAL)</div>
+<div class="line">NAS Secret…Network Access Server secret (OPTIONAL)</div>
+<div class="line">CHAP Secret Length…CHAP Initiator Secret length in bytes</div>
+<div class="line">CHAP Secret…CHAP Initiator Secret</div>
+<div class="line">CHAP Name…Length CHAP Initiator Name Length in bytes</div>
+<div class="line">CHAP Name CHAP Initiator Name</div>
+<div class="line">Reverse CHAP name length Reverse CHAP name length</div>
+<div class="line">Reverse CHAP Name Reverse CHAP name</div>
+<div class="line">Reverse CHAP Secret Length Reverse CHAP secret length</div>
+<div class="line">Reverse CHAP Secret Reverse CHAP secret</div>
+</div>
+<p><strong>CHAP (using local database)Authentication Node</strong></p>
+<p>This Authentication Node type defines CHAP using local database information.</p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_AUTHENTICATION_CHAP_LOCAL_GUID \</span>
+<span class="p">{</span><span class="mh">0xc280c73e</span><span class="p">,</span><span class="mh">0x15ca</span><span class="p">,</span><span class="mh">0x11da</span><span class="p">,</span>\
+<span class="p">{</span><span class="mh">0xb0</span><span class="p">,</span><span class="mh">0xca</span><span class="p">,</span><span class="mh">0x00</span><span class="p">,</span><span class="mh">0x10</span><span class="p">,</span><span class="mh">0x83</span><span class="p">,</span><span class="mh">0xff</span><span class="p">,</span><span class="mh">0xca</span><span class="p">,</span><span class="mh">0x4d</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p><strong>Node Definition</strong></p>
+<table class="longtable docutils align-default" id="chap-authentication-node-structure-using-local-database">
+<caption><span class="caption-number">Table 32.3 </span><span class="caption-text">CHAP Authentication Node Structure using Local Database</span><a class="headerlink" href="#chap-authentication-node-structure-using-local-database" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+<col style="width: 50.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Mnemonic</p></td>
+<td><p>Byte Offset</p></td>
+<td><p>Byte Length</p></td>
+<td><p>Description</p></td>
+</tr>
+<tr class="row-even"><td><p>Type</p></td>
+<td><p>0</p></td>
+<td><p>16</p></td>
+<td><p>EFI_AUTHENTICATION_CHAP_LOCAL_GUID</p></td>
+</tr>
+<tr class="row-odd"><td><p>Length</p></td>
+<td><p>16</p></td>
+<td><p>2</p></td>
+<td><p>Length of this structure in bytes. Total length is 58+P+Q+R+S+T</p></td>
+</tr>
+<tr class="row-even"><td><p>Reserved</p></td>
+<td><p>18</p></td>
+<td><p>2</p></td>
+<td><p>Reserved for future use</p></td>
+</tr>
+<tr class="row-odd"><td><p>User Secret Length</p></td>
+<td><p>20</p></td>
+<td><p>2</p></td>
+<td><p>User Secret Length</p></td>
+</tr>
+<tr class="row-even"><td><p>User Secret</p></td>
+<td><p>22</p></td>
+<td><p>p</p></td>
+<td><p>User Secret</p></td>
+</tr>
+<tr class="row-odd"><td><p>User Name Length</p></td>
+<td><p>22+p</p></td>
+<td><p>2</p></td>
+<td><p>User Name Length</p></td>
+</tr>
+<tr class="row-even"><td><p>User Name</p></td>
+<td><p>24+p</p></td>
+<td><p>q</p></td>
+<td><p>User Name</p></td>
+</tr>
+<tr class="row-odd"><td><p>CHAP Secret Length</p></td>
+<td><p>24+p+q</p></td>
+<td><p>2</p></td>
+<td><p>CHAP Secret Length</p></td>
+</tr>
+<tr class="row-even"><td><p>CHAP Secret</p></td>
+<td><p>26+p+q</p></td>
+<td><p>r</p></td>
+<td><p>CHAP Secret</p></td>
+</tr>
+<tr class="row-odd"><td><p>CHAP Name Length</p></td>
+<td><p>26+p+q+r</p></td>
+<td><p>2</p></td>
+<td><p>CHAP Name Length</p></td>
+</tr>
+<tr class="row-even"><td><p>CHAP Name</p></td>
+<td><p>28+p+q+r</p></td>
+<td><p>s</p></td>
+<td><p>CHAP Name String</p></td>
+</tr>
+<tr class="row-odd"><td><p>Reverse CHAP Name Length</p></td>
+<td><p>58+P+Q+R</p></td>
+<td><p>2</p></td>
+<td><p>Reverse CHAP Name length</p></td>
+</tr>
+<tr class="row-even"><td><p>Reverse CHAP Name</p></td>
+<td><p>60+P+Q+R</p></td>
+<td><p>S</p></td>
+<td><p>Reverse CHAP Name</p></td>
+</tr>
+<tr class="row-odd"><td><p>Reverse CHAP Secret Length</p></td>
+<td><p>60+P+Q+R+S</p></td>
+<td><p>2</p></td>
+<td><p>Reverse CHAP Length</p></td>
+</tr>
+<tr class="row-even"><td><p>Reverse CHAP Secret</p></td>
+<td><p>62+P+Q+R+S</p></td>
+<td><p>T</p></td>
+<td><p>Reverse CHAP Secret</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Summary</strong></p>
+<div class="line-block">
+<div class="line">User Secret Length…User Secret Length in bytes</div>
+<div class="line">User Secret…User Secret</div>
+<div class="line">User Name Length…User Name Length in bytes</div>
+<div class="line">User Name…User Name</div>
+<div class="line">CHAP Secret Length…CHAP Initiator Secret length in bytes</div>
+<div class="line">CHAP Secret…CHAP Initiator Secret</div>
+<div class="line">CHAP Name Length…CHAP Initiator Name Length in bytes</div>
+<div class="line">CHAP Name…CHAP Initiator Name</div>
+<div class="line">Reverse CHAP name length Reverse CHAP name length</div>
+<div class="line">Reverse CHAP Name Reverse CHAP name</div>
+<div class="line">Reverse CHAP Secret Length Reverse CHAP secret length</div>
+<div class="line">Reverse CHAP Secret Reverse CHAP secret</div>
+</div>
+</section>
+</section>
+<section id="uefi-driver-signing-overview">
+<span id="id8"></span><h2><span class="section-number">32.2. </span>UEFI Driver Signing Overview<a class="headerlink" href="#uefi-driver-signing-overview" title="Link to this heading"></a></h2>
+<p>This section describes a means of generating a digital signature for a UEFI executable, embedding that digital signature within the UEFI executable and verifying that the digital signature is from an authorized source. The UEFI specification provides a standard format for executables. These executables may be located on un-secured media (such as a hard drive or unprotected flash device) or may be delivered via a un-secured transport layer (such as a network) or originate from a un-secured port (such as ExpressCard device or USB device). In each of these cases, the system provider may decide to authenticate either the origin of the executable or its integrity (i.e., it has not been tampered with). This section describes a means of doing so.</p>
+<section id="digital-signatures">
+<span id="id9"></span><h3><span class="section-number">32.2.1. </span>Digital Signatures<a class="headerlink" href="#digital-signatures" title="Link to this heading"></a></h3>
+<p>As a rule, digital signatures require two pieces: the data (often referred to as the message) and a public/private key pair. In order to create a digital signature, the message is processed by a hashing algorithm to create a hash value. This hash value is, in turn, encrypted using a signature algorithm and the private key to create the digital signature.</p>
+<figure class="align-default" id="creating-a-digital-signature">
+<a class="reference internal image-reference" href="_images/Secure_Boot_and_Driver_Signing-2.png"><img alt="_images/Secure_Boot_and_Driver_Signing-2.png" src="_images/Secure_Boot_and_Driver_Signing-2.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 32.1 </span><span class="caption-text">Creating A Digital Signature</span><a class="headerlink" href="#creating-a-digital-signature" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>In order to verify a signature, two pieces of data are required: the original message and the public key. First, the hash must be calculated exactly as it was calculated when the signature was created. Then the digital signature is decoded using the public key and the result is compared against the computed hash. If the two are identical, then you can be sure that message data is the one originally signed and it has not been tampered with.</p>
+<figure class="align-default" id="veriying-a-digital-signature">
+<a class="reference internal image-reference" href="_images/Secure_Boot_and_Driver_Signing-3.png"><img alt="_images/Secure_Boot_and_Driver_Signing-3.png" src="_images/Secure_Boot_and_Driver_Signing-3.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 32.2 </span><span class="caption-text">Veriying a Digital Signature</span><a class="headerlink" href="#veriying-a-digital-signature" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="embedded-signatures">
+<span id="id10"></span><h3><span class="section-number">32.2.2. </span>Embedded Signatures<a class="headerlink" href="#embedded-signatures" title="Link to this heading"></a></h3>
+<p>The signatures used for digital signing of UEFI executables are embedded directly within the executable itself. Within the header is an array of directory entries. Each of these entries points to interesting places within the executable image. The fifth data directory entry contains a pointer to a list of certificates along with the length of the certificate areas. Each certificate may contain a digital signature used for validating the driver. The following diagram illustrates how certificates are embedded in the PE/COFF file:</p>
+<figure class="align-default" id="embedded-digital-certificates">
+<a class="reference internal image-reference" href="_images/Secure_Boot_and_Driver_Signing-4.png"><img alt="_images/Secure_Boot_and_Driver_Signing-4.png" src="_images/Secure_Boot_and_Driver_Signing-4.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 32.3 </span><span class="caption-text">Embedded Digital Certificates</span><a class="headerlink" href="#embedded-digital-certificates" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Within the PE/COFF optional header is a data directory. The 5th entry, if filled, points to a list of certificates. Normally, these certificates are appended to the end of the file.</p>
+</section>
+<section id="creating-image-digests-from-images">
+<span id="id11"></span><h3><span class="section-number">32.2.3. </span>Creating Image Digests from Images<a class="headerlink" href="#creating-image-digests-from-images" title="Link to this heading"></a></h3>
+<p>One of the pieces required for creating a digital signature is the image digest. For a detailed description on how to create image digests from PE/COFF images, refer to the “Creating the PE Image Hash” section of the Microsoft Authenticode Format specification (see References).</p>
+</section>
+<section id="code-definitions">
+<span id="uefi-driver-signing-overview-code-definitions"></span><h3><span class="section-number">32.2.4. </span>Code Definitions<a class="headerlink" href="#code-definitions" title="Link to this heading"></a></h3>
+<p>This section describes data structures used for signing UEFI executables.</p>
+<section id="win-certificate">
+<span id="id12"></span><h4><span class="section-number">32.2.4.1. </span>WIN_CERTIFICATE<a class="headerlink" href="#win-certificate" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>The <em>WIN_CERTIFICATE</em> structure is part of the PE/COFF specification.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="n">_WIN_CERTIFICATE</span> <span class="p">{</span>
+  <span class="n">UINT32</span>             <span class="n">dwLength</span><span class="p">;</span>
+  <span class="n">UINT16</span>             <span class="n">wRevision</span><span class="p">;</span>
+  <span class="n">UINT16</span>             <span class="n">wCertificateType</span><span class="p">;</span>
+  <span class="o">//</span><span class="n">UINT8</span>            <span class="n">bCertificate</span><span class="p">[</span><span class="n">ANYSIZE_ARRAY</span><span class="p">];</span>
+<span class="p">}</span> <span class="n">WIN_CERTIFICATE</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>dwLength</dt><dd><p>The length of the entire certificate, including the length of the header, in bytes.</p>
+</dd>
+<dt>wRevision</dt><dd><p>The revision level of the <em>WIN_CERTIFICATE</em> structure. The current revision level is 0x0200.</p>
+</dd>
+<dt>wCertificateType</dt><dd><p>The certificate type. See <em>WIN_CERT_TYPE_xxx</em> for the UEFI certificate types. The UEFI specification reserves the range of certificate type values from 0x0EF0 to 0x0EFF.</p>
+</dd>
+<dt>bCertificate</dt><dd><p>The actual certificate. The format of the certificate depends on <em>wCertificateType</em>. The format of the UEFI certificates is defined below.</p>
+</dd>
+</dl>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define WIN_CERT_TYPE_PKCS_SIGNED_DATA    0x0002</span>
+<span class="c1">#define WIN_CERT_TYPE_EFI_PKCS115         0x0EF0</span>
+<span class="c1">#define WIN_CERT_TYPE_EFI_GUID            0x0EF1</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>This structure is the certificate header. There may be zero or more certificates.</p>
+<ul class="simple">
+<li><p>If the wCertificateType field is set to <em>WIN_CERT_TYPE_EFI_PKCS115,</em> then the certificate follows the format described in <em>WIN_CERTIFICATE_EFI_PKCS1_15</em>.</p></li>
+<li><p>If the <em>wCertificateType</em> field is set to <em>WIN_CERT_TYPE_EFI_GUID,</em> then the certificate follows the format described in <em>WIN_CERTIFICATE_UEFI_GUID</em>.</p></li>
+<li><p>If the <em>wCertificateType</em> field is set to <em>WIN_CERT_TYPE_PKCS_SIGNED_DATA</em> then the certificate is formatted as described in the Authenticode specification.</p></li>
+</ul>
+<p>These certificates can be validated using the contents of the signature database described in  <a class="reference internal" href="#id22">Signature Database</a> . The following table illustrates the relationship between the certificates and the signature types in the database.</p>
+<p><strong>NOTE</strong>: <em>In the case of a</em> WIN_CERT_TYPE_PKCS_SIGNED_DATA (<em>or</em> WIN_CERT_TYPE_EFI_GUID <em>where</em> CertType = EFI_CERT_TYPE_PKCS7_GUID) <em>certificate, a match can occur against an entry in the authorized signature database (or the forbidden signature database;</em>  <a class="reference internal" href="#id35">UEFI Image Variable GUID &amp; Variable Name</a> ) <em>at any level of the chain of X.509 certificates present in the certificate, and matches can occur against any of the applicable signature types defined in</em> ( <a class="reference internal" href="#firmware-os-key-exchange-passing-public-keys"><span class="std std-ref">Firmware/OS Key Exchange: Passing Public Keys</span></a> .</p>
+<table class="longtable docutils align-default" id="pe-coff-certificates-types-and-uefi-signature-database-certificate-types">
+<caption><span class="caption-number">Table 32.4 </span><span class="caption-text">PE/COFF Certificates Types and UEFI Signature Database Certificate Types</span><a class="headerlink" href="#pe-coff-certificates-types-and-uefi-signature-database-certificate-types" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 60.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Image Certificate Type</strong></p></td>
+<td><p><strong>Verified Using Signature Database Type</strong></p></td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line">WIN_CERT_TYPE_EFI_PKCS115</div>
+<div class="line">(Signature Size = 256 bytes)</div>
+</div>
+</td>
+<td><p>EFI_CERT_RSA2048_GUID          (public key)</p></td>
+</tr>
+<tr class="row-odd"><td><div class="line-block">
+<div class="line">WIN_CERT_TYPE_EFI_GUID</div>
+<div class="line">(CertType = EFI_CERT_TYPE_RSA2048_SHA256_GUID)</div>
+</div>
+</td>
+<td><p>EFI_CERT_RSA2048_GUID          (public key)</p></td>
+</tr>
+<tr class="row-even"><td><div class="line-block">
+<div class="line">WIN_CERT_TYPE_EFI_GUID</div>
+<div class="line">(CertType = EFI_CERT_TYPE_PKCS7_GUID)</div>
+</div>
+</td>
+<td><div class="line-block">
+<div class="line">EFI_CERT_X509_GUID</div>
+<div class="line">EFI_CERT_RSA2048_GUID        (when applicable)</div>
+<div class="line">EFI_CERT_X509_SHA256_GUID    (when applicable)</div>
+<div class="line">EFI_CERT_X509_SHA384_GUID    (when applicable)</div>
+<div class="line">EFI_CERT_X509_SHA512_GUID    (when applicable)
+| EFI_CERT_X509_SM3_GUID       (when applicable)</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>WIN_CERT_TYPE_PKCS_SIGNED_DATA</p></td>
+<td><div class="line-block">
+<div class="line">EFI_CERT_X509_GUID</div>
+<div class="line">EFI_CERT_RSA2048_GUID        (when applicable)</div>
+<div class="line">EFI_CERT_X509_SHA256_GUID    (when applicable)</div>
+<div class="line">EFI_CERT_X509_SHA384_GUID    (when applicable)</div>
+<div class="line">EFI_CERT_X509_SHA512_GUID    (when applicable)
+| EFI_CERT_X509_SM3_GUID       (when applicable)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>(Always applicable regardless of whether a certificate is present or not)</p></td>
+<td><div class="line-block">
+<div class="line">EFI_CERT_SHA1_GUID,</div>
+<div class="line">EFI_CERT_SHA224_GUID,</div>
+<div class="line">EFI_CERT_SHA256_GUID,</div>
+<div class="line">EFI_CERT_SHA384_GUID,</div>
+<div class="line">EFI_CERT_SHA512_GUID,
+| EFI_CERT_SM3_GUID</div>
+<div class="line">In this case, the database contains the hash of the image.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="win-certificate-efi-pkcs1-15">
+<span id="win-certificate-efi-pkc51-15"></span><h4><span class="section-number">32.2.4.2. </span>WIN_CERTIFICATE_EFI_PKCS1_15<a class="headerlink" href="#win-certificate-efi-pkcs1-15" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Certificate which encapsulates the RSASSA_PKCS1-v1_5 digital signature.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="n">_WIN_CERTIFICATE_EFI_PKCS1_15</span> <span class="p">{</span>
+   <span class="n">WIN_CERTIFICATE</span>            <span class="n">Hdr</span><span class="p">;</span>
+   <span class="n">EFI_GUID</span>                   <span class="n">HashAlgorithm</span><span class="p">;</span>
+<span class="o">//</span> <span class="n">UINT8</span>                      <span class="n">Signature</span><span class="p">[</span><span class="n">ANYSIZE_ARRAY</span><span class="p">];</span>
+<span class="p">}</span> <span class="n">WIN_CERTIFICATE_EFI_PKCS1_15</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Hdr</dt><dd><p>This is the standard <em>WIN_CERTIFICATE</em> header, where <em>wCertificateType</em> is set to <em>WIN_CERT_TYPE_EFI_PKCS1_15</em>.</p>
+</dd>
+<dt>HashAlgorithm</dt><dd><p>This is the hashing algorithm which was performed on the UEFI executable when creating the digital signature. It is one of the enumerated values pre-defined in <a class="reference internal" href="37_Secure_Technologies.html#efi-hash-algorithms"><span class="std std-ref">EFI Hash Algorithms</span></a>. See <em>EFI_HASH_ALGORITHM_x</em>.</p>
+</dd>
+<dt>Signature</dt><dd><p>This is the actual digital signature. The size of the signature is the same size as the key (2048-bit key is 256 bytes) and can be determined by subtracting the length of the other parts of this header from the total length of the certificate as found in <em>Hdr.dwLength</em>.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>WIN_CERTIFICATE_UEFI_PKCS1_15</em> structure is derived from <em>WIN_CERTIFICATE</em> and encapsulates the information needed to implement the RSASSA-PKCS1-v1_5 digital signature algorithm as specified in RFC2437, sections 8-9.</p>
+</section>
+<section id="win-certificate-uefi-guid">
+<span id="id13"></span><h4><span class="section-number">32.2.4.3. </span>WIN_CERTIFICATE_UEFI_GUID<a class="headerlink" href="#win-certificate-uefi-guid" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Certificate which encapsulates a GUID-specific digital signature.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="n">_WIN_CERTIFICATE_UEFI_GUID</span> <span class="p">{</span>
+  <span class="n">WIN_CERTIFICATE</span>             <span class="n">Hdr</span><span class="p">;</span>
+  <span class="n">EFI_GUID</span>                    <span class="n">CertType</span><span class="p">;</span>
+  <span class="n">UINT8</span>                       <span class="n">CertData</span><span class="p">[</span><span class="n">ANYSIZE_ARRAY</span><span class="p">];</span>
+<span class="p">}</span>   <span class="n">WIN_CERTIFICATE_UEFI_GUID</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Hdr</dt><dd><p>This is the standard <em>WIN_CERTIFICATE</em> header, where   <em>wCertificateType</em> is set to <em>WIN_CERT_TYPE_EFI_GUID</em>.</p>
+</dd>
+<dt>CertType</dt><dd><p>This is the unique id which determines the format of the <em>CertData</em>.</p>
+</dd>
+<dt>CertData</dt><dd><p>This is the certificate data. The format of the data is determined by the <em>CertType</em>.</p>
+</dd>
+</dl>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_CERT_TYPE_RSA2048_SHA256_GUID</span>
+    <span class="p">{</span><span class="mh">0xa7717414</span><span class="p">,</span> <span class="mh">0xc616</span><span class="p">,</span> <span class="mh">0x4977</span><span class="p">,</span> \
+  <span class="p">{</span><span class="mh">0x94</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">,</span> <span class="mh">0x84</span><span class="p">,</span> <span class="mh">0x47</span><span class="p">,</span> <span class="mh">0x12</span><span class="p">,</span> <span class="mh">0xa7</span><span class="p">,</span> <span class="mh">0x35</span><span class="p">,</span> <span class="mh">0xbf</span><span class="p">}}</span>
+<span class="c1">#define EFI_CERT_TYPE_PKCS7_GUID</span>
+  <span class="p">{</span><span class="mh">0x4aafd29d</span><span class="p">,</span> <span class="mh">0x68df</span><span class="p">,</span> <span class="mh">0x49ee</span><span class="p">,</span> \
+  <span class="p">{</span><span class="mh">0x8a</span><span class="p">,</span> <span class="mh">0xa9</span><span class="p">,</span> <span class="mh">0x34</span><span class="p">,</span> <span class="mh">0x7d</span><span class="p">,</span> <span class="mh">0x37</span><span class="p">,</span> <span class="mh">0x56</span><span class="p">,</span> <span class="mh">0x65</span><span class="p">,</span> <span class="mh">0xa7</span><span class="p">}}</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="n">_EFI_CERT_BLOCK_RSA_2048_SHA256</span> <span class="p">{</span>
+  <span class="n">EFI_GUID</span>                 <span class="n">HashType</span><span class="p">;</span>
+  <span class="n">UINT8</span>                    <span class="n">PublicKey</span><span class="p">[</span><span class="mi">256</span><span class="p">];</span>
+  <span class="n">UINT8</span>                    <span class="n">Signature</span><span class="p">[</span><span class="mi">256</span><span class="p">];</span>
+<span class="p">}</span> <span class="n">EFI_CERT_BLOCK_RSA_2048_SHA256</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>PublicKey</dt><dd><p>The RSA exponent e for this structure is 0x10001.</p>
+</dd>
+<dt>Signature</dt><dd><p>This signature block is PKCS 1 version 1.5 formatted.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>WIN_CERTIFICATE_UEFI_GUID</em> certificate type allows new types of certificates to be developed for driver authentication without requiring a new certificate type. The <em>CertType</em> defines the format of the <em>CertData,</em> which length is defined by the size of the certificate less the fixed size of the <em>WIN_CERTIFICATE_UEFI_GUID</em> structure.</p>
+<ul class="simple">
+<li><p>If <em>CertType</em> is <em>EFI_CERT_TYPE_RSA2048_SHA256_GUID</em> then the structure which follows has the format specified by <em>EFI_CERT_BLOCK_RSA_2048_SHA256</em>.</p></li>
+<li><p>If <em>CertType</em> is <em>EFI_CERT_TYPE_PKCS7_GUID</em> then the <em>CertData</em> component shall contain a DER-encoded PKCS #7 version 1.5 [RFC2315] <em>SignedData</em> value.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="firmware-os-key-exchange-creating-trust-relationships">
+<span id="id14"></span><h2><span class="section-number">32.3. </span>Firmware/OS Key Exchange: Creating Trust Relationships<a class="headerlink" href="#firmware-os-key-exchange-creating-trust-relationships" title="Link to this heading"></a></h2>
+<p>This section describes a means of creating a trust relationship between the platform owner, the platform firmware, and an operating system. This trust relationship enables the platform firmware and one or more operating systems to exchange information in a secure manner. The trust relationship uses two types of asymmetric key pairs:</p>
+<dl class="simple">
+<dt><strong>Platform Key (PK)</strong></dt><dd><p>The platform key establishes a trust relationship between the platform owner and the platform firmware. The platform owner enrolls the public half of the key (PKpub) into the platform firmware. The platform owner can later use the private half of the key (PKpriv) to change platform ownership or to enroll a Key Exchange Key. See “Enrolling The Platform Key” and “Clearing The Platform Key” for more information.</p>
+</dd>
+<dt><strong>Key Exchange Key (KEK)</strong></dt><dd><p>Key exchange keys establish a trust relationship between the operating system and the platform firmware. Each operating system (and potentially, each 3rd party application which need to communicate with platform firmware) enrolls a public key (KEKpub) into the platform firmware. See “Enrolling Key Exchange Keys” for more information.</p>
+</dd>
+</dl>
+<p>While no Platform Key is enrolled, the SetupMode variable <em>shall</em> be equal to 1. While SetupMode == 1, the platform firmware <em>shall not</em> require authentication in order to modify the Platform Key, Key Enrollment Key, OsRecoveryOrder, OsRecovery####, and image security databases.</p>
+<p>After the Platform Key is enrolled, the SetupMode variable shall be equal to 0. While SetupMode == 0, the platform firmware <em>shall</em> require authentication in order to modify the Platform Key, Key Enrollment Key, OsRecoveryOrder, OsRecovery####, and image security databases.</p>
+<p>While no Platform Key is enrolled, and while the variable AuditMode == 0, the platform is said to be operating in setup mode.</p>
+<p>After the Platform Key is enrolled, and while the variable AuditMode == 0, the platform is operating in user mode. The platform will continue to operate in user mode until the Platform Key is cleared, or the system is transitioned to either Audit or Deployed Modes. See “Clearing The Platform Key,” “Transitioning to Audit Mode,” and “Transitioning to Deployed Mode” for more information.</p>
+<p>Audit Mode enables programmatic discovery of signature list combinations that successfully authenticate installed EFI images without the risk of rendering a system unbootable. Chosen signature lists configurations can be tested to ensure the system will continue to boot after the system is transitioned out of Audit Mode. Details on how to transition to Audit Mode are detailed below in the section “Transitioning to Audit Mode.” After transitioning to Audit Mode, signature enforcement is disabled such that all images are initialized and enhanced Image Execution Information Table (IEIT) logging is performed including recursive validation for multi-signed images.</p>
+<p>Deployed Mode is the most secure mode. For details on transitioning to Deployed Mode see the section “Transitioning to Deployed Mode” below. By design, both User Mode and Audit Mode support unauthenticated transitions to Deployed Mode. However, to move from Deployed Mode to any other mode requires a secure platform-specific method, or deleting the PK, which is authenticated.</p>
+<p>Secure Boot Mode transitions to User Mode or Deployed Mode shall take effect immediately. Mode transitions to Setup Mode or Audit Mode may either take effect immediately (recommended) or after a reset. For implementations that require a reset, the mode transition shall be processed prior to the initialization of the SecureBoot variable, and the SetVariable() workflow shall be as follows:</p>
+<ol class="arabic simple">
+<li><p>If the variable has an authenticated attribute, it shall be authenticated as specified, and failure will result in immediate termination of this workflow by returning the appropriate error.</p></li>
+<li><p>Check secure storage to determine if a Secure Boot Mode transition is already queued. If a transition is already queued, terminate this workflow by returning EFI_ALREADY_STARTED</p></li>
+<li><p>Queue the request to secure storage</p></li>
+<li><p>The Secure Boot Mode and Policy variables SHALL remain unchanged</p></li>
+<li><p>Return EFI_WARN_RESET_REQUIRED.</p></li>
+<li><p>After reboot, if the transition is successful, Secure Boot Mode and Policy variables will change accordingly. If the transition to lower security modes is rejected or fail, the workflow is terminated and the Secure Boot Mode and Policy variables remain unchanged</p></li>
+</ol>
+<figure class="align-default" id="secure-boot-modes">
+<a class="reference internal image-reference" href="_images/Secure_Boot_and_Driver_Signing-5.png"><img alt="_images/Secure_Boot_and_Driver_Signing-5.png" src="_images/Secure_Boot_and_Driver_Signing-5.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 32.4 </span><span class="caption-text">Secure Boot Modes</span><a class="headerlink" href="#secure-boot-modes" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="enrolling-the-platform-key">
+<span id="id15"></span><h3><span class="section-number">32.3.1. </span>Enrolling The Platform Key<a class="headerlink" href="#enrolling-the-platform-key" title="Link to this heading"></a></h3>
+<p>The platform owner enrolls the public half of the Platform Key (PKpub) by calling the UEFI Boot Service <em>SetVariable()</em> as specified in <a class="reference internal" href="08_Services_Runtime_Services.html#using-the-efi-variable-authentication-3-descriptor"><span class="std std-ref">Using the EFI_VARIABLE_AUTHENTICATION_3 descriptor</span></a>. If the platform is in setup mode, then the new PKpub may be signed with its PKpriv counterpart. If the platform is in user mode, then the new PKpub must be signed with the current PKpriv. When the platform is in setup mode, a successful enrollment of a Platform Key shall cause the platform to immediately transition to user mode.</p>
+<p>The authenticated PK variable can always be read but can only be written if the platform is in setup mode, or if the platform is in user mode and the provided PKpub is signed with the current PKpriv.</p>
+<p>The name and GUID of the Platform Key variable are specified in <a class="reference internal" href="03_Boot_Manager.html#globally-defined-variables"><span class="std std-ref">Globally Defined Variables</span></a> “Globally Defined Variables” The variable has the format of a signature database as described in “Signature Database” below, with exactly one entry.</p>
+<p>The platform vendor may provide a default PKpub in the PKDefault variable described in  <a class="reference internal" href="03_Boot_Manager.html#globally-defined-variables"><span class="std std-ref">Globally Defined Variables</span></a>. This variable is formatted identically to the Platform Key variable. If present, this key may optionally be used as the public half of the Platform Key when transitioning from setup mode to user mode. If so, it may be read, placed within an <em>EFI_VARIABLE_AUTHENTICATION2</em> structure and copied to the Platform Key variable using the <em>SetVariable()</em> call.</p>
+</section>
+<section id="clearing-the-platform-key">
+<span id="id16"></span><h3><span class="section-number">32.3.2. </span>Clearing The Platform Key<a class="headerlink" href="#clearing-the-platform-key" title="Link to this heading"></a></h3>
+<p>The platform owner clears the public half of the Platform Key (PKpub) by deleting the Platform Key variable using UEFI Runtime Service <em>SetVariable()</em>. The data buffer submitted to the <em>SetVariable()</em> must be signed with the current PKpriv - see <a class="reference internal" href="08_Services_Runtime_Services.html#variable-services"><span class="std std-ref">Variable Services</span></a> for details. The name and GUID of the Platform Key variable are specified in <a class="reference internal" href="03_Boot_Manager.html#globally-defined-variables"><span class="std std-ref">Globally Defined Variables</span></a>. The platform key may also be cleared using a secure platform-specific method. When the platform key is cleared, the global variable <em>SetupMode</em> must also be updated to 1.</p>
+</section>
+<section id="transitioning-to-audit-mode">
+<span id="id17"></span><h3><span class="section-number">32.3.3. </span>Transitioning to Audit Mode<a class="headerlink" href="#transitioning-to-audit-mode" title="Link to this heading"></a></h3>
+<p>To enter Audit Mode, a new UEFI variable AuditMode is set to 1. Entering Audit Mode has the side effect of changing SetupMode == 1, PK is cleared, and the new DeployedMode == 0.</p>
+<p><strong>NOTE</strong>: <em>The AuditMode variable is only writable before</em> ExitBootServices() <em>is called when the system is</em> <strong>not</strong> <em>in Deployed Mode</em>. See <a class="reference internal" href="#secure-boot-modes"><span class="std std-ref">Secure Boot Modes</span></a>  <em>for more details.</em></p>
+</section>
+<section id="transitioning-to-deployed-mode">
+<span id="id18"></span><h3><span class="section-number">32.3.4. </span>Transitioning to Deployed Mode<a class="headerlink" href="#transitioning-to-deployed-mode" title="Link to this heading"></a></h3>
+<p>To enter Deployed Mode from Audit Mode, set the variable PK. To enter Deployed Mode from User Mode, set the variable DeployedMode to 1. This transition takes effect immediately with no reset required. Entering Deployed Mode has the side effect of changing SetupMode == 0, AuditMode == 0 and is made read-only, and DeployedMode == 1 and is made read-only. See <a class="reference internal" href="#secure-boot-modes"><span class="std std-ref">Secure Boot Modes</span></a>  for more details.</p>
+</section>
+<section id="enrolling-key-exchange-keys">
+<span id="id19"></span><h3><span class="section-number">32.3.5. </span>Enrolling Key Exchange Keys<a class="headerlink" href="#enrolling-key-exchange-keys" title="Link to this heading"></a></h3>
+<p>Key exchange keys are stored in a signature database as described in “Signature Database” below. The signature database is stored as an authenticated UEFI variable.</p>
+<p>The platform owner enrolls the key exchange keys by either calling <em>SetVariable()</em> as specified in  <a class="reference internal" href="08_Services_Runtime_Services.html#using-the-efi-variable-authentication-3-descriptor"><span class="std std-ref">Using the EFI_VARIABLE_AUTHENTICATION_3 descriptor</span></a>  with the <em>EFI_VARIABLE_APPEND_WRITE</em> attribute set and the <em>Data</em> parameter containing the new key(s), or by reading the database using <em>GetVariable(),</em> appending the new key exchange key to the existing keys and then writing the database using <em>SetVariable()</em> as specified in  <a class="reference internal" href="08_Services_Runtime_Services.html#using-the-efi-variable-authentication-3-descriptor"><span class="std std-ref">Using the EFI_VARIABLE_AUTHENTICATION_3 descriptor</span></a>  without the <em>EFI_VARIABLE_APPEND_WRITE</em> attribute set.</p>
+<p>The authenticated UEFI variable that stores the key exchange keys (KEKs) can always be read but only be written if:</p>
+<ul class="simple">
+<li><p>The platform is in user mode, and the provided variable data is signed with the current PK<sub>priv</sub>; <em>or</em> if</p></li>
+<li><p>The platform is in setup mode, in which case the variable can be written without a signature validation, but the <em>SetVariable()</em> call needs to be formatted in accordance with the procedure for authenticated variables in <a class="reference internal" href="08_Services_Runtime_Services.html#using-the-efi-variable-authentication-3-descriptor"><span class="std std-ref">Using the EFI_VARIABLE_AUTHENTICATION_3 descriptor</span></a>.</p></li>
+</ul>
+<p>The name and GUID of the Key Exchange Key variable are specified in <a class="reference internal" href="03_Boot_Manager.html#globally-defined-variables"><span class="std std-ref">Globally Defined Variables</span></a>, “Globally Defined Variables.” The platform vendor may provide a default set of Key Exchange Keys in the KEKDefault variable described in <a class="reference internal" href="03_Boot_Manager.html#globally-defined-variables"><span class="std std-ref">Globally Defined Variables</span></a>. If present, these keys (or a subset) may optionally be used when performing the initial enrollment of Key Exchange Keys. If any are to be used, they may be parsed from the variable and enrolled as described above.</p>
+</section>
+<section id="platform-firmware-key-storage-requirements">
+<span id="id20"></span><h3><span class="section-number">32.3.6. </span>Platform Firmware Key Storage Requirements<a class="headerlink" href="#platform-firmware-key-storage-requirements" title="Link to this heading"></a></h3>
+<p>This section describes the platform firmware storage
+requirements of the different types of keys.</p>
+<dl class="simple">
+<dt>Platform Keys:</dt><dd><p>The public key must be stored in non-volatile storage which
+is tamper and delete resistant.</p>
+</dd>
+<dt>Key Exchange Keys:</dt><dd><p>The public key must be stored in non-volatile storage which
+is tamper resistant.
+Careful consideration should be given to the security and
+configuration of any out-of-band management agent (e.g.
+hypervisor or service processor) such that the platform
+cannot exploit the management agent in order to circumvent
+Secure Boot.</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="firmware-os-key-exchange-passing-public-keys">
+<span id="id21"></span><h2><span class="section-number">32.4. </span>Firmware/OS Key Exchange: Passing Public Keys<a class="headerlink" href="#firmware-os-key-exchange-passing-public-keys" title="Link to this heading"></a></h2>
+<p>This section describes a means of passing public keys
+from the OS to the platform firmware so that these keys
+can be used to securely pass information between the OS
+and the platform firmware.
+Typically, the OS has been unable to communicate
+sensitive information or enforce any sort of policy
+because of the possibility of spoofing by a malicious
+software agent. That is, the platform firmware has been
+unable to trust the OS. By enrolling these public keys,
+authorized by the platform owner, the platform firmware
+can now check the signature of data passed by the
+operating system.
+Of course, if the malicious software agent is running as
+part of the OS, such as a rootkit, then any communication
+between the firmware and operating system still remains
+the subject of spoofing as the malicious code has access
+to the key exchange key.</p>
+<section id="signature-database">
+<span id="id22"></span><h3><span class="section-number">32.4.1. </span>Signature Database<a class="headerlink" href="#signature-database" title="Link to this heading"></a></h3>
+<section id="efi-signature-data">
+<span id="id23"></span><h4><span class="section-number">32.4.1.1. </span>EFI_SIGNATURE_DATA<a class="headerlink" href="#efi-signature-data" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>The format of a signature database.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma pack(1)</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="n">_EFI_SIGNATURE_DATA</span> <span class="p">{</span>
+  <span class="n">EFI_GUID</span>                 <span class="n">SignatureOwner</span><span class="p">;</span>
+  <span class="n">UINT8</span>                    <span class="n">SignatureData</span> <span class="p">[</span><span class="n">_</span><span class="p">];</span>
+<span class="p">}</span>   <span class="n">EFI_SIGNATURE_DATA</span><span class="p">;</span>
+
+<span class="n">typedef</span> <span class="n">struct</span> <span class="n">_EFI_SIGNATURE_LIST</span> <span class="p">{</span>
+  <span class="n">EFI_GUID</span>                 <span class="n">SignatureType</span><span class="p">;</span>
+  <span class="n">UINT32</span>                   <span class="n">SignatureListSize</span><span class="p">;</span>
+  <span class="n">UINT32</span>                   <span class="n">SignatureHeaderSize</span><span class="p">;</span>
+  <span class="n">UINT32</span>                   <span class="n">SignatureSize</span><span class="p">;</span>
+<span class="o">//</span>   <span class="n">UINT8</span>                 <span class="n">SignatureHeader</span> <span class="p">[</span><span class="n">SignatureHeaderSize</span><span class="p">];</span>
+<span class="o">//</span>   <span class="n">EFI_SIGNATURE_DATA</span>    <span class="n">Signatures</span> <span class="p">[</span><span class="n">__</span><span class="p">][</span><span class="n">SignatureSize</span><span class="p">];</span>
+<span class="p">}</span>   <span class="n">EFI_SIGNATURE_LIST</span><span class="p">;</span>
+<span class="c1">#pragma pack()</span>
+</pre></div>
+</div>
+<p><strong>Members</strong></p>
+<dl class="simple">
+<dt>SignatureListSize</dt><dd><p>Total size of the signature list, including this header.</p>
+</dd>
+<dt>SignatureType</dt><dd><p>Type of the signature. GUID signature types are defined in “Related Definitions” below.</p>
+</dd>
+<dt>SignatureHeaderSize</dt><dd><p>Size of the signature header which precedes the array of signatures.</p>
+</dd>
+<dt>SignatureSize</dt><dd><p>Size of each signature. Must be at least the size of <em>EFI_SIGNATURE_DATA</em>.</p>
+</dd>
+<dt>SignatureHeader</dt><dd><p>Header before the array of signatures. The format of this header is specified by the <em>SignatureType</em>.</p>
+</dd>
+<dt>Signatures</dt><dd><p>An array of signatures. Each signature is <em>SignatureSize</em> bytes in length. The format of the signature is defined by the <em>SignatureType</em>.</p>
+</dd>
+<dt>SignatureOwner</dt><dd><p>An identifier which identifies the agent which added the signature to the list.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The signature database consists of zero or more signature lists. The size of the signature database can be determined by examining the size of the UEFI variable.</p>
+<p>Each signature list is a list of signatures of one type, identified by <em>SignatureType</em>. The signature list contains a header and then an array of zero or more signatures in the format specified by the header. The size of each signature in the signature list is specified by <em>SignatureSize</em>.</p>
+<p>Each signature has an owner <em>SignatureOwner,</em> which is a GUID identifying the agent which inserted the signature in the database. Agents might include the operating system or an OEM-supplied driver or application. Agents may examine this field to understand whether they should manage the signature or not.</p>
+<figure class="align-default" id="signature-lists">
+<a class="reference internal image-reference" href="_images/Secure_Boot_and_Driver_Signing-6.png"><img alt="_images/Secure_Boot_and_Driver_Signing-6.png" src="_images/Secure_Boot_and_Driver_Signing-6.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 32.5 </span><span class="caption-text">Signature Lists</span><a class="headerlink" href="#signature-lists" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_CERT_SHA256_GUID \</span>
+  <span class="p">{</span> <span class="mh">0xc1c41626</span><span class="p">,</span> <span class="mh">0x504c</span><span class="p">,</span> <span class="mh">0x4092</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0xac</span><span class="p">,</span> <span class="mh">0xa9</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span> <span class="mh">0xf9</span><span class="p">,</span> <span class="mh">0x36</span><span class="p">,</span> <span class="mh">0x93</span><span class="p">,</span> <span class="mh">0x43</span><span class="p">,</span> <span class="mh">0x28</span> <span class="p">}</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p>This identifies a signature containing a SHA-256 hash. The <em>SignatureHeader</em> size shall always be 0. The <em>SignatureSize</em> shall always be 16 (size of <em>SignatureOwner</em> component) + 32 bytes.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_CERT_RSA2048_GUID \</span>
+  <span class="p">{</span> <span class="mh">0x3c5766e8</span><span class="p">,</span> <span class="mh">0x269c</span><span class="p">,</span> <span class="mh">0x4e34</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0xaa</span><span class="p">,</span> <span class="mh">0x14</span><span class="p">,</span> <span class="mh">0xed</span><span class="p">,</span> <span class="mh">0x77</span><span class="p">,</span> <span class="mh">0x6e</span><span class="p">,</span> <span class="mh">0x85</span><span class="p">,</span> <span class="mh">0xb3</span><span class="p">,</span> <span class="mh">0xb6</span> <span class="p">}</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p>This identifies a signature containing an RSA-2048 key. The key (only the modulus since the public key exponent is known to be 0x10001) shall be stored in big-endian order.</p>
+<p>The <em>SignatureHeader</em> size shall always be 0. The <em>SignatureSize</em> shall always be 16 (size of <em>SignatureOwner</em> component) + 256 bytes.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_CERT_RSA2048_SHA256_GUID \</span>
+  <span class="p">{</span> <span class="mh">0xe2b36190</span><span class="p">,</span> <span class="mh">0x879b</span><span class="p">,</span> <span class="mh">0x4a3d</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0xad</span><span class="p">,</span> <span class="mh">0x8d</span><span class="p">,</span> <span class="mh">0xf2</span><span class="p">,</span> <span class="mh">0xe7</span><span class="p">,</span> <span class="mh">0xbb</span><span class="p">,</span> <span class="mh">0xa3</span><span class="p">,</span> <span class="mh">0x27</span><span class="p">,</span> <span class="mh">0x84</span> <span class="p">}</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p>This identifies a signature containing a RSA-2048 signature of a SHA-256 hash. The <em>SignatureHeader</em> size shall always be 0. The <em>SignatureSize</em> shall always be 16 (size of <em>SignatureOwner</em> component) + 256 bytes.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_CERT_SHA1_GUID \</span>
+  <span class="p">{</span> <span class="mh">0x826ca512</span><span class="p">,</span> <span class="mh">0xcf10</span><span class="p">,</span> <span class="mh">0x4ac9</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0xb1</span><span class="p">,</span> <span class="mh">0x87</span><span class="p">,</span> <span class="mh">0xbe</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x49</span><span class="p">,</span> <span class="mh">0x66</span><span class="p">,</span> <span class="mh">0x31</span><span class="p">,</span> <span class="mh">0xbd</span> <span class="p">}</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p>This identifies a signature containing a SHA-1 hash. The <em>SignatureSize</em> shall always be 16 (size of <em>SignatureOwner</em> component) + 20 bytes.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_CERT_RSA2048_SHA1_GUID \</span>
+  <span class="p">{</span> <span class="mh">0x67f8444f</span><span class="p">,</span> <span class="mh">0x8743</span><span class="p">,</span> <span class="mh">0x48f1</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0xa3</span><span class="p">,</span> <span class="mh">0x28</span><span class="p">,</span> <span class="mh">0x1e</span><span class="p">,</span> <span class="mh">0xaa</span><span class="p">,</span> <span class="mh">0xb8</span><span class="p">,</span> <span class="mh">0x73</span><span class="p">,</span> <span class="mh">0x60</span><span class="p">,</span> <span class="mh">0x80</span> <span class="p">}</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p>This identifies a signature containing a RSA-2048 signature of a SHA-1 hash. The <em>SignatureHeader</em> size shall always be 0. The <em>SignatureSize</em> shall always be 16 (size of <em>SignatureOwner</em> component) + 256 bytes.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define *EFI_CERT_X509_GUID* \</span>
+  <span class="p">{</span> <span class="mh">0xa5c059a1</span><span class="p">,</span> <span class="mh">0x94e4</span><span class="p">,</span> <span class="mh">0x4aa7</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0x87</span><span class="p">,</span> <span class="mh">0xb5</span><span class="p">,</span> <span class="mh">0xab</span><span class="p">,</span> <span class="mh">0x15</span><span class="p">,</span> <span class="mh">0x5c</span><span class="p">,</span> <span class="mh">0x2b</span><span class="p">,</span> <span class="mh">0xf0</span><span class="p">,</span> <span class="mh">0x72</span> <span class="p">}</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p>This identifies a signature based on a DER-encoded X.509 certificate. If the signature is an X.509 certificate then verification of the signature of an image should validate the public key certificate in the image using certificate path verification, up to this X.509 certificate as a trusted root. If the signature is in a device signature variable, this signature is one root certificate authority (CA) certificate or an intermediate certificate for the device. The <em>SignatureHeader</em> size shall always be 0. The <em>SignatureSize</em> may vary but shall always be 16 (size of the <em>SignatureOwner</em> component) + the size of the certificate itself.</p>
+<p><strong>NOTE</strong>: <em>This means that each certificate will normally be in a separate</em> EFI_SIGNATURE_LIST.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_CERT_SHA224_GUID \</span>
+  <span class="p">{</span> <span class="mh">0xb6e5233</span><span class="p">,</span> <span class="mh">0xa65c</span><span class="p">,</span> <span class="mh">0x44c9</span><span class="p">,</span> \
+  <span class="p">{</span><span class="mh">0x94</span><span class="p">,</span> <span class="mh">0x07</span><span class="p">,</span> <span class="mh">0xd9</span><span class="p">,</span> <span class="mh">0xab</span><span class="p">,</span> <span class="mh">0x83</span><span class="p">,</span> <span class="mh">0xbf</span><span class="p">,</span> <span class="mh">0xc8</span><span class="p">,</span> <span class="mh">0xbd</span><span class="p">}</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p>This identifies a signature containing a SHA-224 hash. The <em>SignatureHeader</em> size shall always be 0. The <em>SignatureSize</em> shall always be 16 (size of <em>SignatureOwner</em> component) + 28 bytes.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_CERT_SHA384_GUID \</span>
+  <span class="p">{</span> <span class="mh">0xff3e5307</span><span class="p">,</span> <span class="mh">0x9fd0</span><span class="p">,</span> <span class="mh">0x48c9</span><span class="p">,</span> \
+  <span class="p">{</span><span class="mh">0x85</span><span class="p">,</span> <span class="mh">0xf1</span><span class="p">,</span> <span class="mh">0x8a</span><span class="p">,</span> <span class="mh">0xd5</span><span class="p">,</span> <span class="mh">0x6c</span><span class="p">,</span> <span class="mh">0x70</span><span class="p">,</span> <span class="mh">0x1e</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">}};</span>
+</pre></div>
+</div>
+<p>This identifies a signature containing a SHA-384 hash. The <em>SignatureHeader</em> size shall always be 0. The <em>SignatureSize</em> shall always be 16 (size of <em>SignatureOwner</em> component) + 48 bytes.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_CERT_SHA512_GUID \</span>
+  <span class="p">{</span> <span class="mh">0x93e0fae</span><span class="p">,</span> <span class="mh">0xa6c4</span><span class="p">,</span> <span class="mh">0x4f50</span><span class="p">,</span> \
+  <span class="p">{</span><span class="mh">0x9f</span><span class="p">,</span> <span class="mh">0x1b</span><span class="p">,</span> <span class="mh">0xd4</span><span class="p">,</span> <span class="mh">0x1e</span><span class="p">,</span> <span class="mh">0x2b</span><span class="p">,</span> <span class="mh">0x89</span><span class="p">,</span> <span class="mh">0xc1</span><span class="p">,</span> <span class="mh">0x9a</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p>This identifies a signature containing a SHA-512 hash. The <em>SignatureHeader</em> size shall always be 0. The <em>SignatureSize</em> shall always be 16 (size of <em>SignatureOwner</em> component) + 64 bytes.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_CERT_X509_SHA256_GUID \</span>
+  <span class="p">{</span> <span class="mh">0x3bd2a492</span><span class="p">,</span> <span class="mh">0x96c0</span><span class="p">,</span> <span class="mh">0x4079</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0xb4</span><span class="p">,</span> <span class="mh">0x20</span><span class="p">,</span> <span class="mh">0xfc</span><span class="p">,</span> <span class="mh">0xf9</span><span class="p">,</span> <span class="mh">0x8e</span><span class="p">,</span> <span class="mh">0xf1</span><span class="p">,</span> <span class="mh">0x03</span><span class="p">,</span> <span class="mh">0xed</span> <span class="p">}</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma pack(1)</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="n">_EFI_CERT_X509_SHA256</span> <span class="p">{</span>
+  <span class="n">EFI_SHA256_HASH</span>          <span class="n">ToBeSignedHash</span><span class="p">;</span>
+  <span class="n">EFI_TIME</span>                 <span class="n">TimeOfRevocation</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">EFI_CERT_X509_SHA256</span><span class="p">;</span>
+<span class="c1">#pragma pack()</span>
+</pre></div>
+</div>
+<p><strong>Members</strong></p>
+<dl>
+<dt>ToBeSignedHash</dt><dd><p>The SHA256 hash of an X.509 certificate’s To-Be-Signed contents.</p>
+</dd>
+<dt>TimeOfRevocation</dt><dd><p>The time that the certificate shall be considered to be revoked.</p>
+<p>This identifies a signature containing the SHA256 hash of an X.509 certificate’s To-Be-Signed contents, and a time of revocation. If the signature is in a device signature variable, this signature is a SHA256 hash of a root certificate authority (CA) certificate or an intermediate certificate for the device. The <em>SignatureHeader</em> size shall always be 0. The <em>SignatureSize</em> shall always be 16 (size of the <em>SignatureOwner</em> component) + 48 bytes for an <em>EFI_CERT_X509_SHA256</em> structure. If the <em>TimeOfRevocation</em> is non-zero, the certificate should be considered to be revoked from that time and onwards, and otherwise the certificate shall be considered to always be revoked.</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_CERT_X509_SHA384_GUID \</span>
+  <span class="p">{</span> <span class="mh">0x7076876e</span><span class="p">,</span> <span class="mh">0x80c2</span><span class="p">,</span> <span class="mh">0x4ee6</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0xaa</span><span class="p">,</span> <span class="mh">0xd2</span><span class="p">,</span> <span class="mh">0x28</span><span class="p">,</span> <span class="mh">0xb3</span><span class="p">,</span> <span class="mh">0x49</span><span class="p">,</span> <span class="mh">0xa6</span><span class="p">,</span> <span class="mh">0x86</span><span class="p">,</span> <span class="mh">0x5b</span> <span class="p">}</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma pack(1)</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="n">_EFI_CERT_X509_SHA384</span> <span class="p">{</span>
+  <span class="n">EFI_SHA384_HASH</span>             <span class="n">ToBeSignedHash</span><span class="p">;</span>
+  <span class="n">EFI_TIME</span>                    <span class="n">TimeOfRevocation</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">EFI_CERT_X509_SHA384</span><span class="p">;</span>
+<span class="c1">#pragma pack()</span>
+</pre></div>
+</div>
+<p><strong>Members</strong></p>
+<dl class="simple">
+<dt>ToBeSignedHash</dt><dd><p>The SHA384 hash of an X.509 certificate’s To-Be-Signed contents.</p>
+</dd>
+<dt>TimeOfRevocation</dt><dd><p>The time that the certificate shall be considered to be revoked.</p>
+</dd>
+</dl>
+<p>This identifies a signature containing the SHA384 hash of an X.509 certificate’s To-Be-Signed contents, and a time of revocation. If the signature is in a device signature variable, this signature is a SHA384 hash of a root certificate authority (CA) certificate or an intermediate certificate for the device. The <em>SignatureHeader</em> size shall always be 0. The <em>SignatureSize</em> shall always be 16 (size of the <em>SignatureOwner</em> component) + 64 bytes for an <em>EFI_CERT_X509_SHA384</em> structure. If the <em>TimeOfRevocation</em> is non-zero, the certificate should be considered to be revoked from that time and onwards, and otherwise the certificate shall be considered to always be revoked.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_CERT_X509_SHA512_GUID \</span>
+  <span class="p">{</span> <span class="mh">0x446dbf63</span><span class="p">,</span> <span class="mh">0x2502</span><span class="p">,</span> <span class="mh">0x4cda</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0xbc</span><span class="p">,</span> <span class="mh">0xfa</span><span class="p">,</span> <span class="mh">0x24</span><span class="p">,</span> <span class="mh">0x65</span><span class="p">,</span> <span class="mh">0xd2</span><span class="p">,</span> <span class="mh">0xb0</span><span class="p">,</span> <span class="mh">0xfe</span><span class="p">,</span> <span class="mh">0x9d</span> <span class="p">}</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma pack(1)</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="n">_EFI_CERT_X509_SHA512</span> <span class="p">{</span>
+  <span class="n">EFI_SHA512_HASH</span>             <span class="n">ToBeSignedHash</span><span class="p">;</span>
+  <span class="n">EFI_TIME</span>                    <span class="n">TimeOfRevocation</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">EFI_CERT_X509_SHA512</span><span class="p">;</span>
+<span class="c1">#pragma pack()</span>
+</pre></div>
+</div>
+<p><strong>Members</strong></p>
+<dl class="simple">
+<dt>ToBeSignedHash</dt><dd><p>The SHA512 hash of an X.509 certificate’s To-Be-Signed contents.</p>
+</dd>
+<dt>TimeOfRevocation</dt><dd><p>The time that the certificate shall be considered to be revoked.</p>
+</dd>
+</dl>
+<p>This identifies a signature containing the SHA512 hash of an X.509 certificate’s To-Be-Signed contents, and a time of revocation. If the signature is in a device signature variable, this signature is a SHA512 hash of a root certificate authority (CA) certificate or an intermediate certificate for the device. The <em>SignatureHeader</em> size shall always be 0. The <em>SignatureSize</em> shall always be 16 (size of the <em>SignatureOwner</em> component) + 80 bytes for an <em>EFI_CERT_X509_SHA512</em> structure. If the <em>TimeOfRevocation</em> is non-zero, the certificate should be considered to be revoked from that time and onwards, and otherwise the certificate shall be considered to always be revoked.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_CERT_SM3_GUID \</span>
+  <span class="p">{</span> <span class="mh">0x57347f87</span><span class="p">,</span> <span class="mh">0x7a9b</span><span class="p">,</span> <span class="mh">0x403a</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0xb9</span><span class="p">,</span> <span class="mh">0x3c</span><span class="p">,</span> <span class="mh">0xdc</span><span class="p">,</span> <span class="mh">0x4a</span><span class="p">,</span> <span class="mh">0xfb</span><span class="p">,</span> <span class="mh">0x7a</span><span class="p">,</span> <span class="mh">0xe</span><span class="p">,</span> <span class="mh">0xbc</span> <span class="p">}</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>This identifies a signature containing a SM3 hash. The SignatureHeader size shall always be 0.
+The SignatureSize shall always be 16 (size of SignatureOwner component) + 32 bytes.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_CERT_X509_SM3_GUID \</span>
+  <span class="p">{</span> <span class="mh">0x60d807e5</span><span class="p">,</span> <span class="mh">0x10b4</span><span class="p">,</span> <span class="mh">0x49a9</span><span class="p">,</span>  \
+  <span class="p">{</span><span class="mh">0x93</span><span class="p">,</span> <span class="mh">0x31</span><span class="p">,</span> <span class="mh">0xe4</span><span class="p">,</span> <span class="mh">0x4</span><span class="p">,</span> <span class="mh">0x37</span><span class="p">,</span> <span class="mh">0x88</span><span class="p">,</span> <span class="mh">0x8d</span><span class="p">,</span> <span class="mh">0x37</span> <span class="p">}</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">UINT8</span> <span class="n">EFI_SM3_HASH</span><span class="p">[</span><span class="mi">32</span><span class="p">];</span>
+<span class="c1">#pragma pack(1)</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="n">_EFI_CERT_X509_SM3</span> <span class="p">{</span>
+  <span class="n">EFI_SM3_HASH</span> <span class="n">ToBeSignedHash</span><span class="p">;</span>
+  <span class="n">EFI_TIME</span> <span class="n">TimeOfRevocation</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_CERT_X509_SM3</span><span class="p">;</span>
+<span class="c1">#pragma pack()</span>
+</pre></div>
+</div>
+<p><strong>Members</strong></p>
+<dl class="simple">
+<dt>ToBeSignedHash</dt><dd><p>The SM3 hash of an X.509 certificate’s To-Be-Signed contents.</p>
+</dd>
+<dt>TimeOfRevocation</dt><dd><p>The time that the certificate shall be considered to be revoked.</p>
+</dd>
+</dl>
+<p>This identifies a signature containing the SM3 hash of an X.509 certificate’s To-Be-Signed contents, and a time of revocation. The SignatureHeader size shall always be 0. The SignatureSize shall always be 16 (size of the SignatureOwner component) + 32 bytes for an EFI_CERT_X509_SM3 structure. If the TimeOfRevocation is non-zero, the certificate should be considered to be revoked from that time and onwards, and otherwise the certificate shall be considered to always be revoked.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_CERT_EXTERNAL_MANAGEMENT_GUID \</span>
+  <span class="p">{</span> <span class="mh">0x452e8ced</span><span class="p">,</span> <span class="mh">0xdfff</span><span class="p">,</span> <span class="mh">0x4b8c</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0xae</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x51</span><span class="p">,</span> <span class="mh">0x18</span><span class="p">,</span> <span class="mh">0x86</span><span class="p">,</span> <span class="mh">0x2e</span><span class="p">,</span> <span class="mh">0x68</span><span class="p">,</span> <span class="mh">0x2c</span> <span class="p">}</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p>This <em>SignatureType</em> describes a pseudo-signature which will not facilitate authentication. It is only meaningful within a signature list used for authenticating writes through <em>SetVariable(),</em> and is only effective if it is the only signature present in that signature list. It allows a signature list to be populated without providing any means for <em>SetVariable()</em> to succeed. This signature type is intended for use on a platform with an external out-of-band management agent (e.g. hypervisor or service processor). When a platform is configured such that only signatures of this <em>SignatureType</em> are available for authenticating writes to a variable, that variable may only be modified by the external management agent using a platform-specific interface.</p>
+<p>When a write may be authenticated using any signature from multiple signature lists, the presence of this signature in one of those signature lists does not inhibit the use of signatures present in the other signature lists. For example, if this signature is placed in PK, an attempt to write to db using <em>SetVariable()</em> will still succeed if it is signed by a valid KEKpriv, but a write to PK or KEK through <em>SetVariable()</em> cannot succeed because no PKpriv exists.</p>
+<p>The <em>SignatureHeader</em> size shall always be 0. The <em>SignatureSize</em> shall always be 16 (size of <em>SignatureOwner</em> component) + 1 byte. The one byte of <em>SignatureData</em> exists only for compatibility reasons; It should be written as zero, and any value read should be ignored.</p>
+</section>
+</section>
+<section id="image-execution-information-table">
+<span id="id24"></span><h3><span class="section-number">32.4.2. </span>Image Execution Information Table<a class="headerlink" href="#image-execution-information-table" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>When <em>AuditMode==0,</em> if the image’s signature is not found in the authorized database, or is found in the forbidden database, the image will not be started and instead, information about it will be placed in the EFI_IMAGE_EXECUTION_INFO_TABLE (see <a class="reference internal" href="#image-execution-information-table"><span class="std std-ref">Image Execution Information Table</span></a>).</p>
+<p>When <em>AuditMode==1,</em> <em>an</em> <em>EFI_IMAGE_EXECUTION_INFO</em> <em>element is created in the</em> <em>EFI_IMAGE_EXECUTION_INFO_TABLE</em> <em>for every certificate found in the certificate table of every image that is validated.</em></p>
+<p>Additionally for every image, an element will be created in the table for every EFI_CERT_SHAXXX that is supported by the platform. The contents of* <em>Action</em> <em>for each element are determined by comparing that specific element’s</em> <em>Signature</em> <em>(which will contain exactly 1</em> <em>EFI_SIGNATURE_DATA</em> <em>) to the currently-configured image security databases and policies, and shall be either</em> <em>EFI_IMAGE_EXECUTION_AUTH_SIG_PASSED</em>, <em>EFI_IMAGE_EXECUTION_AUTH_SIG_FAILED</em>, <em>EFI_IMAGE_EXECUTION_AUTH_SIG_NOT_FOUND</em>, <em>EFI_IMAGE_EXECUTION_AUTH_SIG_FOUND</em>, or <em>EFI_IMAGE_EXECUTION_POLICY_FAILED</em>.</p>
+<p>Finally, because the system is in Audit Mode, all modules are initialized even if they fail to authenticate, and the <em>EFI_IMAGE_EXECUTION_INITIALIZED</em> bit shall be set in <em>Action</em> for all elements.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">EFI_IMAGE_EXECUTION_ACTION</span>     <span class="n">Action</span><span class="p">;</span>
+  <span class="n">UINT32</span>                         <span class="n">InfoSize</span><span class="p">;</span>
+<span class="o">//</span> <span class="n">CHAR16</span>                        <span class="n">Name</span> <span class="p">[</span><span class="n">__</span><span class="p">];</span>
+<span class="o">//</span> <span class="n">EFI_DEVICE_PATH_PROTOCOL</span>      <span class="n">DevicePath</span><span class="p">;</span>
+<span class="o">//</span> <span class="n">EFI_SIGNATURE_LIST</span>            <span class="n">Signature</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_IMAGE_EXECUTION_INFO</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>Action</dt><dd><p>Describes the action taken by the firmware regarding this image. Type EFI_IMAGE_EXECUTION_ACTION is described in “Related Definitions” below.</p>
+</dd>
+<dt>InfoSize</dt><dd><p>Size of all of the entire structure.</p>
+</dd>
+<dt>Name</dt><dd><p>If this image was a UEFI device driver (for option ROM, for example) this is the null-terminated, user-friendly name for the device. If the image was for an application, then this is the name of the application. If this cannot be determined, then a simple NULL character should be put in this position.</p>
+</dd>
+<dt>DevicePath</dt><dd><p>Image device path. The image device path typically comes from the Loaded Image Device Path Protocol installed on the image handle. If image device path cannot be determined, a simple end-of-path device node should be put in this position.</p>
+</dd>
+<dt>Signature</dt><dd><p>Zero or more image signatures. If the image contained no signatures, then this field is empty. The type <em>WIN_CERTIFICATE</em> is defined in chapter 26.</p>
+</dd>
+</dl>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINTN</span>                       <span class="n">NumberOfImages</span><span class="p">;</span>
+  <span class="n">EFI_IMAGE_EXECUTION_INFO</span>    <span class="n">InformationInfo</span><span class="p">[</span><span class="n">__</span><span class="p">]</span>
+<span class="p">}</span>   <span class="n">EFI_IMAGE_EXECUTION_INFO_TABLE</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>NumberOfImages</dt><dd><p>Number of <em>EFI_IMAGE_EXECUTION_INFO</em> structures.</p>
+</dd>
+<dt>InformationInfo</dt><dd><p><em>NumberOfImages</em> instances of  <em>EFI_IMAGE_EXECUTION_INFO</em> structures.</p>
+</dd>
+</dl>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">UINT32</span> <span class="n">EFI_IMAGE_EXECUTION_ACTION</span><span class="p">;</span>
+
+<span class="c1">#define EFI_IMAGE_EXECUTION_AUTHENTICATION      0x00000007</span>
+<span class="c1">#define EFI_IMAGE_EXECUTION_AUTH_UNTESTED       0x00000000</span>
+<span class="c1">#define EFI_IMAGE_EXECUTION_AUTH_SIG_FAILED     0x00000001</span>
+<span class="c1">#define EFI_IMAGE_EXECUTION_AUTH_SIG_PASSED     0x00000002</span>
+<span class="c1">#define EFI_IMAGE_EXECUTION_AUTH_SIG_NOT_FOUND  0x00000003</span>
+<span class="c1">#define EFI_IMAGE_EXECUTION_AUTH_SIG_FOUND      0x00000004</span>
+<span class="c1">#define EFI_IMAGE_EXECUTION_POLICY_FAILED       0x00000005</span>
+
+<span class="c1">#define EFI_IMAGE_EXECUTION_INITIALIZED         0x00000008</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>This structure describes an image in the EFI System Configuration Table. It is only required in the case where image signatures are being checked and the image was not initialized because its signature failed, when AuditMode==1, or was not found in the signature database <em>and</em> an authorized user or the owner would not authorize its execution. It may be used in other cases as well.</p>
+<p>In these cases, the information about the image is copied into the EFI System Configuration Table. Information about other images which were successfully initialized may also be included as well, but this is not required.</p>
+<p>The <em>Action</em> field describes what action the firmware took with regard to the image and what other information it has about the image, including the device which it is related to.</p>
+<p>First, this field describes the results of the firmware’s attempt to authenticate the image.</p>
+<table class="longtable docutils align-default" id="authentication-attempt-status-codes">
+<caption><span class="caption-number">Table 32.5 </span><span class="caption-text">Authentication Attempt Status Codes</span><a class="headerlink" href="#authentication-attempt-status-codes" title="Link to this table"></a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Authentication attempt status</p></th>
+<th class="head"><p>Condition met</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><em>EFI_IMAGE_EXECUTION_AUTH_UNTESTED</em></p></td>
+<td><p>The image contained no certificates</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>EFI_IMAGE_EXECUTION_AUTH_SIG_FAILED</em></p></td>
+<td><dl class="simple">
+<dt>The image has at least one certificate, and either:</dt><dd><ul class="simple">
+<li><p>An image certificate is in the forbidden database, <strong>or</strong></p></li>
+<li><p>A digest of an image certificate is in the forbidden database, <strong>or</strong></p></li>
+<li><p>The image signature check failed.</p></li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td><p><em>EFI_IMAGE_EXECUTION_AUTH_SIG_PASSED</em></p></td>
+<td><dl class="simple">
+<dt>The image has at least one certificate, and either:</dt><dd><ul class="simple">
+<li><p>An image certificate is in authroized database.</p></li>
+<li><p>The image digest is in the authorized database.</p></li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-odd"><td><p><em>EFI_IMAGE_EXECUTION_AUTH_SIG_NOT_FOUND</em></p></td>
+<td><dl class="simple">
+<dt>The image has at least one certificate, and:</dt><dd><ul class="simple">
+<li><p>the image certificate is not found in the authorized database, <strong>and</strong></p></li>
+<li><p>the image digest is not in the authorized database.</p></li>
+</ul>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="row-even"><td><p><em>EFI_IMAGE_EXECUTION_AUTH_SIG_FOUND</em></p></td>
+<td><p>The image has at least one certificate, and the image digest is in the forbidden database.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>EFI_IMAGE_EXECUTION_POLICY_FAILED</em></p></td>
+<td><p>Authentication failed because of (unspecified) firmware security policy.</p></td>
+</tr>
+</tbody>
+</table>
+<p>Second, this field describes whether the image was initialized or not.</p>
+<p>This table can be used by an agent which executes later to audit which images were not loaded and perhaps query other sources to discover whether the image should be authorized. If so, the agent can use the method described in “Signature Database Update” to update the Signature Database with the image’s signature. Switching the system into Audit Mode generates a more verbose table which provides additional insights to this agent.</p>
+<p>If an attempt to boot a legacy non-UEFI OS takes place when the system is in User Mode, the OS load shall fail and a corresponding <em>EFI_IMAGE_EXECUTION_INFO</em> entry shall be created with Action set to <em>EFI_IMAGE_EXECUTION_AUTH_UNTESTED,</em> Name set to the NULL-terminated “Description String” from the BIOS Boot Specification Device Path and DevicePath set to the BIOS Boot Specification Device Path ( <a class="reference internal" href="10_Protocols_Device_Path_Protocol.html#bios-boot-specification-device-path"><span class="std std-ref">BIOS Boot Specification Device Path</span></a> ).</p>
+</section>
+</section>
+<section id="uefi-image-validation">
+<span id="id25"></span><h2><span class="section-number">32.5. </span>UEFI Image Validation<a class="headerlink" href="#uefi-image-validation" title="Link to this heading"></a></h2>
+<section id="overview">
+<h3><span class="section-number">32.5.1. </span>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h3>
+<p>This section describes a way to use the platform ownership model described in the previous section and the key exchange mechanism to allow the firmware to authenticate a UEFI image, such as an OS loader or an option ROM, using the digital signing mechanisms described here.</p>
+<p>The hand-off between the platform firmware and the operating system is a critical part of ensuring secure boot. Since there are large numbers of operating systems and a large number of minor variations in the loaders for those operating systems, it is difficult to carry all possible keys or signatures within the firmware as it ships. This requires some sort of update mechanism, to identify the proper loader. But, as with any update mechanism, there is the risk of allowing malicious software to “authenticate” itself, posing as the real operating system.</p>
+<p>Likewise, there are a large number of potential 3rd-party UEFI applications, drivers and option ROMs and it is difficult to carry all possible keys or signatures within the firmware as it ships.</p>
+<p>The mechanism described here requires that the platform firmware maintain a signature database, with entries for each authorized UEFI image (the authorized UEFI signature database). The signature database is a single UEFI Variable.</p>
+<p>It also requires that the platform firmware maintain a signature database with entries for each forbidden UEFI image. This signature database is also a single UEFI variable.</p>
+<p>The signature database is checked when the UEFI Boot Manager is about to start a UEFI image. If the UEFI image’s signature is not found in the authorized database, or is found in the forbidden database, the UEFI image will be deferred and information placed in the Image Execution Information Table. In the case of OS Loaders, the next boot option will be selected. The signature databases may be updated by the firmware, by a pre-OS application or by an OS application or driver.</p>
+<p>If a firmware supports the <em>EFI_CERT_X509_SHA*_GUID</em> signature types, it should support the RFC3161 timestamp specification. Images whose signature matches one of these types in the forbidden signature database shall only be considered forbidden if the firmware either does not support timestamp verification, or the signature type has a time of revocation equal to zero, or the timestamp does not pass verification against the authorized timestamp and forbidden signature databases, or finally the signature type’s time of revocation is less than or equal to the time recorded in the image signature’s timestamp. If the timestamp’s signature is authorized by the authorized timestamp database and the time recorded in the timestamp is less than the time of revocation, the image shall not be considered forbidden provided it is not forbidden by any other entry in the forbidden signature database. Finally, this requires that firmware supporting timestamp verification must support the authorized timestamp database and have a suitable time stamping authority certificate in that database.</p>
+</section>
+<section id="authorized-user">
+<span id="id26"></span><h3><span class="section-number">32.5.2. </span>Authorized User<a class="headerlink" href="#authorized-user" title="Link to this heading"></a></h3>
+<p>An <em>authorized user</em> (for the purposes of UEFI image security) is one who possesses a key exchange key (KEKpriv). This key is used to sign updates to the signature databases.</p>
+</section>
+<section id="signature-database-update">
+<span id="id27"></span><h3><span class="section-number">32.5.3. </span>Signature Database Update<a class="headerlink" href="#signature-database-update" title="Link to this heading"></a></h3>
+<p>The Authorized, Forbidden, Timestamp, and Recovery signature databases are stored as UEFI authenticated variables (see <a class="reference internal" href="08_Services_Runtime_Services.html#variable-services"><span class="std std-ref">Variable Services</span></a>) for the GUID.</p>
+<div class="line-block">
+<div class="line"><em>EFI_IMAGE_SECURITY_DATABASE_GUID</em> and the names</div>
+<div class="line"><em>EFI_IMAGE_SECURITY_DATABASE,</em></div>
+<div class="line"><em>EFI_IMAGE_SECURITY_DATABASE1,</em></div>
+<div class="line"><em>EFI_IMAGE_SECURITY_DATABASE2,</em> and</div>
+<div class="line"><em>EFI_IMAGE_SECURITY_DATABASE3,</em> respectively.</div>
+</div>
+<p>These authenticated UEFI variables that store the signature databases (db, dbx, dbr, or dbt) can always be read but can only be written if:</p>
+<ul>
+<li><p>The platform is in user mode and the provided variable data is signed with the private half of a previously enrolled key exchange key (KEKpriv *), or the platform private key (PK<sub>priv</sub>);</p>
+<p>or if</p>
+</li>
+<li><p>The platform is in setup mode (in this case the variables can be written without a signature validation, but the <em>SetVariable()</em> call needs to be formatted in accordance with the procedure for authenticated variables in <a class="reference internal" href="08_Services_Runtime_Services.html#using-the-efi-variable-authentication-3-descriptor"><span class="std std-ref">Using the EFI_VARIABLE_AUTHENTICATION_3 descriptor</span></a>)</p></li>
+</ul>
+<p>The signature databases are in the form of Signature Databases, as described in “Signature Database” above.</p>
+<p>The platform vendor may provide a default set of entries for the Signature Database in the dbDefault, dbxDefault, dbtDefault, and dbrDefault variables described in <a class="reference internal" href="03_Boot_Manager.html#globally-defined-variables"><span class="std std-ref">Globally Defined Variables</span></a>. If present, these keys (or a subset) may optionally be used when performing the initial enrollment of signature database entries. If any are to be used, they may be parsed from the variable and enrolled as described below.</p>
+<p>If, when adding a signature to the signature database, <em>SetVariable()</em> returns <em>EFI_OUT_OF_RESOURCES,</em> indicating there is no more room, the updater may discard the new signature or it may decide to discard one of the database entries. These authenticated UEFI variables that store the signature databases (db, or dbx, dbt, or dbr) can always be read but can only be written if:</p>
+<p>The following diagram illustrates the process for adding a new signature by the OS or an application that has access to a previously enrolled key exchange key using <em>SetVariable()</em>. In the diagram, the <em>EFI_VARIABLE_APPEND_WRITE</em> attribute is not used. If <em>EFI_VARIABLE_APPEND_WRITE</em> had been used, then steps 2 and 3 could have been omitted and step 7 would have included setting the <em>EFI_VARIABLE_APPEND_WRITE</em> attribute.</p>
+<ol class="arabic simple">
+<li><p>The procedure begins by generating a new signature, in the format described by the Signature Database.</p></li>
+<li><p>Call <em>GetVariable()</em> using <em>EFI_IMAGE_SECURITY_DATABASE_GUID</em> for the*VendorGuid* parameter and <em>EFI_IMAGE_SECURITY_DATABASE</em> for the VariableName parameter.</p></li>
+<li><p>If the variable exists, go to step 5.</p></li>
+<li><p>Create an empty authorized signature database.</p></li>
+<li><p>Create a new buffer which contains the authorized signature database, along with the new signature appended to the end.</p></li>
+<li><p>Sign the new signature database using the private half of the Key Exchange Key as described in <em>SetVariable()</em>.</p></li>
+<li><p>Update the authorized signature database using the UEFI Runtime Service <em>SetVariable()</em>.</p></li>
+<li><p>If there was no error, go to step 11.</p></li>
+<li><p>If there was an error because of no more resources, determine whether the database can be shrunk any more. The algorithm by which an agent decides which signatures may be safely removed is agent-specific. In most cases, agents should not remove signatures where the SignatureOwner field is not the agent’s. If not, then go to step 11, discarding the new signature.</p></li>
+<li><p>If the signature database could be shrunk further, then remove the entries and go to step 6.</p></li>
+<li><p>Exit.</p></li>
+</ol>
+<figure class="align-default" id="process-for-adding-a-new-signature-by-the-os">
+<a class="reference internal image-reference" href="_images/Secure_Boot_and_Driver_Signing-7.png"><img alt="_images/Secure_Boot_and_Driver_Signing-7.png" src="_images/Secure_Boot_and_Driver_Signing-7.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 32.6 </span><span class="caption-text">Process for Adding a New Signature by the OS</span><a class="headerlink" href="#process-for-adding-a-new-signature-by-the-os" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="using-the-image-execution-information-table">
+<span id="using-the-efi-system-configuration-table"></span><h4><span class="section-number">32.5.3.1. </span>Using The Image Execution Information Table<a class="headerlink" href="#using-the-image-execution-information-table" title="Link to this heading"></a></h4>
+<p>During the process of loading UEFI images, the firmware must gather information about which UEFI images were not started. The firmware may additionally gather information about UEFI images which were started. The information is used to create the IEFI_IMAGE_EXECUTION_INFO_TABLE, which is added to the EFI System Configuration Table and assigned the GUID <em>EFI_IMAGE_SECURITY_DATABASE_GUID.</em></p>
+<p>For each UEFI image, the following information is collected:</p>
+<ul class="simple">
+<li><p>The image hash.</p></li>
+<li><p>The user-friendly name of the UEFI image (if known)</p></li>
+<li><p>The device path</p></li>
+<li><p>The action taken on the device (was it initialized or why was it rejected).</p></li>
+</ul>
+<p>For more information, see the Image Execution Information Table definition above ( <a class="reference internal" href="#image-execution-information-table"><span class="std std-ref">Image Execution Information Table</span></a>).</p>
+</section>
+<section id="firmware-policy">
+<span id="id28"></span><h4><span class="section-number">32.5.3.2. </span>Firmware Policy<a class="headerlink" href="#firmware-policy" title="Link to this heading"></a></h4>
+<p>The firmware may approve UEFI images for other reasons than those specified here. For example: whether the image is in the system flash, whether the device providing the UEFI image is secured (in a case, etc.) or whether the image contains another type of platform-supported digital signature.</p>
+</section>
+<section id="authorization-process">
+<span id="id29"></span><h4><span class="section-number">32.5.3.3. </span>Authorization Process<a class="headerlink" href="#authorization-process" title="Link to this heading"></a></h4>
+<p>This section describes the process by which an unknown UEFI image might be authorized to run. Implementations are not required to support all portions of this. For example, an implementation might defer all UEFI image or none.</p>
+<figure class="align-default" id="authorization-process-flow">
+<a class="reference internal image-reference" href="_images/Secure_Boot_and_Driver_Signing-8.png"><img alt="_images/Secure_Boot_and_Driver_Signing-8.png" src="_images/Secure_Boot_and_Driver_Signing-8.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 32.7 </span><span class="caption-text">Authorization Process Flow</span><a class="headerlink" href="#authorization-process-flow" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<ol class="arabic simple">
+<li><p>Reset. This is when the platform begins initialization during boot.</p></li>
+<li><p>Key Store Initialization. During the firmware initialization and before any signed UEFI images are initialized, the platform firmware must validate the signature database.</p></li>
+<li><p>UEFI Image Validation Succeeded? During initialization of an UEFI image, the UEFI Boot Manager decides whether or not the UEFI image should be initialized. By comparing the calculated UEFI image signature against that in one of the signature databases, the firmware can determine if there is a match.</p></li>
+</ol>
+<p>The security database <em>db</em> must either contain an entry with a hash value of the image (with a supported hash type), or it must contain an entry with a certificate against which an entry in the image’s certificate table can be verified. In either case verification must not succeed if the security database dbx contains any record with:</p>
+<p>– A. Any entry with <em>SignatureListType</em> of <em>EFI_CERT_SHA256_GUID</em> with any
+<em>SignatureData</em> containing the SHA-256 hash of the binary.</p>
+<p>– B. Any entry with <em>SignatureListType</em> of <em>EFI_CERT_X509_SHA256,</em> <em>EFI_CERT_X509_SHA384,</em> or <em>EFI_CERT_X509_SHA512,</em> with any SignatureData which reflects the To-Be-Signed hash included in any certificate in the signing chain of the signature being verified.</p>
+<p>– C. Any entry with <em>SignatureListType</em> of <em>EFI_CERT_X509_GUID,</em> with <em>SignatureData</em> which contains a certificate with the same Issuer, Serial Number, and To-Be-Signed hash included in any certificate in the signing chain of the signature being verified.</p>
+<p>Multiple signatures are allowed to exist in the binary’s certificate table (as per the “Attribute Certificate Table” section of the Microsoft PE/COFF Specification). Only one hash or signature is required to be present in <em>db</em> in order to pass validation, so long as neither the hash of the binary nor any present signature is reflected in dbx.</p>
+<p>Then, based on this match or its own policy, the firmware can decide whether or not to launch the UEFI image.</p>
+<ol class="arabic simple" start="4">
+<li><p>Start UEFI Image. If the UEFI Image is approved, then it is launched normally.</p></li>
+<li><p>UEFI Image Not Approved. If the UEFI image was not approved the platform firmware may use other methods to discover if the UEFI image is authorized, such as consult a disk-based catalog or ask an authorized user. The result can be one of three responses: Yes, No or Defer.</p></li>
+<li><p>UEFI Image Signature Added To Signature Database. If the user approves of the UEFI image, then the UEFI image’s signature is saved in the firmware’s signature database. If user approval is supported, then the firmware be able to update of the Signature Database. For more information, see Signature Database Update.</p></li>
+<li><p>Go To Next Boot Option. If an UEFI image is rejected, then the next boot option is selected normally and go to step 3. This is in the case where the image is listed as a boot option.</p></li>
+<li><p>UEFI Image Signature Passed In System Configuration Table. If user defers, then the UEFI image signature is copied into the Image Execution Information Table in the EFI System Configuration Table which is available to the operating system.</p></li>
+<li><p>OS Application Validates UEFI Image. An OS application determines whether the image is valid.</p></li>
+<li><p>UEFI Image Signature Added To Signature Database. For more information, see <a class="reference internal" href="#signature-database-update"><span class="std std-ref">Signature Database Update</span></a>.</p></li>
+<li><p>End.</p></li>
+</ol>
+</section>
+</section>
+</section>
+<section id="device-authentication">
+<span id="id30"></span><h2><span class="section-number">32.6. </span>Device Authentication<a class="headerlink" href="#device-authentication" title="Link to this heading"></a></h2>
+<section id="device-authentication-overview">
+<span id="id31"></span><h3><span class="section-number">32.6.1. </span>Overview<a class="headerlink" href="#device-authentication-overview" title="Link to this heading"></a></h3>
+<p>This section describes a way to use the platform ownership model to authenticate a platform device during platform boot.</p>
+<p>The platform firmware need maintain a device signature database (devdb), which includes a list of a root CA certificate or an intermediate certificate for the device. The root CA certificate or the intermediate certificate is used to authenticate the device. The device signature database is a single UEFI authenticated variable.</p>
+<p>A device root CA certificate in the device signature database may be revoked. In this case, the platform firmware should update the device signature database to remove the old certificate and add a new certificate.</p>
+<p>During the system boot, when a bus or device driver discovers a device, it follows below steps:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The bus or device driver checks if the device authentication boot mode is enabled by reading L”devAuthBoot” variable. If the variable shows the device authentication boot mode is enabled, then the bus or device driver need perform following steps.</p></li>
+<li><p>The bus or device driver may consult a policy to see if it need authenticate this device. The policy is platform specific. It could be all external devices, all PCI devices, devices attached on certain ports, etc.</p></li>
+<li><p>The bus or device driver gets the device identity information, such as a device certificate or certificate chain. For example, the Secure Protocol and Data Model (SPDM) GET_CERTIFICATE command.</p></li>
+<li><p>The bus or device driver verifies if the certificate chain is anchored by any root CA certificate or any intermediate certificate in the device signature database.</p></li>
+<li><p>The bus or device driver generates a nonce and uses a challenge/response protocol to verify if the device owns the private key associated with the device certificate. For example, the SPDM CHALLENGE or KEY_EXCHANGE command.</p></li>
+<li><p>After the bus or device driver passes all verification for the device, the bus or device driver then enables the device on the UEFI firmware environment. For example, a PCI bus driver will assign bus number, allocate PCI IO/MMIO bar, and install EFI_PCI_IO_PROTOCOL for the PCI device.</p></li>
+<li><p>If any verification fails, the bus or device driver ignores this device and notifies the platform. The platform firmware may take a platform specific action for the device or the platform. For example, a platform may ignore the device. A platform may disconnect or disable the PCI device. Or a platform may reboot the system or halt the system.</p></li>
+</ul>
+</div></blockquote>
+<p>The device authentication flow only verifies the identity of the device and ensure it is a known device. But it does not verify if a device contains the latest certificate or if the device has the latest firmware.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>A device leaf certificate may be revoked. The device signature database does not need to be updated. This can be detected by the attestation. For example, if the platform enables trusted boot flow and the platform firmware extends the device certificate chain to the trust platform module (TPM) platform configuration register (PCR). A verifier can get the device certificate and check the known certificate revocation list (CRL) to see if it is revoked.</p></li>
+<li><p>A device may include an old version firmware. It is not related to the device signature database. This is also be detected by the attestation. For example, the platform firmware may extend the device firmware measurement to TPM PCR. A verifier can get the device firmware information and compare it with the known good device integrity measurement.</p></li>
+<li><p>In both above cases, a platform may define its own policy to perform more verification. For example, a platform may enroll a small set of known revoked certificate. Or a platform may enroll the minimal secure version number for some specific devices.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="device-authentication-authorized-user">
+<span id="id32"></span><h3><span class="section-number">32.6.2. </span>Authorized User<a class="headerlink" href="#device-authentication-authorized-user" title="Link to this heading"></a></h3>
+<p>An authorized user (for the purposes of UEFI device authentication) is one who possesses a platform key (PKpriv). This key is used to sign updates to the device signature databases.</p>
+</section>
+<section id="device-signature-database-update">
+<span id="id33"></span><h3><span class="section-number">32.6.3. </span>Device Signature Database Update<a class="headerlink" href="#device-signature-database-update" title="Link to this heading"></a></h3>
+<p>The Authorized device signature databases are stored as UEFI authenticated variables (see <a class="reference internal" href="08_Services_Runtime_Services.html#variable-services"><span class="std std-ref">Variable Services</span></a>) for the GUID EFI_DEVICE_SECURITY_DATABASE_GUID.</p>
+<p>These authenticated UEFI variables that store the device signature databases (devdb) can always be read but can only be written if:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The platform is in user mode and the provided variable data is signed with the private half of the platform private key (PKpriv); or if</p></li>
+<li><p>The platform is in setup mode (in this case the variables can be written without a signature validation, but the SetVariable() call needs to be formatted in accordance with the procedure for authenticated variables in the  <a class="reference internal" href="08_Services_Runtime_Services.html#using-the-efi-variable-authentication-3-descriptor"><span class="std std-ref">Using the EFI_VARIABLE_AUTHENTICATION_3 descriptor</span></a> section.</p></li>
+</ul>
+</div></blockquote>
+<p>The platform vendor may provide a default set of entries for the Signature Database in the devdbDefault variable described in the <a class="reference internal" href="03_Boot_Manager.html#globally-defined-variables"><span class="std std-ref">Globally Defined Variables</span></a> section.</p>
+<p>The flow to update the device signature database (devdb) is exactly same as the flow to update the image signature databases, which is described in the <a class="reference internal" href="#signature-database-update"><span class="std std-ref">Signature Database Update</span></a> section.</p>
+</section>
+</section>
+<section id="secure-boot-and-driver-signing-code-definitions">
+<span id="id34"></span><h2><span class="section-number">32.7. </span>Code Definitions<a class="headerlink" href="#secure-boot-and-driver-signing-code-definitions" title="Link to this heading"></a></h2>
+<section id="uefi-image-variable-guid-variable-name">
+<span id="id35"></span><h3><span class="section-number">32.7.1. </span>UEFI Image Variable GUID &amp; Variable Name<a class="headerlink" href="#uefi-image-variable-guid-variable-name" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Constants used for UEFI signature database variable access.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_IMAGE_SECURITY_DATABASE_GUID \</span>
+  <span class="p">{</span> <span class="mh">0xd719b2cb</span><span class="p">,</span> <span class="mh">0x3d3a</span><span class="p">,</span> <span class="mh">0x4596</span><span class="p">,</span> \
+  <span class="p">{</span> <span class="mh">0xa3</span><span class="p">,</span> <span class="mh">0xbc</span><span class="p">,</span> <span class="mh">0xda</span><span class="p">,</span> <span class="mh">0xd0</span><span class="p">,</span> <span class="mh">0x0e</span><span class="p">,</span> <span class="mh">0x67</span><span class="p">,</span> <span class="mh">0x65</span><span class="p">,</span> <span class="mh">0x6f</span> <span class="p">}}</span>
+<span class="c1">#define EFI_IMAGE_SECURITY_DATABASE L&quot;db&quot;</span>
+<span class="c1">#define EFI_IMAGE_SECURITY_DATABASE1 L&quot;dbx&quot;</span>
+<span class="c1">#define EFI_IMAGE_SECURITY_DATABASE2 L&quot;dbt&quot;</span>
+<span class="c1">#define EFI_IMAGE_SECURITY_DATABASE3 L&quot;dbr&quot;</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<ul class="simple">
+<li><p>This GUID and name are used when calling the EFI Runtime Services <em>GetVariable()</em> and <em>SetVariable()</em>.</p></li>
+<li><p>The <em>EFI_IMAGE_SECURITY_DATABASE_GUID</em> and <em>EFI_IMAGE_SECURITY_DATABASE</em> are used to retrieve and change the authorized signature database.</p></li>
+<li><p>The <em>EFI_IMAGE_SECURITY_DATABASE_GUID</em> and <em>EFI_IMAGE_SECURITY_DATABASE1</em> are used to retrieve and change the forbidden signature database.</p></li>
+<li><p>The <em>EFI_IMAGE_SECURITY_DATABASE_GUID</em> and <em>EFI_IMAGE_SECURITY_DATABASE2</em> are used to retrieve and change the authorized timestamp signature database.</p></li>
+<li><p>The <em>EFI_IMAGE_SECURITY_DATABASE_GUID</em> and <em>EFI_IMAGE_SECURITY_DATABASE3</em> are used to retrieve and change the authorized recovery signature database.</p></li>
+<li><p>Firmware shall support the <em>EFI_VARIABLE_APPEND_WRITE</em> flag (<a class="reference internal" href="08_Services_Runtime_Services.html#variable-services"><span class="std std-ref">Variable Services</span></a>) for the UEFI signature database variables.</p></li>
+<li><p>The signature database variables db, dbt, dbx, and dbr must be stored in tamper-resistant non-volatile storage.</p></li>
+</ul>
+</section>
+<section id="uefi-device-signature-variable-guid-and-variable-name">
+<span id="id36"></span><h3><span class="section-number">32.7.2. </span>UEFI Device Signature Variable GUID and Variable Name<a class="headerlink" href="#uefi-device-signature-variable-guid-and-variable-name" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Constants used for UEFI device signature database variable access.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="c1">#define EFI_DEVICE_SECURITY_DATABASE_GUID \</span>
+ <span class="p">{</span><span class="mh">0xb9c2b4f4</span><span class="p">,</span> <span class="mh">0xbf5f</span><span class="p">,</span> <span class="mh">0x462d</span><span class="p">,</span> <span class="mh">0x8a</span><span class="p">,</span> <span class="mh">0xdf</span><span class="p">,</span> <span class="mh">0xc5</span><span class="p">,</span> <span class="mh">0xc7</span><span class="p">,</span> <span class="mh">0xa</span><span class="p">,</span> <span class="mh">0xc3</span><span class="p">,</span> <span class="mh">0x5d</span><span class="p">,</span> <span class="mh">0xad</span><span class="p">}</span>
+
+<span class="n">v</span><span class="c1">#define EFI_DEVICE_SECURITY_DATABASE  L”devdb”</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<ul class="simple">
+<li><p>This GUID and name are used when calling the EFI Runtime Services GetVariable() and SetVariable().</p></li>
+<li><p>The EFI_DEVICE_SECURITY_DATABASE_GUID and EFI_DEVICE_SECURITY_DATABASE are used to retrieve and change the authorized device signature database.</p></li>
+<li><p>Firmware shall support the EFI_VARIABLE_APPEND_WRITE flag (see <a class="reference internal" href="08_Services_Runtime_Services.html#variable-services"><span class="std std-ref">Variable Services</span></a>) for the UEFI device signature database variables.</p></li>
+<li><p>The device signature database variable dbdev must be stored in tamper-resistant nonvolatile storage.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="31_EFI_Redfish_Service_Support.html" class="btn btn-neutral float-left" title="31. EFI Redfish Service Support" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="33_Human_Interface_Infrastructure.html" class="btn btn-neutral float-right" title="33. Human Interface Infrastructure Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, UEFI Forum, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9fdcf3a6dff3bd87',t:'MTc3OTEyOTIyMg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>10. EFI Byte Code Virtual Machine Opcode List &mdash; UEFI Specification 2.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=f2209469" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/style.css?v=faba8a36" />
+      <link rel="stylesheet" type="text/css" href="_static/theme-overrides.css?v=84235ce0" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2de06f63"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="11. Alphabetic Function Lists" href="Apx_K_Alphabetic_Function_Lists.html" />
+    <link rel="prev" title="9. Decompression Source Code" href="Apx_I_Decompression_Source_Code.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            UEFI Specification
+          </a>
+              <div class="version">
+                2.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Tables.html">List of Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Figures.html">List of Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/Revision_History.html">Revision History</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01_Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Overview.html">2. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Boot_Manager.html">3. Boot Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_EFI_System_Table.html">4. EFI System Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_GUID_Partition_Table_Format.html">5. GUID Partition Table (GPT) Disk Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_Block_Transition_Table_Layout.html">6. Block Translation Table (BTT) Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Services_Boot_Services.html">7. Services — Boot Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Services_Runtime_Services.html">8. Services — Runtime Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Protocols_EFI_Loaded_Image.html">9. Protocols - EFI Loaded Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Protocols_Device_Path_Protocol.html">10. Protocols – Device Path Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html">11. Protocols — UEFI Driver Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_Protocols_Console_Support.html">12. Protocols — Console Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Protocols_Media_Access.html">13. Protocols – Media Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Protocols_PCI_Bus_Support.html">14. Protocols — PCI Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_Protocols_SCSI_Driver_Models_and_Bus_Support.html">15. Protocols — SCSI Driver Models and Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_Protocols_iSCSI_Boot.html">16. Protocols — iSCSI Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_Protocols_USB_Support.html">17. Protocols — USB Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_Protocols_Debugger_Support.html">18. Protocols — Debugger Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_Protocols_Compression_Algorithm_Specification.html">19. Protocols — Compression Algorithm Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_Protocols_ACPI_Protocols.html">20. Protocols — ACPI Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_Protocols_String_Services.html">21. Protocols — String Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html">22. EFI Byte Code Virtual Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_Firmware_Update_and_Reporting.html">23. Firmware Update and Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24_Network_Protocols_SNP_PXE_BIS.html">24. Network Protocols — SNP, PXE, BIS and HTTP Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25_Network_Protocols_Managed_Network.html">25. Network Protocols - Managed Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26_Network_Protocols_Bluetooth.html">26. Network Protocols — Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27_Network_Protocols_VLAN_and_EAP.html">27. Network Protocols — VLAN, EAP, Wi-Fi and Supplicant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28_Network_Protocols_TCP_IP_and_Configuration.html">28. Network Protocols — TCP, IP, IPsec, FTP, TLS and Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29_Network_Protocols_ARP_and_DHCP.html">29. Network Protocols — ARP, DHCP, DNS, HTTP and REST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_Network_Protocols_UDP_and_MTFTP.html">30. Network Protocols — UDP and MTFTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="31_EFI_Redfish_Service_Support.html">31. EFI Redfish Service Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="32_Secure_Boot_and_Driver_Signing.html">32. Secure Boot and Driver Signing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="33_Human_Interface_Infrastructure.html">33. Human Interface Infrastructure Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="34_HII_Protocols.html">34. HII Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="35_HII_Configuration_Processing_and_Browser_Protocol.html">35. HII Configuration Processing and Browser Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="36_User_Identification.html">36. User Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="37_Secure_Technologies.html">37. Secure Technologies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="38_Confidential_Computing.html">38. Confidential Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="39_Micellaneous_Protocols.html">39. Miscellaneous Protocols</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Apx_A_GUID_and_Time_Formats.html">A. GUID and Time Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_B_Console.html">B. Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_C_Device_Path_Examples.html">C. Device Path Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_D_Status_Codes.html">D. Status Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_E_Universal_Network_Driver_Interfaces.html">E. Universal Network Driver Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_F_Using_the_Simple_Pointer_Protocol.html">F. Using the Simple Pointer Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_G_Using_the_EFI_Extended_SCSI_Pass_Thru_Protocol.html">G. Using the EFI Extended SCSI Pass Thru Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_H_Compression_Source_Code.html">H. Compression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_I_Decompression_Source_Code.html">I. Decompression Source Code</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">J. EFI Byte Code Virtual Machine Opcode List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_K_Alphabetic_Function_Lists.html">K. Alphabetic Function Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_L_EFI_1.10_Protocol_Changes_and_Deprecation_List.html">L. EFI 1.10 Protocol Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html">M. Formats — Language Codes and Language Code Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_N_Common_Platform_Error_Record.html">N. Common Platform Error Record (CPER)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_O_UEFI_ACPI_Data_Table.html">O. UEFI ACPI Data Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_P_Hardware_Error_Record_Persistence_Usage.html">P. Hardware Error Record Persistence Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_Q_References.html">Q. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_R_Glossary.html">R. Glossary</a></li>
+</ul>
+
+    <a href= "genindex.html">Index</a>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UEFI Specification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">10. </span>EFI Byte Code Virtual Machine Opcode List</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="efi-byte-code-virtual-machine-opcode-list">
+<span id="appendix-j-efi-byte-code-virtual-machine-opcode-list-apx-j-efi-byte-code-virtual-machine-opcode-list"></span><h1><span class="section-number">J. </span>EFI Byte Code Virtual Machine Opcode List<a class="headerlink" href="#efi-byte-code-virtual-machine-opcode-list" title="Link to this heading"></a></h1>
+<p>The following table lists the opcodes for EBC instructions. Note that opcodes only require 6 bits of the opcode byte of EBC instructions. The other two bits are used for other encodings that are dependent on the particular instruction.</p>
+<span id="ebc-virtual-machine-opcode-summary-efi-byte-code-virtual-machine-opcode-list"></span><table class="docutils align-default" id="ebc-virtual-machine-opcode-summary">
+<caption><span class="caption-number">Table J.1 </span><span class="caption-text">EBC Virtual Machine Opcode Summary</span><a class="headerlink" href="#ebc-virtual-machine-opcode-summary" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 83.3%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Opcode</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>0x00</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#break-efi-byte-code-virtual-machine"><span class="std std-ref">BREAK</span></a> [break code]</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x01</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#jmp-efi-byte-code-virtual-machine"><span class="std std-ref">JMP</span></a> 32{cs <a class="reference external" href="/cdn-cgi/l/email-protection#c3b8e5e0f0f4f8e5e0f6f1f8e5e0f7fbf8be91f2">{<span>&#64;</span>}R1</a> {Immed32</p></td>
+</tr>
+<tr class="row-even"><td><p>0x02</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#jmp8-efi-byte-code-virtual-machine"><span class="std std-ref">JMP8</span></a> {cs Immed8</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x03</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#call-efi-byte-code-virtual-machine"><span class="std std-ref">CALL</span></a> 32{EX}{a} <a class="reference external" href="/cdn-cgi/l/email-protection#4b306d68787c706d687e79706d687f737036197a">{<span>&#64;</span>}R1</a> {Immed32</p></td>
+</tr>
+<tr class="row-even"><td><p>0x04</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#ret-efi-byte-code-virtual-machine"><span class="std std-ref">RET</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>0x05</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#cmp-efi-byte-code-virtual-machine"><span class="std std-ref">CMP</span></a> [32 R1, <a class="reference external" href="/cdn-cgi/l/email-protection#6c174a4f5f5b574a4f595e574a4f585457113e5e">{<span>&#64;</span>}R2</a> {Index16</p></td>
+</tr>
+<tr class="row-even"><td><p>0x06</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#cmp-efi-byte-code-virtual-machine"><span class="std std-ref">CMP</span></a> [32 R1, <a class="reference external" href="/cdn-cgi/l/email-protection#cab1ece9f9fdf1ece9fff8f1ece9fef2f1b798f8">{<span>&#64;</span>}R2</a> {Index16</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x07</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#cmp-efi-byte-code-virtual-machine"><span class="std std-ref">CMP</span></a> [32 R1, <a class="reference external" href="/cdn-cgi/l/email-protection#0f74292c3c3834292c3a3d34292c3b3734725d3d">{<span>&#64;</span>}R2</a> {Index16</p></td>
+</tr>
+<tr class="row-even"><td><p>0x08</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#cmp-efi-byte-code-virtual-machine"><span class="std std-ref">CMP</span></a> [32 R1, <a class="reference external" href="/cdn-cgi/l/email-protection#97ecb1b4a4a0acb1b4a2a5acb1b4a3afaceac5a5">{<span>&#64;</span>}R2</a> {Index16</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x09</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#cmp-efi-byte-code-virtual-machine"><span class="std std-ref">CMP</span></a> [32 R1, <a class="reference external" href="/cdn-cgi/l/email-protection#1a613c39292d213c392f28213c392e2221674828">{<span>&#64;</span>}R2</a> {Index16</p></td>
+</tr>
+<tr class="row-even"><td><p>0x0A</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#not-efi-byte-code-virtual-machine"><span class="std std-ref">NOT</span></a> [32 <a class="reference external" href="/cdn-cgi/l/email-protection#d7acf1f4e4e0ecf1f4e2e5ecf1f4e3efecaa85e6">{<span>&#64;</span>}R1</a>, <a class="reference external" href="/cdn-cgi/l/email-protection#7c075a5f4f4b475a5f494e475a5f484447012e4e">{<span>&#64;</span>}R2</a> {Index16</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x0B</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#neg-efi-byte-code-virtual-machine"><span class="std std-ref">NEG</span></a> [32 <a class="reference external" href="/cdn-cgi/l/email-protection#3d461b1e0e0a061b1e080f061b1e090506406f0c">{<span>&#64;</span>}R1</a>,{&#64;}R2 {Index16</p></td>
+</tr>
+<tr class="row-even"><td><p>0x0C</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#add-efi-byte-code-virtual-machine"><span class="std std-ref">ADD</span></a> [32 <a class="reference external" href="/cdn-cgi/l/email-protection#ccb7eaeffffbf7eaeff9fef7eaeff8f4f7b19efd">{<span>&#64;</span>}R1</a>,{&#64;}R2 {Index16</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x0D</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#sub-efi-byte-code-virtual-machine"><span class="std std-ref">SUB</span></a> [32 <a class="reference external" href="/cdn-cgi/l/email-protection#651e434656525e434650575e4346515d5e183754">{<span>&#64;</span>}R1</a>,{&#64;}R2 {Index16</p></td>
+</tr>
+<tr class="row-even"><td><p>0x0E</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#mul-efi-byte-code-virtual-machine"><span class="std std-ref">MUL</span></a> [32 <a class="reference external" href="/cdn-cgi/l/email-protection#c7bce1e4f4f0fce1e4f2f5fce1e4f3fffcba95f6">{<span>&#64;</span>}R1</a>,{&#64;}R2 {Index16</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x0F</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#mulu-efi-byte-code-virtual-machine"><span class="std std-ref">MULU</span></a> [32 <a class="reference external" href="/cdn-cgi/l/email-protection#463d606575717d606573747d6065727e7d3b1477">{<span>&#64;</span>}R1</a>,{&#64;}R2 {Index16</p></td>
+</tr>
+<tr class="row-even"><td><p>0x10</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#div-efi-byte-code-virtual-machine"><span class="std std-ref">DIV</span></a> [32 <a class="reference external" href="/cdn-cgi/l/email-protection#4b306d68787c706d687e79706d687f737036197a">{<span>&#64;</span>}R1</a>,{&#64;}R2 {Index16</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x11</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#divu-efi-byte-code-virtual-machine"><span class="std std-ref">DIVU</span></a> [32 <a class="reference external" href="/cdn-cgi/l/email-protection#374c111404000c111402050c1114030f0c4a6506">{<span>&#64;</span>}R1</a>,{&#64;}R2 {Index16</p></td>
+</tr>
+<tr class="row-even"><td><p>0x12</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#mod-efi-byte-code-virtual-machine"><span class="std std-ref">MOD</span></a> [32 <a class="reference external" href="/cdn-cgi/l/email-protection#a6dd808595919d808593949d8085929e9ddbf497">{<span>&#64;</span>}R1</a>,{&#64;}R2 {Index16</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x13</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#modu-efi-byte-code-virtual-machine"><span class="std std-ref">MODU</span></a> [32 <a class="reference external" href="/cdn-cgi/l/email-protection#4e35686d7d7975686d7b7c75686d7a7675331c7f">{<span>&#64;</span>}R1</a>,{&#64;}R2 {Index16</p></td>
+</tr>
+<tr class="row-even"><td><p>0x14</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#and-efi-byte-code-virtual-machine"><span class="std std-ref">AND</span></a> [32 <a class="reference external" href="/cdn-cgi/l/email-protection#ec97cacfdfdbd7cacfd9ded7cacfd8d4d791bedd">{<span>&#64;</span>}R1</a>,{&#64;}R2 {Index16</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x15</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#or-efi-byte-code-virtual-machine"><span class="std std-ref">OR</span></a> [32 <a class="reference external" href="/cdn-cgi/l/email-protection#f68dd0d5c5c1cdd0d5c3c4cdd0d5c2cecd8ba4c7">{<span>&#64;</span>}R1</a>,{&#64;}R2 {Index16</p></td>
+</tr>
+<tr class="row-even"><td><p>0x16</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#xor-efi-byte-code-virtual-machine"><span class="std std-ref">XOR</span></a> [32 <a class="reference external" href="/cdn-cgi/l/email-protection#c0bbe6e3f3f7fbe6e3f5f2fbe6e3f4f8fbbd92f1">{<span>&#64;</span>}R1</a>,{&#64;}R2 {Index16</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x17</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#shl-efi-byte-code-virtual-machine"><span class="std std-ref">SHL</span></a> [32 <a class="reference external" href="/cdn-cgi/l/email-protection#8df6abaebebab6abaeb8bfb6abaeb9b5b6f0dfbc">{<span>&#64;</span>}R1</a>,{&#64;}R2 {Index16</p></td>
+</tr>
+<tr class="row-even"><td><p>0x18</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#shr-efi-byte-code-virtual-machine"><span class="std std-ref">SHR</span></a> [32 <a class="reference external" href="/cdn-cgi/l/email-protection#a5de838696929e838690979e8386919d9ed8f794">{<span>&#64;</span>}R1</a>,{&#64;}R2 {Index16</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x19</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#ashr-efi-byte-code-virtual-machine"><span class="std std-ref">ASHR</span></a> [32 <a class="reference external" href="/cdn-cgi/l/email-protection#a8d38e8b9b9f938e8b9d9a938e8b9c9093d5fa99">{<span>&#64;</span>}R1</a>,{&#64;}R2 {Index16</p></td>
+</tr>
+<tr class="row-even"><td><p>0x1A</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#extndb-efi-byte-code-virtual-machine"><span class="std std-ref">EXTNDB</span></a> [32 <a class="reference external" href="/cdn-cgi/l/email-protection#8ef5a8adbdb9b5a8adbbbcb5a8adbab6b5f3dcbf">{<span>&#64;</span>}R1</a>, <a class="reference external" href="/cdn-cgi/l/email-protection#304b161303070b161305020b161304080b4d6202">{<span>&#64;</span>}R2</a> {Index16</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x1B</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#extndw-efi-byte-code-virtual-machine"><span class="std std-ref">EXTNDW</span></a> [32 <a class="reference external" href="/cdn-cgi/l/email-protection#e893cecbdbdfd3cecbdddad3cecbdcd0d395bad9">{<span>&#64;</span>}R1</a>,{&#64;}R2 {Index16</p></td>
+</tr>
+<tr class="row-even"><td><p>0x1C</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#extndd-efi-byte-code-virtual-machine"><span class="std std-ref">EXTNDD</span></a> [32 <a class="reference external" href="/cdn-cgi/l/email-protection#e992cfcadaded2cfcadcdbd2cfcaddd1d294bbd8">{<span>&#64;</span>}R1</a>,{&#64;}R2 {Index16</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x1D</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#mov-efi-byte-code-virtual-machine"><span class="std std-ref">MOV</span></a> bw <a class="reference external" href="/cdn-cgi/l/email-protection#245f020717131f020711161f0207101c1f597615">{<span>&#64;</span>}R1</a> {Index16}, <a class="reference external" href="/cdn-cgi/l/email-protection#8cf7aaafbfbbb7aaafb9beb7aaafb8b4b7f1debe">{<span>&#64;</span>}R2</a> {Index16}</p></td>
+</tr>
+<tr class="row-even"><td><p>0x1E</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#mov-efi-byte-code-virtual-machine"><span class="std std-ref">MOV</span></a> ww <a class="reference external" href="/cdn-cgi/l/email-protection#344f121707030f121701060f1217000c0f496605">{<span>&#64;</span>}R1</a> {Index16}, <a class="reference external" href="/cdn-cgi/l/email-protection#90ebb6b3a3a7abb6b3a5a2abb6b3a4a8abedc2a2">{<span>&#64;</span>}R2</a> {Index16}</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x1F</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#mov-efi-byte-code-virtual-machine"><span class="std std-ref">MOV</span></a> dw <a class="reference external" href="/cdn-cgi/l/email-protection#f68dd0d5c5c1cdd0d5c3c4cdd0d5c2cecd8ba4c7">{<span>&#64;</span>}R1</a> {Index16}, <a class="reference external" href="/cdn-cgi/l/email-protection#265d000515111d000513141d0005121e1d5b7414">{<span>&#64;</span>}R2</a> {Index16}</p></td>
+</tr>
+<tr class="row-even"><td><p>0x20</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#mov-efi-byte-code-virtual-machine"><span class="std std-ref">MOV</span></a> qw <a class="reference external" href="/cdn-cgi/l/email-protection#562d707565616d707563646d7075626e6d2b0467">{<span>&#64;</span>}R1</a> {Index16}, <a class="reference external" href="/cdn-cgi/l/email-protection#79025f5a4a4e425f5a4c4b425f5a4d4142042b4b">{<span>&#64;</span>}R2</a> {Index16}</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x21</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#mov-efi-byte-code-virtual-machine"><span class="std std-ref">MOV</span></a> bd <a class="reference external" href="/cdn-cgi/l/email-protection#fc87dadfcfcbc7dadfc9cec7dadfc8c4c781aecd">{<span>&#64;</span>}R1</a> {Index32}, <a class="reference external" href="/cdn-cgi/l/email-protection#770c515444404c515442454c5154434f4c0a2545">{<span>&#64;</span>}R2</a> {Index32}</p></td>
+</tr>
+<tr class="row-even"><td><p>0x22</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#mov-efi-byte-code-virtual-machine"><span class="std std-ref">MOV</span></a> wd <a class="reference external" href="/cdn-cgi/l/email-protection#cdb6ebeefefaf6ebeef8fff6ebeef9f5f6b09ffc">{<span>&#64;</span>}R1</a> {Index32}, <a class="reference external" href="/cdn-cgi/l/email-protection#413a676272767a676274737a676275797a3c1373">{<span>&#64;</span>}R2</a> {Index32}</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x23</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#mov-efi-byte-code-virtual-machine"><span class="std std-ref">MOV</span></a> dd <a class="reference external" href="/cdn-cgi/l/email-protection#5d267b7e6e6a667b7e686f667b7e696566200f6c">{<span>&#64;</span>}R1</a> {Index32}, <a class="reference external" href="/cdn-cgi/l/email-protection#dca7faffefebe7faffe9eee7faffe8e4e7a18eee">{<span>&#64;</span>}R2</a> {Index32}</p></td>
+</tr>
+<tr class="row-even"><td><p>0x24</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#mov-efi-byte-code-virtual-machine"><span class="std std-ref">MOV</span></a> qd <a class="reference external" href="/cdn-cgi/l/email-protection#58237e7b6b6f637e7b6d6a637e7b6c6063250a69">{<span>&#64;</span>}R1</a> {Index32}, <a class="reference external" href="/cdn-cgi/l/email-protection#b3c8959080848895908681889590878b88cee181">{<span>&#64;</span>}R2</a> {Index32}</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x25</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#movsn-efi-byte-code-virtual-machine"><span class="std std-ref">MOVsn</span></a> w <a class="reference external" href="/cdn-cgi/l/email-protection#4d366b6e7e7a766b6e787f766b6e797576301f7c">{<span>&#64;</span>}R1</a> {Index16}, <a class="reference external" href="/cdn-cgi/l/email-protection#8ff4a9acbcb8b4a9acbabdb4a9acbbb7b4f2ddbd">{<span>&#64;</span>}R2</a> {Index16</p></td>
+</tr>
+<tr class="row-even"><td><p>0x26</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#movsn-efi-byte-code-virtual-machine"><span class="std std-ref">MOVsn</span></a> d <a class="reference external" href="/cdn-cgi/l/email-protection#c7bce1e4f4f0fce1e4f2f5fce1e4f3fffcba95f6">{<span>&#64;</span>}R1</a> {Index32}, <a class="reference external" href="/cdn-cgi/l/email-protection#344f121707030f121701060f1217000c0f496606">{<span>&#64;</span>}R2</a> {Index32</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x27</p></td>
+<td><p>Reserved</p></td>
+</tr>
+<tr class="row-even"><td><p>0x28</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#mov-efi-byte-code-virtual-machine"><span class="std std-ref">MOV</span></a> qq <a class="reference external" href="/cdn-cgi/l/email-protection#fd86dbdececac6dbdec8cfc6dbdec9c5c680afcc">{<span>&#64;</span>}R1</a> {Index64}, <a class="reference external" href="/cdn-cgi/l/email-protection#c4bfe2e7f7f3ffe2e7f1f6ffe2e7f0fcffb996f6">{<span>&#64;</span>}R2</a> {Index64}</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x29</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#loadsp-efi-byte-code-virtual-machine"><span class="std std-ref">LOADSP</span></a> [Flags], R2</p></td>
+</tr>
+<tr class="row-even"><td><p>0x2A</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#storesp-efi-byte-code-virtual-machine"><span class="std std-ref">STORESP</span></a> R1, [IP|Flags]</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x2B</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#push-efi-byte-code-virtual-machine"><span class="std std-ref">PUSH</span></a> [32 <a class="reference external" href="/cdn-cgi/l/email-protection#19623f3a2a2e223f3a2c2b223f3a2d2122644b28">{<span>&#64;</span>}R1</a> {Index16</p></td>
+</tr>
+<tr class="row-even"><td><p>0x2C</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#pop-efi-byte-code-virtual-machine"><span class="std std-ref">POP</span></a> [32 <a class="reference external" href="/cdn-cgi/l/email-protection#fc87dadfcfcbc7dadfc9cec7dadfc8c4c781aecd">{<span>&#64;</span>}R1</a> {Index16</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x2D</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#cmpi-efi-byte-code-virtual-machine"><span class="std std-ref">CMPI</span></a> [32 <a class="reference external" href="/cdn-cgi/l/email-protection#2f54090c1c1814090c1a1d14090c1b1714527d1e">{<span>&#64;</span>}R1</a> {Index16}, Immed16</p></td>
+</tr>
+<tr class="row-even"><td><p>0x2E</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#cmpi-efi-byte-code-virtual-machine"><span class="std std-ref">CMPI</span></a> [32 <a class="reference external" href="/cdn-cgi/l/email-protection#88f3aeabbbbfb3aeabbdbab3aeabbcb0b3f5dab9">{<span>&#64;</span>}R1</a> {Index16}, Immed16</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x2F</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#cmpi-efi-byte-code-virtual-machine"><span class="std std-ref">CMPI</span></a> [32 <a class="reference external" href="/cdn-cgi/l/email-protection#1d663b3e2e2a263b3e282f263b3e292526604f2c">{<span>&#64;</span>}R1</a> {Index16}, Immed16</p></td>
+</tr>
+<tr class="row-even"><td><p>0x30</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#cmpi-efi-byte-code-virtual-machine"><span class="std std-ref">CMPI</span></a> [32 <a class="reference external" href="/cdn-cgi/l/email-protection#3e45181d0d0905181d0b0c05181d0a0605436c0f">{<span>&#64;</span>}R1</a> {Index16}, Immed16</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x31</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#cmpi-efi-byte-code-virtual-machine"><span class="std std-ref">CMPI</span></a> [32 <a class="reference external" href="/cdn-cgi/l/email-protection#e893cecbdbdfd3cecbdddad3cecbdcd0d395bad9">{<span>&#64;</span>}R1</a> {Index16}, Immed16</p></td>
+</tr>
+<tr class="row-even"><td><p>0x32</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#movn-efi-byte-code-virtual-machine"><span class="std std-ref">MOVn</span></a> w <a class="reference external" href="/cdn-cgi/l/email-protection#3348151000040815100601081510070b084e6102">{<span>&#64;</span>}R1</a> {Index16}, <a class="reference external" href="/cdn-cgi/l/email-protection#750e535646424e535640474e5356414d4e082747">{<span>&#64;</span>}R2</a> {Index16}</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x33</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#movn-efi-byte-code-virtual-machine"><span class="std std-ref">MOVn</span></a> d <a class="reference external" href="/cdn-cgi/l/email-protection#09722f2a3a3e322f2a3c3b322f2a3d3132745b38">{<span>&#64;</span>}R1</a> {Index32}, <a class="reference external" href="/cdn-cgi/l/email-protection#a7dc818494909c818492959c8184939f9cdaf595">{<span>&#64;</span>}R2</a> {Index32}</p></td>
+</tr>
+<tr class="row-even"><td><p>0x34</p></td>
+<td><p>Reserved</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x35</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#pushn-efi-byte-code-virtual-machine"><span class="std std-ref">PUSHn</span></a> <a class="reference external" href="/cdn-cgi/l/email-protection#7b005d58484c405d584e49405d584f434006294a">{<span>&#64;</span>}R1</a> {Index16</p></td>
+</tr>
+<tr class="row-even"><td><p>0x36</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#popn-efi-byte-code-virtual-machine"><span class="std std-ref">POPn</span></a> <a class="reference external" href="/cdn-cgi/l/email-protection#7a015c59494d415c594f48415c594e424107284b">{<span>&#64;</span>}R1</a> {Index16</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x37</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#movi-efi-byte-code-virtual-machine"><span class="std std-ref">MOVI</span></a> [b <a class="reference external" href="/cdn-cgi/l/email-protection#5d267b7e6e6a667b7e686f667b7e696566200f6c">{<span>&#64;</span>}R1</a> {Index16}, Immed16</p></td>
+</tr>
+<tr class="row-even"><td><p>0x38</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#movin-efi-byte-code-virtual-machine"><span class="std std-ref">MOVIn</span></a> [w <a class="reference external" href="/cdn-cgi/l/email-protection#116a373222262a373224232a373225292a6c4320">{<span>&#64;</span>}R1</a> {Index16}, Index16</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x39</p></td>
+<td><p><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html#movrel-efi-byte-code-virtual-machine"><span class="std std-ref">MOVREL</span></a> [w <a class="reference external" href="/cdn-cgi/l/email-protection#750e535646424e535640474e5356414d4e082744">{<span>&#64;</span>}R1</a> {Index16}, Immed16</p></td>
+</tr>
+<tr class="row-even"><td><p>0x3A</p></td>
+<td><p>Reserved</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x3B</p></td>
+<td><p>Reserved</p></td>
+</tr>
+<tr class="row-even"><td><p>0x3C</p></td>
+<td><p>Reserved</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x3D</p></td>
+<td><p>Reserved</p></td>
+</tr>
+<tr class="row-even"><td><p>0x3E</p></td>
+<td><p>Reserved</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x3F</p></td>
+<td><p>Reserved</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Apx_I_Decompression_Source_Code.html" class="btn btn-neutral float-left" title="9. Decompression Source Code" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Apx_K_Alphabetic_Function_Lists.html" class="btn btn-neutral float-right" title="11. Alphabetic Function Lists" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, UEFI Forum, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

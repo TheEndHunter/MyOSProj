@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3. Device Path Examples &mdash; UEFI Specification 2.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=f2209469" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/style.css?v=faba8a36" />
+      <link rel="stylesheet" type="text/css" href="_static/theme-overrides.css?v=84235ce0" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2de06f63"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4. Status Codes" href="Apx_D_Status_Codes.html" />
+    <link rel="prev" title="2. Console" href="Apx_B_Console.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            UEFI Specification
+          </a>
+              <div class="version">
+                2.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Tables.html">List of Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Figures.html">List of Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/Revision_History.html">Revision History</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01_Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Overview.html">2. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Boot_Manager.html">3. Boot Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_EFI_System_Table.html">4. EFI System Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_GUID_Partition_Table_Format.html">5. GUID Partition Table (GPT) Disk Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_Block_Transition_Table_Layout.html">6. Block Translation Table (BTT) Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Services_Boot_Services.html">7. Services — Boot Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Services_Runtime_Services.html">8. Services — Runtime Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Protocols_EFI_Loaded_Image.html">9. Protocols - EFI Loaded Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Protocols_Device_Path_Protocol.html">10. Protocols – Device Path Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html">11. Protocols — UEFI Driver Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_Protocols_Console_Support.html">12. Protocols — Console Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Protocols_Media_Access.html">13. Protocols – Media Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Protocols_PCI_Bus_Support.html">14. Protocols — PCI Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_Protocols_SCSI_Driver_Models_and_Bus_Support.html">15. Protocols — SCSI Driver Models and Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_Protocols_iSCSI_Boot.html">16. Protocols — iSCSI Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_Protocols_USB_Support.html">17. Protocols — USB Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_Protocols_Debugger_Support.html">18. Protocols — Debugger Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_Protocols_Compression_Algorithm_Specification.html">19. Protocols — Compression Algorithm Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_Protocols_ACPI_Protocols.html">20. Protocols — ACPI Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_Protocols_String_Services.html">21. Protocols — String Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html">22. EFI Byte Code Virtual Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_Firmware_Update_and_Reporting.html">23. Firmware Update and Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24_Network_Protocols_SNP_PXE_BIS.html">24. Network Protocols — SNP, PXE, BIS and HTTP Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25_Network_Protocols_Managed_Network.html">25. Network Protocols - Managed Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26_Network_Protocols_Bluetooth.html">26. Network Protocols — Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27_Network_Protocols_VLAN_and_EAP.html">27. Network Protocols — VLAN, EAP, Wi-Fi and Supplicant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28_Network_Protocols_TCP_IP_and_Configuration.html">28. Network Protocols — TCP, IP, IPsec, FTP, TLS and Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29_Network_Protocols_ARP_and_DHCP.html">29. Network Protocols — ARP, DHCP, DNS, HTTP and REST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_Network_Protocols_UDP_and_MTFTP.html">30. Network Protocols — UDP and MTFTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="31_EFI_Redfish_Service_Support.html">31. EFI Redfish Service Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="32_Secure_Boot_and_Driver_Signing.html">32. Secure Boot and Driver Signing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="33_Human_Interface_Infrastructure.html">33. Human Interface Infrastructure Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="34_HII_Protocols.html">34. HII Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="35_HII_Configuration_Processing_and_Browser_Protocol.html">35. HII Configuration Processing and Browser Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="36_User_Identification.html">36. User Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="37_Secure_Technologies.html">37. Secure Technologies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="38_Confidential_Computing.html">38. Confidential Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="39_Micellaneous_Protocols.html">39. Miscellaneous Protocols</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Apx_A_GUID_and_Time_Formats.html">A. GUID and Time Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_B_Console.html">B. Console</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">C. Device Path Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#example-computer-system">C.1. Example Computer System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#legacy-floppy">C.2. Legacy Floppy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ide-disk">C.3. IDE Disk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#secondary-root-pci-bus-with-pci-to-pci-bridge">C.4. Secondary Root PCI Bus with PCI to PCI Bridge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#acpi-terms">C.5. ACPI Terms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-device-path-as-a-name-space">C.6. EFI Device Path as a Name Space</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_D_Status_Codes.html">D. Status Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_E_Universal_Network_Driver_Interfaces.html">E. Universal Network Driver Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_F_Using_the_Simple_Pointer_Protocol.html">F. Using the Simple Pointer Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_G_Using_the_EFI_Extended_SCSI_Pass_Thru_Protocol.html">G. Using the EFI Extended SCSI Pass Thru Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_H_Compression_Source_Code.html">H. Compression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_I_Decompression_Source_Code.html">I. Decompression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_J_EFI_Byte_Code_Virtual_Machine_Opcode_List.html">J. EFI Byte Code Virtual Machine Opcode List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_K_Alphabetic_Function_Lists.html">K. Alphabetic Function Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_L_EFI_1.10_Protocol_Changes_and_Deprecation_List.html">L. EFI 1.10 Protocol Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html">M. Formats — Language Codes and Language Code Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_N_Common_Platform_Error_Record.html">N. Common Platform Error Record (CPER)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_O_UEFI_ACPI_Data_Table.html">O. UEFI ACPI Data Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_P_Hardware_Error_Record_Persistence_Usage.html">P. Hardware Error Record Persistence Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_Q_References.html">Q. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_R_Glossary.html">R. Glossary</a></li>
+</ul>
+
+    <a href= "genindex.html">Index</a>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UEFI Specification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">3. </span>Device Path Examples</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="device-path-examples">
+<span id="device-path-examples-appendix"></span><h1><span class="section-number">C. </span>Device Path Examples<a class="headerlink" href="#device-path-examples" title="Link to this heading"></a></h1>
+<p>This appendix presents an example EFI Device Path and explains its relationship to the ACPI name space. An example system design is presented along with its corresponding ACPI name space. These physical examples are mapped back to EFI Device Paths.</p>
+<section id="example-computer-system">
+<span id="c1-example-computer-system"></span><h2><span class="section-number">C.1. </span>Example Computer System<a class="headerlink" href="#example-computer-system" title="Link to this heading"></a></h2>
+<p>The Figure below, <a class="reference internal" href="#id1"><span class="std std-ref">Example Computer System</span></a>, represents a hypothetical computer system architecture that will be used to discuss the construction of EFI Device Paths. The system consists of a memory controller that connects directly to the processors’ front side bus. The memory controller is only part of a larger chipset, and it connects to a root PCI host bridge chip, and a secondary root PCI host bridge chip. The secondary PCI host bridge chip produces a PCI bus that contains a PCI to PCI bridge. The root PCI host bridge produces a PCI bus, and also contains USB, ATA66, and AC ’97 controllers. The root PCI host bridge also contains an LPC bus that is used to connect a SIO (Super IO) device. The SIO contains a PC-AT-compatible floppy disk controller, and other PC-AT-compatible devices like a keyboard controller.</p>
+<figure class="align-default" id="id1">
+<a class="reference internal image-reference" href="_images/Device_Path_Examples-2.png"><img alt="_images/Device_Path_Examples-2.png" src="_images/Device_Path_Examples-2.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. C.1 </span><span class="caption-text"><strong>Example Computer System</strong></span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>The remainder of this appendix describes how to construct a device path for three example devices from the system in <a class="reference internal" href="#id1"><span class="std std-ref">Example Computer System</span></a> . The following is a list of the examples used:</p>
+<ul class="simple">
+<li><p>Legacy floppy</p></li>
+<li><p>IDE Disk</p></li>
+<li><p>Secondary root PCI bus with PCI to PCI bridge</p></li>
+</ul>
+<p>The Figure below is a partial ACPI name space for the system in the Figure <a class="reference internal" href="#id1"><span class="std std-ref">Example Computer System</span></a> .  Figure <a class="reference internal" href="#partial-acpi-name-space-for-example-system"><span class="std std-ref">Partial ACPI Name Space for Example System</span></a> is based on Figure 5-3 in the <em>Advanced Configuration and Power Interface Specification</em>.</p>
+<figure class="align-default" id="partial-acpi-name-space-for-example-system">
+<a class="reference internal image-reference" href="_images/Device_Path_Examples-4.png"><img alt="_images/Device_Path_Examples-4.png" src="_images/Device_Path_Examples-4.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. C.2 </span><span class="caption-text">Partial ACPI Name Space for Example System</span><a class="headerlink" href="#partial-acpi-name-space-for-example-system" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="legacy-floppy">
+<span id="id2"></span><h2><span class="section-number">C.2. </span>Legacy Floppy<a class="headerlink" href="#legacy-floppy" title="Link to this heading"></a></h2>
+<p>The legacy floppy controller is contained in the SIO chip that is connected root PCI bus host bridge chip. The root PCI host bridge chip produces PCI bus 0, and other resources that appear directly to the processors in the system.</p>
+<p>In ACPI this configuration is represented in the _SB, system bus tree, of the ACPI name space. PCI0 is a child of _SB and it represents the root PCI host bridge. The SIO appears to the system to be a set of ISA devices, so it is represented as a child of PCI0 with the name ISA0. The floppy controller is represented by FLPY as a child of the ISA0 bus.</p>
+<p>The EFI Device Path for the legacy floppy is defined in the Table below, <a class="reference internal" href="#legacy-floppy-device-path"><span class="std std-ref">Legacy Floppy Device Path</span></a> . It would contain entries for the following things:</p>
+<ul class="simple">
+<li><p>Root PCI Bridge. ACPI Device Path _HID PNP0A03, _UID 0. ACPI name space \_SB\PCI0</p></li>
+<li><p>PCI to ISA Bridge. PCI Device Path with device and function of the PCI to ISA bridge. ACPI name space \_SB\PCI0\ISA0</p></li>
+<li><p>Floppy Plug and Play ID. ACPI Device Path _HID PNP0303, _UID 0. ACPI name space \_SB\PCI0\ISA0\FLPY</p></li>
+<li><p>End Device Path</p></li>
+</ul>
+<table class="longtable docutils align-default" id="legacy-floppy-device-path">
+<caption><span class="caption-number">Table C.1 </span><span class="caption-text">Legacy Floppy Device Path</span><a class="headerlink" href="#legacy-floppy-device-path" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 8.3%" />
+<col style="width: 8.3%" />
+<col style="width: 8.3%" />
+<col style="width: 75.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Byte Offset</p></td>
+<td><p>Byte Length</p></td>
+<td><p>Data</p></td>
+<td><p>Description</p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0x02</p></td>
+<td><p>Generic Device Path Header - Type ACPI Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>0x01</p></td>
+<td><p>Sub type - ACPI Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>2</p></td>
+<td><p>0x0C</p></td>
+<td><p>Length</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>4</p></td>
+<td><p>0x41D0, 0x0A03</p></td>
+<td><p>_HID PNP0A03 - 0x41D0 represents the compressed string ‘PNP’ and is encoded in the low order bytes. The compression method is described in the ACPI Specification.</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>4</p></td>
+<td><p>0x0000</p></td>
+<td><p>_UID</p></td>
+</tr>
+<tr class="row-odd"><td><p>C</p></td>
+<td><p>1</p></td>
+<td><p>0x01</p></td>
+<td><p>Generic Device Path Header - Type Hardware Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>D</p></td>
+<td><p>1</p></td>
+<td><p>0x01</p></td>
+<td><p>Sub type PCI Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>E</p></td>
+<td><p>2</p></td>
+<td><p>0x06</p></td>
+<td><p>Length</p></td>
+</tr>
+<tr class="row-even"><td><p>10</p></td>
+<td><p>1</p></td>
+<td><p>0x00</p></td>
+<td><p>PCI Function</p></td>
+</tr>
+<tr class="row-odd"><td><p>11</p></td>
+<td><p>1</p></td>
+<td><p>0x10</p></td>
+<td><p>PCI Device</p></td>
+</tr>
+<tr class="row-even"><td><p>12</p></td>
+<td><p>1</p></td>
+<td><p>0x02</p></td>
+<td><p>Generic Device Path Header - Type ACPI Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>13</p></td>
+<td><p>1</p></td>
+<td><p>0x01</p></td>
+<td><p>Sub type - ACPI Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>14</p></td>
+<td><p>2</p></td>
+<td><p>0x0C</p></td>
+<td><p>Length</p></td>
+</tr>
+<tr class="row-odd"><td><p>16</p></td>
+<td><p>4</p></td>
+<td><p>0x41D0, 0x0303</p></td>
+<td><p>_HID PNP0303</p></td>
+</tr>
+<tr class="row-even"><td><p>1A</p></td>
+<td><p>4</p></td>
+<td><p>0x0000</p></td>
+<td><p>_UID</p></td>
+</tr>
+<tr class="row-odd"><td><p>1E</p></td>
+<td><p>1</p></td>
+<td><p>0x7F</p></td>
+<td><p>Generic Device Path Header - Type End of Hardware Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>1F</p></td>
+<td><p>1</p></td>
+<td><p>0xFF</p></td>
+<td><p>Sub type - End Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>20</p></td>
+<td><p>2</p></td>
+<td><p>0x04</p></td>
+<td><p>Length</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="ide-disk">
+<span id="id3"></span><h2><span class="section-number">C.3. </span>IDE Disk<a class="headerlink" href="#ide-disk" title="Link to this heading"></a></h2>
+<p>The IDE Disk controller is a PCI device that is contained in a function of the root PCI host bridge. The root PCI host bridge is a multi function device and has a separate function for chipset registers, USB, and IDE. The disk connected to the IDE ATA bus is defined as being on the primary or secondary ATA bus, and of being the master or slave device on that bus.</p>
+<p>In ACPI this configuration is represented in the _SB, system bus tree, of the ACPI name space. PCI0 is a child of _SB and it represents the root PCI host bridge. The IDE controller appears to the system to be a PCI device with some legacy properties, so it is represented as a child of PCI0 with the name IDE0. PRIM is a child of IDE0 and it represents the primary ATA bus of the IDE controller. MAST is a child of PRIM and it represents that this device is the ATA master device on this primary ATA bus.</p>
+<p>The EFI Device Path for the PCI IDE controller is defined in the Table <a class="reference internal" href="#ide-disk-device-path"><span class="std std-ref">IDE Disk Device Path</span></a> . It would contain entries for the following things:</p>
+<ul class="simple">
+<li><p>Root PCI Bridge. ACPI Device Path _HID PNP0A03, _UID 0. ACPI name space \_SB\PCI0</p></li>
+<li><p>PCI IDE controller. PCI Device Path with device and function of the IDE controller. ACPI name space \_SB\PCI0\IDE0</p></li>
+<li><p>ATA Address. ATA Messaging Device Path for Primary bus and Master device. ACPI name space \_SB\PCI0\IDE0\PRIM\MAST</p></li>
+<li><p>End Device Path</p></li>
+</ul>
+<table class="docutils align-default" id="ide-disk-device-path">
+<caption><span class="caption-number">Table C.2 </span><span class="caption-text">IDE Disk Device Path</span><a class="headerlink" href="#ide-disk-device-path" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 8.3%" />
+<col style="width: 8.3%" />
+<col style="width: 8.3%" />
+<col style="width: 75.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Byte Offset</p></td>
+<td><p>Byte Length</p></td>
+<td><p>Data</p></td>
+<td><p>Description</p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0x02</p></td>
+<td><p>Generic Device Path Header - Type ACPI Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>0x01</p></td>
+<td><p>Sub type - ACPI Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>2</p></td>
+<td><p>0x0C</p></td>
+<td><p>Length</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>4</p></td>
+<td><p>0x41D0, 0x0A03</p></td>
+<td><p>_HID PNP0A03 - 0x41D0 represents the compressed string ‘PNP’ and is encoded in the low order bytes. The compression method is described in the ACPI Specification.</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>4</p></td>
+<td><p>0x0000</p></td>
+<td><p>_UID</p></td>
+</tr>
+<tr class="row-odd"><td><p>C</p></td>
+<td><p>1</p></td>
+<td><p>0x01</p></td>
+<td><p>Generic Device Path Header - Type Hardware Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>D</p></td>
+<td><p>1</p></td>
+<td><p>0x01</p></td>
+<td><p>Sub type PCI Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>E</p></td>
+<td><p>2</p></td>
+<td><p>0x06</p></td>
+<td><p>Length</p></td>
+</tr>
+<tr class="row-even"><td><p>10</p></td>
+<td><p>1</p></td>
+<td><p>0x01</p></td>
+<td><p>PCI Function</p></td>
+</tr>
+<tr class="row-odd"><td><p>11</p></td>
+<td><p>1</p></td>
+<td><p>0x10</p></td>
+<td><p>PCI Device</p></td>
+</tr>
+<tr class="row-even"><td><p>12</p></td>
+<td><p>1</p></td>
+<td><p>0x03</p></td>
+<td><p>Generic Device Path Header - Messaging Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>13</p></td>
+<td><p>1</p></td>
+<td><p>0x01</p></td>
+<td><p>Sub type - ATAPI Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>14</p></td>
+<td><p>2</p></td>
+<td><p>0x06</p></td>
+<td><p>Length</p></td>
+</tr>
+<tr class="row-odd"><td><p>16</p></td>
+<td><p>1</p></td>
+<td><p>0x00</p></td>
+<td><p>Primary =0, Secondary = 1</p></td>
+</tr>
+<tr class="row-even"><td><p>17</p></td>
+<td><p>1</p></td>
+<td><p>0x00</p></td>
+<td><p>Master = 0, Slave = 1</p></td>
+</tr>
+<tr class="row-odd"><td><p>18</p></td>
+<td><p>2</p></td>
+<td><p>0x0000</p></td>
+<td><p>LUN</p></td>
+</tr>
+<tr class="row-even"><td><p>1A</p></td>
+<td><p>1</p></td>
+<td><p>0x7F</p></td>
+<td><p>Generic Device Path Header - Type End of Hardware Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>1B</p></td>
+<td><p>1</p></td>
+<td><p>0xFF</p></td>
+<td><p>Sub type - End Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>1C</p></td>
+<td><p>2</p></td>
+<td><p>0x04</p></td>
+<td><p>Length</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="secondary-root-pci-bus-with-pci-to-pci-bridge">
+<span id="id4"></span><h2><span class="section-number">C.4. </span>Secondary Root PCI Bus with PCI to PCI Bridge<a class="headerlink" href="#secondary-root-pci-bus-with-pci-to-pci-bridge" title="Link to this heading"></a></h2>
+<p>The secondary PCI host bridge materializes a second set of PCI buses into the system. The PCI buses on the secondary PCI host bridge are totally independent of the PCI buses on the root PCI host bridge. The only relationship between the two is they must be configured to not consume the same resources. The primary PCI bus of the secondary PCI host bridge also contains a PCI to PCI bridge. There is some arbitrary PCI device plugged in behind the PCI to PCI bridge in a PCI slot.</p>
+<p>In ACPI this configuration is represented in the _SB, system bus tree, of the ACPI name space. PCI1 is a child of _SB and it represents the secondary PCI host bridge. The PCI to PCI bridge and the device plugged into the slot on its primary bus are not described in the ACPI name space. These devices can be fully configured by following the applicable PCI specification.</p>
+<p>The EFI Device Path for the secondary root PCI bridge with a PCI to PCI bridge is defined in the Table <a class="reference internal" href="#secondary-root-pci-bus-with-pci-to-pci-bridge-device-path"><span class="std std-ref">Secondary Root PCI Bus with PCI to PCI Bridge Device Path</span></a> . It would contain entries for the following things:</p>
+<ul class="simple">
+<li><p>Root PCI Bridge. ACPI Device Path _HID PNP0A03, _UID 1. ACPI name space \_SB\PCI1</p></li>
+<li><p>PCI to PCI Bridge. PCI Device Path with device and function of the PCI Bridge. ACPI name space \_SB\PCI1, PCI to PCI bridges are defined by PCI specification and not ACPI.</p></li>
+<li><p>PCI Device. PCI Device Path with the device and function of the PCI device. ACPI name space \_SB\PCI1, PCI devices are defined by PCI specification and not ACPI.</p></li>
+<li><p>End Device Path.</p></li>
+</ul>
+<table class="docutils align-default" id="secondary-root-pci-bus-with-pci-to-pci-bridge-device-path">
+<caption><span class="caption-number">Table C.3 </span><span class="caption-text">Secondary Root PCI Bus with PCI to PCI Bridge Device Path</span><a class="headerlink" href="#secondary-root-pci-bus-with-pci-to-pci-bridge-device-path" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 8.3%" />
+<col style="width: 8.3%" />
+<col style="width: 8.3%" />
+<col style="width: 75.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Byte Offset</p></td>
+<td><p>Byte Length</p></td>
+<td><p>Data</p></td>
+<td><p>Description</p></td>
+</tr>
+<tr class="row-even"><td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0x02</p></td>
+<td><p>Generic Device Path Header - Type ACPI Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>0x01</p></td>
+<td><p>Sub type - ACPI Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>2</p></td>
+<td><p>0x0C</p></td>
+<td><p>Length</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>4</p></td>
+<td><p>0x41D0, 0x0A03</p></td>
+<td><p>_HID PNP0A03 - 0x41D0 represents the compressed string ‘PNP’ and is encoded in the low order bytes. The compression method is described in the ACPI Specification.</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>4</p></td>
+<td><p>0x0001</p></td>
+<td><p>_UID</p></td>
+</tr>
+<tr class="row-odd"><td><p>C</p></td>
+<td><p>1</p></td>
+<td><p>0x01</p></td>
+<td><p>Generic Device Path Header - Type Hardware Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>D</p></td>
+<td><p>1</p></td>
+<td><p>0x01</p></td>
+<td><p>Sub type PCI Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>E</p></td>
+<td><p>2</p></td>
+<td><p>0x06</p></td>
+<td><p>Length</p></td>
+</tr>
+<tr class="row-even"><td><p>10</p></td>
+<td><p>1</p></td>
+<td><p>0x00</p></td>
+<td><p>PCI Function for PCI to PCI bridge</p></td>
+</tr>
+<tr class="row-odd"><td><p>11</p></td>
+<td><p>1</p></td>
+<td><p>0x0c</p></td>
+<td><p>PCI Device for PCI to PCI bridge</p></td>
+</tr>
+<tr class="row-even"><td><p>12</p></td>
+<td><p>1</p></td>
+<td><p>0x01</p></td>
+<td><p>Generic Device Path Header - Type Hardware Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>13</p></td>
+<td><p>1</p></td>
+<td><p>0x01</p></td>
+<td><p>Sub type PCI Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>14</p></td>
+<td><p>2</p></td>
+<td><p>0x08</p></td>
+<td><p>Length</p></td>
+</tr>
+<tr class="row-odd"><td><p>16</p></td>
+<td><p>1</p></td>
+<td><p>0x00</p></td>
+<td><p>PCI Function for PCI Device</p></td>
+</tr>
+<tr class="row-even"><td><p>17</p></td>
+<td><p>1</p></td>
+<td><p>0x00</p></td>
+<td><p>PCI Device for PCI Device</p></td>
+</tr>
+<tr class="row-odd"><td><p>18</p></td>
+<td><p>1</p></td>
+<td><p>0x7F</p></td>
+<td><p>Generic Device Path Header - Type End of Hardware Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>19</p></td>
+<td><p>1</p></td>
+<td><p>0xFF</p></td>
+<td><p>Sub type - End Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>1A</p></td>
+<td><p>2</p></td>
+<td><p>0x04</p></td>
+<td><p>Length</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="acpi-terms">
+<span id="id5"></span><h2><span class="section-number">C.5. </span>ACPI Terms<a class="headerlink" href="#acpi-terms" title="Link to this heading"></a></h2>
+<p>Names in the ACPI name space that start with an underscore (“_”) are reserved by the ACPI specification and have architectural meaning. All ACPI names in the name space are four characters in length. The following four ACPI names are used in this specification.</p>
+<p><strong>_ADR</strong>. The Address on a bus that has standard enumeration. An example would be PCI, where the enumeration method is described in the PCI Local Bus specification.</p>
+<p><strong>_CRS</strong>. The current resource setting of a device. A _CRS is required for devices that are not enumerated in a standard fashion. _CRS is how ACPI converts nonstandard devices into Plug and Play devices.</p>
+<p><strong>_HID</strong>. Represents a device’s Plug and Play hardware ID, stored as a 32-bit compressed EISA ID. _HID objects are optional in ACPI. However, a _HID object must be used to describe any device that will be enumerated by the ACPI driver in the OS. This is how ACPI deals with non-Plug and Play devices.</p>
+<p><strong>_UID</strong>. Is a serial number style ID that does not change across reboots. If a system contains more than one device that reports the same _HID, each device must have a unique _UID. The _UID only needs to be unique for device that have the exact same _HID value.</p>
+</section>
+<section id="efi-device-path-as-a-name-space">
+<span id="id6"></span><h2><span class="section-number">C.6. </span>EFI Device Path as a Name Space<a class="headerlink" href="#efi-device-path-as-a-name-space" title="Link to this heading"></a></h2>
+<p>The Figure below shows the EFI Device Path for the example system represented as a name space. The Device Path can be represented as a name space, but EFI does support manipulating the Device Path as a name space. You can only access Device Path information by locating the <em>DEVICE_PATH_INTERFACE</em> from a handle. Not all the nodes in a Device Path will have a handle.</p>
+<figure class="align-default" id="efi-device-path-displayed-as-a-name-space">
+<a class="reference internal image-reference" href="_images/Device_Path_Examples-5.png"><img alt="_images/Device_Path_Examples-5.png" src="_images/Device_Path_Examples-5.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. C.3 </span><span class="caption-text">EFI Device Path Displayed As a Name Space</span><a class="headerlink" href="#efi-device-path-displayed-as-a-name-space" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Apx_B_Console.html" class="btn btn-neutral float-left" title="2. Console" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Apx_D_Status_Codes.html" class="btn btn-neutral float-right" title="4. Status Codes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, UEFI Forum, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

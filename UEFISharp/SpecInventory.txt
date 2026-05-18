@@ -1,0 +1,42 @@
+Inventory of UEFI types, structs, delegates, GUIDs and related wrappers in UEFISharp
+
+Core types and enums:
+- EFI\Guid (UEFISharp/Guid.cs) - 16-byte GUID struct (Data1,uint; Data2,ushort; Data3,ushort; Data4[8])
+- EFI::Status (UEFISharp/Status.cs) - 64-bit enum with error mask constants
+- TableHeader (UEFISharp/Services/TableHeader.cs) - Signature, Revision, HeaderSize, CRC32, Reserved
+- SystemTable (UEFISharp/Services/SystemTable.cs) - TableHeader + FirmwareVendor/Revision/ConIn/ConOut/StdErr Runtime/BootServices, ConfigurationTable
+- TPL (UEFISharp/TPL.cs)
+
+Services:
+- BootServices (UEFISharp/Services/BootServices.cs) - delegates for RaiseTPL, AllocatePages, FreePages, GetMemoryMap, AllocatePool, FreePool, event & protocol management, image services, etc.
+- RuntimeServices (UEFISharp/Services/RuntimeServices.cs) - delegates for GetTime/SetTime, Variable services, ResetSystem, Capsule and VirtualAddress mapping
+
+Protocols (selected):
+- LoadFileProtocol (UEFISharp/Protocols/IO/Media/LoadFileProtocol.cs) - GUID and delegate
+- LoadFile2Protocol (UEFISharp/Protocols/IO/Media/LoadFile2Protocol.cs)
+- GraphicsOutputProtocol (UEFISharp/Protocols/Graphics/*.cs) - mode/info/pixel formats
+- SimpleTextInput/Output (UEFISharp/Protocols/IO/Console/*.cs)
+- SimpleFileSystemProtocol, FileProtocol, FileInfo, FileSystemInfo etc. (UEFISharp/Protocols/IO/Media/*.cs)
+- Debug protocols (UEFISharp/Protocols/Debug/*) - DebugImageInfo, DebugSupportProtocol, etc.
+- Peripheral input protocols (AbsolutePointer, SimplePointer, InputKey, KeyState, etc.)
+
+Other notable structs:
+- MemoryDescriptor (UEFISharp/MemoryDescriptor.cs)
+- Time, TimeCapabilities (UEFISharp/Protocols/Time/*.cs)
+- PixelBitmask, GraphicsOutputModeInformation (UEFISharp/Protocols/Graphics)
+
+Files present but not exhaustively listed:
+- Many protocol wrappers under UEFISharp/Protocols/** (Console, Graphics, IO, Media, Serial, Debug, Configuration)
+
+Notes / Observations:
+- Most service delegates use 'unsafe delegate Status ...' with pointer types expressed as nint, nuint, char*, void*, etc.
+- Guid struct uses [StructLayout(LayoutKind.Sequential, Pack = 8)].
+- TableHeader is a plain public struct (no StructLayout attribute) and many other structs also omit explicit StructLayout attributes.
+- RuntimeServices and BootServices set signature constants matching earlier EFI versions; EFI_SPEC constant currently set to EFI_2_100_SYSTEM_TABLE_REVISION.
+
+Next steps:
+1) Cross-check core service structs and delegates against UEFI 2.11 spec and prepare required edits.
+2) Identify any mismatched GUIDs or missing protocol GUID constants and add or correct them.
+3) Ensure StructLayout and delegate calling conventions reflect native layout where necessary.
+
+Generated automatically by automation; use as a starting checklist for UEFI 2.11 conformance work.

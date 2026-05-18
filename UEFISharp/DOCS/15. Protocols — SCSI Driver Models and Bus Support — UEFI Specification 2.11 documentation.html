@@ -1,0 +1,2019 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>15. Protocols — SCSI Driver Models and Bus Support &mdash; UEFI Specification 2.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=f2209469" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/style.css?v=faba8a36" />
+      <link rel="stylesheet" type="text/css" href="_static/theme-overrides.css?v=84235ce0" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2de06f63"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="16. Protocols — iSCSI Boot" href="16_Protocols_iSCSI_Boot.html" />
+    <link rel="prev" title="14. Protocols — PCI Bus Support" href="14_Protocols_PCI_Bus_Support.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            UEFI Specification
+          </a>
+              <div class="version">
+                2.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Tables.html">List of Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Figures.html">List of Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/Revision_History.html">Revision History</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Overview.html">2. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Boot_Manager.html">3. Boot Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_EFI_System_Table.html">4. EFI System Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_GUID_Partition_Table_Format.html">5. GUID Partition Table (GPT) Disk Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_Block_Transition_Table_Layout.html">6. Block Translation Table (BTT) Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Services_Boot_Services.html">7. Services — Boot Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Services_Runtime_Services.html">8. Services — Runtime Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Protocols_EFI_Loaded_Image.html">9. Protocols - EFI Loaded Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Protocols_Device_Path_Protocol.html">10. Protocols – Device Path Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html">11. Protocols — UEFI Driver Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_Protocols_Console_Support.html">12. Protocols — Console Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Protocols_Media_Access.html">13. Protocols – Media Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Protocols_PCI_Bus_Support.html">14. Protocols — PCI Bus Support</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">15. Protocols — SCSI Driver Models and Bus Support</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#scsi-driver-model-overview">15.1. SCSI Driver Model Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#scsi-bus-drivers">15.2. SCSI Bus Drivers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#driver-binding-protocol-for-scsi-bus-drivers">15.2.1. Driver Binding Protocol for SCSI Bus Drivers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scsi-enumeration">15.2.2. SCSI Enumeration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#scsi-device-drivers">15.3. SCSI Device Drivers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#driver-binding-protocol-for-scsi-device-drivers">15.3.1. Driver Binding Protocol for SCSI Device Drivers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-scsi-i-o-protocol">15.4. EFI SCSI I/O Protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id8">15.4.1. EFI_SCSI_IO_PROTOCOL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-scsi-io-protocol-getdevicetype">15.4.2. EFI_SCSI_IO_PROTOCOL.GetDeviceType()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-scsi-io-protocol-getdevicelocation">15.4.3. EFI_SCSI_IO_PROTOCOL.GetDeviceLocation()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-scsi-io-protocol-resetbus">15.4.4. EFI_SCSI_IO_PROTOCOL.ResetBus()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-scsi-io-protocol-resetdevice">15.4.5. EFI_SCSI_IO_PROTOCOL.ResetDevice()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-scsi-io-protocol-executescsicommand">15.4.6. EFI_SCSI_IO_PROTOCOL.ExecuteScsiCommand()</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#scsi-device-paths">15.5. SCSI Device Paths</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#scsi-device-path-example">15.5.1. SCSI Device Path Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#atapi-device-path-example">15.5.2. ATAPI Device Path Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fibre-channel-device-path-example">15.5.3. Fibre Channel Device Path Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#infiniband-device-path-example">15.5.4. InfiniBand Device Path Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#scsi-pass-thru-device-paths">15.6. SCSI Pass Thru Device Paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#extended-scsi-pass-thru-protocol">15.7. Extended SCSI Pass Thru Protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-ext-scsi-pass-thru-protocol">15.7.1. EFI_EXT_SCSI_PASS_THRU_PROTOCOL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-ext-scsi-pass-thru-protocol-passthru">15.7.2. EFI_EXT_SCSI_PASS_THRU_PROTOCOL.PassThru()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-ext-scsi-pass-thru-protocol-getnexttargetlun">15.7.3. EFI_EXT_SCSI_PASS_THRU_PROTOCOL.GetNextTargetLun()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-ext-scsi-pass-thru-protocol-builddevicepath">15.7.4. EFI_EXT_SCSI_PASS_THRU_PROTOCOL.BuildDevicePath()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-ext-scsi-pass-thru-protocol-gettargetlun">15.7.5. EFI_EXT_SCSI_PASS_THRU_PROTOCOL.GetTargetLun()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-ext-scsi-pass-thru-protocol-resetchannel">15.7.6. EFI_EXT_SCSI_PASS_THRU_PROTOCOL.ResetChannel()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-ext-scsi-pass-thru-protocol-resettargetlun">15.7.7. EFI_EXT_SCSI_PASS_THRU_PROTOCOL.ResetTargetLun()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-ext-scsi-pass-thru-protocol-getnexttarget">15.7.8. EFI_EXT_SCSI_PASS_THRU_PROTOCOL.GetNextTarget()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="16_Protocols_iSCSI_Boot.html">16. Protocols — iSCSI Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_Protocols_USB_Support.html">17. Protocols — USB Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_Protocols_Debugger_Support.html">18. Protocols — Debugger Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_Protocols_Compression_Algorithm_Specification.html">19. Protocols — Compression Algorithm Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_Protocols_ACPI_Protocols.html">20. Protocols — ACPI Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_Protocols_String_Services.html">21. Protocols — String Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html">22. EFI Byte Code Virtual Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_Firmware_Update_and_Reporting.html">23. Firmware Update and Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24_Network_Protocols_SNP_PXE_BIS.html">24. Network Protocols — SNP, PXE, BIS and HTTP Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25_Network_Protocols_Managed_Network.html">25. Network Protocols - Managed Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26_Network_Protocols_Bluetooth.html">26. Network Protocols — Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27_Network_Protocols_VLAN_and_EAP.html">27. Network Protocols — VLAN, EAP, Wi-Fi and Supplicant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28_Network_Protocols_TCP_IP_and_Configuration.html">28. Network Protocols — TCP, IP, IPsec, FTP, TLS and Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29_Network_Protocols_ARP_and_DHCP.html">29. Network Protocols — ARP, DHCP, DNS, HTTP and REST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_Network_Protocols_UDP_and_MTFTP.html">30. Network Protocols — UDP and MTFTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="31_EFI_Redfish_Service_Support.html">31. EFI Redfish Service Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="32_Secure_Boot_and_Driver_Signing.html">32. Secure Boot and Driver Signing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="33_Human_Interface_Infrastructure.html">33. Human Interface Infrastructure Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="34_HII_Protocols.html">34. HII Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="35_HII_Configuration_Processing_and_Browser_Protocol.html">35. HII Configuration Processing and Browser Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="36_User_Identification.html">36. User Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="37_Secure_Technologies.html">37. Secure Technologies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="38_Confidential_Computing.html">38. Confidential Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="39_Micellaneous_Protocols.html">39. Miscellaneous Protocols</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Apx_A_GUID_and_Time_Formats.html">A. GUID and Time Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_B_Console.html">B. Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_C_Device_Path_Examples.html">C. Device Path Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_D_Status_Codes.html">D. Status Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_E_Universal_Network_Driver_Interfaces.html">E. Universal Network Driver Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_F_Using_the_Simple_Pointer_Protocol.html">F. Using the Simple Pointer Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_G_Using_the_EFI_Extended_SCSI_Pass_Thru_Protocol.html">G. Using the EFI Extended SCSI Pass Thru Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_H_Compression_Source_Code.html">H. Compression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_I_Decompression_Source_Code.html">I. Decompression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_J_EFI_Byte_Code_Virtual_Machine_Opcode_List.html">J. EFI Byte Code Virtual Machine Opcode List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_K_Alphabetic_Function_Lists.html">K. Alphabetic Function Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_L_EFI_1.10_Protocol_Changes_and_Deprecation_List.html">L. EFI 1.10 Protocol Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html">M. Formats — Language Codes and Language Code Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_N_Common_Platform_Error_Record.html">N. Common Platform Error Record (CPER)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_O_UEFI_ACPI_Data_Table.html">O. UEFI ACPI Data Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_P_Hardware_Error_Record_Persistence_Usage.html">P. Hardware Error Record Persistence Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_Q_References.html">Q. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_R_Glossary.html">R. Glossary</a></li>
+</ul>
+
+    <a href= "genindex.html">Index</a>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UEFI Specification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">15. </span>Protocols — SCSI Driver Models and Bus Support</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="protocols-scsi-driver-models-and-bus-support">
+<span id="id1"></span><h1><span class="section-number">15. </span>Protocols — SCSI Driver Models and Bus Support<a class="headerlink" href="#protocols-scsi-driver-models-and-bus-support" title="Link to this heading"></a></h1>
+<p>The intent of this chapter is to specify a method of providing direct access to SCSI devices. These protocols provide services that allow a generic driver to produce the Block I/O protocol for SCSI disk devices, and allows an EFI utility to issue commands to any SCSI device. The main reason to provide such an access is to enable S.M.A.R.T. functionality during POST (i.e., issuing Mode Sense, Mode Select, and Log Sense to SCSI devices). This is accomplished by using a generic API such as SCSI Pass Thru. The use of this method will enable additional functionality in the future without modifying the EFI SCSI Pass Thru driver. SCSI Pass Thru is not limited to SCSI channels. It is applicable to all channel technologies that utilize SCSI commands such as SCSI, ATAPI, and Fibre Channel. This chapter describes the SCSI Driver Model. This includes the behavior of SCSI Bus Drivers, the behavior of SCSI Device Drivers, and a detailed description of the SCSI I/O Protocol. This chapter provides enough material to implement a SCSI Bus Driver, and the tools required to design and implement SCSI Device Drivers. It does not provide any information on specific SCSI devices.</p>
+<section id="scsi-driver-model-overview">
+<span id="id2"></span><h2><span class="section-number">15.1. </span>SCSI Driver Model Overview<a class="headerlink" href="#scsi-driver-model-overview" title="Link to this heading"></a></h2>
+<p>The EFI SCSI Driver Stack includes the SCSI Pass Thru Driver, SCSI Bus Driver and individual SCSI Device Drivers.</p>
+<p><strong>SCSI Pass Thru Driver</strong>: A SCSI Pass Through Driver manages a SCSI Host Controller that contains one or more SCSI Buses. It creates SCSI Bus Controller Handles for each SCSI Bus, and attaches Extended SCSI Pass Thru Protocol and Device Path Protocol to each handle the driver produced. Please refer to <a class="reference internal" href="#extended-scsi-pass-thru-protocol"><span class="std std-ref">Extended SCSI Pass Thru Protocol</span></a> and Appendix G. <em>Using the EFI Extended SCSI Pass Thru Protocol</em>.</p>
+<p><strong>SCSI Bus Driver</strong>: A SCSI Bus Driver manages a SCSI Bus Controller Handle that is created by SCSI Pass Thru Driver. It creates SCSI Device Handles for each SCSI Device Controller detected during SCSI Bus Enumeration, and attaches SCSI I/O Protocol and Device Path Protocol to each handle the driver produced.</p>
+<p><strong>SCSI Device Driver</strong>: A SCSI Device Driver manages one kind of SCSI Device. Device handles for SCSI Devices are created by SCSI Bus Drivers. A SCSI Device Driver could be a bus driver itself, and may create child handles. But most SCSI Device Drivers will be device drivers that do not create new handles. For the pure device driver, it attaches protocol instance to the device handle of the SCSI Device. These protocol instances are I/O abstractions that allow the SCSI Device to be used in the pre-boot environment. The most common I/O abstractions are used to boot an EFI compliant OS.</p>
+</section>
+<section id="scsi-bus-drivers">
+<span id="id3"></span><h2><span class="section-number">15.2. </span>SCSI Bus Drivers<a class="headerlink" href="#scsi-bus-drivers" title="Link to this heading"></a></h2>
+<p>A SCSI Bus Driver manages a SCSI Bus Controller Handle. A SCSI Bus Controller Handle is created by a SCSI Pass Thru Driver and is abstracted in software with the Extended SCSI Pass Thru Protocol. A SCSI Bus Driver will manage handles that contain this protocol. The Figure below, <a class="reference internal" href="#device-handle-for-a-scsi-bus-controller"><span class="std std-ref">Device Handle for a SCSI Bus Controller</span></a> , shows an example device handle for a SCSI Bus handle. It contains a Device Path Protocol instance and a Extended SCSI Pass Thru Protocol Instance.</p>
+<figure class="align-default" id="device-handle-for-a-scsi-bus-controller">
+<a class="reference internal image-reference" href="_images/Protocols_SCSI_Driver_Models_and_Bus_Support-2.png"><img alt="_images/Protocols_SCSI_Driver_Models_and_Bus_Support-2.png" src="_images/Protocols_SCSI_Driver_Models_and_Bus_Support-2.png" style="width: 85%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 15.1 </span><span class="caption-text">Device Handle for a SCSI Bus Controller</span><a class="headerlink" href="#device-handle-for-a-scsi-bus-controller" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="driver-binding-protocol-for-scsi-bus-drivers">
+<span id="id4"></span><h3><span class="section-number">15.2.1. </span>Driver Binding Protocol for SCSI Bus Drivers<a class="headerlink" href="#driver-binding-protocol-for-scsi-bus-drivers" title="Link to this heading"></a></h3>
+<p>The Driver Binding Protocol contains three services. These are <em>Supported()</em> , <em>Start()</em> , and <em>Stop()</em> . <em>Supported()</em> tests to see if the SCSI Bus Driver can manage a device handle. A SCSI Bus Driver can only manage device handle that contain the Device Path Protocol and the Extended SCSI Pass Thru Protocol, so a SCSI Bus Driver must look for these two protocols on the device handle that is being tested.</p>
+<p>The <em>Start()</em> function tells the SCSI Bus Driver to start managing a device handle. The device handle should support the protocols shown in Figure <a class="reference internal" href="#device-handle-for-a-scsi-bus-controller"><span class="std std-ref">Device Handle for a SCSI Bus Controller</span></a> . The Extended SCSI Pass Thru Protocol provides information about a SCSI Channel and the ability to communicate with any SCSI devices attached to that SCSI Channel.</p>
+<p>The SCSI Bus Driver has the option of creating all of its children in one call to <em>Start()</em>, or spreading it across several calls to <em>Start()</em> . In general, if it is possible to design a bus driver to create one child at a time, it should do so to support the rapid boot capability in the UEFI Driver Model. Each of the child device handles created in <em>Start()</em> must contain a Device Path Protocol instance, and a SCSI I/O protocol instance. The SCSI I/O Protocol is described in <a class="reference internal" href="#efi-scsi-i-o-protocol">EFI SCSI I/O Protocol</a>  and Section 14.4 .  The format of device paths for SCSI Devices is described in <a class="reference internal" href="#id15">SCSI Device Paths</a>. The Figure below, <a class="reference internal" href="#child-handle-created-by-a-scsi-bus-driver"><span class="std std-ref">Child Handle Created by a SCSI Bus Driver</span></a> ,  shows an example child device handle that is created by a SCSI Bus Driver for a SCSI Device.</p>
+<figure class="align-default" id="child-handle-created-by-a-scsi-bus-driver">
+<a class="reference internal image-reference" href="_images/Protocols_SCSI_Driver_Models_and_Bus_Support-3.png"><img alt="_images/Protocols_SCSI_Driver_Models_and_Bus_Support-3.png" src="_images/Protocols_SCSI_Driver_Models_and_Bus_Support-3.png" style="width: 85%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 15.2 </span><span class="caption-text">Child Handle Created by a SCSI Bus Driver</span><a class="headerlink" href="#child-handle-created-by-a-scsi-bus-driver" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>A SCSI Bus Driver must perform several steps to manage a SCSI Bus.</p>
+<ol class="arabic simple">
+<li><p>Scan for the SCSI Devices on the SCSI Channel that connected to the SCSI Bus Controller. If a request is being made to scan only one SCSI Device, then only looks for the one specified. Create a device handle for the SCSI Device found.</p></li>
+<li><p>Install a Device Path Protocol instance and a SCSI I/O Protocol instance on the device handle created for each SCSI Device.</p></li>
+</ol>
+<p>The <em>Stop()</em> function tells the SCSI Bus Driver to stop managing a SCSI Bus. The <em>Stop()</em> function can destroy one or more of the device handles that were created on a previous call to <em>Start()</em> . If all of the child device handles have been destroyed, then <em>Stop()</em> will place the SCSI Bus Controller in a quiescent state. The functionality of <em>Stop()</em> mirrors <em>Start()</em> .</p>
+</section>
+<section id="scsi-enumeration">
+<span id="id5"></span><h3><span class="section-number">15.2.2. </span>SCSI Enumeration<a class="headerlink" href="#scsi-enumeration" title="Link to this heading"></a></h3>
+<p>The purpose of the SCSI Enumeration is only to scan for the SCSI Devices attached to the specific SCSI channel. The SCSI Bus driver need not allocate resources for SCSI Devices (like PCI Bus Drivers do), nor need it connect a SCSI Device with its Device Driver (like USB Bus Drivers do). The details of the SCSI Enumeration is implementation specific, thus is out of the scope of this document.</p>
+</section>
+</section>
+<section id="scsi-device-drivers">
+<span id="id6"></span><h2><span class="section-number">15.3. </span>SCSI Device Drivers<a class="headerlink" href="#scsi-device-drivers" title="Link to this heading"></a></h2>
+<p>SCSI Device Drivers manage SCSI Devices. Device handles for SCSI Devices are created by SCSI Bus Drivers. A SCSI Device Driver could be a bus driver itself, and may create child handles. But most SCSI Device Drivers will be device drivers that do not create new handles. For the pure device driver, it attaches protocol instance to the device handle of the SCSI Device. These protocol instances are I/O abstractions that allow the SCSI Device to be used in the pre-boot environment. The most common I/O abstractions are used to boot an EFI compliant OS.</p>
+<section id="driver-binding-protocol-for-scsi-device-drivers">
+<span id="id7"></span><h3><span class="section-number">15.3.1. </span>Driver Binding Protocol for SCSI Device Drivers<a class="headerlink" href="#driver-binding-protocol-for-scsi-device-drivers" title="Link to this heading"></a></h3>
+<p>The Driver Binding Protocol contains three services. These are <em>Supported()</em> , <em>Start()</em> , and <em>Stop()</em> . <em>Supported()</em> tests to see if the SCSI Device Driver can manage a device handle. A SCSI Device Driver can only manage device handle that contain the Device Path Protocol and the SCSI I//O Protocol, so a SCSI Device Driver must look for these two protocols on the device handle that is being tested. In addition, it needs to check to see if the device handle represents a SCSI Device that SCSI Device Driver knows how to manage. This is typically done by using the services of the SCSI I/O Protocol to see whether the device information retrieved is supported by the device driver.</p>
+<p>The <em>Start()</em> function tells the SCSI Device Driver to start managing a SCSI Device. A SCSI Device Driver could be a bus driver itself, and may create child handles. But most SCSI Device Drivers will be device drivers that do not create new handles. For the pure device driver, it installs one or more addition protocol instances on the device handle for the SCSI Device.</p>
+<p>The <em>Stop()</em> function mirrors the <em>Start()</em> function, so the <em>Stop()</em> function completes any outstanding transactions to the SCSI Device and removes the protocol interfaces that were installed in <em>Start()</em> .</p>
+</section>
+</section>
+<section id="efi-scsi-i-o-protocol">
+<span id="efi-scsi-io-protocol"></span><h2><span class="section-number">15.4. </span>EFI SCSI I/O Protocol<a class="headerlink" href="#efi-scsi-i-o-protocol" title="Link to this heading"></a></h2>
+<p>This section defines the EFI SCSI I/O protocol. This protocol is used by code, typically drivers, running in the EFI boot services environment to access SCSI devices. In particular, functions for managing devices on SCSI buses are defined here.</p>
+<p>The interfaces provided in the <em>EFI_SCSI_IO_PROTOCOL</em> are for performing basic operations to access SCSI devices.</p>
+<blockquote>
+<div></div></blockquote>
+<section id="id8">
+<span id="id9"></span><h3><span class="section-number">15.4.1. </span>EFI_SCSI_IO_PROTOCOL<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<p>This section provides a detailed description of the <em>EFI_SCSI_IO_PROTOCOL</em>.</p>
+<p><strong>Summary</strong></p>
+<p>Provides services to manage and communicate with SCSI devices.</p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_SCSI_IO_PROTOCOL_GUID \</span>
+  <span class="p">{</span><span class="mh">0x932f47e6</span><span class="p">,</span><span class="mh">0x2362</span><span class="p">,</span><span class="mh">0x4002</span><span class="p">,</span>\
+    <span class="p">{</span><span class="mh">0x80</span><span class="p">,</span><span class="mh">0x3e</span><span class="p">,</span><span class="mh">0x3c</span><span class="p">,</span><span class="mh">0xd5</span><span class="p">,</span><span class="mh">0x4b</span><span class="p">,</span><span class="mh">0x13</span><span class="p">,</span><span class="mh">0x8f</span><span class="p">,</span><span class="mh">0x85</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p><strong>Protocol Interface Structure</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="n">_EFI_SCSI_IO_PROTOCOL</span> <span class="p">{</span>
+  <span class="n">EFI_SCSI_IO_PROTOCOL_GET_DEVICE_TYPE</span>       <span class="n">GetDeviceType</span><span class="p">;</span>
+  <span class="n">EFI_SCSI_IO_PROTOCOL_GET_DEVICE_LOCATION</span>   <span class="n">GetDeviceLocation</span><span class="p">;</span>
+  <span class="n">EFI_SCSI_IO_PROTOCOL_RESET_BUS</span>             <span class="n">ResetBus</span><span class="p">;</span>
+  <span class="n">EFI_SCSI_IO_PROTOCOL_RESET_DEVICE</span>          <span class="n">ResetDevice</span><span class="p">;</span>
+  <span class="n">EFI_SCSI_IO_PROTOCOL_EXECUTE_SCSI_COMMAND</span>  <span class="n">ExecuteScsiCommand</span><span class="p">;</span>
+  <span class="n">UINT32</span>                                     <span class="n">IoAlign</span><span class="p">;</span>
+  <span class="p">}</span> <span class="n">EFI_SCSI_IO_PROTOCOL</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>IoAlign</dt><dd><p>Supplies the alignment requirement for any buffer used in a data transfer. <em>IoAlign</em> values of 0 and 1 mean that the buffer can be placed anywhere in memory. Otherwise, <em>IoAlign</em> must be a power of 2, and the requirement is that the start address of a buffer must be evenly divisible by <em>IoAlign</em> with no remainder.</p>
+</dd>
+<dt>GetDeviceType</dt><dd><p>Retrieves the information of the device type which the SCSI device belongs to <a class="reference internal" href="#id10">EFI_SCSI_IO_PROTOCOL.GetDeviceType()</a> .</p>
+</dd>
+<dt>GetDeviceLocation</dt><dd><p>Retrieves the device location information in the SCSI bus <a class="reference internal" href="#id11">EFI_SCSI_IO_PROTOCOL.GetDeviceLocation()</a>.</p>
+</dd>
+<dt>ResetBus</dt><dd><p>Resets the entire SCSI bus the SCSI device attaches to <a class="reference internal" href="#id12">EFI_SCSI_IO_PROTOCOL.ResetBus()</a>.</p>
+</dd>
+<dt>ResetDevice</dt><dd><p>Resets the SCSI Device that is specified by the device handle the SCSI I/O protocol attaches  <a class="reference internal" href="#id13">EFI_SCSI_IO_PROTOCOL.ResetDevice()</a> .</p>
+</dd>
+<dt>ExecuteScsiCommand</dt><dd><p>Sends a SCSI command to the SCSI device and waits for the execution completion until an exit condition is met, or a timeout occurs <a class="reference internal" href="#id14">EFI_SCSI_IO_PROTOCOL.ExecuteScsiCommand()</a> .</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>EFI_SCSI_IO_PROTOCOL</em> provides the basic functionalities to access and manage a SCSI Device. There is one <em>EFI_SCSI_IO_PROTOCOL</em> instance for each SCSI Device on a SCSI Bus. A device driver that wishes to manage a SCSI Device in a system will have to retrieve the <em>EFI_SCSI_IO_PROTOCOL</em> instance that is associated with the SCSI Device. A device handle for a SCSI Device will minimally contain an <em>EFI_DEVICE_PATH_PROTOCOL</em> instance and an <em>EFI_SCSI_IO_PROTOCOL</em> instance.</p>
+</section>
+<section id="efi-scsi-io-protocol-getdevicetype">
+<span id="id10"></span><h3><span class="section-number">15.4.2. </span>EFI_SCSI_IO_PROTOCOL.GetDeviceType()<a class="headerlink" href="#efi-scsi-io-protocol-getdevicetype" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Retrieves the device type information of the SCSI Device.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_SCSI_IO_PROTOCOL_GET_DEVICE_TYPE</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_SCSI_IO_PROTOCOL</span>        <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">UINT8</span>                      <span class="o">*</span><span class="n">DeviceType</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the EFI_SCSI_IO_PROTOCOL instance. Type EFI_SCSI_IO_PROTOCOL is defined in  <a class="reference internal" href="#id8">EFI_SCSI_IO_PROTOCOL</a> .</p>
+</dd>
+<dt>DeviceType</dt><dd><p>A pointer to the device type information retrieved from the SCSI Device. See “Related Definitions” for the possible returned values of this parameter.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function is used to retrieve the SCSI device type information. This function is typically used for SCSI Device Drivers to quickly recognize whether the SCSI Device could be managed by it.</p>
+<p>If <em>DeviceType</em> is <strong>NULL</strong> , then <em>EFI_INVALID_PARAMETER</em> is returned. Otherwise, the device type is returned in <em>DeviceType</em> and <em>EFI_SUCCESS</em> is returned.</p>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">Defined</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">SCSI</span> <span class="n">Primary</span> <span class="n">Commands</span> <span class="n">standard</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="p">,</span> <span class="n">SPC</span><span class="o">-</span><span class="mi">4</span><span class="p">)</span>
+<span class="o">//</span>
+<span class="c1">#define EFI_SCSI_IO_TYPE_DISK                0x00 // Disk device</span>
+<span class="c1">#define EFI_SCSI_IO_TYPE_TAPE                0x01 // Tape device</span>
+<span class="c1">#define EFI_SCSI_IO_TYPE_PRINTER             0x02 // Printer</span>
+<span class="c1">#define EFI_SCSI_IO_TYPE_PROCESSOR           0x03 // Processor</span>
+<span class="c1">#define EFI_SCSI_IO_TYPE_WORM                0x04 // Write-once read-multiple</span>
+<span class="c1">#define EFI_SCSI_IO_TYPE_CDROM               0x05 // CD or DVD device</span>
+<span class="c1">#define EFI_SCSI_IO_TYPE_SCANNER             0x06 // Scanner device</span>
+<span class="c1">#define EFI_SCSI_IO_TYPE_OPTICAL             0x07 // Optical memory device</span>
+<span class="c1">#define EFI_SCSI_IO_TYPE_MEDIUMCHANGER       0x08 // Medium Changer device</span>
+<span class="c1">#define EFI_SCSI_IO_TYPE_COMMUNICATION       0x09 // Communications device</span>
+<span class="c1">#define MFI_SCSI_IO_TYPE_A                   0x0A // Obsolete</span>
+<span class="c1">#define MFI_SCSI_IO_TYPE_B                   0x0B // Obsolete</span>
+<span class="c1">#define MFI_SCSI_IO_TYPE_RAID                0x0C // Storage array controller</span>
+                       <span class="o">//</span> <span class="n">device</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="p">,</span> <span class="n">RAID</span><span class="p">)</span>
+<span class="c1">#define MFI_SCSI_IO_TYPE_SES                 0x0D // Enclosure services device</span>
+<span class="c1">#define MFI_SCSI_IO_TYPE_RBC                 0x0E // Simplified direct-access</span>
+                       <span class="o">//</span> <span class="n">device</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="p">,</span> <span class="n">magnetic</span>
+                       <span class="o">//</span> <span class="n">disk</span><span class="p">)</span>
+<span class="c1">#define MFI_SCSI_IO_TYPE_OCRW                0x0F // Optical card reader/</span>
+                       <span class="o">//</span> <span class="n">writer</span> <span class="n">device</span>
+<span class="c1">#define MFI_SCSI_IO_TYPE_BRIDGE              0x10 // Bridge Controller</span>
+                       <span class="o">//</span> <span class="n">Commands</span>
+<span class="c1">#define MFI_SCSI_IO_TYPE_OSD                 0x11 // Object-based Storage</span>
+                       <span class="o">//</span> <span class="n">Device</span>
+<span class="c1">#define EFI_SCSI_IO_TYPE_RESERVED_LOW        0x12 // Reserved (low)</span>
+<span class="c1">#define EFI_SCSI_IO_TYPE_RESERVED_HIGH       0x1E // Reserved (high)</span>
+<span class="c1">#define EFI_SCSI_IO_TYPE_UNKNOWN             0x1F // Unknown no device type</span>
+</pre></div>
+</div>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>Retrieves the device type information successfully.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>The DeviceType is <strong>NULL</strong>.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-scsi-io-protocol-getdevicelocation">
+<span id="id11"></span><h3><span class="section-number">15.4.3. </span>EFI_SCSI_IO_PROTOCOL.GetDeviceLocation()<a class="headerlink" href="#efi-scsi-io-protocol-getdevicelocation" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Retrieves the SCSI device location in the SCSI channel.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_SCSI_IO_PROTOCOL_GET_DEVICE_LOCATION</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_SCSI_IO_PROTOCOL</span>                <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">UINT8</span>                           <span class="o">**</span><span class="n">Target</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">UINT64</span>                             <span class="o">*</span><span class="n">Lun</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the EFI_SCSI_IO_PROTOCOL instance. Type EFI_SCSI_IO_PROTOCOL is defined in <a class="reference internal" href="#id8">EFI_SCSI_IO_PROTOCOL</a> .</p>
+</dd>
+<dt>Target</dt><dd><p>A pointer to the Target Array which represents the ID of a SCSI device on the SCSI channel.</p>
+</dd>
+<dt>Lun</dt><dd><p>A pointer to the Logical Unit Number of the SCSI device on the SCSI channel.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function is used to retrieve the SCSI device location in the SCSI bus. The device location is determined by a (Target, Lun) pair. This function allows a SCSI Device Driver to retrieve its location on the SCSI channel, and may use the Extended SCSI Pass Thru Protocol to access the SCSI device directly.</p>
+<p>If <em>Target</em> or <em>Lun</em> is <strong>NULL</strong> , then <em>EFI_INVALID_PARAMETER</em> is returned. Otherwise, the device location is returned in <em>Target</em> and <em>Lun</em> , and <em>EFI_SUCCESS</em> is returned.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>Retrieves the device location successfully.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>Target or Lun is <em>NULL</em>.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-scsi-io-protocol-resetbus">
+<span id="id12"></span><h3><span class="section-number">15.4.4. </span>EFI_SCSI_IO_PROTOCOL.ResetBus()<a class="headerlink" href="#efi-scsi-io-protocol-resetbus" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Resets the SCSI Bus that the SCSI Device is attached to.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_SCSI_IO_PROTOCOL_RESET_BUS</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_SCSI_IO_PROTOCOL</span>            <span class="o">*</span><span class="n">This</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the EFI_SCSI_IO_PROTOCOL instance. Type EFI_SCSI_IO_PROTOCOL is defined in <a class="reference internal" href="#id8">EFI_SCSI_IO_PROTOCOL</a> .</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function provides the mechanism to reset the whole SCSI bus that the specified SCSI Device is connected to. Some SCSI Host Controller may not support bus reset, if so, <em>EFI_UNSUPPORTED</em> is returned. If a device error occurs while executing that bus reset operation, then <em>EFI_DEVICE_ERROR</em> is returned. If a timeout occurs during the execution of the bus reset operation, then <em>EFI_TIMEOUT</em> is returned. If the bus reset operation is completed, then <em>EFI_SUCCESS</em> is returned.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The SCSI bus is reset successfully.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>Errors encountered when resetting the SCSI bus.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>The bus reset operation is not supported by the SCSI Host Controller.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_TIMEOUT</p></td>
+<td><p>A timeout occurred while attempting to reset the SCSI bus.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-scsi-io-protocol-resetdevice">
+<span id="id13"></span><h3><span class="section-number">15.4.5. </span>EFI_SCSI_IO_PROTOCOL.ResetDevice()<a class="headerlink" href="#efi-scsi-io-protocol-resetdevice" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Resets the SCSI Device that is specified by the device handle that the SCSI I/O Protocol is attached.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_SCSI_IO_PROTOCOL_RESET_DEVICE</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_SCSI_IO_PROTOCOL</span>         <span class="o">*</span><span class="n">This</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A Pointer to the EFI_SCSI_IO_PROTOCOL instance. Type EFI_SCSI_IO_PROTOCOL is defined in <a class="reference internal" href="#id8">EFI_SCSI_IO_PROTOCOL</a> .</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function provides the mechanism to reset the SCSI Device. If the SCSI bus does not support a device reset operation, then <em>EFI_UNSUPPORTED</em> is returned. If a device error occurs while executing that device reset operation, then <em>EFI_DEVICE_ERROR</em> is returned. If a timeout occurs during the execution of the device reset operation, then <em>EFI_TIMEOUT</em> is returned. If the device reset operation is completed, then <em>EFI_SUCCESS</em> is returned.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>Reset the SCSI Device successfully.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>Errors are encountered when resetting the SCSI Device.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>The SCSI bus does not support a device reset operation.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_TIMEOUT</p></td>
+<td><p>A timeout occurred while attempting to reset the SCSI Device.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-scsi-io-protocol-executescsicommand">
+<span id="id14"></span><h3><span class="section-number">15.4.6. </span>EFI_SCSI_IO_PROTOCOL.ExecuteScsiCommand()<a class="headerlink" href="#efi-scsi-io-protocol-executescsicommand" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Sends a SCSI Request Packet to the SCSI Device for execution.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+  <span class="n">EFI_STATUS</span>
+  <span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_SCSI_IO_PROTOCOL_EXECUTE_SCSI_COMMAND</span><span class="p">)</span> <span class="p">(</span>
+    <span class="n">IN</span> <span class="n">EFI_SCSI_IO_PROTOCOL</span>                  <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+    <span class="n">IN</span> <span class="n">OUT</span> <span class="n">EFI_SCSI_IO_SCSI_REQUEST_PACKET</span>   <span class="o">*</span><span class="n">Packet</span><span class="p">,</span>
+    <span class="n">IN</span> <span class="n">EFI_EVENT</span>                             <span class="n">Event</span> <span class="n">OPTIONAL</span>
+    <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the EFI_SCSI_IO_PROTOCOL instance. Type EFI_SCSI_IO_PROTOCOL is defined in defined in <a class="reference internal" href="#id8">EFI_SCSI_IO_PROTOCOL</a> .</p>
+</dd>
+<dt>Packet</dt><dd><p>The SCSI request packet to send to the SCSI Device specified by the device handle. See “Related Definitions” for a description of EFI_SCSI_IO_SCSI_REQUEST_PACKET.</p>
+</dd>
+<dt>Event</dt><dd><p>If the SCSI bus where the SCSI device is attached does not support non-blocking I/O, then Event is ignored, and blocking I/O is performed. If Event is NULL, then blocking I/O is performed. If Event is not NULL and non-blocking I/O is supported, then non-blocking I/O is performed, and Event will be signaled when the SCSI Request Packet completes.</p>
+</dd>
+</dl>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINT64</span>             <span class="n">Timeout</span><span class="p">;</span>
+  <span class="n">VOID</span>               <span class="o">*</span><span class="n">InDataBuffer</span><span class="p">;</span>
+  <span class="n">VOID</span>               <span class="o">*</span><span class="n">OutDataBuffer</span><span class="p">;</span>
+  <span class="n">VOID</span>               <span class="o">*</span><span class="n">SenseData</span><span class="p">;</span>
+  <span class="n">VOID</span>               <span class="o">*</span><span class="n">Cdb</span><span class="p">;</span>
+  <span class="n">UINT32</span>             <span class="n">InTransferLength</span><span class="p">;</span>
+  <span class="n">UINT32</span>             <span class="n">OutTransferLength</span><span class="p">;</span>
+  <span class="n">UINT8</span>              <span class="n">CdbLength</span><span class="p">;</span>
+  <span class="n">UINT8</span>              <span class="n">DataDirection</span><span class="p">;</span>
+  <span class="n">UINT8</span>              <span class="n">HostAdapterStatus</span><span class="p">;</span>
+  <span class="n">UINT8</span>              <span class="n">TargetStatus</span><span class="p">;</span>
+  <span class="n">UINT8</span>              <span class="n">SenseDataLength</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_SCSI_IO_SCSI_REQUEST_PACKET</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Timeout</dt><dd><p>The timeout, in 100 ns units, to use for the execution of this SCSI Request Packet. A <em>Timeout</em> value of 0 means that this function will wait indefinitely for the SCSI Request Packet to execute. If <em>Timeout</em> is greater than zero, then this function will return <em>EFI_TIMEOUT</em> if the time required to execute the SCSI Request Packet is greater than <em>Timeout</em> .</p>
+</dd>
+<dt>DataBuffer</dt><dd><p>A pointer to the data buffer to transfer from or to the SCSI device.</p>
+</dd>
+<dt>InDataBuffer</dt><dd><p>A pointer to the data buffer to transfer between the SCSI controller and the SCSI device for SCSI READ command. For all SCSI WRITE Commands this must point to <em>NULL</em> .</p>
+</dd>
+<dt>OutDataBuffer</dt><dd><p>A pointer to the data buffer to transfer between the SCSI controller and the SCSI device for SCSI WRITE command. For all SCSI READ commands this field must point to <em>NULL</em> .</p>
+</dd>
+<dt>SenseData</dt><dd><p>A pointer to the sense data that was generated by the execution of the SCSI Request Packet.</p>
+</dd>
+<dt>Cdb</dt><dd><p>A pointer to buffer that contains the Command Data Block to send to the SCSI device.</p>
+</dd>
+<dt>InTransferLength</dt><dd><p>On Input, the size, in bytes, of <em>InDataBuffer</em> . On output, the number of bytes transferred between the SCSI controller and the SCSI device. If <em>InTransferLength</em> is larger than the SCSI controller can handle, no data will be transferred, <em>InTransferLength</em> will be updated to contain the number of bytes that the SCSI controller is able to transfer, and <em>EFI_BAD_BUFFER_SIZE</em> will be returned.</p>
+</dd>
+<dt>OutTransferLength</dt><dd><p>On Input, the size, in bytes of <em>OutDataBuffer</em> . On Output, the Number of bytes transferred between SCSI Controller and the SCSI device. If <em>OutTransferLength</em> is larger than the SCSI controller can handle, no data will be transferred, <em>OutTransferLength</em> will be updated to contain the number of bytes that the SCSI controller is able to transfer, and <em>EFI_BAD_BUFFER_SIZE</em> will be returned.</p>
+</dd>
+<dt>CdbLength</dt><dd><p>The length, in bytes, of the buffer <em>Cdb</em> . The standard values are 6, 10, 12, and 16, but other values are possible if a variable length <em>CDB</em> is used.</p>
+</dd>
+<dt>DataDirection</dt><dd><p>The direction of the data transfer. 0 for reads, 1 for writes. A value of 2 is Reserved for Bi-Directional SCSI commands. For example XDREADWRITE. All other values are reserved, and must not be used.</p>
+</dd>
+<dt>HostAdapterStatus</dt><dd><p>The status of the SCSI Host Controller that produces the SCSI bus where the SCSI device attached when the SCSI Request Packet was executed on the SCSI Controller. See the possible values listed below.</p>
+</dd>
+<dt>TargetStatus</dt><dd><p>The status returned by the SCSI device when the SCSI Request Packet was executed. See the possible values listed below.</p>
+</dd>
+<dt>SenseDataLength</dt><dd><p>On input, the length in bytes of the <em>SenseData</em> buffer. On output, the number of bytes written to the <em>SenseData</em> buffer.</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span>
+<span class="o">//</span> <span class="n">DataDirection</span>
+<span class="o">//</span>
+<span class="c1">#define EFI_SCSI_IO_DATA_DIRECTION_READ            0</span>
+<span class="c1">#define EFI_SCSI_IO_DATA_DIRECTION_WRITE           1</span>
+<span class="c1">#define EFI_SCSI_IO_DATA_DIRECTION_BIDIRECTIONAL   2</span>
+
+<span class="o">//</span>
+<span class="o">//</span> <span class="n">HostAdapterStatus</span>
+<span class="o">//</span>
+<span class="c1">#define EFI_SCSI_IO_STATUS_HOST_ADAPTER_OK                     0x00</span>
+<span class="c1">#define EFI_SCSI_IO_STATUS_HOST_ADAPTER_TIMEOUT_COMMAND        0x09</span>
+<span class="c1">#define EFI_SCSI_IO_STATUS_HOST_ADAPTER_TIMEOUT                0x0b</span>
+<span class="c1">#define EFI_SCSI_IO_STATUS_HOST_ADAPTER_MESSAGE_REJECT         0x0d</span>
+<span class="c1">#define EFI_SCSI_IO_STATUS_HOST_ADAPTER_BUS_RESET              0x0e</span>
+<span class="c1">#define EFI_SCSI_IO_STATUS_HOST_ADAPTER_PARITY_ERROR           0x0f</span>
+<span class="c1">#define EFI_SCSI_IO_STATUS_HOST_ADAPTER_REQUEST_SENSE_FAILED   0x10</span>
+<span class="c1">#define EFI_SCSI_IO_STATUS_HOST_ADAPTER_SELECTION_TIMEOUT      0x11</span>
+<span class="c1">#define EFI_SCSI_IO_STATUS_HOST_ADAPTER_DATA_OVERRUN_UNDERRUN  0x12</span>
+<span class="c1">#define EFI_SCSI_IO_STATUS_HOST_ADAPTER_BUS_FREE               0x13</span>
+<span class="c1">#define EFI_SCSI_IO_STATUS_HOST_ADAPTER_PHASE_ERROR            0x14</span>
+<span class="c1">#define EFI_SCSI_IO_STATUS_HOST_ADAPTER_OTHER                  0x7f</span>
+
+<span class="o">//</span>
+<span class="o">//</span> <span class="n">TargetStatus</span>
+<span class="o">//</span>
+<span class="c1">#define EFI_SCSI_IO_STATUS_TARGET_GOOD                         0x00</span>
+<span class="c1">#define EFI_SCSI_IO_STATUS_TARGET_CHECK_CONDITION              0x02</span>
+<span class="c1">#define EFI_SCSI_IO_STATUS_TARGET_CONDITION_MET                0x04</span>
+<span class="c1">#define EFI_SCSI_IO_STATUS_TARGET_BUSY                         0x08</span>
+<span class="c1">#define EFI_SCSI_IO_STATUS_TARGET_INTERMEDIATE                 0x10</span>
+<span class="c1">#define EFI_SCSI_IO_STATUS_TARGET_INTERMEDIATE_CONDITION_METn  0x14</span>
+<span class="c1">#define EFI_SCSI_IO_STATUS_TARGET_RESERVATION_CONFLICT         0x18</span>
+<span class="c1">#define EFI_SCSI_IO_STATUS_TARGET_COMMAND_TERMINATED           0x22</span>
+<span class="c1">#define EFI_SCSI_IO_STATUS_TARGET_QUEUE_FULL                   0x28</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>This function sends the SCSI Request Packet specified by <em>Packet</em> to the SCSI Device.</p>
+<p>If the SCSI Bus supports non-blocking I/O and <em>Event</em> is not <strong>NULL</strong>, then this function will return immediately after the command is sent to the SCSI Device, and will later signal <em>Event</em> when the command has completed. If the SCSI Bus supports non-blocking I/O and <em>Event</em> is <strong>NULL</strong>, then this function will send the command to the SCSI Device and block until it is complete. If the SCSI Bus does not support non-blocking I/O, the <em>Event</em> parameter is ignored, and the function will send the command to the SCSI Device and block until it is complete.</p>
+<p>If <em>Packet</em> is successfully sent to the SCSI Device, then <em>EFI_SUCCESS</em> is returned.</p>
+<p>If <em>Packet</em> cannot be sent because there are too many packets already queued up, then <em>EFI_NOT_READY</em> is returned. The caller may retry <em>Packet</em> at a later time.</p>
+<p>If a device error occurs while sending the <em>Packet</em> , then <em>EFI_DEVICE_ERROR</em> is returned.</p>
+<p>If a timeout occurs during the execution of <em>Packet</em> , then <em>EFI_TIMEOUT</em> is returned.</p>
+<p>If any field of <em>Packet</em> is invalid, then <em>EFI_INVALID_PARAMETER</em> is returned.</p>
+<p>If the data buffer described by <em>DataBuffer</em> and <em>TransferLength</em> is too big to be transferred in a single command, then <em>EFI_BAD_BUFFER_SIZE</em> is returned. The number of bytes actually transferred is returned in <em>TransferLength</em> .</p>
+<p>If the command described in <em>Packet</em> is not supported by the SCSI Host Controller that produces the SCSI bus, then <em>EFI_UNSUPPORTED</em> is returned.</p>
+<p>If <em>EFI_SUCCESS, EFI_BAD_BUFFER_SIZE, EFI_DEVICE_ERROR</em> , or <em>EFI_TIMEOUT</em> is returned, then the caller must examine the status fields in <em>Packet</em> in the following precedence order: <em>HostAdapterStatus</em> followed by <em>TargetStatus</em> followed by <em>SenseDataLength</em> , followed by <em>SenseData</em> . If non-blocking I/O is being used, then the status fields in <em>Packet</em> will not be valid until the <em>Event</em> associated with <em>Packet</em> is
+signaled.</p>
+<p>If <em>EFI_NOT_READY</em> , <em>EFI_INVALID_PARAMETER</em> or <em>EFI_UNSUPPORTED</em> is returned, then <em>Packet</em> was never sent, so the status fields in <em>Packet</em> are not valid. If non-blocking I/O is being used, the <em>Event</em> associated with <em>Packet</em> will not be signaled.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The SCSI Request Packet was sent by the host. For read and bi-directional commands, <em>InTransferLength</em> bytes were transferred to <em>InDataBuffer</em> . For write and bi-directional commands, <em>OutTransferLength</em> bytes were transferred from <em>OutDataBuffer</em> . See <em>HostAdapterStatus, TargetStatus, SenseDataLength,</em> and <em>SenseData</em> in that order for additional status information.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_BAD_BUFFER_SIZE</p></td>
+<td><p>The SCSI Request Packet was not executed. For read and bi-directional commands, the number of bytes that could be transferred is returned in <em>InTransferLength.</em> For write and bi-directional commands, the number of bytes that could be transferred is returned in <em>OutTransferLength.</em> See <em>HostAdapterStatus</em> and <em>TargetStatus</em> in that order for additional status information.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_NOT_READY</p></td>
+<td><p>The SCSI Request Packet could not be sent because there are too many SCSI Command Packets already queued. The caller may retry again later.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>A device error occurred while attempting to send the SCSI Request Packet. See HostAdapterStatus, TargetStatus, SenseDataLength, and SenseData in that order for additional status information.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>The contents of CommandPacket are invalid. The SCSI Request Packet was not sent, so no additional status information is available.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>The command described by the SCSI Request Packet is not supported by the SCSI initiator (i.e., SCSI Host Controller). The SCSI Request Packet was not sent, so no additional status information is available.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_TIMEOUT</p></td>
+<td><p>A timeout occurred while waiting for the SCSI Request Packet to execute. See HostAdapterStatus, TargetStatus, SenseDataLength, and SenseData in that order for additional status information.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="scsi-device-paths">
+<span id="id15"></span><h2><span class="section-number">15.5. </span>SCSI Device Paths<a class="headerlink" href="#scsi-device-paths" title="Link to this heading"></a></h2>
+<p>An <em>EFI_SCSI_IO_PROTOCOL</em> must be installed on a handle for its services to be available to SCSI device drivers. In addition to the <em>EFI_SCSI_IO_PROTOCOL</em> , an <em>EFI_DEVICE_PATH_PROTOCOL</em> must also be installed on the same handle. See <a class="reference internal" href="10_Protocols_Device_Path_Protocol.html#protocols-device-path-protocol"><span class="std std-ref">Protocols – Device Path Protocol</span></a>  for detailed description of the <em>EFI_DEVICE_PATH_PROTOCOL</em> .</p>
+<p>The SCSI Driver Model defined in this document can support the SCSI channel generated or emulated by multiple architectures, such as Parallel SCSI, ATAPI, Fibre Channel, InfiniBand, and other future channel types. In this section, there are four example device paths provided, including SCSI device path, ATAPI device path, Fibre Channel device path and InfiniBand device path.</p>
+<section id="scsi-device-path-example">
+<span id="id16"></span><h3><span class="section-number">15.5.1. </span>SCSI Device Path Example<a class="headerlink" href="#scsi-device-path-example" title="Link to this heading"></a></h3>
+<p><a class="reference internal" href="#scsi-device-path-examples"><span class="std std-numref">Table 15.1</span></a> shows an example device path for a SCSI device controller on a desktop platform. This SCSI device controller is connected to a SCSI channel that is generated by a PCI SCSI host controller. The PCI SCSI host controller generates a single SCSI channel, it is located at PCI device number 0x07 and PCI function 0x00, and is directly attached to a PCI root bridge. The SCSI device controller is assigned SCSI Id 2, and its LUN is 0.</p>
+<p>This sample device path consists of an ACPI Device Path Node, a PCI Device Path Node, a SCSI Node, and a Device Path End Structure. The _HID and _UID must match the ACPI table description of the PCI Root Bridge. The shorthand notation for this device path is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ACPI</span><span class="p">(</span><span class="n">PNP0A03</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">PCI</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">SCSI</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span>
+</pre></div>
+</div>
+<table class="longtable docutils align-default" id="scsi-device-path-examples">
+<caption><span class="caption-number">Table 15.1 </span><span class="caption-text">SCSI Device Path Examples</span><a class="headerlink" href="#scsi-device-path-examples" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 11.1%" />
+<col style="width: 11.1%" />
+<col style="width: 11.1%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Byte Offset</strong></p></td>
+<td><p><strong>Byte Length</strong></p></td>
+<td><p><strong>Data</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>0x00</p></td>
+<td><p>0x01</p></td>
+<td><p>0x02</p></td>
+<td><p>Generic Device Path Header - Type ACPI Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Sub type - ACPI Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>0x02</p></td>
+<td><p>0x02</p></td>
+<td><p>0x0C</p></td>
+<td><p>Length - 0x0C bytes</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x04</p></td>
+<td><p>0x04</p></td>
+<td><p>0x41D0,  0x0A03</p></td>
+<td><p>_HID PNP0A03 - 0x41D0 represents the compressed string ‘PNP’ and is encoded in the low order bytes. The compression method is described in the ACPI Specification.</p></td>
+</tr>
+<tr class="row-even"><td><p>0x08</p></td>
+<td><p>0x04</p></td>
+<td><p>0x0000</p></td>
+<td><p>_UID</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x0C</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Generic Device Path Header - Type Hardware Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>0x0D</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Sub type - PCI</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x0E</p></td>
+<td><p>0x02</p></td>
+<td><p>0x06</p></td>
+<td><p>Length - 0x06 bytes</p></td>
+</tr>
+<tr class="row-even"><td><p>0x10</p></td>
+<td><p>0x01</p></td>
+<td><p>0x07</p></td>
+<td><p>PCI Function</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x11</p></td>
+<td><p>0x01</p></td>
+<td><p>0x00</p></td>
+<td><p>PCI Device</p></td>
+</tr>
+<tr class="row-even"><td><p>0x12</p></td>
+<td><p>0x01</p></td>
+<td><p>0x03</p></td>
+<td><p>Generic Device Path Header - Type Message Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x13</p></td>
+<td><p>0x01</p></td>
+<td><p>0x02</p></td>
+<td><p>Sub type - SCSI</p></td>
+</tr>
+<tr class="row-even"><td><p>0x14</p></td>
+<td><p>0x02</p></td>
+<td><p>0x08</p></td>
+<td><p>Length - 0x08 bytes</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x16</p></td>
+<td><p>0x02</p></td>
+<td><p>0x0002</p></td>
+<td><p>Target ID on the SCSI bus (PUN)</p></td>
+</tr>
+<tr class="row-even"><td><p>0x18</p></td>
+<td><p>0x02</p></td>
+<td><p>0x0000</p></td>
+<td><p>Logical Unit Number (LUN)</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x1A</p></td>
+<td><p>0x01</p></td>
+<td><p>0x7F</p></td>
+<td><p>Generic Device Path Header - Type End of Hardware Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>0x1B</p></td>
+<td><p>0x01</p></td>
+<td><p>0xFF</p></td>
+<td><p>Sub type - End of Entire Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x1C</p></td>
+<td><p>0x02</p></td>
+<td><p>0x04</p></td>
+<td><p>Length - 0x04 bytes</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="atapi-device-path-example">
+<span id="id17"></span><h3><span class="section-number">15.5.2. </span>ATAPI Device Path Example<a class="headerlink" href="#atapi-device-path-example" title="Link to this heading"></a></h3>
+<p>The Table below, <a class="reference internal" href="#atapi"><span class="std std-ref">ATAPI Device Path Examples</span></a> , shows an example device path for an ATAPI device on a desktop platform. This ATAPI device is connected to the IDE bus on Primary channel, and is configured as the Master device on the channel. The IDE bus is generated by the IDE controller that is a PCI device. It is located at PCI device number 0x1F and PCI function 0x01, and is directly attached to a PCI root bridge.</p>
+<p>This sample device path consists of an ACPI Device Path Node, a PCI Device Path Node, an ATAPI Node, and a Device Path End Structure. The _HID and _UID must match the ACPI table description of the PCI Root Bridge. The shorthand notation for this device path is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ACPI</span><span class="p">(</span><span class="n">PNP0A03</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">PCI</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">ATA</span><span class="p">(</span><span class="n">Primary</span><span class="p">,</span><span class="n">Master</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span>
+</pre></div>
+</div>
+<table class="longtable docutils align-default" id="atapi">
+<caption><span class="caption-number">Table 15.2 </span><span class="caption-text">ATAPI Device Path Examples</span><a class="headerlink" href="#atapi" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 11.1%" />
+<col style="width: 11.1%" />
+<col style="width: 11.1%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Byte Offset</strong></p></td>
+<td><p><strong>Byte Length</strong></p></td>
+<td><p><strong>Data</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>0x00</p></td>
+<td><p>0x01</p></td>
+<td><p>0x02</p></td>
+<td><p>Generic Device Path Header - Type ACPI Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Sub type - ACPI Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>0x02</p></td>
+<td><p>0x02</p></td>
+<td><p>0x0C</p></td>
+<td><p>Length - 0x0C bytes</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x04</p></td>
+<td><p>0x04</p></td>
+<td><p>0x41D0,  0x0A03</p></td>
+<td><p>_HID PNP0A03 - 0x41D0 represents the compressed string ‘PNP’ and is encoded in the low order bytes. The compression method is described in the ACPI Specification.</p></td>
+</tr>
+<tr class="row-even"><td><p>0x08</p></td>
+<td><p>0x04</p></td>
+<td><p>0x0000</p></td>
+<td><p>_UID</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x0C</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Generic Device Path Header - Type Hardware Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>0x0D</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Sub type - PCI</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x0E</p></td>
+<td><p>0x02</p></td>
+<td><p>0x06</p></td>
+<td><p>Length - 0x06 bytes</p></td>
+</tr>
+<tr class="row-even"><td><p>0x10</p></td>
+<td><p>0x01</p></td>
+<td><p>0x07</p></td>
+<td><p>PCI Function</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x11</p></td>
+<td><p>0x01</p></td>
+<td><p>0x00</p></td>
+<td><p>PCI Device</p></td>
+</tr>
+<tr class="row-even"><td><p>0x12</p></td>
+<td><p>0x01</p></td>
+<td><p>0x03</p></td>
+<td><p>Generic Device Path Header - Type Message Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x13</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Sub type - ATAPI</p></td>
+</tr>
+<tr class="row-even"><td><p>0x14</p></td>
+<td><p>0x02</p></td>
+<td><p>0x08</p></td>
+<td><p>Length - 0x08 bytes</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x16</p></td>
+<td><p>0x01</p></td>
+<td><p>0x00</p></td>
+<td><p>P rimarySecondary - Set to zero for primary or one for secondary.</p></td>
+</tr>
+<tr class="row-even"><td><p>0x17</p></td>
+<td><p>0x01</p></td>
+<td><p>0x00</p></td>
+<td><p>SlaveMaster - set to zero for master or one for slave.</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x18</p></td>
+<td><p>0x02</p></td>
+<td><p>0x0000</p></td>
+<td><p>Logical Unit Number,LUN.</p></td>
+</tr>
+<tr class="row-even"><td><p>0x1A</p></td>
+<td><p>0x01</p></td>
+<td><p>0x7F</p></td>
+<td><p>Generic Device Path Header - Type End of Hardware Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x1B</p></td>
+<td><p>0x01</p></td>
+<td><p>0xFF</p></td>
+<td><p>Sub type - End of Entire Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>0x1C</p></td>
+<td><p>0x02</p></td>
+<td><p>0x04</p></td>
+<td><p>Length - 0x04 bytes</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="fibre-channel-device-path-example">
+<span id="id18"></span><h3><span class="section-number">15.5.3. </span>Fibre Channel Device Path Example<a class="headerlink" href="#fibre-channel-device-path-example" title="Link to this heading"></a></h3>
+<p><a class="reference internal" href="10_Protocols_Device_Path_Protocol.html#fibre-channel-device-path"><span class="std std-numref">Section 10.3.4.3</span></a> shows an example device path for a SCSI device that is connected to a Fibre Channel Port on a desktop platform. The Fibre Channel Port is a PCI device that is located at PCI device number 0x08 and PCI function 0x00, and is directly attached to a PCI root bridge. The Fibre Channel Port is addressed by the World Wide Number, and is assigned as X (X is a 64bit value); the SCSI device’s Logical Unit Number is 0.</p>
+<p>This sample device path consists of an ACPI Device Path Node, a PCI Device Path Node, a Fibre Channel Device Path Node, and a Device Path End Structure. The _HID and _UID must match the ACPI table description of the PCI Root Bridge. The shorthand notation for this device path is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ACPI</span><span class="p">(</span><span class="n">PNP0A03</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">PCI</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">Fibre</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span>
+</pre></div>
+</div>
+<table class="longtable docutils align-default" id="fibre-channel-device-path-examples">
+<caption><span class="caption-number">Table 15.3 </span><span class="caption-text">Fibre Channel Device Path Examples</span><a class="headerlink" href="#fibre-channel-device-path-examples" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 11.1%" />
+<col style="width: 11.1%" />
+<col style="width: 11.1%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Byte Offset</p></td>
+<td><p>Byte Length</p></td>
+<td><p>Data</p></td>
+<td><p>Description</p></td>
+</tr>
+<tr class="row-even"><td><p>0x00</p></td>
+<td><p>0x01</p></td>
+<td><p>0x02</p></td>
+<td><p>Generic Device Path Header - Type ACPI Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Sub type - ACPI Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>0x02</p></td>
+<td><p>0x02</p></td>
+<td><p>0x0C</p></td>
+<td><p>Length - 0x0C bytes</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x04</p></td>
+<td><p>0x04</p></td>
+<td><p>0x41D0,  0x0A03</p></td>
+<td><p>_HID PNP0A03 - 0x41D0 represents the compressed string ‘PNP’ and is encoded in the low order bytes. The compression method is described in the ACPI Specification.</p></td>
+</tr>
+<tr class="row-even"><td><p>0x08</p></td>
+<td><p>0x04</p></td>
+<td><p>0x0000</p></td>
+<td><p>_UID</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x0C</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Generic Device Path Header - Type Hardware Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>0x0D</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Sub type - PCI</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x0E</p></td>
+<td><p>0x02</p></td>
+<td><p>0x06</p></td>
+<td><p>Length - 0x06 bytes</p></td>
+</tr>
+<tr class="row-even"><td><p>0x10</p></td>
+<td><p>0x01</p></td>
+<td><p>0x08</p></td>
+<td><p>PCI Function</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x11</p></td>
+<td><p>0x01</p></td>
+<td><p>0x00</p></td>
+<td><p>PCI Device</p></td>
+</tr>
+<tr class="row-even"><td><p>0x12</p></td>
+<td><p>0x01</p></td>
+<td><p>0x03</p></td>
+<td><p>Generic Device Path Header - Type Message Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x13</p></td>
+<td><p>0x01</p></td>
+<td><p>0x02</p></td>
+<td><p>Sub type - Fibre Channel</p></td>
+</tr>
+<tr class="row-even"><td><p>0x14</p></td>
+<td><p>0x02</p></td>
+<td><p>0x24</p></td>
+<td><p>Length - 0x24 bytes</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x16</p></td>
+<td><p>0x04</p></td>
+<td><p>0x00</p></td>
+<td><p>Reserved</p></td>
+</tr>
+<tr class="row-even"><td><p>0x1A</p></td>
+<td><p>0x08</p></td>
+<td><p>X</p></td>
+<td><p>Fibre Channel World Wide Number</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x22</p></td>
+<td><p>0x08</p></td>
+<td><p>0x00</p></td>
+<td><p>Fibre Channel Logical Unit Number (LUN).</p></td>
+</tr>
+<tr class="row-even"><td><p>0x2A</p></td>
+<td><p>0x01</p></td>
+<td><p>0x7F</p></td>
+<td><p>Generic Device Path Header - Type End of Hardware Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x2B</p></td>
+<td><p>0x01</p></td>
+<td><p>0xFF</p></td>
+<td><p>Sub type - End of Entire Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>0x2C</p></td>
+<td><p>0x02</p></td>
+<td><p>0x04</p></td>
+<td><p>Length - 0x04 bytes</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="infiniband-device-path-example">
+<span id="id19"></span><h3><span class="section-number">15.5.4. </span>InfiniBand Device Path Example<a class="headerlink" href="#infiniband-device-path-example" title="Link to this heading"></a></h3>
+<p>The Table below, <a class="reference internal" href="#infiniband"><span class="std std-ref">InfiniBand Device Path Examples</span></a> , shows an example device path for a SCSI device in an InfiniBand Network. This SCSI device is connected to a single SCSI channel generated by a SCS Host Adapter, and the SCSI Host Adapter is an end node in the InfiniBand Network. The SCSI Host Adapter is a PCI device that is located at PCI device number 0x07 and PCI function 0x00, and is directly attached to a PCI root bridge. The SCSI device is addressed by the (IOU X, IOC Y, DeviceId Z) in the InfiniBand Network. (X, Y, Z are EUI-64 compliant identifiers).</p>
+<p>This sample device path consists of an ACPI Device Path Node, a PCI Device Path Node, an InfiniBand Node, and a Device Path End Structure. The _HID and _UID must match the ACPI table description of the PCI Root Bridge. The shorthand notation for this device path is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ACPI</span><span class="p">(</span><span class="n">PNP0A03</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">PCI</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">Infiniband</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">Z</span><span class="p">)</span><span class="o">.</span>
+</pre></div>
+</div>
+<table class="longtable docutils align-default" id="infiniband">
+<caption><span class="caption-number">Table 15.4 </span><span class="caption-text">InfiniBand Device Path Examples</span><a class="headerlink" href="#infiniband" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 11.1%" />
+<col style="width: 11.1%" />
+<col style="width: 11.1%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Byte Offset</strong></p></td>
+<td><p><strong>Byte Length</strong></p></td>
+<td><p><strong>Data</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>0x00</p></td>
+<td><p>0x01</p></td>
+<td><p>0x02</p></td>
+<td><p>Generic Device Path Header - Type ACPI Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Sub type - ACPI Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>0x02</p></td>
+<td><p>0x02</p></td>
+<td><p>0x0C</p></td>
+<td><p>Length - 0x0C bytes</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x04</p></td>
+<td><p>0x04</p></td>
+<td><p>0x41D0,  0x0A03</p></td>
+<td><p>_HID PNP0A03 - 0x41D0 represents the compressed string ‘PNP’ and is encoded in the low order bytes. The compression method is described in the ACPI Specification.</p></td>
+</tr>
+<tr class="row-even"><td><p>0x08</p></td>
+<td><p>0x04</p></td>
+<td><p>0x0000</p></td>
+<td><p>_UID</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x0C</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Generic Device Path Header - Type Hardware Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>0x0D</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Sub type - PCI</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x0E</p></td>
+<td><p>0x02</p></td>
+<td><p>0x06</p></td>
+<td><p>Length - 0x06 bytes</p></td>
+</tr>
+<tr class="row-even"><td><p>0x10</p></td>
+<td><p>0x01</p></td>
+<td><p>0x07</p></td>
+<td><p>PCI Function</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x11</p></td>
+<td><p>0x01</p></td>
+<td><p>0x00</p></td>
+<td><p>PCI Device</p></td>
+</tr>
+<tr class="row-even"><td><p>0x12</p></td>
+<td><p>0x01</p></td>
+<td><p>0x03</p></td>
+<td><p>Generic Device Path Header - Type Message Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x13</p></td>
+<td><p>0x01</p></td>
+<td><p>0x09</p></td>
+<td><p>Sub type - InfiniBand</p></td>
+</tr>
+<tr class="row-even"><td><p>0x14</p></td>
+<td><p>0x02</p></td>
+<td><p>0x20</p></td>
+<td><p>Length - 0x20 bytes</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x16</p></td>
+<td><p>0x04</p></td>
+<td><p>0x00</p></td>
+<td><p>Reserved</p></td>
+</tr>
+<tr class="row-even"><td><p>0x1A</p></td>
+<td><p>0x08</p></td>
+<td><p>X</p></td>
+<td><p>64bit node GUID of the IOU</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x22</p></td>
+<td><p>0x08</p></td>
+<td><p>Y</p></td>
+<td><p>64bit GUID of the IOC</p></td>
+</tr>
+<tr class="row-even"><td><p>0x2A</p></td>
+<td><p>0x08</p></td>
+<td><p>Z</p></td>
+<td><p>64bit persistent ID of the device.</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x32</p></td>
+<td><p>0x01</p></td>
+<td><p>0x7F</p></td>
+<td><p>Generic Device Path Header - Type End of Hardware Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>0x33</p></td>
+<td><p>0x01</p></td>
+<td><p>0xFF</p></td>
+<td><p>Sub type - End of Entire Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x34</p></td>
+<td><p>0x02</p></td>
+<td><p>0x04</p></td>
+<td><p>Length - 0x04 bytes</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="scsi-pass-thru-device-paths">
+<span id="id20"></span><h2><span class="section-number">15.6. </span>SCSI Pass Thru Device Paths<a class="headerlink" href="#scsi-pass-thru-device-paths" title="Link to this heading"></a></h2>
+<p>An <a class="reference internal" href="#id22">EFI_EXT_SCSI_PASS_THRU_PROTOCOL</a>  must be installed on a handle for its services to be available to UEFI drivers and applications. In addition to the <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL</em> , <a class="reference internal" href="10_Protocols_Device_Path_Protocol.html#efi-device-path-protocol"><span class="std std-ref">EFI Device Path Protocol</span></a>  must also be installed on the same handle. See <a class="reference internal" href="10_Protocols_Device_Path_Protocol.html#protocols-device-path-protocol"><span class="std std-ref">Protocols – Device Path Protocol</span></a>  for a detailed description of the <em>EFI_DEVICE_PATH_PROTOCOL</em> .</p>
+<p>A device path describes the location of a hardware component in a system from the processor’s point of view. This includes the list of busses that lie between the processor and the SCSI controller. The EFI Specification takes advantage of the ACPI Specification to name system components. For the following set of examples, a PCI SCSI controller is assumed. The examples will show a SCSI controller on the root PCI bus, and a SCSI controller behind a PCI-PCI bridge. In addition, an example of a multichannel SCSI controller will be shown.</p>
+<p>See <a class="reference internal" href="#single-channel-pci-scsi-controller"><span class="std std-ref">Single Channel PCI SCSI Controller</span></a>  shows an example device path for a single channel PCI SCSI controller that is located at PCI device number 0x07 and PCI function 0x00, and is directly attached to a PCI root bridge. This device path consists of an ACPI Device Path Node, a PCI Device Path Node, and a Device Path End Structure. The _HID and _UID must match the ACPI table description of the PCI Root Bridge. The shorthand notation for this device path is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ACPI</span><span class="p">(</span><span class="n">PNP0A03</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">PCI</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span>
+</pre></div>
+</div>
+<table class="longtable docutils align-default" id="single-channel-pci-scsi-controller">
+<caption><span class="caption-number">Table 15.5 </span><span class="caption-text">Single Channel PCI SCSI Controller</span><a class="headerlink" href="#single-channel-pci-scsi-controller" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 11.1%" />
+<col style="width: 11.1%" />
+<col style="width: 11.1%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Byte Offset</p></td>
+<td><p>Byte Length</p></td>
+<td><p>Data</p></td>
+<td><p>Description</p></td>
+</tr>
+<tr class="row-even"><td><p>0x00</p></td>
+<td><p>0x01</p></td>
+<td><p>0x02</p></td>
+<td><p>Generic Device Path Header - Type ACPI Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Sub type - ACPI Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>0x02</p></td>
+<td><p>0x02</p></td>
+<td><p>0x0C</p></td>
+<td><p>Length - 0x0C bytes</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x04</p></td>
+<td><p>0x04</p></td>
+<td><p>0x41D0, 0x0A03</p></td>
+<td><p>_HID PNP0A03 - 0x41D0 represents the compressed string ‘PNP’ and is encoded in the low order bytes. The compression method is described in the ACPI Specification.</p></td>
+</tr>
+<tr class="row-even"><td><p>0x08</p></td>
+<td><p>0x04</p></td>
+<td><p>0x0000</p></td>
+<td><p>_UID</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x0C</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Generic Device Path Header - Type Hardware Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>0x0D</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Sub type - PCI</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x0E</p></td>
+<td><p>0x02</p></td>
+<td><p>0x06</p></td>
+<td><p>Length - 0x06 bytes</p></td>
+</tr>
+<tr class="row-even"><td><p>0x10</p></td>
+<td><p>0x01</p></td>
+<td><p>0x00</p></td>
+<td><p>PCI Function</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x11</p></td>
+<td><p>0x01</p></td>
+<td><p>0x07</p></td>
+<td><p>PCI Device</p></td>
+</tr>
+<tr class="row-even"><td><p>0x12</p></td>
+<td><p>0x01</p></td>
+<td><p>0x7F</p></td>
+<td><p>Generic Device Path Header - Type End of Hardware Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x13</p></td>
+<td><p>0x01</p></td>
+<td><p>0xFF</p></td>
+<td><p>Sub type - End of Entire Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>0x14</p></td>
+<td><p>0x02</p></td>
+<td><p>0x04</p></td>
+<td><p>Length - 0x04 bytes</p></td>
+</tr>
+</tbody>
+</table>
+<p>The Table below, <a class="reference internal" href="#single-channel-pci-scsi-controller-behind-a-pci-bridge"><span class="std std-ref">Single Channel PCI SCSI Controller Behind a PCI Bridge</span></a> , shows an example device path for a single channel PCI SCSI controller that is located behind a PCI to PCI bridge at PCI device number 0x07 and PCI function 0x00. The PCI to PCI bridge is directly attached to a PCI root bridge, and it is at PCI device number 0x05 and PCI function 0x00. This device path consists of an ACPI Device Path Node, two PCI Device Path Nodes, and a Device Path End Structure. The _HID and _UID must match the ACPI table description of the PCI Root Bridge. The shorthand notation for this device path is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ACPI</span><span class="p">(</span><span class="n">PNP0A03</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">PCI</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">PCI</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span>
+</pre></div>
+</div>
+<table class="longtable docutils align-default" id="single-channel-pci-scsi-controller-behind-a-pci-bridge">
+<caption><span class="caption-number">Table 15.6 </span><span class="caption-text">Single Channel PCI SCSI Controller Behind a PCI Bridge</span><a class="headerlink" href="#single-channel-pci-scsi-controller-behind-a-pci-bridge" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 11.1%" />
+<col style="width: 11.1%" />
+<col style="width: 11.1%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Byte Offset</p></td>
+<td><p>Byte Length</p></td>
+<td><p>Data</p></td>
+<td><p>Description</p></td>
+</tr>
+<tr class="row-even"><td><p>0x00</p></td>
+<td><p>0x01</p></td>
+<td><p>0x02</p></td>
+<td><p>Generic Device Path Header - Type ACPI Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Sub type - ACPI Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>0x02</p></td>
+<td><p>0x02</p></td>
+<td><p>0x0C</p></td>
+<td><p>Length - 0x0C bytes</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x04</p></td>
+<td><p>0x04</p></td>
+<td><p>0x41D0, 0x0A03</p></td>
+<td><p>_HID PNP0A03 - 0x41D0 represents the compressed string ‘PNP’ and is encoded in the low order bytes. The compression method is described in the ACPI Specification.</p></td>
+</tr>
+<tr class="row-even"><td><p>0x08</p></td>
+<td><p>0x04</p></td>
+<td><p>0x0000</p></td>
+<td><p>_UID</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x0C</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Generic Device Path Header - Type Hardware Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>0x0D</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Sub type - PCI</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x0E</p></td>
+<td><p>0x02</p></td>
+<td><p>0x06</p></td>
+<td><p>Length - 0x06 bytes</p></td>
+</tr>
+<tr class="row-even"><td><p>0x10</p></td>
+<td><p>0x01</p></td>
+<td><p>0x00</p></td>
+<td><p>PCI Function</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x11</p></td>
+<td><p>0x01</p></td>
+<td><p>0x05</p></td>
+<td><p>PCI Device</p></td>
+</tr>
+<tr class="row-even"><td><p>0x12</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Generic Device Path Header - Type Hardware Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x13</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Sub type - PCI</p></td>
+</tr>
+<tr class="row-even"><td><p>0x14</p></td>
+<td><p>0x02</p></td>
+<td><p>0x06</p></td>
+<td><p>Length - 0x06 bytes</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x16</p></td>
+<td><p>0x01</p></td>
+<td><p>0x00</p></td>
+<td><p>PCI Function</p></td>
+</tr>
+<tr class="row-even"><td><p>0x17</p></td>
+<td><p>0x01</p></td>
+<td><p>0x07</p></td>
+<td><p>PCI Device</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x18</p></td>
+<td><p>0x01</p></td>
+<td><p>0x7F</p></td>
+<td><p>Generic Device Path Header - Type End of Hardware Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>0x19</p></td>
+<td><p>0x01</p></td>
+<td><p>0xFF</p></td>
+<td><p>Sub type - End of Entire Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x1A</p></td>
+<td><p>0x02</p></td>
+<td><p>0x04</p></td>
+<td><p>Length - 0x04 bytes</p></td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#channel-3-pci-scsi-controller-behind-a-pci-bridge"><span class="std std-numref">Table 15.7</span></a> shows an example device path for channel #3 of a four channel PCI SCSI controller that is located behind a PCI to PCI bridge at PCI device number 0x07 and PCI function 0x00. The PCI to PCI bridge is directly attached to a PCI root bridge, and it is at PCI device number 0x05 and PCI function 0x00. This device path consists of an ACPI Device Path Node, two PCI Device Path Nodes, a Controller Node, and a Device Path End Structure. The _HID and _UID must match the ACPI table description of the PCI Root Bridge. The shorthand notation of the device paths for all four of the SCSI channels are listed below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ACPI</span><span class="p">(</span><span class="n">PNP0A03</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">PCI</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">PCI</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">Ctrl</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ACPI</span><span class="p">(</span><span class="n">PNP0A03</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">PCI</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">PCI</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">Ctrl</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ACPI</span><span class="p">(</span><span class="n">PNP0A03</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">PCI</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">PCI</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">Ctrl</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ACPI</span><span class="p">(</span><span class="n">PNP0A03</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">PCI</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">PCI</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">Ctrl</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The following table shows the last device path listed.</p>
+<table class="longtable docutils align-default" id="channel-3-pci-scsi-controller-behind-a-pci-bridge">
+<caption><span class="caption-number">Table 15.7 </span><span class="caption-text">Channel #3 of a PCI SCSI Controller behind a PCIBridge</span><a class="headerlink" href="#channel-3-pci-scsi-controller-behind-a-pci-bridge" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 11.1%" />
+<col style="width: 11.1%" />
+<col style="width: 11.1%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>Byte Offset</p></td>
+<td><p>Byte Length</p></td>
+<td><p>Data</p></td>
+<td><p>Description</p></td>
+</tr>
+<tr class="row-even"><td><p>0x00</p></td>
+<td><p>0x01</p></td>
+<td><p>0x02</p></td>
+<td><p>Generic Device Path Header - Type ACPI Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Sub type - ACPI Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>0x02</p></td>
+<td><p>0x02</p></td>
+<td><p>0x0C</p></td>
+<td><p>Length - 0x0C bytes</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x04</p></td>
+<td><p>0x04</p></td>
+<td><p>0x41D0, 0x0A03</p></td>
+<td><p>_HID PNP0A03 - 0x41D0 represents the compressed string ‘PNP’ and is encoded in the low order bytes. The compression method is described in the ACPI Specification.</p></td>
+</tr>
+<tr class="row-even"><td><p>0x08</p></td>
+<td><p>0x04</p></td>
+<td><p>0x0000</p></td>
+<td><p>_UID</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x0C</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Generic Device Path Header - Type Hardware Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>0x0D</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Sub type - PCI</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x0E</p></td>
+<td><p>0x02</p></td>
+<td><p>0x06</p></td>
+<td><p>Length - 0x06 bytes</p></td>
+</tr>
+<tr class="row-even"><td><p>0x10</p></td>
+<td><p>0x01</p></td>
+<td><p>0x00</p></td>
+<td><p>PCI Function</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x11</p></td>
+<td><p>0x01</p></td>
+<td><p>0x05</p></td>
+<td><p>PCI Device</p></td>
+</tr>
+<tr class="row-even"><td><p>0x12</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Generic Device Path Header - Type Hardware Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x13</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Sub type - PCI</p></td>
+</tr>
+<tr class="row-even"><td><p>0x14</p></td>
+<td><p>0x02</p></td>
+<td><p>0x06</p></td>
+<td><p>Length - 0x06 bytes</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x16</p></td>
+<td><p>0x01</p></td>
+<td><p>0x00</p></td>
+<td><p>PCI Function</p></td>
+</tr>
+<tr class="row-even"><td><p>0x17</p></td>
+<td><p>0x01</p></td>
+<td><p>0x07</p></td>
+<td><p>PCI Device</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x18</p></td>
+<td><p>0x01</p></td>
+<td><p>0x01</p></td>
+<td><p>Generic Device Path Header - Type Hardware Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>0x19</p></td>
+<td><p>0x01</p></td>
+<td><p>0x05</p></td>
+<td><p>Sub type - Controller</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x1A</p></td>
+<td><p>0x02</p></td>
+<td><p>0x08</p></td>
+<td><p>Length - 0x08 bytes</p></td>
+</tr>
+<tr class="row-even"><td><p>0x1C</p></td>
+<td><p>0x04</p></td>
+<td><p>0x0003</p></td>
+<td><p>Controller Number</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x20</p></td>
+<td><p>0x01</p></td>
+<td><p>0x7F</p></td>
+<td><p>Generic Device Path Header - Type End of Hardware Device Path</p></td>
+</tr>
+<tr class="row-even"><td><p>0x21</p></td>
+<td><p>0x01</p></td>
+<td><p>0xFF</p></td>
+<td><p>Sub type - End of Entire Device Path</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x22</p></td>
+<td><p>0x02</p></td>
+<td><p>0x04</p></td>
+<td><p>Length - 0x04 bytes</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="extended-scsi-pass-thru-protocol">
+<span id="id21"></span><h2><span class="section-number">15.7. </span>Extended SCSI Pass Thru Protocol<a class="headerlink" href="#extended-scsi-pass-thru-protocol" title="Link to this heading"></a></h2>
+<p>This section defines the Extended SCSI Pass Thru Protocol. This protocol allows information about a SCSI channel to be collected, and allows SCSI Request Packets to be sent to any SCSI devices on a SCSI channel even if those devices are not boot devices. This protocol is attached to the device handle of each SCSI channel in a system that the protocol supports, and can be used for diagnostics. It may also be used to build a Block I/O driver for SCSI hard drives and SCSI CD-ROM or DVD drives to allow those devices to become boot devices. As ATAPI cmds are derived from SCSI cmds, the above statements also are applicable for ATAPI devices attached to a ATA controller. Packet-based commands(ATAPI cmds) would be sent to ATAPI devices only through the Extended SCSI Pass Thru Protocol.</p>
+<section id="efi-ext-scsi-pass-thru-protocol">
+<span id="id22"></span><h3><span class="section-number">15.7.1. </span>EFI_EXT_SCSI_PASS_THRU_PROTOCOL<a class="headerlink" href="#efi-ext-scsi-pass-thru-protocol" title="Link to this heading"></a></h3>
+<p>This section provides a detailed description of the <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL</em> .</p>
+<p><strong>Summary</strong></p>
+<p>Provides services that allow SCSI Pass Thru commands to be sent to SCSI devices attached to a SCSI channel. It also allows packet-based commands (ATAPI cmds) to be sent to ATAPI devices attached to a ATA controller.</p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_EXT_SCSI_PASS_THRU_PROTOCOL_GUID \</span>
+  <span class="p">{</span><span class="mh">0x143b7632</span><span class="p">,</span> <span class="mh">0xb81b</span><span class="p">,</span> <span class="mh">0x4cb7</span><span class="p">,</span>\
+    <span class="p">{</span><span class="mh">0xab</span><span class="p">,</span> <span class="mh">0xd3</span><span class="p">,</span> <span class="mh">0xb6</span><span class="p">,</span> <span class="mh">0x25</span><span class="p">,</span> <span class="mh">0xa5</span><span class="p">,</span> <span class="mh">0xb9</span><span class="p">,</span> <span class="mh">0xbf</span><span class="p">,</span> <span class="mh">0xfe</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p><strong>Protocol Interface Structure</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="n">_EFI_EXT_SCSI_PASS_THRU_PROTOCOL</span> <span class="p">{</span>
+  <span class="n">EFI_EXT_SCSI_PASS_THRU_MODE</span>                   <span class="o">*</span><span class="n">Mode</span><span class="p">;</span>
+  <span class="n">EFI_EXT_SCSI_PASS_THRU_PASSTHRU</span>               <span class="n">PassThru</span><span class="p">;</span>
+  <span class="n">EFI_EXT_SCSI_PASS_THRU_GET_NEXT_TARGET_LUN</span>    <span class="n">GetNextTargetLun</span><span class="p">;</span>
+  <span class="n">EFI_EXT_SCSI_PASS_THRU_BUILD_DEVICE_PATH</span>      <span class="n">BuildDevicePath</span><span class="p">;</span>
+  <span class="n">EFI_EXT_SCSI_PASS_THRU_GET_TARGET_LUN</span>         <span class="n">GetTargetLun</span><span class="p">;</span>
+  <span class="n">EFI_EXT_SCSI_PASS_THRU_RESET_CHANNEL</span>          <span class="n">ResetChannel</span><span class="p">;</span>
+  <span class="n">EFI_EXT_SCSI_PASS_THRU_RESET_TARGET_LUN</span>       <span class="n">ResetTargetLun</span><span class="p">;</span>
+  <span class="n">EFI_EXT_SCSI_PASS_THRU_GET_NEXT_TARGE</span>         <span class="n">GetNextTarget</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_EXT_SCSI_PASS_THRU_PROTOCOL</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>Mode</dt><dd><p>A pointer to the <em>EFI_EXT_SCSI_PASS_THRU_MODE</em> data for this SCSI channel. <em>EFI_EXT_SCSI_PASS_THRU_MODE</em> is defined in “Related Definitions” below.</p>
+</dd>
+<dt>PassThru</dt><dd><p>Sends a SCSI Request Packet to a SCSI device that is Connected to the SCSI channel. See the <a class="reference internal" href="#efi-ext-scsi-pass-thru-protocol-passthru">EFI_EXT_SCSI_PASS_THRU_PROTOCOL.PassThru()</a> function description.</p>
+</dd>
+<dt>GetNextTargetLun</dt><dd><p>Retrieves the list of legal Target IDs and LUNs for the SCSI devices on a SCSI channel. See the <a class="reference internal" href="#id23">EFI_EXT_SCSI_PASS_THRU_PROTOCOL.GetNextTargetLun()</a> function description.</p>
+</dd>
+<dt>BuildDevicePath</dt><dd><p>Allocates and builds a device path node for a SCSI Device on a SCSI channel. See the <a class="reference internal" href="#id24">EFI_EXT_SCSI_PASS_THRU_PROTOCOL.BuildDevicePath()</a> function description.</p>
+</dd>
+<dt>GetTargetLun</dt><dd><p>Translates a device path node to a Target ID and LUN. See the  <a class="reference internal" href="#id25">EFI_EXT_SCSI_PASS_THRU_PROTOCOL.GetTargetLun()</a> function description.</p>
+</dd>
+<dt>ResetChannel</dt><dd><p>Resets the SCSI channel. This operation resets all the SCSI devices connected to the SCSI channel. See the  <a class="reference internal" href="#id26">EFI_EXT_SCSI_PASS_THRU_PROTOCOL.ResetChannel()</a> function description.</p>
+</dd>
+<dt>ResetTargetLun</dt><dd><p>Resets a SCSI device that is connected to the SCSI channel. See the  <a class="reference internal" href="#id27">EFI_EXT_SCSI_PASS_THRU_PROTOCOL.ResetTargetLun()</a> function description.</p>
+</dd>
+<dt>GetNextTartget</dt><dd><p>Retrieves the list of legal Target IDs for the SCSI devices on a SCSI channel. See the <a class="reference internal" href="#id28">EFI_EXT_SCSI_PASS_THRU_PROTOCOL.GetNextTarget()</a> function description.</p>
+</dd>
+</dl>
+<p>The following data values in the <em>EFI_EXT_SCSI_PASS_THRU_MODE</em> interface are read-only.</p>
+<dl class="simple">
+<dt>AdapterId</dt><dd><p>The Target ID of the host adapter on the SCSI channel.</p>
+</dd>
+<dt>Attributes</dt><dd><p>Additional information on the attributes of the SCSI channel. See “Related Definitions” below for the list of possible attributes.</p>
+</dd>
+<dt>IoAlign</dt><dd><p>Supplies the alignment requirement for any buffer used in a data transfer. <em>IoAlign</em> values of 0 and 1 mean that the buffer can be placed anywhere in memory. Otherwise, <em>IoAlign</em> must be a power of 2, and the requirement is that the start address of a buffer must be evenly divisible by <em>IoAlign</em> with no remainder.</p>
+</dd>
+</dl>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINT32</span> <span class="o">*</span><span class="n">AdapterId</span><span class="p">;</span><span class="o">*</span>
+  <span class="n">UINT32</span> <span class="o">*</span><span class="n">Attributes</span><span class="p">;</span><span class="o">*</span>
+  <span class="n">UINT32</span> <span class="o">*</span><span class="n">IoAlign</span><span class="p">;</span><span class="o">*</span>
+<span class="p">}</span> <span class="n">EFI_EXT_SCSI_PASS_THRU_MODE</span><span class="p">;</span>
+
+<span class="c1">#define TARGET_MAX_BYTES 0x10</span>
+<span class="c1">#define EFI_EXT_SCSI_PASS_THRU_ATTRIBUTES_PHYSICAL 0x0001</span>
+<span class="c1">#define EFI_EXT_SCSI_PASS_THRU_ATTRIBUTES_LOGICAL 0x0002</span>
+<span class="c1">#define EFI_EXT_SCSI_PASS_THRU_ATTRIBUTES_NONBLOCKIO 0x0004</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>EFI_EXT_SCSI_PASS_THRU_ATTRIBUTES_PHYSICAL</dt><dd><p>If this bit is set, then the EFI_EXT_SCSI_PASS_THRU_PROTOCOL interface is for physical devices on the SCSI channel.</p>
+</dd>
+<dt>EFI_EXT_SCSI_PASS_THRU_ATTRIBUTES_LOGICAL</dt><dd><p>If this bit is set, then the EFI_EXT_SCSI_PASS_THRU_PROTOCOL interface is for logical devices on the SCSI channel.</p>
+</dd>
+<dt>EFI_EXT_SCSI_PASS_THRU_ATTRIBUTES_NONBLOCKIO</dt><dd><p>If this bit is set, then the EFI_EXT_SCSI_PASS_THRU_PROTOCOL interface supports non blocking I/O. Every EFI_EXT_SCSI_PASS_THRU_PROTOCOL must support blocking I/O. The support of nonblocking I/O is optional.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL</em> provides information about a SCSI channel and the ability to send SCI Request Packets to any SCSI device attached to that SCSI channel. The information includes the Target ID of the host controller on the SCSI channel and the attributes of the SCSI channel.</p>
+<p>The printable name for the SCSI controller, and the printable name of the SCSI channel can be provided through the <em>EFI_COMPONENT_NAME2_PROTOCOL</em> for multiple languages.</p>
+<p>The <em>Attributes</em> field of the <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL</em> interface tells if the interface is for physical SCSI devices or logical SCSI devices. Drivers for non-RAID SCSI controllers will set both the <em>EFI_EXT_SCSI_PASS_THRU_ATTRIBUTES_PHYSICAL</em> , and the <em>EFI_EXT_SCSI_PASS_THRU_ATTRIBUTES_LOGICAL</em> bits.</p>
+<p>Drivers for RAID controllers that allow access to the physical devices and logical devices will produce two <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL</em> interfaces: one with the just the <em>EFI_EXT_SCSI_PASS_THRU_ATTRIBUTES_PHYSICAL</em> bit set and another with just the <em>EFI_EXT_SCSI_PASS_THRU_ATTRIBUTES_LOGICAL</em> bit set. One interface can be used to access the physical devices attached to the RAID controller, and the other can be used to access the logical devices attached to the RAID controller for its current configuration.</p>
+<p>Drivers for RAID controllers that do not allow access to the physical devices will produce one <em>EFI_EXT_SCSI_PASS_THROUGH_PROTOCOL</em> interface with just the <em>EFI_EXT_SCSI_PASS_THRU_LOGICAL</em> bit set. The interface for logical devices can also be used by a file system driver to mount the RAID volumes. An <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL</em> with neither <em>EFI_EXT_SCSI_PASS_THRU_ATTRIBUTES_LOGICAL</em> nor <em>EFI_EXT_SCSI_PASS_THRU_ATTRIBUTES_PHYSICAL</em> set is an illegal configuration.</p>
+<p>The Attributes field also contains the <em>EFI_EXT_SCSI_PASS_THRU_ATTRIBUTES_NONBLOCKIO</em> bit. All <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL</em> interfaces must support blocking I/O. If this bit is set, then the interface support both blocking I/O and nonblocking I/O.</p>
+<p>Each <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL</em> instance must have an associated device path. Typically this will have an ACPI device path node and a PCI device path node, although variation will exist. For a SCSI controller that supports only one channel per PCI bus/device/function, it is recommended, but not required, that an additional Controller device path node (for controller 0) be appended to the device path.</p>
+<p>For a SCSI controller that supports multiple channels per PCI bus/device/function, it is required that a Controller device path node be appended for each channel.</p>
+<p>Additional information about the SCSI channel can be obtained from protocols attached to the same handle as the <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL</em> , or one of its parent handles. This would include the device I/O abstraction used to access the internal registers and functions of the SCSI controller.</p>
+</section>
+<section id="efi-ext-scsi-pass-thru-protocol-passthru">
+<span id="efi-ext-scsi-pass-thru-protocol-passthruprotocols-scsi-driver-models-and-bus-support"></span><h3><span class="section-number">15.7.2. </span>EFI_EXT_SCSI_PASS_THRU_PROTOCOL.PassThru()<a class="headerlink" href="#efi-ext-scsi-pass-thru-protocol-passthru" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Sends a SCSI Request Packet to a SCSI device that is attached to the SCSI channel. This function supports both blocking I/O and nonblocking I/O. The blocking I/O functionality is required, and the nonblocking I/O functionality is optional.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+  <span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_EXT_SCSI_PASS_THRU_PASSTHRU</span><span class="p">)</span> <span class="p">(</span>
+    <span class="n">IN</span> <span class="n">EFI_EXT_SCSI_PASS_THRU_PROTOCOL</span>                 <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+    <span class="n">IN</span> <span class="n">UINT8</span>                                           <span class="o">*</span><span class="n">Target</span><span class="p">,</span>
+    <span class="n">IN</span> <span class="n">UINT64</span>                                          <span class="n">Lun</span><span class="p">,</span>
+    <span class="n">IN</span> <span class="n">OUT</span> <span class="n">EFI_EXT_SCSI_PASS_THRU_SCSI_REQUEST_PACKET</span>  <span class="o">*</span><span class="n">Packet</span><span class="p">,</span>
+    <span class="n">IN</span> <span class="n">EFI_EVENT</span>                                       <span class="n">Event</span> <span class="n">OPTIONAL</span>
+    <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL</em> instance. Type <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL</em> is defined in  <a class="reference internal" href="#extended-scsi-pass-thru-protocol"><span class="std std-ref">Extended SCSI Pass Thru Protocol</span></a> .</p>
+</dd>
+<dt>Target</dt><dd><p>The Target is an array of size <em>TARGET_MAX_BYTES</em> and it represents the id of the SCSI device to send the SCSI Request Packet. Each transport driver may chose to utilize a subset of this size to suit the needs of transport target representation. For example, a Fibre Channel driver may use only 8 bytes (WWN) to represent an FC target.</p>
+</dd>
+<dt>Lun</dt><dd><p>The LUN of the SCSI device to send the SCSI Request Packet.</p>
+</dd>
+<dt>Packet</dt><dd><p>A pointer to the SCSI Request Packet to send to the SCSI device specified by <em>Target</em> and <em>Lun</em> . See “Related Definitions” below for a description of <em>EFI_EXT_SCSI_PASS_THRU_SCSI_REQUEST_PACKET</em> .</p>
+</dd>
+<dt>Event</dt><dd><p>If nonblocking I/O is not supported then <em>Event</em> is ignored, and blocking I/O is performed. If <em>Event</em> is <em>NULL</em> , then blocking I/O is performed. If <em>Event</em> is not <em>NULL</em> and non blocking I/O is supported, then nonblocking I/O is performed, and <em>Event</em> will be signaled when the SCSI Request Packet completes.</p>
+</dd>
+</dl>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINT64</span>       <span class="n">Timeout</span><span class="p">;</span>
+  <span class="n">VOID</span>         <span class="o">*</span><span class="n">InDataBuffer</span><span class="p">;</span>
+  <span class="n">VOID</span>         <span class="o">*</span><span class="n">OutDataBuffer</span><span class="p">;</span>
+  <span class="n">VOID</span>         <span class="o">*</span><span class="n">SenseData</span><span class="p">;</span>
+  <span class="n">VOID</span>         <span class="o">*</span><span class="n">Cdb</span><span class="p">;</span>
+  <span class="n">UINT32</span>       <span class="n">InTransferLength</span><span class="p">;</span>
+  <span class="n">UINT32</span>       <span class="n">OutTransferLength</span><span class="p">;</span>
+  <span class="n">UINT8</span>        <span class="n">CdbLength</span><span class="p">;</span>
+  <span class="n">UINT8</span>        <span class="n">DataDirection</span><span class="p">;</span>
+  <span class="n">UINT8</span>        <span class="n">HostAdapterStatus</span><span class="p">;</span>
+  <span class="n">UINT8</span>        <span class="n">TargetStatus</span><span class="p">;</span>
+  <span class="n">UINT8</span>        <span class="n">SenseDataLength</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_EXT_SCSI_PASS_THRU_SCSI_REQUEST_PACKET</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Timeout</dt><dd><p>The timeout, in 100 ns units, to use for the execution of this SCSI Request Packet. A <em>Timeout</em> value of 0 means that this function will wait indefinitely for the SCSI Request Packet to execute. If <em>Timeout</em> is greater than zero, then this function will return <em>EFI_TIMEOUT</em> if the time required to execute the SCSI Request Packet is greater than <em>Timeout</em> .</p>
+</dd>
+<dt>InDataBuffer</dt><dd><p>A pointer to the data buffer to transfer between the SCSI controller and the SCSI device for read and bidirectional commands. For all write and non data commands where <em>InTransferLength</em> is 0 this field is optional and may be <em>NULL</em> . If this field is not <em>NULL</em> , then it must be aligned on the boundary specified by the <em>IoAlign</em> field in the <em>EFI_EXT_SCSI_PASS_THRU_MODE</em> structure.</p>
+</dd>
+<dt>OutDataBuffer</dt><dd><p>A pointer to the data buffer to transfer between the SCSI controller and the SCSI device for write or bidirectional commands. For all read and non data commands where <em>OutTransferLength</em> is 0 this field is optional and may be <em>NULL</em> . If this field is not <em>NULL</em> , then it must be aligned on the boundary specified by the <em>IoAlign</em> field in the <em>EFI_EXT_SCSI_PASS_THRU_MODE</em> structure.</p>
+</dd>
+<dt>SenseData</dt><dd><p>A pointer to the sense data that was generated by the execution of the SCSI Request Packet. If <em>SenseDataLength</em> is 0, then this field is optional and may be <em>NULL</em> . It is strongly recommended that a sense data buffer of at least 252 bytes be provided to guarantee the entire sense data buffer generated from the execution of the SCSI Request Packet can be returned. If this field is not <em>NULL</em> , then it must be aligned to the boundary specified in the <em>IoAlign</em> field in the <em>EFI_EXT_SCSI_PASS_THRU_MODE</em> structure.</p>
+</dd>
+<dt>Cdb</dt><dd><p>A pointer to buffer that contains the Command Data Block to send to the SCSI device specified by <em>Target</em> and <em>Lun</em> .</p>
+</dd>
+<dt>InTransferLength</dt><dd><p>On Input, the size, in bytes, of <em>InDataBuffer</em> . On output, the number of bytes transferred between the SCSI controller and the SCSI device. If <em>InTransferLength</em> is larger than the SCSI controller can handle, no data will be transferred, <em>InTransferLength</em> will be updated to contain the number of bytes that the SCSI controller is able to transfer, and <em>EFI_BAD_BUFFER_SIZE</em> will be returned.</p>
+</dd>
+<dt>OutTransferLength</dt><dd><p>On Input, the size, in bytes of <em>OutDataBuffer</em> . On Output, the Number of bytes transferred between SCSI Controller and the SCSI device. If <em>OutTransferLength</em> is larger than the SCSI controller can handle, no data will be transferred, <em>OutTransferLength</em> will be updated to contain the number of bytes that the SCSI controller is able to transfer, and <em>EFI_BAD_BUFFER_SIZE</em> will be returned.</p>
+</dd>
+<dt>CdbLength</dt><dd><p>The length, in bytes, of the buffer <em>Cdb</em> . The standard values are 6, 10, 12, and 16, but other values are possible if a variable length <em>CDB</em> is used.</p>
+</dd>
+<dt>DataDirection</dt><dd><p>The direction of the data transfer. 0 for reads, 1 for writes. A value of 2 is Reserved for Bi-Directional SCSI commands. For example XDREADWRITE. All other values are reserved, and must not be used.</p>
+</dd>
+<dt>HostAdapterStatus</dt><dd><p>The status of the host adapter specified by <em>This</em> when the SCSI Request Packet was executed on the target device. See the possible values listed below. If bit 7 of this field is set, then <em>HostAdapterStatus</em> is a vendor defined error code.</p>
+</dd>
+<dt>TargetStatus</dt><dd><p>The status returned by the device specified by <em>Target</em> and <em>Lun</em> when the SCSI Request Packet was executed. See the possible values listed below.</p>
+</dd>
+<dt>SenseDataLength</dt><dd><p>On input, the length in bytes of the <em>SenseData</em> buffer. On output, the number of bytes written to the <em>SenseData</em> buffer.</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span>
+<span class="o">//</span> <span class="n">DataDirection</span>
+<span class="o">//</span>
+<span class="c1">#define EFI_EXT_SCSI_DATA_DIRECTION_READ              0</span>
+<span class="c1">#define EFI_EXT_SCSI_DATA_DIRECTION_WRITE             1</span>
+<span class="c1">#define EFI_EXT_SCSI_DATA_DIRECTION_BIDIRECTIONAL     2</span>
+<span class="o">//</span>
+<span class="o">//</span> <span class="n">HostAdapterStatus</span>
+<span class="o">//</span>
+<span class="c1">#define EFI_EXT_SCSI_STATUS_HOST_ADAPTER_OK                    0x00</span>
+<span class="c1">#define EFI_EXT_SCSI_STATUS_HOST_ADAPTER_TIMEOUT_COMMAND       0x09</span>
+<span class="c1">#define EFI_EXT_SCSI_STATUS_HOST_ADAPTER_TIMEOUT               0x0b</span>
+<span class="c1">#define EFI_EXT_SCSI_STATUS_HOST_ADAPTER_MESSAGE_REJECT        0x0d</span>
+<span class="c1">#define EFI_EXT_SCSI_STATUS_HOST_ADAPTER_BUS_RESET             0x0e</span>
+<span class="c1">#define EFI_EXT_SCSI_STATUS_HOST_ADAPTER_PARITY_ERROR          0x0f</span>
+<span class="c1">#define EFI_EXT_SCSI_STATUS_HOST_ADAPTER_REQUEST_SENSE_FAILED  0x10</span>
+<span class="c1">#define EFI_EXT_SCSI_STATUS_HOST_ADAPTER_SELECTION_TIMEOUT     0x11</span>
+<span class="c1">#define EFI_EXT_SCSI_STATUS_HOST_ADAPTER_DATA_OVERRUN_UNDERRUN 0x12</span>
+<span class="c1">#define EFI_EXT_SCSI_STATUS_HOST_ADAPTER_BUS_FREE              0x13</span>
+<span class="c1">#define EFI_EXT_SCSI_STATUS_HOST_ADAPTER_PHASE_ERROR           0x14</span>
+<span class="c1">#define EFI_EXT_SCSI_STATUS_HOST_ADAPTER_OTHER                 0x7f</span>
+<span class="o">//</span>
+<span class="o">//</span> <span class="n">TargetStatus</span>
+<span class="o">//</span>
+<span class="c1">#define EFI_EXT_SCSI_STATUS_TARGET_GOOD                        0x00</span>
+<span class="c1">#define EFI_EXT_SCSI_STATUS_TARGET_CHECK_CONDITION             0x02</span>
+<span class="c1">#define EFI_EXT_SCSI_STATUS_TARGET_CONDITION_MET               0x04</span>
+<span class="c1">#define EFI_EXT_SCSI_STATUS_TARGET_BUSY                        0x08</span>
+<span class="c1">#define EFI_EXT_SCSI_STATUS_TARGET_INTERMEDIATE                0x10</span>
+<span class="c1">#define EFI_EXT_SCSI_STATUS_TARGET_INTERMEDIATE_CONDITION_MET  0x14</span>
+<span class="c1">#define EFI_EXT_SCSI_STATUS_TARGET_RESERVATION_CONFLICT        0x18</span>
+<span class="c1">#define EFI_EXT_SCSI_STATUS_TARGET_TASK_SET_FULL               0x28</span>
+<span class="c1">#define EFI_EXT_SCSI_STATUS_TARGET_ACA_ACTIVE                  0x30</span>
+<span class="c1">#define EFI_EXT_SCSI_STATUS_TARGET_TASK_ABORTED                0x40</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>The <a class="reference internal" href="#efi-ext-scsi-pass-thru-protocol-passthru">EFI_EXT_SCSI_PASS_THRU_PROTOCOL.PassThru()</a> function sends the SCSI Request Packet specified by <em>Packet</em> to the SCSI device specified by <em>Target</em> and <em>Lun</em> . If the driver supports nonblocking I/O and <em>Event</em> is not <em>NULL,</em> then the driver will return immediately after the command is sent to the selected device, and will later signal <em>Event</em> when the command has completed.</p>
+<p>If the driver supports nonblocking I/O and <em>Event</em> is NULL, then the driver will send the command to the selected device and block until it is complete.</p>
+<p>If the driver does not support nonblocking I/O, then the <em>Event</em> parameter is ignored, and the driver will send the command to the selected device and block until it is complete.</p>
+<p>If <em>Packet</em> is successfully sent to the SCSI device, then EFI_SUCCESS is returned.</p>
+<p>If <em>Packet</em> cannot be sent because there are too many packets already queued up, then EFI_NOT_READY is returned. The caller may retry <em>Packet</em> at a later time.</p>
+<p>If a device error occurs while sending the <em>Packet</em> , then EFI_DEVICE_ERROR is returned.</p>
+<p>If a timeout occurs during the execution of <em>Packet</em> , then EFI_TIMEOUT is returned.</p>
+<p>If a device is not present but the target/LUN address in the packet are valid, then EFI_TIMEOUT is returned, and HostStatus is set to <em>EFI_EXT_SCSI_STATUS_HOST_ADAPTER_TIMEOUT_COMMAND</em> .</p>
+<p>If <em>Target</em> or <em>Lun</em> are not in a valid range for the SCSI channel, then <em>EFI_INVALID_PARAMETER</em> is returned. If <em>InDataBuffer, OutDataBuffer</em> or <em>SenseData</em> do not meet the alignment requirement specified by the <em>IoAlign</em> field of the <em>EFI_EXT_SCSI_PASS_THRU_MODE</em> structure, then <em>EFI_INVALID_PARAMETER</em> is returned. If any of the other fields of <em>Packet</em> are invalid, then <em>EFI_INVALID_PARAMETER</em> is returned.</p>
+<p>If the data buffer described by <em>InDataBuffer</em> and <em>InTransferLength</em> is too big to be transferred in a single command, then no data is transferred and <em>EFI_BAD_BUFFER_SIZE</em> is returned. The number of bytes that can be transferred in a single command are returned in <em>InTransferLength</em> .</p>
+<p>If the data buffer described by <em>OutDataBuffer</em> and <em>OutTransferLength</em> is too big to be transferred in a single command, then no data is transferred and <em>EFI_BAD_BUFFER_SIZE</em> is returned. The number of bytes that can be transferred in a single command are returned in <em>OutTransferLength</em> .</p>
+<p>If the command described in <em>Packet</em> is not supported by the host adapter, then <em>EFI_UNSUPPORTED</em> is returned.</p>
+<p>If <em>EFI_SUCCESS, EFI_BAD_BUFFER_SIZE, EFI_DEVICE_ERROR</em> , or <em>EFI_TIMEOUT</em> is returned, then the caller must examine the status fields in <em>Packet</em> in the following precedence order: <em>HostAdapterStatus</em> followed by <em>TargetStatus</em> followed by <em>SenseDataLength</em> , followed by <em>SenseData</em> .</p>
+<p>If nonblocking I/O is being used, then the status fields in <em>Packet</em> will not be valid until the <em>Event</em> associated with <em>Packet</em> is signaled.</p>
+<p>If <em>EFI_NOT_READY, EFI_INVALID_PARAMETER</em> or <em>EFI_UNSUPPORTED</em> is returned, then <em>Packet</em> was never sent, so the status fields in <em>Packet</em> are not valid. If nonblocking I/O is being used, the <em>Event</em> associated with <em>Packet</em> will not be signaled.</p>
+<p><strong>Note</strong>: <em>Some examples of SCSI read commands are READ, INQUIRY, and MODE_SENSE</em>.</p>
+<p><strong>Note</strong>: <em>Some examples of SCSI write commands are WRITE and MODE_SELECT</em>.</p>
+<p><strong>Note</strong>: <em>An example of a SCSI non data command is TEST_UNIT_READY</em>.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The SCSI Request Packet was sent by the host. For bi-directional commands, <em>InTransferLength</em> bytes were transferred from <em>InDataBuffer</em> . For write and bi-directional commands, <em>OutTransferLength</em> bytes were transferred by <em>OutDataBuffer.</em> See <em>HostAdapterStatus, TargetStatus, SenseDataLength,</em> and <em>SenseData</em> in that order for additional status information.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_BAD_BUFFER_SIZE</p></td>
+<td><p>The SCSI Request Packet was not executed. The number of bytes that could be transferred is returned in <em>InTransferLength.</em> For write and bi-directional commands, <em>OutTransferLength</em> bytes were transferred by <em>OutDataBuffer.</em> See <em>HostAdapterStatus, TargetStatus,</em> and in that order for additional status information.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_NOT_READY</p></td>
+<td><p>The SCSI Request Packet could not be sent because there are too many SCSI Request Packets already queued. The caller may retry again later.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>A device error occurred while attempting to send the SCSI Request Packet. See <em>HostAdapterStatus, TargetStatus, SenseDataLength,</em> and <em>SenseData</em> in that order for additional status information.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>Target, Lun,</em> or the contents of <em>ScsiRequestPacket</em> are invalid. The SCSI Request Packet was not sent, so no additional status information is available.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>The command described by the SCSI Request Packet is not supported by the host adapter. This includes the case of Bi-directional SCSI commands not supported by the implementation. The SCSI Request Packet was not sent, so no additional status information is available.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_TIMEOUT</p></td>
+<td><p>A timeout occurred while waiting for the SCSI Request Packet to execute. See <em>HostAdapterStatus, TargetStatus, SenseDataLength,</em> and <em>SenseData</em> in that order for additional status information.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-ext-scsi-pass-thru-protocol-getnexttargetlun">
+<span id="id23"></span><h3><span class="section-number">15.7.3. </span>EFI_EXT_SCSI_PASS_THRU_PROTOCOL.GetNextTargetLun()<a class="headerlink" href="#efi-ext-scsi-pass-thru-protocol-getnexttargetlun" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Used to retrieve the list of legal Target IDs and LUNs for SCSI devices on a SCSI channel. These can either be the list SCSI devices that are actually present on the SCSI channel, or the list of legal Target Ids and LUNs for the SCSI channel. Regardless, the caller of this function must probe the Target ID and LUN returned to see if a SCSI device is actually present at that location on the SCSI channel.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_EXT_SCSI_PASS_THRU_GET_NEXT_TARGET_LUN</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_EXT_SCSI_PASS_THRU_PROTOCOL</span>         <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">UINT8</span>                               <span class="o">**</span><span class="n">Target</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">UINT64</span>                              <span class="o">*</span><span class="n">Lun</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL</em> instance. Type <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL</em> is defined in  <a class="reference internal" href="#extended-scsi-pass-thru-protocol"><span class="std std-ref">Extended SCSI Pass Thru Protocol</span></a> .</p>
+</dd>
+<dt>Target</dt><dd><p>On input, a pointer to a legal Target ID (an array of size <em>TARGET_MAX_BYTES)</em> for a SCSI device present on the SCSI channel. On output, a pointer to the next legal Target ID (an array of <em>TARGET_MAX_BYTES</em> ) of a SCSI device on a SCSI channel. An input value of <em>0xFF</em> ’s (all bytes in the array are <em>0xFF</em> ) in the Target array retrieves the first legal Target ID for a SCSI device present on a SCSI channel.</p>
+</dd>
+<dt>Lun</dt><dd><p>On input, a pointer to the LUN of a SCSI device present on the SCSI channel. On output, a pointer to the LUN of the next SCSI device ID on a SCSI channel.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL.GetNextTargetLun()</em> function retrieves a list of legal Target ID and LUN of a SCSI channel. If on input a <em>Target</em> is specified by all <em>0xFF</em> in the Target array, then the first legal Target ID and LUN for a SCSI device on a SCSI channel is returned in <em>Target</em> and <em>Lun,</em> and <em>EFI_SUCCESS</em> is returned.</p>
+<p>If <em>Target</em> and <em>Lun</em> is a Target ID and LUN value that was returned on a previous call to <em>GetNextTargetLun()</em> , then the next legal Target ID and LUN for a SCSI device on the SCSI channel is returned in <em>Target</em> and <em>Lun</em> , and <em>EFI_SUCCESS</em> is returned.</p>
+<p>If <em>Target array</em> is not all <em>0xFF’s</em> and <em>Target</em> and <em>Lun</em> were not returned on a previous call to <em>GetNextTargetLun()</em> , then <em>EFI_INVALID_PARAMETER</em> is returned.</p>
+<p>If <em>Target</em> and <em>Lun</em> are the Target ID and LUN of the last SCSI device on the SCSI channel, then <em>EFI_NOT_FOUND</em> is returned.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The Target ID and LUN of the next SCSI device on the SCSI  channel was returned in <em>Target</em> and <em>Lun</em> .</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>There are no more SCSI devices on this SCSI channel.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>Target array</em> is not all <em>0xFF</em> ’s, and <em>Target</em> and <em>Lun</em> were not returned on a previous call to <em>GetNextTargetLun()</em> .</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-ext-scsi-pass-thru-protocol-builddevicepath">
+<span id="id24"></span><h3><span class="section-number">15.7.4. </span>EFI_EXT_SCSI_PASS_THRU_PROTOCOL.BuildDevicePath()<a class="headerlink" href="#efi-ext-scsi-pass-thru-protocol-builddevicepath" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Used to allocate and build a device path node for a SCSI device on a SCSI channel.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+  <span class="n">EFI_STATUS</span>
+    <span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_EXT_SCSI_PASS_THRU_BUILD_DEVICE_PATH</span><span class="p">)</span> <span class="p">(</span>
+      <span class="n">IN</span> <span class="n">EFI_EXT_SCSI_PASS_THRU_PROTOCOL</span>                 <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+      <span class="n">IN</span> <span class="n">UINT8</span>                                           <span class="o">*</span><span class="n">Target</span><span class="p">,</span>
+      <span class="n">IN</span> <span class="n">UINT64</span>                                          <span class="n">Lun</span>
+      <span class="n">OUT</span> <span class="n">EFI_DEVICE_PATH_PROTOCOL</span>                       <span class="o">**</span><span class="n">DevicePath</span>
+      <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL</em> instance. Type <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL</em> is defined in <a class="reference internal" href="#extended-scsi-pass-thru-protocol"><span class="std std-ref">Extended SCSI Pass Thru Protocol</span></a> .</p>
+</dd>
+<dt>Target</dt><dd><p>The Target is an array of size <em>TARGET_MAX_BYTES</em> and it specifies the Target ID of the SCSI device for which a device path node is to be allocated and built. Transport drivers may choose to utilize a subset of this size to suit the representation of targets. For example, a Fibre Channel driver may use only 8 bytes (WWN) in the array to represent a FC target.</p>
+</dd>
+<dt>Lun</dt><dd><p>The LUN of the SCSI device for which a device path node is to be allocated and built.</p>
+</dd>
+<dt>DevicePath</dt><dd><p>A pointer to a single device path node that describes the SCSI device specified by <em>Target</em> and <em>Lun</em>. This function is responsible for allocating the buffer <em>DevicePath</em> with the boot service <em>AllocatePool()</em>. It is the caller’s responsibility to free <em>DevicePath</em> when the caller is finished with <em>DevicePath</em> .</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL.BuildDevicePath()</em> function allocates and builds a single device path node for the SCSI device specified by <em>Target</em> and <em>Lun</em> . If the SCSI device specified by <em>Target</em> and <em>Lun</em> are not present on the SCSI channel, then <em>EFI_NOT_FOUND</em> is returned. If <em>DevicePath</em> is <em>NULL</em> , then <em>EFI_INVALID_PARAMETER</em> is returned. If there are not enough resources to allocate the device path node, then <em>EFI_OUT_OF_RESOURCES</em> is returned. Otherwise, <em>DevicePath</em> is allocated with the boot service <em>AllocatePool()</em> , the contents of <em>DevicePath</em> are initialized to describe the SCSI device specified by <em>Target</em> and <em>Lun</em> , and <em>EFI_SUCCESS</em> is returned.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The device path node that describes the SCSI device specified by <em>Target</em> and <em>Lun</em> was allocated and returned in <em>DevicePath</em> .</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>The SCSI devices specified by <em>Target</em> and <em>Lun</em> does not exist on the SCSI channel.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>DevicePath</em> is <em>NULL</em> .</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_OUT_OF_RESOURCES</p></td>
+<td><p>There are not enough resources to allocate DevicePath.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-ext-scsi-pass-thru-protocol-gettargetlun">
+<span id="id25"></span><h3><span class="section-number">15.7.5. </span>EFI_EXT_SCSI_PASS_THRU_PROTOCOL.GetTargetLun()<a class="headerlink" href="#efi-ext-scsi-pass-thru-protocol-gettargetlun" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Used to translate a device path node to a Target ID and LUN.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+  <span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_EXT_SCSI_PASS_THRU_GET_TARGET_LUN</span><span class="p">)</span> <span class="p">(</span>
+    <span class="n">IN</span> <span class="n">EFI_EXT_SCSI_PASS_THRU_PROTOCOL</span>          <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+    <span class="n">IN</span> <span class="n">EFI_DEVICE_PATH_PROTOCOL</span>                 <span class="o">*</span><span class="n">DevicePath</span>
+    <span class="n">OUT</span> <span class="n">UINT8</span>                                   <span class="o">**</span><span class="n">Target</span><span class="p">,</span>
+    <span class="n">OUT</span> <span class="n">UINT64</span>                                  <span class="o">*</span><span class="n">Lun</span>
+    <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL</em> instance. Type <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL</em> is defined in <a class="reference internal" href="#extended-scsi-pass-thru-protocol"><span class="std std-ref">Extended SCSI Pass Thru Protocol</span></a> .</p>
+</dd>
+<dt>DevicePath</dt><dd><p>A pointer to the device path node that describes a SCSI device on the SCSI channel.</p>
+</dd>
+<dt>Target</dt><dd><p>A pointer to the Target Array which represents the ID of a SCSI device on the SCSI channel.</p>
+</dd>
+<dt>Lun</dt><dd><p>A pointer to the LUN of a SCSI device on the SCSI channel.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL.GetTargetLun()</em> function determines the Target ID and LUN associated with the SCSI device described by <em>DevicePath</em> . If <em>DevicePath</em> is a device path node type that the SCSI Pass Thru driver supports, then the SCSI Pass Thru driver will attempt to translate the contents <em>DevicePath</em> into a Target ID and LUN. If this translation is successful, then that Target ID and LUN are returned in <em>Target</em> and <em>Lun</em> , and <em>EFI_SUCCESS</em> is returned.</p>
+<p>If <em>DevicePath</em> , <em>Target</em> , or <em>Lun</em> are <em>NULL</em> , then <em>EFI_INVALID_PARAMETER</em> is returned.</p>
+<p>If <em>DevicePath</em> is not a device path node type that the SCSI Pass Thru driver supports, then <em>EFI_UNSUPPORTED</em> is returned.</p>
+<p>If <em>DevicePath</em> is a device path node type that the SCSI Pass Thru driver supports, but there is not a valid translation from <em>DevicePath</em> to a Target ID and LUN, then <em>EFI_NOT_FOUND</em> is returned.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p><em>DevicePath</em> was successfully translated to a Target ID and  LUN, and they were returned in Target and Lun.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>DevicePath</em> is <em>NULL</em> .</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>Target</em> is <em>NULL</em></p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>Lun</em> is <em>NULL</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>This driver does not support the device path node type in  <em>DevicePath</em> .</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>A valid translation from <em>DevicePath</em> to a Target ID and LUN  does not exist.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-ext-scsi-pass-thru-protocol-resetchannel">
+<span id="id26"></span><h3><span class="section-number">15.7.6. </span>EFI_EXT_SCSI_PASS_THRU_PROTOCOL.ResetChannel()<a class="headerlink" href="#efi-ext-scsi-pass-thru-protocol-resetchannel" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Resets a SCSI channel. This operation resets all the SCSI devices connected to the SCSI channel.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_EXT_SCSI_PASS_THRU_RESET_CHANNEL</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_EXT_SCSI_PASS_THRU_PROTOCOL</span>            <span class="o">*</span><span class="n">This</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL</em> instance. Type <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL</em> is defined in  <a class="reference internal" href="#extended-scsi-pass-thru-protocol"><span class="std std-ref">Extended SCSI Pass Thru Protocol</span></a> .</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL.ResetChannel()</em> function resets a SCSI channel. This operation resets all the SCSI devices connected to the SCSI channel. If this SCSI channel does not support a reset operation, then <em>EFI_UNSUPPORTED</em> is returned.</p>
+<p>If a device error occurs while executing that channel reset operation, then <em>EFI_DEVICE_ERROR</em> is returned.</p>
+<p>If a timeout occurs during the execution of the channel reset operation, then <em>EFI_TIMEOUT</em> is returned. If the channel reset operation is completed, then <em>EFI_SUCCESS</em> is returned.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The SCSI channel was reset.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>The SCSI channel does not support a channel reset operation.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>A device error occurred while attempting to reset the SCSI channel.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_TIMEOUT</p></td>
+<td><p>A timeout occurred while attempting to reset the SCSI channel.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-ext-scsi-pass-thru-protocol-resettargetlun">
+<span id="id27"></span><h3><span class="section-number">15.7.7. </span>EFI_EXT_SCSI_PASS_THRU_PROTOCOL.ResetTargetLun()<a class="headerlink" href="#efi-ext-scsi-pass-thru-protocol-resettargetlun" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Resets a SCSI logical unit that is connected to a SCSI channel.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+  <span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_EXT_SCSI_PASS_THRU_RESET_TARGET_LUN</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_EXT_SCSI_PASS_THRU_PROTOCOL</span>         <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+    <span class="n">IN</span> <span class="n">UINT8</span>                                 <span class="o">*</span><span class="n">Target</span><span class="p">,</span>
+    <span class="n">IN</span> <span class="n">UINT64</span>                                <span class="n">Lun</span>
+    <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL</em> instance. Type <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL</em> is defined in <a class="reference internal" href="#extended-scsi-pass-thru-protocol"><span class="std std-ref">Extended SCSI Pass Thru Protocol</span></a> .</p>
+</dd>
+<dt>Target</dt><dd><p>The Target is an array of size <em>TARGET_MAX_BYTE</em> and it represents the target port ID of the SCSI device containing the SCSI logical unit to reset. Transport drivers may choose to utilize a subset of this array to suit the representation of their targets. For example a Fibre Channel driver may use only 8 bytes in the array (WWN) to represent a FC target.</p>
+</dd>
+<dt>Lun</dt><dd><p>The LUN of the SCSI device to reset.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL.ResetTargetLun()</em> function resets the SCSI logical unit specified by <em>Target</em> and <em>Lun</em> . If this SCSI channel does not support a target reset operation, then <em>EFI_UNSUPPORTED</em> is returned.</p>
+<p>If <em>Target</em> or <em>Lun</em> are not in a valid range for this SCSI channel, then <em>EFI_INVALID_PARAMETER</em> is returned.</p>
+<p>If a device error occurs while executing that logical unit reset operation, then <em>EFI_DEVICE_ERROR</em> is returned.</p>
+<p>If a timeout occurs during the execution of the logical unit reset operation, then <em>EFI_TIMEOUT</em> is returned.</p>
+<p>If the logical unit reset operation is completed, then <em>EFI_SUCCESS</em> is returned.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The SCSI device specified by <em>Target</em> and <em>Lun</em> was reset</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>The SCSI channel does not support a target reset operation.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>Target</em> or <em>Lun</em> are invalid.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>A device error occurred while attempting to reset the SCSI device  specified by <em>Target</em> and <em>Lun</em> .</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_TIMEOUT</p></td>
+<td><p>A timeout occurred while attempting to reset the SCSI device  specified by <em>Target</em> and <em>Lun</em> .</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-ext-scsi-pass-thru-protocol-getnexttarget">
+<span id="id28"></span><h3><span class="section-number">15.7.8. </span>EFI_EXT_SCSI_PASS_THRU_PROTOCOL.GetNextTarget()<a class="headerlink" href="#efi-ext-scsi-pass-thru-protocol-getnexttarget" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Used to retrieve the list of legal Target IDs for SCSI devices on a SCSI channel. These can either be the list SCSI devices that are actually present on the SCSI channel, or the list of legal Target IDs for the SCSI channel. Regardless, the caller of this function must probe the Target ID returned to see if a SCSI device is actually present at that location on the SCSI channel.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_EXT_SCSI_PASS_THRU_GET_NEXT_TARGET</span><span class="p">)</span> <span class="p">(</span>
+   <span class="n">IN</span> <span class="n">EFI_EXT_SCSI_PASS_THRU_PROTOCOL</span>              <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+   <span class="n">IN</span> <span class="n">OUT</span> <span class="n">UINT8</span>                                    <span class="o">**</span><span class="n">Target</span><span class="p">,</span>
+   <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL</em> instance. Type <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL</em> is defined in  <a class="reference internal" href="#extended-scsi-pass-thru-protocol"><span class="std std-ref">Extended SCSI Pass Thru Protocol</span></a> .</p>
+</dd>
+<dt>Target</dt><dd><p>On input, a pointer to the Target ID (an array of size <em>TARGET_MAX_BYTES</em> ) of a SCSI device present on the SCSI channel. On output, a pointer to the Target ID (an array of <em>TARGET_MAX_BYTES</em> ) of the next SCSI device present on a SCSI channel. An input value of <em>0xFF</em> ’s (all bytes in the array are <em>0xFF</em> ) in the Target array retrieves the Target ID of the first SCSI device present on a SCSI channel.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>EFI_EXT_SCSI_PASS_THRU_PROTOCOL.GetNextTarget()</em> function retrieves the Target ID of a SCSI device present on a SCSI channel. If on input a <em>Target</em> is specified by all 0xF in the Target array, then the Target ID of the first SCSI device is returned in <em>Target</em> and <em>EFI_SUCCESS</em> is returned.</p>
+<p>If <em>Target</em> is a Target ID value that was returned on a previous call to <em>GetNextTarget()</em> , then the Target ID of the next SCSI device on the SCSI channel is returned in <em>Target</em> , and <em>EFI_SUCCESS</em> is returned.</p>
+<p>If <em>Target</em> array is not all <em>0xFF’s</em> and <em>Target</em> were not returned on a previous call to <em>GetNextTarget()</em> , then <em>EFI_INVALID_PARAMETER</em> is returned.</p>
+<p>If <em>Target</em> is the Target ID of the last SCSI device on the SCSI channel, then <em>EFI_NOT_FOUND</em> is returned.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The Target ID of the next SCSI device on the SCSI  channel was returned in <em>Target</em> .</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>There are no more SCSI devices on this SCSI channel.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>Target array</em> is not all <em>0xFF’s</em> , and <em>Target</em> were not returned on a previous call to <em>GetNextTarget()</em>.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="14_Protocols_PCI_Bus_Support.html" class="btn btn-neutral float-left" title="14. Protocols — PCI Bus Support" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="16_Protocols_iSCSI_Boot.html" class="btn btn-neutral float-right" title="16. Protocols — iSCSI Boot" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, UEFI Forum, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

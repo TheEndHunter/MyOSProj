@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>18. Glossary &mdash; UEFI Specification 2.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=f2209469" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/style.css?v=faba8a36" />
+      <link rel="stylesheet" type="text/css" href="_static/theme-overrides.css?v=84235ce0" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2de06f63"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="17. References" href="Apx_Q_References.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            UEFI Specification
+          </a>
+              <div class="version">
+                2.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Tables.html">List of Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Figures.html">List of Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/Revision_History.html">Revision History</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01_Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Overview.html">2. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Boot_Manager.html">3. Boot Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_EFI_System_Table.html">4. EFI System Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_GUID_Partition_Table_Format.html">5. GUID Partition Table (GPT) Disk Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_Block_Transition_Table_Layout.html">6. Block Translation Table (BTT) Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Services_Boot_Services.html">7. Services — Boot Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Services_Runtime_Services.html">8. Services — Runtime Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Protocols_EFI_Loaded_Image.html">9. Protocols - EFI Loaded Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Protocols_Device_Path_Protocol.html">10. Protocols – Device Path Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html">11. Protocols — UEFI Driver Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_Protocols_Console_Support.html">12. Protocols — Console Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Protocols_Media_Access.html">13. Protocols – Media Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Protocols_PCI_Bus_Support.html">14. Protocols — PCI Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_Protocols_SCSI_Driver_Models_and_Bus_Support.html">15. Protocols — SCSI Driver Models and Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_Protocols_iSCSI_Boot.html">16. Protocols — iSCSI Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_Protocols_USB_Support.html">17. Protocols — USB Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_Protocols_Debugger_Support.html">18. Protocols — Debugger Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_Protocols_Compression_Algorithm_Specification.html">19. Protocols — Compression Algorithm Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_Protocols_ACPI_Protocols.html">20. Protocols — ACPI Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_Protocols_String_Services.html">21. Protocols — String Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html">22. EFI Byte Code Virtual Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_Firmware_Update_and_Reporting.html">23. Firmware Update and Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24_Network_Protocols_SNP_PXE_BIS.html">24. Network Protocols — SNP, PXE, BIS and HTTP Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25_Network_Protocols_Managed_Network.html">25. Network Protocols - Managed Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26_Network_Protocols_Bluetooth.html">26. Network Protocols — Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27_Network_Protocols_VLAN_and_EAP.html">27. Network Protocols — VLAN, EAP, Wi-Fi and Supplicant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28_Network_Protocols_TCP_IP_and_Configuration.html">28. Network Protocols — TCP, IP, IPsec, FTP, TLS and Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29_Network_Protocols_ARP_and_DHCP.html">29. Network Protocols — ARP, DHCP, DNS, HTTP and REST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_Network_Protocols_UDP_and_MTFTP.html">30. Network Protocols — UDP and MTFTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="31_EFI_Redfish_Service_Support.html">31. EFI Redfish Service Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="32_Secure_Boot_and_Driver_Signing.html">32. Secure Boot and Driver Signing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="33_Human_Interface_Infrastructure.html">33. Human Interface Infrastructure Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="34_HII_Protocols.html">34. HII Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="35_HII_Configuration_Processing_and_Browser_Protocol.html">35. HII Configuration Processing and Browser Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="36_User_Identification.html">36. User Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="37_Secure_Technologies.html">37. Secure Technologies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="38_Confidential_Computing.html">38. Confidential Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="39_Micellaneous_Protocols.html">39. Miscellaneous Protocols</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Apx_A_GUID_and_Time_Formats.html">A. GUID and Time Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_B_Console.html">B. Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_C_Device_Path_Examples.html">C. Device Path Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_D_Status_Codes.html">D. Status Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_E_Universal_Network_Driver_Interfaces.html">E. Universal Network Driver Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_F_Using_the_Simple_Pointer_Protocol.html">F. Using the Simple Pointer Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_G_Using_the_EFI_Extended_SCSI_Pass_Thru_Protocol.html">G. Using the EFI Extended SCSI Pass Thru Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_H_Compression_Source_Code.html">H. Compression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_I_Decompression_Source_Code.html">I. Decompression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_J_EFI_Byte_Code_Virtual_Machine_Opcode_List.html">J. EFI Byte Code Virtual Machine Opcode List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_K_Alphabetic_Function_Lists.html">K. Alphabetic Function Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_L_EFI_1.10_Protocol_Changes_and_Deprecation_List.html">L. EFI 1.10 Protocol Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html">M. Formats — Language Codes and Language Code Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_N_Common_Platform_Error_Record.html">N. Common Platform Error Record (CPER)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_O_UEFI_ACPI_Data_Table.html">O. UEFI ACPI Data Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_P_Hardware_Error_Record_Persistence_Usage.html">P. Hardware Error Record Persistence Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_Q_References.html">Q. References</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">R. Glossary</a></li>
+</ul>
+
+    <a href= "genindex.html">Index</a>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UEFI Specification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">18. </span>Glossary</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="glossary">
+<span id="appendix-r-glossary"></span><h1><span class="section-number">R. </span>Glossary<a class="headerlink" href="#glossary" title="Link to this heading"></a></h1>
+<dl>
+<dt>_ADR</dt><dd><p>A reserved name in ACPI name space. It refers to an address on a bus that has standard enumeration. An example would be PCI, where the enumeration method is described in the PCI Local Bus specification.</p>
+</dd>
+<dt>_CRS</dt><dd><p>A reserved name in ACPI name space. It refers to the current resource setting of a device. A _CRS is required for devices that are not enumerated in a standard fashion. _CRS is how ACPI converts nonstandard devices into Plug and Play devices.</p>
+</dd>
+<dt>_HID</dt><dd><p>A reserved name in ACPI name space. It represents a device’s plug and play hardware ID and is stored as a 32-bit compressed EISA ID. _HID objects are optional in ACPI. However, a _HID object must be used to describe any device that will be enumerated by the ACPI driver in the OS. This is how ACPI deals with non–Plug and Play devices.</p>
+</dd>
+<dt>_UID</dt><dd><p>A reserved name in ACPI name space. It is a serial number style ID that does not change across reboots. If a system contains more than one device that reports the same _HID, each device must have a unique _UID. The _UID only needs to be unique for device that have the exact same _HID value.</p>
+</dd>
+<dt>ACPI Device Path</dt><dd><p>A Device Path that is used to describe devices whose enumeration is not described in an industry-standard fashion. These devices must be described using ACPI AML in the ACPI name space; this type of node provides linkage to the ACPI name space.</p>
+</dd>
+<dt>ACPI</dt><dd><p>Refers to the Advanced Configuration and Power Interface Specification and to the concepts and technology it discusses. The specification defines a new interface to the system board that enables the operating system to implement operating system-directed power management and system configuration.</p>
+</dd>
+<dt>Alt-GR Unicode</dt><dd><p>Represents the character code of a key when the Alt-GR modifier key is held down. This key (A2) in some keyboard layouts is defined as the right alternate key and serves the same function as the left alternate key. However, in many other layouts it is a secondary modifier key similar to shift. For instance, key C1 is equated to the letter a and its Unicode character code in the typical U.K. keyboard is a non-shifted character code of 0x0061. When holding down the Alt-GR key in conjunction with the pressing of key C1, , the value on the same keyboard often produces an á, which is a character code 0x00E1.</p>
+</dd>
+<dt>Base Code (BC)</dt><dd><p>The PXE Base Code, included as a core protocol in EFI, is comprised of a simple network stack (UDP/IP) and a few common network protocols (DHCP, Bootserver Discovery, TFTP) that are useful for remote booting machines.</p>
+</dd>
+<dt>BC</dt><dd><p>See Base Code (BC)</p>
+</dd>
+<dt>Big Endian</dt><dd><p>A memory architecture in which the low-order byte of a multibyte datum is at the highest address, while the high-order byte is at the lowest address. See Little Endian.</p>
+</dd>
+<dt>BIOS Boot Specification Device Path</dt><dd><p>A Device Path that is used to point to boot legacy operating systems; it is based on the BIOS Boot Specification, Version 1.01.</p>
+</dd>
+<dt>BIOS Parameter Block (BPB)</dt><dd><p>The first block (sector) of a partition. It defines the type and location of the FAT File System on a drive.</p>
+</dd>
+<dt>BIOS</dt><dd><p>Basic Input/Output System. A collection of low-level I/O service routines.</p>
+</dd>
+<dt>Block I/O Protocol</dt><dd><p>A protocol that is used during boot services to abstract mass storage devices. It allows boot services code to perform block I/O without knowing the type of a device or its controller.</p>
+</dd>
+<dt>Block Size</dt><dd><p>The fundamental allocation unit for devices that support the Block I/O Protocol. Not less than 512 bytes. This is commonly referred to as sector size on hard disk drives.</p>
+</dd>
+<dt>Boot Device</dt><dd><p>The Device Handle that corresponds to the device from which the currently executing image was loaded.</p>
+</dd>
+<dt>Boot Manager</dt><dd><p>The part of the firmware implementation that is responsible for implementing system boot policy. Although a particular boot manager implementation is not specified in this document, such code is generally expected to be able to enumerate and handle transfers of control to the available OS loaders as well as UEFI applications and drivers on a given system. The boot manager would typically be responsible for interacting with the system user, where applicable, to determine what to load during system startup. In cases where user interaction is not indicated, the boot manager would determine what to load and, if multiple items are to be loaded, what the sequencing of such loads would be.</p>
+</dd>
+<dt>Block Size</dt><dd><p>The fundamental allocation unit for devices that support the Block I/O Protocol. Not less than 512 bytes. This is commonly referred to as sector size on disk drives.</p>
+</dd>
+<dt>Boot Services Table</dt><dd><p>A table that contains the firmware entry points for accessing boot services functions such as Task Priority Services and Memory Allocation Services. The table is accessed through a pointer in the System Table.</p>
+</dd>
+<dt>Boot Services Time</dt><dd><p>The period of time between platform initialization and the call to ExitBootServices(). During this time, UEFI Driver and applications are loaded iteratively and the system boots from an ordered list of EFI OS loaders.</p>
+</dd>
+<dt>Boot Services</dt><dd><p>The collection of interfaces and protocols that are present in the boot environment. The services minimally provide an OS loader with access to platform capabilities required to complete OS boot. Services are also available to drivers and applications that need access to platform capability. Boot services are terminated once the operating system takes control of the platform.</p>
+</dd>
+<dt>BPB</dt><dd><p>See BIOS Parameter Block (BPB).</p>
+</dd>
+<dt>BTT</dt><dd><p>Block Translation Table: A software mechanism for adding single block write atomicity to any Block Mode ranges or byte-addressable Persistent Memory ranges.</p>
+</dd>
+<dt>Callback</dt><dd><p>Target function which augments the Forms Processor’s ability to evaluate or process configuration settings. Callbacks are not available when the Forms Processor is operating in a Disconnected state.</p>
+</dd>
+<dt>CIM</dt><dd><p>See Common Information Model (CIM).</p>
+</dd>
+<dt>Cluster</dt><dd><p>A collection of disk sectors. Clusters are the basic storage units for disk files. See File Allocation Table (FAT).</p>
+</dd>
+<dt>COFF</dt><dd><p>Common Object File Format, a standard file format for binary images.</p>
+</dd>
+<dt>Coherency Domain</dt><dd><ol class="arabic simple">
+<li><p>The global set of resources that is visible to at least one processor in a platform.</p></li>
+<li><p>The address resources of a system as seen by a processor. It consists of both system memory and I/O space.</p></li>
+</ol>
+</dd>
+<dt>Common Information Model (CIM)</dt><dd><p>An object-oriented schema defined by the DMTF. CIM is an information model that provides a common way to describe and share management information enterprise-wide.</p>
+</dd>
+<dt>Console I/O Protocol</dt><dd><p>A protocol that is used during Boot Services to handle input and output of text-based information intended for the system administrator. It has two parts, a Simple Input Protocol that is used to obtain input from the ConsoleIn device and a Simple Text Output Protocol that is used to control text-based output devices. The Console I/O Protocol is also known as the EFI Console I/O Protocol.</p>
+</dd>
+<dt>ConsoleIn</dt><dd><p>The device handle that corresponds to the device used for user input in the boot services environment. Typically the system keyboard.</p>
+</dd>
+<dt>ConsoleOut</dt><dd><p>The device handle that corresponds to the device used to display messages to the user from the boot services environment. Typically a display screen.</p>
+</dd>
+<dt>DBCS</dt><dd><p>Double Byte Character Set.</p>
+</dd>
+<dt>Desktop Management Interface (DMI)</dt><dd><div class="line-block">
+<div class="line">A platform management information framework, built by the DMTF and designed to provide manageability for desktop and server computing platforms by providing an interface that is:</div>
+<div class="line">(1) independent of any specific desktop operating system, network operating system, network protocol, management protocol, processor, or hardware platform;</div>
+<div class="line">(2) easy for vendors to implement; and</div>
+<div class="line">(3) easily mapped to higher-level protocols.</div>
+</div>
+</dd>
+<dt>DMTF (formerly Desktop Management Task Force)</dt><dd><p>The DMTF is a standards organization comprised of companies from all areas of the computer industry. DMTF creates open manageability standards spanning diverse emerging and traditional IT infrastructures including cloud, virtualization, network, servers and storage.</p>
+</dd>
+<dt>Device Handle</dt><dd><p>A handle points to a list of one or more protocols that can respond to requests for services for a given device referred to by the handle.</p>
+</dd>
+<dt>Device I/O Protocol</dt><dd><p>A protocol that is used during boot services to access memory and I/O. Also called the EFI Device I/O Protocol.</p>
+</dd>
+<dt>Device Path Instance</dt><dd><p>When an environment variable represents multiple devices, it is possible for a device path to contain multiple device paths. An example of this would be the ConsoleOut environment variable that consists of both a VGA console and a serial output console. This environment variable would describe a console output stream that would send output to both devices and therefore has a Device Path that consists of two complete device paths. Each of these paths is a device path instance.</p>
+</dd>
+<dt>Device Path Node</dt><dd><p>A variable-length generic data structure that is used to build a device path. Nodes are distinguished by type, subtype, length, and path-specific data. See Device Path.</p>
+</dd>
+<dt>Device Path Protocol</dt><dd><p>A protocol that is used during boot services to provide the information needed to construct and manage Device Paths. Also called the EFI Device Path Protocol.</p>
+</dd>
+<dt>Device Path</dt><dd><p>A variable-length binary data structure that is composed of variable-length generic device path nodes and is used to define the programmatic path to a logical or physical device. There are six major types of device paths: Hardware Device Path, ACPI Device Path, Messaging Device Path, Media Device Path, BIOS Boot Specification Device Path, and End of Hardware Device Path.</p>
+</dd>
+<dt>DHCP</dt><dd><p>See Dynamic Host Configuration Protocol (DHCP).</p>
+</dd>
+<dt>Disconnected</dt><dd><p>The state when a Forms Processor is manipulating a form set without being connected to the Target’s pre-OS environment. For example, after booting an OS, a Forms Processor cannot execute call-backs or read the configuration settings. For example, when running a Forms Browser while on a remote machine that is not connected to the Target. In these cases, the Forms Processor has limited knowledge of the Target’s current configuration settings and limited or no ability to use call-backs.</p>
+</dd>
+<dt>Disk I/O Protocol</dt><dd><p>A protocol that is used during boot services to abstract Block I/O devices to allow non-block-sized I/O operations. Also called the EFI Disk I/O Protocol.</p>
+</dd>
+<dt>DMI</dt><dd><p>See DBCS.</p>
+</dd>
+<dt>DMTF</dt><dd><p>See DMTF (formerly Desktop Management Task Force).</p>
+</dd>
+<dt>DNS</dt><dd><p>Domain Name System. A protocol used manipulating and translating hostname and IP address</p>
+</dd>
+<dt>DTLS</dt><dd><p>Datagram Transport Layer Security. A protocol to provide communication privacy above UDP.</p>
+</dd>
+<dt>Dynamic Host Configuration Protocol (DHCP)</dt><dd><p>A protocol that is used to get information from a configuration server. DHCP is defined by the DMTF (formerly Desktop Management Task Force), not EFI.</p>
+</dd>
+<dt>EAP</dt><dd><p>Extensible Authentication Protocol. An authentication framework which supports multiple authentication methods</p>
+</dd>
+<dt>EBC Image</dt><dd><p>Executable EBC image following the PE32 file format.</p>
+</dd>
+<dt>EBC</dt><dd><p>See EFI Byte Code (EBC).</p>
+</dd>
+<dt>EFI</dt><dd><p>Extensible Firmware Interface. An interface between the operating system (OS) and the platform firmware.</p>
+</dd>
+<dt>EFI Byte Code (EBC)</dt><dd><p>The binary encoding of instructions as output by the EBC C compiler and linker. The EBC Image is executed by the interpreter.</p>
+</dd>
+<dt>EFI File</dt><dd><p>A container consisting of a number of blocks that holds an image or a data file within a file system that complies with this specification.</p>
+</dd>
+<dt>EFI Hard Disk</dt><dd><p>A hard disk that supports the new EFI partitioning scheme (GUID Partition).</p>
+</dd>
+<dt>EFI-compliant</dt><dd><p>Refers to a platform that complies with this specification.</p>
+</dd>
+<dt>EFI-conformant</dt><dd><p>See EFI-compliant.</p>
+</dd>
+<dt>End of Hardware Device Path</dt><dd><p>A Device Path which, depending on the subtype, is used to indicate the end of the Device Path instance or Device Path structure.</p>
+</dd>
+<dt>Enhanced Mode (EM)</dt><dd><p>The 64-bit architecture extension that makes up part of the Intel® Itanium® architecture.</p>
+</dd>
+<dt>Event Services</dt><dd><p>The set of functions used to manage events. Includes EFI_BOOT_SERVICES.CheckEvent(), EFI_BOOT_SERVICES.CreateEvent(), EFI_BOOT_SERVICES.CloseEvent(), EFI_BOOT_SERVICES.SignalEvent(), and EFI_BOOT_SERVICES.WaitForEvent().</p>
+</dd>
+<dt>Event</dt><dd><p>An EFI data structure that describes an “event”—for example, the expiration of a timer.</p>
+</dd>
+<dt>Event Services</dt><dd><p>The set of functions used to manage events.Includes EFI_BOOT_SERVICES.CheckEvent(), EFI_BOOT_SERVICES.CreateEvent(), EFI_BOOT_SERVICES.CloseEvent(), EFI_BOOT_SERVICES.SignalEvent(), and EFI_BOOT_SERVICES.WaitForEvent().</p>
+</dd>
+<dt>FAT File System</dt><dd><p>The file system on which the EFI File system is based. See File Allocation Table (FAT) and GUID Partition Table (GPT).</p>
+</dd>
+<dt>FAT</dt><dd><p>See File Allocation Table (FAT).</p>
+</dd>
+<dt>File Allocation Table (FAT)</dt><dd><p>A table that is used to identify the clusters that make up a disk file. File allocation tables come in three flavors: FAT12, which uses 12 bits for cluster numbers; FAT16, which uses 16 bits; and FAT32, which allots 32 bits but only uses 28 (the other 4 bits are reserved for future use).</p>
+</dd>
+<dt>File Handle Protocol</dt><dd><p>A component of the File System Protocol. It provides access to a file or directory. Also called the EFI File Handle Protocol.</p>
+</dd>
+<dt>File System Protocol</dt><dd><p>A protocol that is used during boot services to obtain file-based access to a device. It has two parts, a Simple File System Protocol that provides a minimal interface for file-type access to a device, and a File Handle Protocol that provides access to a file or directory.</p>
+</dd>
+<dt>Firmware</dt><dd><p>Any software that is included in read-only memory (ROM).</p>
+</dd>
+<dt>Font</dt><dd><p>A graphical representation corresponding to a character set, in this case Unicode. For more information and examples, see <a class="reference external" href="https://en.wikipedia.org/wiki/Font">https://en.wikipedia.org/wiki/Font</a>.</p>
+</dd>
+<dt>Font glyph</dt><dd><p>The individual elements of a font corresponding to single characters are called font glyphs or simply glyphs. The first character in each of the above three lines is a glyph for the letter “A” in three different fonts.</p>
+</dd>
+<dt>Form</dt><dd><p>Logical grouping of questions with a unique identifier.</p>
+</dd>
+<dt>Form Set</dt><dd><p>An HII database package describing a group of forms, including one parent form and zero or more child forms.</p>
+</dd>
+<dt>Forms Browser</dt><dd><p>A Forms Processor capable of displaying the user-interface information a display and interacting with a user.</p>
+</dd>
+<dt>Forms Processor</dt><dd><p>An application capable of reading and processing the forms data within a forms set.</p>
+</dd>
+<dt>Globally Unique Identifier (GUID)</dt><dd><p>A 128-bit value used to differentiate services and structures in the boot services environment. The format of a GUID is defined in Appendix A. See Protocol.</p>
+</dd>
+<dt>Glyph</dt><dd><p>The individual elements of a font corresponding to single characters. May also be called font keyboard layout glyphs. Also see font glyph above.</p>
+</dd>
+<dt>GPT</dt><dd><p>See GUID Partition Table (GPT).</p>
+</dd>
+<dt>GPT disk layout:</dt><dd><p>The data layout on a disk consisting of a protective MBR in LBA 0, a GPT Header in LBA 1, and additional GPT structures and partitions in the remaining LBAs. See chapter 5.</p>
+</dd>
+<dt>GPTHeader</dt><dd><p>The header in a GUID Partition Table (GPT). Among other things, it contains the number of GPT Partition Entries and the first and last LBAs that can be used for the entries.</p>
+</dd>
+<dt>GPT Partition Entry</dt><dd><p>A data structure that characterizes a Partition in the GPT disk layout. Among other things, it specifies the starting and ending LBA of the partition.</p>
+</dd>
+<dt>GUID Partition Table (GPT)</dt><dd><p>A data structure that describes one or more partitions. It consists of a GPTHeader and, typically, at least one GPTPartition Entry. There are two GUID partition tables: the Primary Partition Table (located in LBA 1 of the disk) and a Backup Partition Table (located in the last LBA of the disk). The Backup Partition Table is a copy of the Primary Partition Table.</p>
+</dd>
+<dt>GPTPartition Entry</dt><dd><p>A data structure that characterizes a GUID Partition. Among other things, it specifies the starting and ending LBA of the partition.</p>
+</dd>
+<dt>GUID Partition</dt><dd><p>A contiguous group of sectors on an EFI Hard Disk.</p>
+</dd>
+<dt>Handle</dt><dd><p>See Device Handle.</p>
+</dd>
+<dt>Hardware Device Path</dt><dd><p>A Device Path that defines how a hardware device is attached to the resource domain of a system (the resource domain is simply the shared memory, memory mapped I/O, and I/O space of the system).</p>
+</dd>
+<dt>HII</dt><dd><p>Human Interface Infrastructure.</p>
+</dd>
+<dt>HII Database</dt><dd><p>The centralized repository for HII-related information, organized as package lists.</p>
+</dd>
+<dt>HTML</dt><dd><p>Hypertext Markup Language. A particular implementation of SGML focused on hypertext applications. HTML is a fairly simple language that enables the description of pages (generally Internet pages) that include links to other pages and other data types (such as graphics). When applied to a larger world, HTML has many shortcomings, including localization (q.v.) and formatting issues. The HTML form concept is of particular interest to this application.</p>
+</dd>
+<dt>HTTP</dt><dd><p>Hypertext transfer protocol. HTTP functions as request-response protocol in the client-server computing rule.</p>
+</dd>
+<dt>IA-32</dt><dd><p>See Intel® Architecture-32 (IA-32).</p>
+</dd>
+<dt>IFR</dt><dd><p>Internal Form Representation. Used to represent forms in EFI so that it can be interpreted as is or expanded easily into XHTML.</p>
+</dd>
+<dt>Image Handle</dt><dd><p>A handle for a loaded image; image handles support the loaded image protocol.</p>
+</dd>
+<dt>Image Handoff State</dt><dd><p>The information handed off to a loaded image as it begins execution; it consists of the image’s handle and a pointer to the image’s system table.</p>
+</dd>
+<dt>Image Header</dt><dd><p>The initial set of bytes in a loaded image. They define the image’s encoding.</p>
+</dd>
+<dt>Image Services</dt><dd><p>The set of functions used to manage EFI images. Includes EFI_BOOT_SERVICES.LoadImage(), EFI_BOOT_SERVICES.StartImage(), EFI_BOOT_SERVICES.UnloadImage(), EFI_BOOT_SERVICES.Exit(), EFI_BOOT_SERVICES.ExitBootServices(), and EFI_IMAGE_ENTRY_POINT.</p>
+</dd>
+<dt>Image</dt><dd><ol class="arabic simple">
+<li><p>An executable file stored in a file system that complies with this specification. Images may be drivers, applications or OS loaders. Also called an EFI Image.</p></li>
+<li><p>Executable binary file containing EBC and data. Output by the EBC linker.</p></li>
+</ol>
+</dd>
+<dt>IME</dt><dd><p>Input Method Editor. A program or subprogram that is used to map keystrokes to logographic characters. For example, IMEs are used (possibly with user intervention) to map the Kana (Hirigana or Katakana) characters on Japanese keyboards to Kanji.</p>
+</dd>
+<dt>Intel® Architecture-32 (IA-32)</dt><dd><p>The 32-bit and 16-bit architecture described in the Intel Architecture Software Developer’s Manual. IA-32 is the architecture of the Intel® P6 family of processors, which includes the Intel® Pentium® Pro, Pentium II, Pentium III, and Pentium 4 processors.</p>
+</dd>
+<dt>Intel® Itanium® Architecture</dt><dd><p>The Intel architecture that has 64-bit instruction capabilities, new performance-enhancing features, and support for the IA-32 instruction set. This architecture is described in the Itanium™ Architecture Software Developer’s Manual.</p>
+</dd>
+<dt>internationalization</dt><dd><p>In this context, is the process of making a system usable across languages and cultures by using universally understood symbols. Internationalization is difficult due to the differences in cultures and the difficulty of creating obvious symbols; for example, why does a red octagon mean “Stop”?</p>
+</dd>
+<dt>Interpreter</dt><dd><p>The software implementation that decodes EBC binary instructions and executes them on a VM. Also called EBC interpreter.</p>
+</dd>
+<dt>Keyboard layout</dt><dd><p>The physical representation of a user’s keyboard. The usage of this is in conjunction to a structure that equates the physical key(s) and the associated action it represents. For instance, key C1 is equated to the letter a and its Unicode value in the typical U.K. keyboard is a non-shifted value of 0x0061.</p>
+</dd>
+<dt>LAN On Motherboard (LOM)</dt><dd><p>This is a network device that is built onto the motherboard (or baseboard) of the machine.</p>
+</dd>
+<dt>LBA:</dt><dd><p>See Logical Block Address (LBA).</p>
+</dd>
+<dt>Legacy Platform</dt><dd><p>A platform which, in the interests of providing backward-compatibility, retains obsolete technology.</p>
+</dd>
+<dt>LFN</dt><dd><p>See Long File Names (LFN).</p>
+</dd>
+<dt>Little Endian</dt><dd><p>A memory architecture in which the low-order byte of a multibyte datum is at the lowest address, while the high-order byte is at the highest address. See Big Endian.</p>
+</dd>
+<dt>Load File Protocol</dt><dd><p>A protocol that is used during boot services to find and load other modules of code.</p>
+</dd>
+<dt>Loaded Image Protocol</dt><dd><p>A protocol that is used during boot services to obtain information about a loaded image. Also called the EFI Loaded Image Protocol.</p>
+</dd>
+<dt>Loaded Image</dt><dd><p>A file containing executable code. When started, a loaded image is given its image handle and can use it to obtain relevant image data.</p>
+</dd>
+<dt>Localization</dt><dd><p>The process of focusing a system in so that it works using the symbols of a language/culture. To a major extent the following design is influenced by the requirements of localization.</p>
+</dd>
+<dt>Logical Block Address (LBA):</dt><dd><p>The address of a logical block on a disk. The first LBA on a disk is LBA 0.</p>
+</dd>
+<dt>Logographic</dt><dd><p>A character set that uses characters to represent words or parts of words rather than syllables or sounds. Kanji is logographic but Kana characters are not.</p>
+</dd>
+<dt>LOM</dt><dd><p>See LAN On Motherboard (LOM).</p>
+</dd>
+<dt>Long File Names (LFN)</dt><dd><p>Refers to an extension to the FAT File System that allows file names to be longer than the original standard (eight characters plus a three-character extension).</p>
+</dd>
+<dt>Machine Check Abort (MCA)</dt><dd><p>The system management and error correction facilities built into the Intel Itanium processors.</p>
+</dd>
+<dt>Master Boot Record (MBR)</dt><dd><p>The data structure that resides on the LBA 0 of a hard disk and defines the partitions on the disk.</p>
+</dd>
+<dt>MBR</dt><dd><p>See Master Boot Record (MBR).</p>
+</dd>
+<dt>MBR boot code:</dt><dd><p>x86 code in the first LBA of a disk.</p>
+</dd>
+<dt>MBR disk layout:</dt><dd><p>The data layout on a disk consisting of an MBR in LBA 0 and partitions described by the MBR in the remaining LBAs. See chapter 5 and Appendix NEW.</p>
+</dd>
+<dt>MBR Partition Record</dt><dd><p>A data structure that characterizes a Partition in the MBR disk layout.</p>
+</dd>
+<dt>MCA</dt><dd><p>See Machine Check Abort (MCA).</p>
+</dd>
+<dt>Media Device Path</dt><dd><p>A Device Path that is used to describe the portion of a medium that is being abstracted by a boot service. For example, a Media Device Path could define which partition on a hard drive was being used.</p>
+</dd>
+<dt>Memory Allocation Services</dt><dd><p>The set of functions used to allocate and free memory, and to retrieve the memory map. Includes EFI_BOOT_SERVICES.AllocatePages(), EFI_BOOT_SERVICES.FreePages(), EFI_BOOT_SERVICES.AllocatePool(), EFI_BOOT_SERVICES.FreePool(), and EFI_BOOT_SERVICES.GetMemoryMap().</p>
+</dd>
+<dt>Memory Map</dt><dd><p>A collection of structures that defines the layout and allocation of system memory during the boot process. Drivers and applications that run during the boot process prior to OS control may require memory. The boot services implementation is required to ensure that an appropriate representation of available and allocated memory is communicated to the OS as part of the hand-off of control.</p>
+</dd>
+<dt>Memory Type</dt><dd><p>One of the memory types defined by UEFI for use by the firmware and UEFI applications. Among others, there are types for boot services code, boot services data, Runtime Services code, and runtime services data. Some of the types are used for one purpose before EFI_BOOT_SERVICES.ExitBootServices() is called and another purpose after.</p>
+</dd>
+<dt>Messaging Device Path</dt><dd><p>A Device Path that is used to describe the connection of devices outside the Coherency Domain of the system. This type of node can describe physical messaging information (e.g., a SCSI ID) or abstract information (e.g., networking protocol IP addresses).</p>
+</dd>
+<dt>Miscellaneous Service</dt><dd><p>Various functions that are needed to support the EFI environment. Includes EFI_BOOT_SERVICES.InstallConfigurationTable(), ResetSystem(), EFI_BOOT_SERVICES.Stall(), EFI_BOOT_SERVICES.SetWatchdogTimer(), EFI_BOOT_SERVICES.GetNextMonotonicCount(), and GetNextHighMonotonicCount().</p>
+</dd>
+<dt>MTFTP</dt><dd><p>See Multicast Trivial File Transfer Protocol (MTFTP).</p>
+</dd>
+<dt>Multicast Trivial File Transfer Protocol (MTFTP)</dt><dd><p>A protocol used to download a Network Boot Program to many clients simultaneously from a TFTP server.</p>
+</dd>
+<dt>Name Space or Namespace</dt><dd><p>A namespace defines a contiguously-addressed range of Non-Volatile Memory conceptually similar to a SCSI Logical Unit (LUN) or a NVM Express namespace. In general, a collection of device paths; in an EFI Device Path.</p>
+</dd>
+<dt>Native Code</dt><dd><p>Low level instructions that are native to the host processor. As such, the processor executes them directly with no overhead of interpretation. Contrast this with EBC, which must be interpreted by native code to operate on a VM.</p>
+</dd>
+<dt>NBP</dt><dd><p>See Network Bootstrap Program (NBP) or Network Boot Program.</p>
+</dd>
+<dt>Network Boot Program</dt><dd><p>A remote boot image downloaded by a PXE client using the Trivial File Transport Protocol (TFTP) or the Multicast Trivial File Transfer Protocol (MTFTP). See Network Bootstrap Program (NBP).</p>
+</dd>
+<dt>Network Bootstrap Program (NBP)</dt><dd><p>This is the first program that is downloaded into a machine that has selected a PXE capable device for remote boot services. A typical NBP examines the machine it is running on to try to determine if the machine is capable of running the next layer (OS or application). If the machine is not capable of running the next layer, control is returned to the EFI boot manager and the next boot device is selected. If the machine is capable, the next layer is downloaded and control can then be passed to the downloaded program. Though most NBPs are OS loaders, NBPs can be written to be standalone applications such as diagnostics, backup/restore, remote management agents, browsers, etc.</p>
+</dd>
+<dt>Network Interface Card (NIC)</dt><dd><p>Technically, this is a network device that is inserted into a bus on the motherboard or in an expansion board. For the purposes of this document, the term NIC will be used in a generic sense, meaning any device that enables a network connection - including LOMs and network devices on external buses (USB, 1394, etc.).</p>
+</dd>
+<dt>NIC</dt><dd><p>See Network Interface Card (NIC).</p>
+</dd>
+<dt>Non-spacing key</dt><dd><p>Typically an accent key that does not advance the cursor and is used to create special characters similar to ÄäÊê. This function is provided only on certain keyboard layouts.</p>
+</dd>
+<dt>NV</dt><dd><p>Nonvolatile.</p>
+</dd>
+<dt>Package</dt><dd><p>HII information with a unique type, such as strings, fonts, images or forms.</p>
+</dd>
+<dt>Package List</dt><dd><p>Group of packages identified by a GUID.</p>
+</dd>
+<dt>Page Memory</dt><dd><p>A set of contiguous pages. Page memory is allocated by EFI_BOOT_SERVICES.AllocatePages() and returned by EFI_BOOT_SERVICES.FreePages().</p>
+</dd>
+<dt>Partition Discovery</dt><dd><p>The process of scanning a block device to determine whether it contains a Partition.</p>
+</dd>
+<dt>Partition</dt><dd><p>A contiguous set of LBAs on a disk, described by the MBR and/or GPT disk layouts.</p>
+</dd>
+<dt>PC-AT</dt><dd><p>Refers to a PC platform that uses the AT form factor for their motherboards.</p>
+</dd>
+<dt>PCI Bus Driver</dt><dd><p>Software that creates a handle for every PCI Controller on a PCI Host Bus Controller and installs both the PCI I/O Protocol and the Device Path Protocol onto that handle. It may optionally perform PCI Enumeration if resources have not already been allocated to all the PCI Controllers on a PCI Host Bus Controller. It also loads and starts any UEFI drivers found in any PCI Option ROMs discovered during PCI Enumeration. If a driver is found in a PCI Option ROM, the PCI Bus Driver will also attach the Bus Specific Driver Override Protocol to the handle for the PCI Controller that is associated with the PCI Option ROM that the driver was loaded from.</p>
+</dd>
+<dt>PCI Bus</dt><dd><p>A collection of up to 32 physical PCI Devices that share the same physical PCI bus. All devices on a PCI Bus share the same PCI Configuration Space.</p>
+</dd>
+<dt>PCI Configuration Space</dt><dd><p>The configuration channel defined by PCI to configure PCI Devices into the resource domain of the system. Each PCI device must produce a standard set of registers in the form of a PCI Configuration Header, and can optionally produce device specific registers. The registers are addressed via Type 0 or Type 1 PCI Configuration Cycles as described by the PCI Specification. The PCI Configuration Space can be shared across multiple PCI Buses. On most PC-AT architecture systems and typical Intel® chipsets, the PCI Configuration Space is accessed via I/O ports 0xCF8 and 0xCFC. Many other implementations are possible.</p>
+</dd>
+<dt>PCI Controller</dt><dd><p>A hardware components that is discovered by a PCI Bus Driver, and is managed by a PCI Device Driver. PCI Functions and PCI Controller are used equivalently in this document.</p>
+</dd>
+<dt>PCI Device Driver</dt><dd><p>Software that manages one or more PCI Controllers of a specific type. A driver will use the PCI I/O Protocol to produce a device I/O abstraction in the form of another protocol (i.e., Block I/O, Simple Network, Simple Input, Simple Text Output, Serial I/O, Load File).</p>
+</dd>
+<dt>PCI Devices</dt><dd><p>A collection of up to 8 PCI Functions that share the same PCI Configuration Space. A PCI Device is physically connected to a PCI Buses.</p>
+</dd>
+<dt>PCI Enumeration</dt><dd><p>The process of assigning resources to all the PCI Controllers on a given PCI Host Bus Controller. This includes PCI Bus Number assignments, PCI Interrupt assignments, PCI I/O resource allocation, the PCI Memory resource allocation, the PCI Prefetchable Memory resource allocation, and miscellaneous PCI DMA settings.</p>
+</dd>
+<dt>PCI Functions</dt><dd><p>A controller that provides some type of I/O services. It consumes some combination of PCI I/O, PCI Memory, and PCI Prefetchable Memory regions, and up to 256 bytes of the PCI Configuration Space. The PCI Function is the basic unit of configuration for PCI.</p>
+</dd>
+<dt>PCI Host Bus Controller</dt><dd><p>A chipset component that produces PCI I/O, PCI Memory, and PCI Prefetchable Memory regions in a single Coherency Domain. A PCI Host Bus Controller is composed of one or more PCI Root Bridges.</p>
+</dd>
+<dt>PCI I/O Protocol</dt><dd><p>A software interface that provides access to PCI Memory, PCI I/O, and PCI Configuration spaces for a PCI Controller. It also provides an abstraction for PCI Bus Master DMA.</p>
+</dd>
+<dt>PCI Option ROM</dt><dd><p>A ROM device that is accessed through a PCI Controller, and is described in the PCI Controller’s Configuration Header. It may contain one or more PCI Device Drivers that are used to manage the PCI Controller.</p>
+</dd>
+<dt>PCI Root Bridge I/O Protocol</dt><dd><p>A software abstraction that provides access to the PCI I/O, PCI Memory, and PCI Prefetchable Memory regions in a single Coherency Domain.</p>
+</dd>
+<dt>PCI Root Bridge</dt><dd><p>A chipset component(s) that produces a physical PCI Local Bus.</p>
+</dd>
+<dt>PCI Segment</dt><dd><p>A collection of up to 256 PCI Buses that share the same PCI Configuration Space. PCI Segment is defined in the ACPI Specification as the _SEG object. The SAL_PCI_CONFIG_READ and SAL_PCI_CONFIG_WRITE procedures defined in chapter 9 of the SAL Specification define how to access the PCI Configuration Space in a system that supports multiple PCI Segments. If a system only supports a single PCI Segment the PCI Segment number is defined to be zero. The existence of PCI Segments enables the construction of systems with greater than 256 PCI buses.</p>
+</dd>
+<dt>Pool Memory</dt><dd><p>A set of contiguous bytes. A pool begins on, but need not end on, an “8-byte” boundary. Pool memory is allocated in pages—that is, firmware allocates enough contiguous pages to contain the number of bytes specified in the allocation request. Hence, a pool can be contained within a single page or extend across multiple pages. Pool memory is allocated by EFI_BOOT_SERVICES.AllocatePool() and returned by EFI_BOOT_SERVICES.FreePool().</p>
+</dd>
+<dt>Preboot Execution Environment (PXE)</dt><dd><div class="line-block">
+<div class="line">A means by which agents can be loaded remotely onto systems to perform management tasks in the absence of a running OS. To enable the interoperability of clients and downloaded bootstrap programs, the client preboot code must provide a set of services for use by a downloaded bootstrap. It also must ensure certain aspects of the client state at the point in time when the bootstrap begins executing.</div>
+<div class="line">The complete PXE specification covers three areas; the client, the network and the server.</div>
+<div class="line"><br /></div>
+<div class="line"><strong>Client</strong></div>
+<div class="line">- Makes network devices into bootable devices.</div>
+<div class="line">- Provides APIs for PXE protocol modules in EFI and for universal drivers in the OS.</div>
+<div class="line"><br /></div>
+<div class="line"><strong>Network</strong></div>
+<div class="line">- Uses existing technology: DHCP, TFTP, etc.</div>
+<div class="line">- Adds “vendor-specific” tags to DHCP to define PXE-specific operation within DHCP.</div>
+<div class="line">- Adds multicast TFTP for high bandwidth remote boot applications.</div>
+<div class="line">- Defines Bootserver discovery based on DHCP packet format.</div>
+<div class="line"><br /></div>
+<div class="line"><strong>Server</strong></div>
+<div class="line">- Bootserver: Responds to Bootserver discovery requests and serves up remote boot images.</div>
+<div class="line">- proxyDHCP: Used to ease the transition of PXE clients and servers into existing network infrastructure. proxyDHCP provides the additional DHCP information that is needed by PXE clients and Bootservers without making changes to existing DHCP servers.</div>
+<div class="line">- Plug-In Modules: Example proxyDHCP and Bootservers provided in the PXE SDK (software development kit) have the ability to take plug-in modules (PIMs). These PIMs are used to change/enhance the capabilities of the proxyDHCP and Bootservers.</div>
+</div>
+</dd>
+<dt>Protocol Handler Services</dt><dd><p>The set of functions used to manipulate handles, protocols, and protocol interfaces. Includes EFI_BOOT_SERVICES.InstallProtocolInterface(), EFI_BOOT_SERVICES.UninstallProtocolInterface(), EFI_BOOT_SERVICES.ReinstallProtocolInterface(), EFI_BOOT_SERVICES.HandleProtocol(), EFI_BOOT_SERVICES.RegisterProtocolNotify(), EFI_BOOT_SERVICES.LocateHandle(), and EFI_BOOT_SERVICES.LocateDevicePath().</p>
+</dd>
+<dt>Protocol Handler</dt><dd><p>A function that responds to a call to a HandleProtocol request for a given handle. A protocol handler returns a protocol interface structure.</p>
+</dd>
+<dt>Protocol Interface Structure</dt><dd><p>The set of data definitions and functions used to access a particular type of device. For example, BLOCK_IO is a protocol that encompasses interfaces to read and write blocks from mass storage devices. See Protocol.</p>
+</dd>
+<dt>Protocol Revision Number</dt><dd><p>The revision number associated with a protocol. See Protocol.</p>
+</dd>
+<dt>Protocol</dt><dd><p>The information that defines how to access a certain type of device during boot services. A protocol consists of a Globally Unique Identifier (GUID), a protocol revision number, and a protocol interface structure. The interface structure contains data definitions and a set of functions for accessing the device. A device can have multiple protocols. Each protocol is accessible through the device’s handle.</p>
+</dd>
+<dt>PXE Base Code Protocol</dt><dd><p>A protocol that is used to control PXE-compatible devices. It may be used by the firmware’s boot manager to support booting from remote locations.  Also called the EFI PXE Base Code Protocol.</p>
+</dd>
+<dt>PXE</dt><dd><p>See Preboot Execution Environment (PXE).</p>
+</dd>
+<dt>Question</dt><dd><p>IFR which describes how a single configuration setting should be presented, stored, and validated.</p>
+</dd>
+<dt>Read-Only Memory (ROM)</dt><dd><p>When used with reference to the UNDI specification, ROM refers to a nonvolatile memory storage device on a NIC.</p>
+</dd>
+<dt>Reset</dt><dd><p>The action which forces question values to be reset to their defaults.</p>
+</dd>
+<dt>ROM</dt><dd><p>See Question.</p>
+</dd>
+<dt>Runtime Services Table</dt><dd><p>A table that contains the firmware entry points for accessing runtime services functions such as Time Services and Virtual Memory Services. The table is accessed through a pointer in the System Table.</p>
+</dd>
+<dt>Runtime Services</dt><dd><p>Interfaces that provide access to underlying platform specific hardware that may be useful during OS runtime, such as timers. These services are available during the boot process but also persist after the OS loader terminates boot services.</p>
+</dd>
+<dt>SAL</dt><dd><p>See System Abstraction Layer (SAL).</p>
+</dd>
+<dt>scan code</dt><dd><p>A value representing the location of a key on a keyboard. Scan codes may also encode make (key press) and break (key release) and auto-repeat information.</p>
+</dd>
+<dt>Serial Protocol</dt><dd><p>A Protocol that is used during boot services to abstract byte stream devices-that is, to communicate with character-based I/O devices.</p>
+</dd>
+<dt>SGML</dt><dd><p>Standard Generalized Markup Language. A markup language for defining markup languages.</p>
+</dd>
+<dt>shifted Unicode</dt><dd><p>Shifted Unicode represents the Unicode character code of a key when the shift modifier key is held down. For instance, key C1 is equated to the letter a and its Unicode character code in the typical U.K. keyboard is a non-shifted value of 0x0061. When the shift key is held down in conjunction with the pressing of key C1, however, the value on the same keyboard often produces an A, which is a the Unicode character code 0x0041.</p>
+<p>A Protocol that is used during boot services to abstract byte stream devices—that is, to communicate with character-based I/O devices.</p>
+</dd>
+<dt>Simple File System Protocol</dt><dd><p>A component of the File System Protocol. It provides a minimal interface for file-type access to a device.</p>
+</dd>
+<dt>Simple Input Protocol</dt><dd><p>A protocol that is used to obtain input from the ConsoleIn device. It is one of two protocols that make up the Console I/O Protocol.</p>
+</dd>
+<dt>Simple Network Protocol</dt><dd><p>A protocol that is used to provide a packet-level interface to a network adapter. Also called the EFI Simple Network Protocol.</p>
+</dd>
+<dt>Simple Text Output Protocol</dt><dd><p>A protocol that is used to control text-based output devices. It is one of two protocols that make up the Console I/O Protocol.</p>
+</dd>
+<dt>SKU</dt><dd><p>Stock keeping unit. An acronym commonly used to reference a “version” of a particular platform. An example might be “We have three different SKUs of this platform.”</p>
+</dd>
+<dt>SMBIOS</dt><dd><p>See System Management BIOS (SMBIOS).</p>
+</dd>
+<dt>SNIA</dt><dd><p>Storage Network Industry Association.(www.snia.org)</p>
+</dd>
+<dt>SNIA Common RAID Disk Data Format</dt><dd><p>Storage Network Industry Association Common RAID Disk Data Format Specification, Revision 1.2, July 28, 2006. (www.snia.org)</p>
+</dd>
+<dt>SSL</dt><dd><p>Secure Sockets Layer. A security protocol that provides communications privacy over the Internet. It is predecessor to TLS.</p>
+</dd>
+<dt>StandardError</dt><dd><p>The device handle that corresponds to the device used to display error messages to the user from the boot services environment.</p>
+</dd>
+<dt>Status Codes</dt><dd><p>Success, error, and warning codes returned by boot services and runtime services functions.</p>
+</dd>
+<dt>string</dt><dd><p>A null-terminated array of 16-bit UCS-2 encoded Unicode characters. All strings in this specification are encoded using UCS-2 unless otherwise specified.</p>
+</dd>
+<dt>Submit</dt><dd><p>The action which forces modified question values to be written back to storage.</p>
+</dd>
+<dt>System Abstraction Layer (SAL)</dt><dd><p>Firmware that abstracts platform implementation differences, and provides the basic platform software interface to all higher level software.</p>
+</dd>
+<dt>System Management BIOS (SMBIOS)</dt><dd><p>A table-based interface that is required by the Wired for Management Baseline Specification. It is used to relate platform-specific management information to the OS or to an OS-based management agent.</p>
+</dd>
+<dt>System Table</dt><dd><p>Table that contains the standard input and output handles for a UEFI application, as well as pointers to the boot services and runtime services tables. It may also contain pointers to other standard tables such as the ACPI, SMBIOS, and SAL System tables. A loaded image receives a pointer to its system table when it begins execution. Also called the EFI System Table.</p>
+</dd>
+<dt>Target</dt><dd><p>The system being configured.</p>
+</dd>
+<dt>Task Priority Level (TPL)</dt><dd><p>The boot services environment exposes three task priority levels: “normal,” “callback,” and “notify.”</p>
+</dd>
+<dt>Task Priority Services</dt><dd><p>The set of functions used to manipulate task priority levels. Includes EFI_BOOT_SERVICES.RaiseTPL() and EFI_BOOT_SERVICES.RestoreTPL().</p>
+</dd>
+<dt>TFTP</dt><dd><p>See Trivial File Transport Protocol (TFTP).</p>
+</dd>
+<dt>Time Format</dt><dd><p>The format for expressing time in an EFI-compliant platform. For more information, see Appendix A.</p>
+</dd>
+<dt>Time Services</dt><dd><p>The set of functions used to manage time. Includes GetTime(), SetTime(), GetWakeupTime(), and SetWakeupTime().</p>
+</dd>
+<dt>Timer Services</dt><dd><p>The set of functions used to manipulate timers. Contains a single function, EFI_BOOT_SERVICES.SetTimer().</p>
+</dd>
+<dt>TLS</dt><dd><p>Transport Layer Security. A protocol to provide privacy and data integrity between two communicating applications above TCP.</p>
+</dd>
+<dt>TPL</dt><dd><p>See Target.</p>
+</dd>
+<dt>Trivial File Transport Protocol (TFTP)</dt><dd><p>A protocol used to download a Network Boot Program from a TFTP server.</p>
+</dd>
+<dt>UEFI</dt><dd><p>Unified Extensible Firmware Interface. The interface between the operating system (OS) and the platform firmware defined by this specification.</p>
+</dd>
+<dt>UEFI Application</dt><dd><p>Modular code that may be loaded in the boot services environment to accomplish platform specific tasks within that environment. Examples of possible applications might include diagnostics or disaster recovery tools shipped with a platform that run outside the OS environment. UEFI applications may be loaded in accordance with policy implemented by the platform firmware to accomplish a specific task. Control is then returned from the UEFI application to the platform firmware.</p>
+</dd>
+<dt>UEFI Boot Service Driver</dt><dd><p>A UEFI driver that is loaded into boot services memory and stays resident until boot services terminate.</p>
+</dd>
+<dt>UEFI Driver</dt><dd><p>A module of code typically inserted into the firmware via protocol interfaces. Drivers may provide device support during the boot process or they may provide platform services. It is important not to confuse UEFI drivers with OS drivers that load to provide device support once the OS takes control of the platform.</p>
+</dd>
+<dt>UEFI OS Loader</dt><dd><p>A UEFI application that is the first piece of operating system code loaded by the firmware to initiate the OS boot process. This code is loaded at a fixed address and then executed. The OS takes control of the system prior to completing the OS boot process by calling the interface that terminates all boot services.</p>
+</dd>
+<dt>UEFI Runtime Services Driver</dt><dd><p>A UEFI driver that is loaded into runtime services memory and stays resident during runtime.</p>
+</dd>
+<dt>Unaccepted Memory</dt><dd><p>Some Virtual Machine platforms, such as AMD SEV-SNP, introduce the concept of memory acceptance, requiring memory to be accepted before it can be used by the guest. This protects against a class of attacks by the virtual machine platform.</p>
+</dd>
+<dt>UNDI</dt><dd><p>See Universal Network Device Interface (UNDI).</p>
+</dd>
+<dt>Unicode Collation Protocol</dt><dd><p>A protocol that is used during boot services to perform case-insensitive comparisons of strings.</p>
+</dd>
+<dt>Unicode</dt><dd><p>An industry standard internationalized character set used for human readable message display.</p>
+</dd>
+<dt>Universal Network Device Interface (UNDI)</dt><dd><p>UNDI is an architectural interface to NICs. Traditionally NICs have had custom interfaces and custom drivers (each NIC had a driver for each OS on each platform architecture). Two variations of UNDI are defined in this specification: H/W UNDI and S/W UNDI. H/W UNDI is an architectural hardware interface to a NIC. S/W UNDI is a software implementation of the H/W UNDI.</p>
+</dd>
+<dt>Universal Serial Bus (USB)</dt><dd><p>A bi-directional, isochronous, dynamically attachable serial interface for adding peripheral devices such as serial ports, parallel ports, and input devices on a single bus.</p>
+</dd>
+<dt>URI</dt><dd><p>Uniform resource identifier. URI is a string of characters used to identify a name of a resource.</p>
+</dd>
+<dt>USB Bus Driver</dt><dd><p>Software that enumerates and creates a handle for each newly attached USB Controller and installs both the USB I/O Protocol and the Device Path Protocol onto that handle, starts that device driver if applicable. For each newly detached USB Controller, the device driver is stopped, the USB I/O Protocol and the Device Path Protocol are uninstalled from the device handle, and the device handle is destroyed.</p>
+</dd>
+<dt>USB Bus</dt><dd><p>A collection of up to 127 physical USB Devices that share the same physical USB bus. All devices on a USB Bus share the bandwidth of the USB Bus.</p>
+</dd>
+<dt>USB Controller</dt><dd><p>A hardware component that is discovered by a USB Bus Driver, and is managed by a USB Device Driver. USB Interface and USB Controller are used equivalently in this document.</p>
+</dd>
+<dt>USB Device Driver</dt><dd><p>Software that manages one or more USB Controller of a specific type. A driver will use the USB I/O Protocol to produce a device I/O abstraction in the form of another protocol (i.e., Block I/O, Simple Network, Simple Input, Simple Text Output, Serial I/O, Load File).</p>
+</dd>
+<dt>USB Device</dt><dd><p>A USB peripheral that is physically attached to the USB Bus.</p>
+</dd>
+<dt>USB Enumeration</dt><dd><p>A periodical process to search the USB Bus to detect if there have been any USB Controller attached or detached. If an attach event is detected, then the USB Controllers device address is assigned, and a child handle is created. If a detach event is detected, then the child handle is destroyed.</p>
+</dd>
+<dt>USB Host Controller</dt><dd><p>Moves data between system memory and devices on the USB Bus by processing data structures and generating the USB transactions. For USB 1.1, there are currently two types of USB Host Controllers: UHCI and OHCI.</p>
+</dd>
+<dt>USB Hub</dt><dd><p>A special USB Device through which more USB devices can be attached to the USB Bus.</p>
+</dd>
+<dt>USB I/O Protocol</dt><dd><p>A software interface that provides services to manage a USB Controller, and services to move data between a USB Controller and system memory.</p>
+</dd>
+<dt>USB Interface</dt><dd><p>The USB Interface is the basic unit of a physical USB Device.</p>
+</dd>
+<dt>USB</dt><dd><p>See Universal Serial Bus (USB).</p>
+</dd>
+<dt>Variable Services</dt><dd><p>The set of functions used to manage variables. Includes GetVariable(), SetVariable(), and GetNextVariableName().</p>
+</dd>
+<dt>Virtual Memory Services</dt><dd><p>The set of functions used to manage virtual memory. Includes SetVirtualAddressMap() and ConvertPointer().</p>
+</dd>
+<dt>VM</dt><dd><p>The Virtual Machine, a pseudo processor implementation consisting of registers which are manipulated by the interpreter when executing EBC instructions.</p>
+</dd>
+<dt>Watchdog Timer</dt><dd><p>An alarm timer that may be set to go off. This can be used to regain control in cases where a code path in the boot services environment fails to or is unable to return control by the expected path.</p>
+</dd>
+<dt>WfM</dt><dd><p>See Wired for Management (WfM).</p>
+</dd>
+<dt>Wired for Management (WfM)</dt><dd><p>Refers to the Wired for Management Baseline Specification. The Specification defines a baseline for system manageability issues; its intent is to help lower the cost of computer ownership.</p>
+</dd>
+<dt>x64</dt><dd><p>Processors that are compatible with instruction sets and operation modes as exemplified by the AMD64 or Intel® Extended Memory 64 Technology (Intel® EM64T) architecture.</p>
+</dd>
+<dt>XHTML</dt><dd><p>Extensible HTML. XHTML “will obey all of the grammar rules of XML (properly nested elements, quoted attributes, and so on), while conforming to the vocabulary of HTML (the elements and attributes that are available for use ant their relationships to one another).” [PXML, pg., 153]. Although not completely defined, XHTML is basically the intersection of XML and HTML and does support forms.</p>
+</dd>
+<dt>XML</dt><dd><p>Extensible Markup Language. A subset of SGML. Addresses many of the problems with HTML but does not currently (1.0) support forms in any specified way.</p>
+</dd>
+</dl>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Apx_Q_References.html" class="btn btn-neutral float-left" title="17. References" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, UEFI Forum, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

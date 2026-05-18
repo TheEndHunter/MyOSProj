@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1. Introduction &mdash; UEFI Specification 2.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=f2209469" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/style.css?v=faba8a36" />
+      <link rel="stylesheet" type="text/css" href="_static/theme-overrides.css?v=84235ce0" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2de06f63"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="2. Overview" href="02_Overview.html" />
+    <link rel="prev" title="Revision History" href="Frontmatter/Revision_History.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            UEFI Specification
+          </a>
+              <div class="version">
+                2.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Tables.html">List of Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Figures.html">List of Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/Revision_History.html">Revision History</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#principle-of-inclusive-terminology">1.1. Principle of Inclusive Terminology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#uefi-driver-model-extensions">1.2. UEFI Driver Model Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#organization">1.3. Organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#goals">1.4. Goals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#target-audience">1.5. Target Audience</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#uefi-design-overview">1.6. UEFI Design Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#uefi-driver-model">1.7. UEFI Driver Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#uefi-driver-model-goals">1.7.1. UEFI Driver Model Goals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#legacy-option-rom-issues">1.7.2. Legacy Option ROM Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#migration-requirements">1.8. Migration Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#legacy-operating-system-support">1.8.1. Legacy Operating System Support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#supporting-the-uefi-specification-on-a-legacy-platform">1.8.2. Supporting the UEFI Specification on a Legacy Platform</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#conventions-used-in-this-document">1.9. Conventions Used in this Document</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#data-structure-descriptions">1.9.1. Data Structure Descriptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#protocol-descriptions">1.9.2. Protocol Descriptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#procedure-descriptions">1.9.3. Procedure Descriptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#instruction-descriptions">1.9.4. Instruction Descriptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pseudo-code-conventions">1.9.5. Pseudo-Code Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#typographic-conventions">1.9.6. Typographic Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#number-formats">1.9.7. Number formats</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#hexadecimal">1.9.7.1. Hexadecimal</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#decimal">1.9.7.2. Decimal</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#si-binary-prefixes">1.9.8. SI &amp; Binary prefixes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#revision-numbers">1.9.9. Revision Numbers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="02_Overview.html">2. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Boot_Manager.html">3. Boot Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_EFI_System_Table.html">4. EFI System Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_GUID_Partition_Table_Format.html">5. GUID Partition Table (GPT) Disk Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_Block_Transition_Table_Layout.html">6. Block Translation Table (BTT) Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Services_Boot_Services.html">7. Services — Boot Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Services_Runtime_Services.html">8. Services — Runtime Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Protocols_EFI_Loaded_Image.html">9. Protocols - EFI Loaded Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Protocols_Device_Path_Protocol.html">10. Protocols – Device Path Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html">11. Protocols — UEFI Driver Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_Protocols_Console_Support.html">12. Protocols — Console Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Protocols_Media_Access.html">13. Protocols – Media Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Protocols_PCI_Bus_Support.html">14. Protocols — PCI Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_Protocols_SCSI_Driver_Models_and_Bus_Support.html">15. Protocols — SCSI Driver Models and Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_Protocols_iSCSI_Boot.html">16. Protocols — iSCSI Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_Protocols_USB_Support.html">17. Protocols — USB Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_Protocols_Debugger_Support.html">18. Protocols — Debugger Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_Protocols_Compression_Algorithm_Specification.html">19. Protocols — Compression Algorithm Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_Protocols_ACPI_Protocols.html">20. Protocols — ACPI Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_Protocols_String_Services.html">21. Protocols — String Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html">22. EFI Byte Code Virtual Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_Firmware_Update_and_Reporting.html">23. Firmware Update and Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24_Network_Protocols_SNP_PXE_BIS.html">24. Network Protocols — SNP, PXE, BIS and HTTP Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25_Network_Protocols_Managed_Network.html">25. Network Protocols - Managed Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26_Network_Protocols_Bluetooth.html">26. Network Protocols — Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27_Network_Protocols_VLAN_and_EAP.html">27. Network Protocols — VLAN, EAP, Wi-Fi and Supplicant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28_Network_Protocols_TCP_IP_and_Configuration.html">28. Network Protocols — TCP, IP, IPsec, FTP, TLS and Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29_Network_Protocols_ARP_and_DHCP.html">29. Network Protocols — ARP, DHCP, DNS, HTTP and REST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_Network_Protocols_UDP_and_MTFTP.html">30. Network Protocols — UDP and MTFTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="31_EFI_Redfish_Service_Support.html">31. EFI Redfish Service Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="32_Secure_Boot_and_Driver_Signing.html">32. Secure Boot and Driver Signing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="33_Human_Interface_Infrastructure.html">33. Human Interface Infrastructure Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="34_HII_Protocols.html">34. HII Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="35_HII_Configuration_Processing_and_Browser_Protocol.html">35. HII Configuration Processing and Browser Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="36_User_Identification.html">36. User Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="37_Secure_Technologies.html">37. Secure Technologies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="38_Confidential_Computing.html">38. Confidential Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="39_Micellaneous_Protocols.html">39. Miscellaneous Protocols</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Apx_A_GUID_and_Time_Formats.html">A. GUID and Time Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_B_Console.html">B. Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_C_Device_Path_Examples.html">C. Device Path Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_D_Status_Codes.html">D. Status Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_E_Universal_Network_Driver_Interfaces.html">E. Universal Network Driver Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_F_Using_the_Simple_Pointer_Protocol.html">F. Using the Simple Pointer Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_G_Using_the_EFI_Extended_SCSI_Pass_Thru_Protocol.html">G. Using the EFI Extended SCSI Pass Thru Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_H_Compression_Source_Code.html">H. Compression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_I_Decompression_Source_Code.html">I. Decompression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_J_EFI_Byte_Code_Virtual_Machine_Opcode_List.html">J. EFI Byte Code Virtual Machine Opcode List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_K_Alphabetic_Function_Lists.html">K. Alphabetic Function Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_L_EFI_1.10_Protocol_Changes_and_Deprecation_List.html">L. EFI 1.10 Protocol Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html">M. Formats — Language Codes and Language Code Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_N_Common_Platform_Error_Record.html">N. Common Platform Error Record (CPER)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_O_UEFI_ACPI_Data_Table.html">O. UEFI ACPI Data Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_P_Hardware_Error_Record_Persistence_Usage.html">P. Hardware Error Record Persistence Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_Q_References.html">Q. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_R_Glossary.html">R. Glossary</a></li>
+</ul>
+
+    <a href= "genindex.html">Index</a>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UEFI Specification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">1. </span>Introduction</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">1. </span>Introduction<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<p>This <em>Unified Extensible Firmware Interface</em> (UEFI) <em>Specification</em> describes an interface between the operating system (OS) and the platform firmware. UEFI was preceded by the <em>Extensible Firmware Interface Specification 1.10</em> (EFI). As a result, some code and certain protocol names retain the EFI designation. Unless otherwise noted, EFI designations in this specification may be assumed to be part of UEFI.</p>
+<p>The interface is in the form of data tables that contain platform-related information, and boot and runtime service calls that are available to the OS loader and the OS. Together, these provide a standard environment for booting an OS. This specification is designed as a pure interface specification. As such, the specification defines the set of interfaces and structures that platform firmware must implement. Similarly, the specification defines the set of interfaces and structures that the OS may use in booting. How either the firmware developer chooses to implement the required elements or the OS developer chooses to make use of those interfaces and structures is an implementation decision left for the developer.</p>
+<p>The intent of this specification is to define a way for the OS and platform firmware to communicate only information necessary to support the OS boot process. This is accomplished through a formal and complete abstract specification of the software-visible interface presented to the OS by the platform and firmware.</p>
+<p>Using this formal definition, a shrink-wrap OS intended to run on platforms compatible with supported processor specifications will be able to boot on a variety of system designs without further platform or OS customization. The definition will also allow for platform innovation to introduce new features and functionality that enhance platform capability without requiring new code to be written in the OS boot sequence.</p>
+<p>Furthermore, an abstract specification opens a route to replace legacy devices and firmware code over time. New device types and associated code can provide equivalent functionality through the same defined abstract interface, again without impact on the OS boot support code.</p>
+<p>The specification is applicable to a full range of hardware platforms from mobile systems to servers. The specification provides a core set of services along with a selection of protocol interfaces. The selection of protocol interfaces can evolve over time to be optimized for various platform market segments. At the same time, the specification allows maximum extensibility and customization abilities for OEMs to allow differentiation. In this, the purpose of UEFI is to define an evolutionary path from the traditional “PC-AT”-style boot world into a legacy-API free environment.</p>
+<section id="principle-of-inclusive-terminology">
+<span id="id2"></span><h2><span class="section-number">1.1. </span>Principle of Inclusive Terminology<a class="headerlink" href="#principle-of-inclusive-terminology" title="Link to this heading"></a></h2>
+<p>The UEFI Forum follows a Principle of Inclusive Terminology in building and maintaining content for specifications. This means that efforts are made to ensure that all wording is perceived or likely to be perceived as welcoming by everyone regardless of personal characteristics. In some cases, the Forum acknowledges that wording derived from earlier work, for example references to legacy specifications not controlled by the Forum, may not follow this principle. In order to preserve compatibility for code that reads on legacy specifications, particularly where that specification is no longer under maintenance or development, language in this specification may appear out of sync with the Principle. The Forum is resolved to work with other standards development bodies to eliminate such examples over time. In the meanwhile, by acknowledging and calling attention to this issue the hope is to promote discussion and action towards more complete use of Inclusive Language reflective of the diverse and innovative population of the technical community that works on standards.</p>
+</section>
+<section id="uefi-driver-model-extensions">
+<span id="id3"></span><h2><span class="section-number">1.2. </span>UEFI Driver Model Extensions<a class="headerlink" href="#uefi-driver-model-extensions" title="Link to this heading"></a></h2>
+<p>Access to boot devices is provided through a set of protocol interfaces. One purpose of the UEFI <em>Driver Model</em> is to provide a replacement for “PC-AT”-style option ROMs. It is important to point out that drivers written to the UEFI <em>Driver Model</em> are designed to access boot devices in the preboot environment. They are not designed to replace the high-performance, OS-specific drivers.</p>
+<p>The UEFI <em>Driver Model</em> is designed to support the execution of modular pieces of code, also known as drivers, that run in the preboot environment. These drivers may manage or control hardware buses and devices on the platform, or they may provide some software-derived, platform-specific service.</p>
+<p>The UEFI <em>Driver Model</em> also contains information required by UEFI driver writers to design and implement any combination of bus drivers and device drivers that a platform might need to boot a UEFI-compliant OS.</p>
+<p>The UEFI <em>Driver Model</em> is designed to be generic and can be adapted to any type of bus or device. The <em>UEFI Specification</em> describes how to write PCI bus drivers, PCI device drivers, USB bus drivers, USB device drivers, and SCSI drivers. Additional details are provided that allow UEFI drivers to be stored in PCI option ROMs, while maintaining compatibility with legacy option ROM images.</p>
+<p>One of the design goals in the <em>UEFI Specification</em> is keeping the driver images as small as possible. However, if a driver is required to support multiple processor architectures, a driver object file would also be required to be shipped for each supported processor architecture. To address this space issue, this specification also defines the <em>EFI Byte Code Virtual Machine</em> . A UEFI driver can be compiled into a single EFI Byte Code object file. UEFI Specification-complaint firmware must contain an EFI Byte Code interpreter. This allows a single EFI Byte Code object file that supports multiple processor architectures to be shipped. Another space saving technique is the use of compression. This specification defines compression and decompression algorithms that may be used to reduce the size of UEFI Drivers, and thus reduce the overhead when UEFI Drivers are stored in ROM devices.</p>
+<p>The information contained in the <em>UEFI Specification</em> can be used by OSVs, IHVs, OEMs, and firmware vendors to design and implement firmware conforming to this specification, drivers that produce standard protocol interfaces, and operating system loaders that can be used to boot UEFI-compliant operating systems.</p>
+</section>
+<section id="organization">
+<span id="id4"></span><h2><span class="section-number">1.3. </span>Organization<a class="headerlink" href="#organization" title="Link to this heading"></a></h2>
+<p>The high-level organization of this specification is as follows:</p>
+<table class="longtable docutils align-default" id="organization-of-this-specification">
+<caption><span class="caption-number">Table 1.1 </span><span class="caption-text">Organization of this specification</span><a class="headerlink" href="#organization-of-this-specification" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Section(s)</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Introduction / Overview</p></td>
+<td><p>Introduces the UEFI Specification, and describes the major components of UEFI.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Boot Manager</p></td>
+<td><p>Manager used to load drivers and applications written to this specification.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI System Table and Partitions</p></td>
+<td><p>Describes an EFI System Table that is passed to every compliant driver and application, and defines a GUID-based partitioning scheme.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Block Transition Table</p></td>
+<td><p>A layout and set of rules for doing block I/O that provide power fail write atomicity of a single block.</p></td>
+</tr>
+<tr class="row-even"><td><p>Boot Services</p></td>
+<td><p>Contains the definitions of the fundamental services that are present in a UEFI-compliant system before an OS is booted.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Runtime Services</p></td>
+<td><p>Contains definitions for the fundamental services that are present in a compliant system before and after an OS is booted.</p></td>
+</tr>
+<tr class="row-even"><td><p>Protocols</p></td>
+<td><div class="line-block">
+<div class="line">• The EFI Loaded Image Protocol describes a UEFI Image that has been loaded into memory.</div>
+<div class="line">• The Device Path Protocol provides the information needed to construct and manage device paths in the UEFI environment.</div>
+<div class="line">• The UEFI Driver Model describes a set of services and protocols that apply to every bus and device type.</div>
+<div class="line">• The Console Support Protocol defines I/O protocols that handle input and output of text-based information intended for the system user while executing in the boot services environment.</div>
+<div class="line">• The Media Access Protocol defines the Load File protocol, file system format and media formats for handling removable media.</div>
+<div class="line">• PCI Bus Support Protocols define PCI Bus Drivers, PCI Device Drivers, and PCI Option ROM layouts. The protocols described include the PCI Root Bridge I/O Protocol and the PCI I/O Protocol.</div>
+<div class="line">• SCSI Driver Models and Bus support defines the SCSI I/O Protocol and the Extended SCSI Pass Thru Protocol that is used to abstract access to a SCSI channel that is produced by a SCSI host controller.</div>
+<div class="line">• The iSCSI protocol defines a transport for SCSI data over TCP/IP.</div>
+<div class="line">• The USB Support Protocol defines USB Bus Drivers and USB Device Drivers.</div>
+<div class="line">• Debugger Support Protocols describe an optional set of protocols that provide the services required to implement a source-level debugger for the UEFI environment.</div>
+<div class="line">• The Compression Algorithm Specification describes the compression/decompression algorithm in detail, plus a standard EFI decompression interface for use at boot time.</div>
+<div class="line">• ACPI Protocols may be used to install or remove an ACPI table from a platform.</div>
+<div class="line">• String Services: the Unicode Collation protocol allows code running in the boot services environment to perform lexical comparison functions on Unicode strings for given languages; the Regular Expression Protocol is used to match Unicode strings against Regular Expression patterns.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>EFI Byte Code Virtual Machine</p></td>
+<td><p>Defines the EFI Byte Code virtual processor and its instruction set. It also defines how EBC object files are loaded into memory, and the mechanism fo transitioning from native code to EBC code and back to native code.</p></td>
+</tr>
+<tr class="row-even"><td><p>Firmware Update and Reporting</p></td>
+<td><p>Provides an abstraction for devices to provide firmware management support.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Network Protocols</p></td>
+<td><div class="line-block">
+<div class="line">• SNP, PXE, BIS, and HTTP Boot protocols define the protocols that provide access to network devices while executing in the UEFI boot services environment.</div>
+<div class="line">• Managed Network protocols define the EFI Managed Network Protocol, which provides raw (unformatted) asynchronous network packet I/O services and Managed Network Service Binding Protocol, used to locate communication devices that are supported by an MNP driver.</div>
+<div class="line">• VLAN, EAP, Wi-Fi and Supplicant protocols define a protocol that is to provide a manageability interface for VLAN configurations.</div>
+<div class="line">• Bluetooth protocol definitions.</div>
+<div class="line">• TCP, IP, PIPsec, FTP, GTLS, and Configurations protocols define the EFI TCPv4 (Transmission Control Protocol version 4) Protocol and the EFI IPv4 (Internet Protocol version 4) Protocol.</div>
+<div class="line">• ARP, DHCP, DNS, HTTP, and REST protocols define the EFI Address Resolution Protocol (ARP) Protocol interface and the EFI DHCPv4 Protocol.</div>
+<div class="line">• UDP and MTFTP protocols define the EFI UDPv4 (User Datagram Protocol version 4) Protocol that interfaces over the EFI IPv4 Protocol and defines the EFI MTFTPv4 Protocol interface that is built on the EFI UDPv4 Protocol.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Secure Boot and Driver Signing</p></td>
+<td><p>Describes Secure Boot and a means of generating a digital signature for UEFI.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Human Interface Infrastructure</p></td>
+<td><div class="line-block">
+<div class="line">• Defines the core code and (HII) services that are required for an implementation of the Human Interface Infrastructure (HII), including basic mechanisms for managing user input and code definitions for related protocols.</div>
+<div class="line">• Describes the data and APIs used to manage the system’s configuration: the actual data that describes the knobs and settings.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p><strong>Section(s)</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p>User Identification</p></td>
+<td><p>Describes services that describe the current user of the platform.</p></td>
+</tr>
+<tr class="row-even"><td><p>Secure Technologies</p></td>
+<td><p>Describes the protocols for utilizing security technologies, including cryptographic hashing and key management.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Miscellaneous Protocols</p></td>
+<td><p>The Timestamp protocol provides a platform independent interface for retrieving a high resolution timestamp counter. The Reset Notification Protocol provides services to register for a notification when ResetSystem is called.</p></td>
+</tr>
+<tr class="row-even"><td><p>Appendices</p></td>
+<td><div class="line-block">
+<div class="line">• GUID and Time Formats.</div>
+<div class="line">• Console requirements for a basic text-based console required by EFI-conformant systems to provide communication capabilities.</div>
+<div class="line">• Device Path examples of use of the data structures that define various hardware devices to the boot services.</div>
+<div class="line">• Status Codes lists success, error, and warning codes returned by UEFI interfaces.</div>
+<div class="line">• Universal Network Driver Interfaces defines the 32/64-bit hardware and software Universal Network Driver Interfaces (UNDIs).</div>
+<div class="line">• Using the Simple Pointer Protocol.</div>
+<div class="line">• Using the EFI Extended SCISI Pass-thru Protocol.</div>
+<div class="line">• Compression Source Code for an implementation of the Compression Algorithm.</div>
+<div class="line">• Decompression Source Code for an implementation of the EFI Decompression Algorithm.</div>
+<div class="line">• The EFI Byte Code Virtual Machine Opcode List provides a summary of the corresponding instruction set.</div>
+<div class="line">• Alphabetic Function Lists identify all UEFI interface functions alphabetically.</div>
+<div class="line">• EFI 1.10 Protocol Changes identifies the Protocol, GUID, and revision identifier name changes compared to the EFI Specification 1.10.</div>
+<div class="line">• Formats: Language Codes and Language Code Arrays list the formats for language codes and language code arrays.</div>
+<div class="line">• The Common Platform Error Record describes the common platform error record format for representing platform hardware errors.</div>
+<div class="line">• The UEFI ACPI Data Table defines the UEFI ACPI table format.</div>
+<div class="line">• Hardware Error Record Persistence Usage.</div>
+<div class="line">• References</div>
+<div class="line">• Glossary</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Index</p></td>
+<td><p>Provides an index to the key terms and concepts in the specification.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="goals">
+<span id="introduction-goals"></span><h2><span class="section-number">1.4. </span>Goals<a class="headerlink" href="#goals" title="Link to this heading"></a></h2>
+<p>The “PC-AT” boot environment presents significant challenges to innovation within the industry. Each new platform capability or hardware innovation requires firmware developers to craft increasingly complex solutions, and often requires OS developers to make changes to their boot code before customers can benefit from the innovation. This can be a time-consuming process requiring a significant investment of resources.</p>
+<p>The primary goal of the UEFI specification is to define an alternative boot environment that can alleviate some of these considerations. In this goal, the specification is similar to other existing boot specifications. The main properties of this specification can be summarized by these attributes:</p>
+<ul class="simple">
+<li><p><em>Coherent, scalable platform environment</em>. The specification defines a complete solution for the firmware to describe all platform features and surface platform capabilities to the OS during the boot process. The definitions are rich enough to cover a range of contemporary processor designs.</p></li>
+<li><p><em>Abstraction of the OS from the firmware</em>. The specification defines interfaces to platform capabilities. Through the use of abstract interfaces, the specification allows the OS loader to be constructed with far less knowledge of the platform and firmware that underlie those interfaces. The interfaces represent a well-defined and stable boundary between the underlying platform and firmware implementation and the OS loader. Such a boundary allows the underlying firmware and the OS loader to change provided both limit their interactions to the defined interfaces. The standard interfaces defined in this specification may be complemented by companion OS/firmware interfaces such as those defined by the ACPI specification. On the other hand, firmware-internal interfaces, such as those defined by the PI Specification, are produced and consumed by firmware only, and are not considered interfaces that a UEFI aware OS can connect to, interact with, or depend on.</p></li>
+<li><p><em>Reasonable device abstraction free of legacy interfaces</em>. “PC-AT” BIOS interfaces require the OS loader to have specific knowledge of the workings of certain hardware devices. This specification provides OS loader developers with something different: abstract interfaces that make it possible to build code that works on a range of underlying hardware devices without having explicit knowledge of the specifics for each device in the range.</p></li>
+<li><p><em>Abstraction of Option ROMs from the firmware</em>. This specification defines interfaces to platform capabilities including standard bus types such as PCI, USB, and SCSI. The list of supported bus types may grow over time, so a mechanism to extend to future bus types is included. These defined interfaces, and the ability to extend to future bus types, are components of the UEFI <em>Driver Model</em>. One purpose of the UEFI <em>Driver Model</em> is to solve a wide range of issues that are present in existing “PC-AT” option ROMs. Like OS loaders, drivers use the abstract interfaces so device drivers and bus drivers can be constructed with far less knowledge of the platform and firmware that underlie those interfaces.</p></li>
+<li><p><em>Architecturally shareable system partition</em>. Initiatives to expand platform capabilities and add new devices often require software support. In many cases, when these platform innovations are activated before the OS takes control of the platform, they must be supported by code that is specific to the platform rather than to the customer’s choice of OS. The traditional approach to this problem has been to embed code in the platform during manufacturing (for example, in flash memory devices). Demand for such persistent storage is increasing at a rapid rate. This specification defines persistent store on large mass storage media types for use by platform support code extensions to supplement the traditional approach. The definition of how this works is made clear in the specification to ensure that firmware developers, OEMs, operating system vendors, and perhaps even third parties can share the space safely while adding to platform capability.</p></li>
+</ul>
+<p>Defining a boot environment that delivers these attributes could be accomplished in many ways. Indeed, several alternatives, perhaps viable from an academic point of view, already existed at the time this specification was written. These alternatives, however, typically presented high barriers to entry given the current infrastructure capabilities surrounding supported processor platforms. This specification is intended to deliver the attributes listed above, while also recognizing the unique needs of an industry that has considerable investment in compatibility and a large installed base of systems that cannot be abandoned summarily. These needs drive the requirements for the additional attributes embodied in this specification:</p>
+<ul class="simple">
+<li><p><em>Evolutionary, not revolutionary</em>. The interfaces and structures in the specification are designed to reduce the burden of an initial implementation as much as possible. While care has been taken to ensure that appropriate abstractions are maintained in the interfaces themselves, the design also ensures that reuse of BIOS code to implement the interfaces is possible with a minimum of additional coding effort. In other words, on PC-AT platforms the specification can be implemented initially as a thin interface layer over an underlying implementation based on existing code. At the same time, introduction of the abstract interfaces provides for migration away from legacy code in the future. Once the abstraction is established as the means for the firmware and OS loader to interact during boot, developers are free to replace legacy code underneath the abstract interfaces at leisure. A similar migration for hardware legacy is also possible. Since the abstractions hide the specifics of devices, it is possible to remove underlying hardware, and replace it with new hardware that provides improved functionality, reduced cost, or both. Clearly this requires that new platform firmware be written to support the device and present it to the OS loader via the abstract interfaces. However, without the interface abstraction, removal of the legacy device might not be possible at all.</p></li>
+<li><p><em>Compatibility by design</em>. The design of the system partition structures also preserves all the structures that are currently used in the “PC-AT” boot environment. Thus, it is a simple matter to construct a single system that is capable of booting a legacy OS or an EFI-aware OS from the same disk.</p></li>
+<li><p><em>Simplifies addition of OS-neutral platform value-add</em>. The specification defines an open, extensible interface that lends itself to the creation of platform “drivers.” These may be analogous to OS drivers, providing support for new device types during the boot process, or they may be used to implement enhanced platform capabilities, such as fault tolerance or security. Furthermore, this ability to extend platform capability is designed into the specification from the outset. This is intended to help developers avoid many of the frustrations inherent in trying to squeeze new code into the traditional BIOS environment. As a result of the inclusion of interfaces to add new protocols, OEMs or firmware developers have an infrastructure to add capability to the platform in a modular way. Such drivers may potentially be implemented using high-level coding languages because of the calling conventions and environment defined in the specification. This in turn may help to reduce the difficulty and cost of innovation. The option of a system partition provides an alternative to nonvolatile memory storage for such extensions.</p></li>
+<li><p><em>Built on existing investment</em>. Where possible, the specification avoids redefining interfaces and structures in areas where existing industry specifications provide adequate coverage. For example, the ACPI specification provides the OS with all the information necessary to discover and configure platform resources. Again, this philosophical choice for the design of the specification is intended to keep barriers to its adoption as low as possible.</p></li>
+</ul>
+</section>
+<section id="target-audience">
+<span id="id5"></span><h2><span class="section-number">1.5. </span>Target Audience<a class="headerlink" href="#target-audience" title="Link to this heading"></a></h2>
+<p>This document is intended for the following readers:</p>
+<ul class="simple">
+<li><p>IHVs and OEMs who will be implementing UEFI drivers.</p></li>
+<li><p>OEMs who will be creating supported processor platforms intended to boot shrink-wrap operating systems.</p></li>
+<li><p>BIOS developers, either those who create general-purpose BIOS and other firmware products or those who modify these products for use in supported processor-based products.</p></li>
+<li><p>Operating system developers who will be adapting their shrink-wrap operating system products to run on supported processor-based platforms.</p></li>
+</ul>
+</section>
+<section id="uefi-design-overview">
+<span id="id6"></span><h2><span class="section-number">1.6. </span>UEFI Design Overview<a class="headerlink" href="#uefi-design-overview" title="Link to this heading"></a></h2>
+<p>The design of UEFI is based on the following fundamental elements:</p>
+<ul class="simple">
+<li><p><em>Reuse of existing table-based interfaces</em>. In order to preserve investment in existing infrastructure support code, both in the OS and firmware, a number of existing specifications that are commonly implemented on platforms compatible with supported processor specifications must be implemented on platforms wishing to comply with the UEFI specification. (For additional  information, see <a class="reference internal" href="Apx_Q_References.html#appendix-q-references"><span class="std std-ref">References</span></a>.)</p></li>
+<li><p><em>System partition</em>. The System partition defines a partition and file system that are designed to allow safe sharing between multiple vendors, and for different purposes. The ability to include a separate, sharable system partition presents an opportunity to increase platform value-add without significantly growing the need for nonvolatile platform memory.</p></li>
+<li><p><em>Boot services</em>. Boot services provide interfaces for devices and system functionality that can be used during boot time. Device access is abstracted through “handles” and “protocols.” This facilitates reuse of investment in existing BIOS code by keeping underlying implementation requirements out of the specification without burdening the consumer accessing the device.</p></li>
+<li><p><em>Runtime services</em>.  A minimal set of runtime services is presented to ensure appropriate abstraction of base platform hardware resources that may be needed by the OS during its normal operations.</p></li>
+</ul>
+<p>The Figure below shows the principal components of UEFI and their relationship to platform hardware and OS software.</p>
+<figure class="align-default" id="uefi-conceptual-overview">
+<img alt="_images/Introduction-2.png" src="_images/Introduction-2.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 1.1 </span><span class="caption-text"><strong>UEFI Conceptual Overview</strong></span><a class="headerlink" href="#uefi-conceptual-overview" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>This Figure illustrates the interactions of the various components of an UEFI specification-compliant system that are used to accomplish platform and OS boot.</p>
+<p>The platform firmware is able to retrieve the OS loader image from the System Partition. The specification provides for a variety of mass storage device types including disk, CD-ROM, and DVD as well as remote boot via a network. Through the extensible protocol interfaces, it is possible to add other boot media types, although these may require OS loader modifications if they require use of protocols other than those defined in this document.</p>
+<p>Once started, the OS loader continues to boot the complete operating system. To do so, it may use the EFI boot services and interfaces defined by this or other required specifications to survey, comprehend, and initialize the various platform components and the OS software that manages them. EFI runtime services are also available to the OS loader during the boot phase.</p>
+</section>
+<section id="uefi-driver-model">
+<span id="introduction-uefi-driver-model"></span><h2><span class="section-number">1.7. </span>UEFI Driver Model<a class="headerlink" href="#uefi-driver-model" title="Link to this heading"></a></h2>
+<p>This section describes the goals of a driver model for firmware conforming to this specification. The goal is for this driver model to provide a mechanism for implementing bus drivers and device drivers for all types of buses and devices. At the time of writing, supported bus types include PCI, USB, and so on.</p>
+<p>As hardware architectures continue to evolve, the number and types of buses present in platforms are increasing. This trend is especially true in high-end servers. However, a more diverse set of bus types is being designed into desktop and mobile systems and even some embedded systems. This increasing complexity means that a simple method for describing and managing all the buses and devices in a platform is required in the preboot environment. The UEFI <em>Driver Model</em> provides this simple method in the form of protocols services and boot services.</p>
+<section id="uefi-driver-model-goals">
+<span id="id7"></span><h3><span class="section-number">1.7.1. </span>UEFI Driver Model Goals<a class="headerlink" href="#uefi-driver-model-goals" title="Link to this heading"></a></h3>
+<p>The UEFI <em>Driver Model</em> has the following goals:</p>
+<ul class="simple">
+<li><p><em>Compatible</em> — Drivers conforming to this specification must maintain compatibility with the <em>EFI 1.10 Specification</em> and the <em>UEFI Specification</em> . This means that the UEFI <em>Driver Model</em> takes advantage of the extensibility mechanisms in the <em>UEFI 2. 0 Specification</em> to add the required functionality.</p></li>
+<li><p><em>Simple</em> — Drivers that conform to this specification must be simple to implement and simple to maintain. The UEFI <em>Driver Model</em> must allow a driver writer to concentrate on the specific device for which the driver is being developed. A driver should not be concerned with platform policy or platform management issues. These considerations should be left to the system firmware.</p></li>
+<li><p><em>Scalable</em> — The UEFI <em>Driver Model</em> must be able to adapt to all types of platforms. These platforms include embedded systems, mobile, and desktop systems, as well as workstations and servers.</p></li>
+<li><p><em>Flexible</em> — The UEFI <em>Driver Model</em> must support the ability to enumerate all the devices, or to enumerate only those devices required to boot the required OS. The minimum device enumeration provides support for more rapid boot capability, and the full device enumeration provides the ability to perform OS installations, system maintenance, or system diagnostics on any boot device present in the system.</p></li>
+<li><p><em>Extensible</em> — The UEFI <em>Driver Model</em> must be able to extend to future bus types as they are defined.</p></li>
+<li><p><em>Portable</em> — Drivers written to the UEFI <em>Driver Model</em> processor architectures.</p></li>
+<li><p><em>Interoperable</em> — Drivers must coexist with other drivers and system firmware and must do so without generating resource conflicts.</p></li>
+<li><p><em>Describe complex bus hierarchies</em> — The UEFI <em>Driver Model</em> must be able to describe a variety of bus topologies from very simple single bus platforms to very complex platforms containing many buses of various types.</p></li>
+<li><p><em>Small driver footprint</em> — The size of executables produced by the UEFI <em>Driver Model</em> must be minimized to reduce the overall platform cost. While flexibility and extensibility are goals, the additional overhead required to support these must be kept to a minimum to prevent the size of firmware components from becoming unmanageable.</p></li>
+<li><p><em>Address legacy option rom issues</em> — The UEFI <em>Driver Model</em> must directly address and solve the constraints and limitations of legacy option ROMs. Specifically, it must be possible to build add-in cards that support both UEFI drivers and legacy option ROMs, where such cards can execute in both legacy BIOS systems and UEFI-conforming platforms, without modifications to the code carried on the card. The solution must provide an evolutionary path to migrate from legacy option ROMs driver to UEFI drivers.</p></li>
+</ul>
+</section>
+<section id="legacy-option-rom-issues">
+<span id="introduction-legacy-option-rom-issues"></span><h3><span class="section-number">1.7.2. </span>Legacy Option ROM Issues<a class="headerlink" href="#legacy-option-rom-issues" title="Link to this heading"></a></h3>
+<p>This idea of supporting a driver model came from feedback on the <em>UEFI Specification</em> that provided a clear, market-driven requirement for an alternative to the legacy option ROM (sometimes also referred to as an expansion ROM). The perception is that the advent of the <em>UEFI Specification</em> represents a chance to escape the limitations implicit in the construction and operation of legacy option ROM images by replacing them with an alternative mechanism that works within the framework of the <em>UEFI Specification</em> .</p>
+</section>
+</section>
+<section id="migration-requirements">
+<span id="id8"></span><h2><span class="section-number">1.8. </span>Migration Requirements<a class="headerlink" href="#migration-requirements" title="Link to this heading"></a></h2>
+<p>Migration requirements cover the transition period from initial implementation of this specification to a future time when all platforms and operating systems implement to this specification. During this period, two major compatibility considerations are important:</p>
+<ul class="simple">
+<li><p>The ability to continue booting legacy operating systems;</p></li>
+<li><p>The ability to implement UEFI on existing platforms by reusing as much existing firmware code to keep development resource and time requirements to a minimum.</p></li>
+</ul>
+<section id="legacy-operating-system-support">
+<span id="id9"></span><h3><span class="section-number">1.8.1. </span>Legacy Operating System Support<a class="headerlink" href="#legacy-operating-system-support" title="Link to this heading"></a></h3>
+<p>The UEFI specification represents the preferred means for a shrink-wrap OS and firmware to communicate during the boot process. However, choosing to make a platform that complies with this specification in no way precludes a platform from also supporting existing legacy OS binaries that have no knowledge of the UEFI specification.</p>
+<p>The UEFI specification does not restrict a platform designer who chooses to support both the UEFI specification and a more traditional “PC-AT” boot infrastructure. If such a legacy infrastructure is to be implemented, it should be developed in accordance with existing industry practice that is defined outside the scope of this specification. The choice of legacy operating systems that are supported on any given platform is left to the manufacturer of that platform.</p>
+</section>
+<section id="supporting-the-uefi-specification-on-a-legacy-platform">
+<span id="id10"></span><h3><span class="section-number">1.8.2. </span>Supporting the UEFI Specification on a Legacy Platform<a class="headerlink" href="#supporting-the-uefi-specification-on-a-legacy-platform" title="Link to this heading"></a></h3>
+<p>The UEFI specification has been carefully designed to allow for existing systems to be extended to support it with a minimum of development effort. In particular, the abstract structures and services defined in the UEFI specification can all be supported on legacy platforms.</p>
+<p>For example, to accomplish such support on an existing and supported 32-bit-based platform that uses traditional BIOS to support operating system boot, an additional layer of firmware code would need to be provided. This extra code would be required to translate existing interfaces for services and devices into support for the abstractions defined in this specification.</p>
+</section>
+</section>
+<section id="conventions-used-in-this-document">
+<span id="id11"></span><h2><span class="section-number">1.9. </span>Conventions Used in this Document<a class="headerlink" href="#conventions-used-in-this-document" title="Link to this heading"></a></h2>
+<p>This document uses typographic and illustrative conventions described below.</p>
+<section id="data-structure-descriptions">
+<span id="id12"></span><h3><span class="section-number">1.9.1. </span>Data Structure Descriptions<a class="headerlink" href="#data-structure-descriptions" title="Link to this heading"></a></h3>
+<p>Supported processors are “little endian” machines. This distinction means that the low-order byte of a multibyte data item in memory is at the lowest address, while the high-order byte is at the highest address. Some supported 64-bit processors may be configured for both “little endian” and “big endian” operation. All implementations designed to conform to this specification use “little endian” operation.</p>
+<p>In some memory layout descriptions, certain fields are marked <em>reserved</em> . Software must initialize such fields to zero and ignore them when read. On an update operation, software must preserve any reserved field.</p>
+</section>
+<section id="protocol-descriptions">
+<span id="id13"></span><h3><span class="section-number">1.9.2. </span>Protocol Descriptions<a class="headerlink" href="#protocol-descriptions" title="Link to this heading"></a></h3>
+<p>A protocol description generally has the following format:</p>
+<p><strong>Protocol Name:</strong> The formal name of the protocol interface.</p>
+<p><strong>Summary:</strong> A brief description of the protocol interface.</p>
+<p><strong>GUID:</strong> The 128-bit Globally Unique Identifier (GUID) for the protocol interface.</p>
+<p><strong>Protocol Interface Structure:</strong> A “C-style” data structure definition containing the procedures and data fields produced by this protocol interface.</p>
+<p><strong>Parameters:</strong> A brief description of each field in the protocol interface structure.</p>
+<p><strong>Description:</strong> A description of the functionality provided by the interface, including any limitations and caveats of which the caller should be aware.</p>
+<p><strong>Related Definitions:</strong> The type declarations and constants that are used in the protocol interface structure or any of its procedures.</p>
+</section>
+<section id="procedure-descriptions">
+<span id="id14"></span><h3><span class="section-number">1.9.3. </span>Procedure Descriptions<a class="headerlink" href="#procedure-descriptions" title="Link to this heading"></a></h3>
+<p>A procedure description generally has the following format:</p>
+<p><strong>ProcedureName():</strong> The formal name of the procedure.</p>
+<p><strong>Summary:</strong> A brief description of the procedure.</p>
+<p><strong>Prototype:</strong> A “C-style” procedure header defining the calling sequence.</p>
+<p><strong>Parameters:</strong> A brief description of each field in the procedure prototype.</p>
+<p><strong>Description:</strong> A description of the functionality provided by the interface, including any limitations and caveats of which the caller should be aware.</p>
+<p><strong>Related Definitions:</strong> The type declarations and constants that are used only by this procedure.</p>
+<p><strong>Status Codes Returned:</strong> A description of any codes returned by the interface. The procedure is required to implement any status codes listed in this table. Additional error codes may be returned, but they will not be tested by standard compliance tests, and any software that uses the procedure cannot depend on any of the extended error codes that an implementation may provide.</p>
+</section>
+<section id="instruction-descriptions">
+<span id="id15"></span><h3><span class="section-number">1.9.4. </span>Instruction Descriptions<a class="headerlink" href="#instruction-descriptions" title="Link to this heading"></a></h3>
+<p>An instruction description for EBC instructions generally has the following format:</p>
+<p><strong>InstructionName:</strong> The formal name of the instruction.</p>
+<p><strong>Syntax:</strong> A brief description of the instruction.</p>
+<p><strong>Description:</strong> A description of the functionality provided by the instruction accompanied by a table that details the instruction encoding.</p>
+<p><strong>Operation:</strong> Details the operations performed on operands.</p>
+<p><strong>Behaviors and Restrictions:</strong> An item-by-item description of the behavior of each operand involved in the instruction and any restrictions that apply to the operands or the instruction.</p>
+</section>
+<section id="pseudo-code-conventions">
+<span id="id16"></span><h3><span class="section-number">1.9.5. </span>Pseudo-Code Conventions<a class="headerlink" href="#pseudo-code-conventions" title="Link to this heading"></a></h3>
+<p>Pseudo code is presented to describe algorithms in a more concise form. None of the algorithms in this document are intended to be compiled directly. The code is presented at a level corresponding to the surrounding text.</p>
+<p>In describing variables, a <em>list</em> is an unordered collection of homogeneous objects. A <em>queue</em> is an ordered list of homogeneous objects. Unless otherwise noted, the ordering is assumed to be FIFO.</p>
+<p>Pseudo code is presented in a C-like format, using C conventions where appropriate. The coding style, particularly the indentation style, is used for readability and does not necessarily comply with an implementation of the <em>UEFI Specification</em> .</p>
+</section>
+<section id="typographic-conventions">
+<span id="id17"></span><h3><span class="section-number">1.9.6. </span>Typographic Conventions<a class="headerlink" href="#typographic-conventions" title="Link to this heading"></a></h3>
+<p>This document uses the typographic and illustrative conventions described below:</p>
+<p>Plain text</p>
+<blockquote>
+<div><p>The normal text typeface is used for the vast majority of the descriptive text in a specification.</p>
+</div></blockquote>
+<p>Plain text (blue)</p>
+<blockquote>
+<div><p>Any plain text that is underlined and in blue indicates an active link to the cross-reference.    Click on the word to follow the hyperlink.</p>
+</div></blockquote>
+<p><strong>Bold</strong></p>
+<blockquote>
+<div><p>In text, a <strong>Bold</strong> typeface identifies a processor register name. In other instances,    a <strong>Bold</strong> typeface can be used as a running head within a paragraph.</p>
+</div></blockquote>
+<p><em>Italic</em></p>
+<blockquote>
+<div><p>In text, an <em>Italic</em> typeface can be used as emphasis to    introduce a new term or to indicate a manual or specification name.</p>
+</div></blockquote>
+<p><strong>BOLD Monospace</strong></p>
+<blockquote>
+<div><p>Computer code, example code segments, and all prototype code segments use a <strong>BOLD Monospace</strong> typeface   with a dark red color. These code listings normally appear in one or more separate paragraphs, though words or segments can also be embedded in a normal text paragraph.</p>
+</div></blockquote>
+<p><strong>Bold Monospace</strong> (Blue, underlined)</p>
+<blockquote>
+<div><p>Words in a Bold Monospace typeface that is underlined and in blue indicate an active hyperlink to the code definition for that function or type definition. Click on the word to follow the hyperlink.</p>
+</div></blockquote>
+<p><strong>Note:</strong> <em>Due to management and file size considerations, only the    first occurrence of the reference on each page is an    active link. Subsequent references on the same page will not be actively linked to the definition and will use the standard, nonunderlined</em> BOLD Monospace <em>typeface. Find the first instance of the name (in the underlined</em> BOLD Monospace <em>typeface) on the page and click on the word to jump to the function or type definition</em>.</p>
+<p><em>Italic Monospace</em></p>
+<blockquote>
+<div><p>In code or in text, words in <em>Italic Monospace</em> indicate placeholder names for variable information that must be supplied (i.e., arguments).</p>
+</div></blockquote>
+</section>
+<section id="number-formats">
+<span id="id18"></span><h3><span class="section-number">1.9.7. </span>Number formats<a class="headerlink" href="#number-formats" title="Link to this heading"></a></h3>
+<p>A binary number is represented in this standard by any sequence of digits consisting of only the Western-Arabic numerals 0 and 1 immediately followed by a lower-case b (e.g., 0101b).</p>
+<p>Underscores or spaces may be included between characters in binary number representations to increase readability or delineate field boundaries (e.g., 0 0101 1010b or 0_0101_1010b).</p>
+<section id="hexadecimal">
+<span id="id19"></span><h4><span class="section-number">1.9.7.1. </span>Hexadecimal<a class="headerlink" href="#hexadecimal" title="Link to this heading"></a></h4>
+<p>A hexadecimal number is represented in this standard by 0x preceding any sequence of digits consisting of only the Western-Arabic numerals 0 through 9 and/or the upper-case English letters A through F (e.g., 0xFA23).</p>
+<p>Underscores or spaces may be included between characters in hexadecimal number representations to increase readability or delineate field boundaries (e.g., 0xB FD8C FA23 or 0xB_FD8C_FA23).</p>
+</section>
+<section id="decimal">
+<span id="id20"></span><h4><span class="section-number">1.9.7.2. </span>Decimal<a class="headerlink" href="#decimal" title="Link to this heading"></a></h4>
+<p>A decimal number is represented in this standard by any sequence of digits consisting of only the Arabic numerals 0 through 9 not immediately followed by a lower-case b or lower-case h (e.g., 25).</p>
+<p>This standard uses the following conventions for representing decimal numbers:</p>
+<ul class="simple">
+<li><p>the decimal separator (i.e., separating the integer and fractional portions of the number) is a period;</p></li>
+<li><p>the thousands separator (i.e., separating groups of three digits in a portion of the number) is a comma;</p></li>
+<li><p>the thousands separator is used in the integer portion and is not used in the fraction portion of a number.</p></li>
+</ul>
+</section>
+</section>
+<section id="si-binary-prefixes">
+<span id="id21"></span><h3><span class="section-number">1.9.8. </span>SI &amp; Binary prefixes<a class="headerlink" href="#si-binary-prefixes" title="Link to this heading"></a></h3>
+<p>This standard uses the prefixes defined in the International System of Units (SI) for values that are powers of ten. See “Links to UEFI-Related Documents” (<a class="reference external" href="https://uefi.org/uefi">http://uefi.org/uefi</a>) under the heading “SI Binary Prefixes”.</p>
+<p><strong>SI prefixes</strong></p>
+<table class="longtable docutils align-default" id="si-prefixes">
+<caption><span class="caption-number">Table 1.2 </span><span class="caption-text">SI Prefixes</span><a class="headerlink" href="#si-prefixes" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>10<sup>3</sup></p></td>
+<td><p>1,000</p></td>
+<td><p>kilo</p></td>
+<td><p>K</p></td>
+</tr>
+<tr class="row-even"><td><p>10<sup>6</sup></p></td>
+<td><p>1,000,000</p></td>
+<td><p>mega</p></td>
+<td><p>M</p></td>
+</tr>
+<tr class="row-odd"><td><p>10<sup>9</sup></p></td>
+<td><p>1,000,000,000</p></td>
+<td><p>giga</p></td>
+<td><p>G</p></td>
+</tr>
+</tbody>
+</table>
+<p>This standard uses the binary prefixes defined in ISO/IEC 80000-13 Quantities and units – Part 13: Information science and technology and IEEE 1514 Standard for Prefixes for Binary Multiples for values that are powers of two.</p>
+<p><strong>Binary prefixes</strong></p>
+<table class="longtable docutils align-default" id="binary-prefixes">
+<caption><span class="caption-number">Table 1.3 </span><span class="caption-text">Binary Prefixes</span><a class="headerlink" href="#binary-prefixes" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 14.3%" />
+<col style="width: 28.6%" />
+<col style="width: 14.3%" />
+<col style="width: 42.9%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Factor</strong></p></td>
+<td><p><strong>Factor</strong></p></td>
+<td><p><strong>Name</strong></p></td>
+<td><p><strong>Symbol</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>2<sup>10</sup></p></td>
+<td><p>1,024</p></td>
+<td><p>kibi</p></td>
+<td><p>Ki</p></td>
+</tr>
+<tr class="row-odd"><td><p>2<sup>20</sup></p></td>
+<td><p>1,048,576</p></td>
+<td><p>mebi</p></td>
+<td><p>Mi</p></td>
+</tr>
+<tr class="row-even"><td><p>2<sup>30</sup></p></td>
+<td><p>1,073,741,824</p></td>
+<td><p>gibi</p></td>
+<td><p>Gi</p></td>
+</tr>
+</tbody>
+</table>
+<p>For example, 4 KB means 4,000 bytes and 4 KiB means 4,096 bytes.</p>
+</section>
+<section id="revision-numbers">
+<span id="id22"></span><h3><span class="section-number">1.9.9. </span>Revision Numbers<a class="headerlink" href="#revision-numbers" title="Link to this heading"></a></h3>
+<p>Updates to the UEFI specification are considered either new revisions or errata as described below:</p>
+<ul class="simple">
+<li><p>A new revision is produced when there is substantive new content or changes that may modify existing behavior. New revisions are designated by a major.minor version number (e.g. xx.yy). In cases where the changes are exceptionally minor, we may have a major.minor.minor naming convention (e.g. xx.yy.z).</p></li>
+<li><p>Errata versions are produced when approved updates to the specification do not include any significant new material or modify existing behavior. Errata are designated by adding an upper-case letter at the end of the version number, such as xx.yy errata A.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Frontmatter/Revision_History.html" class="btn btn-neutral float-left" title="Revision History" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="02_Overview.html" class="btn btn-neutral float-right" title="2. Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, UEFI Forum, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

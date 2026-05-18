@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>21. Protocols — String Services &mdash; UEFI Specification 2.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=f2209469" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/style.css?v=faba8a36" />
+      <link rel="stylesheet" type="text/css" href="_static/theme-overrides.css?v=84235ce0" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2de06f63"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="22. EFI Byte Code Virtual Machine" href="22_EFI_Byte_Code_Virtual_Machine.html" />
+    <link rel="prev" title="20. Protocols — ACPI Protocols" href="20_Protocols_ACPI_Protocols.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            UEFI Specification
+          </a>
+              <div class="version">
+                2.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Tables.html">List of Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Figures.html">List of Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/Revision_History.html">Revision History</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Overview.html">2. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Boot_Manager.html">3. Boot Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_EFI_System_Table.html">4. EFI System Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_GUID_Partition_Table_Format.html">5. GUID Partition Table (GPT) Disk Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_Block_Transition_Table_Layout.html">6. Block Translation Table (BTT) Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Services_Boot_Services.html">7. Services — Boot Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Services_Runtime_Services.html">8. Services — Runtime Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Protocols_EFI_Loaded_Image.html">9. Protocols - EFI Loaded Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Protocols_Device_Path_Protocol.html">10. Protocols – Device Path Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html">11. Protocols — UEFI Driver Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_Protocols_Console_Support.html">12. Protocols — Console Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Protocols_Media_Access.html">13. Protocols – Media Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Protocols_PCI_Bus_Support.html">14. Protocols — PCI Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_Protocols_SCSI_Driver_Models_and_Bus_Support.html">15. Protocols — SCSI Driver Models and Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_Protocols_iSCSI_Boot.html">16. Protocols — iSCSI Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_Protocols_USB_Support.html">17. Protocols — USB Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_Protocols_Debugger_Support.html">18. Protocols — Debugger Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_Protocols_Compression_Algorithm_Specification.html">19. Protocols — Compression Algorithm Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_Protocols_ACPI_Protocols.html">20. Protocols — ACPI Protocols</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">21. Protocols — String Services</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#unicode-collation-protocol">21.1. Unicode Collation Protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-unicode-collation-protocol">21.1.1. EFI_UNICODE_COLLATION_PROTOCOL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-unicode-collation-protocol-stricoll">21.1.2. EFI_UNICODE_COLLATION_PROTOCOL.StriColl()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-unicode-collation-protocol-metaimatch">21.1.3. EFI_UNICODE_COLLATION_PROTOCOL.MetaiMatch()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-unicode-collation-protocol-strlwr">21.1.4. EFI_UNICODE_COLLATION_PROTOCOL.StrLwr()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-unicode-collation-protocol-strupr">21.1.5. EFI_UNICODE_COLLATION_PROTOCOL.StrUpr()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-unicode-collation-protocol-fattostr">21.1.6. EFI_UNICODE_COLLATION_PROTOCOL.FatToStr()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-unicode-collation-protocol-strtofat">21.1.7. EFI_UNICODE_COLLATION_PROTOCOL.StrToFat()</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#regular-expression-protocol">21.2. Regular Expression Protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-regular-expression-protocol">21.2.1. EFI_REGULAR_EXPRESSION_PROTOCOL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-regular-expression-protocol-matchstring">21.2.2. EFI_REGULAR_EXPRESSION_PROTOCOL.MatchString()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-regular-expression-protocol-getinfo">21.2.3. EFI_REGULAR_EXPRESSION_PROTOCOL.GetInfo()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-regular-expression-syntax-type-definitions">21.2.4. EFI Regular Expression Syntax Type Definitions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html">22. EFI Byte Code Virtual Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_Firmware_Update_and_Reporting.html">23. Firmware Update and Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24_Network_Protocols_SNP_PXE_BIS.html">24. Network Protocols — SNP, PXE, BIS and HTTP Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25_Network_Protocols_Managed_Network.html">25. Network Protocols - Managed Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26_Network_Protocols_Bluetooth.html">26. Network Protocols — Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27_Network_Protocols_VLAN_and_EAP.html">27. Network Protocols — VLAN, EAP, Wi-Fi and Supplicant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28_Network_Protocols_TCP_IP_and_Configuration.html">28. Network Protocols — TCP, IP, IPsec, FTP, TLS and Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29_Network_Protocols_ARP_and_DHCP.html">29. Network Protocols — ARP, DHCP, DNS, HTTP and REST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_Network_Protocols_UDP_and_MTFTP.html">30. Network Protocols — UDP and MTFTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="31_EFI_Redfish_Service_Support.html">31. EFI Redfish Service Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="32_Secure_Boot_and_Driver_Signing.html">32. Secure Boot and Driver Signing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="33_Human_Interface_Infrastructure.html">33. Human Interface Infrastructure Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="34_HII_Protocols.html">34. HII Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="35_HII_Configuration_Processing_and_Browser_Protocol.html">35. HII Configuration Processing and Browser Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="36_User_Identification.html">36. User Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="37_Secure_Technologies.html">37. Secure Technologies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="38_Confidential_Computing.html">38. Confidential Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="39_Micellaneous_Protocols.html">39. Miscellaneous Protocols</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Apx_A_GUID_and_Time_Formats.html">A. GUID and Time Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_B_Console.html">B. Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_C_Device_Path_Examples.html">C. Device Path Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_D_Status_Codes.html">D. Status Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_E_Universal_Network_Driver_Interfaces.html">E. Universal Network Driver Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_F_Using_the_Simple_Pointer_Protocol.html">F. Using the Simple Pointer Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_G_Using_the_EFI_Extended_SCSI_Pass_Thru_Protocol.html">G. Using the EFI Extended SCSI Pass Thru Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_H_Compression_Source_Code.html">H. Compression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_I_Decompression_Source_Code.html">I. Decompression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_J_EFI_Byte_Code_Virtual_Machine_Opcode_List.html">J. EFI Byte Code Virtual Machine Opcode List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_K_Alphabetic_Function_Lists.html">K. Alphabetic Function Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_L_EFI_1.10_Protocol_Changes_and_Deprecation_List.html">L. EFI 1.10 Protocol Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html">M. Formats — Language Codes and Language Code Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_N_Common_Platform_Error_Record.html">N. Common Platform Error Record (CPER)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_O_UEFI_ACPI_Data_Table.html">O. UEFI ACPI Data Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_P_Hardware_Error_Record_Persistence_Usage.html">P. Hardware Error Record Persistence Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_Q_References.html">Q. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_R_Glossary.html">R. Glossary</a></li>
+</ul>
+
+    <a href= "genindex.html">Index</a>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UEFI Specification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">21. </span>Protocols — String Services</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="protocols-string-services">
+<span id="id1"></span><h1><span class="section-number">21. </span>Protocols — String Services<a class="headerlink" href="#protocols-string-services" title="Link to this heading"></a></h1>
+<section id="unicode-collation-protocol">
+<span id="id2"></span><h2><span class="section-number">21.1. </span>Unicode Collation Protocol<a class="headerlink" href="#unicode-collation-protocol" title="Link to this heading"></a></h2>
+<p>This section defines the Unicode Collation protocol. This protocol is used to allow code running in the boot services environment to perform lexical comparison functions on Unicode strings for given languages.</p>
+<section id="efi-unicode-collation-protocol">
+<span id="efi-unicode-collation-protocol-protocols-string-services"></span><h3><span class="section-number">21.1.1. </span>EFI_UNICODE_COLLATION_PROTOCOL<a class="headerlink" href="#efi-unicode-collation-protocol" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Is used to perform case-insensitive comparisons of strings.</p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_UNICODE_COLLATION_PROTOCOL2_GUID \</span>
+  <span class="p">{</span><span class="mh">0xa4c751fc</span><span class="p">,</span> <span class="mh">0x23ae</span><span class="p">,</span> <span class="mh">0x4c3e</span><span class="p">,</span> \
+    <span class="p">{</span><span class="mh">0x92</span><span class="p">,</span> <span class="mh">0xe9</span><span class="p">,</span> <span class="mh">0x49</span><span class="p">,</span> <span class="mh">0x64</span><span class="p">,</span> <span class="mh">0xcf</span><span class="p">,</span> <span class="mh">0x63</span><span class="p">,</span> <span class="mh">0xf3</span><span class="p">,</span> <span class="mh">0x49</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p><strong>Protocol Interface Structure</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">EFI_UNICODE_COLLATION_STRICOLL</span>         <span class="n">StriColl</span><span class="p">;</span>
+  <span class="n">EFI_UNICODE_COLLATION_METAIMATCH</span>       <span class="n">MetaiMatch</span><span class="p">;</span>
+  <span class="n">EFI_UNICODE_COLLATION_STRLWR</span>           <span class="n">StrLwr</span><span class="p">;</span>
+  <span class="n">EFI_UNICODE_COLLATION_STRUPR</span>           <span class="n">StrUpr</span><span class="p">;</span>
+  <span class="n">EFI_UNICODE_COLLATION_FATTOSTR</span>         <span class="n">FatToStr</span><span class="p">;</span>
+  <span class="n">EFI_UNICODE_COLLATION_STRTOFAT</span>         <span class="n">StrToFat</span><span class="p">;</span>
+  <span class="n">CHAR8</span>                                  <span class="o">*</span><span class="n">SupportedLanguages</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_UNICODE_COLLATION_PROTOCOL</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>StriColl</dt><dd><p>Performs a case-insensitive comparison of two Null-terminated strings. See the  <a class="reference internal" href="#id3">EFI_UNICODE_COLLATION_PROTOCOL.StriColl()</a> function description.</p>
+</dd>
+<dt>MetaiMatch</dt><dd><p>Performs a case-insensitive comparison between a Null-terminated pattern string and a Null-terminated string. The pattern string can use the ‘?’ wildcard to match any character, and the ‘*’ wildcard to match any substring. See the  <a class="reference internal" href="#id4">EFI_UNICODE_COLLATION_PROTOCOL.MetaiMatch()</a> function description.</p>
+</dd>
+<dt>StrLwr</dt><dd><p>Converts all the characters in a Null-terminated string to lowercase characters. See the  <a class="reference internal" href="#id5">EFI_UNICODE_COLLATION_PROTOCOL.StrLwr()</a> function description.</p>
+</dd>
+<dt>StrUpr</dt><dd><p>Converts all the characters in a Null-terminated string to uppercase characters. See the  <a class="reference internal" href="#id6">EFI_UNICODE_COLLATION_PROTOCOL.StrUpr()</a> function description.</p>
+</dd>
+<dt>FatToStr</dt><dd><p>Converts an 8.3 FAT file name using an OEM character set to a Null-terminated string. See the  <a class="reference internal" href="#id7">EFI_UNICODE_COLLATION_PROTOCOL.FatToStr()</a> function description.</p>
+</dd>
+<dt>StrToFat</dt><dd><p>Converts a Null-terminated string to legal characters in a FAT filename using an OEM character set. See the  <a class="reference internal" href="#id8">EFI_UNICODE_COLLATION_PROTOCOL.StrToFat()</a> function description.</p>
+</dd>
+<dt>SupportedLanguages</dt><dd><p>A Null-terminated ASCII string array that contains one or more language codes. This array is specified in RFC 4646 format. See <a class="reference internal" href="Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html#appendix-m-formats-language-codes-and-language-code-arrays-apx-m-formats-language-codes-and-language-code-arrays"><span class="std std-ref">Formats — Language Codes and Language Code Arrays</span></a></p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The EFI_UNICODE_COLLATION_PROTOCOL is used to perform case-insensitive comparisons of strings.</p>
+<p>One or more of the EFI_UNICODE_COLLATION_PROTOCOL instances may be present at one time. Each protocol instance can support one or more language codes. The language codes supported in the EFI_UNICODE_COLLATION_PROTOCOL are declared in <em>SupportedLanguages</em> .</p>
+<p>The <em>SupportedLanguages</em> is a Null-terminated ASCII string array that contains one or more supported language codes. This is the list of language codes that this protocol supports. See <a class="reference internal" href="Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html#appendix-m-formats-language-codes-and-language-code-arrays-apx-m-formats-language-codes-and-language-code-arrays"><span class="std std-ref">Formats — Language Codes and Language Code Arrays</span></a>  for the format of language codes and language code arrays.</p>
+<p>The main motivation for this protocol is to help support file names in a file system driver. When a file is opened, a file name needs to be compared to the file names on the disk. In some cases, this comparison needs to be performed in a case-insensitive manner. In addition, this protocol can be used to sort files from a directory or to perform a case-insensitive file search.</p>
+</section>
+<section id="efi-unicode-collation-protocol-stricoll">
+<span id="id3"></span><h3><span class="section-number">21.1.2. </span>EFI_UNICODE_COLLATION_PROTOCOL.StriColl()<a class="headerlink" href="#efi-unicode-collation-protocol-stricoll" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Performs a case-insensitive comparison of two Null-terminated strings.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">INTN</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_UNICODE_COLLATION_STRICOLL</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_UNICODE_COLLATION_PROTOCOL</span>    <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">CHAR16</span>                            <span class="o">*</span><span class="n">s1</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">CHAR16</span>                            <span class="o">*</span><span class="n">s2</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the <a class="reference internal" href="#efi-unicode-collation-protocol">EFI_UNICODE_COLLATION_PROTOCOL</a> instance. Type EFI_UNICODE_COLLATION_PROTOCOL is defined above.</p>
+</dd>
+<dt>s1</dt><dd><p>A pointer to a Null-terminated string.</p>
+</dd>
+<dt>s2</dt><dd><p>A pointer to a Null-terminated string.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The StriColl() function performs a case-insensitive comparison of two Null-terminated strings.</p>
+<p>This function performs a case-insensitive comparison between the string s1 and the string s2 using the rules for the language codes that this protocol instance supports. If s1 is equivalent to s2, then 0 is returned. If s1 is lexically less than s2, then a negative number will be returned. If s1 is lexically greater than s2, then a positive number will be returned. This function allows strings to be compared and sorted.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>0</p></td>
+<td><p>s1 is equivalent to s2.</p></td>
+</tr>
+<tr class="row-even"><td><p>&gt; 0</p></td>
+<td><p>s1 is lexically greater than s2.</p></td>
+</tr>
+<tr class="row-odd"><td><p>&lt; 0</p></td>
+<td><p>s1 is lexically less than s2.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-unicode-collation-protocol-metaimatch">
+<span id="id4"></span><h3><span class="section-number">21.1.3. </span>EFI_UNICODE_COLLATION_PROTOCOL.MetaiMatch()<a class="headerlink" href="#efi-unicode-collation-protocol-metaimatch" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Performs a case-insensitive comparison of a Null-terminated
+pattern string and a Null-terminated string.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">BOOLEAN</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_UNICODE_COLLATION_METAIMATCH</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_UNICODE_COLLATION_PROTOCOL</span>       <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">CHAR16</span>                               <span class="o">*</span><span class="n">String</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">CHAR16</span>                               <span class="o">*</span><span class="n">Pattern</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the <a class="reference internal" href="#efi-unicode-collation-protocol">EFI_UNICODE_COLLATION_PROTOCOL</a>  instance. Type EFI_UNICODE_COLLATION_PROTOCOL is defined above.</p>
+</dd>
+<dt>String</dt><dd><p>A pointer to a Null-terminated string.</p>
+</dd>
+<dt>Pattern</dt><dd><p>A pointer to a Null-terminated string.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>MetaiMatch()</em> function performs a case-insensitive comparison of a Null-terminated pattern string and a Null-terminated string.</p>
+<p>This function checks to see if the pattern of characters described by <em>Pattern</em> are found in <em>String</em> . The pattern check is a case-insensitive comparison using the rules for the language codes that this protocol instance supports. If the pattern match succeeds, then <strong>TRUE</strong> is returned. Otherwise <strong>FALSE</strong> is returned. The following syntax can be used to build the string Pattern:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>*                             Match 0 or more characters.
+?                             Match any one character.
+[&lt;char1&gt;&lt;char2&gt;...&lt;charN&gt;]    Match any character in the set.
+[&lt;char1&gt;-&lt;char2&gt;]             Match any character between &lt;char1&gt; and&lt;char2&gt;.
+&lt;char&gt;                        Match the character &lt;char&gt;.
+</pre></div>
+</div>
+<p>Following is an example pattern for English:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>*.FW                          Matches all strings that end in &quot;.FW&quot; or .fw&quot; or &quot;.Fw&quot; or &quot;.fW.&quot;
+[a-z]                         Match any letter in the alphabet.
+[!@#$%^&amp;*()]                  Match any one of these symbols.
+z                             Match the character &quot;z&quot; or &quot;Z.&quot;
+D?.*                          Match the character &quot;D&quot; or &quot;d&quot;
+                              followed by any character
+                              followed by a &quot;.&quot; followed by any string.
+</pre></div>
+</div>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>TRUE</strong></p></td>
+<td><p>Pattern was found in String.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>FALSE</strong></p></td>
+<td><p>Pattern was not found in String.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-unicode-collation-protocol-strlwr">
+<span id="id5"></span><h3><span class="section-number">21.1.4. </span>EFI_UNICODE_COLLATION_PROTOCOL.StrLwr()<a class="headerlink" href="#efi-unicode-collation-protocol-strlwr" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Converts all the characters in a Null-terminated string to
+lowercase characters.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">VOID</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_UNICODE_COLLATION_STRLWR</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_UNICODE_COLLATION_PROTOCOL</span>       <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">CHAR16</span>                           <span class="o">*</span><span class="n">String</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the <a class="reference internal" href="#efi-unicode-collation-protocol">EFI_UNICODE_COLLATION_PROTOCOL</a> instance. Type EFI_UNICODE_COLLATION_PROTOCOL is defined above.</p>
+</dd>
+<dt>String</dt><dd><p>A pointer to a Null-terminated string.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function walks through all the characters in <em>String,</em> and converts each one to its lowercase equivalent if it has one. The converted string is returned in <em>String</em> .</p>
+</section>
+<section id="efi-unicode-collation-protocol-strupr">
+<span id="id6"></span><h3><span class="section-number">21.1.5. </span>EFI_UNICODE_COLLATION_PROTOCOL.StrUpr()<a class="headerlink" href="#efi-unicode-collation-protocol-strupr" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Converts all the characters in a Null-terminated string to uppercase characters.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">VOID</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_UNICODE_COLLATION_STRUPR</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_UNICODE_COLLATION_PROTOCOL</span>      <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">CHAR16</span>                          <span class="o">*</span><span class="n">String</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the  <a class="reference internal" href="#efi-unicode-collation-protocol">EFI_UNICODE_COLLATION_PROTOCOL</a> instance. Type EFI_UNICODE_COLLATION_PROTOCOL is defined above.</p>
+</dd>
+<dt>String</dt><dd><p>A pointer to a Null-terminated string.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This functions walks through all the characters in <em>String,</em> and converts each one to its uppercase equivalent if it has one. The converted string is returned in <em>String</em> .</p>
+</section>
+<section id="efi-unicode-collation-protocol-fattostr">
+<span id="id7"></span><h3><span class="section-number">21.1.6. </span>EFI_UNICODE_COLLATION_PROTOCOL.FatToStr()<a class="headerlink" href="#efi-unicode-collation-protocol-fattostr" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Converts an 8.3 FAT file name in an OEM character set to a Null-terminated string.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">VOID</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_UNICODE_COLLATION_FATTOSTR</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_UNICODE_COLLATION_PROTOCOL</span>       <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">UINTN</span>                                <span class="n">FatSize</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">CHAR8</span>                                <span class="o">*</span><span class="n">Fat</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">CHAR16</span>                              <span class="o">*</span><span class="n">String</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the <a class="reference internal" href="#efi-unicode-collation-protocol">EFI_UNICODE_COLLATION_PROTOCOL</a> instance. Type EFI_UNICODE_COLLATION_PROTOCOL is defined above.</p>
+</dd>
+<dt>FatSize</dt><dd><p>The size of the string Fat in bytes.</p>
+</dd>
+<dt>Fat</dt><dd><p>A pointer to a Null-terminated string that contains an 8.3 file name encoded using an 8-bit OEM character set.</p>
+</dd>
+<dt>String</dt><dd><p>A pointer to a Null-terminated string. The string must be allocated in advance to hold <em>FatSize</em> characters.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function converts the string specified by <em>Fat</em> with length <em>FatSize</em> to the Null-terminated string specified by <em>String</em> . The characters in <em>Fat</em> are from an OEM character set.</p>
+</section>
+<section id="efi-unicode-collation-protocol-strtofat">
+<span id="id8"></span><h3><span class="section-number">21.1.7. </span>EFI_UNICODE_COLLATION_PROTOCOL.StrToFat()<a class="headerlink" href="#efi-unicode-collation-protocol-strtofat" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Converts a Null-terminated string to legal characters in a FAT filename using an OEM character set.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">BOOLEAN</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_UNICODE_COLLATION_STRTOFAT</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_UNICODE_COLLATION_PROTOCOL</span>       <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">CHAR16</span>                               <span class="o">*</span><span class="n">String</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">UINTN</span>                                <span class="n">FatSize</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">CHAR8</span>                               <span class="o">*</span><span class="n">Fat</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the <a class="reference internal" href="#efi-unicode-collation-protocol">EFI_UNICODE_COLLATION_PROTOCOL</a> instance. Type EFI_UNICODE_COLLATION_PROTOCOL is defined above.</p>
+</dd>
+<dt>String</dt><dd><p>A pointer to a Null-terminated string.</p>
+</dd>
+<dt>FatSize</dt><dd><p>The size of the string Fat in bytes.</p>
+</dd>
+<dt>Fat</dt><dd><p>A pointer to a string that contains the converted version of <em>String</em> using legal FAT characters from an OEM character set.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function converts the characters from <em>String</em> into legal FAT characters in an OEM character set and stores then in the string <em>Fat</em> . This conversion continues until either <em>FatSize</em> bytes are stored in <em>Fat,</em> or the end of <em>String</em> is reached. The characters ‘.’ (period) and ‘ ’ (space) are ignored for this conversion. Characters that map to an illegal FAT character are substituted with an ‘_’. If no valid mapping from a character to an OEM character is available, then it is also substituted with an ‘_’. If any of the character conversions are substituted with a ‘_’, then <strong>TRUE</strong> is returned. Otherwise <strong>FALSE</strong> is returned.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>TRUE</strong></p></td>
+<td><p>One or more conversions failed and were substituted with ‘_’.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>FALSE</strong></p></td>
+<td><p>None of the conversions failed.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="regular-expression-protocol">
+<span id="id9"></span><h2><span class="section-number">21.2. </span>Regular Expression Protocol<a class="headerlink" href="#regular-expression-protocol" title="Link to this heading"></a></h2>
+<p>This section defines the Regular Expression Protocol. This protocol is used to match Unicode strings against Regular Expression patterns.</p>
+<section id="efi-regular-expression-protocol">
+<span id="id10"></span><h3><span class="section-number">21.2.1. </span>EFI_REGULAR_EXPRESSION_PROTOCOL<a class="headerlink" href="#efi-regular-expression-protocol" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_REGULAR_EXPRESSION_PROTOCOL_GUID \</span>
+  <span class="p">{</span> <span class="mh">0xB3F79D9A</span><span class="p">,</span> <span class="mh">0x436C</span><span class="p">,</span> <span class="mh">0xDC11</span><span class="p">,</span>\
+    <span class="p">{</span> <span class="mh">0xB0</span><span class="p">,</span> <span class="mh">0x52</span><span class="p">,</span> <span class="mh">0xCD</span><span class="p">,</span> <span class="mh">0x85</span><span class="p">,</span> <span class="mh">0xDF</span><span class="p">,</span> <span class="mh">0x52</span><span class="p">,</span> <span class="mh">0x4C</span><span class="p">,</span> <span class="mh">0xE6</span> <span class="p">}</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Protocol Interface Structure</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">EFI_REGULAR_EXPRESSION_MATCH</span>      <span class="n">MatchString</span><span class="p">;</span>
+  <span class="n">EFI_REGULAR_EXPRESSION_GET_INFO</span>   <span class="n">GetInfo</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_REGULAR_EXPRESSION_PROTOCOL</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>MatchString</dt><dd><p>Search the input string for anything that matches the regular expression.</p>
+</dd>
+<dt>GetInfo</dt><dd><p>Returns information about the regular expression syntax types supported by the implementation.</p>
+</dd>
+</dl>
+</section>
+<section id="efi-regular-expression-protocol-matchstring">
+<span id="id11"></span><h3><span class="section-number">21.2.2. </span>EFI_REGULAR_EXPRESSION_PROTOCOL.MatchString()<a class="headerlink" href="#efi-regular-expression-protocol-matchstring" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Checks if the input string matches to the regular expression pattern.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_REGULAR_EXPRESSION_MATCH</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span>   <span class="n">EFI_REGULAR_EXPRESSION_PROTOCOL</span> <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span>   <span class="n">CHAR16</span>                          <span class="o">*</span><span class="n">String</span><span class="p">,</span>
+  <span class="n">IN</span>   <span class="n">CHAR16</span>                          <span class="o">*</span><span class="n">Pattern</span><span class="p">,</span>
+  <span class="n">IN</span>   <span class="n">EFI_REGEX_SYNTAX_TYPE</span>           <span class="o">*</span><span class="n">SyntaxType</span><span class="p">,</span> <span class="n">OPTIONAL</span>
+  <span class="n">OUT</span>  <span class="n">BOOLEAN</span>                         <span class="o">*</span><span class="n">Result</span><span class="p">,</span>
+  <span class="n">OUT</span>  <span class="n">EFI_REGEX_CAPTURE</span>               <span class="o">**</span><span class="n">Captures</span><span class="p">,</span> <span class="n">OPTIONAL</span>
+  <span class="n">OUT</span> <span class="n">UINTN</span>                            <span class="o">*</span><span class="n">CapturesCount</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the <a class="reference internal" href="#id10">EFI_REGULAR_EXPRESSION_PROTOCOL</a> instance. Type EFI_REGULAR_EXPRESSION_PROTOCOL is defined in above.</p>
+</dd>
+<dt>String</dt><dd><p>A pointer to a NULL terminated string to match against the regular expression string specified by <em>Pattern</em> .</p>
+</dd>
+<dt>Pattern</dt><dd><p>A pointer to a NULL terminated string that represents the regular expression.</p>
+</dd>
+<dt>SyntaxType</dt><dd><p>A pointer to the EFI_REGEX_SYNTAX_TYPE that identifies the regular expression syntax type to use. May be NULL in which case the function will use its default regular expression syntax type.</p>
+</dd>
+<dt>Result</dt><dd><p>On return, points to TRUE if String fully matches against the regular expression Pattern using the regular expression SyntaxType . Otherwise, points to FALSE .</p>
+</dd>
+<dt>Captures</dt><dd><p>A Pointer to an array of EFI_REGEX_CAPTURE objects to receive the captured groups in the event of a match. The full sub-string match is put in Captures [0], and the results of N capturing groups are put in Captures [1:N]. If Captures is NULL, then this function doesn’t allocate the memory for the array and does not build up the elements. It only returns the number of matching patterns in CapturesCount . If Captures is not NULL, this function returns a pointer to an array and builds up the elements in the array. CapturesCount is also updated to the number of matching patterns found. It is the caller’s responsibility to free the memory pool in Captures and in each CapturePtr in the array elements.</p>
+</dd>
+<dt>CapturesCount</dt><dd><p>On output, CapturesCount is the number of matching patterns found in String. Zero means no matching patterns were found in the string.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The MatchString() function performs a matching of a Null-terminated input string with the NULL terminated pattern string. The pattern string syntax type is optionally identified in SyntaxType .</p>
+<p>This function checks to see if String fully matches against the regular expression described by Pattern. The pattern check is performed using regular expression rules that are supported by this implementation, as indicated in the return value of GetInfo function. If the pattern match succeeds, then TRUE is returned in Result . Otherwise FALSE is returned.</p>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">CONST</span> <span class="n">CHAR16</span>       <span class="o">*</span><span class="n">CapturePtr</span><span class="p">;</span>
+  <span class="n">UINTN</span>              <span class="n">Length</span><span class="p">;</span>
+<span class="p">}</span>  <span class="n">EFI_REGEX_CAPTURE</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>*CapturePtr</dt><dd><p>Pointer to the start of the captured sub-expression within matched String.</p>
+</dd>
+<dt>Length</dt><dd><p>Length of captured sub-expression.</p>
+</dd>
+</dl>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The regular expression string matching completed successfully.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>The regular expression syntax specified by <em>SyntaxType</em> is not supported by this driver.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>The regular expression string matching failed due to a hardware or firmware error.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>String, Pattern, Result, or CapturesCount is NULL.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-regular-expression-protocol-getinfo">
+<span id="id12"></span><h3><span class="section-number">21.2.3. </span>EFI_REGULAR_EXPRESSION_PROTOCOL.GetInfo()<a class="headerlink" href="#efi-regular-expression-protocol-getinfo" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Returns information about the regular expression syntax types supported by the implementation.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_REGULAR_EXPRESSION_GET_INFO</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_REGULAR_EXPRESSION_PROTOCOL</span>         <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">UINTN</span>                               <span class="o">*</span><span class="n">RegExSyntaxTypeListSize</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">EFI_REGEX_SYNTAX_TYPE</span>                  <span class="o">*</span><span class="n">RegExSyntaxTypeList</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the <a class="reference internal" href="#id10">EFI_REGULAR_EXPRESSION_PROTOCOL</a> instance.</p>
+</dd>
+<dt>RegExSyntaxTypeListSize</dt><dd><p>On input, the size in bytes of <em>RegExSyntaxTypeList</em> <em>. On</em> output with a return code of <em>EFI_SUCCESS</em> <em>, th</em> e size in bytes of the data returned in <em>RegExSyntaxTypeList</em> . On output with a return code of <em>EFI_BUFFER_TOO_SMALL,</em> the size of <em>RegExSyntaxTypeList</em> required to obtain the list.</p>
+</dd>
+<dt>RegExSyntaxTypeList</dt><dd><p>A caller-allocated memory buffer filled by the driver with one <em>EFI_REGEX_SYNTAX_TYPE</em> element for each supported regular expression syntax type. The list must not change across multiple calls to the same driver. The first syntax type in the list is the default type for the driver.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function returns information about supported regular expression syntax types. A driver implementing the <a class="reference internal" href="#id10">EFI_REGULAR_EXPRESSION_PROTOCOL</a> need not support more than one regular expression syntax type, but shall support a minimum of one regular expression syntax type.</p>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">EFI_GUID</span> <span class="n">EFI_REGEX_SYNTAX_TYPE</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The regular expression syntax types list was returned successfully.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>The service is not supported by this driver.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>The list of syntax types could not be retrieved due to a hardware or firmware error.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_BUFFER_TOO_SMALL</p></td>
+<td><p>The buffer <em>RegExSyntaxTypeList</em> is too small to hold the result.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p><em>RegExSyntaxTypeListSize</em> is NULL.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-regular-expression-syntax-type-definitions">
+<span id="id13"></span><h3><span class="section-number">21.2.4. </span>EFI Regular Expression Syntax Type Definitions<a class="headerlink" href="#efi-regular-expression-syntax-type-definitions" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>This sub-section provides EFI_GUID values for a selection of EFI_REGULAR_EXPRESSION_PROTOCOL syntax types. The types listed are optional, not meant to be exhaustive and may be augmented by vendors or other industry standards.</p>
+<p><strong>Prototype</strong></p>
+<p>For regular expression rules specified in the POSIX Extended Regular Expression (ERE) Syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_REGEX_SYNTAX_TYPE_POSIX_EXTENDED_GUID \</span>
+  <span class="p">{</span><span class="mh">0x5F05B20F</span><span class="p">,</span> <span class="mh">0x4A56</span><span class="p">,</span> <span class="mh">0xC231</span><span class="p">,</span>\
+    <span class="p">{</span> <span class="mh">0xFA</span><span class="p">,</span> <span class="mh">0x0B</span><span class="p">,</span> <span class="mh">0xA7</span><span class="p">,</span> <span class="mh">0xB1</span><span class="p">,</span> <span class="mh">0xF1</span><span class="p">,</span> <span class="mh">0x10</span><span class="p">,</span> <span class="mh">0x04</span><span class="p">,</span> <span class="mh">0x1D</span> <span class="p">}}</span>
+</pre></div>
+</div>
+<p>For regular expression rules specified in the Perl standard:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_REGEX_SYNTAX_TYPE_PERL_GUID \</span>
+  <span class="p">{</span><span class="mh">0x63E60A51</span><span class="p">,</span> <span class="mh">0x497D</span><span class="p">,</span> <span class="mh">0xD427</span><span class="p">,</span>\
+   <span class="p">{</span> <span class="mh">0xC4</span><span class="p">,</span> <span class="mh">0xA5</span><span class="p">,</span> <span class="mh">0xB8</span><span class="p">,</span> <span class="mh">0xAB</span><span class="p">,</span> <span class="mh">0xDC</span><span class="p">,</span> <span class="mh">0x3A</span><span class="p">,</span> <span class="mh">0xAE</span><span class="p">,</span> <span class="mh">0xB6</span> <span class="p">}}</span>
+</pre></div>
+</div>
+<p>For regular expression rules specified in the ECMA 262 Specification:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_REGEX_SYNTAX_TYPE_ECMA_262_GUID \</span>
+  <span class="p">{</span> <span class="mh">0x9A473A4A</span><span class="p">,</span> <span class="mh">0x4CEB</span><span class="p">,</span> <span class="mh">0xB95A</span><span class="p">,</span> <span class="mh">0x41</span><span class="p">,</span>\
+    <span class="p">{</span> <span class="mh">0x5E</span><span class="p">,</span> <span class="mh">0x5B</span><span class="p">,</span> <span class="mh">0xA0</span><span class="p">,</span> <span class="mh">0xBC</span><span class="p">,</span> <span class="mh">0x63</span><span class="p">,</span> <span class="mh">0x9B</span><span class="p">,</span> <span class="mh">0x2E</span> <span class="p">}}</span>
+</pre></div>
+</div>
+<p>For regular expression rules specified in the POSIX Extended Regular Expression (ERE) Syntax, where the Pattern and String input strings need to be converted to ASCII:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_REGEX_SYNTAX_TYPE_POSIX_EXTENDED_ASCII_GUID \</span>
+  <span class="p">{</span><span class="mh">0x3FD32128</span><span class="p">,</span> <span class="mh">0x4BB1</span><span class="p">,</span> <span class="mh">0xF632</span><span class="p">,</span> \
+    <span class="p">{</span> <span class="mh">0xBE</span><span class="p">,</span> <span class="mh">0x4F</span><span class="p">,</span> <span class="mh">0xBA</span><span class="p">,</span> <span class="mh">0xBF</span><span class="p">,</span> <span class="mh">0x85</span><span class="p">,</span> <span class="mh">0xC9</span><span class="p">,</span> <span class="mh">0x36</span><span class="p">,</span> <span class="mh">0x76</span> <span class="p">}}</span>
+</pre></div>
+</div>
+<p>For regular expression rules specified in the Perl standard, where the Pattern and String input strings nees to be converted to ASCII:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_REGEX_SYNTAX_TYPE_PERL_ASCII_GUID \</span>
+  <span class="p">{</span><span class="mh">0x87DFB76D</span><span class="p">,</span> <span class="mh">0x4B58</span><span class="p">,</span> <span class="mh">0xEF3A</span><span class="p">,</span> \
+    <span class="p">{</span> <span class="mh">0xF7</span><span class="p">,</span> <span class="mh">0xC6</span><span class="p">,</span> <span class="mh">0x16</span><span class="p">,</span> <span class="mh">0xA4</span><span class="p">,</span> <span class="mh">0x2A</span><span class="p">,</span> <span class="mh">0x68</span><span class="p">,</span> <span class="mh">0x28</span><span class="p">,</span> <span class="mh">0x10</span> <span class="p">}}</span>
+</pre></div>
+</div>
+<p>For regular expression rules specified in the ECMA 262 Specification, where the Pattern and String input strings need to be converted to ASCII:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_REGEX_SYNTAX_TYPE_ECMA_262_ASCII_GUID \</span>
+  <span class="p">{</span> <span class="mh">0xB2284A2F</span><span class="p">,</span> <span class="mh">0x4491</span><span class="p">,</span> <span class="mh">0x6D9D</span><span class="p">,</span> \
+    <span class="p">{</span> <span class="mh">0xEA</span><span class="p">,</span> <span class="mh">0xB7</span><span class="p">,</span> <span class="mh">0x11</span><span class="p">,</span> <span class="mh">0xB0</span><span class="p">,</span> <span class="mh">0x67</span><span class="p">,</span> <span class="mh">0xD4</span><span class="p">,</span> <span class="mh">0x9B</span><span class="p">,</span> <span class="mh">0x9A</span> <span class="p">}}</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="Apx_Q_References.html#appendix-q-references"><span class="std std-ref">References</span></a> for more information.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="20_Protocols_ACPI_Protocols.html" class="btn btn-neutral float-left" title="20. Protocols — ACPI Protocols" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="22_EFI_Byte_Code_Virtual_Machine.html" class="btn btn-neutral float-right" title="22. EFI Byte Code Virtual Machine" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, UEFI Forum, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

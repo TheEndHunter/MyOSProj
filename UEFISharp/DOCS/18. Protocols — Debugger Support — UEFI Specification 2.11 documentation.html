@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>18. Protocols — Debugger Support &mdash; UEFI Specification 2.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=f2209469" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/style.css?v=faba8a36" />
+      <link rel="stylesheet" type="text/css" href="_static/theme-overrides.css?v=84235ce0" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2de06f63"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="19. Protocols — Compression Algorithm Specification" href="19_Protocols_Compression_Algorithm_Specification.html" />
+    <link rel="prev" title="17. Protocols — USB Support" href="17_Protocols_USB_Support.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            UEFI Specification
+          </a>
+              <div class="version">
+                2.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Tables.html">List of Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Figures.html">List of Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/Revision_History.html">Revision History</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Overview.html">2. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Boot_Manager.html">3. Boot Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_EFI_System_Table.html">4. EFI System Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_GUID_Partition_Table_Format.html">5. GUID Partition Table (GPT) Disk Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_Block_Transition_Table_Layout.html">6. Block Translation Table (BTT) Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Services_Boot_Services.html">7. Services — Boot Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Services_Runtime_Services.html">8. Services — Runtime Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Protocols_EFI_Loaded_Image.html">9. Protocols - EFI Loaded Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Protocols_Device_Path_Protocol.html">10. Protocols – Device Path Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html">11. Protocols — UEFI Driver Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_Protocols_Console_Support.html">12. Protocols — Console Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Protocols_Media_Access.html">13. Protocols – Media Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Protocols_PCI_Bus_Support.html">14. Protocols — PCI Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_Protocols_SCSI_Driver_Models_and_Bus_Support.html">15. Protocols — SCSI Driver Models and Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_Protocols_iSCSI_Boot.html">16. Protocols — iSCSI Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_Protocols_USB_Support.html">17. Protocols — USB Support</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">18. Protocols — Debugger Support</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">18.1. Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-debug-support-protocol">18.2. EFI Debug Support Protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-debug-support-protocol-overview">18.2.1. EFI Debug Support Protocol Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">18.2.2. EFI_DEBUG_SUPPORT_PROTOCOL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-debug-support-protocol-getmaximumprocessorindex">18.2.3. EFI_DEBUG_SUPPORT_PROTOCOL.GetMaximumProcessorIndex()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-debug-support-protocol-registerperiodiccallback">18.2.4. EFI_DEBUG_SUPPORT_PROTOCOL.RegisterPeriodicCallback()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-debug-support-protocol-registerexceptioncallback">18.2.5. EFI_DEBUG_SUPPORT_PROTOCOL.RegisterExceptionCallback()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-debug-support-protocol-invalidateinstructioncache">18.2.6. EFI_DEBUG_SUPPORT_PROTOCOL.InvalidateInstructionCache()</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-debugport-protocol">18.3. EFI Debugport Protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-debugport-overview">18.3.1. EFI Debugport Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">18.3.2. EFI_DEBUGPORT_PROTOCOL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-debugport-protocol-reset">18.3.3. EFI_DEBUGPORT_PROTOCOL.Reset()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-debugport-protocol-write">18.3.4. EFI_DEBUGPORT_PROTOCOL.Write()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-debugport-protocol-read">18.3.5. EFI_DEBUGPORT_PROTOCOL.Read()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-debugport-protocol-poll">18.3.6. EFI_DEBUGPORT_PROTOCOL.Poll()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#debugport-device-path">18.3.7. Debugport Device Path</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-debugport-variable">18.3.8. EFI Debugport Variable</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-debug-support-table">18.4. EFI Debug Support Table</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview-1">18.4.1. Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-system-table-location">18.4.2. EFI System Table Location</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-image-info">18.4.3. EFI Image Info</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="19_Protocols_Compression_Algorithm_Specification.html">19. Protocols — Compression Algorithm Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_Protocols_ACPI_Protocols.html">20. Protocols — ACPI Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_Protocols_String_Services.html">21. Protocols — String Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html">22. EFI Byte Code Virtual Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_Firmware_Update_and_Reporting.html">23. Firmware Update and Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24_Network_Protocols_SNP_PXE_BIS.html">24. Network Protocols — SNP, PXE, BIS and HTTP Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25_Network_Protocols_Managed_Network.html">25. Network Protocols - Managed Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26_Network_Protocols_Bluetooth.html">26. Network Protocols — Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27_Network_Protocols_VLAN_and_EAP.html">27. Network Protocols — VLAN, EAP, Wi-Fi and Supplicant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28_Network_Protocols_TCP_IP_and_Configuration.html">28. Network Protocols — TCP, IP, IPsec, FTP, TLS and Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29_Network_Protocols_ARP_and_DHCP.html">29. Network Protocols — ARP, DHCP, DNS, HTTP and REST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_Network_Protocols_UDP_and_MTFTP.html">30. Network Protocols — UDP and MTFTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="31_EFI_Redfish_Service_Support.html">31. EFI Redfish Service Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="32_Secure_Boot_and_Driver_Signing.html">32. Secure Boot and Driver Signing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="33_Human_Interface_Infrastructure.html">33. Human Interface Infrastructure Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="34_HII_Protocols.html">34. HII Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="35_HII_Configuration_Processing_and_Browser_Protocol.html">35. HII Configuration Processing and Browser Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="36_User_Identification.html">36. User Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="37_Secure_Technologies.html">37. Secure Technologies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="38_Confidential_Computing.html">38. Confidential Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="39_Micellaneous_Protocols.html">39. Miscellaneous Protocols</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Apx_A_GUID_and_Time_Formats.html">A. GUID and Time Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_B_Console.html">B. Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_C_Device_Path_Examples.html">C. Device Path Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_D_Status_Codes.html">D. Status Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_E_Universal_Network_Driver_Interfaces.html">E. Universal Network Driver Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_F_Using_the_Simple_Pointer_Protocol.html">F. Using the Simple Pointer Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_G_Using_the_EFI_Extended_SCSI_Pass_Thru_Protocol.html">G. Using the EFI Extended SCSI Pass Thru Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_H_Compression_Source_Code.html">H. Compression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_I_Decompression_Source_Code.html">I. Decompression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_J_EFI_Byte_Code_Virtual_Machine_Opcode_List.html">J. EFI Byte Code Virtual Machine Opcode List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_K_Alphabetic_Function_Lists.html">K. Alphabetic Function Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_L_EFI_1.10_Protocol_Changes_and_Deprecation_List.html">L. EFI 1.10 Protocol Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html">M. Formats — Language Codes and Language Code Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_N_Common_Platform_Error_Record.html">N. Common Platform Error Record (CPER)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_O_UEFI_ACPI_Data_Table.html">O. UEFI ACPI Data Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_P_Hardware_Error_Record_Persistence_Usage.html">P. Hardware Error Record Persistence Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_Q_References.html">Q. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_R_Glossary.html">R. Glossary</a></li>
+</ul>
+
+    <a href= "genindex.html">Index</a>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UEFI Specification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">18. </span>Protocols — Debugger Support</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="protocols-debugger-support">
+<span id="id1"></span><h1><span class="section-number">18. </span>Protocols — Debugger Support<a class="headerlink" href="#protocols-debugger-support" title="Link to this heading"></a></h1>
+<p>This chapter describes a minimal set of protocols and associated data structures necessary to enable the creation of source level debuggers for EFI. It does not fully define a debugger design. Using the services described in this document, it should also be possible to implement a variety of debugger solutions.</p>
+<section id="overview">
+<span id="id2"></span><h2><span class="section-number">18.1. </span>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>Efficient UEFI driver and application development requires the availability of source level debugging facilities. Although completely on-target debuggers are clearly possible, UEFI debuggers are generally expected to be remotely hosted. That is to say, the debugger itself will be split between two machines, which are the host and target. A majority of debugger code runs on the host that is typically responsible for disassembly, symbol management, source display, and user interface. Similarly, a smaller piece of code runs on the target that establishes the communication to the host and proxies requests from the host. The on-target code is known as the “debug agent.”</p>
+<p>The debug agent design is subdivided further into two parts, which are the processor/platform abstraction and the debugger host specific communication grammar. This specification describes architectural interfaces for the former only. Specific implementations for various debugger host communication grammars can be created that make use of the facilities described in this specification.</p>
+<p>The processor/platform abstraction is presented as a pair of protocol interfaces, which are the Debug Support protocol and the Debug Port protocol.</p>
+<p>The Debug Support protocol abstracts the processor’s debugging facilities, namely a mechanism to manage the processor’s context via caller-installable exception handlers.</p>
+<p>The Debug Port protocol abstracts the device that is used for communication between the host and target. Typically, this will be a 16550 serial port, 1394 device, or other device that is nominally a serial stream.</p>
+<p>Furthermore, a table driven, quiescent, memory-only mechanism for determining the base address of PE32+ images is provided to enable the debugger host to determine where images are located in memory.</p>
+<p>Aside from timing differences that occur because of running code associated with the debug agent and user-initiated changes to the machine context, the operation of the on-target debugger component must be transparent to the rest of the system. In addition, no portion of the debug agent that runs in interrupt context may make any calls to EFI services or other protocol interfaces.</p>
+<p>The services described in this document do not comprise a complete debugger, rather they provide a minimal abstraction required to implement a wide variety of debugger solutions.</p>
+</section>
+<section id="efi-debug-support-protocol">
+<span id="id3"></span><h2><span class="section-number">18.2. </span>EFI Debug Support Protocol<a class="headerlink" href="#efi-debug-support-protocol" title="Link to this heading"></a></h2>
+<p>This section defines the EFI Debug Support protocol which is used by the debug agent.</p>
+<section id="efi-debug-support-protocol-overview">
+<span id="id4"></span><h3><span class="section-number">18.2.1. </span>EFI Debug Support Protocol Overview<a class="headerlink" href="#efi-debug-support-protocol-overview" title="Link to this heading"></a></h3>
+<p>The debug-agent needs to be able to gain control of the machine when certain types of events occur; i.e., breakpoints, processor exceptions, etc. Additionally, the debug agent must also be able to periodically gain control during operation of the machine to check for asynchronous commands from the host. The EFI Debug Support protocol services enable these capabilities.</p>
+<p>The EFI Debug Support protocol interfaces produce callback registration mechanisms which are used by the debug agent to register functions that are invoked either periodically or when specific processor exceptions. When they are invoked by the Debug Support driver, these callback functions are passed the current machine context record. The debug agent may modify this context record to change the machine context which is restored to the machine after the callback function returns. The debug agent does not run in the same context as the rest of UEFI and all modifications to the machine context are deferred until after the callback function returns.</p>
+<p>It is expected that there will typically be two instances of the EFI Debug Support protocol in the system. One associated with the native processor instruction set (IA-32, x64, ARM, RISC-V, LoongArch, or Itanium processor family), and one for the EFI virtual machine that implements EFI byte code (EBC).</p>
+<p>While multiple instances of the EFI Debug Support protocol are expected, there must never be more than one for any given instruction set.</p>
+</section>
+<section id="id5">
+<span id="id6"></span><h3><span class="section-number">18.2.2. </span>EFI_DEBUG_SUPPORT_PROTOCOL<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>This protocol provides the services to allow the debug agent to register callback functions that are called either periodically or when specific processor exceptions occur.</p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_DEBUG_SUPPORT_PROTOCOL_GUID \</span>
+  <span class="p">{</span><span class="mh">0x2755590C</span><span class="p">,</span><span class="mh">0x6F3C</span><span class="p">,</span><span class="mh">0x42FA</span><span class="p">,</span>\
+  <span class="p">{</span><span class="mh">0x9E</span><span class="p">,</span><span class="mh">0xA4</span><span class="p">,</span><span class="mh">0xA3</span><span class="p">,</span><span class="mh">0xBA</span><span class="p">,</span><span class="mh">0x54</span><span class="p">,</span><span class="mh">0x3C</span><span class="p">,</span><span class="mh">0xDA</span><span class="p">,</span><span class="mh">0x25</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p><strong>Protocol Interface Structure</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">EFI_INSTRUCTION_SET_ARCHITECTURE</span>        <span class="n">Isa</span><span class="p">;</span>
+  <span class="n">EFI_GET_MAXIMUM_PROCESSOR_INDEX</span>         <span class="n">GetMaximumProcessorIndex</span><span class="p">;</span>
+  <span class="n">EFI_REGISTER_PERIODIC_CALLBACK</span>          <span class="n">RegisterPeriodicCallback</span><span class="p">;</span>
+  <span class="n">EFI_REGISTER_EXCEPTION_CALLBACK</span>         <span class="n">RegisterExceptionCallback</span><span class="p">;</span>
+  <span class="n">EFI_INVALIDATE_INSTRUCTION_CACHE</span>        <span class="n">InvalidateInstructionCache</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_DEBUG_SUPPORT_PROTOCOL</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl>
+<dt>Isa</dt><dd><p>Declares the processor architecture for this instance of the EFI Debug Support protocol.</p>
+</dd>
+<dt>GetMaximumProcessorIndex</dt><dd><div class="line-block">
+<div class="line">Returns the maximum processor index value that may be used with</div>
+<div class="line"><a class="reference internal" href="#id8">EFI_DEBUG_SUPPORT_PROTOCOL.REGISTERPERIODICCALLBACK()</a>,</div>
+<div class="line"><a class="reference internal" href="#id9">EFI_DEBUG_SUPPORT_PROTOCOL.REGISTEREXCEPTIONCALLBACK()</a> ,</div>
+<div class="line"><a class="reference internal" href="#id7">EFI_DEBUG_SUPPORT_PROTOCOL.GETMAXIMUMPROCESSORINDEX()</a> function description.</div>
+</div>
+</dd>
+<dt>RegisterPeriodicCallback</dt><dd><p>Registers a callback function that will be invoked periodically and asynchronously to the execution of EFI. See the RegisterPeriodicCallback()* function description.</p>
+</dd>
+<dt>RegisterExceptionCallback</dt><dd><p>Registers a callback function that will be called each time the specified processor exception occurs. See the RegisterExceptionCallback()* function description.</p>
+</dd>
+<dt>InvalidateInstructionCache</dt><dd><p>Invalidate the instruction cache of the processor. This is required by processor architectures where instruction and data caches are not coherent when instructions in the code under debug has been modified by the debug agent.  <a class="reference internal" href="#id10">EFI_DEBUG_SUPPORT_PROTOCOL.INVALIDATEINSTRUCTIONCACHE()</a>  function description.</p>
+</dd>
+</dl>
+<p><strong>Related Definitions</strong></p>
+<p>Refer to the Microsoft PE/COFF Specification revision 6.2 or later for <em>IMAGE_FILE_MACHINE</em> definitions.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The definition of IMAGE_FILE_MACHINE_EBC is not included in revision 6.2 of the PE/COFF specification. It can be found in an article about the PE/COFF format at <a class="reference external" href="https://learn.microsoft.com/en-us/windows/win32/debug/pe-format">https://learn.microsoft.com/en-us/windows/win32/debug/pe-format</a></p>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span>
+<span class="o">//</span> <span class="n">Machine</span> <span class="nb">type</span> <span class="n">definition</span>
+<span class="o">//</span>
+<span class="n">typedef</span> <span class="n">enum</span> <span class="p">{</span>
+  <span class="n">IsaIa32</span> <span class="o">=</span> <span class="n">IMAGE_FILE_MACHINE_I386</span><span class="p">,</span>               <span class="o">//</span> <span class="mh">0x014C</span>
+  <span class="n">IsaX64</span> <span class="o">=</span> <span class="n">IMAGE_FILE_MACHINE_X64</span><span class="p">,</span>                 <span class="o">//</span> <span class="mh">0x8664</span>
+  <span class="n">IsaIpf</span> <span class="o">=</span> <span class="n">IMAGE_FILE_MACHINE_IA64</span><span class="p">,</span>                <span class="o">//</span> <span class="mh">0x0200</span>
+  <span class="n">IsaEbc</span> <span class="o">=</span> <span class="n">IMAGE_FILE_MACHINE_EBC</span><span class="p">,</span>                 <span class="o">//</span> <span class="mh">0x0EBC</span>
+  <span class="n">IsaArm</span> <span class="o">=</span> <span class="n">IMAGE_FILE_MACHINE_ARMTHUMB_MIXED</span>       <span class="o">//</span> <span class="mh">0x1C2</span>
+  <span class="n">IsaAArch64</span> <span class="o">=</span> <span class="n">IMAGE_FILE_MACHINE_AARCH64</span>          <span class="o">//</span> <span class="mh">0xAA64</span>
+  <span class="n">IsaRISCV32</span> <span class="o">=</span> <span class="n">IMAGE_FILE_MACHINE_RISCV32</span>          <span class="o">//</span> <span class="mh">0x5032</span>
+  <span class="n">IsaRISCV64</span> <span class="o">=</span> <span class="n">IMAGE_FILE_MACHINE_RISCV64</span>          <span class="o">//</span> <span class="mh">0x5064</span>
+  <span class="n">IsaRISCV128</span> <span class="o">=</span> <span class="n">IMAGE_FILE_MACHINE_RISCV128</span>        <span class="o">//</span> <span class="mh">0x5128</span>
+  <span class="n">IsaLoongArch32</span> <span class="o">=</span> <span class="n">IMAGE_FILE_MACHINE_LOONGARCH32</span>  <span class="o">//</span> <span class="mh">0x6232</span>
+  <span class="n">IsaLoongArch64</span> <span class="o">=</span> <span class="n">IMAGE_FILE_MACHINE_LOONGARCH64</span>  <span class="o">//</span> <span class="mh">0x6264</span>
+<span class="p">}</span> <span class="n">EFI_INSTRUCTION_SET_ARCHITECTURE</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>The EFI Debug Support protocol provides the interfaces required to register debug agent callback functions and to manage the processor’s instruction stream as required. Registered callback functions are invoked in interrupt context when the specified event occurs.</p>
+<p>The driver that produces the EFI Debug Support protocol is also responsible for saving the machine context prior to invoking a registered callback function and restoring it after the callback function returns prior to returning to the code under debug. If the debug agent has modified the context record, the modified context must be used in the restore operation.</p>
+<p>Furthermore, if the debug agent modifies any of the code under debug (to set a software breakpoint for example), it must call the <em>InvalidateInstructionCache()</em> function for the region of memory that has been modified.</p>
+</section>
+<section id="efi-debug-support-protocol-getmaximumprocessorindex">
+<span id="id7"></span><h3><span class="section-number">18.2.3. </span>EFI_DEBUG_SUPPORT_PROTOCOL.GetMaximumProcessorIndex()<a class="headerlink" href="#efi-debug-support-protocol-getmaximumprocessorindex" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Returns the maximum value that may be used for the <em>ProcessorIndex</em> parameter in   <a class="reference internal" href="#id8">EFI_DEBUG_SUPPORT_PROTOCOL.REGISTERPERIODICCALLBACK()</a>   and  <a class="reference internal" href="#id9">EFI_DEBUG_SUPPORT_PROTOCOL.REGISTEREXCEPTIONCALLBACK()</a> .</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_GET_MAXIMUM_PROCESSOR_INDEX</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_DEBUG_SUPPORT_PROTOCOL</span>              <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">UINTN</span>                                  <span class="o">*</span><span class="n">MaxProcessorIndex</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the  <a class="reference internal" href="#id5">EFI_DEBUG_SUPPORT_PROTOCOL</a>  instance. Type EFI_DEBUG_SUPPORT_PROTOCOL is defined in this section.</p>
+</dd>
+<dt>MaxProcessorIndex</dt><dd><p>Pointer to a caller-allocated UINTN in which the maximum supported processor index is returned.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>GetMaximumProcessorIndex()</em> function returns the maximum processor index in the output parameter <em>MaxProcessorIndex</em>. This value is the largest value that may be used in the <em>ProcessorIndex</em> parameter for both <em>RegisterPeriodicCallback()</em> and <em>RegisterExceptionCallback()</em> . All values between 0 and <em>MaxProcessorIndex</em> must be supported by <em>RegisterPeriodicCallback()</em> and <em>RegisterExceptionCallback()</em>.</p>
+<p>It is the responsibility of the caller to ensure all parameters are correct. There is no provision for parameter checking by <em>GetMaximumProcessorIndex()</em>. The implementation behavior when an invalid parameter is passed is not defined by this specification.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The function completed successfully.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-debug-support-protocol-registerperiodiccallback">
+<span id="id8"></span><h3><span class="section-number">18.2.4. </span>EFI_DEBUG_SUPPORT_PROTOCOL.RegisterPeriodicCallback()<a class="headerlink" href="#efi-debug-support-protocol-registerperiodiccallback" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Registers a function to be called back periodically in interrupt context.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_REGISTER_PERIODIC_CALLBACK</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_DEBUG_SUPPORT_PROTOCOL</span>              <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">UINTN</span>                                   <span class="n">ProcessorIndex</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">EFI_PERIODIC_CALLBACK</span>                   <span class="n">PeriodicCallback</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the  <a class="reference internal" href="#id5">EFI_DEBUG_SUPPORT_PROTOCOL</a>  instance. Type EFI_DEBUG_SUPPORT_PROTOCOL is defined in  <a class="reference internal" href="#id5">EFI_DEBUG_SUPPORT_PROTOCOL</a> .</p>
+</dd>
+<dt>ProcessorIndex</dt><dd><p>Specifies which processor the callback function applies to.</p>
+</dd>
+<dt>PeriodicCallback</dt><dd><p>A pointer to a function of type <em>PERIODIC_CALLBACK</em> that is the main periodic entry point of the debug agent. It receives as a parameter a pointer to the full context of the interrupted execution thread.</p>
+</dd>
+</dl>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">typedef</span>
+ <span class="n">VOID</span> <span class="p">(</span><span class="o">*</span><span class="n">EFI_PERIODIC_CALLBACK</span><span class="p">)</span> <span class="p">(</span>
+   <span class="n">IN</span> <span class="n">OUT</span> <span class="n">EFI_SYSTEM_CONTEXT</span>      <span class="n">SystemContext</span>
+ <span class="p">);</span>
+
+ <span class="o">//</span> <span class="n">Universal</span> <span class="n">EFI_SYSTEM_CONTEXT</span> <span class="n">definition</span>
+ <span class="n">typedef</span> <span class="n">union</span> <span class="p">{</span>
+    <span class="n">EFI_SYSTEM_CONTEXT_EBC</span>         <span class="o">*</span><span class="n">SystemContextEbc</span><span class="p">;</span>
+    <span class="n">EFI_SYSTEM_CONTEXT_IA32</span>        <span class="o">*</span><span class="n">SystemContextIa32</span><span class="p">;</span>
+    <span class="n">EFI_SYSTEM_CONTEXT_X64</span>         <span class="o">*</span><span class="n">SystemContextX64</span><span class="p">;</span>
+    <span class="n">EFI_SYSTEM_CONTEXT_IPF</span>         <span class="o">*</span><span class="n">SystemContextIpf</span><span class="p">;</span>
+    <span class="n">EFI_SYSTEM_CONTEXT_ARM</span>         <span class="o">*</span><span class="n">SystemContextArm</span><span class="p">;</span>
+    <span class="n">EFI_SYSTEM_CONTEXT_AARCH64</span>     <span class="o">*</span><span class="n">SystemContextAArch64</span><span class="p">;</span>
+    <span class="n">EFI_SYSTEM_CONTEXT_RISCV32</span>     <span class="o">*</span><span class="n">SystemContextRiscV32</span><span class="p">;</span>
+    <span class="n">EFI_SYSTEM_CONTEXT_RISCV64</span>     <span class="o">*</span><span class="n">SystemContextRiscV64</span><span class="p">;</span>
+    <span class="n">EFI_SYSTEM_CONTEXT_RISCV128</span>    <span class="o">*</span><span class="n">SystemContextRiscv128</span><span class="p">;</span>
+    <span class="n">EFI_SYSTEM_CONTEXT_LOONGARCH64</span> <span class="o">*</span><span class="n">SystemContextLongArch64</span><span class="p">;</span>
+ <span class="p">}</span> <span class="n">EFI_SYSTEM_CONTEXT</span><span class="p">;</span>
+
+ <span class="o">//</span> <span class="n">System</span> <span class="n">context</span> <span class="k">for</span> <span class="n">virtual</span> <span class="n">EBC</span> <span class="n">processors</span>
+ <span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+    <span class="n">UINT64</span>                  <span class="n">R0</span><span class="p">,</span> <span class="n">R1</span><span class="p">,</span> <span class="n">R2</span><span class="p">,</span> <span class="n">R3</span><span class="p">,</span> <span class="n">R4</span><span class="p">,</span> <span class="n">R5</span><span class="p">,</span> <span class="n">R6</span><span class="p">,</span> <span class="n">R7</span><span class="p">;</span>
+    <span class="n">UINT64</span>                  <span class="n">Flags</span><span class="p">;</span>
+    <span class="n">UINT64</span>                  <span class="n">ControlFlags</span><span class="p">;</span>
+    <span class="n">UINT64</span>                  <span class="n">Ip</span><span class="p">;</span>
+ <span class="p">}</span> <span class="n">EFI_SYSTEM_CONTEXT_EBC</span><span class="p">;</span>
+
+ <span class="o">//</span> <span class="n">System</span> <span class="n">context</span> <span class="k">for</span> <span class="n">RISC</span><span class="o">-</span><span class="n">V</span> <span class="mi">32</span>
+ <span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+
+    <span class="o">//</span> <span class="n">Integer</span> <span class="n">registers</span>
+    <span class="n">UINT32</span>         <span class="n">Zero</span><span class="p">,</span> <span class="n">Ra</span><span class="p">,</span> <span class="n">Sp</span><span class="p">,</span> <span class="n">Gp</span><span class="p">,</span> <span class="n">Tp</span><span class="p">,</span> <span class="n">T0</span><span class="p">,</span> <span class="n">T1</span><span class="p">,</span> <span class="n">T2</span><span class="p">;</span>
+    <span class="n">UINT32</span>         <span class="n">S0FP</span><span class="p">,</span> <span class="n">S1</span><span class="p">,</span> <span class="n">A0</span><span class="p">,</span> <span class="n">A1</span><span class="p">,</span> <span class="n">A2</span><span class="p">,</span> <span class="n">A3</span><span class="p">,</span> <span class="n">A4</span><span class="p">,</span> <span class="n">A5</span><span class="p">,</span> <span class="n">A6</span><span class="p">,</span> <span class="n">A7</span><span class="p">;</span>
+    <span class="n">UINT32</span>         <span class="n">S2</span><span class="p">,</span> <span class="n">S3</span><span class="p">,</span> <span class="n">S4</span><span class="p">,</span> <span class="n">S5</span><span class="p">,</span> <span class="n">S6</span><span class="p">,</span> <span class="n">S7</span><span class="p">,</span> <span class="n">S8</span><span class="p">,</span> <span class="n">S9</span><span class="p">,</span> <span class="n">S10</span><span class="p">,</span> <span class="n">S11</span><span class="p">;</span>
+    <span class="n">UINT32</span>         <span class="n">T3</span><span class="p">,</span> <span class="n">T4</span><span class="p">,</span> <span class="n">T5</span><span class="p">,</span> <span class="n">T6</span><span class="p">;</span>
+
+    <span class="o">//</span> <span class="n">Floating</span> <span class="n">registers</span> <span class="k">for</span> <span class="n">F</span><span class="p">,</span> <span class="n">D</span> <span class="ow">and</span> <span class="n">Q</span> <span class="n">Standard</span> <span class="n">Extensions</span>
+    <span class="n">UINT128</span>        <span class="n">Ft0</span><span class="p">,</span> <span class="n">Ft1</span><span class="p">,</span> <span class="n">Ft2</span><span class="p">,</span> <span class="n">Ft3</span><span class="p">,</span> <span class="n">Ft4</span><span class="p">,</span> <span class="n">Ft5</span><span class="p">,</span> <span class="n">Ft6</span><span class="p">,</span> <span class="n">Ft7</span><span class="p">;</span>
+    <span class="n">UINT128</span>        <span class="n">Fs0</span><span class="p">,</span> <span class="n">Fs1</span><span class="p">,</span> <span class="n">Fa0</span><span class="p">,</span> <span class="n">Fa1</span><span class="p">,</span> <span class="n">Fa2</span><span class="p">,</span> <span class="n">Fa3</span><span class="p">,</span> <span class="n">Fa4</span><span class="p">,</span> <span class="n">Fa5</span><span class="p">,</span> <span class="n">Fa6</span><span class="p">,</span> <span class="n">Fa7</span><span class="p">;</span>
+    <span class="n">UINT128</span>        <span class="n">Fs2</span><span class="p">,</span> <span class="n">Fs3</span><span class="p">,</span> <span class="n">Fs4</span><span class="p">,</span> <span class="n">Fs5</span><span class="p">,</span> <span class="n">Fs6</span><span class="p">,</span> <span class="n">Fs7</span><span class="p">,</span> <span class="n">Fs8</span><span class="p">,</span> <span class="n">Fs9</span><span class="p">,</span> <span class="n">Fs10</span><span class="p">,</span> <span class="n">Fs11</span><span class="p">;</span>
+    <span class="n">UINT128</span>        <span class="n">Ft8</span><span class="p">,</span> <span class="n">Ft9</span><span class="p">,</span> <span class="n">Ft10</span><span class="p">,</span> <span class="n">Ft11</span><span class="p">;</span>
+
+ <span class="p">}</span> <span class="n">EFI_SYSTEM_CONTEXT_RISCV32</span><span class="p">;</span>
+
+ <span class="o">//</span> <span class="n">System</span> <span class="n">context</span> <span class="k">for</span> <span class="n">RISC</span><span class="o">-</span><span class="n">V</span> <span class="mi">64</span>
+ <span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+
+    <span class="o">//</span> <span class="n">Integer</span> <span class="n">registers</span>
+    <span class="n">UINT64</span>         <span class="n">Zero</span><span class="p">,</span> <span class="n">Ra</span><span class="p">,</span> <span class="n">Sp</span><span class="p">,</span> <span class="n">Gp</span><span class="p">,</span> <span class="n">Tp</span><span class="p">,</span> <span class="n">T0</span><span class="p">,</span> <span class="n">T1</span><span class="p">,</span> <span class="n">T2</span><span class="p">;</span>
+    <span class="n">UINT64</span>         <span class="n">S0FP</span><span class="p">,</span> <span class="n">S1</span><span class="p">,</span> <span class="n">A0</span><span class="p">,</span> <span class="n">A1</span><span class="p">,</span> <span class="n">A2</span><span class="p">,</span> <span class="n">A3</span><span class="p">,</span> <span class="n">A4</span><span class="p">,</span> <span class="n">A5</span><span class="p">,</span> <span class="n">A6</span><span class="p">,</span> <span class="n">A7</span><span class="p">;</span>
+    <span class="n">UINT64</span>         <span class="n">S2</span><span class="p">,</span> <span class="n">S3</span><span class="p">,</span> <span class="n">S4</span><span class="p">,</span> <span class="n">S5</span><span class="p">,</span> <span class="n">S6</span><span class="p">,</span> <span class="n">S7</span><span class="p">,</span> <span class="n">S8</span><span class="p">,</span> <span class="n">S9</span><span class="p">,</span> <span class="n">S10</span><span class="p">,</span> <span class="n">S11</span><span class="p">;</span>
+    <span class="n">UINT64</span>         <span class="n">T3</span><span class="p">,</span> <span class="n">T4</span><span class="p">,</span> <span class="n">T5</span><span class="p">,</span> <span class="n">T6</span><span class="p">;</span>
+
+    <span class="o">//</span> <span class="n">Floating</span> <span class="n">registers</span> <span class="k">for</span> <span class="n">F</span><span class="p">,</span> <span class="n">D</span> <span class="ow">and</span> <span class="n">Q</span> <span class="n">Standard</span> <span class="n">Extensions</span>
+    <span class="n">UINT128</span>        <span class="n">Ft0</span><span class="p">,</span> <span class="n">Ft1</span><span class="p">,</span> <span class="n">Ft2</span><span class="p">,</span> <span class="n">Ft3</span><span class="p">,</span> <span class="n">Ft4</span><span class="p">,</span> <span class="n">Ft5</span><span class="p">,</span> <span class="n">Ft6</span><span class="p">,</span> <span class="n">Ft7</span><span class="p">;</span>
+    <span class="n">UINT128</span>        <span class="n">Fs0</span><span class="p">,</span> <span class="n">Fs1</span><span class="p">,</span> <span class="n">Fa0</span><span class="p">,</span> <span class="n">Fa1</span><span class="p">,</span> <span class="n">Fa2</span><span class="p">,</span> <span class="n">Fa3</span><span class="p">,</span> <span class="n">Fa4</span><span class="p">,</span> <span class="n">Fa5</span><span class="p">,</span> <span class="n">Fa6</span><span class="p">,</span> <span class="n">Fa7</span><span class="p">;</span>
+    <span class="n">UINT128</span>        <span class="n">Fs2</span><span class="p">,</span> <span class="n">Fs3</span><span class="p">,</span> <span class="n">Fs4</span><span class="p">,</span> <span class="n">Fs5</span><span class="p">,</span> <span class="n">Fs6</span><span class="p">,</span> <span class="n">Fs7</span><span class="p">,</span> <span class="n">Fs8</span><span class="p">,</span> <span class="n">Fs9</span><span class="p">,</span> <span class="n">Fs10</span><span class="p">,</span> <span class="n">Fs11</span><span class="p">;</span>
+    <span class="n">UINT128</span>        <span class="n">Ft8</span><span class="p">,</span> <span class="n">Ft9</span><span class="p">,</span> <span class="n">Ft10</span><span class="p">,</span> <span class="n">Ft11</span><span class="p">;</span>
+
+ <span class="p">}</span> <span class="n">EFI_SYSTEM_CONTEXT_RISCV64</span><span class="p">;</span>
+
+ <span class="o">//</span> <span class="n">System</span> <span class="n">context</span> <span class="k">for</span> <span class="n">RISC</span><span class="o">-</span><span class="n">V</span> <span class="mi">128</span>
+ <span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+
+    <span class="o">//</span> <span class="n">Integer</span> <span class="n">registers</span>
+    <span class="n">UINT128Zero</span><span class="p">,</span>      <span class="n">Ra</span><span class="p">,</span> <span class="n">Sp</span><span class="p">,</span> <span class="n">Gp</span><span class="p">,</span> <span class="n">Tp</span><span class="p">,</span> <span class="n">T0</span><span class="p">,</span> <span class="n">T1</span><span class="p">,</span> <span class="n">T2</span><span class="p">;</span>
+    <span class="n">UINT128S0FP</span><span class="p">,</span>      <span class="n">S1</span><span class="p">,</span> <span class="n">A0</span><span class="p">,</span> <span class="n">A1</span><span class="p">,</span> <span class="n">A2</span><span class="p">,</span> <span class="n">A3</span><span class="p">,</span> <span class="n">A4</span><span class="p">,</span> <span class="n">A5</span><span class="p">,</span> <span class="n">A6</span><span class="p">,</span> <span class="n">A7</span><span class="p">;</span>
+    <span class="n">UINT128S2</span><span class="p">,</span>        <span class="n">S3</span><span class="p">,</span> <span class="n">S4</span><span class="p">,</span> <span class="n">S5</span><span class="p">,</span> <span class="n">S6</span><span class="p">,</span> <span class="n">S7</span><span class="p">,</span> <span class="n">S8</span><span class="p">,</span> <span class="n">S9</span><span class="p">,</span> <span class="n">S10</span><span class="p">,</span> <span class="n">S11</span><span class="p">;</span>
+    <span class="n">UINT128T3</span><span class="p">,</span>        <span class="n">T4</span><span class="p">,</span> <span class="n">T5</span><span class="p">,</span> <span class="n">T6</span><span class="p">;</span>
+
+    <span class="o">//</span> <span class="n">Floating</span> <span class="n">registers</span> <span class="k">for</span> <span class="n">F</span><span class="p">,</span> <span class="n">D</span> <span class="ow">and</span> <span class="n">Q</span> <span class="n">Standard</span> <span class="n">Extensions</span>
+    <span class="n">UINT128</span>           <span class="n">Ft0</span><span class="p">,</span> <span class="n">Ft1</span><span class="p">,</span> <span class="n">Ft2</span><span class="p">,</span> <span class="n">Ft3</span><span class="p">,</span> <span class="n">Ft4</span><span class="p">,</span> <span class="n">Ft5</span><span class="p">,</span> <span class="n">Ft6</span><span class="p">,</span> <span class="n">Ft7</span><span class="p">;</span>
+    <span class="n">UINT128</span>           <span class="n">Fs0</span><span class="p">,</span> <span class="n">Fs1</span><span class="p">,</span> <span class="n">Fa0</span><span class="p">,</span> <span class="n">Fa1</span><span class="p">,</span> <span class="n">Fa2</span><span class="p">,</span> <span class="n">Fa3</span><span class="p">,</span> <span class="n">Fa4</span><span class="p">,</span> <span class="n">Fa5</span><span class="p">,</span> <span class="n">Fa6</span><span class="p">,</span> <span class="n">Fa7</span><span class="p">;</span>
+    <span class="n">UINT128</span>           <span class="n">Fs2</span><span class="p">,</span> <span class="n">Fs3</span><span class="p">,</span> <span class="n">Fs4</span><span class="p">,</span> <span class="n">Fs5</span><span class="p">,</span> <span class="n">Fs6</span><span class="p">,</span> <span class="n">Fs7</span><span class="p">,</span> <span class="n">Fs8</span><span class="p">,</span> <span class="n">Fs9</span><span class="p">,</span> <span class="n">Fs10</span><span class="p">,</span> <span class="n">Fs11</span><span class="p">;</span>
+    <span class="n">UINT128</span>           <span class="n">Ft8</span><span class="p">,</span> <span class="n">Ft9</span><span class="p">,</span> <span class="n">Ft10</span><span class="p">,</span> <span class="n">Ft11</span><span class="p">;</span>
+
+<span class="p">}</span> <span class="n">EFI_SYSTEM_CONTEXT_RISCV128</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Note:</strong>  <em>When the context record field is larger than the register being stored in it, the upper bits of the context record
+field are unused and ignored</em>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">System</span> <span class="n">context</span> <span class="k">for</span> <span class="n">IA</span><span class="o">-</span><span class="mi">32</span> <span class="n">processors</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+   <span class="n">UINT32</span> <span class="n">ExceptionData</span><span class="p">;</span>   <span class="o">//</span> <span class="n">ExceptionData</span> <span class="ow">is</span> <span class="n">additional</span> <span class="n">data</span> <span class="n">pushed</span>
+                           <span class="o">//</span> <span class="n">on</span> <span class="n">the</span> <span class="n">stack</span> <span class="n">by</span> <span class="n">some</span> <span class="n">types</span> <span class="n">of</span> <span class="n">IA</span><span class="o">-</span><span class="mi">32</span>
+                           <span class="o">//</span> <span class="n">exceptions</span>
+   <span class="n">EFI_FX_SAVE_STATE_IA32</span>     <span class="n">FxSaveState</span><span class="p">;</span>
+   <span class="n">UINT32</span>                     <span class="n">Dr0</span><span class="p">,</span> <span class="n">Dr1</span><span class="p">,</span> <span class="n">Dr2</span><span class="p">,</span> <span class="n">Dr3</span><span class="p">,</span> <span class="n">Dr6</span><span class="p">,</span> <span class="n">Dr7</span><span class="p">;</span>
+   <span class="n">UINT32</span>                     <span class="n">Cr0</span><span class="p">,</span> <span class="n">Cr1</span> <span class="o">/*</span> <span class="n">Reserved</span> <span class="o">*/</span><span class="p">,</span> <span class="n">Cr2</span><span class="p">,</span> <span class="n">Cr3</span><span class="p">,</span> <span class="n">Cr4</span><span class="p">;</span>
+   <span class="n">UINT32</span>                     <span class="n">Eflags</span><span class="p">;</span>
+   <span class="n">UINT32</span>                     <span class="n">Ldtr</span><span class="p">,</span> <span class="n">Tr</span><span class="p">;</span>
+   <span class="n">UINT32</span>                     <span class="n">Gdtr</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">Idtr</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT32</span>                     <span class="n">Eip</span><span class="p">;</span>
+   <span class="n">UINT32</span>                     <span class="n">Gs</span><span class="p">,</span> <span class="n">Fs</span><span class="p">,</span> <span class="n">Es</span><span class="p">,</span> <span class="n">Ds</span><span class="p">,</span> <span class="n">Cs</span><span class="p">,</span> <span class="n">Ss</span><span class="p">;</span>
+   <span class="n">UINT32</span>                     <span class="n">Edi</span><span class="p">,</span> <span class="n">Esi</span><span class="p">,</span> <span class="n">Ebp</span><span class="p">,</span> <span class="n">Esp</span><span class="p">,</span> <span class="n">Ebx</span><span class="p">,</span> <span class="n">Edx</span><span class="p">,</span> <span class="n">Ecx</span><span class="p">,</span> <span class="n">Eax</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_SYSTEM_CONTEXT_IA32</span><span class="p">;</span>
+
+<span class="o">//</span> <span class="n">FXSAVE_STATE</span> <span class="o">-</span> <span class="n">FP</span> <span class="o">/</span> <span class="n">MMX</span> <span class="o">/</span> <span class="n">XMM</span> <span class="n">registers</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+   <span class="n">UINT16</span>         <span class="n">Fcw</span><span class="p">;</span>
+   <span class="n">UINT16</span>         <span class="n">Fsw</span><span class="p">;</span>
+   <span class="n">UINT16</span>         <span class="n">Ftw</span><span class="p">;</span>
+   <span class="n">UINT16</span>         <span class="n">Opcode</span><span class="p">;</span>
+   <span class="n">UINT32</span>         <span class="n">Eip</span><span class="p">;</span>
+   <span class="n">UINT16</span>         <span class="n">Cs</span><span class="p">;</span>
+   <span class="n">UINT16</span>         <span class="n">Reserved1</span><span class="p">;</span>
+   <span class="n">UINT32</span>         <span class="n">DataOffset</span><span class="p">;</span>
+   <span class="n">UINT16</span>         <span class="n">Ds</span><span class="p">;</span>
+   <span class="n">UINT8</span>          <span class="n">Reserved2</span><span class="p">[</span><span class="mi">10</span><span class="p">];</span>
+   <span class="n">UINT8</span>          <span class="n">St0Mm0</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">Reserved3</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+   <span class="n">UINT8</span>          <span class="n">St1Mm1</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">Reserved4</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+   <span class="n">UINT8</span>          <span class="n">St2Mm2</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">Reserved5</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+   <span class="n">UINT8</span>          <span class="n">St3Mm3</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">Reserved6</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+   <span class="n">UINT8</span>          <span class="n">St4Mm4</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">Reserved7</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+   <span class="n">UINT8</span>          <span class="n">St5Mm5</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">Reserved8</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+   <span class="n">UINT8</span>          <span class="n">St6Mm6</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">Reserved9</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+   <span class="n">UINT8</span>          <span class="n">St7Mm7</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">Reserved10</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+   <span class="n">UINT8</span>          <span class="n">Xmm0</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+   <span class="n">UINT8</span>          <span class="n">Xmm1</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+   <span class="n">UINT8</span>          <span class="n">Xmm2</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+   <span class="n">UINT8</span>          <span class="n">Xmm3</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+   <span class="n">UINT8</span>          <span class="n">Xmm4</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+   <span class="n">UINT8</span>          <span class="n">Xmm5</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+   <span class="n">UINT8</span>          <span class="n">Xmm6</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+   <span class="n">UINT8</span>          <span class="n">Xmm7</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+   <span class="n">UINT8</span>          <span class="n">Reserved11</span><span class="p">[</span><span class="mi">14</span> <span class="o">*</span> <span class="mi">16</span><span class="p">];</span>
+<span class="p">}</span> <span class="n">EFI_FX_SAVE_STATE_IA32</span>
+
+<span class="o">//</span> <span class="n">System</span> <span class="n">context</span> <span class="k">for</span> <span class="n">x64</span> <span class="n">processors</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+   <span class="n">UINT64</span> <span class="n">ExceptionData</span><span class="p">;</span>   <span class="o">//</span> <span class="n">ExceptionData</span> <span class="ow">is</span>
+                           <span class="o">//</span> <span class="n">additional</span> <span class="n">data</span> <span class="n">pushed</span>
+                           <span class="o">//</span> <span class="n">on</span> <span class="n">the</span> <span class="n">stack</span> <span class="n">by</span> <span class="n">some</span>
+                           <span class="o">//</span> <span class="n">types</span> <span class="n">of</span> <span class="n">x64</span> <span class="mi">64</span><span class="o">-</span><span class="n">bit</span>
+                           <span class="o">//</span> <span class="n">mode</span> <span class="n">exceptions</span>
+   <span class="n">EFI_FX_SAVE_STATE_X64</span> <span class="n">FxSaveState</span><span class="p">;</span>
+   <span class="n">UINT64</span>                  <span class="n">Dr0</span><span class="p">,</span> <span class="n">Dr1</span><span class="p">,</span> <span class="n">Dr2</span><span class="p">,</span> <span class="n">Dr3</span><span class="p">,</span> <span class="n">Dr6</span><span class="p">,</span> <span class="n">Dr7</span><span class="p">;</span>
+   <span class="n">UINT64</span>                  <span class="n">Cr0</span><span class="p">,</span> <span class="n">Cr1</span> <span class="o">/*</span> <span class="n">Reserved</span> <span class="o">*/</span><span class="p">,</span> <span class="n">Cr2</span><span class="p">,</span> <span class="n">Cr3</span><span class="p">,</span> <span class="n">Cr4</span><span class="p">,</span> <span class="n">Cr8</span><span class="p">;</span>
+   <span class="n">UINT64</span>                  <span class="n">Rflags</span><span class="p">;</span>
+   <span class="n">UINT64</span>                  <span class="n">Ldtr</span><span class="p">,</span> <span class="n">Tr</span><span class="p">;</span>
+   <span class="n">UINT64</span>                  <span class="n">Gdtr</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">Idtr</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span>                  <span class="n">Rip</span><span class="p">;</span>
+   <span class="n">UINT64</span>                  <span class="n">Gs</span><span class="p">,</span> <span class="n">Fs</span><span class="p">,</span> <span class="n">Es</span><span class="p">,</span> <span class="n">Ds</span><span class="p">,</span> <span class="n">Cs</span><span class="p">,</span> <span class="n">Ss</span><span class="p">;</span>
+   <span class="n">UINT64</span>                  <span class="n">Rdi</span><span class="p">,</span> <span class="n">Rsi</span><span class="p">,</span> <span class="n">Rbp</span><span class="p">,</span> <span class="n">Rsp</span><span class="p">,</span> <span class="n">Rbx</span><span class="p">,</span> <span class="n">Rdx</span><span class="p">,</span> <span class="n">Rcx</span><span class="p">,</span> <span class="n">Rax</span><span class="p">;</span>
+   <span class="n">UINT64</span>                  <span class="n">R8</span><span class="p">,</span> <span class="n">R9</span><span class="p">,</span> <span class="n">R10</span><span class="p">,</span> <span class="n">R11</span><span class="p">,</span> <span class="n">R12</span><span class="p">,</span> <span class="n">R13</span><span class="p">,</span> <span class="n">R14</span><span class="p">,</span> <span class="n">R15</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_SYSTEM_CONTEXT_X64</span><span class="p">;</span>
+
+<span class="o">//</span> <span class="n">FXSAVE_STATE</span> <span class="o">-</span> <span class="n">FP</span> <span class="o">/</span> <span class="n">MMX</span> <span class="o">/</span> <span class="n">XMM</span> <span class="n">registers</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+   <span class="n">UINT16</span>                  <span class="n">Fcw</span><span class="p">;</span>
+   <span class="n">UINT16</span>                  <span class="n">Fsw</span><span class="p">;</span>
+   <span class="n">UINT16</span>                  <span class="n">Ftw</span><span class="p">;</span>
+   <span class="n">UINT16</span>                  <span class="n">Opcode</span><span class="p">;</span>
+   <span class="n">UINT64</span>                  <span class="n">Rip</span><span class="p">;</span>
+   <span class="n">UINT64</span>                  <span class="n">DataOffset</span><span class="p">;</span>
+   <span class="n">UINT8</span>                   <span class="n">Reserved1</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>
+   <span class="n">UINT8</span>                   <span class="n">St0Mm0</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">Reserved2</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+   <span class="n">UINT8</span>                   <span class="n">St1Mm1</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">Reserved3</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+   <span class="n">UINT8</span>                   <span class="n">St2Mm2</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">Reserved4</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+   <span class="n">UINT8</span>                   <span class="n">St3Mm3</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">Reserved5</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+   <span class="n">UINT8</span>                   <span class="n">St4Mm4</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">Reserved6</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+   <span class="n">UINT8</span>                   <span class="n">St5Mm5</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">Reserved7</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+   <span class="n">UINT8</span>                   <span class="n">St6Mm6</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">Reserved8</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+   <span class="n">UINT8</span>                   <span class="n">St7Mm7</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">Reserved9</span><span class="p">[</span><span class="mi">6</span><span class="p">];</span>
+   <span class="n">UINT8</span>                   <span class="n">Xmm0</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+   <span class="n">UINT8</span>                   <span class="n">Xmm1</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+   <span class="n">UINT8</span>                   <span class="n">Xmm2</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+   <span class="n">UINT8</span>                   <span class="n">Xmm3</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+   <span class="n">UINT8</span>                   <span class="n">Xmm4</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+   <span class="n">UINT8</span>                   <span class="n">Xmm5</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+   <span class="n">UINT8</span>                   <span class="n">Xmm6</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+   <span class="n">UINT8</span>                   <span class="n">Xmm7</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+   <span class="n">UINT8</span>                   <span class="n">Reserved11</span><span class="p">[</span><span class="mi">14</span> <span class="o">*</span> <span class="mi">16</span><span class="p">];</span>
+<span class="p">}</span> <span class="n">EFI_FX_SAVE_STATE_X64</span><span class="p">;</span>
+
+<span class="o">//</span> <span class="n">System</span> <span class="n">context</span> <span class="k">for</span> <span class="n">Itanium</span> <span class="n">processor</span> <span class="n">family</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINT64</span> <span class="n">Reserved</span><span class="p">;</span>
+
+  <span class="n">UINT64</span> <span class="n">R1</span><span class="p">,</span> <span class="n">R2</span><span class="p">,</span> <span class="n">R3</span><span class="p">,</span> <span class="n">R4</span><span class="p">,</span> <span class="n">R5</span><span class="p">,</span> <span class="n">R6</span><span class="p">,</span> <span class="n">R7</span><span class="p">,</span> <span class="n">R8</span><span class="p">,</span> <span class="n">R9</span><span class="p">,</span> <span class="n">R10</span><span class="p">,</span>
+    <span class="n">R11</span><span class="p">,</span> <span class="n">R12</span><span class="p">,</span> <span class="n">R13</span><span class="p">,</span> <span class="n">R14</span><span class="p">,</span> <span class="n">R15</span><span class="p">,</span> <span class="n">R16</span><span class="p">,</span> <span class="n">R17</span><span class="p">,</span> <span class="n">R18</span><span class="p">,</span> <span class="n">R19</span><span class="p">,</span> <span class="n">R20</span><span class="p">,</span>
+    <span class="n">R21</span><span class="p">,</span> <span class="n">R22</span><span class="p">,</span> <span class="n">R23</span><span class="p">,</span> <span class="n">R24</span><span class="p">,</span> <span class="n">R25</span><span class="p">,</span> <span class="n">R26</span><span class="p">,</span> <span class="n">R27</span><span class="p">,</span> <span class="n">R28</span><span class="p">,</span> <span class="n">R29</span><span class="p">,</span> <span class="n">R30</span><span class="p">,</span>
+    <span class="n">R31</span><span class="p">;</span>
+
+  <span class="n">UINT64</span> <span class="n">F2</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">F3</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">F4</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">F5</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">F6</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+    <span class="n">F7</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">F8</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">F9</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">F10</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">F11</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+    <span class="n">F12</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">F13</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">F14</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">F15</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">F16</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+    <span class="n">F17</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">F18</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">F19</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">F20</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">F21</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+    <span class="n">F22</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">F23</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">F24</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">F25</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">F26</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+    <span class="n">F27</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">F28</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">F29</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">F30</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">F31</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+
+<span class="n">UINT64</span> <span class="n">Pr</span><span class="p">;</span>
+
+<span class="n">UINT64</span> <span class="n">B0</span><span class="p">,</span> <span class="n">B1</span><span class="p">,</span> <span class="n">B2</span><span class="p">,</span> <span class="n">B3</span><span class="p">,</span> <span class="n">B4</span><span class="p">,</span> <span class="n">B5</span><span class="p">,</span> <span class="n">B6</span><span class="p">,</span> <span class="n">B7</span><span class="p">;</span>
+
+<span class="o">//</span> <span class="n">application</span> <span class="n">registers</span>
+<span class="n">UINT64</span>      <span class="n">ArRsc</span><span class="p">,</span> <span class="n">ArBsp</span><span class="p">,</span> <span class="n">ArBspstore</span><span class="p">,</span> <span class="n">ArRnat</span><span class="p">;</span>
+<span class="n">UINT64</span>      <span class="n">ArFcr</span><span class="p">;</span>
+<span class="n">UINT64</span>      <span class="n">ArEflag</span><span class="p">,</span> <span class="n">ArCsd</span><span class="p">,</span> <span class="n">ArSsd</span><span class="p">,</span> <span class="n">ArCflg</span><span class="p">;</span>
+<span class="n">UINT64</span>      <span class="n">ArFsr</span><span class="p">,</span> <span class="n">ArFir</span><span class="p">,</span> <span class="n">ArFdr</span><span class="p">;</span>
+<span class="n">UINT64</span>      <span class="n">ArCcv</span><span class="p">;</span>
+<span class="n">UINT64</span>      <span class="n">ArUnat</span><span class="p">;</span>
+<span class="n">UINT64</span>      <span class="n">ArFpsr</span><span class="p">;</span>
+<span class="n">UINT64</span>      <span class="n">ArPfs</span><span class="p">,</span> <span class="n">ArLc</span><span class="p">,</span> <span class="n">ArEc</span><span class="p">;</span>
+
+<span class="o">//</span> <span class="n">control</span> <span class="n">registers</span>
+<span class="n">UINT64</span>      <span class="n">CrDcr</span><span class="p">,</span> <span class="n">CrItm</span><span class="p">,</span> <span class="n">CrIva</span><span class="p">,</span> <span class="n">CrPta</span><span class="p">,</span> <span class="n">CrIpsr</span><span class="p">,</span> <span class="n">CrIsr</span><span class="p">;</span>
+<span class="n">UINT64</span>      <span class="n">CrIip</span><span class="p">,</span> <span class="n">CrIfa</span><span class="p">,</span> <span class="n">CrItir</span><span class="p">,</span> <span class="n">CrIipa</span><span class="p">,</span> <span class="n">CrIfs</span><span class="p">,</span> <span class="n">CrIim</span><span class="p">;</span>
+<span class="n">UINT64</span>      <span class="n">CrIha</span><span class="p">;</span>
+
+<span class="o">//</span> <span class="n">debug</span> <span class="n">registers</span>
+<span class="n">UINT64</span>      <span class="n">Dbr0</span><span class="p">,</span> <span class="n">Dbr1</span><span class="p">,</span> <span class="n">Dbr2</span><span class="p">,</span> <span class="n">Dbr3</span><span class="p">,</span> <span class="n">Dbr4</span><span class="p">,</span> <span class="n">Dbr5</span><span class="p">,</span> <span class="n">Dbr6</span><span class="p">,</span> <span class="n">Dbr7</span><span class="p">;</span>
+<span class="n">UINT64</span>      <span class="n">Ibr0</span><span class="p">,</span> <span class="n">Ibr1</span><span class="p">,</span> <span class="n">Ibr2</span><span class="p">,</span> <span class="n">Ibr3</span><span class="p">,</span> <span class="n">Ibr4</span><span class="p">,</span> <span class="n">Ibr5</span><span class="p">,</span> <span class="n">Ibr6</span><span class="p">,</span> <span class="n">Ibr7</span><span class="p">;</span>
+
+<span class="o">//</span> <span class="n">virtual</span> <span class="n">registers</span>
+<span class="n">UINT64</span>      <span class="n">IntNat</span><span class="p">;</span> <span class="o">//</span> <span class="n">nat</span> <span class="n">bits</span> <span class="k">for</span> <span class="n">R1</span><span class="o">-</span><span class="n">R31</span>
+
+<span class="p">}</span> <span class="n">EFI_SYSTEM_CONTEXT_IPF</span><span class="p">;</span>
+
+<span class="o">//</span>
+<span class="o">//</span> <span class="n">ARM</span> <span class="n">processor</span> <span class="n">context</span> <span class="n">definition</span>
+<span class="o">//</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+   <span class="n">UINT32</span> <span class="n">R0</span><span class="p">;</span>
+   <span class="n">UINT32</span> <span class="n">R1</span><span class="p">;</span>
+   <span class="n">UINT32</span> <span class="n">R2</span><span class="p">;</span>
+   <span class="n">UINT32</span> <span class="n">R3</span><span class="p">;</span>
+   <span class="n">UINT32</span> <span class="n">R4</span><span class="p">;</span>
+   <span class="n">UINT32</span> <span class="n">R5</span><span class="p">;</span>
+   <span class="n">UINT32</span> <span class="n">R6</span><span class="p">;</span>
+   <span class="n">UINT32</span> <span class="n">R7</span><span class="p">;</span>
+   <span class="n">UINT32</span> <span class="n">R8</span><span class="p">;</span>
+   <span class="n">UINT32</span> <span class="n">R9</span><span class="p">;</span>
+   <span class="n">UINT32</span> <span class="n">R10</span><span class="p">;</span>
+   <span class="n">UINT32</span> <span class="n">R11</span><span class="p">;</span>
+   <span class="n">UINT32</span> <span class="n">R12</span><span class="p">;</span>
+   <span class="n">UINT32</span> <span class="n">SP</span><span class="p">;</span>
+   <span class="n">UINT32</span> <span class="n">LR</span><span class="p">;</span>
+   <span class="n">UINT32</span> <span class="n">PC</span><span class="p">;</span>
+   <span class="n">UINT32</span> <span class="n">CPSR</span><span class="p">;</span>
+   <span class="n">UINT32</span> <span class="n">DFSR</span><span class="p">;</span>
+   <span class="n">UINT32</span> <span class="n">DFAR</span><span class="p">;</span>
+   <span class="n">UINT32</span> <span class="n">IFSR</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_SYSTEM_CONTEXT_ARM</span><span class="p">;</span>
+
+<span class="o">//</span>
+<span class="o">///</span>
+<span class="o">///</span> <span class="n">AARCH64</span> <span class="n">processor</span> <span class="n">context</span> <span class="n">definition</span><span class="o">.</span>
+<span class="o">///</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+<span class="o">//</span> <span class="n">General</span> <span class="n">Purpose</span> <span class="n">Registers</span>
+   <span class="n">UINT64</span> <span class="n">X0</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X1</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X2</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X3</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X4</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X5</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X6</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X7</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X8</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X9</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X10</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X11</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X12</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X13</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X14</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X15</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X16</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X17</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X18</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X19</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X20</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X21</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X22</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X23</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X24</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X25</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X26</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X27</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">X28</span><span class="p">;</span>
+   <span class="n">UINT64</span> <span class="n">FP</span><span class="p">;</span> <span class="o">//</span> <span class="n">x29</span> <span class="o">-</span> <span class="n">Frame</span> <span class="n">Pointer</span>
+   <span class="n">UINT64</span> <span class="n">LR</span><span class="p">;</span> <span class="o">//</span> <span class="n">x30</span> <span class="o">-</span> <span class="n">Link</span> <span class="n">Register</span>
+   <span class="n">UINT64</span> <span class="n">SP</span><span class="p">;</span> <span class="o">//</span> <span class="n">x31</span> <span class="o">-</span> <span class="n">Stack</span> <span class="n">Pointer</span>
+              <span class="o">//</span> <span class="n">FP</span><span class="o">/</span><span class="n">SIMD</span> <span class="n">Registers</span>
+   <span class="n">UINT64</span> <span class="n">V0</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V1</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V2</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V3</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V4</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V5</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V6</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V7</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V8</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V9</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V10</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V11</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V12</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V13</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V14</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V15</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V16</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V17</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V18</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V19</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V20</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V21</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V22</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V23</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V24</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V25</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V26</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V27</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V28</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V29</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V30</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">V31</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">UINT64</span> <span class="n">ELR</span><span class="p">;</span>       <span class="o">//</span> <span class="ne">Exception</span> <span class="n">Link</span> <span class="n">Register</span>
+   <span class="n">UINT64</span> <span class="n">SPSR</span><span class="p">;</span>      <span class="o">//</span> <span class="n">Saved</span> <span class="n">Processor</span> <span class="n">Status</span> <span class="n">Register</span>
+   <span class="n">UINT64</span> <span class="n">FPSR</span><span class="p">;</span>      <span class="o">//</span> <span class="n">Floating</span> <span class="n">Point</span> <span class="n">Status</span> <span class="n">Register</span>
+   <span class="n">UINT64</span> <span class="n">ESR</span><span class="p">;</span>       <span class="o">//</span> <span class="ne">Exception</span> <span class="n">syndrome</span> <span class="n">register</span>
+   <span class="n">UINT64</span> <span class="n">FAR</span><span class="p">;</span>       <span class="o">//</span> <span class="n">Fault</span> <span class="n">Address</span> <span class="n">Register</span>
+
+<span class="p">}</span> <span class="n">EFI_SYSTEM_CONTEXT_AARCH64</span><span class="p">;</span>
+
+
+<span class="o">//</span> <span class="n">System</span> <span class="n">context</span> <span class="k">for</span> <span class="n">LoongArch64</span> <span class="n">processors</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+   <span class="n">UINT64</span>    <span class="n">R0</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R1</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R2</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R3</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R4</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R5</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R6</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R7</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R8</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R9</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R10</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R11</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R12</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R13</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R14</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R15</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R16</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R17</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R18</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R19</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R20</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R21</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R22</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R23</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R24</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R25</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R26</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R27</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R28</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R29</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R30</span><span class="p">;</span>
+   <span class="n">UINT64</span>    <span class="n">R31</span><span class="p">;</span>
+
+   <span class="n">UINT64</span>    <span class="n">CRMD</span><span class="p">;</span>  <span class="o">//</span> <span class="n">CuRrent</span> <span class="n">MoDe</span> <span class="n">information</span>
+   <span class="n">UINT64</span>    <span class="n">PRMD</span><span class="p">;</span>  <span class="o">//</span> <span class="n">PRe</span><span class="o">-</span><span class="n">exception</span> <span class="n">MoDe</span> <span class="n">information</span>
+   <span class="n">UINT64</span>    <span class="n">EUEN</span><span class="p">;</span>  <span class="o">//</span> <span class="n">Extended</span> <span class="n">component</span> <span class="n">Unit</span> <span class="n">ENable</span>
+   <span class="n">UINT64</span>    <span class="n">MISC</span><span class="p">;</span>  <span class="o">//</span> <span class="n">MISCellaneous</span> <span class="n">controller</span>
+   <span class="n">UINT64</span>    <span class="n">ECFG</span><span class="p">;</span>  <span class="o">//</span> <span class="n">Execption</span> <span class="n">ConFiGuration</span>
+   <span class="n">UINT64</span>    <span class="n">ESTAT</span><span class="p">;</span> <span class="o">//</span> <span class="n">Exeption</span> <span class="n">STATus</span>
+   <span class="n">UINT64</span>    <span class="n">ERA</span><span class="p">;</span>   <span class="o">//</span> <span class="ne">Exception</span> <span class="n">Return</span> <span class="n">Address</span>
+   <span class="n">UINT64</span>    <span class="n">BADV</span><span class="p">;</span>  <span class="o">//</span> <span class="n">BAD</span> <span class="n">Virtual</span> <span class="n">address</span>
+   <span class="n">UINT64</span>    <span class="n">BADI</span><span class="p">;</span>  <span class="o">//</span> <span class="n">BAD</span> <span class="n">Instruction</span>
+<span class="p">}</span> <span class="n">EFI_SYSTEM_CONTEXT_LOONGARCH64</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>The <em>RegisterPeriodicCallback()</em> function registers and enables the on-target debug agent’s periodic entry point. To unregister and disable calling the debug agent’s periodic entry point, call <em>RegisterPeriodicCallback()</em> passing a <strong>NULL</strong> <em>PeriodicCallback</em> parameter.</p>
+<p>The implementation must handle saving and restoring the processor context to/from the system context record around calls to the registered callback function.</p>
+<p>If the interrupt is also used by the firmware for the EFI time base or some other use, two rules must be observed. First, the registered callback function must be called before any EFI processing takes place. Second, the Debug Support implementation must perform the necessary steps to pass control to the firmware’s corresponding interrupt handler in a transparent manner.</p>
+<p>There is no quality-of-service requirement or specification regarding the frequency of calls to the registered <em>PeriodicCallback</em> function. This allows the implementation to mitigate a potential adverse impact to EFI timer based services due to the latency induced by the context save/restore and the associated callback function.</p>
+<p>It is the responsibility of the caller to ensure all parameters are correct. There is no provision for parameter checking by <em>RegisterPeriodicCallback()</em>. The implementation behavior when an invalid parameter is passed is not defined by this specification.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The function completed successfully.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_ALREADY_STARTED</p></td>
+<td><p>Non- <em>NULL</em> PeriodicCallback parameter when a callback function was previously registered.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_OUT_OF_RESOURCES</p></td>
+<td><p>System has insufficient memory resources to register new callback function.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-debug-support-protocol-registerexceptioncallback">
+<span id="id9"></span><h3><span class="section-number">18.2.5. </span>EFI_DEBUG_SUPPORT_PROTOCOL.RegisterExceptionCallback()<a class="headerlink" href="#efi-debug-support-protocol-registerexceptioncallback" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Registers a function to be called when a given processor exception occurs.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">REGISTER_EXCEPTION_CALLBACK</span><span class="p">)</span> <span class="p">(</span>
+   <span class="n">IN</span> <span class="n">EFI_DEBUG_SUPPORT_PROTOCOL</span>    <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+   <span class="n">IN</span> <span class="n">UINTN</span>                         <span class="n">ProcessorIndex</span><span class="p">,</span>
+   <span class="n">IN</span> <span class="n">EFI_EXCEPTION_CALLBACK</span>        <span class="n">ExceptionCallback</span><span class="p">,</span>
+   <span class="n">IN</span> <span class="n">EFI_EXCEPTION_TYPE</span>            <span class="n">ExceptionType</span>
+   <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the  <a class="reference internal" href="#id5">EFI_DEBUG_SUPPORT_PROTOCOL</a>  instance. Type EFI_DEBUG_SUPPORT_PROTOCOL is defined in  <a class="reference internal" href="#id5">EFI_DEBUG_SUPPORT_PROTOCOL</a> .</p>
+</dd>
+<dt>ProcessorIndex</dt><dd><p>Specifies which processor the callback function applies to.</p>
+</dd>
+<dt>ExceptionCallback</dt><dd><p>A pointer to a function of type EXCEPTION_CALLBACK* that is called when the processor exception specified by <em>ExceptionType</em> occurs. Passing <em>NULL</em> unregisters any previously registered function associated with <em>ExceptionType</em>.</p>
+</dd>
+<dt>ExceptionType</dt><dd><p>Specifies which processor exception to hook.</p>
+</dd>
+</dl>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+  <span class="n">VOID</span> <span class="p">(</span><span class="o">*</span><span class="n">EFI_EXCEPTION_CALLBACK</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_EXCEPTION_TYPE</span>          <span class="n">ExceptionType</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">EFI_SYSTEM_CONTEXT</span>      <span class="n">SystemContext</span>
+  <span class="p">);</span>
+
+<span class="n">typedef</span> <span class="n">INTN</span> <span class="n">EFI_EXCEPTION_TYPE</span><span class="p">;</span>
+
+<span class="o">//</span> <span class="n">EBC</span> <span class="ne">Exception</span> <span class="n">types</span>
+<span class="c1">#define EXCEPT_EBC_UNDEFINED             0</span>
+<span class="c1">#define EXCEPT_EBC_DIVIDE_ERROR          1</span>
+<span class="c1">#define EXCEPT_EBC_DEBUG                 2</span>
+<span class="c1">#define EXCEPT_EBC_BREAKPOINT            3</span>
+<span class="c1">#define EXCEPT_EBC_OVERFLOW              4</span>
+<span class="c1">#define EXCEPT_EBC_INVALID_OPCODE        5</span>
+<span class="c1">#define EXCEPT_EBC_STACK_FAULT           6</span>
+<span class="c1">#define EXCEPT_EBC_ALIGNMENT_CHECK       7</span>
+<span class="c1">#define EXCEPT_EBC_INSTRUCTION_ENCODING  8</span>
+<span class="c1">#define EXCEPT_EBC_BAD_BREAK             9</span>
+<span class="c1">#define EXCEPT_EBC_SINGLE_STEP           10</span>
+
+<span class="o">//</span> <span class="n">IA</span><span class="o">-</span><span class="mi">32</span> <span class="ne">Exception</span> <span class="n">types</span>
+<span class="c1">#define EXCEPT_IA32_DIVIDE_ERROR         0</span>
+<span class="c1">#define EXCEPT_IA32_DEBUG                1</span>
+<span class="c1">#define EXCEPT_IA32_NMI                  2</span>
+<span class="c1">#define EXCEPT_IA32_BREAKPOINT           3</span>
+<span class="c1">#define EXCEPT_IA32_OVERFLOW             4</span>
+<span class="c1">#define EXCEPT_IA32_BOUND                5</span>
+<span class="c1">#define EXCEPT_IA32_INVALID_OPCODE       6</span>
+<span class="c1">#define EXCEPT_IA32_DOUBLE_FAULT         8</span>
+<span class="c1">#define EXCEPT_IA32_INVALID_TSS          10</span>
+<span class="c1">#define EXCEPT_IA32_SEG_NOT_PRESENT      11</span>
+<span class="c1">#define EXCEPT_IA32_STACK_FAULT          12</span>
+<span class="c1">#define EXCEPT_IA32_GP_FAULT             13</span>
+<span class="c1">#define EXCEPT_IA32_PAGE_FAULT           14</span>
+<span class="c1">#define EXCEPT_IA32_FP_ERROR             16</span>
+<span class="c1">#define EXCEPT_IA32_ALIGNMENT_CHECK      17</span>
+<span class="c1">#define EXCEPT_IA32_MACHINE_CHECK        18</span>
+<span class="c1">#define EXCEPT_IA32_SIMD                 19</span>
+
+<span class="o">//</span>
+<span class="o">//</span> <span class="n">X64</span> <span class="ne">Exception</span> <span class="n">types</span>
+<span class="o">//</span>
+<span class="c1">#define EXCEPT_X64_DIVIDE_ERROR          0</span>
+<span class="c1">#define EXCEPT_X64_DEBUG                 1</span>
+<span class="c1">#define EXCEPT_X64_NMI                   2</span>
+<span class="c1">#define EXCEPT_X64_BREAKPOINT            3</span>
+<span class="c1">#define EXCEPT_X64_OVERFLOW              4</span>
+<span class="c1">#define EXCEPT_X64_BOUND                 5</span>
+<span class="c1">#define EXCEPT_X64_INVALID_OPCODE        6</span>
+<span class="c1">#define EXCEPT_X64_DOUBLE_FAULT          8</span>
+<span class="c1">#define EXCEPT_X64_INVALID_TSS           10</span>
+<span class="c1">#define EXCEPT_X64_SEG_NOT_PRESENT       11</span>
+<span class="c1">#define EXCEPT_X64_STACK_FAULT           12</span>
+<span class="c1">#define EXCEPT_X64_GP_FAULT              13</span>
+<span class="c1">#define EXCEPT_X64_PAGE_FAULT            14</span>
+<span class="c1">#define EXCEPT_X64_FP_ERROR              16</span>
+<span class="c1">#define EXCEPT_X64_ALIGNMENT_CHECK       17</span>
+<span class="c1">#define EXCEPT_X64_MACHINE_CHECK         18</span>
+<span class="c1">#define EXCEPT_X64_SIMD                  19</span>
+
+<span class="o">//</span> <span class="n">Itanium</span> <span class="n">Processor</span> <span class="n">Family</span> <span class="ne">Exception</span> <span class="n">types</span>
+<span class="c1">#define EXCEPT_IPF_VHTP_TRANSLATION              0</span>
+<span class="c1">#define EXCEPT_IPF_INSTRUCTION_TLB               1</span>
+<span class="c1">#define EXCEPT_IPF_DATA_TLB                      2</span>
+<span class="c1">#define EXCEPT_IPF_ALT_INSTRUCTION_TLB           3</span>
+<span class="c1">#define EXCEPT_IPF_ALT_DATA_TLB                  4</span>
+<span class="c1">#define EXCEPT_IPF_DATA_NESTED_TLB               5</span>
+<span class="c1">#define EXCEPT_IPF_INSTRUCTION_KEY_MISSED        6</span>
+<span class="c1">#define EXCEPT_IPF_DATA_KEY_MISSED               7</span>
+<span class="c1">#define EXCEPT_IPF_DIRTY_BIT                     8</span>
+<span class="c1">#define EXCEPT_IPF_INSTRUCTION_ACCESS_BIT        9</span>
+<span class="c1">#define EXCEPT_IPF_DATA_ACCESS_BIT               10</span>
+<span class="c1">#define EXCEPT_IPF_BREAKPOINT                    11</span>
+<span class="c1">#define EXCEPT_IPF_EXTERNAL_INTERRUPT            12</span>
+<span class="o">//</span> <span class="mi">13</span> <span class="o">-</span> <span class="mi">19</span> <span class="n">reserved</span>
+<span class="c1">#define EXCEPT_IPF_PAGE_NOT_PRESENT              20</span>
+<span class="c1">#define EXCEPT_IPF_KEY_PERMISSION                21</span>
+<span class="c1">#define EXCEPT_IPF_INSTRUCTION_ACCESS_RIGHTS     22</span>
+<span class="c1">#define EXCEPT_IPF_DATA_ACCESS_RIGHTS            23</span>
+<span class="c1">#define EXCEPT_IPF_GENERAL_EXCEPTION             24</span>
+<span class="c1">#define EXCEPT_IPF_DISABLED_FP_REGISTER          25</span>
+<span class="c1">#define EXCEPT_IPF_NAT_CONSUMPTION               26</span>
+<span class="c1">#define EXCEPT_IPF_SPECULATION                   27</span>
+<span class="o">//</span> <span class="mi">28</span> <span class="n">reserved</span>
+<span class="c1">#define EXCEPT_IPF_DEBUG                         29</span>
+<span class="c1">#define EXCEPT_IPF_UNALIGNED_REFERENCE           30</span>
+<span class="c1">#define EXCEPT_IPF_UNSUPPORTED_DATA_REFERENCE    31</span>
+<span class="c1">#define EXCEPT_IPF_FP_FAULT                      32</span>
+<span class="c1">#define EXCEPT_IPF_FP_TRAP                       33</span>
+<span class="c1">#define EXCEPT_IPF_LOWER_PRIVILEGE_TRANSFER_TRAP 34</span>
+<span class="c1">#define EXCEPT_IPF_TAKEN_BRANCH                  35</span>
+<span class="c1">#define EXCEPT_IPF_SINGLE_STEP                   36</span>
+<span class="o">//</span> <span class="mi">37</span> <span class="o">-</span> <span class="mi">44</span> <span class="n">reserved</span>
+<span class="c1">#define EXCEPT_IPF_IA32_EXCEPTION                45</span>
+<span class="c1">#define EXCEPT_IPF_IA32_INTERCEPT                46</span>
+<span class="c1">#define EXCEPT_IPF_IA32_INTERRUPT                47</span>
+<span class="o">//</span>
+<span class="o">//</span> <span class="n">ARM</span> <span class="n">processor</span> <span class="n">exception</span> <span class="n">types</span>
+<span class="o">//</span>
+<span class="c1">#define EXCEPT_ARM_RESET                   0</span>
+<span class="c1">#define EXCEPT_ARM_UNDEFINED_INSTRUCTION   1</span>
+<span class="c1">#define EXCEPT_ARM_SOFTWARE_INTERRUPT      2</span>
+<span class="c1">#define EXCEPT_ARM_PREFETCH_ABORT          3</span>
+<span class="c1">#define EXCEPT_ARM_DATA_ABORT              4</span>
+<span class="c1">#define EXCEPT_ARM_RESERVED                5</span>
+<span class="c1">#define EXCEPT_ARM_IRQ                     6</span>
+<span class="c1">#define EXCEPT_ARM_FIQ                     7</span>
+
+<span class="o">//</span>
+<span class="o">//</span> <span class="n">For</span> <span class="n">coding</span> <span class="n">convenience</span><span class="p">,</span> <span class="n">define</span> <span class="n">the</span> <span class="n">maximum</span> <span class="n">valid</span> <span class="n">ARM</span>
+<span class="o">//</span> <span class="n">exception</span><span class="o">.</span>
+<span class="o">//</span>
+<span class="c1">#define MAX_ARM_EXCEPTION EXCEPT_ARM_FIQ</span>
+<span class="o">///</span>
+<span class="o">///</span> <span class="n">AARCH64</span> <span class="n">processor</span> <span class="n">exception</span> <span class="n">types</span><span class="o">.</span>
+<span class="o">///</span>
+<span class="c1">#define EXCEPT_AARCH64_SYNCHRONOUS_EXCEPTIONS 0</span>
+<span class="c1">#define EXCEPT_AARCH64_IRQ 1</span>
+<span class="c1">#define EXCEPT_AARCH64_FIQ 2</span>
+<span class="c1">#define EXCEPT_AARCH64_SERROR 3</span>
+<span class="o">///</span>
+<span class="o">///</span> <span class="n">For</span> <span class="n">coding</span> <span class="n">convenience</span><span class="p">,</span> <span class="n">define</span> <span class="n">the</span> <span class="n">maximum</span> <span class="n">valid</span>
+<span class="o">///</span> <span class="n">AARCH64</span> <span class="n">exception</span><span class="o">.</span>
+<span class="o">///</span>
+<span class="c1">#define MAX_AARCH64_EXCEPTION EXCEPT_AARCH64_SERROR</span>
+<span class="o">///</span>
+<span class="o">///</span> <span class="n">RISC</span><span class="o">-</span><span class="n">V</span> <span class="n">processor</span> <span class="n">exception</span> <span class="n">types</span><span class="o">.</span>
+<span class="o">///</span>
+<span class="c1">#define EXCEPT_RISCV_INST_MISALIGNED               0</span>
+<span class="c1">#define EXCEPT_RISCV_INST_ACCESS_FAULT             1</span>
+<span class="c1">#define EXCEPT_RISCV_ILLEGAL_INST                  2</span>
+<span class="c1">#define EXCEPT_RISCV_BREAKPOINT                    3</span>
+<span class="c1">#define EXCEPT_RISCV_LOAD_ADDRESS_MISALIGNED       4</span>
+<span class="c1">#define EXCEPT_RISCV_LOAD_ACCESS_FAULT             5</span>
+<span class="c1">#define EXCEPT_RISCV_STORE_AMO_ADDRESS_MISALIGNED  6</span>
+<span class="c1">#define EXCEPT_RISCV_STORE_AMO_ACCESS_FAULT        7</span>
+<span class="c1">#define EXCEPT_RISCV_ENV_CALL_FROM_UMODE           8</span>
+<span class="c1">#define EXCEPT_RISCV_ENV_CALL_FROM_SMODE           9</span>
+<span class="c1">#define EXCEPT_RISCV_ENV_CALL_FROM_MMODE           11</span>
+<span class="c1">#define EXCEPT_RISCV_INST_PAGE_FAULT               12</span>
+<span class="c1">#define EXCEPT_RISCV_LOAD_PAGE_FAULT               13</span>
+<span class="c1">#define EXCEPT_RISCV_STORE_AMO_PAGE_FAULT          15</span>
+
+<span class="o">///</span>
+<span class="o">///</span> <span class="n">RISC</span><span class="o">-</span><span class="n">V</span> <span class="n">processor</span> <span class="n">interrupt</span> <span class="n">types</span><span class="o">.</span>
+<span class="o">///</span>
+
+<span class="c1">#define EXCEPT_RISCV_SUPERVISOR_SOFTWARE_INT       1</span>
+<span class="c1">#define EXCEPT_RISCV_MACHINE_SOFTWARE_INT          3</span>
+<span class="c1">#define EXCEPT_RISCV_SUPERVISOR_TIMER_INT          5</span>
+<span class="c1">#define EXCEPT_RISCV_MACHINE_TIMER_INT             7</span>
+<span class="c1">#define EXCEPT_RISCV_SUPERVISOR_EXTERNAL_INT       9</span>
+<span class="c1">#define EXCEPT_RISCV_MACHINE_EXTERNAL_INT          11</span>
+
+<span class="o">///</span>
+<span class="o">///</span> <span class="n">LoongArch</span> <span class="n">processor</span> <span class="n">exception</span> <span class="n">types</span><span class="o">.</span>
+<span class="o">///</span>
+<span class="o">///</span> <span class="n">The</span> <span class="n">exception</span> <span class="n">types</span> <span class="ow">is</span> <span class="n">located</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">CSR</span> <span class="n">ESTAT</span>
+<span class="o">///</span> <span class="n">register</span> <span class="n">offset</span> <span class="mi">16</span> <span class="n">bits</span><span class="p">,</span> <span class="n">width</span> <span class="mi">6</span> <span class="n">bits</span><span class="o">.</span>
+<span class="o">///</span>
+<span class="o">///</span> <span class="n">If</span> <span class="n">you</span> <span class="n">want</span> <span class="n">to</span> <span class="n">register</span> <span class="n">an</span> <span class="n">exception</span> <span class="n">hook</span><span class="p">,</span> <span class="n">you</span> <span class="n">can</span>
+<span class="o">///</span> <span class="n">shfit</span> <span class="n">the</span> <span class="n">number</span> <span class="n">left</span> <span class="n">by</span> <span class="mi">16</span> <span class="n">bits</span><span class="p">,</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">exception</span>
+<span class="o">///</span> <span class="n">handler</span> <span class="n">will</span> <span class="n">know</span> <span class="n">the</span> <span class="n">types</span><span class="o">.</span>
+<span class="o">///</span>
+<span class="o">///</span> <span class="n">For</span> <span class="n">example</span><span class="p">:</span>
+<span class="o">///</span> <span class="n">mCpu</span><span class="o">-&gt;</span><span class="n">CpuRegisterInterruptHandler</span> <span class="p">(</span>
+<span class="o">///</span>   <span class="n">mCpu</span><span class="p">,</span>
+<span class="o">///</span>   <span class="p">(</span><span class="n">EXCEPT_LOONGARCH_PPI</span> <span class="o">&lt;&lt;</span> <span class="n">CSR_ESTAT_EXC_SHIFT</span><span class="p">),</span>
+<span class="o">///</span>   <span class="n">PpiExceptionHandler</span>
+<span class="o">///</span>   <span class="p">);</span>
+<span class="o">///</span>
+<span class="c1">#define EXCEPT_LOONGARCH_INT                       0</span>
+<span class="c1">#define EXCEPT_LOONGARCH_PIL                       1</span>
+<span class="c1">#define EXCEPT_LOONGARCH_PIS                       2</span>
+<span class="c1">#define EXCEPT_LOONGARCH_PIF                       3</span>
+<span class="c1">#define EXCEPT_LOONGARCH_PME                       4</span>
+<span class="c1">#define EXCEPT_LOONGARCH_PNR                       5</span>
+<span class="c1">#define EXCEPT_LOONGARCH_PNX                       6</span>
+<span class="c1">#define EXCEPT_LOONGARCH_PPI                       7</span>
+<span class="c1">#define EXCEPT_LOONGARCH_ADE                       8</span>
+<span class="c1">#define EXCEPT_LOONGARCH_ALE                       9</span>
+<span class="c1">#define EXCEPT_LOONGARCH_BCE                       10</span>
+<span class="c1">#define EXCEPT_LOONGARCH_SYS                       11</span>
+<span class="c1">#define EXCEPT_LOONGARCH_BRK                       12</span>
+<span class="c1">#define EXCEPT_LOONGARCH_INE                       13</span>
+<span class="c1">#define EXCEPT_LOONGARCH_IPE                       14</span>
+<span class="c1">#define EXCEPT_LOONGARCH_FPD                       15</span>
+<span class="c1">#define EXCEPT_LOONGARCH_SXD                       16</span>
+<span class="c1">#define EXCEPT_LOONGARCH_ASXD                      17</span>
+<span class="c1">#define EXCEPT_LOONGARCH_FPE                       18</span>
+<span class="c1">#define EXCEPT_LOONGARCH_WPE                       19</span>
+<span class="c1">#define EXCEPT_LOONGARCH_BTD                       20</span>
+<span class="c1">#define EXCEPT_LOONGARCH_BTE                       21</span>
+<span class="c1">#define EXCEPT_LOONGARCH_GSPR                      22</span>
+<span class="c1">#define EXCEPT_LOONGARCH_HVC                       23</span>
+<span class="c1">#define EXCEPT_LOONGARCH_GCXC                      24</span>
+
+<span class="o">///</span>
+<span class="o">///</span> <span class="n">For</span> <span class="n">coding</span> <span class="n">convenience</span><span class="p">,</span> <span class="n">define</span> <span class="n">the</span> <span class="n">maximum</span> <span class="n">valid</span>
+<span class="o">///</span> <span class="n">LoongArch</span> <span class="n">exception</span><span class="o">.</span>
+<span class="o">///</span>
+<span class="c1">#define MAX_LOONGARCH_EXCEPTION                    64</span>
+
+<span class="o">///</span>
+<span class="o">///</span> <span class="n">LoongArch</span> <span class="n">processor</span> <span class="n">Interrupt</span> <span class="n">types</span><span class="o">.</span>
+<span class="o">///</span>
+<span class="c1">#define EXCEPT_LOONGARCH_INT_SIP0                  0</span>
+<span class="c1">#define EXCEPT_LOONGARCH_INT_SIP1                  1</span>
+<span class="c1">#define EXCEPT_LOONGARCH_INT_IP0                   2</span>
+<span class="c1">#define EXCEPT_LOONGARCH_INT_IP1                   3</span>
+<span class="c1">#define EXCEPT_LOONGARCH_INT_IP2                   4</span>
+<span class="c1">#define EXCEPT_LOONGARCH_INT_IP3                   5</span>
+<span class="c1">#define EXCEPT_LOONGARCH_INT_IP4                   6</span>
+<span class="c1">#define EXCEPT_LOONGARCH_INT_IP5                   7</span>
+<span class="c1">#define EXCEPT_LOONGARCH_INT_IP6                   8</span>
+<span class="c1">#define EXCEPT_LOONGARCH_INT_IP7                   9</span>
+<span class="c1">#define EXCEPT_LOONGARCH_INT_PMC                   10</span>
+<span class="c1">#define EXCEPT_LOONGARCH_INT_TIMER                 11</span>
+<span class="c1">#define EXCEPT_LOONGARCH_INT_IPI                   12</span>
+
+<span class="o">///</span>
+<span class="o">///</span> <span class="n">For</span> <span class="n">coding</span> <span class="n">convenience</span><span class="p">,</span> <span class="n">define</span> <span class="n">the</span> <span class="n">maximum</span> <span class="n">valid</span>
+<span class="o">///</span> <span class="n">LoongArch</span> <span class="n">interrupt</span><span class="o">.</span>
+<span class="o">///</span>
+<span class="c1">#define MAX_LOONGARCH_INTERRUPT                    16</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>The <em>RegisterExceptionCallback()</em> function registers and enables an exception callback function for the specified exception. The specified exception must be valid for the instruction set architecture. To unregister the callback function and stop servicing the exception, call <em>RegisterExceptionCallback()</em> passing a <em>NULL</em> <em>ExceptionCallback</em> parameter.</p>
+<p>The implementation must handle saving and restoring the processor context to/from the system context record around calls to the registered callback function. No chaining of exception handlers is allowed.</p>
+<p>It is the responsibility of the caller to ensure all parameters are correct. There is no provision for parameter checking by <em>RegisterExceptionCallback()</em>. The implementation behavior when an invalid parameter is passed is not defined by this specification.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The function completed successfully.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_ALREADY_STARTED</p></td>
+<td><p>Non- <em>NULL</em> ExceptionCallback parameter when a callback function was previously registered.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_OUT_OF_RESOURCES</p></td>
+<td><p>System has insufficient memory resources to register new callback function.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-debug-support-protocol-invalidateinstructioncache">
+<span id="id10"></span><h3><span class="section-number">18.2.6. </span>EFI_DEBUG_SUPPORT_PROTOCOL.InvalidateInstructionCache()<a class="headerlink" href="#efi-debug-support-protocol-invalidateinstructioncache" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Invalidates processor instruction cache for a memory range. Subsequent execution in this range causes a fresh memory fetch to retrieve code to be executed.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_INVALIDATE_INSTRUCTION_CACHE</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_DEBUG_SUPPORT_PROTOCOL</span>            <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">UINTN</span>                                 <span class="n">ProcessorIndex</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">VOID</span>                                  <span class="o">*</span><span class="n">Start</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">UINT64</span>                                <span class="n">Length</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the  <a class="reference internal" href="#id5">EFI_DEBUG_SUPPORT_PROTOCOL</a>  instance. Type EFI_DEBUG_SUPPORT_PROTOCOL is defined in  <a class="reference internal" href="#id5">EFI_DEBUG_SUPPORT_PROTOCOL</a> .</p>
+</dd>
+<dt>ProcessorIndex</dt><dd><p>Specifies which processor’s instruction cache is to be invalidated.</p>
+</dd>
+<dt>Start</dt><dd><p>Specifies the physical base of the memory range to be invalidated.</p>
+</dd>
+<dt>Length</dt><dd><p>Specifies the minimum number of bytes in the processor’s instruction cache to invalidate.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>Typical operation of a debugger may require modifying the code image that is under debug. This can occur for many reasons, but is typically done to insert/remove software break instructions. Some processor architectures do not have coherent instruction and data caches so modifications to the code image require that the instruction cache be explicitly invalidated in that memory region.</p>
+<p>The <em>InvalidateInstructionCache()</em> function abstracts this operation from the debug agent and provides a general purpose capability to invalidate the processor’s instruction cache.</p>
+<p>It is the responsibility of the caller to ensure all parameters are correct. There is no provision for parameter checking by  <a class="reference internal" href="#id9">EFI_DEBUG_SUPPORT_PROTOCOL.REGISTEREXCEPTIONCALLBACK()</a> . The implementation behavior when an invalid parameter is passed is not defined by this specification.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The function completed successfully.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="efi-debugport-protocol">
+<span id="id11"></span><h2><span class="section-number">18.3. </span>EFI Debugport Protocol<a class="headerlink" href="#efi-debugport-protocol" title="Link to this heading"></a></h2>
+<p>This section defines the EFI Debugport protocol. This protocol is used by debug agent to communicate with the remote debug host.</p>
+<section id="efi-debugport-overview">
+<span id="id12"></span><h3><span class="section-number">18.3.1. </span>EFI Debugport Overview<a class="headerlink" href="#efi-debugport-overview" title="Link to this heading"></a></h3>
+<p>Historically, remote debugging has typically been done using a standard UART serial port to connect the host and target. This is obviously not possible in a legacy reduced system that does not have a UART. The Debugport protocol solves this problem by providing an abstraction that can support many different types of debugport hardware. The debug agent should use this abstraction to communicate with the host.</p>
+<p>The interface is minimal with only reset, read, write, and poll abstractions. Since these functions are called in interrupt context, none of them may call any EFI services or other protocol interfaces.</p>
+<p>Debugport selection and configuration is handled by setting defaults via an environment variable which contains a full device path to the debug port. This environment variable is used during the debugport driver’s initialization to configure the debugport correctly. The variable contains a full device path to the debugport, with the last node (prior to the terminal node) being a debugport messaging node. See  <a class="reference internal" href="#id19">Debugport Device Path</a> for details.</p>
+<p>The driver must also produce an instance of the EFI Device Path protocol to indicate what hardware is being used for the debugport. This may be used by the OS to maintain the debugport across a call to  <a class="reference internal" href="07_Services_Boot_Services.html#efi-boot-services-exitbootservices"><span class="std std-ref">EFI_BOOT_SERVICES.ExitBootServices()</span></a> .</p>
+</section>
+<section id="id13">
+<span id="id14"></span><h3><span class="section-number">18.3.2. </span>EFI_DEBUGPORT_PROTOCOL<a class="headerlink" href="#id13" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>This protocol provides the communication link between the debug agent and the remote host.</p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_DEBUGPORT_PROTOCOL_GUID \</span>
+  <span class="p">{</span><span class="mh">0xEBA4E8D2</span><span class="p">,</span><span class="mh">0x3858</span><span class="p">,</span><span class="mh">0x41EC</span><span class="p">,</span>\
+    <span class="p">{</span><span class="mh">0xA2</span><span class="p">,</span><span class="mh">0x81</span><span class="p">,</span><span class="mh">0x26</span><span class="p">,</span><span class="mh">0x47</span><span class="p">,</span><span class="mh">0xBA</span><span class="p">,</span><span class="mh">0x96</span><span class="p">,</span><span class="mh">0x60</span><span class="p">,</span><span class="mh">0xD0</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p><strong>Protocol Interface Structure</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">EFI_DEBUGPORT_RESET</span>        <span class="n">Reset</span><span class="p">;</span>
+  <span class="n">EFI_DEBUGPORT_WRITE</span>        <span class="n">Write</span><span class="p">;</span>
+  <span class="n">EFI_DEBUGPORT_READ</span>         <span class="n">Read</span><span class="p">;</span>
+  <span class="n">EFI_DEBUGPORT_POLL</span>         <span class="n">Poll</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_DEBUGPORT_PROTOCOL</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>Reset</dt><dd><p>Resets the debugport hardware.</p>
+</dd>
+<dt>Write</dt><dd><p>Send a buffer of characters to the debugport device.</p>
+</dd>
+<dt>Read</dt><dd><p>Receive a buffer of characters from the debugport device.</p>
+</dd>
+<dt>Poll</dt><dd><p>Determine if there is any data available to be read from the debugport device.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The Debugport protocol is used for byte stream communication with a debugport device. The debugport can be a standard UART Serial port, a USB-based character device, or potentially any character-based I/O device.</p>
+<p>The attributes for all UART-style debugport device interfaces are defined in the DEBUGPORT variable ( <a class="reference internal" href="#id19">Debugport Device Path</a> ).</p>
+</section>
+<section id="efi-debugport-protocol-reset">
+<span id="id15"></span><h3><span class="section-number">18.3.3. </span>EFI_DEBUGPORT_PROTOCOL.Reset()<a class="headerlink" href="#efi-debugport-protocol-reset" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Resets the debugport.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_DEBUGPORT_RESET</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_DEBUGPORT_PROTOCOL</span>        <span class="o">*</span><span class="n">This</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the  <a class="reference internal" href="#id13">EFI_DEBUGPORT_PROTOCOL</a>  instance. Type EFI_DEBUGPORT_PROTOCOL is defined in  <a class="reference internal" href="#id13">EFI_DEBUGPORT_PROTOCOL</a>.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>Reset()</em> function resets the debugport device.</p>
+<p>It is the responsibility of the caller to ensure all parameters are valid. There is no provision for parameter checking by <em>Reset()</em>. The implementation behavior when an invalid parameter is passed is not defined by this specification.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The debugport device was reset and is in usable state.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>The debugport device could not be reset and is unusable.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-debugport-protocol-write">
+<span id="id16"></span><h3><span class="section-number">18.3.4. </span>EFI_DEBUGPORT_PROTOCOL.Write()<a class="headerlink" href="#efi-debugport-protocol-write" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Writes data to the debugport.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_DEBUGPORT_WRITE</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_DEBUGPORT_PROTOCOL</span>      <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">UINT32</span>                      <span class="n">Timeout</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">UINTN</span>                   <span class="o">*</span><span class="n">BufferSize</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">VOID</span>                        <span class="o">*</span><span class="n">Buffer</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the  <a class="reference internal" href="#id13">EFI_DEBUGPORT_PROTOCOL</a>  instance. Type EFI_DEBUGPORT_PROTOCOL is defined in  <a class="reference internal" href="#id13">EFI_DEBUGPORT_PROTOCOL</a>.</p>
+</dd>
+<dt>Timeout</dt><dd><p>The number of microseconds to wait before timing out a write operation.</p>
+</dd>
+<dt>BufferSize</dt><dd><p>On input, the requested number of bytes of data to write. On output, the number of bytes of data actually written.</p>
+</dd>
+<dt>Buffer</dt><dd><p>A pointer to a buffer containing the data to write.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>Write()</em> function writes the specified number of bytes to a debugport device. If a timeout error occurs while data is being sent to the debugport, transmission of this buffer will terminate, and <em>EFI_TIMEOUT</em> will be returned. In all cases the number of bytes actually written to the debugport device is returned in <em>BufferSize</em>.</p>
+<p>It is the responsibility of the caller to ensure all parameters are valid. There is no provision for parameter checking by <em>Write()</em>. The implementation behavior when an invalid parameter is passed is not defined by this specification.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The data was written.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>The device reported an error.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_TIMEOUT</p></td>
+<td><p>The data write was stopped due to a timeout.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-debugport-protocol-read">
+<span id="id17"></span><h3><span class="section-number">18.3.5. </span>EFI_DEBUGPORT_PROTOCOL.Read()<a class="headerlink" href="#efi-debugport-protocol-read" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Reads data from the debugport.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_DEBUGPORT_READ</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_DEBUGPORT_PROTOCOL</span>         <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">UINT32</span>                         <span class="n">Timeout</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">OUT</span> <span class="n">UINTN</span>                      <span class="o">*</span><span class="n">BufferSize</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">VOID</span>                          <span class="o">*</span><span class="n">Buffer</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the  <a class="reference internal" href="#id13">EFI_DEBUGPORT_PROTOCOL</a>  instance. Type EFI_DEBUGPORT_PROTOCOL is defined in  <a class="reference internal" href="#id13">EFI_DEBUGPORT_PROTOCOL</a>.</p>
+</dd>
+<dt>Timeout</dt><dd><p>The number of microseconds to wait before timing out a read operation.</p>
+</dd>
+<dt>BufferSize</dt><dd><p>A pointer to an integer which, on input contains the requested number of bytes of data to read, and on output contains the actual number of bytes of data read and returned in Buffer.</p>
+</dd>
+<dt>Buffer</dt><dd><p>A pointer to a buffer into which the data read will be saved.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>Read()</em> function reads a specified number of bytes from a debugport. If a timeout error or an overrun error is detected while data is being read from the debugport, then no more characters will be read, and <em>EFI_TIMEOUT</em> will be returned. In all cases the number of bytes actually read is returned in * <em>BufferSize</em>.</p>
+<p>It is the responsibility of the caller to ensure all parameters are valid. There is no provision for parameter checking by <em>Read()</em>. The implementation behavior when an invalid parameter is passed is not defined by this specification.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The data was read.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>The debugport device reported an error.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_TIMEOUT</p></td>
+<td><p>The operation was stopped due to a timeout or overrun.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-debugport-protocol-poll">
+<span id="id18"></span><h3><span class="section-number">18.3.6. </span>EFI_DEBUGPORT_PROTOCOL.Poll()<a class="headerlink" href="#efi-debugport-protocol-poll" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Checks to see if any data is available to be read from the debugport device.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_DEBUGPORT_POLL</span><span class="p">)</span> <span class="p">(</span>
+  <span class="n">IN</span> <span class="n">EFI_DEBUGPORT_PROTOCOL</span>         <span class="o">*</span><span class="n">This</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the  <a class="reference internal" href="#id13">EFI_DEBUGPORT_PROTOCOL</a>  instance. Type EFI_DEBUGPORT_PROTOCOL is defined in  <a class="reference internal" href="#id13">EFI_DEBUGPORT_PROTOCOL</a>.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>Poll()</em> function checks if there is any data available to be read from the debugport device and returns the result. No data is actually removed from the input stream. This function enables simpler debugger design since buffering of reads is not necessary by the caller.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>At least one byte of data is available to be read.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_READY</p></td>
+<td><p>No data is available to be read.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_DEVICE_ERROR</p></td>
+<td><p>The debugport device is not functioning correctly.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="debugport-device-path">
+<span id="id19"></span><h3><span class="section-number">18.3.7. </span>Debugport Device Path<a class="headerlink" href="#debugport-device-path" title="Link to this heading"></a></h3>
+<p>The debugport driver must establish and maintain an instance of the EFI Device Path protocol for the debugport. A graceful handoff of debugport ownership between the EFI Debugport driver and an OS debugport driver requires that the OS debugport driver can determine the type, location, and configuration of the debugport device.</p>
+<p>The Debugport Device Path is a vendor-defined messaging device path with no data, only a GUID. It is used at the end of a conventional device path to tag the device for use as the debugport. For example, a typical UART debugport would have the following fully qualified device path:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PciRoot</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">Pci</span><span class="p">(</span><span class="mh">0x1f</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">ACPI</span><span class="p">(</span><span class="n">PNP0501</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span><span class="o">/</span><span class="n">UART</span><span class="p">(</span><span class="mi">115200</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">DebugPort</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The Vendor_GUID that defines the debugport device path is the same as the debugport protocol GUID, as defined below.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define DEVICE_PATH_MESSAGING_DEBUGPORT \</span>
+   <span class="n">EFI_DEBUGPORT_PROTOCOL_GUID</span>
+</pre></div>
+</div>
+<p>The Table below,  <a class="reference internal" href="#debugport-messaging-device-path"><span class="std std-ref">Debugport Messaging Device Path</span></a>, shows all fields of the debugport device path.</p>
+<table class="docutils align-default" id="debugport-messaging-device-path">
+<caption><span class="caption-number">Table 18.1 </span><span class="caption-text">Debugport Messaging Device Path</span><a class="headerlink" href="#debugport-messaging-device-path" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 10.0%" />
+<col style="width: 10.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Mnemonic</strong></p></td>
+<td><p><strong>Byte Offset</strong></p></td>
+<td><p><strong>Byte Length</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Type</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>Type 3 - Messaging Device Path.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Sub Type</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>Sub Type 10 - Vendor.</p></td>
+</tr>
+<tr class="row-even"><td><p>Length</p></td>
+<td><p>2</p></td>
+<td><p>2</p></td>
+<td><p>Length of this structure in bytes. Length is 20 bytes.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Vendor_GUID</p></td>
+<td><p>4</p></td>
+<td><p>16</p></td>
+<td><p>DEVICE_PATH_MESSA GING_DEBUGPORT.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-debugport-variable">
+<span id="id20"></span><h3><span class="section-number">18.3.8. </span>EFI Debugport Variable<a class="headerlink" href="#efi-debugport-variable" title="Link to this heading"></a></h3>
+<p>Even though there may be more than one hardware device that could function as a debugport in a system, only one debugport may be active at a time. The DEBUGPORT variable is used to declare which hardware device will act as the debugport, and what communication parameters it should assume.</p>
+<p>Like all EFI variables, the DEBUGPORT variable has both a name and a GUID. The name is “DEBUGPORT.” The GUID is the same as the <em>EFI_DEBUGPORT_PROTOCOL_GUID</em> :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_DEBUGPORT_VARIABLE_NAME L&quot;DEBUGPORT&quot;</span>
+<span class="c1">#define EFI_DEBUGPORT_VARIABLE_GUID EFI_DEBUGPORT_PROTOCOL_GUID</span>
+</pre></div>
+</div>
+<p>The data contained by the DEBUGPORT variable is a fully qualified debugport device path ( <a class="reference internal" href="#id19">Debugport Device Path</a> ).</p>
+<p>The desired communication parameters for the debugport are declared in the DEBUGPORT variable. The debugport driver must read this variable during initialization to determine how to configure the debug port.</p>
+<p>To reduce the required complexity of the debugport driver, the debugport driver is not required to support all possible combinations of communication parameters. What combinations of parameters are possible is implementation specific.</p>
+<p>Additionally debugport drivers implemented for PNP0501 devices, that is debugport devices with a PNP0501 ACPI node in the device path, must support the following defaults. These defaults must be used in the absence of a DEBUGPORT variable, or when the communication parameters specified in the DEBUGPORT variable are not supported by the driver.</p>
+<ul class="simple">
+<li><p>Baud : 115200</p></li>
+<li><p>8 data bits</p></li>
+<li><p>No parity</p></li>
+<li><p>1 stop bit</p></li>
+<li><p>No flow control (See Appendix A for flow control details)</p></li>
+</ul>
+<p>In the absence of the DEBUGPORT variable, the selection of which port to use as the debug port is implementation specific.</p>
+<p>Future revisions of this specification may define new defaults for other debugport types.</p>
+<p>The debugport device path must be constructed to reflect the actual settings for the debugport. Any code needing to know the state of the debug port must reference the device path rather than the DEBUGPORT variable, since the debugport may have assumed a default setting in spite of the existence of the DEBUGPORT variable.</p>
+<p>If it is not possible to configure the debug port using either the settings declared in the DEBUGPORT variable or the default settings for the particular debugport type, the driver initialization must not install any protocol interfaces and must exit with an error.</p>
+</section>
+</section>
+<section id="efi-debug-support-table">
+<span id="id21"></span><h2><span class="section-number">18.4. </span>EFI Debug Support Table<a class="headerlink" href="#efi-debug-support-table" title="Link to this heading"></a></h2>
+<p>This chapter defines the EFI Debug Support Table which is used by the debug agent or an external debugger to determine loaded image information in a quiescent manner.</p>
+<section id="overview-1">
+<span id="id22"></span><h3><span class="section-number">18.4.1. </span>Overview<a class="headerlink" href="#overview-1" title="Link to this heading"></a></h3>
+<p>Every executable image loaded in EFI is represented by an EFI handle populated with an instance of the  <a class="reference internal" href="09_Protocols_EFI_Loaded_Image.html#efi-loaded-image-protocol"><span class="std std-ref">EFI Loaded Image Protocol</span></a>  protocol. This handle is known as an “image handle.” The associated Loaded Image protocol provides image information that is of interest to a source level debugger. Normal EFI executables can access this information by using EFI services to locate all instances of the Loaded Image protocol.</p>
+<p>A debugger has two problems with this scenario. First, if it is an external hardware debugger, the location of the EFI system table is not known. Second, even if the location of the EFI system table is known, the services contained therein are generally unavailable to a debugger either because it is an on-target debugger that is running in interrupt context, or in the case of an external hardware debugger there is no debugger code running on the target at all.</p>
+<p>Since a source level debugger must be capable of determining image information for all loaded images, an alternate mechanism that does not use EFI services must be provided. Two features are added to the EFI system software to enable this capability.</p>
+<p>First, an alternate mechanism of locating the EFI system table is required. A check-summed structure containing the physical address of the EFI system table is created and located on a 4M aligned memory address. A hardware debugger can search memory for this structure to determine the location of the EFI system table.</p>
+<p>Second, an <em>EFI_CONFIGURATION_TABLE</em> is published that leads to a database of pointers to all instances of the Loaded Image protocol. Several layers of indirection are used to allow dynamically managing the data as images are loaded and unloaded. Once the address of the EFI system table is known, it is possible to discover a complete and accurate list of EFI images. (Note that the EFI core itself must be represented by an instance of the Loaded Image protocol.)</p>
+<blockquote>
+<div><p><a class="reference internal" href="#debug-support-table-indirection-and-pointer-usage"><span class="std std-ref">Debug Support Table Indirection and Pointer Usage</span></a>  illustrates the table indirection and pointer usage.</p>
+</div></blockquote>
+<figure class="align-default" id="debug-support-table-indirection-and-pointer-usage">
+<img alt="_images/Protocols_Debugger_Support-2.png" src="_images/Protocols_Debugger_Support-2.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 18.1 </span><span class="caption-text">Debug Support Table Indirection and Pointer Usage</span><a class="headerlink" href="#debug-support-table-indirection-and-pointer-usage" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="efi-system-table-location">
+<span id="id23"></span><h3><span class="section-number">18.4.2. </span>EFI System Table Location<a class="headerlink" href="#efi-system-table-location" title="Link to this heading"></a></h3>
+<p>The EFI system table can be located by an off-target hardware debugger by searching for the <em>EFI_SYSTEM_TABLE_POINTER</em> structure. The <em>EFI_SYSTEM_TABLE_POINTER</em> structure is located on a 4M boundary as close to the top of physical memory as feasible. It may be found searching for <em>the EFI_SYSTEM_TABLE_SIGNATURE</em> on each 4M boundary starting at the top of memory and scanning down. When the signature is found, the entire structure must verified using the <em>Crc32</em> field. The 32-bit CRC of the entire structure is calculated assuming the <em>Crc32</em> field is zero. This value is then written to the <em>Crc32</em> field.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="n">_EFI_SYSTEM_TABLE_POINTER</span> <span class="p">{</span>
+   <span class="n">UINT64</span>                      <span class="n">Signature</span><span class="p">;</span>
+   <span class="n">EFI_PHYSICAL_ADDRESS</span>        <span class="n">EfiSystemTableBase</span><span class="p">;</span>
+   <span class="n">UINT32</span>                      <span class="n">Crc32</span><span class="p">;</span>
+   <span class="p">}</span> <span class="n">EFI_SYSTEM_TABLE_POINTER</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Signature</dt><dd><p>A constant UINT64 that has the value EFI_SYSTEM_TABLE_SIGNATURE (see the EFI 1.0 specification).</p>
+</dd>
+<dt>EfiSystemTableBase</dt><dd><p>The physical address of the EFI system table.</p>
+</dd>
+<dt>Crc32</dt><dd><p>A 32-bit CRC value that is used to verify the <em>EFI_SYSTEM_TABLE_POINTER</em> structure is valid.</p>
+</dd>
+</dl>
+</section>
+<section id="efi-image-info">
+<span id="id24"></span><h3><span class="section-number">18.4.3. </span>EFI Image Info<a class="headerlink" href="#efi-image-info" title="Link to this heading"></a></h3>
+<p>The <em>EFI_DEBUG_IMAGE_INFO_TABLE</em> is an array of pointers to <em>EFI_DEBUG_IMAGE_INFO</em> unions. Each member of an <em>EFI_DEBUG_IMAGE_INFO</em> union is a pointer to a data structure representing a particular image type. For each image that has been loaded, there is an appropriate image data structure with a pointer to it stored in the <em>EFI_DEBUG_IMAGE_INFO_TABLE</em>. Data structures for normal images and SMM images are defined. All other image types are reserved for future use.</p>
+<p>The process of locating the <em>EFI_DEBUG_IMAGE_INFO_TABLE</em> begins with an EFI configuration table.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span>
+<span class="o">//</span> <span class="n">EFI_DEBUG_IMAGE_INFO_TABLE</span> <span class="n">configuration</span> <span class="n">table</span>
+<span class="o">//</span>     <span class="n">GUID</span> <span class="n">declaration</span> <span class="o">-</span> <span class="p">{</span><span class="mf">49152E77</span><span class="o">-</span><span class="mi">1</span><span class="n">ADA</span><span class="o">-</span><span class="mi">4764</span><span class="o">-</span><span class="n">B7A2</span><span class="o">-</span><span class="mi">7</span><span class="n">AFEFED95E8B</span><span class="p">}</span>
+<span class="o">//</span>
+<span class="c1">#define EFI_DEBUG_IMAGE_INFO_TABLE_GUID \</span>
+  <span class="p">{</span><span class="mh">0x49152E77</span><span class="p">,</span><span class="mh">0x1ADA</span><span class="p">,</span><span class="mh">0x4764</span><span class="p">,</span>\
+    <span class="p">{</span><span class="mh">0xB7</span><span class="p">,</span><span class="mh">0xA2</span><span class="p">,</span><span class="mh">0x7A</span><span class="p">,</span><span class="mh">0xFE</span><span class="p">,</span><span class="mh">0xFE</span><span class="p">,</span><span class="mh">0xD9</span><span class="p">,</span><span class="mh">0x5E</span><span class="p">,</span><span class="mh">0x8B</span> <span class="p">}}</span>
+</pre></div>
+</div>
+<p>The address reported in the EFI configuration table entry of this type will be referenced as physical and will not be fixed up when transition from preboot to runtime phase.</p>
+<p>The configuration table leads to an <em>EFI_DEBUG_IMAGE_INFO_TABLE_HEADER</em> structure that contains a pointer to the <em>EFI_DEBUG_IMAGE_INFO_TABLE</em> and some status bits that are used to control access to the
+<em>EFI_DEBUG_IMAGE_INFO_TABLE</em> when it is being updated.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span>
+<span class="o">//</span> <span class="n">UpdateStatus</span> <span class="n">bits</span>
+<span class="o">//</span>
+<span class="c1">#define EFI_DEBUG_IMAGE_INFO_UPDATE_IN_PROGRESS    0x01</span>
+<span class="c1">#define EFI_DEBUG_IMAGE_INFO_TABLE_MODIFIED        0x02</span>
+
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+   <span class="n">volatile</span> <span class="n">UINT32</span>               <span class="n">UpdateStatus</span><span class="p">;</span>
+   <span class="n">UINT32</span>                        <span class="n">TableSize</span><span class="p">;</span>
+   <span class="n">EFI_DEBUG_IMAGE_INFO</span>          <span class="o">*</span><span class="n">EfiDebugImageInfoTable</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_DEBUG_IMAGE_INFO_TABLE_HEADER</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl>
+<dt>UpdateStatus</dt><dd><p><em>UpdateStatus</em> is used by the system to indicate the state of the debug image info table.</p>
+<p>The EFI_DEBUG_IMAGE_INFO_UPDATE_IN_PROGRESS bit must be set when the table is being modified. Software consuming the table must qualify the access to the table with this bit.</p>
+<p>The EFI_DEBUG_IMAGE_INFO_TABLE_MODIFIED bit is always set by software that modifies the table. It may be cleared by software that consumes the table once the entire table has been read. It is essentially a sticky version of the EFI_DEBUG_IMAGE_INFO_UPDATE_IN_PROGRESS bit and is intended to provide an efficient mechanism to minimize the number of times the table must be scanned by the consumer.</p>
+</dd>
+<dt>TableSize</dt><dd><p>The number of EFI_DEBUG_IMAGE_INFO elements in the array pointed to by <em>EfiDebugImageInfoTable</em>.</p>
+</dd>
+<dt>EfiDebugImageInfoTable</dt><dd><p>A pointer to the first element of an array of EFI_DEBUG_IMAGE_INFO structures.</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_DEBUG_IMAGE_INFO_TYPE_NORMAL 0x01</span>
+
+<span class="n">typedef</span> <span class="n">union</span> <span class="p">{</span>
+  <span class="n">UINT32</span>                        <span class="o">*</span><span class="n">ImageInfoType</span><span class="p">;</span>
+  <span class="n">EFI_DEBUG_IMAGE_INFO_NORMAL</span>   <span class="o">*</span><span class="n">NormalImage</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_DEBUG_IMAGE_INFO</span><span class="p">;</span>
+
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINT32</span>                        <span class="n">ImageInfoType</span><span class="p">;</span>
+  <span class="n">EFI_LOADED_IMAGE_PROTOCOL</span>     <span class="o">*</span><span class="n">LoadedImageProtocolInstance</span><span class="p">;</span>
+  <span class="n">EFI_HANDLE</span>                    <span class="n">ImageHandle</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_DEBUG_IMAGE_INFO_NORMAL</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>ImageInfoType</dt><dd><p>Indicates the type of image info structure. For PE32 EFI images, this is set to EFI_DEBUG_IMAGE_INFO_TYPE_NORMAL.</p>
+</dd>
+<dt>LoadedImageProtocolInstance</dt><dd><p>A pointer to an instance of the loaded image protocol for the associated image.</p>
+</dd>
+<dt>ImageHandle</dt><dd><p>Indicates the image handle of the associated image.</p>
+</dd>
+</dl>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="17_Protocols_USB_Support.html" class="btn btn-neutral float-left" title="17. Protocols — USB Support" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="19_Protocols_Compression_Algorithm_Specification.html" class="btn btn-neutral float-right" title="19. Protocols — Compression Algorithm Specification" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, UEFI Forum, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

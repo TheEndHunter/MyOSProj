@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3. Boot Manager &mdash; UEFI Specification 2.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=f2209469" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/style.css?v=faba8a36" />
+      <link rel="stylesheet" type="text/css" href="_static/theme-overrides.css?v=84235ce0" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2de06f63"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4. EFI System Table" href="04_EFI_System_Table.html" />
+    <link rel="prev" title="2. Overview" href="02_Overview.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            UEFI Specification
+          </a>
+              <div class="version">
+                2.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Tables.html">List of Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Figures.html">List of Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/Revision_History.html">Revision History</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Overview.html">2. Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3. Boot Manager</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#firmware-boot-manager">3.1. Firmware Boot Manager</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#boot-manager-programming">3.1.1. Boot Manager Programming</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#load-option-processing">3.1.2. Load Option Processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#load-options">3.1.3. Load Options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#boot-manager-capabilities">3.1.4. Boot Manager Capabilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#launching-boot-applications">3.1.5. Launching Boot#### Applications</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#launching-boot-load-options-using-hot-keys">3.1.6. Launching Boot#### Load Options Using Hot Keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#required-system-preparation-applications">3.1.7. Required System Preparation Applications</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#boot-manager-policy-protocol">3.2. Boot Manager Policy Protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#efi-boot-manager-policy-protocol">3.2.1. EFI_BOOT_MANAGER_POLICY_PROTOCOL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-boot-manager-policy-protocol-connectdevicepath">3.2.2. EFI_BOOT_MANAGER_POLICY_PROTOCOL.ConnectDevicePath()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-boot-manager-policy-protocol-connectdeviceclass">3.2.3. EFI_BOOT_MANAGER_POLICY_PROTOCOL.ConnectDeviceClass()</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#globally-defined-variables">3.3. Globally Defined Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#boot-option-recovery">3.4. Boot Option Recovery</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#os-defined-boot-option-recovery">3.4.1. OS-Defined Boot Option Recovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#platform-defined-boot-option-recovery">3.4.2. Platform-Defined Boot Option Recovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#boot-option-variables-default-boot-behavior">3.4.3. Boot Option Variables Default Boot Behavior</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#boot-mechanisms">3.5. Boot Mechanisms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#boot-via-the-simple-file-protocol">3.5.1. Boot via the Simple File Protocol</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#removable-media-boot-behavior">3.5.1.1. Removable Media Boot Behavior</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#boot-via-the-load-file-protocol">3.5.2. Boot via the Load File Protocol</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#network-booting">3.5.2.1. Network Booting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#future-boot-media">3.5.2.2. Future Boot Media</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04_EFI_System_Table.html">4. EFI System Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_GUID_Partition_Table_Format.html">5. GUID Partition Table (GPT) Disk Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_Block_Transition_Table_Layout.html">6. Block Translation Table (BTT) Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Services_Boot_Services.html">7. Services — Boot Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Services_Runtime_Services.html">8. Services — Runtime Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Protocols_EFI_Loaded_Image.html">9. Protocols - EFI Loaded Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Protocols_Device_Path_Protocol.html">10. Protocols – Device Path Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html">11. Protocols — UEFI Driver Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_Protocols_Console_Support.html">12. Protocols — Console Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Protocols_Media_Access.html">13. Protocols – Media Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Protocols_PCI_Bus_Support.html">14. Protocols — PCI Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_Protocols_SCSI_Driver_Models_and_Bus_Support.html">15. Protocols — SCSI Driver Models and Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_Protocols_iSCSI_Boot.html">16. Protocols — iSCSI Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_Protocols_USB_Support.html">17. Protocols — USB Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_Protocols_Debugger_Support.html">18. Protocols — Debugger Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_Protocols_Compression_Algorithm_Specification.html">19. Protocols — Compression Algorithm Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_Protocols_ACPI_Protocols.html">20. Protocols — ACPI Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_Protocols_String_Services.html">21. Protocols — String Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html">22. EFI Byte Code Virtual Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_Firmware_Update_and_Reporting.html">23. Firmware Update and Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24_Network_Protocols_SNP_PXE_BIS.html">24. Network Protocols — SNP, PXE, BIS and HTTP Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25_Network_Protocols_Managed_Network.html">25. Network Protocols - Managed Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26_Network_Protocols_Bluetooth.html">26. Network Protocols — Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27_Network_Protocols_VLAN_and_EAP.html">27. Network Protocols — VLAN, EAP, Wi-Fi and Supplicant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28_Network_Protocols_TCP_IP_and_Configuration.html">28. Network Protocols — TCP, IP, IPsec, FTP, TLS and Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29_Network_Protocols_ARP_and_DHCP.html">29. Network Protocols — ARP, DHCP, DNS, HTTP and REST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_Network_Protocols_UDP_and_MTFTP.html">30. Network Protocols — UDP and MTFTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="31_EFI_Redfish_Service_Support.html">31. EFI Redfish Service Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="32_Secure_Boot_and_Driver_Signing.html">32. Secure Boot and Driver Signing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="33_Human_Interface_Infrastructure.html">33. Human Interface Infrastructure Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="34_HII_Protocols.html">34. HII Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="35_HII_Configuration_Processing_and_Browser_Protocol.html">35. HII Configuration Processing and Browser Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="36_User_Identification.html">36. User Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="37_Secure_Technologies.html">37. Secure Technologies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="38_Confidential_Computing.html">38. Confidential Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="39_Micellaneous_Protocols.html">39. Miscellaneous Protocols</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Apx_A_GUID_and_Time_Formats.html">A. GUID and Time Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_B_Console.html">B. Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_C_Device_Path_Examples.html">C. Device Path Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_D_Status_Codes.html">D. Status Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_E_Universal_Network_Driver_Interfaces.html">E. Universal Network Driver Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_F_Using_the_Simple_Pointer_Protocol.html">F. Using the Simple Pointer Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_G_Using_the_EFI_Extended_SCSI_Pass_Thru_Protocol.html">G. Using the EFI Extended SCSI Pass Thru Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_H_Compression_Source_Code.html">H. Compression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_I_Decompression_Source_Code.html">I. Decompression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_J_EFI_Byte_Code_Virtual_Machine_Opcode_List.html">J. EFI Byte Code Virtual Machine Opcode List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_K_Alphabetic_Function_Lists.html">K. Alphabetic Function Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_L_EFI_1.10_Protocol_Changes_and_Deprecation_List.html">L. EFI 1.10 Protocol Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html">M. Formats — Language Codes and Language Code Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_N_Common_Platform_Error_Record.html">N. Common Platform Error Record (CPER)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_O_UEFI_ACPI_Data_Table.html">O. UEFI ACPI Data Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_P_Hardware_Error_Record_Persistence_Usage.html">P. Hardware Error Record Persistence Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_Q_References.html">Q. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_R_Glossary.html">R. Glossary</a></li>
+</ul>
+
+    <a href= "genindex.html">Index</a>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UEFI Specification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">3. </span>Boot Manager</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="boot-manager">
+<span id="id1"></span><h1><span class="section-number">3. </span>Boot Manager<a class="headerlink" href="#boot-manager" title="Link to this heading"></a></h1>
+<p>The UEFI boot manager is a firmware policy engine that can be configured by modifying architecturally defined global NVRAM variables. The boot manager will attempt to load UEFI drivers and UEFI applications (including UEFI OS boot loaders) in an order defined by the global NVRAM variables. The platform firmware must use the boot order specified in the global NVRAM variables for normal boot. The platform firmware may add extra boot options or remove invalid boot options from the boot order list.</p>
+<p>The platform firmware may also implement value added features in the boot manager if an exceptional condition is discovered in the firmware boot process. One example of a value added feature would be not loading a UEFI driver if booting failed the first time the driver was loaded. Another example would be booting to an OEM-defined diagnostic environment if a critical error was discovered in the boot process.</p>
+<p>The boot sequence for UEFI consists of the following:</p>
+<ul class="simple">
+<li><p>The boot order list is read from a globally defined NVRAM variable. Modifications to this variable are only guaranteed to take effect after the next platform reset. The boot order list defines a list of NVRAM variables that contain information about what is to be booted. Each NVRAM variable defines a name for the boot option that can be displayed to a user.</p></li>
+<li><p>The variable also contains a pointer to the hardware device and to a file on that hardware device that contains the UEFI image to be loaded.</p></li>
+<li><p>The variable might also contain paths to the OS partition and directory along with other configuration specific directories.</p></li>
+</ul>
+<p>The NVRAM can also contain load options that are passed directly to the UEFI image. The platform firmware has no knowledge of what is contained in the load options. The load options are set by higher level software when it writes to a global NVRAM variable to set the platform firmware boot policy. This information could be used to define the location of the OS kernel if it was different than the location of the UEFI OS loader.</p>
+<section id="firmware-boot-manager">
+<span id="firmware"></span><h2><span class="section-number">3.1. </span>Firmware Boot Manager<a class="headerlink" href="#firmware-boot-manager" title="Link to this heading"></a></h2>
+<p>The boot manager is a component in firmware conforming to this specification that determines which drivers and applications should be explicitly loaded and when. Once compliant firmware is initialized, it passes control to the boot manager. The boot manager is then responsible for determining what to load and any interactions with the user that may be required to make such a decision.</p>
+<p>The actions taken by the boot manager depend upon the system type and the policies set by the system designer. For systems that allow the installation of new Boot Variables ( See <a class="reference internal" href="#boot-option-recovery"><span class="std std-ref">Boot Option Recovery</span></a> ), the Boot Manager must automatically or upon the request of the loaded item, initialize at least one system console, as well as perform all required initialization of the device indicated within the primary boot target. For such systems, the Boot Manager is also required to honor the priorities set in BootOrder variable.</p>
+<p>In particular, likely implementation options might include any console interface concerning boot, integrated platform management of boot selections, and possible knowledge of other internal applications or recovery drivers that may be integrated into the system through the boot manager.</p>
+<section id="boot-manager-programming">
+<span id="id2"></span><h3><span class="section-number">3.1.1. </span>Boot Manager Programming<a class="headerlink" href="#boot-manager-programming" title="Link to this heading"></a></h3>
+<p>Programmatic interaction with the boot manager is accomplished through globally defined variables. On initialization the boot manager reads the values which comprise all of the published load options among the UEFI environment variables. By using the <a class="reference internal" href="08_Services_Runtime_Services.html#setvariable"><span class="std std-ref">SetVariable()</span></a>  function the data that contain these environment variables can be modified. Such modifications are guaranteed to take effect after the next system boot commences. However, boot manager implementations may choose to improve on this guarantee and have changes take immediate effect for all subsequent accesses to the variables that affect boot manager behavior without requiring any form of system reset.</p>
+<p>Each load option entry resides in a <em>Boot####</em>, <em>Driver####</em>, <em>SysPrep####</em>, <em>OsRecovery####</em> or <em>PlatformRecovery####</em> variable where <em>####</em> is replaced by a unique option number in printable hexadecimal representation using the digits 0-9, and the upper case versions of the characters A-F (0000-FFFF).</p>
+<p>The <em>####</em> must always be four digits, so small numbers must use leading zeros. The load options are then logically ordered by an array of option numbers listed in the desired order. There are two such option ordering lists when booting normally. The first is <em>DriverOrder</em> that orders the <em>Driver####</em> load option variables into their load order. The second is <em>BootOrder</em> that orders the <em>Boot####</em> load options variables into their load order.</p>
+<p>For example, to add a new boot option, a new <em>Boot####</em> variable would be added. Then the option number of the new <em>Boot####</em> variable would be added to the <em>BootOrder</em> ordered list and the <em>BootOrder</em> variable would be rewritten. To change boot option on an existing <em>Boot####</em> , only the <em>Boot####</em> variable would need to be rewritten. A similar operation would be done to add, remove, or modify the driver load list.</p>
+<p>If the boot via <em>Boot####</em> returns with a status of <em>EFI_SUCCESS</em> , platform firmware supports boot manager menu, and if firmware is configured to boot in an interactive mode, the boot manager will stop processing the <em>BootOrder</em> variable and present a boot manager menu to the user. If any of the above-mentioned conditions is not satisfied, the next <em>Boot####</em> in the <em>BootOrder</em> variable will be tried until all possibilities are exhausted. In this case, boot option recovery must be performed (  See <a class="reference internal" href="#boot-option-recovery"><span class="std std-ref">Boot Option Recovery</span></a> ).</p>
+<p>The boot manager may perform automatic maintenance of the database variables. For example, it may remove unreferenced load option variables or any load option variables that cannot be parsed, and it may rewrite any ordered list to remove any load options that do not have corresponding load option variables. The boot manager can also, at its own discretion, provide an administrator with the ability to invoke manual maintenance operations as well. Examples include choosing the order of any or all load options, activating or deactivating load options, initiating OS-defined or platform-defined recovery, etc. In addition, if a platform intends to create <em>PlatformRecovery####</em> , before attempting to load and execute any <em>DriverOrder</em> or <em>BootOrder</em> entries, the firmware must create any and all <em>PlatformRecovery####</em> variables (  See <a class="reference internal" href="#platform-defined-boot-option-recovery"><span class="std std-ref">Platform-Defined Boot Option Recovery</span></a> ). The firmware should not, under normal operation, automatically remove any correctly formed Boot#### variable currently referenced by the <em>BootOrder</em> or <em>BootNext</em> variables. Such removal should be limited to scenarios where the firmware is guided by direct user interaction.</p>
+<p>The contents of <em>PlatformRecovery####</em> represent the final recovery options the firmware would have attempted had recovery been initiated during the current boot, and need not include entries to reflect contingencies such as significant hardware reconfiguration, or entries corresponding to specific hardware that the firmware is not yet aware of.</p>
+<p>The behavior of the UEFI Boot Manager is impacted when Secure Boot is enabled,  <a class="reference internal" href="32_Secure_Boot_and_Driver_Signing.html#firmware-os-key-exchange-passing-public-keys"><span class="std std-ref">Firmware/OS Key Exchange: Passing Public Keys</span></a>.</p>
+</section>
+<section id="load-option-processing">
+<span id="id3"></span><h3><span class="section-number">3.1.2. </span>Load Option Processing<a class="headerlink" href="#load-option-processing" title="Link to this heading"></a></h3>
+<p>The boot manager is required to process the Driver load option entries before the Boot load option entries. If the <em>EFI_OS_INDICATIONS_START_OS_RECOVERY</em> bit has been set in <em>OsIndications</em> , the firmware shall attempt OS-defined recovery (See <a class="reference internal" href="#os-defined-boot-option-recovery"><span class="std std-ref">OS-Defined Boot Option Recovery</span></a> ) rather than normal boot processing. If the <em>EFI_OS_INDICATIONS_START_PLATFORM_RECOVERY</em> bit has been set in <em>OsIndications</em> , the firmware shall attempt platform-defined recovery (  See  <a class="reference internal" href="#platform-defined-boot-option-recovery"><span class="std std-ref">Platform-Defined Boot Option Recovery</span></a> ) rather than normal boot processing or handling of the <em>EFI_OS_INDICATIONS_START_OS_RECOVERY</em> bit. In either case, both bits should be cleared.</p>
+<p>Otherwise, the boot manager is also required to initiate a boot of the boot option specified by the <em>BootNext</em> variable as the first boot option on the next boot, and only on the next boot. The boot manager removes the <em>BootNext</em> variable before transferring control to the <em>BootNext</em> boot option. After the <em>BootNext</em> boot option is tried, the normal <em>BootOrder</em> list is used. To prevent loops, the boot manager deletes <em>BootNext</em> before transferring control to the preselected boot option.</p>
+<p>If all entries of <em>BootNext</em> and <em>BootOrder</em> have been exhausted without success, or if the firmware has been instructed to attempt boot order recovery, the firmware must attempt boot option recovery (  See <a class="reference internal" href="#boot-option-recovery"><span class="std std-ref">Boot Option Recovery</span></a> ).</p>
+<p>The boot manager must call <a class="reference internal" href="07_Services_Boot_Services.html#efi-boot-services-loadimage"><span class="std std-ref">EFI_BOOT_SERVICES.LoadImage()</span></a>  which supports at least  <a class="reference internal" href="13_Protocols_Media_Access.html#efi-simple-file-system-protocol"><span class="std std-ref">EFI_SIMPLE_FILE_SYSTEM_PROTOCOL</span></a> and <a class="reference internal" href="13_Protocols_Media_Access.html#efi-load-file-protocol"><span class="std std-ref">EFI_LOAD_FILE_PROTOCOL</span></a> for resolving load options. If <em>LoadImage()</em> succeeds, the boot manager must enable the watchdog timer for 5 minutes by using the <a class="reference internal" href="07_Services_Boot_Services.html#efi-boot-services-setwatchdogtimer"><span class="std std-ref">EFI_BOOT_SERVICES.SetWatchdogTimer()</span></a>  boot service prior to calling <a class="reference internal" href="07_Services_Boot_Services.html#efi-boot-services-startimage"><span class="std std-ref">EFI_BOOT_SERVICES.StartImage()</span></a>. If a boot option returns control to the boot manager, the boot manager must disable the watchdog timer with an additional call to the <em>SetWatchdogTimer()</em> boot service.</p>
+<p>If the boot image is not loaded via  <a class="reference internal" href="07_Services_Boot_Services.html#efi-boot-services-loadimage"><span class="std std-ref">EFI_BOOT_SERVICES.LoadImage()</span></a>  the boot manager is required to check for a default application to boot. Searching for a default application to boot happens on both removable and fixed media types. This search occurs when the device path of the boot image listed in any boot option points directly to an <em>EFI_SIMPLE_FILE_SYSTEM_PROTOCOL</em> device and does not specify the exact file to load. The file discovery method is explained in  <a class="reference internal" href="#boot-option-recovery"><span class="std std-ref">Boot Option Recovery</span></a>. The default media boot case of a protocol other than <em>EFI_SIMPLE_FILE_SYSTEM_PROTOCOL</em> is handled by the   <a class="reference internal" href="13_Protocols_Media_Access.html#efi-load-file-protocol"><span class="std std-ref">EFI_LOAD_FILE_PROTOCOL</span></a>  for the target device path and does not need to be handled by the boot manager.</p>
+<p>The UEFI boot manager must support booting from a short-form device path that starts with the first element being a USB WWID ( <a class="reference internal" href="10_Protocols_Device_Path_Protocol.html#usb-wwid-device-path"><span class="std std-ref">USB WWID Device Path</span></a> ) or a USB Class ( <a class="reference internal" href="10_Protocols_Device_Path_Protocol.html#usb-class-device-path"><span class="std std-ref">USB Class Device Path</span></a> ) device path. For USB WWID, the boot manager must use the device vendor ID, device product id, and serial number, and must match any USB device in the system that contains this information. If more than one device matches the USB WWID device path, the boot manager will pick one arbitrarily. For USB Class, the boot manager must use the vendor ID, Product ID, Device Class, Device Subclass, and Device Protocol, and must match any USB device in the system that contains this information. If any of the ID, Product ID, Device Class, Device Subclass, or Device Protocol contain all F’s (0xFFFF or 0xFF), this element is skipped for the purpose of matching. If more than one device matches the USB Class device path, the boot manager will pick one arbitrarily.</p>
+<p>The boot manager must also support booting from a short-form device path that starts with the first element being a hard drive media device path (<a class="reference internal" href="10_Protocols_Device_Path_Protocol.html#hard-drive-media-device-path"><span class="std std-ref">Hard Drive Media Device Path</span></a> ). The boot manager must use the GUID or signature and partition number in the hard drive device path to match it to a device in the system. If the drive supports the GPT partitioning scheme the GUID in the hard drive media device path is compared with the <em>UniquePartitionGuid</em> field of the GUID Partition Entry (  <a class="reference internal" href="05_GUID_Partition_Table_Format.html#gpt-partition-entry"><span class="std std-ref">GPT Partition Entry</span></a> ). If the drive supports the PC-AT MBR scheme the signature in the hard drive media device path is compared with the <em>UniqueMBRSignature</em> in the Legacy Master Boot Record (  <a class="reference internal" href="05_GUID_Partition_Table_Format.html#legacy-mbr"><span class="std std-ref">Legacy MBR</span></a> ). If a signature match is made, then the partition number must also be matched. The hard drive device path can be appended to the matching hardware device path and normal boot behavior can then be used. If more than one device matches the hard drive device path, the boot manager will pick one arbitrarily. Thus the operating system must ensure the uniqueness of the signatures on hard drives to guarantee deterministic boot behavior.</p>
+<p>The boot manager must also support booting from a short-form device path that starts with the first element being a File Path Media Device Path (<a class="reference internal" href="10_Protocols_Device_Path_Protocol.html#file-path-media-device-path"><span class="std std-ref">File Path Media Device Path</span></a> ). When the boot manager attempts to boot a short-form File Path Media Device Path, it will enumerate all removable media devices, followed by all fixed media devices, creating boot options for each device. The boot option FilePathList[0] is constructed by appending short-form File Path Media Device Path to the device path of a media. The order within each group is undefined. These new boot options must not be saved to non volatile storage, and may not be added to <em>BootOrder</em>. The boot manager will then attempt to boot from each boot option. If a device does not support the <em>EFI_SIMPLE_FILE_SYSTEM_PROTOCOL</em> , but supports the <em>EFI_BLOCK_IO_PROTOCOL</em> protocol, then the EFI Boot Service <em>ConnectController</em> must be called for this device with <em>DriverImageHandle</em> and <em>RemainingDevicePath</em> set to NULL and the Recursive flag is set to <em>TRUE</em>. The firmware will then attempt to boot from any child handles produced using the algorithms outlined above.</p>
+<p>The boot manager must also support booting from a short-form device path that starts with the first element being a URI Device Path ( <a class="reference internal" href="10_Protocols_Device_Path_Protocol.html#uri-device-path"><span class="std std-ref">URI Device Path</span></a> ). When the boot manager attempts to boot a short-form URI Device Path, it could attempt to connect any device which will produce a device path protocol including a URI device path node until it matches a device, or fail to match any device. The boot manager will enumerate all <em>LoadFile</em> protocol instances, and invoke <em>LoadFile</em> protocol with <em>FilePath</em> set to the short-form device path during the matching process.</p>
+</section>
+<section id="load-options">
+<span id="id4"></span><h3><span class="section-number">3.1.3. </span>Load Options<a class="headerlink" href="#load-options" title="Link to this heading"></a></h3>
+<p>Each load option variable contains an <em>EFI_LOAD_OPTION</em>
+descriptor that is a byte packed buffer of variable length
+fields.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="n">_EFI_LOAD_OPTION</span> <span class="p">{</span>
+  <span class="n">UINT32</span>                            <span class="n">Attributes</span><span class="p">;</span>
+  <span class="n">UINT16</span>                            <span class="n">FilePathListLength</span><span class="p">;</span>
+  <span class="o">//</span> <span class="n">CHAR16</span>                         <span class="n">Description</span><span class="p">[];</span>
+  <span class="o">//</span> <span class="n">EFI_DEVICE_PATH_PROTOCOL</span>       <span class="n">FilePathList</span><span class="p">[];</span>
+  <span class="o">//</span> <span class="n">UINT8</span>                          <span class="n">OptionalData</span><span class="p">[];</span>
+<span class="p">}</span>   <span class="n">EFI_LOAD_OPTION</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>Attributes</dt><dd><p>The attributes for this load option entry. All  unused bits must be zero and are reserved by the UEFI specification for future growth. See “Related  Definitions.”</p>
+</dd>
+<dt>FilePathListLength</dt><dd><p>Length in bytes of the FilePathList. OptionalData starts  at offset sizeof(UINT32) + sizeof(UINT16)  + StrSize(Description) + FilePathListLength of the EFI_LOAD_OPTION descriptor.</p>
+</dd>
+<dt>Description</dt><dd><p>The user readable description for the load option. This field ends with a Null character.</p>
+</dd>
+<dt>FilePathList</dt><dd><p>A packed array of UEFI device paths. The  first element of the array is a device path  that describes the device and location of the  Image for this load option. The FilePathList[0]  is specific to the device type. Other device paths  may optionally exist in the FilePathList,  but their usage is OSV specific. Each element in  the array is variable length, and ends at the device  path end structure. Because the size of Description is arbitrary, this data structure is not guaranteed to be aligned on a natural boundary. This data structure may  have to be copied to an aligned natural boundary before  it is used.</p>
+</dd>
+<dt>OptionalData</dt><dd><p>The remaining bytes in the load option  descriptor are a binary data buffer that is passed  to the loaded image. If the field is zero bytes long,  a NULL pointer is passed to the loaded image. The  number of bytes in OptionalData can be computed  by subtracting the starting offset of OptionalData  from total size in bytes of the EFI_LOAD_OPTION.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Each device path in the FilePathList can be a single instance or a multi-instance device path.</p>
+</div>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//********************************************************</span>
+<span class="o">//</span> <span class="n">Attributes</span>
+<span class="o">//********************************************************</span>
+<span class="c1">#define LOAD_OPTION_ACTIVE                0x00000001</span>
+<span class="c1">#define LOAD_OPTION_FORCE_RECONNECT       0x00000002</span>
+<span class="c1">#define LOAD_OPTION_HIDDEN                0x00000008</span>
+<span class="c1">#define LOAD_OPTION_CATEGORY              0x00001F00</span>
+
+<span class="c1">#define LOAD_OPTION_CATEGORY_BOOT         0x00000000</span>
+<span class="c1">#define LOAD_OPTION_CATEGORY_APP          0x00000100</span>
+<span class="o">//</span> <span class="n">All</span> <span class="n">values</span> <span class="mh">0x00000200</span><span class="o">-</span><span class="mh">0x00001F00</span> <span class="n">are</span> <span class="n">reserved</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>Calling  <a class="reference internal" href="08_Services_Runtime_Services.html#setvariable"><span class="std std-ref">SetVariable()</span></a>  creates a load option. The size of the load option is the same as the size of the <em>DataSize</em> argument to the <em>SetVariable()</em> call that created the variable. When creating a new load option, all undefined attribute bits must be written as zero. When updating a load option, all undefined attribute bits must be preserved.</p>
+<p>If a load option is marked as <em>LOAD_OPTION_ACTIVE,</em> the boot manager will attempt to boot automatically using the device path information in the load option. This provides an easy way to disable or enable load options without needing to delete and re-add them.</p>
+<p>If any <em>Driver####</em> load option is marked as <em>LOAD_OPTION_FORCE_RECONNECT</em> , then all of the UEFI drivers in the system will be disconnected and reconnected after the last <em>Driver####</em> load option is processed. This allows a UEFI driver loaded with a <em>Driver####</em> load option to override a UEFI driver that was loaded prior to the execution of the UEFI Boot Manager.</p>
+<p>The executable indicated by <em>FilePathList[0]</em> in <em>Driver####</em> load option must be of type <em>EFI_IMAGE_SUBSYSTEM_EFI_BOOT_SERVICE_DRIVER</em> or <em>EFI_IMAGE_SUBSYSTEM_EFI_RUNTIME_DRIVER</em> otherwise the indicated executable will not be entered for initialization.</p>
+<p>The executable indicated by <em>FilePathList[0]</em> in <em>SysPrep###</em> , <em>Boot####</em> , or <em>OsRecovery####</em> load option must be of type <em>EFI_IMAGE_SUBSYSTEM_EFI_APPLICATION,</em> otherwise the indicated executable will not be entered.</p>
+<p>The <em>LOAD_OPTION_CATEGORY</em> is a sub-field of Attributes that provides details to the boot manager to describe how it should group the <em>Boot####</em> load options. This field is ignored for variables of the form <em>Driver####</em> , <em>SysPrep####,</em> or <em>OsRecovery####</em>.</p>
+<p><em>Boot####</em> load options with <em>LOAD_OPTION_CATEGORY</em> set to <em>LOAD_OPTION_CATEGORY_BOOT</em> are meant to be part of the normal boot processing.</p>
+<p>Boot#### load options with <em>LOAD_OPTION_CATEGORY</em> set to <em>LOAD_OPTION_CATEGORY_APP</em> are executables which are not part of the normal boot processing but can be optionally chosen for execution if boot menu is provided, or via Hot Keys. See  See <a class="reference internal" href="#id7">Launching Boot#### Load Options Using Hot Keys</a> for details.</p>
+<p>Boot options with reserved category values, will be ignored by the boot manager.</p>
+<p>If any <em>Boot####</em> load option is marked as <em>LOAD_OPTION_HIDDEN</em> , then the load option will not appear in the menu (if any) provided by the boot manager for load option selection.</p>
+</section>
+<section id="boot-manager-capabilities">
+<span id="id5"></span><h3><span class="section-number">3.1.4. </span>Boot Manager Capabilities<a class="headerlink" href="#boot-manager-capabilities" title="Link to this heading"></a></h3>
+<p>The boot manager can report its capabilities through the global variable <em>BootOptionSupport</em>. If the global variable is not present, then an installer or application must act as if a value of 0 was returned.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_BOOT_OPTION_SUPPORT_KEY         0x00000001</span>
+<span class="c1">#define EFI_BOOT_OPTION_SUPPORT_APP         0x00000002</span>
+<span class="c1">#define EFI_BOOT_OPTION_SUPPORT_SYSPREP     0x00000010</span>
+<span class="c1">#define EFI_BOOT_OPTION_SUPPORT_COUNT       0x00000300</span>
+</pre></div>
+</div>
+<p>If <em>EFI_BOOT_OPTION_SUPPORT_KEY</em> is set then the boot manager supports launching of <em>Boot####</em> load options using key presses. If <em>EFI_BOOT_OPTION_SUPPORT_APP</em> is set then the boot manager supports boot options with <em>LOAD_OPTION_CATEGORY_APP</em>. If <em>EFI_BOOT_OPTION_SUPPORT_SYSPREP</em> is set then the boot manager supports boot options of form <em>SysPrep####.</em></p>
+<p>The value specified in <em>EFI_BOOT_OPTION_SUPPORT_COUNT</em> describes the maximum number of key presses which the boot manager supports in the <em>EFI_KEY_OPTION</em> <em>.KeyData.InputKeyCount</em>. This value is only valid if <em>EFI_BOOT_OPTION_SUPPORT_KEY</em> is set. Key sequences with more keys specified are ignored.</p>
+</section>
+<section id="launching-boot-applications">
+<span id="id6"></span><h3><span class="section-number">3.1.5. </span>Launching Boot#### Applications<a class="headerlink" href="#launching-boot-applications" title="Link to this heading"></a></h3>
+<p>The boot manager may support a separate category of <em>Boot####</em> load option for applications. The boot manager indicates that it supports this separate category by setting the <em>EFI_BOOT_OPTION_SUPPORT_APP</em> in the <em>BootOptionSupport</em> global variable.</p>
+<p>When an application’s <em>Boot####</em> option is being added to the <em>BootOrder</em> , the installer should clear <em>LOAD_OPTION_ACTIVE</em> so that the boot manager does not attempt to automatically “boot” the application. If the boot manager indicates that it supports a separate application category, as described above, the installer should set <em>LOAD_OPTION_CATEGORY_APP</em>. If not, it should set <em>LOAD_OPTION_CATEGORY_BOOT</em>.</p>
+</section>
+<section id="launching-boot-load-options-using-hot-keys">
+<span id="id7"></span><h3><span class="section-number">3.1.6. </span>Launching Boot#### Load Options Using Hot Keys<a class="headerlink" href="#launching-boot-load-options-using-hot-keys" title="Link to this heading"></a></h3>
+<p>The boot manager may support launching a Boot#### load option using a special key press. If so, the boot manager reports this capability by setting EFI_BOOT_OPTION_SUPPORT_KEY in the BootOptionSupport global variable.</p>
+<p>A boot manager which supports key press launch reads the current key information from the console. Then, if there was a key press, it compares the key returned against zero or more <em>Key####</em> global variables. If it finds a match, it verifies that the <em>Boot####</em> load option specified is valid and, if so, attempts to launch it immediately. The #### in the <em>Key####</em> is a printable hexadecimal number (‘0’-‘9’, ‘A’-‘F’) with leading zeroes. The order which the <em>Key####</em> variables are checked is implementation-specific.</p>
+<p>The boot manager may ignore <em>Key####</em> variables where the hot keys specified overlap with those used for internal boot manager functions. It is recommended that the boot manager delete these keys.</p>
+<p>The <em>Key####</em> variables have the following format:</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="n">_EFI_KEY_OPTION</span> <span class="p">{</span>
+  <span class="n">EFI_BOOT_KEY_DATA</span>         <span class="n">KeyData</span><span class="p">;</span>
+  <span class="n">UINT32</span>                    <span class="n">BootOptionCrc</span><span class="p">;</span>
+  <span class="n">UINT16</span>                    <span class="n">BootOption</span><span class="p">;</span>
+<span class="o">//</span> <span class="n">EFI_INPUT_KEY</span>            <span class="n">Keys</span><span class="p">[];</span>
+<span class="p">}</span>   <span class="n">EFI_KEY_OPTION</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>KeyData</dt><dd><p>Specifies options about how the key will be processed. Type EFI_BOOT_KEY_DATA is defined in “Related  Definitions” below.</p>
+</dd>
+<dt>BootOptionCrc</dt><dd><p>The CRC-32 which should match the CRC-32 of the entire EFI_LOAD_OPTION to which BootOption refers. If the  CRC-32s do not match this value, then this key option  is ignored.</p>
+</dd>
+<dt>BootOption</dt><dd><p>The Boot#### option which will be invoked if this key  is pressed and the boot option is active  (LOAD_OPTION_ACTIVE is set).</p>
+</dd>
+<dt>Keys</dt><dd><p>The key codes to compare against those returned by the EFI_SIMPLE_TEXT_INPUT and EFI_SIMPLE_TEXT_INPUT_EX protocols. The number of key codes (0-3) is specified  by the EFI_KEY_CODE_COUNT field in KeyOptions.</p>
+</dd>
+</dl>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">union</span> <span class="p">{</span>
+  <span class="n">struct</span> <span class="p">{</span>
+    <span class="n">UINT32</span>   <span class="n">Revision</span> <span class="p">:</span> <span class="mi">8</span><span class="p">;</span>
+    <span class="n">UINT32</span>   <span class="n">ShiftPressed</span> <span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">UINT32</span>   <span class="n">ControlPressed</span> <span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">UINT32</span>   <span class="n">AltPressed</span> <span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">UINT32</span>   <span class="n">LogoPressed</span> <span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">UINT32</span>   <span class="n">MenuPressed</span> <span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">UINT32</span>   <span class="n">SysReqPressed</span> <span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="n">UINT32</span>   <span class="n">Reserved</span> <span class="p">:</span> <span class="mi">16</span><span class="p">;</span>
+    <span class="n">UINT32</span>   <span class="n">InputKeyCount</span> <span class="p">:</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="p">}</span> <span class="n">Options</span><span class="p">;</span>
+  <span class="n">UINT32</span> <span class="n">PackedValue</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_BOOT_KEY_DATA</span><span class="p">;</span>
+</pre></div>
+</div>
+<dl>
+<dt>Revision</dt><dd><p>Indicates the revision of the <em>EFI_KEY_OPTION</em> structure. This revision level should be 0.</p>
+</dd>
+<dt>ShiftPressed</dt><dd><p>Either the left or right Shift keys must be pressed (1)  or must not be pressed (0).</p>
+</dd>
+<dt>ControlPressed</dt><dd><p>Either the left or right Control keys must be pressed (1)  or must not be pressed (0).</p>
+</dd>
+<dt>AltPressed</dt><dd><p>Either the left or right Alt keys must be pressed (1)  or must not be pressed (0).</p>
+</dd>
+<dt>LogoPressed</dt><dd><p>Either the left or right Logo keys must be pressed (1)  or must not be pressed (0).</p>
+</dd>
+<dt>MenuPressed</dt><dd><p>The Menu key must be pressed (1) or must not be pressed (0).</p>
+</dd>
+<dt>SysReqPressed</dt><dd><p>The SysReq key must be pressed (1) or must not be pressed (0).</p>
+</dd>
+<dt>InputKeyCount</dt><dd><p>Specifies the actual number of entries in EFI_KEY_OPTION. Keys, from 0-3. If zero, then only the shift state is considered. If more than one, then the boot option will only be launched if all of the specified keys are pressed with the same shift state.</p>
+<div class="line-block">
+<div class="line">Example #1: ALT is the hot key. <em>KeyData.PackedValue</em> = <em>0x00000400</em>.</div>
+</div>
+<div class="line-block">
+<div class="line">Example #2: CTRL-ALT-P-R. <em>KeyData.PackedValue</em> = <em>0x80000600</em>.</div>
+</div>
+<div class="line-block">
+<div class="line">Example #3: CTRL-F1. <em>KeyData.PackedValue</em> = <em>0x40000200</em>.</div>
+</div>
+</dd>
+</dl>
+</section>
+<section id="required-system-preparation-applications">
+<span id="id8"></span><h3><span class="section-number">3.1.7. </span>Required System Preparation Applications<a class="headerlink" href="#required-system-preparation-applications" title="Link to this heading"></a></h3>
+<p>A load option of the form <em>SysPrep####</em> is intended to designate a UEFI application that is required to execute in order to complete system preparation prior to processing of any <em>Boot####</em> variables. The execution order of <em>SysPrep####</em> applications is determined by the contents of the variable <em>SysPrepOrder</em> in a way directly analogous to the ordering of <em>Boot####</em> options by <em>BootOrder</em>.</p>
+<p>The platform is required to examine all <em>SysPrep####</em> variables referenced in <em>SysPrepOrder</em>. If Attributes bit <em>LOAD_OPTION_ACTIVE</em> is set, and the application referenced by <em>FilePathList[0]</em> is present, the UEFI Applications thus identified must be loaded and launched in the order they appear in SysPrepOrder and prior to the launch of any load options of type <em>Boot####</em>.</p>
+<p>When launched, the platform is required to provide the application loaded by S <em>ysPrep####</em> , with the same services such as console and network as are normally provided at launch to applications referenced by a <em>Boot####</em> variable. <em>SysPrep####</em> application must exit and may not call <em>ExitBootServices()</em>. Processing of any Error Code returned at exit is according to system policy and does not necessarily change processing of following boot options. Any driver portion of the feature supported by <em>SysPrep####</em> boot option that is required to remain resident should be loaded by use of <em>Driver####</em> variable.</p>
+<p>The Attributes option <em>LOAD_OPTION_FORCE_RECONNECT</em> is ignored for <em>SysPrep####</em> variables, and in the event that an application so launched performs some action that adds to the available hardware or drivers, the system preparation application shall itself utilize appropriate calls to <em>ConnectController()</em> or <em>DisconnectController()</em> to revise connections between drivers and hardware</p>
+<p>After all <em>SysPrep####</em> variables have been launched and exited, the platform shall notify <em>EFI_EVENT_GROUP_READY_TO_BOOT</em> and EFI_EVENT_GROUP_AFTER_READY_TO_BOOT event groups. This should happen when the Boot Manager is about to load and execute <em>Boot####</em> variables with Attributes set to <em>LOAD_OPTION_CATEGORY_BOOT</em> according to the order defined by BootOrder.</p>
+</section>
+</section>
+<section id="boot-manager-policy-protocol">
+<span id="id9"></span><h2><span class="section-number">3.2. </span>Boot Manager Policy Protocol<a class="headerlink" href="#boot-manager-policy-protocol" title="Link to this heading"></a></h2>
+<section id="efi-boot-manager-policy-protocol">
+<span id="efi-policy-protocol"></span><h3><span class="section-number">3.2.1. </span>EFI_BOOT_MANAGER_POLICY_PROTOCOL<a class="headerlink" href="#efi-boot-manager-policy-protocol" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>This protocol is used by EFI Applications to request the UEFI Boot Manager to connect devices using platform policy.</p>
+<p><strong>GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_BOOT_MANAGER_POLICY_PROTOCOL_GUID \</span>
+  <span class="p">{</span> <span class="mh">0xFEDF8E0C</span><span class="p">,</span> <span class="mh">0xE147</span><span class="p">,</span> <span class="mh">0x11E3</span><span class="p">,</span>\
+  <span class="p">{</span> <span class="mh">0x99</span><span class="p">,</span> <span class="mh">0x03</span><span class="p">,</span> <span class="mh">0xB8</span><span class="p">,</span> <span class="mh">0xE8</span><span class="p">,</span> <span class="mh">0x56</span><span class="p">,</span> <span class="mh">0x2C</span><span class="p">,</span> <span class="mh">0xBA</span><span class="p">,</span> <span class="mh">0xFA</span> <span class="p">}</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Protocol Interface Structure</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="n">_EFI_BOOT_MANAGER_POLICY_PROTOCOL</span>
+  <span class="n">EFI_BOOT_MANAGER_POLICY_PROTOCOL</span><span class="p">;</span>
+<span class="n">struct</span> \<span class="n">_EFI_BOOT_MANAGER_POLICY_PROTOCOL</span> <span class="p">{</span>
+  <span class="n">UINT64</span>                                        <span class="n">Revision</span><span class="p">;</span>
+<span class="n">EFI_BOOT_MANAGER_POLICY_CONNECT_DEVICE_PATH</span>     <span class="n">ConnectDevicePath</span><span class="p">;</span>
+  <span class="n">EFI_BOOT_MANAGER_POLICY_CONNECT_DEVICE_CLASS</span>  <span class="n">ConnectDeviceClass</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>ConnectDevicePath</dt><dd><p>Connect a Device Path following the platforms EFI Boot Manager policy.</p>
+</dd>
+<dt>ConnectDeviceClass</dt><dd><p>Connect a class of devices, named by EFI_GUID, following the platforms UEFI Boot Manager policy.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The EFI_BOOT_MANAGER_POLICY_PROTOCOL is produced by the platform firmware to expose Boot Manager policy and platform specific EFI_BOOT_SERVICES.ConnectController()  <a class="reference internal" href="07_Services_Boot_Services.html#efi-boot-services-connectcontroller"><span class="std std-ref">EFI_BOOT_SERVICES.ConnectController()</span></a> behavior.</p>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_BOOT_MANAGER_POLICY_PROTOCOL_REVISION 0x00010000</span>
+</pre></div>
+</div>
+</section>
+<section id="efi-boot-manager-policy-protocol-connectdevicepath">
+<span id="id10"></span><h3><span class="section-number">3.2.2. </span>EFI_BOOT_MANAGER_POLICY_PROTOCOL.ConnectDevicePath()<a class="headerlink" href="#efi-boot-manager-policy-protocol-connectdevicepath" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Connect a device path following the platform’s EFI Boot Manager policy.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Prototype</span>
+<span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_BOOT_MANAGER_POLICY_CONNECT_DEVICE_PATH</span><span class="p">)(</span>
+   <span class="n">IN</span> <span class="n">EFI_BOOT_MANAGER_POLICY_PROTOCOL</span>             <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+   <span class="n">IN</span> <span class="n">EFI_DEVICE_PATH</span>                              <span class="o">*</span><span class="n">DevicePath</span><span class="p">,</span>
+   <span class="n">IN</span> <span class="n">BOOLEAN</span>                                      <span class="n">Recursive</span>
+   <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the EFI_BOOT_MANAGER_POLICY_PROTOCOL instance. Type EFI_BOOT_MANAGER_POLICY_PROTOCOL  defined above.</p>
+</dd>
+<dt>DevicePath</dt><dd><p>Points to the start of the EFI device path to connect. If <em>DevicePath</em> is NULL then all the  controllers in the system will be connected using  the platform’s EFI Boot Manager policy.</p>
+</dd>
+<dt>Recursive</dt><dd><p>If <strong>TRUE</strong>, then ConnectController() is called  recursively until the entire tree of controllers  below the controller specified by DevicePath have  been created. If <strong>FALSE</strong>, then the tree of controllers  is only expanded one level. If DevicePath is NULL  then Recursive is ignored.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>ConnectDevicePath()</em> function allows the caller to connect a <em>DevicePath</em> using the same policy as the EFI Boot Manager.</p>
+<p>If <em>Recursive</em> is <strong>TRUE</strong> , then <em>ConnectController()</em> is called recursively until the entire tree of controllers below the controller specified by <em>DevicePath</em> have been created. If <em>Recursive</em> is <strong>FALSE</strong>, then the tree of controllers is only expanded one level. If <em>DevicePath</em> is NULL then <em>Recursive</em> is ignored.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The <em>DevicePath</em> was connected</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>The <em>DevicePath</em> was not found</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>No driver was connected to <em>DevicePath</em>.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_SECURITY_VIOLATION</p></td>
+<td><p>The user has no permission to start UEFI device drivers</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>The current TPL is not <em>TPL_APPLICATION</em>.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-boot-manager-policy-protocol-connectdeviceclass">
+<span id="id11"></span><h3><span class="section-number">3.2.3. </span>EFI_BOOT_MANAGER_POLICY_PROTOCOL.ConnectDeviceClass()<a class="headerlink" href="#efi-boot-manager-policy-protocol-connectdeviceclass" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>Connect a class of devices using the platform Boot Manager policy.</p>
+<p><strong>Prototype</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_BOOT_MANAGER_POLICY_CONNECT_DEVICE_CLASS</span><span class="p">)(</span>
+   <span class="n">IN</span> <span class="n">EFI_BOOT_MANAGER_POLICY_PROTOCOL</span>          <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+   <span class="n">IN</span> <span class="n">EFI_GUID</span>                                  <span class="o">*</span><span class="n">Class</span>
+   <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>A pointer to the EFI_BOOT_MANAGER_POLICY_PROTOCOL instance. Type EFI_BOOT_MANAGER_POLICY_PROTOCOL is defined above.</p>
+</dd>
+<dt>Class</dt><dd><p>A pointer to an <em>EFI_GUID</em> that represents a class of devices that will be connected using the Boot Manager’s platform policy.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The <em>ConnectDeviceClass()</em> function allows the caller to request that the Boot Manager connect a class of devices.</p>
+<p>If <em>Class</em> is <em>EFI_BOOT_MANAGER_POLICY_CONSOLE_GUID</em> then the Boot Manager will use platform policy to connect consoles. Some platforms may restrict the number of consoles connected as they attempt to fast boot, and calling <em>ConnectDeviceClass()</em> with a <em>Class</em> value of <em>EFI_BOOT_MANAGER_POLICY_CONSOLE_GUID</em> must connect the set of consoles that follow the Boot Manager platform policy, and the <em>EFI_SIMPLE_TEXT_INPUT_PROTOCOL</em> , <em>EFI_SIMPLE_TEXT_INPUT_EX_PROTOCOL</em> , and the <em>EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL</em> are produced on the connected handles. The Boot Manager may restrict which consoles get connect due to platform policy, for example a security policy may require that a given console is not connected.</p>
+<p>If <em>Class</em> is <em>EFI_BOOT_MANAGER_POLICY_NETWORK_GUID</em> then the Boot Manager will connect the protocols the platform supports for UEFI general purpose network applications on one or more handles. The protocols associated with UEFI general purpose network applications are defined in  <a class="reference internal" href="02_Overview.html#platform-specific-elements"><span class="std std-ref">Platform-Specific Elements</span></a> , list item number 7. If more than one network controller is available a platform will connect, one, many, or all of the networks based on platform policy. Connecting UEFI networking protocols, like <em>EFI_DHCP4_PROTOCOL</em> , does not establish connections on the network. The UEFI general purpose network application that called <em>ConnectDeviceClass()</em> may need to use the published protocols to establish the network connection. The Boot Manager can optionally have a policy to establish a network connection.</p>
+<p>If <em>Class</em> is <em>EFI_BOOT_MANAGER_POLICY_STORAGE_GUID</em> then the Boot Manager will connect the protocols associated with the discoverable storage devices. These protocols may include EFI_BLOCK_IO_PROTOCOL, EFI_SIMPLE_FILE_SYSTEM_PROTOCOL, or other storage protocols relevant to the device. The platform may choose to restrict the connected devices based on its policy. For example, the platform may exclude external peripherals or only include specific, well-known devices.</p>
+<p>If <em>Class</em> is <em>EFI_BOOT_MANAGER_POLICY_CONNECT_ALL_GUID</em> then the Boot Manager will connect all UEFI drivers using the UEFI Boot Service  <a class="reference internal" href="07_Services_Boot_Services.html#efi-boot-services-connectcontroller"><span class="std std-ref">EFI_BOOT_SERVICES.ConnectController()</span></a>. If the Boot Manager has policy associated with connect all UEFI drivers this policy will be used.</p>
+<p>A platform can also define platform specific <em>Class</em> values as a properly generated <em>EFI_GUID</em> would never conflict with this specification.</p>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_BOOT_MANAGER_POLICY_CONSOLE_GUID \</span>
+   <span class="p">{</span> <span class="mh">0xCAB0E94C</span><span class="p">,</span> <span class="mh">0xE15F</span><span class="p">,</span> <span class="mh">0x11E3</span><span class="p">,</span>\
+   <span class="p">{</span> <span class="mh">0x91</span><span class="p">,</span> <span class="mh">0x8D</span><span class="p">,</span> <span class="mh">0xB8</span><span class="p">,</span> <span class="mh">0xE8</span><span class="p">,</span> <span class="mh">0x56</span><span class="p">,</span> <span class="mh">0x2C</span><span class="p">,</span> <span class="mh">0xBA</span><span class="p">,</span> <span class="mh">0xFA</span> <span class="p">}</span> <span class="p">}</span>
+<span class="c1">#define EFI_BOOT_MANAGER_POLICY_NETWORK_GUID \</span>
+   <span class="p">{</span> <span class="mh">0xD04159DC</span><span class="p">,</span> <span class="mh">0xE15F</span><span class="p">,</span> <span class="mh">0x11E3</span><span class="p">,</span>\
+   <span class="p">{</span> <span class="mh">0xB2</span><span class="p">,</span> <span class="mh">0x61</span><span class="p">,</span> <span class="mh">0xB8</span><span class="p">,</span> <span class="mh">0xE8</span><span class="p">,</span> <span class="mh">0x56</span><span class="p">,</span> <span class="mh">0x2C</span><span class="p">,</span> <span class="mh">0xBA</span><span class="p">,</span> <span class="mh">0xFA</span> <span class="p">}</span> <span class="p">}</span>
+<span class="c1">#define EFI_BOOT_MANAGER_POLICY_STORAGE_GUID \</span>
+   <span class="p">{</span> <span class="mh">0xCD68FE79</span><span class="p">,</span> <span class="mh">0xD3CB</span><span class="p">,</span> <span class="mh">0x436E</span><span class="p">,</span>\
+   <span class="p">{</span> <span class="mh">0xA8</span><span class="p">,</span> <span class="mh">0x50</span><span class="p">,</span> <span class="mh">0xF4</span><span class="p">,</span> <span class="mh">0x43</span><span class="p">,</span> <span class="mh">0xC8</span><span class="p">,</span> <span class="mh">0x8C</span><span class="p">,</span> <span class="mh">0xFB</span><span class="p">,</span> <span class="mh">0x49</span> <span class="p">}</span> <span class="p">}</span>
+<span class="c1">#define EFI_BOOT_MANAGER_POLICY_CONNECT_ALL_GUID \</span>
+   <span class="p">{</span> <span class="mh">0x113B2126</span><span class="p">,</span> <span class="mh">0xFC8A</span><span class="p">,</span> <span class="mh">0x11E3</span><span class="p">,</span>\
+     <span class="p">{</span> <span class="mh">0xBD</span><span class="p">,</span> <span class="mh">0x6C</span><span class="p">,</span> <span class="mh">0xB8</span><span class="p">,</span> <span class="mh">0xE8</span><span class="p">,</span> <span class="mh">0x56</span><span class="p">,</span> <span class="mh">0x2C</span><span class="p">,</span> <span class="mh">0xBA</span><span class="p">,</span> <span class="mh">0xFA</span> <span class="p">}</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>At least one devices of the <em>Class</em> was connected.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_DE ERROR</p></td>
+<td><p>Devices were not connected due to an error.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>The <em>Class</em> is not supported by the platform.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>The current TPL is not <em>TPL_APPLICATION</em>.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="globally-defined-variables">
+<span id="id12"></span><h2><span class="section-number">3.3. </span>Globally Defined Variables<a class="headerlink" href="#globally-defined-variables" title="Link to this heading"></a></h2>
+<p>This section defines a set of variables that have architecturally defined meanings. In addition to the defined data content, each such variable has an architecturally defined attribute that indicates when the data variable may be accessed. The variables with an attribute of NV are nonvolatile. This means that their values are persistent across resets and power cycles. The value of any environment variable that does not have this attribute will be lost when power is removed from the system and the state of firmware reserved memory is not otherwise preserved. The variables with an attribute of BS are only available before <a class="reference internal" href="07_Services_Boot_Services.html#efi-boot-services-exitbootservices"><span class="std std-ref">EFI_BOOT_SERVICES.ExitBootServices()</span></a>  is called. This means that these environment variables can only be retrieved or modified in the preboot environment. They are not visible to an operating system. Environment variables with an attribute of RT are available before and after <em>ExitBootServices()</em> is called. Environment variables of this type can be retrieved and modified in the preboot environment, and from an operating system. The variables with an attribute of AT are variables with a time-based authenticated write access defined in   <a class="reference internal" href="08_Services_Runtime_Services.html#using-the-efi-variable-authentication-3-descriptor"><span class="std std-ref">Using the EFI_VARIABLE_AUTHENTICATION_3 descriptor</span></a>. All architecturally defined variables use the <em>EFI_GLOBAL_VARIABLE</em> <em>VendorGuid</em>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_GLOBAL_VARIABLE \</span>
+ <span class="p">{</span><span class="mh">0x8BE4DF61</span><span class="p">,</span><span class="mh">0x93CA</span><span class="p">,</span><span class="mh">0x11d2</span><span class="p">,</span>\
+   <span class="p">{</span><span class="mh">0xAA</span><span class="p">,</span><span class="mh">0x0D</span><span class="p">,</span><span class="mh">0x00</span><span class="p">,</span><span class="mh">0xE0</span><span class="p">,</span><span class="mh">0x98</span><span class="p">,</span><span class="mh">0x03</span><span class="p">,</span><span class="mh">0x2B</span><span class="p">,</span><span class="mh">0x8C</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p>To prevent name collisions with possible future globally defined variables, other internal firmware data variables that are not defined here must be saved with a unique <em>VendorGuid</em> other than <em>EFI_GLOBAL_VARIABLE</em> or any other GUID defined by the UEFI Specification. Implementations must only permit the creation of variables with a UEFI Specification-defined <em>VendorGuid</em> when these variables are documented in the UEFI Specification.</p>
+<table class="longtable docutils align-default" id="global-variables">
+<caption><span class="caption-number">Table 3.1 </span><span class="caption-text">Global Variables</span><a class="headerlink" href="#global-variables" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Variable Name</strong></p></td>
+<td><p><strong>Attribute</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>AuditMode</p></td>
+<td><p>BS, RT</p></td>
+<td><p>Whether the system is operating in Audit Mode (1) or not (0). All other values are reserved. Should be treated as read-only except when DeployedMode is 0. Always becomes read-only after ExitBootServices() is called.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Boot####</p></td>
+<td><p>NV, BS, RT</p></td>
+<td><p>A boot load option. #### is a printed hex value. No 0x or h is included in the hex value.</p></td>
+</tr>
+<tr class="row-even"><td><p>BootCurrent</p></td>
+<td><p>BS, RT</p></td>
+<td><p>The boot option that was selected for the current boot.</p></td>
+</tr>
+<tr class="row-odd"><td><p>BootNext</p></td>
+<td><p>NV, BS, RT</p></td>
+<td><p>The boot option for the next boot only.</p></td>
+</tr>
+<tr class="row-even"><td><p>BootOrder</p></td>
+<td><p>NV, BS, RT</p></td>
+<td><p>The ordered boot option load list.</p></td>
+</tr>
+<tr class="row-odd"><td><p>BootOptionSupport</p></td>
+<td><p>BS,RT,</p></td>
+<td><p>The types of boot options supported by the boot manager. Should be treated as read-only.</p></td>
+</tr>
+<tr class="row-even"><td><p>ConIn</p></td>
+<td><p>NV, BS, RT</p></td>
+<td><p>The device path of the default input console.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ConInDev</p></td>
+<td><p>BS, RT</p></td>
+<td><p>The device path of all possible console input devices.</p></td>
+</tr>
+<tr class="row-even"><td><p>ConOut</p></td>
+<td><p>NV, BS, RT</p></td>
+<td><p>The device path of the default output console.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ConOutDev</p></td>
+<td><p>BS, RT</p></td>
+<td><p>The device path of all possible console output devices.</p></td>
+</tr>
+<tr class="row-even"><td><p>dbDefault</p></td>
+<td><p>BS, RT</p></td>
+<td><p>The OEM’s default secure boot signature store. Should be treated as read-only.</p></td>
+</tr>
+<tr class="row-odd"><td><p>dbrDefault</p></td>
+<td><p>BS, RT</p></td>
+<td><p>The OEM’s default OS Recovery signature store. Should be treated as read-only.</p></td>
+</tr>
+<tr class="row-even"><td><p>dbtDefault</p></td>
+<td><p>BS, RT</p></td>
+<td><p>The OEM’s default secure boot timestamp signature store. Should be treated as read-only.</p></td>
+</tr>
+<tr class="row-odd"><td><p>dbxDefault</p></td>
+<td><p>BS, RT</p></td>
+<td><p>The OEM’s default secure boot blacklist signature store. Should be treated as read-only.</p></td>
+</tr>
+<tr class="row-even"><td><p>DeployedMode</p></td>
+<td><p>BS, RT</p></td>
+<td><p>Whether the system is operating in Deployed Mode (1) or not (0). All other values are reserved. Should be treated as read-only when its value is 1. Always becomes read-only after ExitBootServices() is called.</p></td>
+</tr>
+<tr class="row-odd"><td><p>devAuthBoot</p></td>
+<td><p>BS, RT</p></td>
+<td><p>Whether the platform firmware is operating in device authentication boot mode (1) or not (0). All other values are reserved. Should be treated as read-only.</p></td>
+</tr>
+<tr class="row-even"><td><p>devdbDefault</p></td>
+<td><p>BS, RT</p></td>
+<td><p>The OEM’s default device authentication signature store. Should be treated as read-only.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Driver####</p></td>
+<td><p>NV, BS, RT</p></td>
+<td><p>A driver load option. #### is a printed hex value.</p></td>
+</tr>
+<tr class="row-even"><td><p>DriverOrder</p></td>
+<td><p>NV, BS, RT</p></td>
+<td><p>The ordered driver load option list.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ErrOut</p></td>
+<td><p>NV, BS, RT</p></td>
+<td><p>The device path of the default error output device.</p></td>
+</tr>
+<tr class="row-even"><td><p>ErrOutDev</p></td>
+<td><p>BS, RT</p></td>
+<td><p>The device path of all possible error output devices.</p></td>
+</tr>
+<tr class="row-odd"><td><p>HwErrRecSupport</p></td>
+<td><p>NV, BS, RT</p></td>
+<td><p>Identifies the level of hardware error record persistence support implemented by the platform. This variable is only modified by firmware and is read-only to the OS.</p></td>
+</tr>
+<tr class="row-even"><td><p>KEK</p></td>
+<td><p>NV, BS, RT,AT</p></td>
+<td><p>The Key Exchange Key Signature Database.</p></td>
+</tr>
+<tr class="row-odd"><td><p>KEKDefault</p></td>
+<td><p>BS, RT</p></td>
+<td><p>The OEM’s default Key Exchange Key Signature Database. Should be treated as read-only.</p></td>
+</tr>
+<tr class="row-even"><td><p>Key####</p></td>
+<td><p>NV, BS, RT</p></td>
+<td><p>Describes hot key relationship with a Boot#### load option.</p></td>
+</tr>
+<tr class="row-odd"><td><p>OsIndications</p></td>
+<td><p>NV, BS, RT</p></td>
+<td><p>Allows the OS to request the firmware to enable certain features and to take certain actions.</p></td>
+</tr>
+<tr class="row-even"><td><p>OsIndicationsSupported</p></td>
+<td><p>BS, RT</p></td>
+<td><p>Allows the firmware to indicate supported features and actions to the OS.</p></td>
+</tr>
+<tr class="row-odd"><td><p>OsRecoveryOrder</p></td>
+<td><p>BS,RT,NV,AT</p></td>
+<td><p>OS-specified recovery options.</p></td>
+</tr>
+<tr class="row-even"><td><p>PK</p></td>
+<td><p>NV, BS, RT,AT</p></td>
+<td><p>The public Platform Key.</p></td>
+</tr>
+<tr class="row-odd"><td><p>PKDefault</p></td>
+<td><p>BS, RT</p></td>
+<td><p>The OEM’s default public Platform Key. Should be treated as read-only.</p></td>
+</tr>
+<tr class="row-even"><td><p>PlatformLangCodes</p></td>
+<td><p>BS, RT</p></td>
+<td><p>The language codes that the firmware supports.</p></td>
+</tr>
+<tr class="row-odd"><td><p>PlatformLang</p></td>
+<td><p>NV, BS, RT</p></td>
+<td><p>The language code that the system is configured for.</p></td>
+</tr>
+<tr class="row-even"><td><p>PlatformRecovery####</p></td>
+<td><p>BS, RT</p></td>
+<td><p>Platform-specified recovery options. These variables are only modified by firmware and are read-only to the OS.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SignatureSupport</p></td>
+<td><p>BS, RT</p></td>
+<td><p>Array of GUIDs representing the type of signatures supported by the platform firmware. Should be treated as read-only.</p></td>
+</tr>
+<tr class="row-even"><td><p>SecureBoot</p></td>
+<td><p>BS, RT</p></td>
+<td><p>Whether the platform firmware is operating in Secure boot mode (1) or not (0). All other values are reserved. Should be treated as read-only.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SetupMode</p></td>
+<td><p>BS, RT</p></td>
+<td><p>Whether the system should require authentication on SetVariable() requests to Secure Boot policy variables (0) or not (1). Should be treated as read-only.  The system is in “Setup Mode” when SetupMode==1, AuditMode==0, and DeployedMode==0.</p></td>
+</tr>
+<tr class="row-even"><td><p>SysPrep####</p></td>
+<td><p>NV, BS, RT</p></td>
+<td><p>A System Prep application load option containing an <em>EFI_LOAD_OPTION</em> descriptor. #### is a printed hex value.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SysPrepOrder</p></td>
+<td><p>NV, BS, RT</p></td>
+<td><p>The ordered System Prep Application load option list.</p></td>
+</tr>
+<tr class="row-even"><td><p>Timeout</p></td>
+<td><p>NV, BS, RT</p></td>
+<td><p>The firmware’s boot managers timeout, in seconds, before initiating the default boot selection.</p></td>
+</tr>
+<tr class="row-odd"><td><p>VendorKeys</p></td>
+<td><p>BS, RT</p></td>
+<td><p>Whether the system is configured to use only vendor-provided keys or not. Should be treated as read-only.</p></td>
+</tr>
+</tbody>
+</table>
+<p>The <em>PlatformLangCodes</em> variable contains a null- terminated ASCII string representing the language codes that the firmware can support. At initialization time the firmware computes the supported languages and creates this data variable. Since the firmware creates this value on each initialization, its contents are not stored in nonvolatile memory. This value is considered read-only. <em>PlatformLangCodes</em> is specified in Native RFC 4646 format. See <a class="reference internal" href="Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html#appendix-m-formats-language-codes-and-language-code-arrays-apx-m-formats-language-codes-and-language-code-arrays"><span class="std std-ref">Formats — Language Codes and Language Code Arrays</span></a>.</p>
+<p>The <em>PlatformLang</em> variable contains a null- terminated ASCII string language code that the machine has been configured for. This value may be changed to any value supported by <em>PlatformLangCodes</em>. If this change is made in the preboot environment, then the change will take effect immediately. If this change is made at OS runtime, then the change does not take effect until the next boot. If the language code is set to an unsupported value, the firmware will choose a supported default at initialization and set <em>PlatformLang</em> to a supported value. <em>PlatformLang</em> is specified in Native RFC 4646 array format. See <a class="reference internal" href="Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html#appendix-m-formats-language-codes-and-language-code-arrays-apx-m-formats-language-codes-and-language-code-arrays"><span class="std std-ref">Formats — Language Codes and Language Code Arrays</span></a>.</p>
+<p>The <em>Timeout</em> variable contains a binary <em>UINT16</em> that supplies the number of seconds that the firmware will wait before initiating the original default boot selection. A value of 0 indicates that the default boot selection is to be initiated immediately on boot. If the value is not present, or contains the value of 0xFFFF then firmware will wait for user input before booting. This means the default boot selection is not automatically started by the firmware.</p>
+<p>The <em>ConIn</em> , <em>ConOut</em> , and <em>ErrOut</em> variables each contain an <a class="reference internal" href="10_Protocols_Device_Path_Protocol.html#efi-device-path-protocol"><span class="std std-ref">EFI Device Path Protocol</span></a>  descriptor that defines the default device to use on boot. Changes to these values made in the preboot environment take effect immediately. Changes to these values at OS runtime do not take effect until the next boot. If the firmware cannot resolve the device path, it is allowed to automatically replace the values, as needed, to provide a console for the system. If the device path starts with a USB Class device path ( <a class="reference internal" href="10_Protocols_Device_Path_Protocol.html#usb-class-device-path"><span class="std std-ref">USB Class Device Path</span></a> ), then any input or output device that matches the device path must be used as a console if it is supported by the firmware.</p>
+<p>The <em>ConInDev</em> , <em>ConOutDev</em> , and <em>ErrOutDev</em> variables each contain an <em>EFI_DEVICE_PATH_PROTOCOL</em> descriptor that defines all the possible default devices to use on boot. These variables are volatile, and are set dynamically on every boot. <em>ConIn</em> , <em>ConOut</em> , and <em>ErrOut</em> are always proper subsets of <em>ConInDev</em> , <em>ConOutDev</em> , and <em>ErrOutDev</em> .</p>
+<p>Each <em>Boot####</em> variable contains an <em>EFI_LOAD_OPTION</em>. Each <em>Boot####</em> variable is the name “Boot” appended with a unique four digit hexadecimal number. For example, Boot0001, Boot0002, Boot0A02, etc.</p>
+<p>The <em>OsRecoveryOrder</em> variable contains an array of <em>EFI_GUID</em> structures. Each <em>EFI_GUID</em> structure specifies a namespace for variables containing OS-defined recovery entries (  See <a class="reference internal" href="#os-defined-boot-option-recovery"><span class="std std-ref">OS-Defined Boot Option Recovery</span></a> ). Write access to this variable is controlled by the security key database dbr ( <a class="reference internal" href="08_Services_Runtime_Services.html#using-the-efi-variable-authentication-3-descriptor"><span class="std std-ref">Using the EFI_VARIABLE_AUTHENTICATION_3 descriptor</span></a> ).</p>
+<p><em>PlatformRecovery####</em> variables share the same structure as Boot#### variables. These variables are processed when the system is performing recovery of boot options.</p>
+<p>The <em>BootOrder</em> variable contains an array of <em>UINT16</em> ’s that make up an ordered list of the <em>Boot####</em> options. The first element in the array is the value for the first logical boot option, the second element is the value for the second logical boot option, etc. The <em>BootOrder</em> order list is used by the firmware’s boot manager as the default boot order.</p>
+<p>The <em>BootNext</em> variable is a single <em>UINT16</em> that defines the <em>Boot####</em> option that is to be tried first on the next boot. After the <em>BootNext</em> boot option is tried the normal <em>BootOrder</em> list is used. To prevent loops, the boot manager deletes this variable before transferring control to the preselected boot option.</p>
+<p>The <em>BootCurrent</em> variable is a single <em>UINT16</em> that defines the <em>Boot####</em> option that was selected on the current boot. The platform sets this variable before signaling EFI_EVENT_GROUP_READY_TO_BOOT. This variable is not set when attempting to launch OsRecovery### or PlatformRecovery### options.</p>
+<p>The <em>BootOptionSupport</em> variable is a <em>UINT32</em> that defines the types of boot options supported by the boot manager.</p>
+<p>Each <em>Driver####</em> variable contains an <em>EFI_LOAD_OPTION</em>. Each load option variable is appended with a unique number, for example Driver0001, Driver0002, etc.</p>
+<p>The <em>DriverOrder</em> variable contains an array of <em>UINT16</em> ’s that make up an ordered list of the <em>Driver####</em> variable. The first element in the array is the value for the first logical driver load option, the second element is the value for the second logical driver load option, etc. The <em>DriverOrder</em> list is used by the firmware’s boot manager as the default load order for UEFI drivers that it should explicitly load.</p>
+<p>The <em>Key####</em> variable associates a key press with a single boot option. Each <em>Key####</em> variable is the name “Key” appended with a unique four digit hexadecimal number. For example, Key0001, Key0002, Key00A0, etc.</p>
+<p>The <em>HwErrRecSupport</em> variable contains a binary UINT16 that supplies the level of support for Hardware Error Record Persistence (<a class="reference internal" href="08_Services_Runtime_Services.html#hardware-error-record-persistence"><span class="std std-ref">Hardware Error Record Persistence</span></a> ) that is implemented by the platform. If the value is not present, then the platform implements no support for Hardware Error Record Persistence. A value of zero indicates that the platform implements no support for Hardware Error Record Persistence. A value of 1 indicates that the platform implements Hardware Error Record Persistence as defined in  <a class="reference internal" href="08_Services_Runtime_Services.html#hardware-error-record-persistence"><span class="std std-ref">Hardware Error Record Persistence</span></a>. Firmware initializes this variable. All other values are reserved for future use.</p>
+<p>The <em>SetupMode</em> variable is an 8-bit unsigned integer that defines whether the system is should require authentication (0) or not (1) on <em>SetVariable()</em> requests to Secure Boot Policy Variables. Secure Boot Policy Variables include:</p>
+<ul class="simple">
+<li><p>The global variables <em>PK</em> , <em>KEK</em> , and <em>OsRecoveryOrder</em></p></li>
+<li><p>All variables named <em>OsRecovery####</em> under all VendorGuids</p></li>
+<li><p>All variables with the VendorGuid <em>EFI_IMAGE_SECURITY_DATABASE_GUID.</em></p></li>
+</ul>
+<p>Secure Boot Policy Variables must be created using the <em>EFI_VARIABLE_AUTHENTICATION_2</em> structure.</p>
+<p>The <em>AuditMode</em> variable is an 8-bit unsigned integer that defines whether the system is currently operating in Audit Mode.</p>
+<p>The <em>DeployedMode</em> variable is an 8-bit unsigned integer that defines whether the system is currently operating in Deployed Mode.</p>
+<p>The <em>KEK</em> variable contains the current Key Exchange Key database.</p>
+<p>The <em>PK</em> variable contains the current Platform Key.</p>
+<p>The <em>VendorKeys</em> variable is an 8-bit unsigned integer that defines whether the Security Boot Policy Variables have been modified by anyone other than the platform vendor or a holder of the vendor-provided keys. A value of 0 indicates that someone other than the platform vendor or a holder of the vendor-provided keys has modified the Secure Boot Policy Variables Otherwise, the value will be 1.</p>
+<p>The <em>KEKDefault</em> variable, if present, contains the platform-defined Key Exchange Key database. This is not used at runtime but is provided in order to allow the OS to recover the OEM’s default key setup. The contents of this variable do not include an <em>EFI_VARIABLE_AUTHENTICATION</em> or <em>EFI_VARIABLE_AUTHENTICATION2</em> structure.</p>
+<p>The <em>PKDefault</em> variable, if present, contains the platform-defined Platform Key. This is not used at runtime but is provided in order to allow the OS to recover the OEM’s default key setup. The contents of this variable do not include an <em>EFI_VARIABLE_AUTHENTICATION2</em> structure.</p>
+<p>The <em>dbDefault</em> variable, if present, contains the platform-defined secure boot signature database. This is not used at runtime but is provided in order to allow the OS to recover the OEM’s default key setup. The contents of this variable do not include an <em>EFI_VARIABLE_AUTHENTICATION2</em> structure.</p>
+<p>The <em>dbrDefault</em> variable, if present, contains the platform-defined secure boot authorized recovery signature database. This is not used at runtime but is provided in order to allow the OS to recover the OEM’s default key setup. The contents of this variable do not include an <em>EFI_VARIABLE_AUTHENTICATION2</em> structure.</p>
+<p>The <em>dbtDefault</em> variable, if present, contains the platform-defined secure boot timestamp signature database. This is not used at runtime but is provided in order to allow the OS to recover the OEM’s default key setup. The contents of this variable do not include an <em>EFI_VARIABLE_AUTHENTICATION2</em> structure.</p>
+<p>The <em>dbxDefault</em> variable, if present, contains the platform-defined secure boot blacklist signature database. This is not used at runtime but is provided in order to allow the OS to recover the OEM’s default key setup. The contents of this variable do not include an <em>EFI_VARIABLE_AUTHENTICATION2</em> structure.</p>
+<p>The <em>SignatureSupport</em> variable returns an array of GUIDs, with each GUID representing a type of signature which the platform firmware supports for images and other data. The different signature types are described in “Signature Database”.</p>
+<p>The <em>SecureBoot</em> variable is an 8-bit unsigned integer that defines whether the platform firmware is operating with Secure Boot enabled. A value of 1 indicates that platform firmware performs driver and boot application signature verification as specified in  <a class="reference internal" href="32_Secure_Boot_and_Driver_Signing.html#uefi-image-validation"><span class="std std-ref">UEFI Image Validation</span></a>  during the current boot. A value of 0 indicates that driver and boot application signature verification is not active during the current boot. The SecureBoot variable is initialized prior to Secure Boot image authentication and thereafter should be treated as read-only and immutable. Its initialization value is determined by platform policy but must be 0 if the platform is in Setup Mode or Audit Mode during its initialization.</p>
+<p>The <em>OsIndicationsSupported</em> variable indicates which of the OS indication features and actions that the firmware supports. This variable is recreated by firmware every boot, and cannot be modified by the OS (see <em>SetVariable()</em> Attributes usage rules once <em>ExitBootServices()</em> is performed).</p>
+<p>The <em>OsIndications</em> variable is used to indicate which features the OS wants firmware to enable or which actions the OS wants the firmware to take. The OS will supply this data with a <em>SetVariable()</em> call.  <a class="reference internal" href="08_Services_Runtime_Services.html#exchanging-information-between-the-os-and-firmware"><span class="std std-ref">Exchanging information between the OS and Firmware</span></a> for the variable definition.</p>
+<p>The devAuthBoot variable is an 8-bit unsigned integer that defines whether the platform firmware is operating with device authentication boot enabled. A value of 1 indicates that platform firmware performs device authentication as specified in Device Authentication during the current boot. A value of 0 indicates that device authentication is not active during the current boot. The devAuthBoot variable is initialized prior to device authentication and thereafter should be treated as read-only and immutable. Its initialization value is determined by platform policy.</p>
+<p>The devdbDefault variable, if present, contains the platform-defined device authentication signature database. This is not used at runtime but is provided in order to allow the OS to recover the OEM’s default key setup. The contents of this variable do not include an EFI_VARIABLE_AUTHENTICATION2 structure.</p>
+</section>
+<section id="boot-option-recovery">
+<span id="id13"></span><h2><span class="section-number">3.4. </span>Boot Option Recovery<a class="headerlink" href="#boot-option-recovery" title="Link to this heading"></a></h2>
+<p>Boot option recovery consists of two independent parts, operating system-defined recovery and platform-defined recovery. OS-defined recovery is an attempt to allow installed operating systems to recover any needed boot options, or to launch full operating system recovery. Platform-defined recovery includes any remedial actions performed by the platform as a last resort when no operating system is found, such as the Default Boot Behavior ( <a class="reference internal" href="#boot-option-variables-default-boot-behavior"><span class="std std-ref">Boot Option Variables Default Boot Behavior</span></a> ). This could include behaviors such as warranty service reconfiguration or diagnostic options.</p>
+<p>In the event that boot option recovery must be performed, the boot manager must first attempt OS-defined recovery, re-attempt normal booting via <em>Boot####</em> and <em>BootOrder</em> variables, and finally attempt platform-defined recovery if no options have succeeded.</p>
+<section id="os-defined-boot-option-recovery">
+<span id="id14"></span><h3><span class="section-number">3.4.1. </span>OS-Defined Boot Option Recovery<a class="headerlink" href="#os-defined-boot-option-recovery" title="Link to this heading"></a></h3>
+<p>If the <em>EFI_OS_INDICATIONS_START_OS_RECOVERY</em> bit is set in <em>OsIndications</em> , or if processing of <em>BootOrder</em> does not result in success, the platform must process OS-defined recovery options. In the case where OS-defined recovery is entered due to <em>OsIndications</em> , <em>SysPrepOrder</em> and <em>SysPrep####</em> variables should not be processed. Note that in order to avoid ambiguity in intent, this bit is ignored in <em>OsIndications</em> if <em>EFI_OS_INDICATIONS_START_PLATFORM_RECOVERY</em> is set.</p>
+<p>OS-defined recovery uses the <em>OsRecoveryOrder</em> variable, as well as variables created with vendor specific <em>VendorGuid</em> values and a name following the pattern <em>OsRecovery####</em>. Each of these variables must be an authenticated variable with the <em>EFI_VARIABLE_TIME_BASED_AUTHENTICATED_WRITE_ACCESS</em> attribute set.</p>
+<p>To process these variables, the boot manager iterates over the array of EFI_GUID structures in the <em>OsRecoveryOrder</em> variable, and each GUID specified is treated as a <em>VendorGuid</em> associated with a series of variable names. For each GUID, the firmware attempts to load and execute, in hexadecimal sort order, every variable with that GUID and a name following the pattern <em>OsRecovery####</em>. These variables have the same format as <em>Boot####</em> variables, and the boot manager must verify that each variable it attempts to load was created with a public key that is associated with a certificate chaining to one listed in the authorized recovery signature database <em>dbr</em> and not in the forbidden signature database, or is created by a key in the Key Exchange Key database <em>KEK</em> or the current Platform Key <em>PK</em> .</p>
+<p>If the boot manager finishes processing <em>OsRecovery####</em> options without  <a class="reference internal" href="07_Services_Boot_Services.html#efi-boot-services-exitbootservices"><span class="std std-ref">EFI_BOOT_SERVICES.ExitBootServices()</span></a>  or  <a class="reference internal" href="08_Services_Runtime_Services.html#resetsystem"><span class="std std-ref">ResetSystem()</span></a>  having been called, it must attempt to process <em>BootOrder</em> a second time. If booting does not succeed during that process, OS-defined recovery has failed, and the boot manager must attempt platform-based recovery.</p>
+<p>If, while processing <em>OsRecovery####</em> variables, the boot manager encounters an entry which cannot be loaded or executed due to a security policy violation, it must ignore that variable.</p>
+</section>
+<section id="platform-defined-boot-option-recovery">
+<span id="id15"></span><h3><span class="section-number">3.4.2. </span>Platform-Defined Boot Option Recovery<a class="headerlink" href="#platform-defined-boot-option-recovery" title="Link to this heading"></a></h3>
+<p>If the <em>EFI_OS_INDICATIONS_START_PLATFORM_RECOVERY</em> bit is set in <em>OsIndications</em> , or if OS-defined recovery has failed, the system firmware must commence with platform-specific recovery by iterating its <em>PlatformRecovery####</em> variables in the same manner as <em>OsRecovery####</em> , but must stop processing if any entry is successful. In the case where platform-specific recovery is entered due to <em>OsIndications</em> , <em>SysPrepOrder</em> and <em>SysPrep####</em> variables should not be processed.</p>
+</section>
+<section id="boot-option-variables-default-boot-behavior">
+<span id="id16"></span><h3><span class="section-number">3.4.3. </span>Boot Option Variables Default Boot Behavior<a class="headerlink" href="#boot-option-variables-default-boot-behavior" title="Link to this heading"></a></h3>
+<p>The default state of globally-defined variables is firmware vendor specific. However the boot options require a standard default behavior in the exceptional case that valid boot options are not present on a platform. The default behavior must be invoked any time the <em>BootOrder</em> variable does not exist or only points to nonexistent boot options, or if no entry in <em>BootOrder</em> can successfully be executed.</p>
+<p>If system firmware supports boot option recovery as described in  <a class="reference internal" href="#boot-option-recovery"><span class="std std-ref">Boot Option Recovery</span></a> , system firmware must include a <em>PlatformRecovery####</em> variable specifying a short-form File Path Media Device Path (  <a class="reference internal" href="#load-option-processing"><span class="std std-ref">Load Option Processing</span></a> ) containing the platform default file path for removable media ( <a class="reference internal" href="#uefi-image-types"><span class="std std-ref">UEFI Image Types</span></a> ). It is recommended for maximal compatibility with prior versions of this specification that this entry be the first such variable, though it may be at any position within the list.</p>
+<p>It is expected that this default boot will load an operating system or a maintenance utility. If this is an operating system setup program it is then responsible for setting the requisite environment variables for subsequent boots. The platform firmware may also decide to recover or set to a known set of boot options.</p>
+</section>
+</section>
+<section id="boot-mechanisms">
+<span id="id17"></span><h2><span class="section-number">3.5. </span>Boot Mechanisms<a class="headerlink" href="#boot-mechanisms" title="Link to this heading"></a></h2>
+<p>EFI can boot from a device using the <em>EFI_SIMPLE_FILE_SYSTEM_PROTOCOL</em> or the <em>EFI_LOAD_FILE_PROTOCOL</em>. A device that supports the <em>EFI_SIMPLE_FILE_SYSTEM_PROTOCOL</em> must materialize a file system protocol for that device to be bootable. If a device does not wish to support a complete file system it may produce an <em>EFI_LOAD_FILE_PROTOCOL</em> which allows it to materialize an image directly. The Boot Manager will attempt to boot using the <em>EFI_SIMPLE_FILE_SYSTEM_PROTOCOL</em> first. If that fails, then the <em>EFI_LOAD_FILE_PROTOCOL</em> will be used.</p>
+<section id="boot-via-the-simple-file-protocol">
+<span id="id18"></span><h3><span class="section-number">3.5.1. </span>Boot via the Simple File Protocol<a class="headerlink" href="#boot-via-the-simple-file-protocol" title="Link to this heading"></a></h3>
+<p>When booting via the <em>EFI_SIMPLE_FILE_SYSTEM_PROTOCOL</em> , the <em>FilePath</em> will start with a device path that points to the device that implements the <em>EFI_SIMPLE_FILE_SYSTEM_PROTOCOL</em> or the <em>EFI_BLOCK_IO_PROTOCOL</em>. The next part of the <em>FilePath</em> may point to the file name, including subdirectories, which contain the bootable image. If the file name is a null device path, the file name must be generated from the rules defined below.</p>
+<p>If the <em>FilePathList[0]</em> device does not support the <em>EFI_SIMPLE_FILE_SYSTEM_PROTOCOL</em> , but supports the <em>EFI_BLOCK_IO_PROTOCOL</em> protocol, then the EFI Boot Service  <a class="reference internal" href="07_Services_Boot_Services.html#efi-boot-services-connectcontroller"><span class="std std-ref">EFI_BOOT_SERVICES.ConnectController()</span></a> must be called for <em>FilePathList[0]</em> with <em>DriverImageHandle</em> and <em>RemainingDevicePath</em> set to <em>NULL</em> and the <em>Recursive</em> flag is set to <em>TRUE</em>.The firmware will then attempt to boot from any child handles produced using the algorithms outlined below.</p>
+<p>The format of the file system specified is contained in  <a class="reference internal" href="13_Protocols_Media_Access.html#file-system-format"><span class="std std-ref">File System Format</span></a>. While the firmware must produce an <em>EFI_SIMPLE_FILE_SYSTEM_PROTOCOL</em> that understands the UEFI file system, any file system can be abstracted with the <em>EFI_SIMPLE_FILE_SYSTEM_PROTOCOL</em> interface.</p>
+<section id="removable-media-boot-behavior">
+<span id="id19"></span><h4><span class="section-number">3.5.1.1. </span>Removable Media Boot Behavior<a class="headerlink" href="#removable-media-boot-behavior" title="Link to this heading"></a></h4>
+<p>To generate a file name when none is present in the FilePath, the firmware must append a default file name in the form <code class="docutils literal notranslate"><span class="pre">\EFI\BOOT\BOOT{machine</span> <span class="pre">type</span> <span class="pre">short-name}.EFI</span></code> where machine type short-name defines a PE32+ image format architecture. Each file only contains one UEFI image type, and a system may support booting from one or more images types.  See <a class="reference internal" href="#uefi-image-types"><span class="std std-numref">Table 3.2</span></a> for a list of the UEFI image types.</p>
+<table class="longtable docutils align-default" id="uefi-image-types">
+<caption><span class="caption-number">Table 3.2 </span><span class="caption-text">UEFI Image Types</span><a class="headerlink" href="#uefi-image-types" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 33.3%" />
+<col style="width: 33.3%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><div class="line-block">
+<div class="line"><br /></div>
+</div>
+</td>
+<td><p><strong>File Name Convention</strong></p></td>
+<td><p><strong>PE Executable Machine Type</strong> *</p></td>
+</tr>
+<tr class="row-even"><td><p>32-bit</p></td>
+<td><p>BOOTIA32.EFI</p></td>
+<td><p>0x14c</p></td>
+</tr>
+<tr class="row-odd"><td><p>x64</p></td>
+<td><p>BOOTx64.EFI</p></td>
+<td><p>0x8664</p></td>
+</tr>
+<tr class="row-even"><td><p>Itanium architecture</p></td>
+<td><p>BOOTIA64.EFI</p></td>
+<td><p>0x200</p></td>
+</tr>
+<tr class="row-odd"><td><p>AArch32 architecture</p></td>
+<td><p>BOOTARM.EFI</p></td>
+<td><p>0x01c2</p></td>
+</tr>
+<tr class="row-even"><td><p>AArch64 architecture</p></td>
+<td><p>BOOTAA64.EFI</p></td>
+<td><p>0xAA64</p></td>
+</tr>
+<tr class="row-odd"><td><p>RISC-V 32-bit architecture</p></td>
+<td><p>BOOTRISCV32.EFI</p></td>
+<td><p>0x5032</p></td>
+</tr>
+<tr class="row-even"><td><p>RISC-V 64-bit architecture</p></td>
+<td><p>BOOTRISCV64.EFI</p></td>
+<td><p>0x5064</p></td>
+</tr>
+<tr class="row-odd"><td><p>RISC-V 128-bit architecture</p></td>
+<td><p>BOOTRISCV128.EFI</p></td>
+<td><p>0x5128</p></td>
+</tr>
+<tr class="row-even"><td><p>LoongArch32 architecture</p></td>
+<td><p>BOOTLOONGARCH32.EFI</p></td>
+<td><p>0x6232</p></td>
+</tr>
+<tr class="row-odd"><td><p>LoongArch64 architecture</p></td>
+<td><p>BOOTLOONGARCH64.EFI</p></td>
+<td><p>0x6264</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The PE Executable machine type is contained in the machine field of the COFF file header as defined in the Microsoft Portable Executable and Common Object File Format Specification, Revision 6.0*</p>
+</div>
+<p>Media may support multiple architectures by simply having a file <code class="docutils literal notranslate"><span class="pre">\EFI\BOOT\BOOT{machine</span> <span class="pre">type</span> <span class="pre">short-name}.EFI</span></code> for each possible machine type.</p>
+</section>
+</section>
+<section id="boot-via-the-load-file-protocol">
+<span id="id20"></span><h3><span class="section-number">3.5.2. </span>Boot via the Load File Protocol<a class="headerlink" href="#boot-via-the-load-file-protocol" title="Link to this heading"></a></h3>
+<p>When booting via the  <a class="reference internal" href="13_Protocols_Media_Access.html#efi-load-file-protocol"><span class="std std-ref">EFI_LOAD_FILE_PROTOCOL</span></a>  protocol, the <em>FilePath</em> is a device path that points to a device that “speaks” the <em>EFI_LOAD_FILE_PROTOCOL</em>. The image is loaded directly from the device that supports the <em>EFI_LOAD_FILE_PROTOCOL</em>. The remainder of the <em>FilePath</em> will contain information that is specific to the device. Firmware passes this device-specific data to the loaded image, but does not use it to load the image. If the remainder of the <em>FilePath</em> is a null device path it is the loaded image’s responsibility to implement a policy to find the correct boot device.</p>
+<p>The <em>EFI_LOAD_FILE_PROTOCOL</em> is used for devices that do not directly support file systems. Network devices commonly boot in this model where the image is materialized without the need of a file system.</p>
+<section id="network-booting">
+<span id="id21"></span><h4><span class="section-number">3.5.2.1. </span>Network Booting<a class="headerlink" href="#network-booting" title="Link to this heading"></a></h4>
+<p>Network booting is described by the <em>Preboot eXecution Environment (PXE) BIOS Support Specification</em>. PXE specifies UDP, DHCP, and TFTP network protocols that a booting platform can use to interact with an intelligent system load server. UEFI defines special interfaces that are used to implement PXE. These interfaces are contained in the <a class="reference internal" href="24_Network_Protocols_SNP_PXE_BIS.html#efi-pxe-base-code-protocol"><span class="std std-ref">EFI_PXE_BASE_CODE_PROTOCOL</span></a> .</p>
+</section>
+<section id="future-boot-media">
+<span id="id22"></span><h4><span class="section-number">3.5.2.2. </span>Future Boot Media<a class="headerlink" href="#future-boot-media" title="Link to this heading"></a></h4>
+<p>Since UEFI defines an abstraction between the platform and the OS and its loader it should be possible to add new types of boot media as technology evolves. The OS loader will not necessarily have to change to support new types of boot. The implementation of the UEFI platform services may change, but the interface will remain constant. The OS will require a driver to support the new type of boot media so that it can make the transition from UEFI boot services to OS control of the boot media.</p>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="02_Overview.html" class="btn btn-neutral float-left" title="2. Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="04_EFI_System_Table.html" class="btn btn-neutral float-right" title="4. EFI System Table" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, UEFI Forum, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

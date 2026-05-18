@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>9. Decompression Source Code &mdash; UEFI Specification 2.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=f2209469" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/style.css?v=faba8a36" />
+      <link rel="stylesheet" type="text/css" href="_static/theme-overrides.css?v=84235ce0" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2de06f63"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="10. EFI Byte Code Virtual Machine Opcode List" href="Apx_J_EFI_Byte_Code_Virtual_Machine_Opcode_List.html" />
+    <link rel="prev" title="8. Compression Source Code" href="Apx_H_Compression_Source_Code.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            UEFI Specification
+          </a>
+              <div class="version">
+                2.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Tables.html">List of Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Figures.html">List of Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/Revision_History.html">Revision History</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01_Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Overview.html">2. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Boot_Manager.html">3. Boot Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_EFI_System_Table.html">4. EFI System Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_GUID_Partition_Table_Format.html">5. GUID Partition Table (GPT) Disk Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_Block_Transition_Table_Layout.html">6. Block Translation Table (BTT) Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Services_Boot_Services.html">7. Services — Boot Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Services_Runtime_Services.html">8. Services — Runtime Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Protocols_EFI_Loaded_Image.html">9. Protocols - EFI Loaded Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Protocols_Device_Path_Protocol.html">10. Protocols – Device Path Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html">11. Protocols — UEFI Driver Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_Protocols_Console_Support.html">12. Protocols — Console Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Protocols_Media_Access.html">13. Protocols – Media Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Protocols_PCI_Bus_Support.html">14. Protocols — PCI Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_Protocols_SCSI_Driver_Models_and_Bus_Support.html">15. Protocols — SCSI Driver Models and Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_Protocols_iSCSI_Boot.html">16. Protocols — iSCSI Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_Protocols_USB_Support.html">17. Protocols — USB Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_Protocols_Debugger_Support.html">18. Protocols — Debugger Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_Protocols_Compression_Algorithm_Specification.html">19. Protocols — Compression Algorithm Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_Protocols_ACPI_Protocols.html">20. Protocols — ACPI Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_Protocols_String_Services.html">21. Protocols — String Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html">22. EFI Byte Code Virtual Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_Firmware_Update_and_Reporting.html">23. Firmware Update and Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24_Network_Protocols_SNP_PXE_BIS.html">24. Network Protocols — SNP, PXE, BIS and HTTP Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25_Network_Protocols_Managed_Network.html">25. Network Protocols - Managed Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26_Network_Protocols_Bluetooth.html">26. Network Protocols — Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27_Network_Protocols_VLAN_and_EAP.html">27. Network Protocols — VLAN, EAP, Wi-Fi and Supplicant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28_Network_Protocols_TCP_IP_and_Configuration.html">28. Network Protocols — TCP, IP, IPsec, FTP, TLS and Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29_Network_Protocols_ARP_and_DHCP.html">29. Network Protocols — ARP, DHCP, DNS, HTTP and REST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_Network_Protocols_UDP_and_MTFTP.html">30. Network Protocols — UDP and MTFTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="31_EFI_Redfish_Service_Support.html">31. EFI Redfish Service Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="32_Secure_Boot_and_Driver_Signing.html">32. Secure Boot and Driver Signing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="33_Human_Interface_Infrastructure.html">33. Human Interface Infrastructure Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="34_HII_Protocols.html">34. HII Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="35_HII_Configuration_Processing_and_Browser_Protocol.html">35. HII Configuration Processing and Browser Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="36_User_Identification.html">36. User Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="37_Secure_Technologies.html">37. Secure Technologies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="38_Confidential_Computing.html">38. Confidential Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="39_Micellaneous_Protocols.html">39. Miscellaneous Protocols</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Apx_A_GUID_and_Time_Formats.html">A. GUID and Time Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_B_Console.html">B. Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_C_Device_Path_Examples.html">C. Device Path Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_D_Status_Codes.html">D. Status Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_E_Universal_Network_Driver_Interfaces.html">E. Universal Network Driver Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_F_Using_the_Simple_Pointer_Protocol.html">F. Using the Simple Pointer Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_G_Using_the_EFI_Extended_SCSI_Pass_Thru_Protocol.html">G. Using the EFI Extended SCSI Pass Thru Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_H_Compression_Source_Code.html">H. Compression Source Code</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">I. Decompression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_J_EFI_Byte_Code_Virtual_Machine_Opcode_List.html">J. EFI Byte Code Virtual Machine Opcode List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_K_Alphabetic_Function_Lists.html">K. Alphabetic Function Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_L_EFI_1.10_Protocol_Changes_and_Deprecation_List.html">L. EFI 1.10 Protocol Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html">M. Formats — Language Codes and Language Code Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_N_Common_Platform_Error_Record.html">N. Common Platform Error Record (CPER)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_O_UEFI_ACPI_Data_Table.html">O. UEFI ACPI Data Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_P_Hardware_Error_Record_Persistence_Usage.html">P. Hardware Error Record Persistence Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_Q_References.html">Q. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_R_Glossary.html">R. Glossary</a></li>
+</ul>
+
+    <a href= "genindex.html">Index</a>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UEFI Specification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">9. </span>Decompression Source Code</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="decompression-source-code">
+<span id="appendix-i-decompression-source-code-apx-i-decompression-source-code"></span><h1><span class="section-number">I. </span>Decompression Source Code<a class="headerlink" href="#decompression-source-code" title="Link to this heading"></a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>=/*++
+
+Copyright (c) 2001-2002 Intel Corporation
+
+Module Name:
+
+  Decompress.c
+
+Abstract:
+
+  Decompressor.
+
+--*/
+
+#include &quot;EfiCommon.h&quot;
+
+#define BITBUFSIZ       16
+#define WNDBIT          13
+#define WNDSIZ          (1U &lt;&lt; WNDBIT)
+#define MAXMATCH        256
+#define THRESHOLD       3
+#define CODE_BIT        16
+#define UINT8_MAX       0xff
+#define BAD_TABLE       -1
+
+//
+// C: Char&amp;Len Set; P: Position Set; T: exTra Set
+//
+
+#define NC              (0xff + MAXMATCH + 2 - THRESHOLD)
+#define CBIT            9
+#define NP              (WNDBIT + 1)
+#define NT              (CODE_BIT + 3)
+#define PBIT            4
+#define TBIT            5
+#if NT &gt; NP
+  #define NPT           NT
+#else
+  #define NPT           NP
+#endif
+
+typedef struct {
+  UINT8    *mSrcBase; //Starting address of compressed data
+  UINT8    *mDstBase; //Starting address of decompressed data
+
+  UINT16   mBytesRemain;
+  UINT16   mBitCount;
+  UINT16   mBitBuf;
+  UINT16   mSubBitBuf;
+  UINT16   mBufSiz;
+  UINT16   mBlockSize;
+  UINT32   mDataIdx;
+  UINT32   mCompSize;
+  UINT32   mOrigSize;
+  UINT32   mOutBuf;
+  UINT32   mInBuf;
+
+  UINT16   mBadTableFlag;
+
+  UINT8    mBuffer[WNDSIZ];
+  UINT16   mLeft[2 * NC - 1];
+  UINT16   mRight[2 * NC - 1];
+  UINT32   mBuf;
+  UINT8    mCLen[NC];
+  UINT8    mPTLen[NPT];
+  UINT16   mCTable[4096];
+  UINT16   mPTTable[256];
+} SCRATCH_DATA;
+
+ //
+ // Function Prototypes
+ //
+
+ STATIC
+ VOID
+ FillBuf (
+  IN SCRATCH_DATA  *Sd,
+  IN UINT16        NumOfBits
+  );
+
+STATIC
+VOID
+Decode (
+   SCRATCH_DATA     *Sd,
+   UINT16           NumOfBytes
+   );
+
+ //
+ // Functions
+ //
+
+ EFI_STATUS
+ EFIAPI
+ GetInfo (
+  IN EFI_DECOMPRESS_PROTOCOL *This,
+  IN VOID *Source,
+  IN UINT32 SrcSize,
+  OUT UINT32 *DstSize,
+  OUT UINT32 *ScratchSize
+  )
+ /*++
+
+Routine Description:
+
+  The implementation of EFI_DECOMPRESS_PROTOCOL.GetInfo().
+
+Arguments:
+
+ This - Protocol instance pointer.
+ Source - The source buffer containing the compressed data.
+ SrcSize - The size of source buffer
+ DstSize - The size of destination buffer.
+ ScratchSize - The size of scratch buffer.
+
+Returns:
+
+ EFI_SUCCESS - The size of destination buffer and the size of scratch
+buffer are successful retrieved.
+ EFI_INVALID_PARAMETER - The source data is corrupted
+
+--*/
+{
+ UINT8 *Src;
+
+ *ScratchSize = sizeof (SCRATCH_DATA);
+
+ Src = Source;
+ if (SrcSize &lt; 8) {
+  return EFI_INVALID_PARAMETER;
+ }
+
+ *DstSize = Src[4] + (Src[5] &lt;&lt; 8) + (Src[6] &lt;&lt; 16) + (Src[7] &lt;&lt; 24);
+ return EFI_SUCCESS;
+}
+
+EFI_STATUS
+EFIAPI
+Decompress (
+ IN EFI_DECOMPRESS_PROTOCOL *This,
+ IN VOID *Source,
+ IN UINT32 SrcSize,
+ IN OUT VOID *Destination,
+ IN UINT32 DstSize,
+ IN OUT VOID *Scratch,
+ IN UINT32 ScratchSize
+ )
+/*++
+
+Routine Description:
+
+The implementation of EFI_DECOMPRESS_PROTOCOL.Decompress().
+
+Arguments:
+
+ This - The protocol instance.
+ Source - The source buffer containing the compressed data.
+ SrcSize - The size of the source buffer
+ Destination - The destination buffer to store the decompressed data
+ DstSize - The size of the destination buffer.
+ Scratch - The buffer used internally by the decompress routine. This
+ buffer is needed to store intermediate data.
+ ScratchSize - The size of scratch buffer.
+
+Returns:
+
+ EFI_SUCCESS - Decompression is successful
+ EFI_INVALID_PARAMETER - The source data is corrupted
+
+--*/
+{
+ UINT32     Index;
+ UINT16     Count;
+ UINT32     CompSize;
+ UINT32     OrigSize;
+ UINT8      *Dst1;
+ EFI_STATUS Status;
+ SCRATCH_DATA *Sd;
+ UINT8      *Src;
+ UINT8      *Dst;
+
+ Status = EFI_SUCCESS;
+ Src = Source;
+ Dst = Destination;
+ Dst1 = Dst;
+
+ if (ScratchSize &lt; sizeof (SCRATCH_DATA)) {
+ return EFI_INVALID_PARAMETER;
+ }
+
+ Sd = (SCRATCH_DATA *)Scratch;
+
+ if (SrcSize &lt; 8) {
+ return EFI_INVALID_PARAMETER;
+ }
+
+ CompSize = Src[0] + (Src[1] &lt;&lt; 8) + (Src[2] &lt;&lt; 16) + (Src[3] &lt;&lt; 24);
+ OrigSize = Src[4] + (Src[5] &lt;&lt; 8) + (Src[6] &lt;&lt; 16) + (Src[7] &lt;&lt; 24);
+
+ if (SrcSize &lt; CompSize + 8) {
+  return EFI_INVALID_PARAMETER;
+ }
+
+ Src = Src + 8;
+
+ for (Index = 0; Index &lt; sizeof(SCRATCH_DATA); Index++) {
+  ((UINT8*)Sd)[Index] = 0;
+ }
+
+ Sd-&gt;mBytesRemain = (UINT16)(-1);
+ Sd-&gt;mSrcBase = Src;
+ Sd-&gt;mDstBase = Dst;
+ Sd-&gt;mCompSize = CompSize;
+ Sd-&gt;mOrigSize = OrigSize;
+
+ //
+ // Fill the first two bytes
+ //
+ FillBuf(Sd, BITBUFSIZ);
+
+ while (Sd-&gt;mOrigSize &gt; 0) {
+
+  Count = (UINT16) (WNDSIZ &lt; Sd-&gt;mOrigSize? WNDSIZ: Sd-&gt;mOrigSize);
+  Decode (Sd, Count);
+
+  if (Sd-&gt;mBadTableFlag != 0) {
+   //
+   // Something wrong with the source
+   //
+   return EFI_INVALID_PARAMETER;
+  }
+
+ for (Index = 0; Index &lt; Count; Index ++) {
+  if (Dst1 &lt; Dst + DstSize) {
+   *Dst1++ = Sd-&gt;mBuffer[Index];
+  } else {
+   return EFI_INVALID_PARAMETER;
+  }
+ }
+
+ Sd-&gt;mOrigSize -= Count;
+}
+
+ if (Sd-&gt;mBadTableFlag != 0) {
+  Status = EFI_INVALID_PARAMETER;
+ }  else {
+  Status = EFI_SUCCESS;
+ }
+
+  return Status;
+ }
+
+ STATIC
+ VOID
+ FillBuf (
+  IN SCRATCH_DATA *Sd,
+  IN UINT16 NumOfBits
+  )
+/*++
+
+Routine Description:
+
+  Shift mBitBuf NumOfBits left. Read in NumOfBits of bits from source.
+
+Arguments:
+
+  Sd - The global scratch data
+  NumOfBit - The number of bits to shift and read.
+
+ Returns: (VOID)
+
+--*/
+{
+ Sd-&gt;mBitBuf = (UINT16)(Sd-&gt;mBitBuf &lt;&lt; NumOfBits);
+
+ while (NumOfBits &gt; Sd-&gt;mBitCount) {
+
+  Sd-&gt;mBitBuf \|= (UINT16)(Sd-&gt;mSubBitBuf &lt;&lt;
+   (NumOfBits = (UINT16)(NumOfBits - Sd-&gt;mBitCount)));
+
+  if (Sd-&gt;mCompSize &gt; 0) {
+
+   //
+   // Get 1 byte into SubBitBuf
+   //
+  Sd-&gt;mCompSize --;
+  Sd-&gt;mSubBitBuf = 0;
+  Sd-&gt;mSubBitBuf = Sd-&gt;mSrcBase[Sd-&gt;mInBuf ++];
+  Sd-&gt;mBitCount = 8;
+
+  } else {
+
+  Sd-&gt;mSubBitBuf = 0;
+  Sd-&gt;mBitCount = 8;
+
+  }
+ }
+
+ Sd-&gt;mBitCount = (UINT16)(Sd-&gt;mBitCount - NumOfBits);
+ Sd-&gt;mBitBuf \|= Sd-&gt;mSubBitBuf &gt;&gt; Sd-&gt;mBitCount;
+}
+
+STATIC
+UINT16
+GetBits(
+ IN SCRATCH_DATA *Sd,
+ IN UINT16 NumOfBits
+ )
+/*++
+
+Routine Description:
+
+ Get NumOfBits of bits out from mBitBuf. Fill mBitBuf with subsequent
+ NumOfBits of bits from source. Returns NumOfBits of bits that are
+ popped out.
+
+Arguments:
+
+ Sd - The global scratch data.
+ NumOfBits - The number of bits to pop and read.
+
+Returns:
+The bits that are popped out.
+
+--*/
+{
+ UINT16 OutBits;
+
+ OutBits = (UINT16)(Sd-&gt;mBitBuf &gt;&gt; (BITBUFSIZ - NumOfBits));
+
+ FillBuf (Sd, NumOfBits);
+
+ return OutBits;
+}
+
+STATIC
+UINT16
+MakeTable (
+ IN SCRATCH_DATA *Sd,
+ IN UINT16 NumOfChar,
+ IN UINT8 *BitLen,
+ IN UINT16 TableBits,
+ OUT UINT16 *Table
+ )
+/*++
+
+Routine Description:
+
+  Creates Huffman Code mapping table according to code length array.
+
+Arguments:
+
+ Sd - The global scratch data
+ NumOfChar - Number of symbols in the symbol set
+ BitLen - Code length array
+ TableBits - The width of the mapping table
+ Table - The table
+
+Returns:
+
+ 0 - OK.
+ BAD_TABLE - The table is corrupted.
+
+--*/
+{
+ UINT16 Count[17];
+ UINT16 Weight[17];
+ UINT16 Start[18];
+ UINT16 *p;
+ UINT16 k;
+ UINT16 i;
+ UINT16 Len;
+ UINT16 Char;
+ UINT16 JuBits;
+ UINT16 Avail;
+ UINT16 NextCode;
+ UINT16 Mask;
+ UINT16 MaxTableLength;
+
+for (i = 1; i &lt;= 16; i ++) {
+ Count[i] = 0;
+}
+
+for (i = 0; i &lt; NumOfChar; i++) {
+ if (BitLen[i] &gt; 16) {
+  return (UINT16) BAD_TABLE;
+ }
+ Count[BitLen[i]]++;
+}
+
+Start[1] = 0;
+
+for (i = 1; i &lt;= 16; i ++) {
+ Start[i + 1] = (UINT16)(Start[i] + (Count[i] &lt;&lt; (16 - i)));
+}
+
+if (Start[17] != 0) {/*(1U &lt;&lt; 16)*/
+ return (UINT16)BAD_TABLE;
+}
+
+JuBits = (UINT16)(16 - TableBits);
+
+for (i = 1; i &lt;= TableBits; i ++) {
+ Start[i] &gt;&gt;= JuBits;
+ Weight[i] = (UINT16)(1U &lt;&lt; (TableBits - i));
+}
+
+while (i &lt;= 16) {
+ Weight[i++] = (UINT16)(1U &lt;&lt; (16 - i));
+}
+
+i = (UINT16)(Start[TableBits + 1] &gt;&gt; JuBits);
+
+if (i != 0) {
+ k = (UINT16)(1U &lt;&lt; TableBits);
+ while (i != k) {
+  Table[i++] = 0;
+ }
+}
+
+Avail = NumOfChar;
+Mask = (UINT16)(1U &lt;&lt; (15 - TableBits));
+MaxTableLength = (UINT16) (1U &lt;&lt; TableBits);
+
+for (Char = 0; Char &lt; NumOfChar; Char++) {
+
+ Len = BitLen[Char];
+ if (Len == 0) {
+  continue;
+ }
+
+ NextCode = (UINT16)(Start[Len] + Weight[Len]);
+ if (Len &lt;= TableBits) {
+
+  for (i = Start[Len]; i &lt; NextCode; i ++) {
+   if (i &gt;= MaxTableLength) {
+    return (UINT16) BAD_TABLE;
+   }
+   Table[i] = Char;
+  }
+
+} else {
+
+ k = Start[Len];
+ p = &amp;Table[k &gt;&gt; JuBits];
+ i = (UINT16)(Len - TableBits);
+
+  while (i != 0) {
+   if (*p == 0) {
+    Sd-&gt;mRight[Avail] = Sd-&gt;mLeft[Avail] = 0;
+     *p = Avail ++;
+   }
+
+   if (k &amp; Mask) {
+    p = &amp;Sd-&gt;mRight[*p];
+   } else {
+    p = &amp;Sd-&gt;mLeft[*p];
+   }
+
+   k &lt;&lt;= 1;
+   i --;
+  }
+
+  *p = Char;
+
+ }
+
+ Start[Len] = NextCode;
+}
+
+ //
+ // Succeeds
+ //
+ return 0;
+}
+
+STATIC
+UINT16
+DecodeP (
+  IN SCRATCH_DATA *Sd
+  )
+/*++
+
+Routine description:
+
+ Decodes a position value.
+
+Arguments:
+
+ Sd - the global scratch data
+
+Returns:
+
+ The position value decoded.
+
+--*/
+{
+ UINT16 Val;
+ UINT16 Mask;
+
+ Val = Sd-&gt;mPTTable[Sd-&gt;mBitBuf &gt;&gt; (BITBUFSIZ - 8)];
+
+ if (Val &gt;= NP) {
+  Mask = 1U &lt;&lt; (BITBUFSIZ - 1 - 8);
+
+  do {
+
+   if (Sd-&gt;mBitBuf &amp; Mask) {
+    Val = Sd-&gt;mRight[Val];
+   } else {
+    Val = Sd-&gt;mLeft[Val];
+   }
+
+   Mask &gt;&gt;= 1;
+  } while (Val &gt;= NP);
+ }
+
+ //
+ // Advance what we have read
+ //
+ FillBuf (Sd, Sd-&gt;mPTLen[Val]);
+
+ if (Val) {
+  Val = (UINT16)((1U &lt;&lt; (Val - 1)) + GetBits (Sd, (UINT16)(Val - 1)));
+ }
+
+  return Val;
+ }
+
+ STATIC
+ UINT16
+ ReadPTLen (
+  IN SCRATCH_DATA *Sd,
+  IN UINT16 nn,
+  IN UINT16 nbit,
+  IN UINT16 Special
+  )
+/*++
+
+Routine Description
+
+ Reads code lengths for the Extra Set or the Position Set
+
+Arguments:
+
+ Sd - The global scratch data
+ nn - Number of symbols
+ nbit - Number of bits needed to represent nn
+ Special - The special symbol that needs to be taken care of
+
+Returns:
+
+ 0 - OK.
+ BAD_TABLE - Table is corrupted.
+
+--*/
+{
+ UINT16 n;
+ UINT16 c;
+ UINT16 i;
+ UINT16 Mask;
+
+ n = GetBits (Sd, nbit);
+
+ if (n == 0) {
+  c = GetBits (Sd, nbit);
+
+  for ( i = 0; i &lt; 256; i ++) {
+   Sd-&gt;mPTTable[i] = c;
+  }
+
+  for ( i = 0; i &lt; nn; i++) {
+   Sd-&gt;mPTLen[i] = 0;
+  }
+
+  return 0;
+ }
+
+ i = 0;
+
+ while (i &lt; n) {
+
+  c = (UINT16)(Sd-&gt;mBitBuf &gt;&gt; (BITBUFSIZ - 3));
+
+  if (c == 7) {
+   Mask = 1U &lt;&lt; (BITBUFSIZ - 1 - 3);
+   while (Mask &amp; Sd-&gt;mBitBuf) {
+    Mask &gt;&gt;= 1;
+    c += 1;
+   }
+  }
+
+  FillBuf (Sd, (UINT16)((c &lt; 7) ? 3 : c - 3));
+
+  Sd-&gt;mPTLen [i++] = (UINT8)c;
+
+  if (i == Special) {
+
+   c = GetBits (Sd, 2);
+   while ((INT16)(--c) &gt;= 0) {
+    Sd-&gt;mPTLen[i++] = 0;
+   }
+  }
+ }
+
+ while (i &lt; nn) {
+  Sd-&gt;mPTLen [i++] = 0;
+ }
+
+ return ( MakeTable (Sd, nn, Sd-&gt;mPTLen, 8, Sd-&gt;mPTTable) );
+}
+
+STATIC
+VOID
+ReadCLen (
+ SCRATCH_DATA *Sd
+ )
+/*++
+
+Routine Description:
+
+ Reads code lengths for Char&amp;Len Set.
+
+Arguments:
+
+ Sd - the global scratch data
+
+Returns: (VOID)
+
+--*/
+{
+ UINT16 n;
+ UINT16 c;
+ UINT16 i;
+ UINT16 Mask;
+
+ n = GetBits(Sd, CBIT);
+
+ if (n == 0) {
+  c = GetBits(Sd, CBIT);
+
+  for (i = 0; i &lt; NC; i ++) {
+   Sd-&gt;mCLen[i] = 0;
+  }
+
+  for (i = 0; i &lt; 4096; i ++) {
+   Sd-&gt;mCTable[i] = c;
+  }
+
+  return;
+ }
+
+ i = 0;
+ while (i &lt; n) {
+
+ c = Sd-&gt;mPTTable[Sd-&gt;mBitBuf &gt;&gt; (BITBUFSIZ - 8)];
+ if (c &gt;= NT) {
+  Mask = 1U &lt;&lt; (BITBUFSIZ - 1 - 8);
+
+  do {
+
+   if (Mask &amp; Sd-&gt;mBitBuf) {
+    c = Sd-&gt;mRight [c];
+   } else {
+    c = Sd-&gt;mLeft [c];
+   }
+
+   Mask &gt;&gt;= 1;
+
+  }while (c &gt;= NT);
+ }
+
+ //
+ // Advance what we have read
+ //
+ FillBuf (Sd, Sd-&gt;mPTLen[c]);
+
+ if (c &lt;= 2) {
+
+  if (c == 0) {
+   c = 1;
+  } else if (c == 1) {
+   c = (UINT16)(GetBits (Sd, 4) + 3);
+  } else if (c == 2) {
+   c = (UINT16)(GetBits (Sd, CBIT) + 20);
+  }
+
+  while ((INT16)(--c) &gt;= 0) {
+   Sd-&gt;mCLen[i++] = 0;
+  }
+
+ } else {
+
+  Sd-&gt;mCLen[i++] = (UINT8)(c - 2);
+
+  }
+ }
+
+ while (i &lt; NC) {
+  Sd-&gt;mCLen[i++] = 0;
+ }
+
+ MakeTable (Sd, NC, Sd-&gt;mCLen, 12, Sd-&gt;mCTable);
+
+ return;
+}
+
+STATIC
+UINT16
+DecodeC (
+ SCRATCH_DATA *Sd
+ )
+/*++
+
+Routine Description:
+
+ Decode a character/length value.
+
+Arguments:
+
+ Sd - The global scratch data.
+
+Returns:
+
+ The value decoded.
+
+--*/
+{
+ UINT16 j;
+ UINT16 Mask;
+
+ if (Sd-&gt;mBlockSize == 0) {
+
+   //
+   // Starting a new block
+   //
+
+  Sd-&gt;mBlockSize = GetBits(Sd, 16);
+  Sd-&gt;mBadTableFlag = ReadPTLen (Sd, NT, TBIT, 3);
+  if (Sd-&gt;mBadTableFlag != 0) {
+   return 0;
+  }
+
+ ReadCLen (Sd);
+
+ Sd-&gt;mBadTableFlag = ReadPTLen (Sd, NP, PBIT, (UINT16)(-1));
+ if (Sd-&gt;mBadTableFlag != 0) {
+  return 0;
+ }
+}
+
+Sd-&gt;mBlockSize --;
+j = Sd-&gt;mCTable[Sd-&gt;mBitBuf &gt;&gt; (BITBUFSIZ - 12)];
+
+if (j &gt;= NC) {
+ Mask = 1U &lt;&lt; (BITBUFSIZ - 1 - 12);
+
+ do {
+  if (Sd-&gt;mBitBuf &amp; Mask) {
+   j = Sd-&gt;mRight[j];
+  } else {
+   j = Sd-&gt;mLeft[j];
+  }
+
+  Mask &gt;&gt;= 1;
+ } while (j &gt;= NC);
+}
+
+ //
+ // Advance what we have read
+ //
+ FillBuf(Sd, Sd-&gt;mCLen[j]);
+
+ return j;
+}
+
+STATIC
+VOID
+Decode (
+ SCRATCH_DATA *Sd,
+ UINT16 NumOfBytes
+ )
+ /*++
+
+Routine Description:
+
+ Decode NumOfBytes and put the resulting data at starting point of    mBuffer.
+ The buffer is circular.
+
+Arguments:
+
+ Sd - The global scratch data
+ NumOfBytes - Number of bytes to decode
+
+Returns: (VOID)
+
+--*/
+{
+ UINT16 di;
+ UINT16 r;
+ UINT16 c;
+
+ r = 0;
+ di = 0;
+
+ Sd-&gt;mBytesRemain --;
+ while ((INT16)(Sd-&gt;mBytesRemain) &gt;= 0) {
+  Sd-&gt;mBuffer[di++] = Sd-&gt;mBuffer[Sd-&gt;mDataIdx++];
+
+  if (Sd-&gt;mDataIdx &gt;= WNDSIZ) {
+   Sd-&gt;mDataIdx -= WNDSIZ;
+  }
+
+  r ++;
+  if (r &gt;= NumOfBytes) {
+  return;
+  }
+  Sd-&gt;mBytesRemain --;
+ }
+
+ for (;;) {
+  c = DecodeC (Sd);
+  if (Sd-&gt;mBadTableFlag != 0) {
+   return;
+  }
+
+  if (c &lt; 256) {
+
+  //
+  // Process an Original character
+  //
+
+  Sd-&gt;mBuffer[di++] = (UINT8)c;
+  r ++;
+  if (di &gt;= WNDSIZ) {
+   return;
+  }
+
+ } else {
+
+  //
+  // Process a Pointer
+  //
+
+  c = (UINT16)(c - (UINT8_MAX + 1 - THRESHOLD));
+  Sd-&gt;mBytesRemain = c;
+
+  Sd-&gt;mDataIdx = (r - DecodeP(Sd) - 1) &amp; (WNDSIZ - 1); //Make circular
+
+  di = r;
+
+  Sd-&gt;mBytesRemain --;
+  while ((INT16)(Sd-&gt;mBytesRemain) &gt;= 0) {
+   Sd-&gt;mBuffer[di++] = Sd-&gt;mBuffer[Sd-&gt;mDataIdx++];
+   if (Sd-&gt;mDataIdx &gt;= WNDSIZ) {
+    Sd-&gt;mDataIdx -= WNDSIZ;
+   }
+
+   r ++;
+   if (di &gt;= WNDSIZ) {
+    return;
+   }
+
+   if (di &gt;= Sd-&gt;mOrigSize) {
+    Sd-&gt;mBadTableFlag = (UINT16) BAD_TABLE;
+    return;
+   }
+
+   Sd-&gt;mBuffer[di++] = Sd-&gt;mBuffer[Sd-&gt;mDataIdx++];
+   Sd-&gt;mBytesRemain --;
+  }
+ }
+
+ return;
+}
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Apx_H_Compression_Source_Code.html" class="btn btn-neutral float-left" title="8. Compression Source Code" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Apx_J_EFI_Byte_Code_Virtual_Machine_Opcode_List.html" class="btn btn-neutral float-right" title="10. EFI Byte Code Virtual Machine Opcode List" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, UEFI Forum, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

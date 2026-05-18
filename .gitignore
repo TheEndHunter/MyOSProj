@@ -42,3 +42,15 @@ binInt/
 /Tools
 /workload-install.ps1
 *.vhd
+/UEFIRefs/obj/Debug/net11.0/System.Private.CoreLib.pdb
+/UEFIRefs/obj/Debug/net11.0/UEFIRefs.AssemblyInfo.cs
+/UEFIRefs/obj/Debug/net11.0/UEFIRefs.AssemblyInfoInputs.cache
+/UEFIRefs/obj/Debug/net11.0/UEFIRefs.csproj.CoreCompileInputs.cache
+/UEFIRefs/obj/Debug/net11.0/UEFIRefs.csproj.FileListAbsolute.txt
+/UEFIRefs/obj/Debug/net11.0/UEFIRefs.GeneratedMSBuildEditorConfig.editorconfig
+/UEFIRefs/obj/Debug/net11.0/UEFIRefs.sourcelink.json
+/UEFIRefs/obj
+/UEFISharp/obj/ARM64
+/UEFISharp/obj/x64
+/UEFISharp/obj/x86/Debug/net11.0
+/x64/Release

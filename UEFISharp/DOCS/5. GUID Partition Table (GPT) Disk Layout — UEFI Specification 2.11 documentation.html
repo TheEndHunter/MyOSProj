@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5. GUID Partition Table (GPT) Disk Layout &mdash; UEFI Specification 2.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=f2209469" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/style.css?v=faba8a36" />
+      <link rel="stylesheet" type="text/css" href="_static/theme-overrides.css?v=84235ce0" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2de06f63"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="6. Block Translation Table (BTT) Layout" href="06_Block_Transition_Table_Layout.html" />
+    <link rel="prev" title="4. EFI System Table" href="04_EFI_System_Table.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            UEFI Specification
+          </a>
+              <div class="version">
+                2.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Tables.html">List of Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Figures.html">List of Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/Revision_History.html">Revision History</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Overview.html">2. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Boot_Manager.html">3. Boot Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_EFI_System_Table.html">4. EFI System Table</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5. GUID Partition Table (GPT) Disk Layout</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#gpt-and-mbr-disk-layout-comparison">5.1. GPT and MBR disk layout comparison</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lba-0-format">5.2. LBA 0 Format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#legacy-master-boot-record-mbr">5.2.1. Legacy Master Boot Record (MBR)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#os-types">5.2.2. OS Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#protective-mbr">5.2.3. Protective MBR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#partition-information">5.2.4. Partition Information</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#guid-partition-table-gpt-disk-layout-1">5.3. GUID Partition Table (GPT) Disk Layout</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gpt-overview">5.3.1. GPT overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gpt-header">5.3.2. GPT Header</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gpt-partition-entry-array">5.3.3. GPT Partition Entry Array</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="06_Block_Transition_Table_Layout.html">6. Block Translation Table (BTT) Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Services_Boot_Services.html">7. Services — Boot Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Services_Runtime_Services.html">8. Services — Runtime Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Protocols_EFI_Loaded_Image.html">9. Protocols - EFI Loaded Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Protocols_Device_Path_Protocol.html">10. Protocols – Device Path Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html">11. Protocols — UEFI Driver Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_Protocols_Console_Support.html">12. Protocols — Console Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Protocols_Media_Access.html">13. Protocols – Media Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Protocols_PCI_Bus_Support.html">14. Protocols — PCI Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_Protocols_SCSI_Driver_Models_and_Bus_Support.html">15. Protocols — SCSI Driver Models and Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_Protocols_iSCSI_Boot.html">16. Protocols — iSCSI Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_Protocols_USB_Support.html">17. Protocols — USB Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_Protocols_Debugger_Support.html">18. Protocols — Debugger Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_Protocols_Compression_Algorithm_Specification.html">19. Protocols — Compression Algorithm Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_Protocols_ACPI_Protocols.html">20. Protocols — ACPI Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_Protocols_String_Services.html">21. Protocols — String Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html">22. EFI Byte Code Virtual Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_Firmware_Update_and_Reporting.html">23. Firmware Update and Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24_Network_Protocols_SNP_PXE_BIS.html">24. Network Protocols — SNP, PXE, BIS and HTTP Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25_Network_Protocols_Managed_Network.html">25. Network Protocols - Managed Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26_Network_Protocols_Bluetooth.html">26. Network Protocols — Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27_Network_Protocols_VLAN_and_EAP.html">27. Network Protocols — VLAN, EAP, Wi-Fi and Supplicant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28_Network_Protocols_TCP_IP_and_Configuration.html">28. Network Protocols — TCP, IP, IPsec, FTP, TLS and Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29_Network_Protocols_ARP_and_DHCP.html">29. Network Protocols — ARP, DHCP, DNS, HTTP and REST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_Network_Protocols_UDP_and_MTFTP.html">30. Network Protocols — UDP and MTFTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="31_EFI_Redfish_Service_Support.html">31. EFI Redfish Service Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="32_Secure_Boot_and_Driver_Signing.html">32. Secure Boot and Driver Signing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="33_Human_Interface_Infrastructure.html">33. Human Interface Infrastructure Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="34_HII_Protocols.html">34. HII Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="35_HII_Configuration_Processing_and_Browser_Protocol.html">35. HII Configuration Processing and Browser Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="36_User_Identification.html">36. User Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="37_Secure_Technologies.html">37. Secure Technologies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="38_Confidential_Computing.html">38. Confidential Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="39_Micellaneous_Protocols.html">39. Miscellaneous Protocols</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Apx_A_GUID_and_Time_Formats.html">A. GUID and Time Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_B_Console.html">B. Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_C_Device_Path_Examples.html">C. Device Path Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_D_Status_Codes.html">D. Status Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_E_Universal_Network_Driver_Interfaces.html">E. Universal Network Driver Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_F_Using_the_Simple_Pointer_Protocol.html">F. Using the Simple Pointer Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_G_Using_the_EFI_Extended_SCSI_Pass_Thru_Protocol.html">G. Using the EFI Extended SCSI Pass Thru Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_H_Compression_Source_Code.html">H. Compression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_I_Decompression_Source_Code.html">I. Decompression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_J_EFI_Byte_Code_Virtual_Machine_Opcode_List.html">J. EFI Byte Code Virtual Machine Opcode List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_K_Alphabetic_Function_Lists.html">K. Alphabetic Function Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_L_EFI_1.10_Protocol_Changes_and_Deprecation_List.html">L. EFI 1.10 Protocol Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html">M. Formats — Language Codes and Language Code Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_N_Common_Platform_Error_Record.html">N. Common Platform Error Record (CPER)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_O_UEFI_ACPI_Data_Table.html">O. UEFI ACPI Data Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_P_Hardware_Error_Record_Persistence_Usage.html">P. Hardware Error Record Persistence Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_Q_References.html">Q. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_R_Glossary.html">R. Glossary</a></li>
+</ul>
+
+    <a href= "genindex.html">Index</a>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UEFI Specification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">5. </span>GUID Partition Table (GPT) Disk Layout</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="guid-partition-table-gpt-disk-layout">
+<span id="id1"></span><h1><span class="section-number">5. </span>GUID Partition Table (GPT) Disk Layout<a class="headerlink" href="#guid-partition-table-gpt-disk-layout" title="Link to this heading"></a></h1>
+<section id="gpt-and-mbr-disk-layout-comparison">
+<span id="id2"></span><h2><span class="section-number">5.1. </span>GPT and MBR disk layout comparison<a class="headerlink" href="#gpt-and-mbr-disk-layout-comparison" title="Link to this heading"></a></h2>
+<p>This specification defines the GUID Partition table (GPT) disk layout (i.e., partitioning scheme). The following list outlines the advantages of using the GPT disk layout over the legacy Master Boot Record (MBR) disk layout:</p>
+<ul class="simple">
+<li><p>Logical Block Addresses (LBAs) are 64 bits (rather than 32 bits).</p></li>
+<li><p>Supports many partitions (rather than just four primary partitions).</p></li>
+<li><p>Provides both a primary and backup partition table for redundancy.</p></li>
+<li><p>Uses version number and size fields for future expansion.</p></li>
+<li><p>Uses CRC32 fields for improved data integrity.</p></li>
+<li><p>Defines a GUID for uniquely identifying each partition.</p></li>
+<li><p>Uses a GUID and attributes to define partition content type.</p></li>
+<li><p>Each partition contains a 36 character human readable name.</p></li>
+</ul>
+</section>
+<section id="lba-0-format">
+<span id="id3"></span><h2><span class="section-number">5.2. </span>LBA 0 Format<a class="headerlink" href="#lba-0-format" title="Link to this heading"></a></h2>
+<p>LBA 0 (i.e., the first logical block) of the hard disk contains either</p>
+<ul class="simple">
+<li><p>a legacy Master Boot Record (MBR) (  See <a class="reference internal" href="#id4">Legacy Master Boot Record (MBR)</a> )</p></li>
+<li><p>or a protective MBR (  See <a class="reference internal" href="#protective-mbr"><span class="std std-ref">Protective MBR</span></a> ).</p></li>
+</ul>
+<section id="legacy-master-boot-record-mbr">
+<span id="id4"></span><h3><span class="section-number">5.2.1. </span>Legacy Master Boot Record (MBR)<a class="headerlink" href="#legacy-master-boot-record-mbr" title="Link to this heading"></a></h3>
+<p>A legacy MBR may be located at LBA 0 (i.e., the first logical block) of the disk if it is not using the GPT disk layout (i.e., if it is using the MBR disk layout). The boot code on the MBR is not executed by UEFI firmware.</p>
+<table class="longtable docutils align-default" id="legacy-mbr">
+<caption><span class="caption-number">Table 5.1 </span><span class="caption-text">Legacy MBR</span><a class="headerlink" href="#legacy-mbr" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 21.4%" />
+<col style="width: 12.9%" />
+<col style="width: 12.9%" />
+<col style="width: 52.9%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Mnemonic</strong></p></td>
+<td><p><strong>Byte Offset</strong></p></td>
+<td><p><strong>Byte Length</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><em>BootCode</em></p></td>
+<td><p>0</p></td>
+<td><p>424</p></td>
+<td><p>x86 code used on a non-UEFI system to select an MBR partition record and load the first logical block of that partition . This code shall not be executed on UEFI systems.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>UniqueMB RDiskSignature</em></p></td>
+<td><p>440</p></td>
+<td><p>4</p></td>
+<td><p>Unique Disk Signature This may be used by the OS to identify the disk from other disks in the system. This value is always written by the OS and is never written by EFI firmware.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>Unknown</em></p></td>
+<td><p>444</p></td>
+<td><p>2</p></td>
+<td><p>Unknown. This field shall not be used by UEFI firmware.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>PartitionRecord</em></p></td>
+<td><p>446</p></td>
+<td><p>16*4</p></td>
+<td><p>Array of four legacy MBR partition records ( See <a class="reference internal" href="#legacy-mbr-partition-record"><span class="std std-ref">Legacy MBR Partition Record</span></a> ).</p></td>
+</tr>
+<tr class="row-even"><td><p><em>Signature</em></p></td>
+<td><p>510</p></td>
+<td><p>2</p></td>
+<td><p>Set to 0xAA55 (i.e., byte 510 contains 0x55 and byte 5 11 contains 0xAA).</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>Reserved</em></p></td>
+<td><p>512</p></td>
+<td><p>Logical BlockSize - 512</p></td>
+<td><p>The rest of the logical block, if any, is reserved.</p></td>
+</tr>
+</tbody>
+</table>
+<p>The MBR contains four partition records (see Table 11) that each define the beginning and ending LBAs that a partition consumes on a disk.</p>
+<table class="longtable docutils align-default" id="legacy-mbr-partition-record">
+<caption><span class="caption-number">Table 5.2 </span><span class="caption-text">Legacy MBR Partition Record</span><a class="headerlink" href="#legacy-mbr-partition-record" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 21.4%" />
+<col style="width: 12.9%" />
+<col style="width: 12.9%" />
+<col style="width: 52.9%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Mnemonic</strong></p></td>
+<td><p><strong>Byte Offset</strong></p></td>
+<td><p><strong>Byte Length</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><em>BootIndicator</em></p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>0x80 indicates that this is the bootable legacy partition. Other values indicate that this is not a bootable legacy partition. This field shall not be used by UEFI firmware.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>StartingCHS</em></p></td>
+<td><p>1</p></td>
+<td><p>3</p></td>
+<td><p>Start of partition in CHS address format. This field shall not be used by UEFI firmware.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>OSType</em></p></td>
+<td><p>4</p></td>
+<td><p>1</p></td>
+<td><p>Type of partition. See  See <a class="reference internal" href="#id5">OS Types</a> .</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>EndingCHS</em></p></td>
+<td><p>5</p></td>
+<td><p>3</p></td>
+<td><p>End of partition in CHS address format. This field shall not be used by UEFI firmware.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>StartingLBA</em></p></td>
+<td><p>8</p></td>
+<td><p>4</p></td>
+<td><p>Starting LBA of the partition on the disk. This field is used by UEFI firmware to determine the start of the partition.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>SizeInLBA</em></p></td>
+<td><p>12</p></td>
+<td><p>4</p></td>
+<td><p>Size of the partition in LBA units of logical blocks. This field is used by UEFI firmware to determine the size of the partition.</p></td>
+</tr>
+</tbody>
+</table>
+<p>If an MBR partition has an <em>OSType</em> field of 0xEF (i.e., UEFI System Partition), then the firmware must add the UEFI System Partition GUID to the handle for the MBR partition using <em>InstallProtocolInterface()</em> . This allows drivers and applications, including OS loaders, to easily search for handles that represent UEFI System Partitions.</p>
+<p>The following test must be performed to determine if a legacy MBR is valid:</p>
+<ul class="simple">
+<li><p>The Signature must be 0xaa55</p></li>
+<li><p>A Partition Record that contains an <em>OSType</em> value of zero or a <em>SizeInLBA</em> value of zero may be ignored.</p></li>
+</ul>
+<p>Otherwise:</p>
+<ul class="simple">
+<li><p>The partition defined by each MBR Partition Record must physically reside on the disk (i.e., not exceed the capacity of the disk).</p></li>
+<li><p>Each partition must not overlap with other partitions.</p></li>
+</ul>
+<p>Figure 5.1 (below) shows an example of an MBR disk layout with four partitions.</p>
+<figure class="align-default" id="mbrdisk-layout-with-legacy-mbr-example">
+<a class="reference internal image-reference" href="_images/GUID_Partition_Table_Format-2.png"><img alt="_images/GUID_Partition_Table_Format-2.png" src="_images/GUID_Partition_Table_Format-2.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 5.1 </span><span class="caption-text">MBRDisk Layout with legacy MBR example</span><a class="headerlink" href="#mbrdisk-layout-with-legacy-mbr-example" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p><strong>Related Definitions</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma pack(1)</span>
+<span class="o">///</span>
+<span class="o">///</span> <span class="n">MBR</span> <span class="n">Partition</span> <span class="n">Entry</span>
+<span class="o">///</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+   <span class="n">UINT8</span>         <span class="n">BootIndicator</span><span class="p">;</span>
+   <span class="n">UINT8</span>         <span class="n">StartHead</span><span class="p">;</span>
+   <span class="n">UINT8</span>         <span class="n">StartSector</span><span class="p">;</span>
+   <span class="n">UINT8</span>         <span class="n">StartTrack</span><span class="p">;</span>
+   <span class="n">UINT8</span>         <span class="n">OSIndicator</span><span class="p">;</span>
+   <span class="n">UINT8</span>         <span class="n">EndHead</span><span class="p">;</span>
+   <span class="n">UINT8</span>         <span class="n">EndSector</span><span class="p">;</span>
+   <span class="n">UINT8</span>         <span class="n">EndTrack</span><span class="p">;</span>
+   <span class="n">UINT8</span>         <span class="n">StartingLBA</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+   <span class="n">UINT8</span>         <span class="n">SizeInLBA</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+<span class="p">}</span>    <span class="n">MBR_PARTITION_RECORD</span><span class="p">;</span>
+
+<span class="o">///</span>
+<span class="o">///</span> <span class="n">MBR</span> <span class="n">Partition</span> <span class="n">Table</span>
+<span class="o">///</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+   <span class="n">UINT8</span>         <span class="n">BootStrapCode</span><span class="p">[</span><span class="mi">440</span><span class="p">];</span>
+   <span class="n">UINT8</span>         <span class="n">UniqueMbrSignature</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+   <span class="n">UINT8</span>         <span class="n">Unknown</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+   <span class="n">MBR_PARTITION_RECORD</span> <span class="n">Partition</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+   <span class="n">UINT16</span>        <span class="n">Signature</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">MASTER_BOOT_RECORD</span><span class="p">;</span>
+
+<span class="c1">#pragma pack()</span>
+</pre></div>
+</div>
+</section>
+<section id="os-types">
+<span id="id5"></span><h3><span class="section-number">5.2.2. </span>OS Types<a class="headerlink" href="#os-types" title="Link to this heading"></a></h3>
+<p>Unique types defined by this specification (other values are not defined by this specification):</p>
+<ul class="simple">
+<li><p>0xEF (i.e., UEFI System Partition) defines a UEFI system partition.</p></li>
+<li><p>0xEE (i.e., GPT Protective) is used by a protective MBR (see 5.2.2) to define a fake partition covering the entire disk.</p></li>
+</ul>
+<p>Other values are used by legacy operating systems, and are allocated independently of the UEFI specification.</p>
+<p><strong>NOTE:</strong>  <em>“Partition types” by Andries Brouwer: See “Links to UEFI-Related Documents”</em> (<a class="reference external" href="https://uefi.org/uefi">http://uefi.org/uefi</a>) <em>under the heading “OS Type values used in the MBR disk layout”</em>.</p>
+</section>
+<section id="protective-mbr">
+<span id="id6"></span><h3><span class="section-number">5.2.3. </span>Protective MBR<a class="headerlink" href="#protective-mbr" title="Link to this heading"></a></h3>
+<p>For a bootable disk, a Protective MBR must be located at LBA 0 (i.e., the first logical block) of the disk if it is using the GPT disk layout. The Protective MBR precedes the GUID Partition Table Header to maintain compatibility with existing tools that do not understand GPT partition structures.</p>
+<span id="protective-mbr-1"></span><table class="longtable docutils align-default" id="id12">
+<caption><span class="caption-number">Table 5.3 </span><span class="caption-text">Protective MBR</span><a class="headerlink" href="#id12" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 21.4%" />
+<col style="width: 12.9%" />
+<col style="width: 12.9%" />
+<col style="width: 52.9%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Mnemonic</strong></p></td>
+<td><p><strong>Byte Offset</strong></p></td>
+<td><p><strong>Byte Length</strong></p></td>
+<td><p><strong>Contents</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Boot Code</p></td>
+<td><p>0</p></td>
+<td><p>440</p></td>
+<td><p>Unused by UEFI systems.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Unique MBR Disk Signature</p></td>
+<td><p>440</p></td>
+<td><p>4</p></td>
+<td><p>Unused. Set to zero.</p></td>
+</tr>
+<tr class="row-even"><td><p>Unknown</p></td>
+<td><p>444</p></td>
+<td><p>2</p></td>
+<td><p>Unused. Set to zero.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Partition Record</p></td>
+<td><p>446</p></td>
+<td><p>16*4</p></td>
+<td><div class="line-block">
+<div class="line">Array of four MBR partition records. Contains:</div>
+<div class="line">• one partition record as defined  See Table (below); and</div>
+<div class="line">• three partition records each set to zero.</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Signature</p></td>
+<td><p>510</p></td>
+<td><p>2</p></td>
+<td><p>Set to 0xAA55 (i.e., byte 510 contains 0x55 and byte 511 contains 0xAA).</p></td>
+</tr>
+<tr class="row-odd"><td><p>Reserved</p></td>
+<td><p>512</p></td>
+<td><p>Logical Block Size - 512</p></td>
+<td><p>The rest of the logical block, if any, is reserved. Set to zero.</p></td>
+</tr>
+</tbody>
+</table>
+<p>One of the Partition Records shall be as defined in table 12, reserving the entire space on the disk after the Protective MBR itself for the GPT disk layout.</p>
+<table class="longtable docutils align-default" id="protective-mbr-partition-record-protecting-the-entire-disk">
+<caption><span class="caption-number">Table 5.4 </span><span class="caption-text">Protective MBR Partition Record protecting the entire disk*</span><a class="headerlink" href="#protective-mbr-partition-record-protecting-the-entire-disk" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 21.4%" />
+<col style="width: 12.9%" />
+<col style="width: 12.9%" />
+<col style="width: 52.9%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Mnemonic</strong></p></td>
+<td><p><strong>Byte Offset</strong></p></td>
+<td><p><strong>Byte Length</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><em>BootIndicator</em></p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>Set to 0x00 to indicate a non-bootable partition. If set to any value other than 0x00 the behavior of this flag on non-UEFI systems is undefined. Must be ignored by UEFI implementations.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>StartingCHS</em></p></td>
+<td><p>1</p></td>
+<td><p>3</p></td>
+<td><p>Set to 0x000200, corresponding to the Starting LBA field.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>OSType</em></p></td>
+<td><p>4</p></td>
+<td><p>1</p></td>
+<td><p>Set to 0xEE (i.e., GPT Protective)</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>EndingCHS</em></p></td>
+<td><p>5</p></td>
+<td><p>3</p></td>
+<td><p>Set to the CHS address of the last logical block on the disk. Set to 0xFFFFFF if it is not possible to represent the value in this field.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>StartingLBA</em></p></td>
+<td><p>8</p></td>
+<td><p>4</p></td>
+<td><p>Set to 0x00000001 (i.e., the LBA of the GPT Partition Header).</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>SizeInLBA</em></p></td>
+<td><p>12</p></td>
+<td><p>4</p></td>
+<td><p>Set to the size of the disk minus one. Set to 0xFFFFFFFF if the size of the disk is too large to be represented in this field.</p></td>
+</tr>
+</tbody>
+</table>
+<p>The remaining Partition Records shall each be set to zeros.</p>
+<p>Figure 5.2 (below) shows an example of a GPT disk layout with four partitions with a protective MBR.</p>
+<figure class="align-default" id="gpt-disk-layout-with-protective-mbr">
+<a class="reference internal image-reference" href="_images/GUID_Partition_Table_Format-3.png"><img alt="_images/GUID_Partition_Table_Format-3.png" src="_images/GUID_Partition_Table_Format-3.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 5.2 </span><span class="caption-text">GPT disk layout with protective MBR</span><a class="headerlink" href="#gpt-disk-layout-with-protective-mbr" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Figure 5.3 (below)  shows an example of a GPT disk layout with four partitions with a protective MBR, where the disk capacity
+exceeds LBA 0xFFFFFFFF.</p>
+<figure class="align-default" id="gpt-disk-layout-with-protective-mbr-on-a-diskwith-capacity">
+<a class="reference internal image-reference" href="_images/GUID_Partition_Table_Format-4.png"><img alt="_images/GUID_Partition_Table_Format-4.png" src="_images/GUID_Partition_Table_Format-4.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 5.3 </span><span class="caption-text">GPT disk layout with protective MBR on a diskwith capacity &gt; LBA 0xFFFFFFFF</span><a class="headerlink" href="#gpt-disk-layout-with-protective-mbr-on-a-diskwith-capacity" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="partition-information">
+<span id="id7"></span><h3><span class="section-number">5.2.4. </span>Partition Information<a class="headerlink" href="#partition-information" title="Link to this heading"></a></h3>
+<p>Install an EFI_PARTITION_INFO protocol on each of the device handles that logical EFI_BLOCK_IO_PROTOTOLs are installed.</p>
+</section>
+</section>
+<section id="guid-partition-table-gpt-disk-layout-1">
+<span id="id8"></span><h2><span class="section-number">5.3. </span>GUID Partition Table (GPT) Disk Layout<a class="headerlink" href="#guid-partition-table-gpt-disk-layout-1" title="Link to this heading"></a></h2>
+<section id="gpt-overview">
+<span id="id9"></span><h3><span class="section-number">5.3.1. </span>GPT overview<a class="headerlink" href="#gpt-overview" title="Link to this heading"></a></h3>
+<p>The GPT partitioning scheme is depicted in the Figure  <a class="reference internal" href="#guid-partition-table-gpt-example"><span class="std std-ref">GUID Partition Table (GPT) example</span></a> . The GPT Header ( <a class="reference internal" href="#gpt-header"><span class="std std-ref">GPT Header</span></a> ) includes a signature and a revision number that specifies the format of the data bytes in the partition header. The GUID Partition Table Header contains a header size field that is used in calculating the CRC32 that confirms the integrity of the GPT Header. While the GPT Header’s size may increase in the future it cannot span more than one logical block on the device.</p>
+<p>LBA 0 (i.e., the first logical block) contains a protective MBR (  See <a class="reference internal" href="#protective-mbr"><span class="std std-ref">Protective MBR</span></a> ).</p>
+<p>Two GPT Header structures are stored on the device: the primary and the backup. The primary GPT Header must be located in LBA 1 (i.e., the second logical block), and the backup GPT Header must be located in the last LBA of the device. Within the GPT Header the <em>My LBA</em> field contains the LBA of the GPT Header itself, and the <em>Alternate LBA</em> field contains the LBA of the other GPT Header. For example, the primary GPT Header’s <em>My LBA</em> value would be 1 and its <em>Alternate LBA</em> would be the value for the last LBA of the device. The backup GPT Header’s fields would be reversed.</p>
+<p>The GPT Header defines the range of LBAs that are usable by GPT Partition Entries. This range is defined to be inclusive of <em>First Usable LBA</em> through <em>Last Usable LBA</em> on the logical device. All data stored on the volume must be stored between the <em>First Usable LBA</em> through <em>Last Usable LBA</em> , and only the data structures defined by UEFI to manage partitions may reside outside of the usable space. The value of <em>Disk GUID</em> is a GUID that uniquely identifies the entire GPT Header and all its associated storage. This value can be used to uniquely identify the disk. The start of the GPT Partition Entry Array is located at the LBA  indicated by the <em>Partition Entry LBA</em> field. The size of a GUID Partition Entry element is defined in the <em>Size Of Partition Entry</em> field. There is a 32-bit CRC of the GPT Partition Entry Array that is stored in the GPT Header in <em>Partition Entry Array CRC32</em> field. The size of the GPT Partition Entry Array is S <em>ize Of Partition Entry</em> multiplied by <em>Number Of Partition Entries</em> . If the size of the GUID Partition Entry Array is not an even multiple of the logical block size, then any space left over in the last logical block is Reserved and not covered by the <em>Partition Entry Array CRC32</em> field. When a GUID Partition Entry is updated, the <em>Partition Entry Array CRC32</em> must be updated. When the <em>Partition Entry Array CRC32</em> is updated, the GPT Header CRC must also be updated, since the <em>Partition Entry Array CRC32</em> is stored in the GPT Header.</p>
+<figure class="align-default" id="id13">
+<span id="guid-partition-table-gpt-example"></span><a class="reference internal image-reference" href="_images/GUID_Partition_Table_Format-5.png"><img alt="_images/GUID_Partition_Table_Format-5.png" src="_images/GUID_Partition_Table_Format-5.png" style="width: 75%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 5.4 </span><span class="caption-text">GUID Partition Table (GPT) example</span><a class="headerlink" href="#id13" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>The primary GPT Partition Entry Array must be located after the primary GPT Header and end before the <em>First Usable LBA</em>. The backup GPT Partition Entry Array must be located after the <em>Last Usable LBA</em> and end before the backup GPT Header.</p>
+<p>Therefore the primary and backup GPT Partition EntryArrays are stored in separate locations on the disk. Each GPT Partition Entry defines a partition that is contained in a range that is within the usable space declared by the GPT Header. Zero or more GPT Partition Entries may be in use in the GPT Partition Entry Array. Each defined partition must not overlap with any other defined partition. If all the fields of a GUID Partition Entry are zero, the entry is not in use. A minimum of 16,384 bytes of space must be reserved for the GPT Partition Entry Array.</p>
+<p>If the block size is 512, the <em>First Usable LBA</em> must be greater than or equal to 34 (allowing 1 block for the Protective MBR, 1 block for the Partition Table Header, and 32 blocks for the GPT Partition Entry Array); if the logical block size is 4096, the <em>First Useable LBA</em> must be greater than or equal to 6 (allowing 1 block for the Protective MBR, 1 block for the GPT Header, and 4 blocks for the GPT Partition Entry Array).</p>
+<p>The device may present a logical block size that is not 512 bytes long. In ATA, this is called the Long Logical Sector feature set; an ATA device reports support for this feature set in IDENTIFY DEVICE data word 106 bit 12 and reports the number of words (i.e., 2 bytes) per logical sector in IDENTIFY DEVICE data words 117-118 (see ATA8-ACS). A SCSI device reports its logical block size in the READ CAPACITY parameter data Block Length In Bytes field (see SBC-3).</p>
+<p>The device may present a logical block size that is smaller than the physical block size (e.g., present a logical block size of 512 bytes but implement a physical block size of 4,096 bytes). In ATA, this is called the Long Physical Sector feature set; an ATA device reports support for this feature set in IDENTIFY DEVICE data word 106 bit 13 and reports the Physical Sector Size/Logical Sector Size exponential ratio in IDENTIFY DEVICE data word 106 bits 3-0 (See ATA8-ACS). A SCSI device reports its logical block size/physical block exponential ratio in the READ CAPACITY (16) parameter data Logical Blocks Per Physical Block Exponent field (see SBC-3).These fields return 2 <em>x</em> logical sectors per physical sector (e.g., 3 means 2 <em>3</em> =8 logical sectors per physical sector).</p>
+<p>A device implementing long physical blocks may present logical blocks that are not aligned to the underlying physical block boundaries. An ATA device reports the alignment of logical blocks within a physical block in IDENTIFY DEVICE data word 209 (see ATA8-ACS). A SCSI device reports its alignment in the READ CAPACITY (16) parameter data Lowest Aligned Logical Block Address field (see SBC-3). Note that the ATA and SCSI fields are defined differently (e.g., to make LBA 63 aligned, ATA returns a value of 1 while SCSI returns a value of 7).</p>
+<p>In SCSI devices, the Block Limits VPD page Optimal Transfer Length Granularity field (see SBC-3) may also report a granularity that is important for alignment purposes (e.g., RAID controllers may return their RAID stripe depth in that field)</p>
+<p>GPT partitions should be aligned to the larger of:</p>
+<p>a – The physical block boundary, if any</p>
+<p>b – The optimal transfer length granularity, if any.</p>
+<p>For example</p>
+<p>a – If the logical block size is 512 bytes, the physical block size is 4,096 bytes (i.e., 512 bytes x 8 logical blocks), there is no optimal transfer length granularity, and logical block 0 is aligned to a physical block boundary, then each GPT partition should start at an LBA that is a multiple of 8.</p>
+<p>b – If the logical block size is 512 bytes, the physical block size is 8,192 bytes (i.e., 512 bytes x 16 logical blocks), the optimal transfer length granularity is 65,536 bytes (i.e., 512 bytes x 128 logical  blocks), and logical block 0 is aligned to a physical block boundary, then each GPT partition should start at an LBA that is a multiple of 128.</p>
+<p>To avoid the need to determine the physical block size and the optimal transfer length granularity, software may align GPT partitions at significantly larger boundaries. For example, assuming logical block 0 is aligned, it may use LBAs that are multiples of 2,048 to align to 1,048,576 byte (1 MiB) boundaries, which supports most common physical block sizes and RAID stripe sizes.</p>
+<p>References are as follows:</p>
+<p>ISO/IEC 24739-200 [ANSI INCITS 452-2008] AT Attachment 8 - ATA/ATAPI Command Set (ATA8-ACS). By the INCITS T13 technical committee. (See “Links to UEFI-Related Documents” ( <em>http://uefi.org/uefi</em> under the headings “InterNational Committee on Information Technology Standards (INCITS)” and “INCITs T13 technical committee”).</p>
+<p>ISO/IEC 14776-323 [T10/1799-D] SCSI Block Commands - 3 (SBC-3). Available from www.incits.org. By the INCITS T10 technical committee (See “Links to UEFI-Related Documents” ( <em>http://uefi.org/uefi</em> under the headings “InterNational Committee on Information Technology Standards (INCITS)” and “SCSI Block Commands”).</p>
+</section>
+<section id="gpt-header">
+<span id="id10"></span><h3><span class="section-number">5.3.2. </span>GPT Header<a class="headerlink" href="#gpt-header" title="Link to this heading"></a></h3>
+<p>See Table (below) which defines the GPT Header.</p>
+<span id="gpt-header-1"></span><table class="longtable docutils align-default" id="id14">
+<caption><span class="caption-number">Table 5.5 </span><span class="caption-text">GPT Header</span><a class="headerlink" href="#id14" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 8.3%" />
+<col style="width: 8.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Mnemonic</strong></p></td>
+<td><p><strong>Byte Offset</strong></p></td>
+<td><p><strong>Byte Length</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><em>Signature</em></p></td>
+<td><p>0</p></td>
+<td><p>8</p></td>
+<td><p>Identifies EFI-compatible partition table header. This value must contain the ASCII string “EFI PART”, encoded as the 64-bit constant 0x54 52415020494645.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>Revision</em></p></td>
+<td><p>8</p></td>
+<td><p>4</p></td>
+<td><p>The revision number for this header. This revision value is not related to the UEFI Specification version. This header is version 1.0, so the correct value is 0x00010000.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>HeaderSize</em></p></td>
+<td><p>12</p></td>
+<td><p>4</p></td>
+<td><p>Size in bytes of the GPT Header. The <em>HeaderSize</em> must be greater than or equal to 92 and must be less than or equal to the logical block size.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>HeaderCRC32</em></p></td>
+<td><p>16</p></td>
+<td><p>4</p></td>
+<td><p>CRC32 checksum for the GPT Header structure. This value is computed by  setting this field to 0, and computing the 32-bit CRC for <em>HeaderSize</em> bytes.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>Reserved</em></p></td>
+<td><p>20</p></td>
+<td><p>4</p></td>
+<td><p>Must be zero.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>MyLBA</em></p></td>
+<td><p>24</p></td>
+<td><p>8</p></td>
+<td><p>The LBA that contains this data structure.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>AlternateLBA</em></p></td>
+<td><p>32</p></td>
+<td><p>8</p></td>
+<td><p>LBA address of the alternate GPT Header.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>FirstUsableLBA</em></p></td>
+<td><p>40</p></td>
+<td><p>8</p></td>
+<td><p>The first usable logical block that may be used by a partition described by a GUID Partition Entry.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>LastUsableLBA</em></p></td>
+<td><p>48</p></td>
+<td><p>8</p></td>
+<td><p>The last usable logical block that may be used by a partition described by a GUID Partition Entry.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>DiskGUID</em></p></td>
+<td><p>56</p></td>
+<td><p>16</p></td>
+<td><p>GUID that can be used to uniquely identify the disk.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>PartitionEntryLBA</em></p></td>
+<td><p>72</p></td>
+<td><p>8</p></td>
+<td><p>The starting LBA of the GUID Partition Entry array.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>NumberOfPartitionEntries</em></p></td>
+<td><p>80</p></td>
+<td><p>4</p></td>
+<td><p>The number of Partition Entries in the GUID Partition Entry array.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>SizeOfPartitionEntry</em></p></td>
+<td><p>84</p></td>
+<td><p>4</p></td>
+<td><p>The size, in bytes, of each the GUID Partition Entry structures in the GUID Partition Entry array. This field shall be set to a value of 128 x 2 <em>n</em> where n is an integer greater than or equal to zero (e.g., 128, 256, 512, etc.).  NOTE: Previous versions of this specification allowed any multiple of 8.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>PartitionEntryArrayCRC32</em></p></td>
+<td><p>88</p></td>
+<td><p>4</p></td>
+<td><p>The CRC32 of the GUID Partition Entry array.  Starts at <em>PartitionEntryLBA</em> and is computed over a byte length of <em>NumberOfPartitionEntries * SizeOfPartitionEntry.</em></p></td>
+</tr>
+<tr class="row-even"><td><p><em>Reserved</em></p></td>
+<td><p>92</p></td>
+<td><p>BlockSize - 92</p></td>
+<td><p>The rest of the block is reserved by UEFI and must be zero.</p></td>
+</tr>
+</tbody>
+</table>
+<p>The following test must be performed to determine if a GPT
+is valid:</p>
+<ul class="simple">
+<li><p>Check the Signature</p></li>
+<li><p>Check the Header CRC</p></li>
+<li><p>Check that the <em>MyLBA</em> entry points to the LBA that contains the GUID Partition Table</p></li>
+<li><p>Check the CRC of the GUID Partition Entry Array</p></li>
+</ul>
+<p>If the GPT is the primary table, stored at LBA 1:</p>
+<ul class="simple">
+<li><p>Check the <em>AlternateLBA</em> to see if it is a valid GPT</p></li>
+</ul>
+<p>If the primary GPT is corrupt, software must check the last LBA of the device to see if it has a valid GPT Header and point to a valid GPT Partition Entry Array. If it points to a valid GPT Partition Entry Array, then software should restore the primary GPT if allowed by platform policy settings (e.g. a platform may require a user to provide confirmation before restoring the table, or may allow the table to be restored automatically). Software must report whenever it restores a GPT.</p>
+<p>Software should ask a user for confirmation before restoring the primary GPT and must report whenever it does modify the media to restore a GPT. If a GPT formatted disk is reformatted to the legacy MBR format by legacy software, the last logical block might not be overwritten and might still contain a stale GPT. If GPT-cognizant software then accesses the disk and honors the stale GPT, it will misinterpret the contents of the disk. Software may detect this scenario if the legacy MBR contains valid partitions rather than a protective MBR ( <a class="reference internal" href="#id4">Legacy Master Boot Record (MBR)</a> ).</p>
+<p>Any software that updates the primary GPT must also update the backup GPT. Software may update the GPT Header and GPT Partition Entry Array in any order, since all the CRCs are stored in the GPT Header. Software must update the backup GPT before the primary GPT, so if the size of device has changed (e.g. volume expansion) and the update is interrupted, the backup GPT is in the proper location on the disk</p>
+<p>If the primary GPT is invalid, the backup GPT is used instead and it is located on the last logical block on the disk. If the backup GPT is valid it must be used to restore the primary GPT. If the primary GPT is valid and the backup GPT is invalid software must restore the backup GPT. If both the primary and backup GPTs are corrupted this block device is defined as not having a valid GUID Partition Header.</p>
+<p>Both the primary and backup GPTs must be valid before an attempt is made to grow the size of a physical volume. This is due to the GPT recovery scheme depending on locating the backup GPT at the end of the device. A volume may grow in size when disks are added to a RAID device. As soon as the volume size is increased the backup GPT must be moved to the end of the volume and the primary and backup GPT Headers must be updated to reflect the new volume size.</p>
+</section>
+<section id="gpt-partition-entry-array">
+<span id="id11"></span><h3><span class="section-number">5.3.3. </span>GPT Partition Entry Array<a class="headerlink" href="#gpt-partition-entry-array" title="Link to this heading"></a></h3>
+<p>The GPT Partition Entry Array contains an array of GPT Partition Entries.  See Table (below) which defines the GPT Partition Entry.</p>
+<table class="longtable docutils align-default" id="gpt-partition-entry">
+<caption><span class="caption-number">Table 5.6 </span><span class="caption-text">GPT Partition Entry</span><a class="headerlink" href="#gpt-partition-entry" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 21.4%" />
+<col style="width: 12.9%" />
+<col style="width: 12.9%" />
+<col style="width: 52.9%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Mnemonic</strong></p></td>
+<td><p><strong>Byte Offset</strong></p></td>
+<td><p><strong>Byte Length</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><em>PartitionTypeGUID</em></p></td>
+<td><p>0</p></td>
+<td><p>16</p></td>
+<td><p>Unique ID that defines the purpose and type of this Partition. A value of zero defines that this partition entry is not being used.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>UniquePartitionGUID</em></p></td>
+<td><p>16</p></td>
+<td><p>16</p></td>
+<td><p>GUID that is unique for every partition entry. Every partition ever created will have a unique GUID. This GUID must be assigned when the GPT Partition Entry is created. The GPT Partition Entry is created whenever the <em>NumberOfPartitionEntries</em> in the GPT Header is increased to include a larger range of addresses.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>StartingLBA</em></p></td>
+<td><p>32</p></td>
+<td><p>8</p></td>
+<td><p>Starting LBA of the partition defined by this entry.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>EndingLBA</em></p></td>
+<td><p>40</p></td>
+<td><p>8</p></td>
+<td><p>Ending LBA of the partition defined by this entry.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>Attributes</em></p></td>
+<td><p>48</p></td>
+<td><p>8</p></td>
+<td><p>Attribute bits, all bits reserved by UEFI ( <a class="reference internal" href="#defined-gpt-partition-entry-partition-type-guids"><span class="std std-ref">Defined GPT Partition Entry — Partition Type GUIDs</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><em>PartitionName</em></p></td>
+<td><p>56</p></td>
+<td><p>72</p></td>
+<td><p>Null-terminated string containing a human-readable name of the partition.</p></td>
+</tr>
+<tr class="row-even"><td><p><em>Reserved</em></p></td>
+<td><p>128</p></td>
+<td><p><em>SizeOf PartitionEntry</em> - 128</p></td>
+<td><p>The rest of the GPT Partition Entry, if any, is reserved by UEFI and must be zero.</p></td>
+</tr>
+</tbody>
+</table>
+<p>The <em>SizeOfPartitionEntry</em> variable in the GPT Header defines the size of each GUID Partition Entry. Each partition entry contains a <em>Unique Partition GUID</em> value that uniquely identifies every partition that will ever be created. Any time a new partition entry is created a new GUID must be generated for that partition, and every partition is guaranteed to have a unique GUID. The partition is defined as all the logical blocks inclusive of the <em>StartingLBA</em> and <em>EndingLBA</em> .</p>
+<p>The <em>PartitionTypeGUID</em> field identifies the contents of the partition. This GUID is similar to the <em>OS Type</em> field in the MBR. Each filesystem must publish its unique GUID. The <em>Attributes</em> field can be used by utilities to make broad inferences about the usage of a partition and is defined in Table (below).</p>
+<p>The firmware must add the <em>PartitionTypeGuid</em> to the handle of every active GPT partition using <a class="reference internal" href="07_Services_Boot_Services.html#efi-boot-services-installprotocolinterface"><span class="std std-ref">EFI_BOOT_SERVICES.InstallProtocolInterface()</span></a> . This will allow drivers and applications, including OS loaders, to easily search for handles that represent EFI System Partitions or vendor specific partition types.</p>
+<p>Software that makes copies of GPT-formatted disks and partitions must generate new <em>Disk GUID</em> values in the GPT Headers and new <em>Unique Partition GUID</em> values in each GPT Partition Entry. If GPT-cognizant software encounters two disks or partitions with identical GUIDs, results will be indeterminate.</p>
+<table class="docutils align-default" id="defined-gpt-partition-entry-partition-type-guids">
+<caption><span class="caption-number">Table 5.7 </span><span class="caption-text">Defined GPT Partition Entry — Partition Type GUIDs</span><a class="headerlink" href="#defined-gpt-partition-entry-partition-type-guids" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 40.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Description</strong></p></td>
+<td><p><strong>GUID Value</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Unused Entry</p></td>
+<td><p>00000000-0000-0000-0000-000000000000</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI System Partition</p></td>
+<td><p>C12A7328-F81F-11D2-BA4B-00A0C93EC93B</p></td>
+</tr>
+<tr class="row-even"><td><p>Partition containing a legacy MBR</p></td>
+<td><p>024DEE41-33E7-11D3-9D69-0008C781F39F</p></td>
+</tr>
+</tbody>
+</table>
+<p>OS vendors need to generate their own Partition Type GUIDs to identify their partition types.</p>
+<table class="longtable docutils align-default" id="defined-gpt-partition-entry-attributes">
+<caption><span class="caption-number">Table 5.8 </span><span class="caption-text">Defined GPT Partition Entry - Attributes</span><a class="headerlink" href="#defined-gpt-partition-entry-attributes" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 7.7%" />
+<col style="width: 23.1%" />
+<col style="width: 69.2%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Bits</strong></p></td>
+<td><p><strong>Name</strong></p></td>
+<td><p><strong>Description</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Bit 0</p></td>
+<td><p>Required Partition</p></td>
+<td><p>If this bit is set, the partition is required for the platform to function. The owner/creator of the partition indicates that deletion or modification of the contents can result in loss of platform features or failure for the platform to boot or operate. The system cannot function normally if this partition is removed, and it should be considered part of the hardware of the system. Actions such as running diagnostics, system recovery, or even OS install or boot could potentially stop working if this partition is removed. Unless OS software or firmware recognizes this partition, it should never be removed or modified as the UEFI firmware or platform hardware may become non-functional.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Bit 1</p></td>
+<td><p>No Block IO Protocol</p></td>
+<td><p>If this bit is set, then firmware must not produce an <em>EFI_BLOCK_IO_PROTOCOL</em> device for this partition. See <a class="reference internal" href="13_Protocols_Media_Access.html#partition-discovery"><span class="std std-ref">Partition Discovery</span></a> for more details. By not producing an <em>EFI_BLOCK_IO_PROTOCOL</em> partition, file system mappings will not be created for this partition in UEFI.</p></td>
+</tr>
+<tr class="row-even"><td><p>Bit 2</p></td>
+<td><p>Legacy BIOS Bootable</p></td>
+<td><p>This bit is set aside by this specification to let systems with traditional PC-AT BIOS firmware implementations inform certain limited, special-purpose software running on these systems that a GPT partition may be bootable. For systems with firmware implementations conforming to this specification, the UEFI boot manager (see chapter 3) must ignore this bit when selecting a UEFI-compliant application, e.g., an OS loader (see 2.1.3). Therefore there is no need for this specification to define the exact meaning of this bit.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Bits 3-47</p></td>
+<td></td>
+<td><p>Undefined and must be zero. Reserved for expansion by future versions of the UEFI specification.</p></td>
+</tr>
+<tr class="row-even"><td><p>Bits 48-63</p></td>
+<td></td>
+<td><p>Reserved for GUID specific use. The use of these bits will vary depending on the <em>PartitionTypeGUID</em> . Only the owner of the <em>PartitionTypeGUID</em> is allowed to modify these bits. They must be preserved if Bits 0-47 are modified.</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Related Definitions:</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#pragma pack(1)</span>
+<span class="o">///</span>
+<span class="o">///</span> <span class="n">GPT</span> <span class="n">Partition</span> <span class="n">Entry</span><span class="o">.</span>
+<span class="o">///</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">EFI_GUID</span>     <span class="n">PartitionTypeGUID</span><span class="p">;</span>
+  <span class="n">EFI_GUID</span>     <span class="n">UniquePartitionGUID</span><span class="p">;</span>
+  <span class="n">EFI_LBA</span>      <span class="n">StartingLBA</span><span class="p">;</span>
+  <span class="n">EFI_LBA</span>      <span class="n">EndingLBA</span><span class="p">;</span>
+  <span class="n">UINT64</span>       <span class="n">Attributes</span><span class="p">;</span>
+  <span class="n">CHAR16</span>       <span class="n">PartitionName</span><span class="p">[</span><span class="mi">36</span><span class="p">];</span>
+<span class="p">}</span>   <span class="n">EFI_PARTITION_ENTRY</span><span class="p">;</span>
+<span class="c1">#pragma pack()</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="04_EFI_System_Table.html" class="btn btn-neutral float-left" title="4. EFI System Table" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="06_Block_Transition_Table_Layout.html" class="btn btn-neutral float-right" title="6. Block Translation Table (BTT) Layout" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, UEFI Forum, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

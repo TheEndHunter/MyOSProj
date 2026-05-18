@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2. Console &mdash; UEFI Specification 2.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=f2209469" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/style.css?v=faba8a36" />
+      <link rel="stylesheet" type="text/css" href="_static/theme-overrides.css?v=84235ce0" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2de06f63"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3. Device Path Examples" href="Apx_C_Device_Path_Examples.html" />
+    <link rel="prev" title="1. GUID and Time Formats" href="Apx_A_GUID_and_Time_Formats.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            UEFI Specification
+          </a>
+              <div class="version">
+                2.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Tables.html">List of Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Figures.html">List of Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/Revision_History.html">Revision History</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01_Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Overview.html">2. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Boot_Manager.html">3. Boot Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_EFI_System_Table.html">4. EFI System Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_GUID_Partition_Table_Format.html">5. GUID Partition Table (GPT) Disk Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_Block_Transition_Table_Layout.html">6. Block Translation Table (BTT) Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Services_Boot_Services.html">7. Services — Boot Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Services_Runtime_Services.html">8. Services — Runtime Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Protocols_EFI_Loaded_Image.html">9. Protocols - EFI Loaded Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Protocols_Device_Path_Protocol.html">10. Protocols – Device Path Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html">11. Protocols — UEFI Driver Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_Protocols_Console_Support.html">12. Protocols — Console Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Protocols_Media_Access.html">13. Protocols – Media Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Protocols_PCI_Bus_Support.html">14. Protocols — PCI Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_Protocols_SCSI_Driver_Models_and_Bus_Support.html">15. Protocols — SCSI Driver Models and Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_Protocols_iSCSI_Boot.html">16. Protocols — iSCSI Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_Protocols_USB_Support.html">17. Protocols — USB Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_Protocols_Debugger_Support.html">18. Protocols — Debugger Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_Protocols_Compression_Algorithm_Specification.html">19. Protocols — Compression Algorithm Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_Protocols_ACPI_Protocols.html">20. Protocols — ACPI Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_Protocols_String_Services.html">21. Protocols — String Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html">22. EFI Byte Code Virtual Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_Firmware_Update_and_Reporting.html">23. Firmware Update and Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24_Network_Protocols_SNP_PXE_BIS.html">24. Network Protocols — SNP, PXE, BIS and HTTP Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25_Network_Protocols_Managed_Network.html">25. Network Protocols - Managed Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26_Network_Protocols_Bluetooth.html">26. Network Protocols — Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27_Network_Protocols_VLAN_and_EAP.html">27. Network Protocols — VLAN, EAP, Wi-Fi and Supplicant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28_Network_Protocols_TCP_IP_and_Configuration.html">28. Network Protocols — TCP, IP, IPsec, FTP, TLS and Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29_Network_Protocols_ARP_and_DHCP.html">29. Network Protocols — ARP, DHCP, DNS, HTTP and REST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_Network_Protocols_UDP_and_MTFTP.html">30. Network Protocols — UDP and MTFTP</a></li>
+<li class="toctree-l1"><a class="reference internal" href="31_EFI_Redfish_Service_Support.html">31. EFI Redfish Service Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="32_Secure_Boot_and_Driver_Signing.html">32. Secure Boot and Driver Signing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="33_Human_Interface_Infrastructure.html">33. Human Interface Infrastructure Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="34_HII_Protocols.html">34. HII Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="35_HII_Configuration_Processing_and_Browser_Protocol.html">35. HII Configuration Processing and Browser Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="36_User_Identification.html">36. User Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="37_Secure_Technologies.html">37. Secure Technologies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="38_Confidential_Computing.html">38. Confidential Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="39_Micellaneous_Protocols.html">39. Miscellaneous Protocols</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Apx_A_GUID_and_Time_Formats.html">A. GUID and Time Formats</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">B. Console</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#efi-simple-text-input-protocol-and-efi-simple-text-input-ex-protocol">B.1. EFI_SIMPLE_TEXT_INPUT_PROTOCOL and EFI_SIMPLE_TEXT _INPUT_EX_PROTOCOL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-simple-text-output-protocol-for-pc-ansi-or-ansi-x3-64-terminals">B.2. EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL for PC ANSI or ANSI X3.64 terminals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_C_Device_Path_Examples.html">C. Device Path Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_D_Status_Codes.html">D. Status Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_E_Universal_Network_Driver_Interfaces.html">E. Universal Network Driver Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_F_Using_the_Simple_Pointer_Protocol.html">F. Using the Simple Pointer Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_G_Using_the_EFI_Extended_SCSI_Pass_Thru_Protocol.html">G. Using the EFI Extended SCSI Pass Thru Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_H_Compression_Source_Code.html">H. Compression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_I_Decompression_Source_Code.html">I. Decompression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_J_EFI_Byte_Code_Virtual_Machine_Opcode_List.html">J. EFI Byte Code Virtual Machine Opcode List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_K_Alphabetic_Function_Lists.html">K. Alphabetic Function Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_L_EFI_1.10_Protocol_Changes_and_Deprecation_List.html">L. EFI 1.10 Protocol Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html">M. Formats — Language Codes and Language Code Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_N_Common_Platform_Error_Record.html">N. Common Platform Error Record (CPER)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_O_UEFI_ACPI_Data_Table.html">O. UEFI ACPI Data Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_P_Hardware_Error_Record_Persistence_Usage.html">P. Hardware Error Record Persistence Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_Q_References.html">Q. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_R_Glossary.html">R. Glossary</a></li>
+</ul>
+
+    <a href= "genindex.html">Index</a>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UEFI Specification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">2. </span>Console</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="console">
+<span id="appendix-b-console"></span><h1><span class="section-number">B. </span>Console<a class="headerlink" href="#console" title="Link to this heading"></a></h1>
+<p>The EFI console was designed to allow input from a wide variety of devices. This appendix provides examples of the mapping of keyboard input from various types of devices to EFI scan codes. While representative of common console devices in use today, it is not intended to be a comprehensive list. EFI application programmers can use this table to identify the EFI Scan Code generated by a specific key press. The description of the example device input data that generates a EFI Scan Code may be useful to EFI driver writers, as well as showing the limitations on which EFI Scan codes can be generated by different types of console input devices.</p>
+<p>The EFI console was designed so that it could map to common console devices. This appendix explains how an EFI console could map to a VGA with PC AT 101/102, PC ANSI, or ANSI X3.64 consoles.</p>
+<section id="efi-simple-text-input-protocol-and-efi-simple-text-input-ex-protocol">
+<span id="efi-simple-text-input-protocol-and-efi-simple-text-input-ex-protocol-console"></span><h2><span class="section-number">B.1. </span>EFI_SIMPLE_TEXT_INPUT_PROTOCOL and EFI_SIMPLE_TEXT _INPUT_EX_PROTOCOL<a class="headerlink" href="#efi-simple-text-input-protocol-and-efi-simple-text-input-ex-protocol" title="Link to this heading"></a></h2>
+<p>Tables <a class="reference internal" href="#efi-scan-codes-for-efi-simple-text-input-protocol"><span class="std std-ref">EFI Scan Codes for EFI_SIMPLE_TEXT_INPUT_PROTOCOL</span></a> and <a class="reference internal" href="#efi-scan-codes-for-efi-simple-text-input-ex-protocol"><span class="std std-ref">EFI Scan Codes for EFI_SIMPLE_TEXT_INPUT_EX_PROTOCOL</span></a> give examples of how input from a set of common input devices is mapped to EFI scan codes. Terminals and terminal emulators generally report function and editing keys as escape or control sequences. These sequences are formed by a control character followed by one or more additional graphic characters that indicate what the sequence means. ANSI X3.64 terminals generally require an ANSI parser to determine how to interpret a sequence and how to determine that the sequence is complete. These terminals can generate sequences using either 8-bit controls or 7-bit control sequences. Older terminal types, such as the VT100+ have a simpler set of sequences that can be interpreted using simple case statements. These terminals usually generate only 7-bit data, and 7-bit control sequences.</p>
+<p>In the tables below, the CSI character is the 8-bit control character 0x9B, and is equivalent to the 7-bit control sequence “ESC [” (the 0x1B control ESC followed by the left bracket character 0x5B). The sequences are shown with spaces for readability, but do not contain the space character.</p>
+<p>The VT100+ column represents a common class of terminal emulation that is a superset of the Digital Equipment Corporation (DEC) VT100 terminal. This includes VT-UTF8 (Hyperterm) and PC_ANSI terminal types. The ANSI X3.64 column shows the sequences generated by the DEC VT200 through VT500 terminals, which are an ANSI X3.64 / ISO 6429 compliant.</p>
+<p>The USB HID and AT 101/102 columns show the scan codes generated by two common directly attached keyboards. These keyboards are generally used in combination with a VGA text display to form a “VGA Console”.</p>
+<p>In the table below, the cells with N/A contained in them are simply intended to reflect that the key may be defined for that terminal or keyboard, but there is no industry standard or consistent mapping for the key. Some input devices might not implement all of these keys.</p>
+<table class="longtable docutils align-default" id="efi-scan-codes-for-efi-simple-text-input-protocol">
+<caption><span class="caption-number">Table B.1 </span><span class="caption-text">EFI Scan Codes for EFI_SIMPLE_TEXT_INPUT_PROTOCOL</span><a class="headerlink" href="#efi-scan-codes-for-efi-simple-text-input-protocol" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI Scan Code</p></td>
+<td><p>Description</p></td>
+<td><p>ANSI X3.64 / DEC VT200-500 (8-bit mode)</p></td>
+<td><p>VT100+ (7-bit mode)</p></td>
+<td><p>USB Keyboard HID Values</p></td>
+<td><p>AT 101/102 Keyboard Scan Codes</p></td>
+</tr>
+<tr class="row-even"><td><p>0x00</p></td>
+<td><p>Null scan code</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>0x00</p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x01</p></td>
+<td><p>UP ARROW</p></td>
+<td><p>CSI A</p></td>
+<td><p>ESC [ A</p></td>
+<td><p>0x52</p></td>
+<td><p>0xe0, 0x48</p></td>
+</tr>
+<tr class="row-even"><td><p>0x02</p></td>
+<td><p>DOWN ARROW</p></td>
+<td><p>CSI B</p></td>
+<td><p>ESC [ B</p></td>
+<td><p>0x51</p></td>
+<td><p>0xe0, 0x50</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x03</p></td>
+<td><p>RIGHT ARROW</p></td>
+<td><p>CSI C</p></td>
+<td><p>ESC [ C</p></td>
+<td><p>0x4F</p></td>
+<td><p>0xe0, 0x4d</p></td>
+</tr>
+<tr class="row-even"><td><p>0x04</p></td>
+<td><p>LEFT ARROW</p></td>
+<td><p>CSI D</p></td>
+<td><p>ESC [ D</p></td>
+<td><p>0x50</p></td>
+<td><p>0xe0, 0x4b</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x05</p></td>
+<td><p>Home</p></td>
+<td><p>CSI 1 ~</p></td>
+<td><p>ESC h</p></td>
+<td><p>0x4A</p></td>
+<td><p>0xe0, 0x47</p></td>
+</tr>
+<tr class="row-even"><td><p>0x06</p></td>
+<td><p>End</p></td>
+<td><p>CSI 4 ~</p></td>
+<td><p>ESC k</p></td>
+<td><p>0x4D</p></td>
+<td><p>0xe0, 0x4f</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x07</p></td>
+<td><p>Insert</p></td>
+<td><p>CSI 2 ~</p></td>
+<td><p>ESC +</p></td>
+<td><p>0x49</p></td>
+<td><p>0xe0, 0x52</p></td>
+</tr>
+<tr class="row-even"><td><p>0x08</p></td>
+<td><p>Delete</p></td>
+<td><p>CSI 3 ~</p></td>
+<td><p>ESC -</p></td>
+<td><p>0x4C</p></td>
+<td><p>0xe0, 0x53</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x09</p></td>
+<td><p>Page Up</p></td>
+<td><p>CSI 5 ~</p></td>
+<td><p>ESC ?</p></td>
+<td><p>0x4B</p></td>
+<td><p>0xe0, 0x49</p></td>
+</tr>
+<tr class="row-even"><td><p>0x0a</p></td>
+<td><p>Page Down</p></td>
+<td><p>CSI 6 ~</p></td>
+<td><p>ESC /</p></td>
+<td><p>0x4E</p></td>
+<td><p>0xe0, 0x51</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x0b</p></td>
+<td><p>Function 1</p></td>
+<td><p>CSI 1 1 ~</p></td>
+<td><p>ESC 1</p></td>
+<td><p>0x3A</p></td>
+<td><p>0x3b</p></td>
+</tr>
+<tr class="row-even"><td><p>0x0c</p></td>
+<td><p>Function 2</p></td>
+<td><p>CSI 1 2 ~</p></td>
+<td><p>ESC 2</p></td>
+<td><p>0x3B</p></td>
+<td><p>0x3c</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x0d</p></td>
+<td><p>Function 3</p></td>
+<td><p>CSI 1 3 ~</p></td>
+<td><p>ESC 3</p></td>
+<td><p>0x3C</p></td>
+<td><p>0x3d</p></td>
+</tr>
+<tr class="row-even"><td><p>0x0e</p></td>
+<td><p>Function 4</p></td>
+<td><p>CSI 1 4 ~</p></td>
+<td><p>ESC 4</p></td>
+<td><p>0x3D</p></td>
+<td><p>0x3e</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x0f</p></td>
+<td><p>Function 5</p></td>
+<td><p>CSI 1 5 ~</p></td>
+<td><p>ESC 5</p></td>
+<td><p>0x3E</p></td>
+<td><p>0x3f</p></td>
+</tr>
+<tr class="row-even"><td><p>0x10</p></td>
+<td><p>Function 6</p></td>
+<td><p>CSI 1 7 ~</p></td>
+<td><p>ESC 6</p></td>
+<td><p>0x3F</p></td>
+<td><p>0x40</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x11</p></td>
+<td><p>Function 7</p></td>
+<td><p>CSI 1 8 ~</p></td>
+<td><p>ESC 7</p></td>
+<td><p>0x40</p></td>
+<td><p>0x41</p></td>
+</tr>
+<tr class="row-even"><td><p>0x12</p></td>
+<td><p>Function 8</p></td>
+<td><p>CSI 1 9 ~</p></td>
+<td><p>ESC 8</p></td>
+<td><p>0x41</p></td>
+<td><p>0x42</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x13</p></td>
+<td><p>Function 9</p></td>
+<td><p>CSI 2 0 ~</p></td>
+<td><p>ESC 9</p></td>
+<td><p>0x42</p></td>
+<td><p>0x43</p></td>
+</tr>
+<tr class="row-even"><td><p>0x14</p></td>
+<td><p>Function 10</p></td>
+<td><p>CSI 2 1 ~</p></td>
+<td><p>ESC 0</p></td>
+<td><p>0x43</p></td>
+<td><p>0x44</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x17</p></td>
+<td><p>Escape</p></td>
+<td><p>ESC</p></td>
+<td><p>ESC</p></td>
+<td><p>0x29</p></td>
+<td><p>0x01</p></td>
+</tr>
+</tbody>
+</table>
+<table class="longtable docutils align-default" id="efi-scan-codes-for-efi-simple-text-input-ex-protocol">
+<caption><span class="caption-number">Table B.2 </span><span class="caption-text">EFI Scan Codes for EFI_SIMPLE_TEXT_INPUT_EX_PROTOCOL</span><a class="headerlink" href="#efi-scan-codes-for-efi-simple-text-input-ex-protocol" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI Scan Code</p></td>
+<td><p>De scription</p></td>
+<td><p>ANSI X3.64 / DEC VT200-500 (8-bit mode)</p></td>
+<td><p>VT100+ (7-bit mode)</p></td>
+<td><p>USB Keyboard HID Values</p></td>
+<td><p>AT 101/102 Keyboard Scan Codes</p></td>
+</tr>
+<tr class="row-even"><td><p>0x15</p></td>
+<td><p>Function 11</p></td>
+<td><p>CSI 2 3 ~</p></td>
+<td><p>ESC !</p></td>
+<td><p>0x44</p></td>
+<td><p>0x57</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x16</p></td>
+<td><p>Function 12</p></td>
+<td><p>CSI 2 4 ~</p></td>
+<td><p>ESC &#64;</p></td>
+<td><p>0x45</p></td>
+<td><p>0x58</p></td>
+</tr>
+<tr class="row-even"><td><p>0x48</p></td>
+<td><p>Pause</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>0x48</p></td>
+<td><p>0xe1, 0x1d, 0x45</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x68</p></td>
+<td><p>Function 13</p></td>
+<td><p>CSI 2 5 ~</p></td>
+<td><p>N/A</p></td>
+<td><p>0x68</p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td><p>0x69</p></td>
+<td><p>Function 14</p></td>
+<td><p>CSI 2 6 ~</p></td>
+<td><p>N/A</p></td>
+<td><p>0x69</p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x6A</p></td>
+<td><p>Function 15</p></td>
+<td><p>CSI 2 7 ~</p></td>
+<td><p>N/A</p></td>
+<td><p>0x6A</p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td><p>0x6B</p></td>
+<td><p>Function 16</p></td>
+<td><p>CSI 2 8 ~</p></td>
+<td><p>N/A</p></td>
+<td><p>0x6B</p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x6C</p></td>
+<td><p>Function 17</p></td>
+<td><p>CSI 2 9 ~</p></td>
+<td><p>N/A</p></td>
+<td><p>0x6C</p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td><p>0x6D</p></td>
+<td><p>Function 18</p></td>
+<td><p>CSI 3 0 ~</p></td>
+<td><p>N/A</p></td>
+<td><p>0x6D</p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x6E</p></td>
+<td><p>Function 19</p></td>
+<td><p>CSI 3 1 ~</p></td>
+<td><p>N/A</p></td>
+<td><p>0x6E</p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td><p>0x6F</p></td>
+<td><p>Function 20</p></td>
+<td><p>CSI 3 2 ~</p></td>
+<td><p>N/A</p></td>
+<td><p>0x6F</p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x70</p></td>
+<td><p>Function 21</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>0x70</p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td><p>0x71</p></td>
+<td><p>Function 22</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>0x71</p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x72</p></td>
+<td><p>Function 23</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>0x72</p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td><p>0x73</p></td>
+<td><p>Function 24</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>0x73</p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x7F</p></td>
+<td><p>Mute</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>0x7F</p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td><p>0x80</p></td>
+<td><p>Volume Up</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>0x80</p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x81</p></td>
+<td><p>Volume Down</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>0x81</p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td><p>0x100</p></td>
+<td><p>B rightness Up</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x101</p></td>
+<td><p>B rightness Down</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td><p>0x102</p></td>
+<td><p>Suspend</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x103</p></td>
+<td><p>Hibernate</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td><p>0x104</p></td>
+<td><p>Toggle Display</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x105</p></td>
+<td><p>Recovery</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td><p>0x106</p></td>
+<td><p>Eject</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x80 00-0xFFFF</p></td>
+<td><p>OEM Reserved</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+<td><p>N/A</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-simple-text-output-protocol-for-pc-ansi-or-ansi-x3-64-terminals">
+<span id="efi-simple-text-output-protocol-ansi"></span><h2><span class="section-number">B.2. </span>EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL for PC ANSI or ANSI X3.64 terminals<a class="headerlink" href="#efi-simple-text-output-protocol-for-pc-ansi-or-ansi-x3-64-terminals" title="Link to this heading"></a></h2>
+<p>Table below defines how the programmatic methods of the EFI_SIMPLE_TEXT_OUTPUT_PROTOCOs could be implemented as PC ANSI or ANSI X3.64 terminals. Detailed descriptions of PC ANSI and ANSI X3.64 escape sequences are as follows. The same type of operations can be supported via a PC AT type INT 10h interface.</p>
+<table class="longtable docutils align-default" id="control-sequences-to-implement-efi-simple-text-input-protocol">
+<caption><span class="caption-number">Table B.3 </span><span class="caption-text">Control Sequences to Implement EFI_SIMPLE_TEXT_INPUT_PROTOCOL</span><a class="headerlink" href="#control-sequences-to-implement-efi-simple-text-input-protocol" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 12.5%" />
+<col style="width: 62.5%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>PC ANSI Codes</p></td>
+<td><p>ANSI X3.64 Codes</p></td>
+<td><p>Description</p></td>
+</tr>
+<tr class="row-even"><td><p>ESC [ 2 J</p></td>
+<td><p>CSI 2 J</p></td>
+<td><p>Clear Display Screen.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ESC [ 0 m</p></td>
+<td><p>CSI 0 m</p></td>
+<td><p>Normal Text.</p></td>
+</tr>
+<tr class="row-even"><td><p>ESC [ 1 m</p></td>
+<td><p>CSI 1 m</p></td>
+<td><p>Bright Text.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ESC [ 7 m</p></td>
+<td><p>CSI 7 m</p></td>
+<td><p>Reversed Text.</p></td>
+</tr>
+<tr class="row-even"><td><p>ESC [ 30 m</p></td>
+<td><p>CSI 30 m</p></td>
+<td><p>Black foreground, compliant with ISO Standard 6429.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ESC [ 31 m</p></td>
+<td><p>CSI 31 m</p></td>
+<td><p>Red foreground, compliant with ISO Standard 6429.</p></td>
+</tr>
+<tr class="row-even"><td><p>ESC [ 32 m</p></td>
+<td><p>CSI 32 m</p></td>
+<td><p>Green foreground, compliant with ISO Standard 6429.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ESC [ 33 m</p></td>
+<td><p>CSI 33 m</p></td>
+<td><p>Yellow foreground, compliant with ISO Standard 6429.</p></td>
+</tr>
+<tr class="row-even"><td><p>ESC [ 34 m</p></td>
+<td><p>CSI 34 m</p></td>
+<td><p>Blue foreground, compliant with ISO Standard 6429.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ESC [ 35 m</p></td>
+<td><p>CSI 35 m</p></td>
+<td><p>Magenta foreground, compliant with ISO Standard 6429.</p></td>
+</tr>
+<tr class="row-even"><td><p>ESC [ 36 m</p></td>
+<td><p>CSI 36 m</p></td>
+<td><p>Cyan foreground, compliant with ISO Standard 6429.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ESC [ 37 m</p></td>
+<td><p>CSI 37 m</p></td>
+<td><p>White foreground, compliant with ISO Standard 6429.</p></td>
+</tr>
+<tr class="row-even"><td><p>ESC [ 40 m</p></td>
+<td><p>CSI 40 m</p></td>
+<td><p>Black background, compliant with ISO Standard 6429.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ESC [ 41 m</p></td>
+<td><p>CSI 41 m</p></td>
+<td><p>Red background, compliant with ISO Standard 6429.</p></td>
+</tr>
+<tr class="row-even"><td><p>ESC [ 42 m</p></td>
+<td><p>CSI 42 m</p></td>
+<td><p>Green background, compliant with ISO Standard 6429.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ESC [ 43 m</p></td>
+<td><p>CSI 43 m</p></td>
+<td><p>Yellow background, compliant with ISO Standard 6429.</p></td>
+</tr>
+<tr class="row-even"><td><p>ESC [ 44 m</p></td>
+<td><p>CSI 44 m</p></td>
+<td><p>Blue background, compliant with ISO Standard 6429.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ESC [ 45 m</p></td>
+<td><p>CSI 45 m</p></td>
+<td><p>Magenta background, compliant with ISO Standard 6429.</p></td>
+</tr>
+<tr class="row-even"><td><p>ESC [ 46 m</p></td>
+<td><p>CSI 46 m</p></td>
+<td><p>Cyan background, compliant with ISO Standard 6429.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ESC [ 47 m</p></td>
+<td><p>CSI 47 m</p></td>
+<td><p>White background, compliant with ISO Standard 6429.</p></td>
+</tr>
+<tr class="row-even"><td><p>ESC [ = 3 h</p></td>
+<td><p>CSI = 3 h</p></td>
+<td><p>Set Mode 80x25 color.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ESC [ row;col H</p></td>
+<td><p>CSI row;col H</p></td>
+<td><p>Set cursor position to row;col. Row and col are strings of ASCII digits.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="longtable docutils align-default" id="example-keyboard-layout">
+<caption><span class="caption-number">Table B.4 </span><span class="caption-text">Example Keyboard Layout</span><a class="headerlink" href="#example-keyboard-layout" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Usage</strong></p></td>
+<td><p><strong>EFI_KEY enum value</strong></p></td>
+<td><p><strong>USB Keyboard HID Values</strong></p></td>
+<td><p><strong>Typical AT-101 key position</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>Key a and A</p></td>
+<td><p>EfiKeyC1</p></td>
+<td><p>0x04</p></td>
+<td><p>31</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key b and B</p></td>
+<td><p>EfiKeyB5</p></td>
+<td><p>0x05</p></td>
+<td><p>50</p></td>
+</tr>
+<tr class="row-even"><td><p>Key c and C</p></td>
+<td><p>EfiKeyB3</p></td>
+<td><p>0x06</p></td>
+<td><p>48</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key d and D</p></td>
+<td><p>EfiKeyC3</p></td>
+<td><p>0x07</p></td>
+<td><p>33</p></td>
+</tr>
+<tr class="row-even"><td><p>Key e and E</p></td>
+<td><p>EfiKeyD3</p></td>
+<td><p>0x08</p></td>
+<td><p>19</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key f and F</p></td>
+<td><p>EfiKeyC4</p></td>
+<td><p>0x09</p></td>
+<td><p>34</p></td>
+</tr>
+<tr class="row-even"><td><p>Key g and G</p></td>
+<td><p>EfiKeyC5</p></td>
+<td><p>0x0A</p></td>
+<td><p>35</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key h and H</p></td>
+<td><p>EfiKeyC6</p></td>
+<td><p>0x0B</p></td>
+<td><p>36</p></td>
+</tr>
+<tr class="row-even"><td><p>Key i and I</p></td>
+<td><p>EfiKeyD8</p></td>
+<td><p>0x0C</p></td>
+<td><p>24</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key j and J</p></td>
+<td><p>EfiKeyC7</p></td>
+<td><p>0x0D</p></td>
+<td><p>37</p></td>
+</tr>
+<tr class="row-even"><td><p>Key k and K</p></td>
+<td><p>EfiKeyC8</p></td>
+<td><p>0x0E</p></td>
+<td><p>38</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key l and L</p></td>
+<td><p>EfiKeyC9</p></td>
+<td><p>0x0F</p></td>
+<td><p>39</p></td>
+</tr>
+<tr class="row-even"><td><p>Key m and M</p></td>
+<td><p>EfiKeyB7</p></td>
+<td><p>0x10</p></td>
+<td><p>52</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key n and N</p></td>
+<td><p>EfiKeyB6</p></td>
+<td><p>0x11</p></td>
+<td><p>51</p></td>
+</tr>
+<tr class="row-even"><td><p>Key o and O</p></td>
+<td><p>EfiKeyD9</p></td>
+<td><p>0x12</p></td>
+<td><p>25</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key p and p</p></td>
+<td><p>EfiKeyD10</p></td>
+<td><p>0x13</p></td>
+<td><p>26</p></td>
+</tr>
+<tr class="row-even"><td><p>Key q and Q</p></td>
+<td><p>EfiKeyD1</p></td>
+<td><p>0x14</p></td>
+<td><p>17</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key r and R</p></td>
+<td><p>EfiKeyD4</p></td>
+<td><p>0x15</p></td>
+<td><p>20</p></td>
+</tr>
+<tr class="row-even"><td><p>Key s and S</p></td>
+<td><p>EfiKeyC2</p></td>
+<td><p>0x16</p></td>
+<td><p>32</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key t and T</p></td>
+<td><p>EfiKeyD5</p></td>
+<td><p>0x17</p></td>
+<td><p>21</p></td>
+</tr>
+<tr class="row-even"><td><p>Key u and U</p></td>
+<td><p>EfiKeyD7</p></td>
+<td><p>0x18</p></td>
+<td><p>23</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key v and V</p></td>
+<td><p>EfiKeyB4</p></td>
+<td><p>0x19</p></td>
+<td><p>49</p></td>
+</tr>
+<tr class="row-even"><td><p>Key w and W</p></td>
+<td><p>EfiKeyD2</p></td>
+<td><p>0x1A</p></td>
+<td><p>18</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key x and X</p></td>
+<td><p>EfiKeyB2</p></td>
+<td><p>0x1B</p></td>
+<td><p>47</p></td>
+</tr>
+<tr class="row-even"><td><p>Key y and Y</p></td>
+<td><p>EfiKeyD6</p></td>
+<td><p>0x1C</p></td>
+<td><p>22</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key z and Z</p></td>
+<td><p>EfiKeyB1</p></td>
+<td><p>0x1D</p></td>
+<td><p>46</p></td>
+</tr>
+<tr class="row-even"><td><p>Key 1 and !</p></td>
+<td><p>EfiKeyE1</p></td>
+<td><p>0x1E</p></td>
+<td><p>2</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key 2 and &#64;</p></td>
+<td><p>EfiKeyE2</p></td>
+<td><p>0x1F</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-even"><td><p>Key 3 and #</p></td>
+<td><p>EfiKeyE3</p></td>
+<td><p>0x20</p></td>
+<td><p>4</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key 4 and $</p></td>
+<td><p>EfiKeyE4</p></td>
+<td><p>0x21</p></td>
+<td><p>5</p></td>
+</tr>
+<tr class="row-even"><td><p>Key 5 and %</p></td>
+<td><p>EfiKeyE5</p></td>
+<td><p>0x22</p></td>
+<td><p>6</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key 6 and ^</p></td>
+<td><p>EfiKeyE6</p></td>
+<td><p>0x23</p></td>
+<td><p>7</p></td>
+</tr>
+<tr class="row-even"><td><p>Key 7 and &amp;</p></td>
+<td><p>EfiKeyE7</p></td>
+<td><p>0x24</p></td>
+<td><p>8</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key 8 and *</p></td>
+<td><p>EfiKeyE8</p></td>
+<td><p>0x25</p></td>
+<td><p>9</p></td>
+</tr>
+<tr class="row-even"><td><p>Key 9 and (</p></td>
+<td><p>EfiKeyE9</p></td>
+<td><p>0x26</p></td>
+<td><p>10</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key 0 and )</p></td>
+<td><p>EfiKeyE10</p></td>
+<td><p>0x27</p></td>
+<td><p>11</p></td>
+</tr>
+<tr class="row-even"><td><p>Enter*</p></td>
+<td><p>EfiKeyEnter</p></td>
+<td><p>0x28</p></td>
+<td><p>43</p></td>
+</tr>
+<tr class="row-odd"><td><p>Escape *</p></td>
+<td><p>EfiKeyEsc</p></td>
+<td><p>0x29</p></td>
+<td><p>110</p></td>
+</tr>
+<tr class="row-even"><td><p>Del * / Backspace *</p></td>
+<td><p>EfiKeyBackSpace</p></td>
+<td><p>0x2A</p></td>
+<td><p>15</p></td>
+</tr>
+<tr class="row-odd"><td><p>Tab *</p></td>
+<td><p>EfiKeyTab</p></td>
+<td><p>0x2B</p></td>
+<td><p>16</p></td>
+</tr>
+<tr class="row-even"><td><p>Spacebar</p></td>
+<td><p>EfiKeySpaceBar</p></td>
+<td><p>0x2C</p></td>
+<td><p>61</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key - and _</p></td>
+<td><p>EfiKeySpaceBar</p></td>
+<td><p>0x2D</p></td>
+<td><p>12</p></td>
+</tr>
+<tr class="row-even"><td><p>Key = and +</p></td>
+<td><p>EfiKeySpaceBar</p></td>
+<td><p>0x2E</p></td>
+<td><p>13</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key [ and {</p></td>
+<td><p>EfiKeySpaceBar</p></td>
+<td><p>0x2F</p></td>
+<td><p>27</p></td>
+</tr>
+<tr class="row-even"><td><p>Key ] and }</p></td>
+<td><p>EfiKeyD12</p></td>
+<td><p>0x30</p></td>
+<td><p>28</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key and |</p></td>
+<td><p>EfiKeyD13</p></td>
+<td><p>0x31</p></td>
+<td><p>29</p></td>
+</tr>
+<tr class="row-even"><td><p>Key ; and :</p></td>
+<td><p>EfiKeyC10</p></td>
+<td><p>0x33</p></td>
+<td><p>40</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key ‘ and “</p></td>
+<td><p>EfiKeyC11</p></td>
+<td><p>0x34</p></td>
+<td><p>41</p></td>
+</tr>
+<tr class="row-even"><td><p>Key ` and ~</p></td>
+<td><p>EfiKeyE0</p></td>
+<td><p>0x35</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key , and &lt;</p></td>
+<td><p>EfiKeyB8</p></td>
+<td><p>0x36</p></td>
+<td><p>53</p></td>
+</tr>
+<tr class="row-even"><td><p>Key . and &gt;</p></td>
+<td><p>EfiKeyB9</p></td>
+<td><p>0x37</p></td>
+<td><p>54</p></td>
+</tr>
+<tr class="row-odd"><td><p>Key / and ?</p></td>
+<td><p>EfiKeyB10</p></td>
+<td><p>0x38</p></td>
+<td><p>55</p></td>
+</tr>
+<tr class="row-even"><td><p>Capslock *</p></td>
+<td><p>EfiKeyCapsLock</p></td>
+<td><p>0x39</p></td>
+<td><p>30</p></td>
+</tr>
+<tr class="row-odd"><td><p>F1*</p></td>
+<td><p>EfiKeyF1</p></td>
+<td><p>0x3A</p></td>
+<td><p>112</p></td>
+</tr>
+<tr class="row-even"><td><p>F2*</p></td>
+<td><p>EfiKeyF2</p></td>
+<td><p>0x3B</p></td>
+<td><p>113</p></td>
+</tr>
+<tr class="row-odd"><td><p>F3*</p></td>
+<td><p>EfiKeyF3</p></td>
+<td><p>0x3C</p></td>
+<td><p>114</p></td>
+</tr>
+<tr class="row-even"><td><p>F4*</p></td>
+<td><p>EfiKeyF4</p></td>
+<td><p>0x3D</p></td>
+<td><p>115</p></td>
+</tr>
+<tr class="row-odd"><td><p>F5*</p></td>
+<td><p>EfiKeyF5</p></td>
+<td><p>0x3E</p></td>
+<td><p>116</p></td>
+</tr>
+<tr class="row-even"><td><p>F6*</p></td>
+<td><p>EfiKeyF6</p></td>
+<td><p>0x3F</p></td>
+<td><p>117</p></td>
+</tr>
+<tr class="row-odd"><td><p>F7*</p></td>
+<td><p>EfiKeyF7</p></td>
+<td><p>0x40</p></td>
+<td><p>118</p></td>
+</tr>
+<tr class="row-even"><td><p>F8*</p></td>
+<td><p>EfiKeyF8</p></td>
+<td><p>0x41</p></td>
+<td><p>119</p></td>
+</tr>
+<tr class="row-odd"><td><p>F9*</p></td>
+<td><p>EfiKeyF9</p></td>
+<td><p>0x42</p></td>
+<td><p>120</p></td>
+</tr>
+<tr class="row-even"><td><p>F10*</p></td>
+<td><p>EfiKeyF10</p></td>
+<td><p>0x43</p></td>
+<td><p>121</p></td>
+</tr>
+<tr class="row-odd"><td><p>F11*</p></td>
+<td><p>EfiKeyF11</p></td>
+<td><p>0x44</p></td>
+<td><p>122</p></td>
+</tr>
+<tr class="row-even"><td><p>F12*</p></td>
+<td><p>EfiKeyF12</p></td>
+<td><p>0x45</p></td>
+<td><p>123</p></td>
+</tr>
+<tr class="row-odd"><td><p>PrintScreen*</p></td>
+<td><p>EfiKeyPrint</p></td>
+<td><p>0x46</p></td>
+<td><p>124</p></td>
+</tr>
+<tr class="row-even"><td><p>ScrollLock*</p></td>
+<td><p>EfiKeySLck</p></td>
+<td><p>0x47</p></td>
+<td><p>125</p></td>
+</tr>
+<tr class="row-odd"><td><p>Pause*</p></td>
+<td><p>EfiKeyPause</p></td>
+<td><p>0x48</p></td>
+<td><p>126</p></td>
+</tr>
+<tr class="row-even"><td><p>Insert*</p></td>
+<td><p>EfiKeyIns</p></td>
+<td><p>0x49</p></td>
+<td><p>75</p></td>
+</tr>
+<tr class="row-odd"><td><p>Home*</p></td>
+<td><p>EfiKeyHome</p></td>
+<td><p>0x4A</p></td>
+<td><p>80</p></td>
+</tr>
+<tr class="row-even"><td><p>PageUp*</p></td>
+<td><p>EfiKeyPgUp</p></td>
+<td><p>0x4B</p></td>
+<td><p>85</p></td>
+</tr>
+<tr class="row-odd"><td><p>Delete*</p></td>
+<td><p>EfiKeyDel</p></td>
+<td><p>0x4C</p></td>
+<td><p>76</p></td>
+</tr>
+<tr class="row-even"><td><p>End*</p></td>
+<td><p>EfiKeyEnd</p></td>
+<td><p>0x4D</p></td>
+<td><p>81</p></td>
+</tr>
+<tr class="row-odd"><td><p>PageDown*</p></td>
+<td><p>EfiKeyPgDn</p></td>
+<td><p>0x4E</p></td>
+<td><p>86</p></td>
+</tr>
+<tr class="row-even"><td><p>RightArrow*</p></td>
+<td><p>EfiKeyRightArrow</p></td>
+<td><p>0x4F</p></td>
+<td><p>89</p></td>
+</tr>
+<tr class="row-odd"><td><p>LeftArrow*</p></td>
+<td><p>EfiKeyLeftArrow</p></td>
+<td><p>0x50</p></td>
+<td><p>79</p></td>
+</tr>
+<tr class="row-even"><td><p>DownArrow*</p></td>
+<td><p>EfiKeyDownArrow</p></td>
+<td><p>0x51</p></td>
+<td><p>84</p></td>
+</tr>
+<tr class="row-odd"><td><p>UpArrow*</p></td>
+<td><p>EfiKeyUpArrow</p></td>
+<td><p>0x52</p></td>
+<td><p>83</p></td>
+</tr>
+<tr class="row-even"><td><p>NumLock*</p></td>
+<td><p>EfiKeyNLck</p></td>
+<td><p>0x53</p></td>
+<td><p>90</p></td>
+</tr>
+<tr class="row-odd"><td><p>Keypad /</p></td>
+<td><p>EfiKeySlash</p></td>
+<td><p>0x54</p></td>
+<td><p>95</p></td>
+</tr>
+<tr class="row-even"><td><p>Keypad *</p></td>
+<td><p>EfiKeyAsterisk</p></td>
+<td><p>0x55</p></td>
+<td><p>100</p></td>
+</tr>
+<tr class="row-odd"><td><p>Keypad -</p></td>
+<td><p>EfiKeyMinus</p></td>
+<td><p>0x56</p></td>
+<td><p>105</p></td>
+</tr>
+<tr class="row-even"><td><p>Keypad +</p></td>
+<td><p>EfiKeyPlus</p></td>
+<td><p>0x57</p></td>
+<td><p>106</p></td>
+</tr>
+<tr class="row-odd"><td><p>Keypad Enter*</p></td>
+<td><p>EfiKeyEnter</p></td>
+<td><p>0x58</p></td>
+<td><p>108</p></td>
+</tr>
+<tr class="row-even"><td><p>Keypad 1 and  End*</p></td>
+<td><p>EfiKeyOne</p></td>
+<td><p>0x59</p></td>
+<td><p>93</p></td>
+</tr>
+<tr class="row-odd"><td><p>Keypad 2 and DownArrow*</p></td>
+<td><p>EfiKeyTwo</p></td>
+<td><p>0x5A</p></td>
+<td><p>98</p></td>
+</tr>
+<tr class="row-even"><td><p>Keypad 3 and</p></td>
+<td><p>EfiKeyThree PageDown*</p></td>
+<td><p>0x5B</p></td>
+<td><p>103</p></td>
+</tr>
+<tr class="row-odd"><td><p>Keypad 4 and LeftArrow*</p></td>
+<td><p>EfiKeyFour</p></td>
+<td><p>0x5C</p></td>
+<td><p>92</p></td>
+</tr>
+<tr class="row-even"><td><p>Keypad 5</p></td>
+<td><p>EfiKeyFive</p></td>
+<td><p>0x5D</p></td>
+<td><p>97</p></td>
+</tr>
+<tr class="row-odd"><td><p>Keypad 6 and RightArrow *</p></td>
+<td><p>EfiKeySix</p></td>
+<td><p>0x5E</p></td>
+<td><p>102</p></td>
+</tr>
+<tr class="row-even"><td><p>Keypad 7 and Home *</p></td>
+<td><p>EfiKeySeven</p></td>
+<td><p>0x5F</p></td>
+<td><p>91</p></td>
+</tr>
+<tr class="row-odd"><td><p>Keypad 8 and UpArrow*</p></td>
+<td><p>EfiKeyEight</p></td>
+<td><p>0x60</p></td>
+<td><p>96</p></td>
+</tr>
+<tr class="row-even"><td><p>Keypad 9 and PageUp *</p></td>
+<td><p>EfiKeyNine</p></td>
+<td><p>0x61</p></td>
+<td><p>101</p></td>
+</tr>
+<tr class="row-odd"><td><p>Keypad 0 and Insert *</p></td>
+<td><p>EfiKeyZero</p></td>
+<td><p>0x62</p></td>
+<td><p>99</p></td>
+</tr>
+<tr class="row-even"><td><p>Keypad . and Delete *</p></td>
+<td><p>EfiKeyPeriod</p></td>
+<td><p>0x63</p></td>
+<td><p>104</p></td>
+</tr>
+<tr class="row-odd"><td><p>Menu</p></td>
+<td><p>EfiKeyA4</p></td>
+<td><p>0x76</p></td>
+<td><p>n/a</p></td>
+</tr>
+<tr class="row-even"><td><p>LeftControl*</p></td>
+<td><p>EfiKeyLCtrl</p></td>
+<td><p>0xE0</p></td>
+<td><p>58</p></td>
+</tr>
+<tr class="row-odd"><td><p>LeftShift*</p></td>
+<td><p>EfiKeyLShift</p></td>
+<td><p>0xE1</p></td>
+<td><p>44</p></td>
+</tr>
+<tr class="row-even"><td><p>LeftAlt*</p></td>
+<td><p>EfiKeyLAlt</p></td>
+<td><p>0xE2</p></td>
+<td><p>60</p></td>
+</tr>
+<tr class="row-odd"><td><p>LeftLogo*</p></td>
+<td><p>EfiKeyA0</p></td>
+<td><p>0xE3</p></td>
+<td><p>127</p></td>
+</tr>
+<tr class="row-even"><td><p>RightControl*</p></td>
+<td><p>EfiKeyRCtrl</p></td>
+<td><p>0xE4</p></td>
+<td><p>64</p></td>
+</tr>
+<tr class="row-odd"><td><p>RightShift*</p></td>
+<td><p>EfiKeyRShift</p></td>
+<td><p>0xE5</p></td>
+<td><p>57</p></td>
+</tr>
+<tr class="row-even"><td><p>RightAlt*</p></td>
+<td><p>EfiKeyA2</p></td>
+<td><p>0xE6</p></td>
+<td><p>62</p></td>
+</tr>
+<tr class="row-odd"><td><p>RightLogo*</p></td>
+<td><p>EfiKeyA3</p></td>
+<td><p>0xE7</p></td>
+<td><p>128</p></td>
+</tr>
+<tr class="row-even"><td><p>Non-US # and ~</p></td>
+<td><p>EfiKeyC12</p></td>
+<td><p>0x32</p></td>
+<td><p>42</p></td>
+</tr>
+<tr class="row-odd"><td><p>Non-US and |</p></td>
+<td><p>EfiKeyIntl0</p></td>
+<td><p>0x64</p></td>
+<td><p>45</p></td>
+</tr>
+<tr class="row-even"><td><p>Non-US and _</p></td>
+<td><p>EfiKeyIntl1</p></td>
+<td><p>0x87</p></td>
+<td><p>56</p></td>
+</tr>
+<tr class="row-odd"><td><p>Non-US ¥ and |</p></td>
+<td><p>EfiKeyIntl3</p></td>
+<td><p>0x89</p></td>
+<td><p>n/a</p></td>
+</tr>
+</tbody>
+</table>
+<p>An * indicates a non-printable character or keyboard behavior</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Apx_A_GUID_and_Time_Formats.html" class="btn btn-neutral float-left" title="1. GUID and Time Formats" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Apx_C_Device_Path_Examples.html" class="btn btn-neutral float-right" title="3. Device Path Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, UEFI Forum, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

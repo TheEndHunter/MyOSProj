@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>31. EFI Redfish Service Support &mdash; UEFI Specification 2.11 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=f2209469" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/style.css?v=faba8a36" />
+      <link rel="stylesheet" type="text/css" href="_static/theme-overrides.css?v=84235ce0" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2de06f63"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="32. Secure Boot and Driver Signing" href="32_Secure_Boot_and_Driver_Signing.html" />
+    <link rel="prev" title="30. Network Protocols — UDP and MTFTP" href="30_Network_Protocols_UDP_and_MTFTP.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            UEFI Specification
+          </a>
+              <div class="version">
+                2.11
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+    
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Tables.html">List of Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/List_of_Figures.html">List of Figures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Frontmatter/Revision_History.html">Revision History</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_Introduction.html">1. Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_Overview.html">2. Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_Boot_Manager.html">3. Boot Manager</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_EFI_System_Table.html">4. EFI System Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_GUID_Partition_Table_Format.html">5. GUID Partition Table (GPT) Disk Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_Block_Transition_Table_Layout.html">6. Block Translation Table (BTT) Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_Services_Boot_Services.html">7. Services — Boot Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_Services_Runtime_Services.html">8. Services — Runtime Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_Protocols_EFI_Loaded_Image.html">9. Protocols - EFI Loaded Image</a></li>
+<li class="toctree-l1"><a class="reference internal" href="10_Protocols_Device_Path_Protocol.html">10. Protocols – Device Path Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11_Protocols_UEFI_Driver_Model.html">11. Protocols — UEFI Driver Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12_Protocols_Console_Support.html">12. Protocols — Console Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13_Protocols_Media_Access.html">13. Protocols – Media Access</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_Protocols_PCI_Bus_Support.html">14. Protocols — PCI Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="15_Protocols_SCSI_Driver_Models_and_Bus_Support.html">15. Protocols — SCSI Driver Models and Bus Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_Protocols_iSCSI_Boot.html">16. Protocols — iSCSI Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="17_Protocols_USB_Support.html">17. Protocols — USB Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="18_Protocols_Debugger_Support.html">18. Protocols — Debugger Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19_Protocols_Compression_Algorithm_Specification.html">19. Protocols — Compression Algorithm Specification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20_Protocols_ACPI_Protocols.html">20. Protocols — ACPI Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21_Protocols_String_Services.html">21. Protocols — String Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22_EFI_Byte_Code_Virtual_Machine.html">22. EFI Byte Code Virtual Machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23_Firmware_Update_and_Reporting.html">23. Firmware Update and Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="24_Network_Protocols_SNP_PXE_BIS.html">24. Network Protocols — SNP, PXE, BIS and HTTP Boot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25_Network_Protocols_Managed_Network.html">25. Network Protocols - Managed Network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="26_Network_Protocols_Bluetooth.html">26. Network Protocols — Bluetooth</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27_Network_Protocols_VLAN_and_EAP.html">27. Network Protocols — VLAN, EAP, Wi-Fi and Supplicant</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28_Network_Protocols_TCP_IP_and_Configuration.html">28. Network Protocols — TCP, IP, IPsec, FTP, TLS and Configurations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29_Network_Protocols_ARP_and_DHCP.html">29. Network Protocols — ARP, DHCP, DNS, HTTP and REST</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30_Network_Protocols_UDP_and_MTFTP.html">30. Network Protocols — UDP and MTFTP</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">31. EFI Redfish Service Support</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#efi-redfish-discover-protocol">31.1. EFI Redfish Discover Protocol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">31.1.1. Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-redfish-discover-driver">31.1.2. EFI Redfish Discover Driver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-redfish-discover-client">31.1.3. EFI Redfish Discover Client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#efi-redfish-discover-protocol-1">31.1.4. EFI Redfish Discover Protocol</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#efi-redfish-discover-protocol-getnetworkinterfacelist">31.1.4.1. EFI_REDFISH_DISCOVER_PROTOCOL.GetNetworkInterfaceList()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-redfish-discover-protocol-acquireredfishservice">31.1.4.2. EFI_REDFISH_DISCOVER_PROTOCOL.AcquireRedfishService()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-redfish-discover-protocol-abortacquireredfishservice">31.1.4.3. EFI_REDFISH_DISCOVER_PROTOCOL.AbortAcquireRedfishService()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#efi-redfish-discover-protocol-releaseredfishservice">31.1.4.4. EFI_REDFISH_DISCOVER_PROTOCOL.ReleaseRedfishService()</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#implementation-examples">31.1.5. Implementation Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#processes-to-discover-redfish-services">31.1.5.1. Processes to Discover Redfish Services</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#network-interface-configuration">31.1.5.2. Network Interface Configuration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#efi-redfish-json-structure-converter">31.2. EFI Redfish JSON Structure Converter</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#the-guidance-of-writing-efi-redfish-jsonstructure-converter">31.2.1. The Guidance of Writing EFI Redfish JSONStructure Converter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#the-guidance-of-using-efi-redfish-json-structure-converter">31.2.2. The Guidance of Using EFI Redfish JSON Structure Converter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="32_Secure_Boot_and_Driver_Signing.html">32. Secure Boot and Driver Signing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="33_Human_Interface_Infrastructure.html">33. Human Interface Infrastructure Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="34_HII_Protocols.html">34. HII Protocols</a></li>
+<li class="toctree-l1"><a class="reference internal" href="35_HII_Configuration_Processing_and_Browser_Protocol.html">35. HII Configuration Processing and Browser Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="36_User_Identification.html">36. User Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="37_Secure_Technologies.html">37. Secure Technologies</a></li>
+<li class="toctree-l1"><a class="reference internal" href="38_Confidential_Computing.html">38. Confidential Computing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="39_Micellaneous_Protocols.html">39. Miscellaneous Protocols</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Apx_A_GUID_and_Time_Formats.html">A. GUID and Time Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_B_Console.html">B. Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_C_Device_Path_Examples.html">C. Device Path Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_D_Status_Codes.html">D. Status Codes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_E_Universal_Network_Driver_Interfaces.html">E. Universal Network Driver Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_F_Using_the_Simple_Pointer_Protocol.html">F. Using the Simple Pointer Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_G_Using_the_EFI_Extended_SCSI_Pass_Thru_Protocol.html">G. Using the EFI Extended SCSI Pass Thru Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_H_Compression_Source_Code.html">H. Compression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_I_Decompression_Source_Code.html">I. Decompression Source Code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_J_EFI_Byte_Code_Virtual_Machine_Opcode_List.html">J. EFI Byte Code Virtual Machine Opcode List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_K_Alphabetic_Function_Lists.html">K. Alphabetic Function Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_L_EFI_1.10_Protocol_Changes_and_Deprecation_List.html">L. EFI 1.10 Protocol Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_M_Formats_Language_Codes_and_Language_Code_Arrays.html">M. Formats — Language Codes and Language Code Arrays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_N_Common_Platform_Error_Record.html">N. Common Platform Error Record (CPER)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_O_UEFI_ACPI_Data_Table.html">O. UEFI ACPI Data Table</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_P_Hardware_Error_Record_Persistence_Usage.html">P. Hardware Error Record Persistence Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_Q_References.html">Q. References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Apx_R_Glossary.html">R. Glossary</a></li>
+</ul>
+
+    <a href= "genindex.html">Index</a>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UEFI Specification</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">31. </span>EFI Redfish Service Support</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="efi-redfish-service-support">
+<span id="id1"></span><h1><span class="section-number">31. </span>EFI Redfish Service Support<a class="headerlink" href="#efi-redfish-service-support" title="Link to this heading"></a></h1>
+<section id="efi-redfish-discover-protocol">
+<span id="id2"></span><h2><span class="section-number">31.1. </span>EFI Redfish Discover Protocol<a class="headerlink" href="#efi-redfish-discover-protocol" title="Link to this heading"></a></h2>
+<section id="overview">
+<span id="efi-redfish-discover-protocol-overview"></span><h3><span class="section-number">31.1.1. </span>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h3>
+<p>The purpose of the EFI Redfish Discover is to provide a mechanism for EFI Redfish clients to acquire the DMTF Redfish® services provided on the platform or network. See the Redfish Developer Hub at <a class="reference external" href="https://redfish.dmtf.org/">https://redfish.dmtf.org/</a> for official Redfish schema and specifications. Redfish services can be discovered according to Redfish Host Interface (SMBIOS type 42) reported on platform, or optionally using Simple Service Discovery Protocol (SSDP) message over UDP port 1900 to search Redfish services which were joined well-known multicast group addresses. EFI Redfish Discover driver discovers Redfish services and creates EFI REST EX protocol instance for each Redfish service it found. It also configures EFI REST EX protocol instance according to the Redfish service information described in Redfish Host Interface or the response of UPnP M-SEARCH request (defined in UPnP Device Architecture, which can be obtained at “Links to UEFI-Related Documents” <a class="reference external" href="https://uefi.org/uefi">http://uefi.org/uefi</a>).</p>
+<p>EFI Redfish Discover Protocol behaves as a middle protocol which abstracts the creation and configuration of EFI REST EX instance from EFI Redfish clients.</p>
+<ul class="simple">
+<li><p>EFI Redfish Discover Protocol uses EFI UDP protocol to send SSDP message to verify or discover Redfish services. For the Redfish service reported by SMBIOS type 42h, EFI Redfish Discover Protocol can optionally unicast M-SEARCH request to Redfish service in order to verify the existence of service.</p></li>
+<li><p>EFI Redfish Discover Protocol can optionally provide the functionality of discovering Redfish services through each network interface installed on platform. Prior to acquiring the list of ready-to-use EFI REST EX protocol instances, the consumer of this protocol can get the network interface list and decide which interface is used for the multicast transmission. EFI Redfish Discover Protocol multicasts M-SEARCH request to multicast group addresses then collects M-SEARCH responses from Redfish services in asynchronous or synchronous manner.</p></li>
+<li><p>EFI Redfish Discover Protocol provides the information of each network interface installed on platform through GetNetworkInterfaceList()function. The information such as MAC address, subnet ID, subset mask and VLAN ID of network interface could be utilized by upper-layer EFI application or driver to identify network interface used for Redfish service discovery. EFI Redfish Discover Protocol abstracts EFI network stack to user which means this protocol should not require user to configure UDP before utilizing services. Network configuration of network interface such as station IP address, subnet ID, subnet mask and other operational parameters should be configured through system firmware specific implementation (for example system utility). This protocol should simply use UDP default station properties.</p></li>
+</ul>
+<p>Multicast across internetworks is handled by multicast router and is not in the scope of EFI Redfish Discover Protocol. The implementation of upper-layer user interface is system firmware design-specific.</p>
+<ul class="simple">
+<li><p>EFI Redfish Discovery Protocol is the helper driver to discover Redfish services on platform or network. The upper level EFI Redfish client could provide its own implementation of how to utilize information returned from this protocol. Such as network interface selection UI, create Redfish host interface (SMBIOS type 42h) according to Redfish services information, configure system BIOS setting using Redfish service or etc.</p></li>
+</ul>
+</section>
+<section id="efi-redfish-discover-driver">
+<span id="id3"></span><h3><span class="section-number">31.1.2. </span>EFI Redfish Discover Driver<a class="headerlink" href="#efi-redfish-discover-driver" title="Link to this heading"></a></h3>
+<p>A Redfish Discover Driver installs the Redfish Discover Protocol and EFI Driver Binding Protocol in its driver entry point.</p>
+<p>The Driver Binding Protocol contains three services. These are <em>Supported()</em>, <em>Start()</em>, and <em>Stop()</em>. <em>Supported()</em> tests to see if the Redfish Discover Driver can manage a device handle. A Redfish Discover Driver can manage device handle that contain the EFI REST EX Service Binding Protocol, EFI UDP4 Service Binding Protocol or EFI UDP6 Service Binding Protocol, so a Redfish Discover Driver must look for these three protocols on the device handle that is being tested, and return success if any of them is presented.</p>
+<p>The <em>Start()</em> function tells the Redfish Discover Driver to start managing a device driver. The device handle should support at least one of the service binding protocols checked in <em>Supported()</em>.The Redfish Discover Driver should create a child handle for each service binding protocol, and open these children with <em>BY_DRIVER</em> attribute.</p>
+<figure class="align-default">
+<a class="reference internal image-reference" href="_images/EFI_Redfish_Service_Support-2.png"><img alt="_images/EFI_Redfish_Service_Support-2.png" src="_images/EFI_Redfish_Service_Support-2.png" style="width: 260%;" /></a>
+</figure>
+<p>The <em>Stop()</em> function tells the Redfish Discover Driver to stop managing a device driver. The <em>Stop()</em> function can destroy one or more of the device handles (or its child handles) that being managed by Redfish Discover Driver. A Redfish Discover Driver should stop the in-process discovery and destroy corresponding child handle which was created in a previous call to <em>Start()</em>, or in <em>AcquireRedfishService()</em>.</p>
+</section>
+<section id="efi-redfish-discover-client">
+<span id="id4"></span><h3><span class="section-number">31.1.3. </span>EFI Redfish Discover Client<a class="headerlink" href="#efi-redfish-discover-client" title="Link to this heading"></a></h3>
+<p>An EFI Redfish client invokes EFI Redfish Discover Protocol to acquire the ready-to-use EFI REST EX protocol instance.</p>
+<p>Below is the conceptual figure of mechanism of EFI Redfish Discover Protocol. The first scenario is unicast M-SEARCH to verify Redfish service reported in SMBIOS type 42h.
+..</p>
+<figure class="align-default">
+<a class="reference internal image-reference" href="_images/EFI_Redfish_Service_Support-3.png"><img alt="_images/EFI_Redfish_Service_Support-3.png" src="_images/EFI_Redfish_Service_Support-3.png" style="width: 200%;" /></a>
+</figure>
+<ol class="arabic simple">
+<li><p>EFI Redfish client invokes EFI Redfish Discover Protocol to acquire ready-to-use EFI REST EX for communicating with Redfish services reported in Redfish Host Interface (SMBIOS type 42h)</p></li>
+<li><p>EFI Redfish Discover Protocol optionally verifies the existence of Redfish service by unicasting M-SEARCH to Redfish service according to the Redfish service information provided in Redfish Host Interface.</p></li>
+<li><p>3EFI Redfish Discover Protocol creates and configures REST EX instance for Redfish service according to the Redfish service information provided in Redfish Host Interface.</p></li>
+<li><p>EFI Redfish clients communicate with Redfish service using EFI REST EX instance returned from EFI Redfish Discover protocol.</p></li>
+</ol>
+<p>EFI Redfish client passes <em>EFI_REDFISH_DISCOVERED_TOKEN</em> and the discovery options to EFI Redfish Discover Protocol. <em>EFI_EVENT</em> is created by EFI Redfish client for retrieving <em>EFI_REDFISH_DISCOVERED_LIST</em> once EFI Redfish Discover Protocol optionally verifies Redfish service reported by Redfish Host Interface. EFI Redfish client can listen to the notification of verified Redfish service in asynchronous or synchronous according to the setting of options indicated in <em>EFI_REDFISH_DISCOVER_FLAG</em>.</p>
+<p>The second scenario is optionally provided by EFI Redfish Discover Protocol, which is multicast M-SEARCH to discover Redfish services.</p>
+<figure class="align-default">
+<a class="reference internal image-reference" href="_images/EFI_Redfish_Service_Support-3.png"><img alt="_images/EFI_Redfish_Service_Support-3.png" src="_images/EFI_Redfish_Service_Support-3.png" style="width: 200%;" /></a>
+</figure>
+<ol class="arabic simple">
+<li><p>EFI Redfish client gets the list of network interfaces if it would like to discover Redfish services on the certain network.</p></li>
+<li><p>EFI Redfish client invokes EFI Redfish Discover Protocol to acquire ready-to-use EFI REST EX for communicating with Redfish services.</p></li>
+<li><p>EFI Redfish Discover Protocol discovers Redfish services through SSDP over UDP.</p></li>
+<li><p>EFI Redfish clients communicate with Redfish service using EFI REST EX instance returned from EFI Redfish Discover protocol.</p></li>
+</ol>
+<p>EFI Redfish client passes <em>EFI_REDFISH_DISCOVERED_TOKEN</em> and the discovery options to EFI Redfish Discover Protocol. <em>EFI_EVENT</em> is created by EFI Redfish client for retrieving <em>EFI_REDFISH_DISCOVERED_LIST</em> when any time EFI Redfish Discover Protocol discovers new Redfish service. EFI Redfish client can listen to the notification of new found Redfish service in asynchronous or synchronous according to the setting of options indicated in <em>EFI_REDFISH_DISCOVER_FLAG</em>. Setting <em>Timeout</em> to zero in <em>EFI_REDFISH_DISCOVERED_TOKEN</em> to waiting for the new discovered Redfish service in synchronously, otherwise asynchronous notification happens when new Redfish service is discovered by EFI Redfish Discover Protocol.</p>
+</section>
+<section id="efi-redfish-discover-protocol-1">
+<span id="id5"></span><h3><span class="section-number">31.1.4. </span>EFI Redfish Discover Protocol<a class="headerlink" href="#efi-redfish-discover-protocol-1" title="Link to this heading"></a></h3>
+<p><strong>Summary</strong></p>
+<p>This protocol is utilized by EFI Redfish clients to acquire the list of Redfish services provided on platform or network.</p>
+<p><strong>Protocol GUID</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define EFI_REDFISH_DISCOVER_PROTOCOL_GUID \</span>
+  <span class="p">{</span><span class="mh">0x5db12509</span><span class="p">,</span> <span class="mh">0x4550</span><span class="p">,</span> <span class="mh">0x4347</span><span class="p">,</span>
+  <span class="p">{</span><span class="mh">0x96</span><span class="p">,</span> <span class="mh">0xb3</span><span class="p">,</span> <span class="mh">0x73</span><span class="p">,</span> <span class="mh">0xc0</span><span class="p">,</span> <span class="mh">0xff</span><span class="p">,</span> <span class="mh">0x6e</span><span class="p">,</span> <span class="mh">0x86</span><span class="p">,</span> <span class="mh">0x9f</span><span class="p">}}</span>
+</pre></div>
+</div>
+<p><strong>Protocol Interface Structure</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span> <span class="n">struct</span> <span class="n">_EFI_REDFISH_DISCOVER_PROTOCOL</span> <span class="p">{</span>
+  <span class="n">EFI_REDFISH_DISCOVER_NETWORK_LIST</span>               <span class="n">GetNetworkInterfaceList</span><span class="p">;</span>
+  <span class="n">EFI_REDFISH_DISCOVER_ACQUIRE_SERVICE</span>            <span class="n">AcquireRedfishService</span><span class="p">;</span>
+  <span class="n">EFI_REDFISH_DISCOVER_ABORT_ACQUIRE</span>              <span class="n">AbortAcquireRedfishService</span><span class="p">;</span>
+  <span class="n">EFI_REDFISH_DISCOVER_RELEASE_SERVICE</span>            <span class="n">ReleaseRedfishService</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">EFI_REDFISH_DISCOVER_PROTOCOL</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>GetNetworkInterfaceList</dt><dd><p>Get the list of network interfaces on which Redfish services could be discovered.</p>
+</dd>
+<dt>AcquireRedfishService</dt><dd><p>Acquire the list of Redfish services.</p>
+</dd>
+<dt>AbortAcquireRedfishService</dt><dd><p>Abort Redfish services acquire process.</p>
+</dd>
+<dt>ReleaseRedfishService</dt><dd><p>Release Redfish services acquired from AcquireRedfishService().</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>EFI Redfish Discover Protocol provides a mechanism for EFI Redfish clients to acquire the Redfish services provided on the platform or network as described before.</p>
+<section id="efi-redfish-discover-protocol-getnetworkinterfacelist">
+<span id="id6"></span><h4><span class="section-number">31.1.4.1. </span>EFI_REDFISH_DISCOVER_PROTOCOL.GetNetworkInterfaceList()<a class="headerlink" href="#efi-redfish-discover-protocol-getnetworkinterfacelist" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>Get the currently available list of network interfaces on which Redfish services could be discovered.</p>
+<p><strong>Protocol Interface</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_REDFISH_DISCOVER_NETWORK_LIST</span><span class="p">)(</span>
+  <span class="n">IN</span> <span class="n">EFI_REDFISH_DISCOVER_PROTOCOL</span>              <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="n">EFI_HANDLE</span>                                 <span class="n">ImageHandle</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">UINTN</span>                                     <span class="o">*</span><span class="n">NumberOfNetworkInterfaces</span><span class="p">,</span>
+  <span class="n">OUT</span> <span class="n">EFI_REDFISH_DISCOVER_NETWORK_INTERFACE</span>    <span class="o">**</span><span class="n">NetworkInterfaces</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>This is the <em>EFI_REDFISH_DISCOVER_PROTOCOL</em> instance.</p>
+</dd>
+<dt>ImageHandle</dt><dd><p>EFI image to get network list. The image handle is caller’s image handle.</p>
+</dd>
+<dt>NumberOfNetworkInterfaces</dt><dd><p>Number of network interfaces in NetworkInterfaces.</p>
+</dd>
+<dt>NetworkInterfaces</dt><dd><p>It’s an array of instances. The number of entries in NetworkInterfaces is indicated by NumberOfNetworkInterfaces. Caller has to release the memory allocated by Redfish discover protocol with a call to EFI_BOOT_SERVICES.FreePool().</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function is used to get the list of network interfaces which can be used to send SSDP message over UDP protocol for the Redfish services discovery. The entry in NetworkInterfaces could be used as the parameter to <em>EFI_REDFISH_DISCOVER_PROTOCOL</em>.AcquireRedfishService function for discovering Redfish service on specific network interface.</p>
+<p><strong>Related Description</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//*******************************************************</span>
+<span class="o">//</span> <span class="n">EFI_REDFISH_DISCOVER_NETWORK_INTERFACE</span>
+<span class="o">//*******************************************************</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">EFI_MAC_ADDRESS</span>                <span class="n">MacAddress</span><span class="p">;</span>
+  <span class="n">BOOLEAN</span>                        <span class="n">IsIpv6</span><span class="p">;</span>
+  <span class="n">EFI_IP_ADDRESS</span>                 <span class="n">SubnetId</span><span class="p">;</span>
+  <span class="n">UINT8</span>                          <span class="n">SubnetPrefixLength</span><span class="p">;</span>
+  <span class="n">UINT16</span>                         <span class="n">VlanId</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">EFI_REDFISH_DISCOVER_NETWORK_INTERFACE</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>MacAddress</dt><dd><p>MAC address of this network interface.</p>
+</dd>
+<dt>IsIpv6</dt><dd><p>If TRUE, indicates the network interface is running IPv6. Otherwise the network interface is running IPv4.</p>
+</dd>
+<dt>SubnetId</dt><dd><p>Subnet of this network.</p>
+</dd>
+<dt>SubnetPrefixLength</dt><dd><p>Subnet prefix-length for IPv4 and IPv6.</p>
+</dd>
+<dt>VlanId</dt><dd><p>VLAN ID of this network interface.</p>
+</dd>
+</dl>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>Network interface is returned in <em>NetworkInterfaces</em> and the number of network interfaces is returned in <em>NumbermOfNetworkInterfaces</em> successfully.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><p>One of below parameters is NULL. <em>ImageHandle</em>, <em>NumberOfNetworkInterfaces</em>, and <em>NetworkInterfaces</em></p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_UNSUPPORTED</p></td>
+<td><p>Unable to return network interface list.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_NOT_FOUND</p></td>
+<td><p>No network interfaces are found.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EFI_OUT_OF_RESOURCE</p></td>
+<td><p>Not enough resources to return network interfaces to caller.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-redfish-discover-protocol-acquireredfishservice">
+<span id="id7"></span><h4><span class="section-number">31.1.4.2. </span>EFI_REDFISH_DISCOVER_PROTOCOL.AcquireRedfishService()<a class="headerlink" href="#efi-redfish-discover-protocol-acquireredfishservice" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>This function acquires the list of discovered Redfish services.</p>
+<p><strong>Protocol Interface</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+  <span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_REDFISH_DISCOVER_ACQUIRE_SERVICE</span><span class="p">)(</span>
+    <span class="n">IN</span> <span class="n">EFI_REDFISH_DISCOVER_PROTOCOL</span>               <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+    <span class="n">IN</span> <span class="n">EFI_HANDLE</span>                                  <span class="n">ImageHandle</span><span class="p">,</span>
+    <span class="n">IN</span> <span class="n">EFI_REDFISH_DISCOVER_NETWORK_INTERFACE</span>      <span class="o">*</span><span class="n">TargetNetworkInterface</span> <span class="n">OPTIONAL</span><span class="p">,</span>
+    <span class="n">IN</span> <span class="n">EFI_REDFISH_DISCOVER_FLAG</span>                   <span class="n">Flags</span><span class="p">,</span>
+    <span class="n">IN</span> <span class="n">EFI_REDFISH_DISCOVERED_TOKEN</span>                <span class="o">*</span><span class="n">Token</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl>
+<dt>This</dt><dd><p>This is the <em>EFI_REDFISH_DISCOVER_PROTOCOL</em> instance.</p>
+</dd>
+<dt>ImageHandle</dt><dd><p>EFI image acquires Redfish service discovery. The image handle is caller’s image handle.</p>
+</dd>
+<dt>TargetNetworkInterface</dt><dd><p>The target Network Interface which is used to discover Redfish services. Set to NULL to discover Redfish services on all network interfaces.</p>
+</dd>
+<dt>Flags</dt><dd><p>Options of Redfish service discovery.</p>
+</dd>
+<dt>Token</dt><dd><div class="line-block">
+<div class="line"><em>EFI_REDFISH_DISCOVERED_TOKEN</em> instance. The memory of</div>
+<div class="line"><em>EFI_REDFISH_DISCOVERED_LIST</em> and the strings in</div>
+<div class="line"><em>EFI_REDFISH_DISCOVERED_INFORMATION</em> are all allocated by</div>
+<div class="line"><em>AcquireRedfishService()</em> and must be freed when caller invokes</div>
+<div class="line"><em>ReleaseRedfishService()</em>.</div>
+</div>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>This function is used to acquire the list of Redfish services which are discovered according to Redfish Host Interface or through SSDP over UDP. Redfish services discovery through SSDP over UDP could be achieved via network interface specified in TargetNetworkInterface or via all network interfaces if TargetNetworkInterface is specified as NULL. <em>EFI_REDFISH_DISCOVERED_LIST</em> is returned to EFI Redfish client by signaling the EFI event created by client. Each of EFI handle in <em>EFI_REDFISH_DISCOVERED_LIST</em> has the corresponding EFI REST EX instance installed on it. Each REST EX instance is a child instance which is created through EFI REST EX service binding protocol and used by EFI Redfish client for communicating with specific Redfish service. In AcquireRedfishService(), UDP child is created and opened to do SSDP discovery. This UDP child will be destroyed right away after the discovery is done. AcquireRedfishService()also creates and opens REST EX child to configures REST EX instance according to Redfish service information retuned in M-SEARCH response or Redfish Host Interface. REST EX child must be closed after REST EX child is configured. EFI Redfish client must open REST EX instance from RedfishRestExHandle returned in <em>EFI_REDFISH_DISCOVERED_INFORMATION</em> and close REST EX instance once EFI Redfish client is no longer communicating with Redfish service.</p>
+<p><strong>Related Description</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//*******************************************************</span>
+<span class="o">//</span> <span class="n">EFI_REDFISH_DISCOVER_FLAG</span>
+<span class="o">//*******************************************************</span>
+
+<span class="c1">#define EFI_REDFISH_DISCOVER_HOST_INTERFACE        0x00000001</span>
+<span class="c1">#define EFI_REDFISH_DISCOVER_SSDP                  0x00000002</span>
+<span class="c1">#define EFI_REDFISH_DISCOVER_SSDP_UDP6             0x00000004</span>
+<span class="c1">#define EFI_REDFISH_DISCOVER_KEEP_ALIVE            0x00000008</span>
+<span class="c1">#define EFI_REDFISH_DISCOVER_RENEW                 0x00000010</span>
+<span class="c1">#define EFI_REDFISH_DISCOVER_VALIDATION            0x80000000</span>
+<span class="c1">#define EFI_REDFISH_DISCOVER_DURATION_MASK         0x0f000000</span>
+</pre></div>
+</div>
+<p><em>EFI_REDFISH_DISCOVER_FLAG</em> is used to indicate the options when EFI Redfish clients acquire Redfish discover list through this protocol. Redfish Discover Protocol discovers Redfish service according to Redfish Host Interface when <em>EFI_REDFISH_DISCOVER_HOST_INTERFACE</em> is set to <em>TRUE</em>. Redfish Discover Protocol also optionally discovers Redfish services using SSDP UPnP M-SEARCH request through UDP Port 1900. Redfish Discover Protocol returns <em>EFI_INVALID_PARAMETER</em> if none of <em>EFI_REDFISH_DISCOVER_HOST_INTERFACE</em> and <em>EFI_REDFISH_DISCOVER_SSDP</em> is set to <em>TRUE</em>. Set <em>EFI_REDFISH_DISCOVER_SSDP_UDP6</em> to indicate using IPv6 as internet protocol. For the Redfish service discovery according to Redfish Host Interface, Redfish service information like IP address is descripted in Redfish Host Interface. EFI Redfish client can set <em>EFI_REDFISH_DISCOVER_VALIDATION</em> to <em>TRUE</em> to ask Redfish Discover Protocol to validate this Redfish service using IP address described in Redfish Host Interface. Redfish Discover Protocol unicasts UPnP M-SEARCH request to the target Redfish service and verify the response message to determine if the target Redfish service is existing or not. <em>EFI_REDFISH_DISCOVER_VALIDATION</em> doesn’t affect the SSDP discovery. For Redfish SSDP discovery, the responses of the multicast UPnP M-SEARCH request imply the valid Redfish services are existing.</p>
+<p>According to UPnP device architecture, the maximum waiting time of the response to UPnP M-SEARCH request is indicated in MX message header. The value is greater or equal to 1 to less than 5 inclusive in second. In order to give the chance to those Redfish services which do not respond to M-SEARCH in time, set <em>EFI_REDFISH_DISCOVER_KEEP_ALIVE</em> to <em>TRUE</em> to tell Redfish Discover Protocol keeps to sending multicast M-SEARCH request. The duration of periodical multicast request is declared in <em>EFI_REDFISH_DISCOVER_DURATION_MASK</em>. The value indicated in <em>EFI_REDFISH_DISCOVER_DURATION_MASK</em> means 2 to the power of duration. The valid value of duration is greater or equal to 3 and less or equal to 15. The corresponding duration is 8 to 2^15 seconds. Minimum duration is set to 8 seconds in order to keep the duration out of scope of MX value defined in UPnP device architecture. Duration is only valid when <em>EFI_REDFISH_DISCOVER_KEEP_ALIVE</em> is set to <em>TRUE</em> and <em>EFI_REDFISH_DISCOVER_SSDP</em> is set to <em>TRUE</em>.</p>
+<p>Redfish Discover Protocol maintains an internal database of Redfish services it found. It also maintains the EFI image which owns the EFI REST EX instance of discovered Redfish services. Redfish Discover Protocol only signals EFI Redfish client with new found of Redfish services instead of notifying EFI Redfish client the duplicate Redfish services found earlier, unless <em>EFI_REDFISH_DISCOVER_RENEW</em> is set to TRUE. Set <em>EFI_REDFISH_DISCOVER_RENEW</em> to <em>TRUE</em> forces Redfish Discover Protocol to notify EFI Redfish clients all found Redfish services, even the Redfish service which was already discovered and notified previously.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//*******************************************************</span>
+<span class="o">//</span> <span class="n">EFI_REDFISH_DISCOVERED_TOKEN</span>
+<span class="o">//*******************************************************</span>
+<span class="c1">#define REDFISH_DISCOVER_TOKEN_SIGNATURE SIGNATURE_32 (&#39;R&#39;, &#39;F&#39;, &#39;T&#39;, &#39;S&#39;)</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINT32</span>                         <span class="n">Signature</span>
+  <span class="n">EFI_REDFISH_DISCOVERED_LIST</span>    <span class="n">DiscoveredList</span><span class="p">;</span>
+  <span class="n">EFI_EVENT</span>                      <span class="n">Event</span><span class="p">;</span>
+  <span class="n">UINTN</span>                          <span class="n">Timeout</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">EFI_REDFISH_DISCOVERED_TOKEN</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p><em>EFI_REDFISH_DISCOVERED_TOKEN</em> is created by EFI Redfish client and passed to <em>AcquireRedfishService()</em>.</p>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>Signature</dt><dd><p>The token signature should be the value of REDFISH_DISCOVER_TOKEN_SIGNATURE defined above.</p>
+</dd>
+<dt>DiscoveredList</dt><dd><p>Structure of <em>EFI_REDFISH_DISCOVERED_LIST</em> to retrieve the discovered Redfish services.</p>
+</dd>
+<dt>Event</dt><dd><p>EFI event at the <em>TPL_CALLBACK</em> level created by EFI Redfish client, which is used to be notified when Redfish services are discovered or any errors occurred during discovery.</p>
+</dd>
+<dt>Timeout</dt><dd><p>The timeout value declared in <em>EFI_REDFISH_DISCOVERED_TOKEN</em> determines the seconds to drop discovery process. Basically, the nearby Redfish services must give the response in &gt;=1 and &lt;= 5 seconds. The valid timeout value used for the asynchronous discovery is &gt;= 1 and &lt;= 5 seconds. Set the timeout to zero means to discover Redfish service synchronously.</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//*******************************************************</span>
+<span class="o">//</span> <span class="n">EFI_REDFISH_DISCOVERED_LIST</span>
+<span class="o">//*******************************************************</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">UINTN</span>                                <span class="n">NumberOfServiceFound</span><span class="p">;</span>
+  <span class="n">EFI_REDFISH_DISCOVERED_INSTANCE</span>      <span class="o">*</span><span class="n">RedfishInstances</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">EFI_REDFISH_DISCOVERED_LIST</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>The content of <em>EFI_REDFISH_DISCOVERED_LIST</em> is filled by <em>AcquireRedfishService()</em> before signaling Event. <em>NumberOfServiceFound</em> must be set to 0 and RedfishInstances must be NULL when client invokes <em>AcquireRedfishService()</em>. The memory block for <em>RedfishInstances</em> is allocated by the EFI Redfish Discover Protocol,and will be freed by the EFI Redfish Discover Protocol as well in <em>ReleaseRedfishService()</em>.</p>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>NumberOfServiceFound</dt><dd><p>Number of Redfish services are discovered.</p>
+</dd>
+<dt>RedfishInstances</dt><dd><p>Pointer to <em>EFI_REDFISH_DISCOVERED_INSTANCE</em>, number of Redfish services are discovered is indicated in NumberOfServiceFound.</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//*******************************************************</span>
+<span class="o">//</span> <span class="n">EFI_REDFISH_DISCOVERED_INSTANCE</span>
+<span class="o">//*******************************************************</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">EFI_STATUS</span>                              <span class="n">Status</span><span class="p">;</span>
+  <span class="n">EFI_REDFISH_DISCOVERED_INFORMATION</span>      <span class="n">Information</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">EFI_REDFISH_DISCOVERED_INSTANCE</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>This structure describes the status and the information of discovered Redfish service.</p>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>Status</dt><dd><p>EFI status code of Redfish service discovery.</p>
+</dd>
+<dt>Information</dt><dd><p>The information of Redfish service discovered. The information is only valid when Status is EFI_SUCCESS. Refer to below description of <em>EFI_REDFISH_DISCOVERED_INSTANCE</em>.</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//*******************************************************</span>
+<span class="o">//</span> <span class="n">EFI_REDFISH_DISCOVERED_INFORMATION</span>
+<span class="o">//*******************************************************</span>
+<span class="n">typedef</span> <span class="n">struct</span> <span class="p">{</span>
+  <span class="n">EFI_HANDLE</span>                  <span class="n">RedfishRestExHandle</span><span class="p">;</span>
+  <span class="n">BOOLEAN</span>                     <span class="n">IsIPv6</span><span class="p">;</span>
+  <span class="n">EFI_IP_ADDRESS</span>              <span class="n">RedfishHostIpAddress</span><span class="p">;</span>
+  <span class="n">UINT16</span>                      <span class="n">RedfishVersion</span><span class="p">;</span>
+  <span class="n">CHAR16</span>                      <span class="o">*</span><span class="n">Location</span><span class="p">;</span>
+  <span class="n">CHAR16</span>                      <span class="o">*</span><span class="n">Uuid</span><span class="p">;</span>
+  <span class="n">CHAR16</span>                      <span class="o">*</span><span class="n">Os</span><span class="p">;</span>
+  <span class="n">CHAR16</span>                      <span class="o">*</span><span class="n">OsVersion</span><span class="p">;</span>
+  <span class="n">CHAR16</span>                      <span class="o">*</span><span class="n">Product</span><span class="p">;</span>
+  <span class="n">CHAR16</span>                      <span class="o">*</span><span class="n">ProductVersion</span><span class="p">;</span>
+  <span class="n">BOOLEAN</span>                     <span class="n">UseHttps</span><span class="p">;</span>
+<span class="p">}</span>   <span class="n">EFI_REDFISH_DISCOVERED_INFORMATION</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><strong>Description</strong></p>
+<p>This structure describes each Redfish service information. The corresponding EFI REST EX protocol instance is also created and configured by EFI Redfish Discover Protocol for EFI Redfish client. The memory allocated for the information in this structure will be freed by EFI Redfish Discover Protocol in <em>ReleaseRedfishService()</em>.</p>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>RedfishRestExHandle</dt><dd><p>EFI handle which has EFI REST EX protocol instance installed on it. The EFI REST EX protocol instance is already configured by EFI Redfish Discover Protocol through <em>EFI_REST_EX_PROTOCOL</em> <em>.Configure()</em> according to the Redfish host information discovered through Redfish Host Interface or SSDP.</p>
+</dd>
+<dt>IsIPv6</dt><dd><p>Indicates the Redfish service is reached via IPv6 protocol.</p>
+</dd>
+<dt>RedfishHostIpAddress</dt><dd><p>Redfish service host IP address.</p>
+</dd>
+<dt>RedfishVersion</dt><dd><p>Redfish service version. The high byte of RedfishVersion is the major Redfish service version, low byte is the minor Redfish version. For example 0x100 is Redfish service. Redfish service version is acquired from “ST” header in the response of M-SEARCH request.</p>
+</dd>
+<dt>Location</dt><dd><p>Redfish service host location, this information is acquired from “Server” header returned in the response of M-SEARCH request.</p>
+</dd>
+<dt>Uuid</dt><dd><p>The UUID of Redfish service, this information is acquired from “USN” header defined in UPnP Device Architecture specification.</p>
+</dd>
+<dt>Os</dt><dd><p>The OS provides Redfish service, this information is acquired from “Server” header returned in the response of M-SEARCH request. Below is the response in “Server” header defined in UPnP Device Architecture specification. SERVER:OS/version UPnP/1.1 product/version <em>OsVersion</em> Redfish service OS version, this information is acquired from “Server” header returned in the response of M-SEARCH request. Below is the response in “Server” header defined in UPnP Device Architecture specification. SERVER:OS/version UPnP/1.1 product/version</p>
+</dd>
+<dt>Product</dt><dd><p>Product name, this information is extracted from “Server” header returned in the response of M-SEARCH request. Below is the response in “Server” header defined in UPnP Architecture Device specification. SERVER:OS/version UPnP/1.1 product/version</p>
+</dd>
+<dt>ProductVersion</dt><dd><p>Product version, this information is acquired from “Server” header returned in the response of M-SEARCH request. Below is the response in “Server” header defined in UPnP Device Architecture specification. | SERVER:OS/version UPnP/1.1 product/version <em>UseHttps</em> Indicates the Redfish service is reached via HTTPS protocol.</p>
+</dd>
+</dl>
+<p><strong>Status Codes Returned</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>Acquire for Redfish service list is successful.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMATER</p></td>
+<td><div class="line-block">
+<div class="line">One or more of the following is TRUE:</div>
+<div class="line"><em>This</em> is <strong>NULL</strong>.</div>
+<div class="line"><em>ImageHandle</em> is <strong>NULL</strong>.</div>
+<div class="line"><em>Flags</em> is 0 or the improper bit combination of option is set in Flag.</div>
+<div class="line"><em>Token</em> is <strong>NULL</strong>.</div>
+<div class="line"><em>Token-&gt;Timeout</em> is greater than 5 seconds.</div>
+<div class="line"><em>Token-&gt;Event</em> is <strong>NULL</strong>.</div>
+<div class="line">On input,</div>
+<div class="line">• <em>Token-&gt;DiscoveredList.NumberOfServiceFound</em> is not 0, or</div>
+<div class="line">• <em>Token-&gt; DiscoveredList-&gt;RedfishInstances</em> is not <strong>NULL</strong>.</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Others</p></td>
+<td><p>Fail to acquire the list of Redfish service.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-redfish-discover-protocol-abortacquireredfishservice">
+<span id="id8"></span><h4><span class="section-number">31.1.4.3. </span>EFI_REDFISH_DISCOVER_PROTOCOL.AbortAcquireRedfishService()<a class="headerlink" href="#efi-redfish-discover-protocol-abortacquireredfishservice" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>This function aborts Redfish service discovery on the given
+network interface.</p>
+<p><strong>Protocol Interface</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_REDFISH_DISCOVER_ABORT_ACQUIRE</span><span class="p">)(</span>
+  <span class="n">IN</span> <span class="n">EFI_REDFISH_DISCOVER_PROTOCOL</span>              <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span> <span class="o">*</span><span class="n">EFI_REDFISH_DISCOVER_NETWORK_INTERFACE</span>    <span class="o">*</span><span class="n">TargetNetworkInterface</span> <span class="n">OPTIONAL</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>This is the <em>EFI_REDFISH_DISCOVER_PROTOCOL</em> instance.</p>
+</dd>
+<dt>TargetNetworkInterface</dt><dd><p>The target Network Interface on which Redfish services discovery is in process. NULL to abort Redfish service discovery on all network interfaces.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>In <em>AbortAcquireRedfishService()</em>, to abort the in-process Redfish service, discovery is required for preventing unexpected behaviors from happening. This function has to cancel in-process SSDP, the unicast over Udp4/Udp6, close Udp4/Udp6 protocol and destroy the Udp4/Udp6 child. Also closes REST EX opened for configuring REST EX child instance.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>Redfish service discovery is aborted.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><div class="line-block">
+<div class="line">One or more of the following is <strong>TRUE</strong>:</div>
+<div class="line">- <em>This</em> is <strong>NULL</strong>.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="efi-redfish-discover-protocol-releaseredfishservice">
+<span id="id9"></span><h4><span class="section-number">31.1.4.4. </span>EFI_REDFISH_DISCOVER_PROTOCOL.ReleaseRedfishService()<a class="headerlink" href="#efi-redfish-discover-protocol-releaseredfishservice" title="Link to this heading"></a></h4>
+<p><strong>Summary</strong></p>
+<p>This function releases the list of Redfish services discovered
+previously.</p>
+<p><strong>Protocol Interface</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">typedef</span>
+<span class="n">EFI_STATUS</span>
+<span class="p">(</span><span class="n">EFIAPI</span> <span class="o">*</span><span class="n">EFI_REDFISH_DISCOVER_RELEASE_SERVICE</span><span class="p">)(</span>
+  <span class="n">IN</span>    <span class="n">EFI_REDFISH_DISCOVER_PROTOCOL</span>        <span class="o">*</span><span class="n">This</span><span class="p">,</span>
+  <span class="n">IN</span>    <span class="n">EFI_REDFISH_DISCOVERED_LIST</span>          <span class="o">*</span><span class="n">List</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>Parameters</strong></p>
+<dl class="simple">
+<dt>This</dt><dd><p>This is the <em>EFI_REDFISH_DISCOVER_PROTOCOL</em> instance.</p>
+</dd>
+<dt>List</dt><dd><p>The pointer to <em>EFI_REDFISH_DISCOVERED_LIST</em> which lists the Redfish services to release.</p>
+</dd>
+</dl>
+<p><strong>Description</strong></p>
+<p>The Redfish services which listed in List will be released in <em>ReleaseRedfishService()</em>. All memory blocks which were allocated for Redfish service information will be freed in this function. EFI REST EX protocol instance which was created in <em>AcquireRedfishService()</em> will be also destroyed in <em>ReleaseRedfishService()</em>. The Redfish service listed in **List* is not required to be identical or in the same order with <em>EFI_REDFISH_DISCOVERED_LIST</em> retuned from <em>AcquireRedfishService()</em>. List is flexible to list any Redfish services which were discovered by <em>AcquireRedfishService()</em> earlier. In ReleaseRedfishService(), free the resource allocated for the discovered Redfish service indicated in <em>EFI_REDFISH_DISCOVERED_LIST</em>.</p>
+<p><strong>Status Codes Returned</strong></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 66.7%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>EFI_SUCCESS</p></td>
+<td><p>The Redfish services listed in **List* are released successfully.</p></td>
+</tr>
+<tr class="row-even"><td><p>EFI_INVALID_PARAMETER</p></td>
+<td><div class="line-block">
+<div class="line">One or more of the following is <strong>TRUE</strong>:</div>
+<div class="line">- <em>This</em> is <strong>NULL</strong>.</div>
+<div class="line">- <em>List</em> is <strong>NULL</strong>.</div>
+<div class="line">- Invalid settings in *List.</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="implementation-examples">
+<span id="id10"></span><h3><span class="section-number">31.1.5. </span>Implementation Examples<a class="headerlink" href="#implementation-examples" title="Link to this heading"></a></h3>
+<section id="processes-to-discover-redfish-services">
+<span id="id11"></span><h4><span class="section-number">31.1.5.1. </span>Processes to Discover Redfish Services<a class="headerlink" href="#processes-to-discover-redfish-services" title="Link to this heading"></a></h4>
+<p>The following flowchart delineates the EFI Redfish client processes of utilizing EFI Discover Protocol to discover Redfish service, abort discovery and release discovered Redfish service instance.</p>
+<figure class="align-default">
+<a class="reference internal image-reference" href="_images/EFI_Redfish_Service_Support-5.png"><img alt="_images/EFI_Redfish_Service_Support-5.png" src="_images/EFI_Redfish_Service_Support-5.png" style="width: 200%;" /></a>
+</figure>
+</section>
+<section id="network-interface-configuration">
+<span id="id12"></span><h4><span class="section-number">31.1.5.2. </span>Network Interface Configuration<a class="headerlink" href="#network-interface-configuration" title="Link to this heading"></a></h4>
+<p>The EFI Redfish Discover Protocol provides a Redfish service discovery function to discover Redfish service through SMBIOS type 42 or optionally discover Redfish service on specific network interface. EFI Redfish Clients (EFI driver or EFI Application) can utilize the discover function to acquire Redfish service and manipulate Redfish properties to manage a system. For example, applying BIOS settings on the systems managed by Redfish Service. The system could be the one that runs EFI Redfish Client, or other systems on the network. If Redfish service is discovered according to SMBIOS type 42, then the platform developer has to create an SMBIOS type 42 entry with host (station) and Redfish Service information (Refer to DSP0270, Redfish Host Interface Specification). Besides discovering Redfish service using SMBIOS type 42, Redfish services can be also discovered by using SSDP over UDP. However, the network interface must be configured using either DHCP or static configuration prior to discovery of Redfish services. If the network interface is configured statically, then at least the IP address and Subnet mask must be configured for the station. The VLAN ID and new route entry may need to be configured depending on the networking environment if necessary.</p>
+<p>Below is the implementation example for configuring network interface. Network interface could be configured in platform-implementation method. For example, platform developer can provide HII network options in BIOS setup utility. Network interface could be configured in statically or dynamically (DHCP) manner and the configuration could be stored in EFI variables or any platform non-volatile storage which may consumed by network stacks when each time system boot. This makes sure certain network interface is configured properly before EFI Redfish Clients utilizing EFI Redfish Discover Protocol.</p>
+<p>The alternative of configuring network stack is system boots to EFI Shell and execute ifconfig shell command. This configures the settings of certain network interfaces. After this, network interface is ready to process Redfish service discovery by EFI Redfish Clients. However, this method requires user to configure network interface when each time system boot to EFI shell, unless other implementations of ifconfig EFI shell command is provided.</p>
+<figure class="align-default">
+<a class="reference internal image-reference" href="_images/EFI_Redfish_Service_Support-6.png"><img alt="_images/EFI_Redfish_Service_Support-6.png" src="_images/EFI_Redfish_Service_Support-6.png" style="width: 260%;" /></a>
+</figure>
+<p>Once EFI Redfish Client is launched, it gets network interface information using EFI Redfish Discover protocol. EFI Redfish Client may provide selection UI of network interfaces for Redfish service discovery. EFI Redfish Client could manipulate Redfish properties such as BIOS Attributes on the discovered Redfish services for system management or deployment. EFI Redfish Client can also optionally maintain the information, location and other properties of discovered Redfish services in non-volatile storage for next system boots afterward.</p>
+</section>
+</section>
+</section>
+<section id="efi-redfish-json-structure-converter">
+<span id="id13"></span><h2><span class="section-number">31.2. </span>EFI Redfish JSON Structure Converter<a class="headerlink" href="#efi-redfish-json-structure-converter" title="Link to this heading"></a></h2>
+<section id="the-guidance-of-writing-efi-redfish-jsonstructure-converter">
+<span id="the-guidance-of-writing-efi-redfish-json-structure-converter"></span><h3><span class="section-number">31.2.1. </span>The Guidance of Writing EFI Redfish JSONStructure Converter<a class="headerlink" href="#the-guidance-of-writing-efi-redfish-jsonstructure-converter" title="Link to this heading"></a></h3>
+<p>To provide interoperability between the Redfish service and the EFI environment, EFI Redfish JSON structure converters for each Redfish schema namespace should be implemented for EFI Redfish clients. This recommendation of writing EFI Redfish JSON structure converters is necessary to unify the implementation and capability of the converters.</p>
+<ul>
+<li><p>One converter supports one Redfish schema resource type; write the converter based on Redfish resource type. Using Redfish schema as an example:</p>
+<div class="line-block">
+<div class="line">— AccountService.v1_0_0.json: RedfishAccountService_V1_0_0_Dxe driver</div>
+</div>
+<div class="line-block">
+<div class="line">— AttributeRegistry.v1_2_0.json: RedfishAttributeRegistry_V1_2_0_Dxe driver</div>
+</div>
+<div class="line-block">
+<div class="line">— EthernetInterface.v1_4_0.json : EthernetInterface_V1_4_0_Dxe driver</div>
+</div>
+</li>
+<li><p>Redfish JSON structure converter can be delivered in source code package or binary (library or EFI driver) format.</p></li>
+<li><p>A C header file must be released with the Redfish JSON structure converter package. The package could be provisioned to conform to any EFI implementation, such as EFI EDKII open source.</p></li>
+<li><p>Provide documents which can describe the usage of structure members defined in REST JSON structure.</p></li>
+<li><p>The documentation can be published with a source code package, binary package, web site, online help, etc.</p></li>
+<li><p>Write the converter as an EFI DXE driver, and utilize <em>EFI_REST_JSON_STRUCTURE_PROTOCOL</em> to register the converter to provide the corresponding <em>EFI_REST_JSON_STRUCTURE_PROTOCOL</em> functions:</p>
+<div class="line-block">
+<div class="line">— <em>ToStructure()</em></div>
+</div>
+<div class="line-block">
+<div class="line">— <em>ToJson()</em></div>
+</div>
+<div class="line-block">
+<div class="line">— <em>DestoryStructure()</em></div>
+</div>
+</li>
+<li><p>FI_REST_JSON_RESOURCE_TYPE_IDENTIFIER</p></li>
+</ul>
+<p><strong>Namespace</strong></p>
+<dl class="simple">
+<dt>ResourceTypeName:</dt><dd><p>String to Redfish schema resource type.</p>
+</dd>
+<dt>MajorVersion:</dt><dd><p>String to Redfish schema major version, NULL string for non version controlled schema.</p>
+</dd>
+<dt>MinorVersion:</dt><dd><p>String to Redfish schema minor version, NULL string for non version controlled schema.</p>
+</dd>
+<dt>ErrataVersion:</dt><dd><p>String to Redfish schema errata version, NULL string for non version controlled schema. Datatype</p>
+</dd>
+</dl>
+<p><strong>Datatype</strong></p>
+<p>String to data type defined in Redfish schema</p>
+<p><strong>Examples</strong></p>
+<p>AccountService.v1_0_0.json</p>
+<p><strong>Namespace</strong></p>
+<p>ResourceTypeName: “AccountService”
+MajorVersion:”1”
+MinorVersion:”0”
+ErrataVErsion:”0”</p>
+<p><strong>Datatype:</strong> “AccountService”</p>
+<p><strong>Namespace</strong></p>
+<p>ResourceTypeName: “ComputerSystemCollection”
+MajorVersion:NULL
+MinorVersion:NULL
+ErrataVErsion:NULL</p>
+<p><strong>Datatype:</strong> “ComputerSystemCollection”</p>
+<ul class="simple">
+<li><p>Determine Redfish resource type according to the given JsonRsrcIdentifier. If the given JsonRsrcIdentifier is non-NULL, the Redfish resource structure converter must convert the JSON resource to the Redfish JSON structure according to the resource type and revision specified in JsonRsrcIdentifier. The converter should not refer to the resource type and revision according to Redfish namespace and datatype indicated in “odata.type” in JSON text resource. This prevents from the returned structure format is different with what consumer expects.</p></li>
+<li><p>Automatically determine the Redfish resource type. If the given JsonRsrcIdentifier is NULL, the EFI Redfish JSON structure converter should check the namespace and datatype indicated in “odata.type” in the JSON text resource. Parse this identifier property to retrieve the corresponding Redfish schema name space and data type, then decode the JSON text resource into the corresponding structure. EFI_REST_JSON_RESOURCE_TYPE_IDENTIFIER in JsonStructure returned to consumer should be filled with the correct Redfish schema resource type information following the guidance mentioned above.</p></li>
+<li><p>All structure members for Redfish schema must be declared as C pointers. With this, the converter consumer can get the partial Redfish JSON properties from the converter. The consumer just initializes certain structure members, and the converter producer only converts non-NULL pointers in the given structure into corresponding Redfish JSON properties in text format.</p></li>
+</ul>
+</section>
+<section id="the-guidance-of-using-efi-redfish-json-structure-converter">
+<span id="id14"></span><h3><span class="section-number">31.2.2. </span>The Guidance of Using EFI Redfish JSON Structure Converter<a class="headerlink" href="#the-guidance-of-using-efi-redfish-json-structure-converter" title="Link to this heading"></a></h3>
+<p>The consumer of EFI Redfish JSON structure converter utilizes EFI_REST_JSON_STRUCTURE_PROTOCOL for converting Redfish JSON resource to Redfish JSON structure and vice versa.</p>
+<p>Refer to the converter document to include the C header file of the Redfish JSON structure converter into the build process. For example, include the converter’s EDKII package into an EFI module INF file for the C header file reference, or follow the build rule of other EFI implementations.</p>
+<p>There are two ways for a consumer to convert JSON resources using the EFI_REST_JSON_STRUCTURE_PROTOCOL:</p>
+<ul class="simple">
+<li><p>Setup the crorect Redfish namespace and datatype in EFI_REST_JSON_RESOURCE_TYPE_IDENTIFIER. This makes sure the EFI REST JSON Structure Protocol uses the exact converter that the consumer prefers for the conversion. In this case, the Redfish namespace and datatype indicated in “odata.type” in the EFI_REST_JSON_RESOURCE_TYPE_IDENTIFIER is set to NULL. This means the converter may recognize the Redfish namespace and datatype indicated in “odata.type” in the JSON text resource, and converts it to the C structure it supports. In this case, the consumer has to be careful when using a C structure pointer to refer to the Redfish JSON structure.</p></li>
+<li><p>EFI_REST_JSON_RESOURCE_TYPE_IDENTIFIER set to NULL means the returned structure format may not be in the same form as the consumer’s expectation. The consumer then has to check the EFI_REST_JSON_RESOURCE_TYPE_IDENTIFIER for the Redfish namespace and datatype, and use the correct prototype for structure reference.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="30_Network_Protocols_UDP_and_MTFTP.html" class="btn btn-neutral float-left" title="30. Network Protocols — UDP and MTFTP" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="32_Secure_Boot_and_Driver_Signing.html" class="btn btn-neutral float-right" title="32. Secure Boot and Driver Signing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, UEFI Forum, Inc..</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
